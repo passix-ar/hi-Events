@@ -66,8 +66,7 @@ export const EventLiveCelebrationModal = ({
                                     {({copied, copy}) => (
                                         <Tooltip label={copied ? t`Copied!` : t`Copy link`}>
                                             <Button
-                                                variant="light"
-                                                color={copied ? 'teal' : 'gray'}
+                                                variant="default"
                                                 onClick={copy}
                                                 size="sm"
                                                 leftSection={copied ? <IconCheck size={14}/> : <IconCopy size={14}/>}
@@ -86,7 +85,7 @@ export const EventLiveCelebrationModal = ({
                             component="a"
                             href={url}
                             target="_blank"
-                            variant="light"
+                            variant="default"
                             leftSection={<IconExternalLink size={16}/>}
                             className={classes.actionButton}
                         >
@@ -94,7 +93,7 @@ export const EventLiveCelebrationModal = ({
                         </Button>
 
                         <Button
-                            variant="light"
+                            variant="default"
                             leftSection={<IconShare size={16}/>}
                             onClick={openShareModal}
                             className={classes.actionButton}
@@ -105,7 +104,7 @@ export const EventLiveCelebrationModal = ({
                         <Button
                             component={NavLink}
                             to={`/manage/event/${eventId}/widget`}
-                            variant="light"
+                            variant="default"
                             leftSection={<IconCode size={16}/>}
                             onClick={onClose}
                             className={classes.actionButton}

@@ -43,29 +43,25 @@ export const PoweredByFooter = (
         return url.toString();
     }, []);
 
-    const footerContent = isHiEvents() ? (
-        <>
-            {t`Planning an event?`}{" "}
-            <a
-                href={`${link}`}
-                target="_blank"
-                className={classes.ctaLink}
-                title={"Effortlessly manage events and sell tickets online with Hi.Events"}
-            >
-                {t`Try Hi.Events Free`}
-            </a>
-        </>
-    ) : (
+    const footerContent = (
         <>
             {t`Powered by`}{" "}
             <a
                 href={link}
                 target="_blank"
-                title={"Effortlessly manage events and sell tickets online with Hi.Events"}
+                title={"Passix — powered by Hi.Events"}
+            >
+                Passix
+            </a>
+            {", "}
+            {t`based on`}{" "}
+            <a
+                href="https://hi.events"
+                target="_blank"
+                title={"Hi.Events open source event platform"}
             >
                 Hi.Events
-            </a>{" "}
-            🚀
+            </a>
         </>
     );
 
