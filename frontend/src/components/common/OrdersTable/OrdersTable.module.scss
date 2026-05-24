@@ -116,10 +116,10 @@
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  background: var(--mantine-color-gray-1);
+  background: var(--hi-color-gray-2);
   border-radius: 4px;
   font-size: 12px;
-  color: var(--mantine-color-gray-7);
+  color: var(--hi-text-light);
   font-weight: 500;
 }
 
@@ -205,8 +205,8 @@
   }
 
   &[data-status="ABANDONED"] {
-    background: var(--mantine-color-gray-1);
-    color: var(--mantine-color-gray-9);
+    background: var(--hi-color-gray-2);
+    color: var(--hi-text);
   }
 }
 

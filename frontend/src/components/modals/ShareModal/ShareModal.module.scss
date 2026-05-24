@@ -22,7 +22,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1rem;
-    background: #fff;
+    background: var(--hi-color-gray);
     border: 1px solid var(--mantine-color-gray-3);
     border-radius: var(--mantine-radius-md);
     cursor: pointer;
@@ -31,7 +31,7 @@
     color: var(--mantine-color-text);
 
     &:hover {
-        background: var(--mantine-color-gray-0);
+        background: var(--hi-color-gray);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
@@ -48,7 +48,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: white;
+    background: var(--hi-color-gray);
     color: var(--mantine-color-dark-6);
 }
 
@@ -67,7 +67,7 @@
 }
 
 .qrCodeWrapper {
-    background: white;
+    background: var(--hi-color-gray);
     padding: 2rem;
     border-radius: var(--mantine-radius-lg);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);

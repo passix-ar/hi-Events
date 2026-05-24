@@ -36,7 +36,7 @@ const TicketDesigner = () => {
 
     const form = useForm<TicketDesignSettings>({
         initialValues: {
-            accent_color: '#333333',
+            accent_color: '#d6ff3d',
             logo_image_id: undefined,
             footer_text: '',
             enabled: true,
@@ -49,7 +49,7 @@ const TicketDesigner = () => {
         if (eventSettingsQuery?.isFetched && eventSettingsQuery?.data?.ticket_design_settings) {
             const settings = eventSettingsQuery.data.ticket_design_settings;
             form.setValues({
-                accent_color: settings.accent_color || '#333333',
+                accent_color: settings.accent_color || '#d6ff3d',
                 logo_image_id: settings.logo_image_id || undefined,
                 footer_text: settings.footer_text || '',
                 enabled: settings.enabled !== false,

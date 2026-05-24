@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   padding: 0.875rem;
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray);
   border: 1px solid var(--mantine-color-gray-2);
   border-radius: var(--mantine-radius-sm);
   transition: all 0.2s ease;
@@ -83,7 +83,7 @@
 }
 
 .answer {
-  color: var(--mantine-color-gray-7);
+  color: var(--hi-text-light);
   padding-left: 1.5rem;
   font-size: var(--mantine-font-size-sm);
 }

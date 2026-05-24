@@ -15,10 +15,10 @@
   }
 
   &.default {
-    // Use checkout variables if available, fallback to default colors
-    background-color: var(--checkout-surface, #FFFFFF);
-    border: 1px solid var(--checkout-border, #E5E7EB);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    // Use checkout variables if available, fallback to dark theme surface colors
+    background-color: var(--checkout-surface, var(--hi-color-gray));
+    border: 1px solid var(--checkout-border, var(--hi-color-gray-2));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.15s ease;
   }
 }

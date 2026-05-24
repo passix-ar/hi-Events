@@ -1,4 +1,4 @@
-import {facebookPixelPlugin} from './plugins/facebookPixel';
+import {facebookPixelPlugin} from './plugins/metaPixel';
 import {googleAnalytics4Plugin} from './plugins/googleAnalytics4';
 import {googleTagManagerPlugin} from './plugins/googleTagManager';
 import {tiktokPixelPlugin} from './plugins/tiktokPixel';

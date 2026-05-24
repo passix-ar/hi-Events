@@ -45,12 +45,12 @@
 
 // Shared Auth Card Base Styles
 @mixin auth-card {
-  background: white;
+  background: #16161d;
   border-radius: var(--hi-radius-xl);
   padding: 2rem;
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.04),
-    0 4px 12px rgba(0, 0, 0, 0.03);
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 4px 24px rgba(0, 0, 0, 0.2);
   border: 1px solid var(--hi-color-gray-2);
 
   @include mixins.respond-below(sm) {
@@ -77,9 +77,9 @@
     }
 
     &:focus {
-      border-color: var(--mantine-color-secondary-5);
-      box-shadow: 0 0 0 3px var(--mantine-color-secondary-1);
-      background: white;
+      border-color: #d6ff3d;
+      box-shadow: 0 0 0 3px rgba(214, 255, 61, 0.12);
+      background: #1e1e27;
     }
 
     &::placeholder {

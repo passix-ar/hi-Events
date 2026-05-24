@@ -50,9 +50,9 @@ const OrganizerHomepageDesigner = () => {
     const form = useForm<FormValues>({
         initialValues: {
             homepage_theme_settings: {
-                accent: '#8b5cf6',
-                background: '#f5f3ff',
-                mode: 'light',
+                accent: '#d6ff3d',
+                background: '#0b0b0e',
+                mode: 'dark',
                 background_type: 'COLOR',
                 font_family: DEFAULT_HOMEPAGE_FONT,
             },

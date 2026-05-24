@@ -15,14 +15,14 @@
     padding: 12px 16px;
     border: 1px solid var(--mantine-color-gray-3);
     border-radius: 8px;
-    background: white;
+    background: var(--hi-color-gray);
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
     position: relative;
 
     &:hover {
-        background: var(--mantine-color-gray-0);
+        background: var(--hi-color-gray);
         border-color: var(--mantine-color-primary-5);
         transform: translateY(-1px);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -43,7 +43,7 @@
     border-radius: 8px;
     overflow: hidden;
     flex-shrink: 0;
-    background: var(--mantine-color-gray-1);
+    background: var(--hi-color-gray-2);
 
     img {
         width: 100%;
@@ -70,7 +70,7 @@
 .organizerName {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--mantine-color-gray-9);
+    color: var(--hi-text);
     margin: 0 0 2px 0;
     white-space: nowrap;
     overflow: hidden;
@@ -137,7 +137,7 @@
     margin-top: 4px;
 
     &:hover {
-        color: var(--mantine-color-gray-8);
+        color: var(--hi-text);
     }
 }
 

@@ -4,10 +4,11 @@
   display: flex;
   flex-direction: column;
   grid-area: sidebar;
-  background: linear-gradient(180deg, var(--mantine-color-primary-9), var(--mantine-color-secondary-9));
+  background: #16161d;
   color: var(--hi-color-white);
   position: relative;
-  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #26262f;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
   height: 100vh;
 
   &.closed {
@@ -95,8 +96,8 @@
       text-align: left;
 
       .navBadge {
-        background: var(--hi-primary);
-        color: white;
+        background: #d6ff3d;
+        color: #0b0b0e;
         padding: 2px 6px;
         border-radius: 12px;
         font-size: 0.75em;
@@ -132,13 +133,13 @@
       }
 
       &.linkActive {
-        background: rgba(255, 255, 255, 0.12);
-        color: white;
+        background: rgba(214, 255, 61, 0.12);
+        color: #d6ff3d;
         font-weight: 600;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
         .linkIcon {
-          color: rgba(255, 255, 255, 1);
+          color: #d6ff3d;
         }
       }
 

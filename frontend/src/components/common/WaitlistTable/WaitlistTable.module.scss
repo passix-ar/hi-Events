@@ -49,8 +49,8 @@
   }
 
   &[data-status="CANCELLED"] {
-    background: var(--mantine-color-gray-1);
-    color: var(--mantine-color-gray-9);
+    background: var(--hi-color-gray-2);
+    color: var(--hi-text);
   }
 
   &[data-status="OFFER_EXPIRED"] {

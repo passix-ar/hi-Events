@@ -1,7 +1,7 @@
 .accordionItem {
   border: 1px solid var(--mantine-color-gray-2);
   border-radius: var(--mantine-radius-sm);
-  background-color: var(--mantine-color-white);
+  background-color: var(--hi-color-gray);
   overflow: hidden;
 
   & + & {
@@ -10,15 +10,15 @@
 }
 
 .accordionControl {
-  background-color: var(--mantine-color-gray-0);
+  background-color: var(--hi-color-gray);
   border-bottom: none;
 
   &:hover {
-    background-color: var(--mantine-color-gray-1);
+    background-color: var(--hi-color-gray-2);
   }
 
   &[data-expanded] {
-    background-color: var(--mantine-color-white);
+    background-color: var(--hi-color-gray);
     border-bottom: 1px solid var(--mantine-color-gray-2);
   }
 }

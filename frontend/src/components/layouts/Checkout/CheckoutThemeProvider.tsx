@@ -21,12 +21,12 @@ const LIGHT_PALETTE = {
 };
 
 const DARK_PALETTE = {
-    surface: '#1f1f1f',
-    background: '#121212',
-    textPrimary: '#ffffff',
-    textSecondary: '#a3a3a3',
-    textTertiary: '#737373',
-    border: '#333333',
+    surface: '#16161d',
+    background: '#0b0b0e',
+    textPrimary: '#f4f1ea',
+    textSecondary: '#8e8e98',
+    textTertiary: '#8e8e98',
+    border: '#26262f',
 };
 
 /**

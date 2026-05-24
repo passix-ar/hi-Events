@@ -37,7 +37,7 @@ export const ThemeColorControls = ({
         }
     }, [values.background]);
 
-    const currentMode = values.mode || 'light';
+    const currentMode = values.mode || 'dark';
 
     const hasIssues = useMemo(() => {
         const validated = validateThemeSettings(values);
@@ -51,7 +51,7 @@ export const ThemeColorControls = ({
                 label={t`Accent Color`}
                 description={t`The primary brand color used for buttons and highlights`}
                 size="sm"
-                value={values.accent || '#8b5cf6'}
+                value={values.accent || '#d6ff3d'}
                 onChange={handleAccentChange}
                 disabled={disabled}
             />
@@ -61,7 +61,7 @@ export const ThemeColorControls = ({
                 label={t`Background Color`}
                 description={t`The background color of the page. When using cover image, this is applied as an overlay.`}
                 size="sm"
-                value={values.background || '#f5f3ff'}
+                value={values.background || '#0b0b0e'}
                 onChange={handleBackgroundChange}
                 disabled={disabled}
             />

@@ -17,7 +17,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray);
   border: 1px solid var(--mantine-color-gray-2);
   border-radius: var(--mantine-radius-md);
   transition: all 0.15s ease;
@@ -58,7 +58,7 @@
   align-items: center;
 
   &:hover {
-    color: var(--mantine-color-gray-7);
+    color: var(--hi-text-light);
   }
 
   &:active {
@@ -98,7 +98,7 @@
   justify-content: center;
   padding: 32px 16px;
   text-align: center;
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray);
   border: 1px dashed var(--mantine-color-gray-3);
   border-radius: var(--mantine-radius-md);
 
@@ -126,7 +126,7 @@
   }
 
   &:hover {
-    background: var(--mantine-color-gray-0);
+    background: var(--hi-color-gray);
 
     [data-mantine-color-scheme="dark"] & {
       background: var(--mantine-color-dark-6);
@@ -166,7 +166,7 @@
   :global(.mantine-TextInput-input),
   :global(.mantine-Select-input),
   :global(.mantine-Textarea-input) {
-    background: var(--mantine-color-gray-1);
+    background: var(--hi-color-gray-2);
 
     [data-mantine-color-scheme="dark"] & {
       background: var(--mantine-color-dark-5);
@@ -215,7 +215,7 @@
 
 .defaultFields {
   padding: 6px 10px;
-  background: var(--mantine-color-gray-1);
+  background: var(--hi-color-gray-2);
   border-radius: var(--mantine-radius-sm);
   border: 1px dashed var(--mantine-color-gray-3);
 
@@ -233,7 +233,7 @@
 
 .fieldPill {
   padding: 2px 8px;
-  background: var(--mantine-color-white);
+  background: var(--hi-color-gray);
   border: 1px solid var(--mantine-color-gray-3);
   border-radius: var(--mantine-radius-xl);
   font-size: 0.75rem;

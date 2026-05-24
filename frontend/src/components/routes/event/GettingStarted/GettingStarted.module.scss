@@ -1,9 +1,10 @@
 @use "../../../../styles/mixins.scss";
 
 .headerCard {
-  background: linear-gradient(135deg, var(--mantine-color-primary-0) 0%, var(--mantine-color-secondary-0) 100%);
+  background: linear-gradient(135deg, rgba(214, 255, 61, 0.12) 0%, rgba(214, 255, 61, 0.05) 100%);
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.08) !important;
+  border: 1px solid rgba(214, 255, 61, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
   padding: 32px;
   margin-bottom: 32px;
   border: none;
@@ -62,7 +63,7 @@
 .mainTitle {
   font-size: 28px;
   font-weight: 700;
-  color: var(--mantine-color-gray-9);
+  color: var(--hi-text);
   margin: 0;
   line-height: 1.2;
 
@@ -92,7 +93,7 @@
   margin-top: 12px;
   font-size: 16px;
   line-height: 1.5;
-  color: var(--mantine-color-gray-7);
+  color: var(--hi-text-light);
   max-width: 600px;
 }
 
@@ -107,7 +108,7 @@
 
 .progressBar {
   height: 8px;
-  background-color: var(--mantine-color-secondary-1);
+  background-color: rgba(214, 255, 61, 0.15);
 
   [role="progressbar"] {
     background: linear-gradient(90deg, var(--mantine-color-secondary-5), var(--mantine-color-primary-5));
@@ -161,7 +162,7 @@
     margin-bottom: 0;
     position: relative;
     padding: 28px;
-    border: 1px solid var(--mantine-color-gray-2);
+    border: 1px solid var(--hi-color-gray-2);
     border-radius: 12px;
     transition: all 0.2s ease-in-out;
 
@@ -175,12 +176,12 @@
       margin-bottom: 12px;
       font-size: 18px;
       font-weight: 600;
-      color: var(--mantine-color-gray-9);
+      color: var(--hi-text);
     }
 
     p {
       margin-bottom: 20px;
-      color: var(--mantine-color-gray-7);
+      color: var(--hi-text-light);
       line-height: 1.5;
       font-size: 14px;
     }
@@ -192,16 +193,16 @@
 }
 
 .completedCard {
-  background-color: var(--mantine-color-green-0);
-  border-color: var(--mantine-color-green-2);
+  background-color: rgba(74, 222, 128, 0.06);
+  border-color: rgba(74, 222, 128, 0.2);
 }
 
 .completedBadge {
   position: absolute;
   top: 12px;
   right: 12px;
-  background-color: var(--mantine-color-green-1);
-  color: var(--mantine-color-green-6);
+  background-color: rgba(74, 222, 128, 0.12);
+  color: var(--mantine-color-green-4);
   border-radius: 50%;
   width: 28px;
   height: 28px;

@@ -9,7 +9,7 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    background: var(--mantine-color-white);
+    background: var(--hi-color-gray);
     transition: all 0.2s ease;
     overflow: hidden;
 
@@ -101,7 +101,7 @@
     .name {
       font-size: 0.95rem;
       font-weight: 500;
-      color: var(--mantine-color-gray-8);
+      color: var(--hi-text);
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -123,7 +123,7 @@
   text-align: center;
   padding: 40px 20px;
   color: var(--mantine-color-gray-6);
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray);
   border-radius: 12px;
   border: 1px dashed var(--mantine-color-gray-3);
   margin-top: 20px;

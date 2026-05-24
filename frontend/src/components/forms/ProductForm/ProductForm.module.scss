@@ -8,7 +8,7 @@
     margin: 0 0 var(--hi-spacing-sm) 0;
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--mantine-color-gray-7);
+    color: var(--hi-text-light);
   }
 }
 
@@ -46,17 +46,17 @@
   margin-top: var(--hi-spacing-sm);
   margin-bottom: var(--hi-spacing-xl);
   cursor: pointer;
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray);
   border: 1px solid var(--mantine-color-gray-2);
   border-radius: var(--mantine-radius-md);
   transition: all 0.15s ease;
 
   &:hover {
-    background: var(--mantine-color-gray-1);
+    background: var(--hi-color-gray-2);
     border-color: var(--mantine-color-gray-3);
 
     .toggleLabel {
-      color: var(--mantine-color-gray-8);
+      color: var(--hi-text);
     }
 
     svg {
@@ -94,7 +94,7 @@
   .toggleLabel {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--mantine-color-gray-7);
+    color: var(--hi-text-light);
     transition: color 0.15s ease;
   }
 

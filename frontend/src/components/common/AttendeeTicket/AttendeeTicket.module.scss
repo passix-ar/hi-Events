@@ -21,9 +21,9 @@
 }
 
 .ticket {
-  background: #ffffff;
+  background: #131319;
   border-radius: var(--mantine-radius-md);
-  border: 1px solid var(--mantine-color-gray-3);
+  border: 1px solid #26262f;
   max-width: 750px;
   margin: 0 auto;
   overflow: hidden;
@@ -48,8 +48,8 @@
 
 // Header
 .header {
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+  background: #1a1a22;
+  border-bottom: 1px solid #26262f;
   padding: 24px 32px;
 
   @include mixins.respond-below(sm) {
@@ -85,7 +85,7 @@
 .eventTitle {
   font-size: 24px;
   font-weight: 600;
-  color: #1e293b;
+  color: #f4f1ea;
   margin: 0;
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -186,7 +186,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
+  color: #8e8e98;
 
   @media print {
     font-size: 11px;
@@ -198,7 +198,7 @@
 .detailValue {
   font-size: 16px;
   font-weight: 500;
-  color: #1e293b;
+  color: #f4f1ea;
   line-height: 1.4;
 
   @include mixins.respond-below(sm) {
@@ -213,7 +213,7 @@
 
 // Attendee Section
 .attendeeSection {
-  background: #f1f5f9;
+  background: #26262f;
   padding: 24px;
   border-radius: 4px;
   margin-top: auto;
@@ -233,7 +233,7 @@
 .attendeeName {
   font-size: 18px;
   font-weight: 600;
-  color: #1e293b;
+  color: #f4f1ea;
   margin: 8px 0 4px;
 
   @include mixins.respond-below(sm) {
@@ -249,7 +249,7 @@
 
 .attendeeEmail {
   font-size: 14px;
-  color: #64748b;
+  color: #8e8e98;
 
   @media print {
     font-size: 14px;
@@ -260,7 +260,7 @@
 // Footer Text
 .footerText {
   font-size: 14px;
-  color: #475569;
+  color: #8e8e98;
   line-height: 1.5;
   flex: 1;
 
@@ -453,7 +453,7 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--accent);
-  background: #f8fafc;
+  background: #26262f;
   padding: 8px 16px;
   border-radius: 4px;
   letter-spacing: 0.05em;
@@ -474,8 +474,8 @@
 
 // Footer
 .footer {
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+  background: #1a1a22;
+  border-top: 1px solid #26262f;
   padding: 20px 32px;
 
   @include mixins.respond-below(sm) {

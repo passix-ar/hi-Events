@@ -286,7 +286,7 @@
   align-items: center;
   gap: 24px;
   padding: 12px 18px;
-  background: var(--mantine-color-gray-0);
+  background: var(--hi-color-gray-2);
   border-radius: var(--hi-radius-md);
   flex-shrink: 0;
 
@@ -358,16 +358,16 @@
   color: var(--mantine-color-dimmed);
 
   @include mixins.respond-below(md, true) {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(4px);
 
     &:hover {
-      background: var(--mantine-color-white);
+      background: rgba(0, 0, 0, 0.6);
     }
   }
 
   &:hover {
-    background: var(--mantine-color-gray-1);
-    color: var(--mantine-color-text);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--hi-text);
   }
 }

@@ -70,11 +70,9 @@ export const getClientLocale = () => {
         if (storedLocale) {
             return getSupportedLocale(storedLocale);
         }
-
-        return getSupportedLocale(window.navigator.language);
     }
 
-    return "en";
+    return "es";
 };
 
 export async function dynamicActivateLocale(locale: string) {
@@ -102,5 +100,5 @@ export const getSupportedLocale = (userLocale: string) => {
         return mainLocale;
     }
 
-    return "en";
+    return "es";
 };

@@ -2,7 +2,7 @@
 
 .topBar {
   grid-area: topbar;
-  background: linear-gradient(90deg, var(--mantine-color-primary-9), var(--mantine-color-secondary-9));
+  background: #16161d;
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.3s ease;
@@ -23,8 +23,8 @@
 
   .breadcrumbsRow {
     padding: 10px 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    background-color: #fff;
+    border-top: 1px solid #26262f;
+    background-color: #131319;
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -193,7 +193,7 @@
 
   @include mixins.respond-below(md) {
     .topBarMain {
-      background: linear-gradient(90deg, var(--mantine-color-primary-9), var(--mantine-color-secondary-9));
+      background: #16161d;
     }
   }
 

@@ -22,13 +22,13 @@
   .sidebar {
     min-width: 380px;
     max-width: 380px;
-    background-color: #ffffff;
+    background-color: var(--hi-color-gray);
     padding: var(--hi-spacing-lg);
     height: calc(100vh - 55px);
     overflow-y: auto;
     position: sticky;
     top: 0;
-    border-right: 1px solid var(--mantine-color-gray-2);
+    border-right: 1px solid var(--hi-color-gray-2);
 
     @include mixins.respond-below(sm) {
       width: 100%;
@@ -38,7 +38,7 @@
       overflow: auto;
       height: auto;
       border-right: none;
-      border-bottom: 1px solid var(--mantine-color-gray-2);
+      border-bottom: 1px solid var(--hi-color-gray-2);
     }
 
     .sticky {
@@ -49,13 +49,13 @@
     .header {
       margin-bottom: var(--hi-spacing-lg);
       padding-bottom: var(--hi-spacing-md);
-      border-bottom: 1px solid var(--mantine-color-gray-2);
+      border-bottom: 1px solid var(--hi-color-gray-2);
       
       h2 {
         margin: 0 0 var(--hi-spacing-xs) 0;
         font-size: 1.375rem;
         font-weight: 600;
-        color: var(--mantine-color-gray-9);
+        color: var(--hi-text);
       }
     }
 
@@ -63,7 +63,7 @@
       margin-bottom: 0;
       
       .accordionItem {
-        border: 1px solid var(--mantine-color-gray-3);
+        border: 1px solid var(--hi-color-gray-2);
         border-radius: var(--mantine-radius-md);
         overflow: hidden;
         
@@ -73,20 +73,20 @@
 
         :global(.mantine-Accordion-control) {
           padding: var(--hi-spacing-md);
-          background: var(--mantine-color-gray-0);
+          background: var(--hi-color-gray);
           
           &:hover {
-            background: var(--mantine-color-gray-1);
+            background: var(--hi-color-gray-2);
           }
           
           &[data-active] {
-            border-bottom: 1px solid var(--mantine-color-gray-2);
+            border-bottom: 1px solid var(--hi-color-gray-2);
           }
         }
 
         :global(.mantine-Accordion-panel) {
           padding: 0;
-          background: white;
+          background: var(--hi-color-gray);
         }
 
         :global(.mantine-Accordion-content) {
@@ -128,7 +128,7 @@
         
         &:hover {
           transform: translateY(-2px);
-          background: var(--mantine-color-gray-0);
+          background: var(--hi-color-gray);
           
           .themeCircle {
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
@@ -136,10 +136,10 @@
         }
         
         &[data-selected="true"] {
-          background: var(--mantine-color-blue-0);
-          
+          background: var(--hi-color-gray-2);
+
           .themeCircle {
-            box-shadow: 0 0 0 3px var(--mantine-color-blue-5);
+            box-shadow: 0 0 0 3px var(--hi-primary);
           }
         }
       }
@@ -152,7 +152,7 @@
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease;
-        border: 2px solid white;
+        border: 2px solid var(--hi-color-gray-2);
       }
       
       .themeOuter {
@@ -189,14 +189,14 @@
         transform: translate(-50%, -50%);
         width: 26px;
         height: 26px;
-        background: white;
+        background: var(--hi-color-gray);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-        color: var(--mantine-color-blue-6);
-        border: 1px solid var(--mantine-color-blue-2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        color: var(--hi-primary);
+        border: 1px solid var(--hi-primary);
       }
     }
   }

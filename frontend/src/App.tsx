@@ -1,5 +1,5 @@
 import React, {FC, PropsWithChildren, useCallback, useEffect} from "react";
-import {MantineProvider} from "@mantine/core";
+import {MantineProvider, type CSSVariablesResolver} from "@mantine/core";
 import {Notifications} from "@mantine/notifications";
 import {i18n} from "@lingui/core";
 import {I18nProvider} from "@lingui/react";
@@ -7,6 +7,22 @@ import {ModalsProvider} from "@mantine/modals";
 import {HydrationBoundary, QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import {generateColors} from '@mantine/colors-generator';
+
+const passixResolver: CSSVariablesResolver = () => ({
+    variables: {},
+    dark: {
+        '--mantine-color-body':           '#16161d',
+        '--mantine-color-default':        '#16161d',
+        '--mantine-color-default-hover':  '#1e1e27',
+        '--mantine-color-default-border': '#26262f',
+        '--mantine-color-dimmed':         '#8e8e98',
+        '--mantine-color-text':           '#f4f1ea',
+        '--mantine-color-dark-6':         '#16161d',
+        '--mantine-color-dark-5':         '#1e1e27',
+        '--mantine-color-dark-4':         '#26262f',
+    },
+    light: {},
+});
 
 import "@mantine/core/styles/global.css";
 import "@mantine/core/styles.css";
@@ -65,20 +81,24 @@ export const App: FC<
                     width: "100vw",
                     height: "100vh",
                     position: "fixed",
-                    background: "#ffffff",
+                    background: "#0b0b0e",
                     zIndex: 1000,
                     display: isLoadedOnBrowser ? "none" : "block",
                 }}
             />
             <MantineProvider
+                forceColorScheme="dark"
+                cssVariablesResolver={passixResolver}
                 theme={{
                     colors: {
-                        primary: generateColors(getConfig("VITE_APP_PRIMARY_COLOR", "#40296C") as string),
-                        secondary: generateColors(getConfig("VITE_APP_SECONDARY_COLOR", "#3d0b44") as string),
+                        primary: generateColors(getConfig("VITE_APP_PRIMARY_COLOR", "#d6ff3d") as string),
+                        secondary: generateColors(getConfig("VITE_APP_SECONDARY_COLOR", "#b4e000") as string),
                     },
                     primaryColor: "primary",
-                    fontFamily: "Outfit, sans-serif",
-                    primaryShade: 8,
+                    fontFamily: "'Hanken Grotesk', sans-serif",
+                    headings: { fontFamily: "'Syne', sans-serif" },
+                    primaryShade: { dark: 6, light: 8 },
+                    autoContrast: true,
                 }}
             >
                 <HelmetProvider context={props.helmetContext}>

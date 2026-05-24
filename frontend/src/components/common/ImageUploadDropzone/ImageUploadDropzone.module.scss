@@ -13,13 +13,13 @@
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: var(--mantine-color-blue-6);
+    border-color: var(--hi-primary);
   }
 }
 
 .dropzoneRoot {
-  border: 2px dashed var(--mantine-color-gray-4);
-  background-color: var(--mantine-color-gray-0);
+  border: 2px dashed var(--hi-color-gray-2);
+  background-color: var(--hi-color-gray);
   border-radius: 8px;
   transition: border 0.2s ease;
 }
@@ -38,8 +38,8 @@
 }
 
 .iconWrapper {
-  background-color: var(--mantine-color-blue-0);
-  color: var(--mantine-color-blue-6);
+  background-color: rgba(214, 255, 61, 0.1);
+  color: var(--hi-primary);
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -105,11 +105,11 @@
 
 // Error states
 .dropzoneError {
-  border-color: var(--mantine-color-red-3) !important;
-  background-color: var(--mantine-color-red-0);
-  
+  border-color: var(--mantine-color-red-4) !important;
+  background-color: rgba(255, 0, 0, 0.06);
+
   &:hover {
-    border-color: var(--mantine-color-red-4) !important;
+    border-color: var(--mantine-color-red-5) !important;
   }
 }
 

@@ -107,7 +107,7 @@
     border: 1.5px solid var(--hi-color-gray-2);
     padding: 0.625rem 0.875rem;
     font-size: 0.875rem;
-    background: white;
+    background: #131319;
 
     @include mixins.respond-below(sm) {
       font-size: 1rem;

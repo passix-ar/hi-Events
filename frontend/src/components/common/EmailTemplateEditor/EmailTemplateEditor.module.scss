@@ -2,11 +2,11 @@
   .templatePreview {
     border: 1px solid var(--mantine-color-gray-3);
     border-radius: var(--mantine-radius-md);
-    background: var(--mantine-color-gray-0);
+    background: var(--hi-color-gray);
     
     .previewHeader {
       padding: 1rem;
-      background: var(--mantine-color-gray-1);
+      background: var(--hi-color-gray-2);
       border-bottom: 1px solid var(--mantine-color-gray-3);
       border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
     }
@@ -48,7 +48,7 @@
         }
         
         code {
-          background: var(--mantine-color-gray-1);
+          background: var(--hi-color-gray-2);
           padding: 0.125rem 0.25rem;
           border-radius: 0.25rem;
           font-size: 0.875em;
@@ -82,7 +82,7 @@
       
       .tokenDescription {
         font-size: 0.8rem;
-        color: var(--mantine-color-gray-7);
+        color: var(--hi-text-light);
       }
     }
   }

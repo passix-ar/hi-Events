@@ -21,11 +21,11 @@ export const WidgetEditor = () => {
     const {data: eventSettings, isFetched: isEventSettingsFetched} = useGetEventSettings(eventId);
     const form = useForm({
         initialValues: {
-            background_color: "#ffffff",
-            primary_color: "#828282",
-            primary_text_color: "#ffffff",
-            secondary_color: "#f5f5f5",
-            secondary_text_color: "#828282",
+            background_color: "#0b0b0e",
+            primary_color: "#d6ff3d",
+            primary_text_color: "#0b0b0e",
+            secondary_color: "#131319",
+            secondary_text_color: "#8e8e98",
             continue_button_text: t`Continue`,
             padding: 20,
             autoResize: true,
@@ -141,12 +141,21 @@ export default App;
 
     useEffect(() => {
         if (eventSettings) {
+            const LIGHT_DEFAULTS = ['#ffffff', '#f5f5f5', '#828282', '#8b5cf6', '#000000', '#f5f3ff'];
+            const isDark = (color: string | null | undefined) =>
+                color && !LIGHT_DEFAULTS.includes(color.toLowerCase());
+
             form.setValues({
-                background_color: eventSettings.homepage_background_color,
-                primary_color: eventSettings.homepage_primary_color,
-                primary_text_color: eventSettings.homepage_primary_text_color,
-                secondary_color: eventSettings.homepage_secondary_color,
-                secondary_text_color: eventSettings.homepage_secondary_text_color,
+                background_color: isDark(eventSettings.homepage_background_color)
+                    ? eventSettings.homepage_background_color! : '#0b0b0e',
+                primary_color: isDark(eventSettings.homepage_primary_color)
+                    ? eventSettings.homepage_primary_color! : '#d6ff3d',
+                primary_text_color: isDark(eventSettings.homepage_primary_text_color)
+                    ? eventSettings.homepage_primary_text_color! : '#0b0b0e',
+                secondary_color: isDark(eventSettings.homepage_secondary_color)
+                    ? eventSettings.homepage_secondary_color! : '#131319',
+                secondary_text_color: isDark(eventSettings.homepage_secondary_text_color)
+                    ? eventSettings.homepage_secondary_text_color! : '#8e8e98',
                 continue_button_text: eventSettings.continue_button_text,
             });
         }

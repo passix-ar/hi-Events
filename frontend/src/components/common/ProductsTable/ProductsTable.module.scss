@@ -11,13 +11,13 @@ $transition-fast: 150ms ease;
 $transition-base: 200ms ease;
 
 
-$color-text-primary: #1f2937;
-$color-text-secondary: #6b7280;
-$color-text-muted: #9ca3af;
-$color-border: #e5e7eb;
-$color-border-light: #f3f4f6;
-$color-success: #10b981;
-$color-money: #059669;
+$color-text-primary: #f4f1ea;
+$color-text-secondary: #8e8e98;
+$color-text-muted: #5e5e6a;
+$color-border: #26262f;
+$color-border-light: #1e1e26;
+$color-success: #4ade80;
+$color-money: #4ade80;
 
 // ==========================================
 // Category Container Styles
@@ -30,7 +30,7 @@ $color-money: #059669;
   padding: var(--hi-spacing-lg);
   box-shadow: $card-shadow;
   border: 1px solid $color-border;
-  background-color: #ffffff;
+  background-color: var(--hi-color-gray);
 
   &:hover {
     box-shadow: $card-shadow-hover;
@@ -123,7 +123,7 @@ $color-money: #059669;
   box-sizing: border-box;
   border-radius: $card-radius;
   border: 1px solid $color-border;
-  background-color: #ffffff;
+  background-color: var(--hi-color-gray);
   display: grid;
   padding: 0;
   overflow: hidden;
@@ -136,7 +136,7 @@ $color-money: #059669;
 
   &:hover {
     box-shadow: $card-shadow-hover;
-    border-color: darken($color-border, 5%);
+    border-color: #3a3a47;
 
     .actionButton {
       background-color: $color-border-light;
@@ -189,7 +189,7 @@ $color-money: #059669;
   align-items: center;
   padding: 12px 0;
   border-right: 1px solid $color-border-light;
-  background-color: #fafafa;
+  background-color: var(--hi-color-gray-2);
 }
 
 // Main content area
@@ -314,8 +314,8 @@ $color-money: #059669;
   align-items: center;
   gap: 4px;
   padding: 2px 8px;
-  background-color: #fef3c7;
-  color: #92400e;
+  background-color: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
   border-radius: 4px;
   font-size: 11px;
   font-weight: 500;
@@ -323,7 +323,7 @@ $color-money: #059669;
   transition: background-color $transition-fast;
 
   &:hover {
-    background-color: #fde68a;
+    background-color: rgba(251, 191, 36, 0.2);
   }
 
   svg {
@@ -442,7 +442,7 @@ $color-money: #059669;
   justify-content: center;
   padding: 0 12px;
   border-left: 1px solid $color-border-light;
-  background-color: #fafafa;
+  background-color: var(--hi-color-gray-2);
 
   @include mixins.respond-below(lg) {
     border-left: none;
@@ -483,7 +483,7 @@ $color-money: #059669;
 // ==========================================
 
 .dragPreview {
-  background-color: #fff;
+  background-color: var(--hi-color-gray);
   border: 1px solid $color-border;
   border-radius: $card-radius;
   padding: 12px 16px;

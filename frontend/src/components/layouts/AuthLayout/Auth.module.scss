@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background: linear-gradient(135deg, #fafafa 0%, var(--hi-color-gray) 50%, #faf8fc 100%);
+  background: #0b0b0e;
   overflow-y: auto;
   z-index: 2;
 
@@ -142,13 +142,12 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg,
-    var(--mantine-color-primary-9) 0%,
-    var(--mantine-color-primary-8) 30%,
-    var(--mantine-color-primary-6) 60%,
-    var(--mantine-color-secondary-5) 100%
+    160deg,
+    rgba(11, 11, 14, 0.90) 0%,
+    rgba(19, 19, 25, 0.85) 65%,
+    rgba(214, 255, 61, 0.18) 100%
   );
-  opacity: 0.92;
+  opacity: 1;
 }
 
 // Grid pattern overlay
