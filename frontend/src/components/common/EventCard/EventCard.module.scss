@@ -148,20 +148,23 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
-  background: var(--mantine-color-white);
+  background: rgba(11, 11, 14, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--hi-radius-sm);
   padding: 6px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 44px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .dateDay {
   font-size: 18px;
   font-weight: 700;
-  color: var(--mantine-color-dark-9);
+  color: #ffffff;
   line-height: 1;
 }
 

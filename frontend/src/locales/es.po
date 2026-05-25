@@ -3873,7 +3873,7 @@ msgstr "Gestión de comisiones"
 #: src/components/forms/ProductForm/index.tsx:409
 #: src/components/routes/organizer/Reports/RevenueSummaryReport/index.tsx:54
 msgid "Fees"
-msgstr "Honorarios"
+msgstr "Cargo por servicio"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:291
 msgid "Fees are subject to change. You will be notified of any changes to your fee structure."

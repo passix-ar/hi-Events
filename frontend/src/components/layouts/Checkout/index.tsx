@@ -18,7 +18,6 @@ import {withLoadingNotification} from "../../../utilites/withLoadingNotification
 import {useAbandonOrderPublic} from "../../../mutations/useAbandonOrderPublic.ts";
 import {showError, showInfo} from "../../../utilites/notifications.tsx";
 import {isDateInFuture} from "../../../utilites/dates.ts";
-import {detectMode} from "../../../utilites/themeUtils.ts";
 import {CheckoutThemeProvider} from "./CheckoutThemeProvider.tsx";
 import {useOrganizerTrackingPixels} from "../../../hooks/useOrganizerTrackingPixels";
 import {trackPixelEvent, hasActivePixels} from "../../../utilites/trackingPixels";
@@ -182,11 +181,9 @@ const Checkout = () => {
         }
     }, [order?.status, order?.short_id, consentGranted]);
 
-    // Get accent color from event settings, derive mode from homepage background
     const homepageSettings = event?.settings?.homepage_theme_settings;
-    const accentColor = homepageSettings?.accent || DEFAULT_ACCENT;
-    // Mode is derived from the homepage background color (light homepage = light checkout)
-    const checkoutMode = homepageSettings?.mode || detectMode(homepageSettings?.background || '#ffffff');
+    const accentColor = homepageSettings?.accent || '#d6ff3d';
+    const checkoutMode: 'dark' | 'light' = 'dark';
 
     return (
         <CheckoutThemeProvider accentColor={accentColor} mode={checkoutMode}>
