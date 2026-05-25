@@ -122,8 +122,30 @@ const AuthLayout = () => {
         }
     }, []);
 
+    if (me.isPending) {
+        return (
+            <div style={{
+                minHeight: '100vh',
+                background: '#0b0b0e',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <div style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    border: '3px solid #26262f',
+                    borderTopColor: '#d6ff3d',
+                    animation: 'auth-spin 0.7s linear infinite',
+                }} />
+                <style>{`@keyframes auth-spin { to { transform: rotate(360deg); } }`}</style>
+            </div>
+        );
+    }
+
     if (me.isSuccess) {
-        return <Navigate to={'/manage/events'} />
+        return <Navigate to={'/manage/events'} />;
     }
 
     return (

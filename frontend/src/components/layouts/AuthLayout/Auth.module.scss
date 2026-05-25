@@ -2,7 +2,8 @@
 
 // Premium Auth Layout - Sophisticated design for events industry
 .authLayout {
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -12,7 +13,7 @@
   flex: 1;
   display: flex;
   position: relative;
-  min-height: 100vh;
+  height: 100%;
 }
 
 // Left Panel - Form area with subtle background
@@ -22,11 +23,12 @@
   flex-direction: column;
   position: relative;
   background: #0b0b0e;
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 2;
 
   @include mixins.respond-below(md) {
     width: 100%;
+    overflow-y: auto;
   }
 }
 
@@ -36,42 +38,25 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 2rem;
-  min-height: 100vh;
+  padding: 1.25rem 2rem;
+  height: 100%;
 
   @include mixins.respond-below(md) {
-    min-height: auto;
     justify-content: flex-start;
-    padding: 3rem 1.5rem 2rem;
+    padding: 2rem 1.5rem 1.5rem;
   }
 
   @include mixins.respond-below(sm) {
-    padding: 2rem 1rem 1.5rem;
+    padding: 1.5rem 1rem 1rem;
   }
 }
 
 .logo {
-  margin-bottom: 1.5rem;
-
-  @include mixins.respond-below(md) {
-    margin-bottom: 1.25rem;
-  }
-
-  @include mixins.respond-below(sm) {
-    margin-bottom: 1rem;
-  }
+  margin-bottom: 1rem;
 
   img {
-    height: 110px;
+    height: 52px;
     width: auto;
-
-    @include mixins.respond-below(md) {
-      height: 100px;
-    }
-
-    @include mixins.respond-below(sm) {
-      height: 90px;
-    }
   }
 }
 
