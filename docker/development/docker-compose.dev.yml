@@ -60,6 +60,8 @@ services:
             VITE_STRIPE_PUBLISHABLE_KEY: '${STRIPE_PUBLIC_KEY}'
             VITE_FRONTEND_URL: '${FRONTEND_URL}'
             VITE_APP_NAME: '${APP_NAME}'
+            VITE_TOS_URL: '${TOS_URL}'
+            VITE_PRIVACY_URL: '${PRIVACY_URL}'
         networks:
             - app
 

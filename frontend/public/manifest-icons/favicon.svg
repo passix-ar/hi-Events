@@ -1,11 +1,3 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="10" fill="#0b0b0e"/>
-  <text x="24" y="24"
-        font-family="system-ui, -apple-system, Arial, sans-serif"
-        font-size="22"
-        font-weight="800"
-        text-anchor="middle"
-        dominant-baseline="central">
-    <tspan fill="#ffffff">PA</tspan><tspan fill="#d6ff3d">IX</tspan>
-  </text>
+  <circle cx="24" cy="24" r="22" fill="#d6ff3d"/>
 </svg>
