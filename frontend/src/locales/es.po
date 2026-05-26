@@ -2841,6 +2841,10 @@ msgstr "Duplicar evento"
 msgid "Duplicate Options"
 msgstr "Duplicar opciones"
 
+#: src/components/modals/DuplicateProductModal/index.tsx:60
+msgid "(Copy)"
+msgstr "(Copia)"
+
 #: src/components/modals/DuplicateProductModal/index.tsx:113
 #: src/components/modals/DuplicateProductModal/index.tsx:117
 msgid "Duplicate Product"
@@ -6262,6 +6266,14 @@ msgstr "Pagar para desbloquear"
 msgid "Payload"
 msgstr "Carga útil"
 
+#: src/components/modals/WebhookLogsModal/index.tsx:111
+msgid "Payload:"
+msgstr "Payload:"
+
+#: src/components/modals/WebhookLogsModal/index.tsx:125
+msgid "Response:"
+msgstr "Respuesta:"
+
 #: src/components/common/OrdersTable/index.tsx:375
 #: src/components/common/ProgressStepper/index.tsx:19
 #: src/components/forms/StripeCheckoutForm/index.tsx:127
@@ -9156,7 +9168,11 @@ msgstr "No se puede crear una pregunta. Por favor revisa tus datos"
 
 #: src/components/modals/DuplicateProductModal/index.tsx:107
 msgid "Unable to duplicate product. Please check the your details"
-msgstr "No se pudo duplicar el producto. Por favor, revisa tus datos"
+msgstr "No se pudo duplicar el producto. Por favor, revisá tus datos"
+
+#: src/components/modals/DuplicateProductModal/index.tsx:107
+msgid "Unable to duplicate product. Please check your details"
+msgstr "No se pudo duplicar el producto. Por favor, revisá tus datos"
 
 #: src/components/layouts/CheckIn/index.tsx:221
 msgid "Unable to fetch attendee"

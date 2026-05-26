@@ -10,7 +10,6 @@ import {
     IconReceiptTax,
     IconReportMoney,
     IconTicket,
-    IconUserCircle,
     IconUsers
 } from '@tabler/icons-react';
 import {t, Trans} from '@lingui/macro';
@@ -316,53 +315,49 @@ export const OrganizerDashboard = () => {
 
                 {/* Orders Section - Second on mobile, first on desktop */}
                 <div className={`${classes.recentSection} ${classes.ordersSection}`}>
-                    <h3 className={classes.sectionTitle}><Trans>Recent Orders</Trans></h3>
+                    <div className={classes.sectionHeader}>
+                        <h3 className={classes.sectionTitle}><Trans>Recent Orders</Trans></h3>
+                    </div>
                     {isLoadingOrders && (
                         <div className={classes.skeletonStack}>
-                            {[...Array(3)].map((_, i) => <Skeleton key={i} height={100} radius="md"/>)}
+                            {[...Array(4)].map((_, i) => <Skeleton key={i} height={52} radius="md"/>)}
                         </div>
                     )}
                     {!isLoadingOrders && recentOrders && recentOrders.length > 0 && (
-                        <div className={classes.ordersList}>
+                        <div className={classes.orderCompactList}>
                             {recentOrders.map((order: Order) => (
                                 <NavLink
                                     key={order.id}
                                     to={`/manage/event/${order.event_id}/orders#order-${order.id}`}
-                                    className={classes.orderCardLink}
+                                    className={classes.orderCompactRow}
                                 >
-                                    <Card className={classes.orderCard}>
-                                        <div className={classes.orderMain}>
-                                            <div className={classes.orderAvatar}>
-                                                <IconUserCircle size={24} stroke={1.5}/>
-                                            </div>
-                                            <div className={classes.orderDetails}>
-                                                <div className={classes.orderCustomer}>
-                                                    <span className={classes.customerName}>
-                                                        {order.first_name} {order.last_name}
-                                                    </span>
-                                                    <Badge
-                                                        color={getOrderStatusColor(order.status, order.payment_status)}
-                                                        variant="light"
-                                                        radius="sm"
-                                                        size="xs"
-                                                    >
-                                                        {formatOrderStatus(order.status, order.payment_status)}
-                                                    </Badge>
-                                                </div>
-                                                <div className={classes.orderMeta}>
-                                                    <span className={classes.orderAmount}>
-                                                        {formatCurrency(order.total_gross, order.currency)}
-                                                    </span>
-                                                    <span className={classes.orderSeparator}>·</span>
-                                                    <span className={classes.orderTime}>
-                                                        {relativeDate(order.created_at)}
-                                                    </span>
-                                                </div>
-                                                <span className={classes.orderId}>#{order.public_id}</span>
-                                            </div>
+                                    <div className={classes.orderCompactInfo}>
+                                        <div className={classes.orderCompactCustomer}>
+                                            <span className={classes.orderCompactName}>
+                                                {order.first_name} {order.last_name}
+                                            </span>
+                                            <Badge
+                                                color={getOrderStatusColor(order.status, order.payment_status)}
+                                                variant="light"
+                                                radius="sm"
+                                                size="xs"
+                                            >
+                                                {formatOrderStatus(order.status, order.payment_status)}
+                                            </Badge>
                                         </div>
-                                        <IconChevronRight size={18} className={classes.orderArrow}/>
-                                    </Card>
+                                        <div className={classes.orderCompactMeta}>
+                                            <span className={classes.orderCompactAmount}>
+                                                {formatCurrency(order.total_gross, order.currency)}
+                                            </span>
+                                            <span className={classes.orderCompactSeparator}>·</span>
+                                            <span className={classes.orderCompactTime}>
+                                                {relativeDate(order.created_at)}
+                                            </span>
+                                            <span className={classes.orderCompactSeparator}>·</span>
+                                            <span className={classes.orderCompactId}>#{order.public_id}</span>
+                                        </div>
+                                    </div>
+                                    <IconChevronRight size={16} className={classes.orderCompactArrow}/>
                                 </NavLink>
                             ))}
                         </div>

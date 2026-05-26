@@ -164,9 +164,9 @@
   gap: 1rem;
 
   @include mixins.respond-above(lg) {
-    grid-template-columns: minmax(300px, 1fr) 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    align-items: stretch;
+    align-items: start;
   }
 }
 
@@ -204,123 +204,96 @@
   letter-spacing: -0.02em;
 }
 
-// Orders list
-.ordersList {
+// Compact order list (mirrors event compact list style)
+.orderCompactList {
   display: flex;
   flex-direction: column;
-  flex: 1;
   gap: 0;
 }
 
-.orderCardLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.orderCard {
+.orderCompactRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px;
-  transition: all 0.15s ease;
+  padding: 11px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.12s ease;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
-    border-color: var(--mantine-color-gray-4);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background: var(--hi-color-gray);
 
-    .orderArrow {
+    .orderCompactArrow {
       transform: translateX(2px);
       color: var(--mantine-color-primary-filled);
     }
 
-    .customerName {
+    .orderCompactName {
       color: var(--mantine-color-primary-filled);
     }
   }
-
-  &:active {
-    transform: scale(0.995);
-  }
 }
 
-.orderMain {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  flex: 1;
-}
-
-.orderAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--hi-color-gray-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--mantine-color-gray-5);
-}
-
-.orderDetails {
+.orderCompactInfo {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   min-width: 0;
   flex: 1;
 }
 
-.orderCustomer {
+.orderCompactCustomer {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.customerName {
-  font-size: 14px;
+.orderCompactName {
+  font-size: 13.5px;
   font-weight: 600;
-  color: var(--mantine-color-text);
-  transition: color 0.15s ease;
-  @include mixins.ellipsis;
+  color: var(--hi-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.12s ease;
 }
 
-.orderMeta {
+.orderCompactMeta {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--mantine-color-dimmed);
+  flex-wrap: wrap;
 }
 
-.orderAmount {
+.orderCompactAmount {
   font-weight: 600;
   color: var(--mantine-color-green-7);
 }
 
-.orderSeparator {
+.orderCompactSeparator {
   color: var(--mantine-color-gray-4);
 }
 
-.orderTime {
+.orderCompactTime {
   color: var(--mantine-color-dimmed);
 }
 
-.orderId {
+.orderCompactId {
   font-size: 11px;
   color: var(--mantine-color-gray-5);
   font-family: 'SF Mono', Monaco, 'Cascadia Mono', 'Roboto Mono', monospace;
   letter-spacing: 0.02em;
 }
 
-.orderArrow {
+.orderCompactArrow {
   flex-shrink: 0;
   color: var(--mantine-color-gray-4);
-  transition: all 0.15s ease;
+  transition: all 0.12s ease;
 }
 
 // Section header with title + action button

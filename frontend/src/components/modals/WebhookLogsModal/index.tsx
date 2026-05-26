@@ -77,7 +77,7 @@ const LogEntry = ({log}: { log: WebhookLog }) => {
                                 size="sm"
                                 radius="sm"
                             >
-                                {log.response_code || 'No Response'}
+                                {log.response_code || t`No Response`}
                             </Badge>
                         </Group>
                         <Text size="xs" c="dimmed">
@@ -108,7 +108,7 @@ const LogEntry = ({log}: { log: WebhookLog }) => {
                 <Stack mt="lg" gap="md">
                     {log.payload && (
                         <div>
-                            <Text size="sm" fw={500} mb={8} c="dimmed">Payload:</Text>
+                            <Text size="sm" fw={500} mb={8} c="dimmed">{t`Payload:`}</Text>
                             <Code block p="md" style={{
                                 borderRadius: '6px',
                                 maxHeight: '300px',
@@ -122,7 +122,7 @@ const LogEntry = ({log}: { log: WebhookLog }) => {
 
                     {log.response_body && (
                         <div>
-                            <Text size="sm" fw={500} mb={8} c="dimmed">Response:</Text>
+                            <Text size="sm" fw={500} mb={8} c="dimmed">{t`Response:`}</Text>
                             <Code block p="md" style={{
                                 borderRadius: '6px',
                                 maxHeight: '300px',
@@ -155,7 +155,7 @@ export const WebhookLogsModal = ({onClose, webhookId}: WebhookLogsModalProps) =>
                 <Center>
                     <Stack align="center" gap="xs">
                         <Loader size="md"/>
-                        <Text size="sm" c="dimmed">Loading webhook logs...</Text>
+                        <Text size="sm" c="dimmed">{t`Loading webhook logs...`}</Text>
                     </Stack>
                 </Center>
             )}

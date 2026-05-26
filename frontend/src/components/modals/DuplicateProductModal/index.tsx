@@ -57,7 +57,7 @@ export const DuplicateProductModal = ({onClose, originalProductId}: DuplicatePro
         }
 
         form.setValues({
-            title: `${originalProduct.title} (Copy)`,
+            title: `${originalProduct.title} ${t`(Copy)`}`,
             description: originalProduct.description,
             max_per_order: originalProduct.max_per_order,
             min_per_order: originalProduct.min_per_order,
@@ -104,7 +104,7 @@ export const DuplicateProductModal = ({onClose, originalProductId}: DuplicatePro
                 if (error?.response?.data?.errors) {
                     form.setErrors(error.response.data.errors);
                 }
-                showError(t`Unable to duplicate product. Please check the your details`);
+                showError(t`Unable to duplicate product. Please check your details`);
             },
         });
     };
