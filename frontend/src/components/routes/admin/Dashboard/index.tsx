@@ -421,7 +421,7 @@ const AdminDashboard = () => {
                                                         <Badge size="xs" color="green" variant="light">{t`Verified`}</Badge>
                                                     )}
                                                     {account.stripe_connect_setup_complete && (
-                                                        <Badge size="xs" color="blue" variant="light">{t`Stripe`}</Badge>
+                                                        <Badge size="xs" color="blue" variant="light">{t`MP`}</Badge>
                                                     )}
                                                 </Group>
                                             </Table.Td>

@@ -72,6 +72,7 @@ const RevenueSummaryReport = () => {
             organizer={organizer}
             showCurrencyFilter={true}
             availableCurrencies={allCurrencies}
+            filterRow={(row) => Number(row.order_count) > 0}
         />
     );
 };

@@ -381,7 +381,7 @@ export const OrdersTable = ({orders, event}: OrdersTableProps) => {
                             {order.payment_provider === 'STRIPE' ? (
                                 <>
                                     <IconCreditCard size={16}/>
-                                    <Text>{t`Stripe`}</Text>
+                                    <Text>{t`MercadoPago`}</Text>
                                 </>
                             ) : order.payment_provider === 'OFFLINE' ? (
                                 <>

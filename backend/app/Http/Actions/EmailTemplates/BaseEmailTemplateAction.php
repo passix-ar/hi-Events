@@ -38,11 +38,6 @@ abstract class BaseEmailTemplateAction extends BaseAction
             throw new AccountNotVerifiedException(__('You cannot modify email templates until your account is verified.'));
         }
 
-        if (!$account->getIsManuallyVerified()) {
-            throw new AccountNotVerifiedException(
-                __('Due to issues with spam, you must connect a Stripe account before you can modify email templates.')
-            );
-        }
     }
 
     protected function validateEmailTemplateRequest(Request $request): array

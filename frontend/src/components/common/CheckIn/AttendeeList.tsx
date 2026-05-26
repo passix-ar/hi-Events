@@ -62,7 +62,7 @@ export const AttendeeList = ({
     if (attendees.length === 0) {
         return (
             <div className={classes.noResults}>
-                No attendees to show.
+                {t`No attendees to show.`}
             </div>
         );
     }

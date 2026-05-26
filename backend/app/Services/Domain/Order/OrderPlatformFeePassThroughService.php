@@ -27,11 +27,7 @@ class OrderPlatformFeePassThroughService
 
     public function isEnabled(EventSettingDomainObject $eventSettings): bool
     {
-        if (!$this->config->get('app.saas_mode_enabled')) {
-            return false;
-        }
-
-        return $eventSettings->getPassPlatformFeeToBuyer();
+        return (bool) $this->config->get('app.saas_mode_enabled');
     }
 
     /**

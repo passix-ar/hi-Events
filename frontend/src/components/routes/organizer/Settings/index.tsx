@@ -4,25 +4,19 @@ import { SocialLinks } from "./Sections/SocialLinks";
 import { AddressSettings } from "./Sections/AddressSettings";
 import EmailTemplateSettings from "./Sections/EmailTemplateSettings";
 import { EventDefaults } from "./Sections/EventDefaults";
-import { PlatformFeesSettings } from "./Sections/PlatformFeesSettings";
 import { DangerZoneSettings } from "./Sections/DangerZoneSettings";
 import { TrackingPixelSettings } from "./Sections/TrackingPixelSettings";
 import { PageBody } from "../../../common/PageBody";
 import { PageTitle } from "../../../common/PageTitle";
 import { t } from "@lingui/macro";
 import { Box, Group, NavLink as MantineNavLink, Stack } from "@mantine/core";
-import { IconAlertTriangle, IconBrandGoogleAnalytics, IconInfoCircle, IconMapPin, IconShare, IconMail, IconCalendarEvent, IconPercentage, IconChartBar } from "@tabler/icons-react";
+import { IconAlertTriangle, IconBrandGoogleAnalytics, IconInfoCircle, IconMapPin, IconShare, IconMail, IconCalendarEvent, IconChartBar } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMemo, useState } from "react";
 import { Card } from "../../../common/Card";
 import { useParams } from "react-router";
-import { useGetAccount } from "../../../../queries/useGetAccount.ts";
-
 const Settings = () => {
     const { organizerId } = useParams();
-    const { data: account } = useGetAccount();
-    const isSaasMode = account?.is_saas_mode_enabled;
-
     const SECTIONS = useMemo(() => {
         const baseSections = [
             {
@@ -82,17 +76,8 @@ const Settings = () => {
             },
         ];
 
-        if (isSaasMode) {
-            baseSections.splice(2, 0, {
-                id: 'platform-fees',
-                label: t`Platform Fees`,
-                icon: IconPercentage,
-                component: PlatformFeesSettings,
-            });
-        }
-
         return baseSections;
-    }, [isSaasMode, organizerId]);
+    }, [organizerId]);
 
     const isLargeScreen = useMediaQuery('(min-width: 1200px)', true);
     const [activeSection, setActiveSection] = useState('basic-settings');

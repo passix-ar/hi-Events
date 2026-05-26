@@ -249,8 +249,7 @@ const FeePlanDisplay = ({configuration, stripeCountry}: FeePlanDisplayProps) => 
             <Title mb={10} order={3}>{t`Platform Fees`}</Title>
 
             <Text size="sm" c="dimmed" mb="lg">
-                {getConfig("VITE_APP_NAME", "Hi.Events")} charges platform fees to maintain and improve our services.
-                These fees are automatically deducted from each transaction.
+                {t`Passix charges platform fees to maintain and improve our services. These fees are automatically deducted from each transaction.`}
             </Text>
 
             <VatNotice stripeCountry={stripeCountry} />
@@ -827,39 +826,14 @@ const PaymentSettings = () => {
                     <Grid gutter="xl">
 
                         <Grid.Col span={{base: 12, md: 6}}>
-                            {accountQuery.isFetched && (
-                                <ConnectStatus account={accountQuery.data}/>
-                            )}
+                            <MercadoPagoSettings/>
                         </Grid.Col>
                         <Grid.Col span={{base: 12, md: 6}}>
                             {accountQuery.data?.configuration && (
                                 <FeePlanDisplay
                                     configuration={accountQuery.data.configuration}
-                                    stripeCountry={
-                                        stripeAccountsQuery.data?.stripe_connect_accounts.find(
-                                            acc => acc.is_setup_complete
-                                        )?.country
-                                    }
                                 />
                             )}
-                        </Grid.Col>
-                        {isHiEvents() && (
-                            <Grid.Col span={{base: 12}}>
-                                {accountQuery.data && stripeAccountsQuery.data && (
-                                    <VatSettings
-                                        account={accountQuery.data}
-                                        stripeCountry={
-                                            stripeAccountsQuery.data.stripe_connect_accounts.find(
-                                                acc => acc.is_setup_complete
-                                            )?.country
-                                        }
-                                    />
-                                )}
-                            </Grid.Col>
-                        )}
-
-                        <Grid.Col span={{base: 12, md: 6}}>
-                            <MercadoPagoSettings/>
                         </Grid.Col>
                     </Grid>
                 )}

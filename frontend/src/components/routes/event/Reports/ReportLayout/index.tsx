@@ -2,6 +2,7 @@ import {Link, useParams} from "react-router";
 import {PageBody} from "../../../../common/PageBody";
 import {Button} from "@mantine/core";
 import {IconChevronLeft} from "@tabler/icons-react";
+import {t} from "@lingui/macro";
 import ProductSalesReport from "../ProductSalesReport";
 import {ReportTypes} from "../../../../../types.ts";
 import {DailySalesReport} from "../DailySalesReport";
@@ -16,7 +17,7 @@ const renderReport = (reportType: string) => {
         case ReportTypes.PromoCodes:
             return <PromoCodesReport/>;
         default:
-            return <div>Report not found</div>;
+            return <div>{t`Report not found`}</div>;
     }
 };
 
@@ -32,7 +33,7 @@ const ReportLayout = () => {
                     to={`/manage/event/${eventId}/reports`}
                     pl={0}
             >
-                Back to Reports
+                {t`Back to Reports`}
             </Button>
             <div>
                 {renderReport(reportType as string)}

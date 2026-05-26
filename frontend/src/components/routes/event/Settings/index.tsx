@@ -18,20 +18,16 @@ import {
     IconHome,
     IconListCheck,
     IconMapPin,
-    IconPercentage,
 } from "@tabler/icons-react";
 import {useMediaQuery} from "@mantine/hooks";
 import {useEffect, useMemo, useState} from "react";
 import {Card} from "../../../common/Card";
 import {PaymentAndInvoicingSettings} from "./Sections/PaymentSettings";
-import {PlatformFeesSettings} from "./Sections/PlatformFeesSettings";
 import {WaitlistSettings} from "./Sections/WaitlistSettings";
 import {DangerZoneSettings} from "./Sections/DangerZoneSettings";
 import {useGetAccount} from "../../../../queries/useGetAccount.ts";
 
 export const Settings = () => {
-    const {data: account} = useGetAccount();
-    const isSaasMode = account?.is_saas_mode_enabled;
 
     const SECTIONS = useMemo(() => {
         const baseSections = [
@@ -92,17 +88,8 @@ export const Settings = () => {
             }
         ];
 
-        if (isSaasMode) {
-            baseSections.splice(baseSections.length - 1, 0, {
-                id: 'platform-fees',
-                label: t`Platform Fees`,
-                icon: IconPercentage,
-                component: PlatformFeesSettings,
-            });
-        }
-
         return baseSections;
-    }, [isSaasMode]);
+    }, []);
 
     const isLargeScreen = useMediaQuery('(min-width: 1200px)', true);
     const [activeSection, setActiveSection] = useState(() => {

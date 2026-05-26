@@ -14,8 +14,6 @@ import {NavLink} from "react-router";
 import {t} from "@lingui/macro";
 import {authClient} from "../../../api/auth.client.ts";
 import {useDisclosure} from "@mantine/hooks";
-import {AboutModal} from "../../modals/AboutModal";
-import {getConfig} from "../../../utilites/config.ts";
 import {CreateOrganizerModal} from "../../modals/CreateOrganizerModal";
 
 interface Link {
@@ -64,13 +62,14 @@ export const GlobalMenu = () => {
         })
     }
 
-    if (!getConfig("VITE_HIDE_ABOUT_LINK")) {
-        links.push({
-            label: `About & Support`,
-            icon: IconLifebuoy,
-            onClick: openAboutModal,
-        });
-    }
+    links.push({
+        label: t`Help & Support`,
+        icon: IconLifebuoy,
+        onClick: (event: any) => {
+            event.preventDefault();
+            window.location.href = `mailto:soporte@passix.com.ar`;
+        },
+    });
 
     links.push({
         label: t`Create Organizer`,
@@ -118,7 +117,6 @@ export const GlobalMenu = () => {
                     ))}
                 </Menu.Dropdown>
             </Menu>
-            {aboutModalOpen && <AboutModal onClose={closeAboutModal}/>}
             {createOrganizerModalOpen && <CreateOrganizerModal onClose={closeCreateOrganizerModal}/>}
         </>
     );

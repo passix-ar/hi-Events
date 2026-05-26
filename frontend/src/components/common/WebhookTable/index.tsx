@@ -93,7 +93,7 @@ export const WebhookTable = ({webhooks, openCreateModal}: WebhookTableProps) => 
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                    <Menu.Label>Manage</Menu.Label>
+                    <Menu.Label>{t`Manage`}</Menu.Label>
                     <Menu.Item
                         leftSection={<IconPencil size={14}/>}
                         onClick={() => {
@@ -165,7 +165,7 @@ export const WebhookTable = ({webhooks, openCreateModal}: WebhookTableProps) => 
                 <Popover.Dropdown>
                     <Stack gap="md">
                         <Group justify="space-between" align="center">
-                            <Text fw={500} size="sm">Response Details</Text>
+                            <Text fw={500} size="sm">{t`Response Details`}</Text>
                             <Badge
                                 variant="light"
                                 color={statusColor}

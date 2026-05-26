@@ -188,7 +188,7 @@ export const ManageOrderModal = ({onClose, orderId}: GenericModalProps & ManageO
             <Stack className={classes.container}>
                 <div className={classes.header}>
                     <div className={classes.orderInfo}>
-                        <Text fz="sm" c="dimmed" mb={4}>Order Reference</Text>
+                        <Text fz="sm" c="dimmed" mb={4}>{t`Order Reference`}</Text>
                         <Text fz="xl" fw={600}>{order.public_id}</Text>
                     </div>
                     <OrderStatusBadge order={order} variant="outline"/>

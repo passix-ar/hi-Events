@@ -42,10 +42,12 @@ interface OrganizerReportProps<T> {
     defaultEndDate?: Date;
     onDateRangeChange?: (range: [Date | null, Date | null]) => void;
     enableDownload?: boolean;
+    downloadFileName?: string;
     showCustomDatePicker?: boolean;
     showCurrencyFilter?: boolean;
     availableCurrencies?: string[];
     eventId?: number | null;
+    filterRow?: (row: T) => boolean;
 }
 
 const TIME_PERIODS = [
@@ -71,10 +73,12 @@ const OrganizerReportTable = <T extends Record<string, any>>({
                                                                  defaultEndDate = new Date(),
                                                                  onDateRangeChange,
                                                                  enableDownload = true,
+                                                                 downloadFileName,
                                                                  organizer,
                                                                  showCurrencyFilter = true,
                                                                  availableCurrencies = [],
                                                                  eventId,
+                                                                 filterRow,
                                                              }: OrganizerReportProps<T>) => {
     const tz = organizer.timezone || 'UTC';
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
@@ -199,7 +203,7 @@ const OrganizerReportTable = <T extends Record<string, any>>({
                 selectedCurrency,
                 eventId
             );
-            const filename = `${reportType}_${dayjs().format('YYYY-MM-DD_HH-mm-ss')}.csv`;
+            const filename = downloadFileName ?? `${reportType}_${dayjs().format('YYYY-MM-DD_HH-mm-ss')}.csv`;
             downloadBinary(blob, filename);
             showSuccess(t`Export successful`);
         } catch {
@@ -251,6 +255,10 @@ const OrganizerReportTable = <T extends Record<string, any>>({
             return 0;
         });
     }, [data, sortField, sortDirection]);
+
+    const displayData = useMemo<T[]>(() => {
+        return filterRow ? sortedData.filter(filterRow) : sortedData;
+    }, [sortedData, filterRow]);
 
     const emptyStateMessage = () => {
         const wrapper = (message: React.ReactNode) => (
@@ -352,7 +360,7 @@ const OrganizerReportTable = <T extends Record<string, any>>({
 
             {totalRows > 0 && (
                 <Text size="sm" c="dimmed" mb="sm">
-                    {t`Showing ${sortedData.length} of ${totalRows} records`}
+                    {t`Showing ${displayData.length} of ${totalRows} records`}
                     {totalPages > 1 && ` (${t`Page`} ${currentPage} ${t`of`} ${totalPages})`}
                 </Text>
             )}
@@ -375,8 +383,8 @@ const OrganizerReportTable = <T extends Record<string, any>>({
                     </MantineTable.Tr>
                 </TableHead>
                 <MantineTable.Tbody>
-                    {!sortedData.length && emptyStateMessage()}
-                    {sortedData.map((row, index) => (
+                    {!displayData.length && emptyStateMessage()}
+                    {displayData.map((row, index) => (
                         <MantineTable.Tr key={index}>
                             {columns.map((column) => (
                                 <MantineTable.Td key={String(column.key)}>

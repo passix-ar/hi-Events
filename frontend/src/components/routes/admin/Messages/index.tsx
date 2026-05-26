@@ -70,7 +70,7 @@ const Messages = () => {
     const getEligibilityFailureLabel = (failure: string): string => {
         switch (failure) {
             case 'stripe_not_connected':
-                return t`Stripe Not Connected`;
+                return t`Payment Not Connected`;
             case 'no_paid_orders':
                 return t`No Paid Orders`;
             case 'event_too_new':

@@ -39,7 +39,7 @@ class AccountResource extends JsonResource
             $this->mergeWhen($this->getConfiguration() !== null, fn() => [
                 'configuration' => new AccountConfigurationResource($this->getConfiguration()),
             ]),
-            'requires_manual_verification' => config('app.saas_mode_enabled') && !$this->getIsManuallyVerified(),
+            'requires_manual_verification' => false,
         ];
     }
 }

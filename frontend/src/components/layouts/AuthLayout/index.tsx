@@ -34,7 +34,7 @@ const allFeatures = [
     {
         icon: IconCreditCard,
         title: t`Instant Payouts`,
-        description: t`Get paid immediately via Stripe Connect`
+        description: t`Get paid immediately via MercadoPago`
     },
     {
         icon: IconChartBar,

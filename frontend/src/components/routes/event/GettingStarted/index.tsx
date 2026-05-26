@@ -9,6 +9,7 @@ import {useGetEvent} from "../../../../queries/useGetEvent.ts";
 import {useGetEventImages} from "../../../../queries/useGetEventImages.ts";
 import {Tooltip} from "../../../common/Tooltip";
 import {useGetAccount} from "../../../../queries/useGetAccount.ts";
+import {useGetMercadoPagoStatus} from "../../../../queries/useGetMercadoPagoStatus.ts";
 import {useUpdateEventStatus} from "../../../../mutations/useUpdateEventStatus.ts";
 import {showError, showSuccess} from "../../../../utilites/notifications.tsx";
 import {getProductsFromEvent} from "../../../../utilites/helpers.ts";
@@ -50,6 +51,8 @@ const GettingStarted = () => {
     const hasImages = eventImages && eventImages.length > 0;
     const accountQuery = useGetAccount();
     const account = accountQuery.data;
+    const {data: mpStatus} = useGetMercadoPagoStatus(account?.id);
+    const isMpConnected = mpStatus?.is_connected ?? false;
     const statusToggleMutation = useUpdateEventStatus();
 
     const handleStatusToggle = () => {
@@ -102,7 +105,7 @@ const GettingStarted = () => {
                                     value={[
                                         hasProducts,
                                         event?.description,
-                                        account?.stripe_connect_setup_complete,
+                                        isMpConnected,
                                         hasImages,
                                         event?.status === 'LIVE',
                                         account?.is_account_email_confirmed
@@ -146,17 +149,17 @@ const GettingStarted = () => {
                         </Button>
                     </Card>
 
-                    <Card className={account?.stripe_connect_setup_complete ? classes.completedCard : ''}>
-                        {account?.stripe_connect_setup_complete && <CompletedBadge/>}
+                    <Card className={isMpConnected ? classes.completedCard : ''}>
+                        {isMpConnected && <CompletedBadge/>}
                         <h2>
-                            {t`💳 Connect with Stripe`}
+                            {t`💳 Connect with MercadoPago`}
                         </h2>
                         <p>
-                            {t`Connect your Stripe account to start receiving payments.`}
+                            {t`Connect your MercadoPago account to start receiving payments.`}
                         </p>
-                        {!account?.stripe_connect_setup_complete && (
+                        {!isMpConnected && (
                             <Button variant={'light'} component={NavLink} to={'/account/payment'}>
-                                {t`Connect with Stripe`}
+                                {t`Connect with MercadoPago`}
                             </Button>)
                         }
                     </Card>

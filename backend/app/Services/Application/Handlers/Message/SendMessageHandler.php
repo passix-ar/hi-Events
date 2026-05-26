@@ -52,14 +52,6 @@ class SendMessageHandler
             throw new AccountNotVerifiedException(__('You cannot send messages until your account is verified.'));
         }
 
-        if ($this->config->get('app.saas_mode_enabled') && !$account->getIsManuallyVerified()) {
-            throw new AccountNotVerifiedException(
-                __('Due to issues with spam, you must contact us to enable your account for sending messages. ' .
-                    'Please contact us at :email', [
-                    'email' => $this->config->get('app.platform_support_email'),
-                ])
-            );
-        }
 
         $recipientCount = $this->estimateRecipientCount($messageData);
         $tierViolation = $this->eligibilityService->checkTierLimits(

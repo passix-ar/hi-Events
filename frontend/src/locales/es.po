@@ -10386,3 +10386,123 @@ msgstr "CP o Código Postal"
 #: src/components/routes/product-widget/CollectInformation/index.tsx:549
 msgid "ZIP or Postal Code"
 msgstr "Código postal"
+
+#: src/components/common/CheckIn/AttendeeList.tsx
+msgid "No attendees to show."
+msgstr "No hay asistentes para mostrar."
+
+#: src/components/common/ImageUploadDropzone/index.tsx
+msgid "Processing image..."
+msgstr "Procesando imagen..."
+
+#: src/components/common/ImageUploadDropzone/index.tsx
+msgid "Replace Image"
+msgstr "Reemplazar imagen"
+
+#: src/components/common/ImageUploadDropzone/index.tsx
+msgid "Click to upload"
+msgstr "Clic para subir"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx
+msgid "Passix charges platform fees to maintain and improve our services. These fees are automatically deducted from each transaction."
+msgstr "Passix cobra tarifas de plataforma para mantener y mejorar nuestros servicios. Estas tarifas se descuentan automáticamente de cada transacción."
+
+#: src/components/layouts/OrganizerLayout/index.tsx
+msgid "Connect MercadoPago"
+msgstr "Conectar MercadoPago"
+
+#: src/components/layouts/OrganizerLayout/index.tsx
+msgid "Connect your MercadoPago account to accept payments for tickets and products."
+msgstr "Conectá tu cuenta de MercadoPago para aceptar pagos por entradas y productos."
+
+#: src/components/common/GlobalMenu/index.tsx
+msgid "Help & Support"
+msgstr "Ayuda y soporte"
+
+#: src/components/routes/event/Reports/ReportLayout/index.tsx
+msgid "Back to Reports"
+msgstr "Volver a informes"
+
+#: src/components/routes/event/Reports/ReportLayout/index.tsx
+msgid "Report not found"
+msgstr "Informe no encontrado"
+
+#: src/components/modals/ManageOrderModal/index.tsx
+msgid "Order Reference"
+msgstr "Referencia de pedido"
+
+#: src/components/common/WebhookTable/index.tsx
+msgid "Manage"
+msgstr "Gestionar"
+
+#: src/components/common/WebhookTable/index.tsx
+msgid "Response Details"
+msgstr "Detalles de respuesta"
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "Name"
+msgstr "Nombre"
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "This is the name of the category that will be displayed on the event page."
+msgstr "Este es el nombre de la categoría que se mostrará en la página del evento."
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "No products message"
+msgstr "Mensaje sin productos"
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "A message to display when there are no products in this category."
+msgstr "Un mensaje para mostrar cuando no hay productos en esta categoría."
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "Description"
+msgstr "Descripción"
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "An optional description of this category to display on the event page."
+msgstr "Una descripción opcional de esta categoría para mostrar en la página del evento."
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "Hide this category?"
+msgstr "¿Ocultar esta categoría?"
+
+#: src/components/forms/ProductCategoryForm/index.tsx
+msgid "If checked, this category will be hidden from the public."
+msgstr "Si está marcado, esta categoría estará oculta al público."
+
+#: src/components/common/ImageUploadDropzone/index.tsx
+msgid "Drag & drop or click to upload"
+msgstr "Arrastrá y soltá o hacé clic para subir"
+
+#: src/components/common/ImageUploadDropzone/index.tsx
+msgid "Images only · Max 5MB"
+msgstr "Solo imágenes · Máx. 5MB"
+
+#: src/components/layouts/AuthLayout/index.tsx
+msgid "Get paid immediately via MercadoPago"
+msgstr "Cobrá al instante con MercadoPago"
+
+#: src/components/routes/event/GettingStarted/index.tsx
+msgid "💳 Connect with MercadoPago"
+msgstr "💳 Conectate con MercadoPago"
+
+#: src/components/routes/event/GettingStarted/index.tsx
+msgid "Connect your MercadoPago account to start receiving payments."
+msgstr "Conectá tu cuenta de MercadoPago para comenzar a recibir pagos."
+
+#: src/components/routes/event/GettingStarted/index.tsx
+msgid "Connect with MercadoPago"
+msgstr "Conectar MercadoPago"
+
+#: src/components/routes/organizer/Reports/PlatformFeesReport/index.tsx
+msgid "Payment ID"
+msgstr "ID de pago"
+
+#: src/components/routes/admin/Messages/index.tsx
+msgid "Payment Not Connected"
+msgstr "Pago no conectado"
+
+#: src/components/routes/admin/Attribution/index.tsx
+msgid "MP Connected"
+msgstr "MP Conectado"

@@ -101,7 +101,7 @@ const PlatformFeesReport = () => {
         },
         {
             key: 'payment_intent_id' as const,
-            label: t`Stripe Payment ID`,
+            label: t`Payment ID`,
             sortable: false,
             render: (value: string) => value || '-'
         }

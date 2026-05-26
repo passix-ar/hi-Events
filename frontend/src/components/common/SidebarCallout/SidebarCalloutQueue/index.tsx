@@ -10,6 +10,7 @@ export interface CalloutConfig {
     onClick?: () => void;
     storageKey: string;
     customButton?: React.ReactNode;
+    isDismissible?: boolean;
 }
 
 interface SidebarCalloutQueueProps {

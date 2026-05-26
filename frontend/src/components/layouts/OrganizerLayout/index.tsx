@@ -1,6 +1,5 @@
 import {
     IconArrowsHorizontal,
-    IconBrandStripe,
     IconCalendar,
     IconCalendarPlus,
     IconChartPie,
@@ -33,7 +32,7 @@ import { SwitchOrganizerModal } from "../../modals/SwitchOrganizerModal";
 import { CreateOrganizerModal } from "../../modals/CreateOrganizerModal";
 import { useGetOrganizers } from "../../../queries/useGetOrganizers.ts";
 import { useGetAccount } from "../../../queries/useGetAccount.ts";
-import { StripeConnectButton } from "../../common/StripeConnectButton";
+import { useGetMercadoPagoStatus } from "../../../queries/useGetMercadoPagoStatus.ts";
 import { ShareModal } from "../../modals/ShareModal";
 import { organizerHomepageUrl } from "../../../utilites/urlHelper";
 import { useUpdateOrganizerStatus } from "../../../mutations/useUpdateOrganizerStatus.ts";
@@ -58,6 +57,7 @@ const OrganizerLayout = () => {
     const { data: organizerResposne } = useGetOrganizers();
     const organizers = organizerResposne?.data;
     const { data: account } = useGetAccount();
+    const { data: mpStatus } = useGetMercadoPagoStatus(account?.id);
     const resendEmailConfirmationMutation = useResendEmailConfirmation();
     const [emailConfirmationResent, setEmailConfirmationResent] = useState(false);
     const { data: me } = useGetMe();
@@ -175,20 +175,26 @@ const OrganizerLayout = () => {
         },
     ];
 
-    if (account && !account?.stripe_connect_setup_complete) {
+    if (mpStatus && !mpStatus.is_connected) {
         callouts.unshift({
-            icon: <IconBrandStripe size={20} />,
-            heading: t`Connect Stripe`,
-            description: t`Connect your Stripe account to accept payments for tickets and products.`,
-            storageKey: `stripe-callout-dismissed`,
-            customButton:
-                <StripeConnectButton
+            icon: <IconCreditCard size={20} />,
+            heading: t`Connect MercadoPago`,
+            description: t`Connect your MercadoPago account to accept payments for tickets and products.`,
+            storageKey: `mp-callout-never-dismissed`,
+            isDismissible: false,
+            customButton: (
+                <Button
+                    component={NavLink}
+                    to="/account/payment"
                     fullWidth
                     variant="white"
-                    buttonIcon={<IconCreditCard size={16} />}
-                    buttonText={t`Connect Stripe`}
+                    size="sm"
+                    leftSection={<IconCreditCard size={16} />}
                     className={classes.calloutButton}
-                />
+                >
+                    {t`Connect MercadoPago`}
+                </Button>
+            )
         });
     }
 
