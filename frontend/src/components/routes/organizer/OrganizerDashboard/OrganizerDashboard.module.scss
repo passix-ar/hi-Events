@@ -323,11 +323,129 @@
   transition: all 0.15s ease;
 }
 
-// Events list
-.eventsList {
+// Section header with title + action button
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Compact event list
+.eventCompactList {
   display: flex;
   flex-direction: column;
+  gap: 0;
+}
+
+.eventCompactRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  gap: 12px;
+
+  &:hover {
+    background: var(--hi-color-gray);
+
+    .eventCompactArrow {
+      transform: translateX(2px);
+      color: var(--mantine-color-primary-filled);
+    }
+
+    .eventCompactTitle {
+      color: var(--mantine-color-primary-filled);
+    }
+  }
+}
+
+.eventCompactLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   flex: 1;
+}
+
+.eventCompactInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.eventCompactTitle {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--hi-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.12s ease;
+}
+
+.eventCompactDate {
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+
+.eventCompactRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.eventCompactStat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+
+.eventCompactRevenue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mantine-color-green-7);
+  min-width: 70px;
+  text-align: right;
+}
+
+.eventCompactArrow {
+  color: var(--mantine-color-gray-4);
+  transition: all 0.12s ease;
+  flex-shrink: 0;
+}
+
+// Status dots
+.dotLive, .dotOnSale, .dotDraft, .dotEnded, .dotArchived {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotLive {
+  background: var(--mantine-color-green-5);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.25);
+}
+
+.dotOnSale {
+  background: var(--mantine-color-blue-5);
+}
+
+.dotDraft {
+  background: var(--mantine-color-gray-4);
+}
+
+.dotEnded {
+  background: var(--mantine-color-orange-4);
+}
+
+.dotArchived {
+  background: var(--mantine-color-gray-3);
 }
 
 // Empty states

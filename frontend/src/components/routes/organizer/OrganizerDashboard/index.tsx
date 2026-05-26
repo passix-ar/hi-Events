@@ -1,8 +1,9 @@
 import {ReactNode, useEffect, useState} from 'react';
-import {NavLink, useParams} from "react-router";
+import {NavLink, useNavigate, useParams} from "react-router";
 import {Badge, Button, Group, Menu, Skeleton, UnstyledButton} from '@mantine/core';
 import {
     IconBuildingStore,
+    IconCalendarEvent,
     IconCash,
     IconChevronDown,
     IconChevronRight,
@@ -19,14 +20,13 @@ import {PageBody} from "../../../common/PageBody";
 import {useGetOrganizerStats} from "../../../../queries/useGetOrganizerStats.ts";
 import {useGetEvents} from "../../../../queries/useGetEvents.ts";
 import {formatCurrency} from "../../../../utilites/currency.ts";
-import {relativeDate} from "../../../../utilites/dates.ts";
+import {formatDateWithLocale, relativeDate} from "../../../../utilites/dates.ts";
 import {formatNumber} from "../../../../utilites/helpers.ts";
 import {Event, Order, QueryFilters} from '../../../../types';
 import {useGetOrganizerOrders} from "../../../../queries/useGetOrganizerOrders.ts";
 import classes from './OrganizerDashboard.module.scss';
 import {StatBox} from "../../../common/StatBoxes";
 import {useGetOrganizer} from "../../../../queries/useGetOrganizer.ts";
-import {EventCard} from "../../../common/EventCard";
 import {currenciesMap} from "../../../../../data/currencies.ts";
 import {Card} from "../../../common/Card";
 import {CreateEventModal} from "../../../modals/CreateEventModal";
@@ -68,6 +68,60 @@ export const DashboardSkeleton = () => {
     );
 };
 
+
+const EventStatusDot = ({status, lifecycleStatus}: {status: string, lifecycleStatus: string}) => {
+    if (status === 'ARCHIVED') return <span className={classes.dotArchived}/>;
+    if (lifecycleStatus === 'ENDED') return <span className={classes.dotEnded}/>;
+    if (status === 'DRAFT') return <span className={classes.dotDraft}/>;
+    if (lifecycleStatus === 'ONGOING') return <span className={classes.dotLive}/>;
+    return <span className={classes.dotOnSale}/>;
+};
+
+const getStatusLabel = (status: string, lifecycleStatus: string): string => {
+    if (status === 'ARCHIVED') return t`Archived`;
+    if (lifecycleStatus === 'ENDED') return t`Ended`;
+    if (status === 'DRAFT') return t`Draft`;
+    if (lifecycleStatus === 'ONGOING') return t`Live`;
+    return t`On Sale`;
+};
+
+const EventCompactList = ({events, selectedCurrency}: {events: Event[], selectedCurrency: string}) => {
+    const navigate = useNavigate();
+    return (
+        <div className={classes.eventCompactList}>
+            {events.map((event: Event) => {
+                const date = formatDateWithLocale(event.start_date, 'shortDate', event.timezone);
+                const revenue = event?.statistics?.sales_total_gross || 0;
+                const attendees = event?.statistics?.attendees_registered || 0;
+                return (
+                    <div
+                        key={event.id}
+                        className={classes.eventCompactRow}
+                        onClick={() => navigate(`/manage/event/${event.id}/dashboard`)}
+                        role="button"
+                    >
+                        <div className={classes.eventCompactLeft}>
+                            <EventStatusDot status={event.status} lifecycleStatus={event.lifecycle_status}/>
+                            <div className={classes.eventCompactInfo}>
+                                <span className={classes.eventCompactTitle}>{event.title}</span>
+                                <span className={classes.eventCompactDate}>{date}</span>
+                            </div>
+                        </div>
+                        <div className={classes.eventCompactRight}>
+                            <span className={classes.eventCompactStat}>
+                                <IconUsers size={13}/>{formatNumber(attendees)}
+                            </span>
+                            <span className={classes.eventCompactRevenue}>
+                                {formatCurrency(revenue, selectedCurrency)}
+                            </span>
+                            <IconChevronRight size={16} className={classes.eventCompactArrow}/>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
 
 export const OrganizerDashboard = () => {
     const {organizerId} = useParams<{ organizerId: string }>();
@@ -227,33 +281,33 @@ export const OrganizerDashboard = () => {
 
             {/* Recent Orders and Events Lists */}
             <div className={classes.recentItemsGrid}>
-                {/* Events Section - First on mobile, second on desktop */}
+                {/* Events Section */}
                 <div className={`${classes.recentSection} ${classes.eventsSection}`}>
-                    <h3 className={classes.sectionTitle}><Trans>Upcoming Events</Trans></h3>
+                    <div className={classes.sectionHeader}>
+                        <h3 className={classes.sectionTitle}><Trans>Events</Trans></h3>
+                        <Button
+                            size="xs"
+                            variant="subtle"
+                            onClick={() => setShowCreateEventModal(true)}
+                            rightSection={<IconCalendarEvent size={14}/>}
+                        >
+                            <Trans>New</Trans>
+                        </Button>
+                    </div>
                     {isLoadingEvents && (
                         <div className={classes.skeletonStack}>
-                            {[...Array(3)].map((_, i) => <Skeleton key={i} height={100} radius="md"/>)}
+                            {[...Array(4)].map((_, i) => <Skeleton key={i} height={52} radius="md"/>)}
                         </div>
                     )}
                     {!isLoadingEvents && recentEvents && recentEvents.length > 0 && (
-                        <div className={classes.eventsList}>
-                            {recentEvents.map((event: Event) => (
-                                <EventCard key={event.id} event={event}/>
-                            ))}
-                        </div>
+                        <EventCompactList events={recentEvents} selectedCurrency={selectedCurrency}/>
                     )}
                     {!isLoadingEvents && (!recentEvents || recentEvents.length === 0) && (
                         <div className={classes.emptyState}>
                             <div className={classes.emptyStateIcon}>🎉</div>
                             <h4><Trans>No events yet</Trans></h4>
-                            <p><Trans>Create your first event to start selling tickets and managing attendees.</Trans>
-                            </p>
-                            <Button
-                                onClick={() => setShowCreateEventModal(true)}
-                                variant="light"
-                                size="sm"
-                                mt="md"
-                            >
+                            <p><Trans>Create your first event to start selling tickets and managing attendees.</Trans></p>
+                            <Button onClick={() => setShowCreateEventModal(true)} variant="light" size="sm" mt="md">
                                 <Trans>Create Event</Trans>
                             </Button>
                         </div>
