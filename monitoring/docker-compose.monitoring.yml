@@ -1,0 +1,111 @@
+services:
+
+  # ── Métricas ─────────────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: passix_prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - monitoring
+
+  # ── Dashboards + Alertas ──────────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: passix_grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Definir GRAFANA_PASSWORD en .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_DOMAIN: ${GRAFANA_DOMAIN:-localhost}
+      GF_SERVER_ROOT_URL: "https://%(domain)s/"
+      GF_UNIFIED_ALERTING_ENABLED: "true"
+      GF_ALERTING_ENABLED: "false"
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+      - loki
+
+  # ── Logs ──────────────────────────────────────────────────────────────────
+  loki:
+    image: grafana/loki:2.9.4
+    container_name: passix_loki
+    restart: unless-stopped
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:2.9.4
+    container_name: passix_promtail
+    restart: unless-stopped
+    volumes:
+      - ./promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - monitoring
+    depends_on:
+      - loki
+
+  # ── Host metrics ──────────────────────────────────────────────────────────
+  # network_mode: host para ver métricas reales del servidor
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: passix_node_exporter
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+
+  # ── Blackbox / Health checks HTTP ─────────────────────────────────────────
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.24.0
+    container_name: passix_blackbox
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/blackbox.yml:/etc/blackbox_exporter/config.yml:ro
+    networks:
+      - monitoring
+
+volumes:
+  prometheus_data:
+    name: passix_prometheus_data
+  grafana_data:
+    name: passix_grafana_data
+  loki_data:
+    name: passix_loki_data
+
+networks:
+  monitoring:
+    name: passix_monitoring
+    driver: bridge
