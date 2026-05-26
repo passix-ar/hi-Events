@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: Security headers middleware (X-Frame-Options, HSTS, CSP, etc.).
 namespace HiEvents\Http\Middleware;
 
 use Closure;

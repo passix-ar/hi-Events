@@ -5,6 +5,7 @@
 @php /** @var string $eventUrl */ @endphp
 
 @php /** @see \HiEvents\Mail\Order\OrderFailed */ @endphp
+{{-- Modified by Passix on 2026-05-25: Replaced hardcoded hello@hi.events with platform_support_email config. --}}
 
 <x-mail::message>
 {{ __('Hello') }},
@@ -16,7 +17,7 @@
 </x-mail::button>
 
 {{ __('If you have any questions or need assistance, feel free to reach out to our support team') }}
-{{ __('at') }} {{ $supportEmail ?? 'hello@hi.events' }}.
+{{ __('at') }} {{ $supportEmail ?? config('app.platform_support_email') }}.
 
 {{ __('Best regards') }},<br>
 {{ $organizer->getName() ?: config('app.name') }}

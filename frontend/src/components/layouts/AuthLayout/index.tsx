@@ -118,7 +118,7 @@ const AuthLayout = () => {
 
         if (clickCountRef.current >= 5) {
             clickCountRef.current = 0;
-            showInfo(`HiEvents v${__APP_VERSION__}`);
+            showInfo(`Passix v${__APP_VERSION__}`);
         }
     }, []);
 

@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

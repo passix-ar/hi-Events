@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Http\Actions\Accounts\MercadoPago;
 
 use HiEvents\DomainObjects\AccountDomainObject;

@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 return [
     'client_id'            => env('MP_CLIENT_ID', ''),
     'client_secret'        => env('MP_CLIENT_SECRET', ''),

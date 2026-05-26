@@ -1,5 +1,6 @@
 <?php
 
+// Modified by Passix on 2026-05-25: Fixed hardcoded hello@hi.events, now uses event support email config.
 namespace HiEvents\Mail\Order;
 
 use HiEvents\DomainObjects\EventDomainObject;

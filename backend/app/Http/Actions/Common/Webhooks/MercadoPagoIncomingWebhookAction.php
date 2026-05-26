@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Http\Actions\Common\Webhooks;
 
 use HiEvents\Http\Actions\BaseAction;

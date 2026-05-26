@@ -72,7 +72,7 @@ const PlatformFeesReport = () => {
         },
         {
             key: 'fee_amount' as const,
-            label: t`Hi.Events Fee`,
+            label: t`Platform Fee`,
             sortable: true,
             render: (value: number, row: any) => formatCurrency(value, row.currency)
         },
@@ -115,7 +115,7 @@ const PlatformFeesReport = () => {
                 color="yellow"
                 mb="lg"
             >
-                {t`This report is for informational purposes only. Always consult with a tax professional before using this data for accounting or tax purposes. Please cross-reference with your Stripe dashboard as Hi.Events may be missing historical data.`}
+                {t`This report is for informational purposes only. Always consult with a tax professional before using this data for accounting or tax purposes. Please cross-reference with your payment processor dashboard as data may not be complete.`}
             </Alert>
 
             <div className={classes.eventFilter}>

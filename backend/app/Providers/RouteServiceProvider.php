@@ -1,5 +1,6 @@
 <?php
 
+// Modified by Passix on 2026-05-25: Added rate limiting for auth and public contact endpoints.
 namespace HiEvents\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;

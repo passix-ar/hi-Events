@@ -1,5 +1,6 @@
 <?php
 
+// Modified by Passix on 2026-05-25: Added SecurityHeadersMiddleware to global middleware stack.
 namespace HiEvents\Http;
 
 use HiEvents\Http\Middleware\Authenticate;

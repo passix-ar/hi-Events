@@ -39,7 +39,7 @@ const OrganizerReports = () => {
         {
             id: OrganizerReportTypes.PlatformFees,
             title: t`Platform Fees`,
-            description: t`Hi.Events platform fees and VAT breakdown by transaction`,
+            description: t`Platform fees and VAT breakdown by transaction`,
             icon: <Avatar size={40} color={'#E67C63'}><IconReceipt/></Avatar>
         }
     ];

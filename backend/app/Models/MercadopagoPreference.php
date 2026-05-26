@@ -1,5 +1,6 @@
 <?php
 
+// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 declare(strict_types=1);
 
 namespace HiEvents\Models;
