@@ -10495,6 +10495,82 @@ msgstr "Conectá tu cuenta de MercadoPago para comenzar a recibir pagos."
 msgid "Connect with MercadoPago"
 msgstr "Conectar MercadoPago"
 
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Daily Sales Report"
+msgstr "Informe de ventas diarias"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Date"
+msgstr "Fecha"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Sales Total Gross"
+msgstr "Ventas brutas totales"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Total Tax"
+msgstr "Impuesto total"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Net Sales"
+msgstr "Ventas netas"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Products Sold"
+msgstr "Productos vendidos"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Completed Orders"
+msgstr "Pedidos completados"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Total Fee"
+msgstr "Cargo total"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Total Refunded"
+msgstr "Total reembolsado"
+
+#: src/components/routes/event/Reports/DailySalesReport/index.tsx
+msgid "Total Views"
+msgstr "Vistas totales"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Product Sales Report"
+msgstr "Informe de ventas por producto"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Product Title"
+msgstr "Producto"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Units Sold"
+msgstr "Unidades vendidas"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Gross Sales"
+msgstr "Ventas brutas"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Tax"
+msgstr "Impuesto"
+
+#: src/components/routes/event/Reports/ProductSalesReport/index.tsx
+msgid "Service Fees"
+msgstr "Cargos de servicio"
+
+#: src/components/common/ReportTable/index.tsx
+msgid "Pick dates range"
+msgstr "Seleccioná un rango de fechas"
+
+#: src/components/routes/event/EventDashboard/index.tsx
+msgid "Link your MercadoPago account to receive funds from ticket sales."
+msgstr "Vinculá tu cuenta de MercadoPago para recibir fondos de la venta de entradas."
+
+#: src/components/layouts/OrganizerLayout/index.tsx
+msgid "Overview"
+msgstr "Resumen"
+
 #: src/components/routes/organizer/Reports/PlatformFeesReport/index.tsx
 msgid "Payment ID"
 msgstr "ID de pago"

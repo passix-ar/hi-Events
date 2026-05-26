@@ -15,6 +15,7 @@ import {Button, SegmentedControl, Skeleton, Tooltip} from "@mantine/core";
 import {useMediaQuery} from "@mantine/hooks";
 import {IconAlertCircle, IconX} from "@tabler/icons-react";
 import {useGetAccount} from "../../../../queries/useGetAccount.ts";
+import {useGetMercadoPagoStatus} from "../../../../queries/useGetMercadoPagoStatus.ts";
 import {useUpdateEventStatus} from "../../../../mutations/useUpdateEventStatus.ts";
 import {confirmationDialog} from "../../../../utilites/confirmationDialog.tsx";
 import {showError, showSuccess} from "../../../../utilites/notifications.tsx";
@@ -51,6 +52,8 @@ export const EventDashboard = () => {
     const {data: eventStats} = eventStatsQuery;
     const isMobile = useMediaQuery('(max-width: 768px)');
     const {data: account, isFetched: accountIsFetched} = useGetAccount();
+    const {data: mpStatus} = useGetMercadoPagoStatus(account?.id);
+    const isMpConnected = mpStatus?.is_connected ?? false;
     const statusToggleMutation = useUpdateEventStatus();
 
     const [isChecklistVisible, setIsChecklistVisible] = useState(true);
@@ -104,7 +107,7 @@ export const EventDashboard = () => {
         : '';
 
     const shouldShowChecklist = (isChecklistVisible && event && accountIsFetched && account?.is_saas_mode_enabled) && (
-        !account?.stripe_connect_setup_complete ||
+        !isMpConnected ||
         event?.status !== 'LIVE'
     );
 
@@ -221,9 +224,9 @@ export const EventDashboard = () => {
                                             <div className={classes.checkboxContainer}>
                                                 <div
                                                     className={classes.checkbox}
-                                                    style={{backgroundColor: account?.stripe_connect_setup_complete ? 'var(--hi-primary)' : 'transparent'}}
+                                                    style={{backgroundColor: isMpConnected ? 'var(--hi-primary)' : 'transparent'}}
                                                 >
-                                                    {account?.stripe_connect_setup_complete && (
+                                                    {isMpConnected && (
                                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                                              xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M13.3333 4L6.00001 11.3333L2.66667 8"
@@ -235,8 +238,8 @@ export const EventDashboard = () => {
                                             </div>
                                             {t`Connect payment processing`}
                                         </h3>
-                                        <p>{t`Link your Stripe account to receive funds from ticket sales.`}</p>
-                                        {!account?.stripe_connect_setup_complete && (
+                                        <p>{t`Link your MercadoPago account to receive funds from ticket sales.`}</p>
+                                        {!isMpConnected && (
                                             <Button
                                                 onClick={() => {
                                                     window.location.href = '/account/payment';
@@ -246,7 +249,7 @@ export const EventDashboard = () => {
                                                 radius="md"
                                                 fullWidth
                                             >
-                                                {account?.stripe_account_id ? t`Complete Stripe Setup` : t`Connect to Stripe`}
+                                                {t`Connect MercadoPago`}
                                             </Button>
                                         )}
                                     </div>

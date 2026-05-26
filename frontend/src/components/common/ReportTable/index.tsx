@@ -38,6 +38,7 @@ interface ReportProps<T> {
     enableDownload?: boolean;
     downloadFileName?: string;
     showCustomDatePicker?: boolean;
+    filterRow?: (row: T) => boolean;
 }
 
 const TIME_PERIODS = [
@@ -63,6 +64,7 @@ const ReportTable = <T extends Record<string, any>>({
                                                         enableDownload = true,
                                                         downloadFileName = 'report.csv',
                                                         showCustomDatePicker = false,
+                                                        filterRow,
                                                         event
                                                     }: ReportProps<T>) => {
     const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
@@ -167,7 +169,8 @@ const ReportTable = <T extends Record<string, any>>({
     };
 
     const sortedData = useMemo(() => {
-        return [...data].sort((a, b) => {
+        const filtered = filterRow ? data.filter(filterRow) : data;
+        return [...filtered].sort((a, b) => {
             if (!sortField || !sortDirection) return 0;
             const aValue = a[sortField];
             const bValue = b[sortField];
@@ -272,7 +275,7 @@ const ReportTable = <T extends Record<string, any>>({
                             style={{minWidth: '305px', marginBottom: '0'}}
                             leftSection={<IconCalendar stroke={1.5} size={20}/>}
                             type="range"
-                            placeholder="Pick dates range"
+                            placeholder={t`Pick dates range`}
                             value={dateRange}
                             onChange={handleDateRangeChange}
                             minDate={dayjs().subtract(1, 'year').tz(event.timezone).toDate()}
@@ -300,7 +303,7 @@ const ReportTable = <T extends Record<string, any>>({
                                 style={{cursor: column.sortable ? 'pointer' : 'default', minWidth: '180px'}}
                             >
                                 <Group gap="xs" wrap={'nowrap'}>
-                                    {t`${column.label}`}
+                                    {column.label}
                                     {column.sortable && getSortIcon(column.key)}
                                 </Group>
                             </MantineTable.Th>

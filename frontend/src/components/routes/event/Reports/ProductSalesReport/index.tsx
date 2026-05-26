@@ -2,6 +2,7 @@ import {useParams} from "react-router";
 import {useGetEvent} from "../../../../../queries/useGetEvent.ts";
 import {formatCurrency} from "../../../../../utilites/currency.ts";
 import ReportTable from "../../../../common/ReportTable";
+import {t} from "@lingui/macro";
 
 const ProductSalesReport = () => {
     const {eventId} = useParams();
@@ -15,29 +16,29 @@ const ProductSalesReport = () => {
     const columns = [
         {
             key: 'product_title' as const,
-            label: 'Product Title',
+            label: t`Product Title`,
             sortable: true
         },
         {
             key: 'number_sold' as const,
-            label: 'Units Sold',
+            label: t`Units Sold`,
             sortable: true
         },
         {
             key: 'total_gross' as const,
-            label: 'Gross Sales',
+            label: t`Gross Sales`,
             sortable: true,
             render: (value: string) => formatCurrency(value, event?.currency)
         },
         {
             key: 'total_tax' as const,
-            label: 'Tax',
+            label: t`Tax`,
             sortable: true,
             render: (value: string) => formatCurrency(value, event?.currency)
         },
         {
             key: 'total_service_fees' as const,
-            label: 'Service Fees',
+            label: t`Service Fees`,
             sortable: true,
             render: (value: string) => formatCurrency(value, event?.currency)
         }
@@ -45,7 +46,7 @@ const ProductSalesReport = () => {
 
     return (
         <ReportTable
-            title="Product Sales Report"
+            title={t`Product Sales Report`}
             columns={columns}
             isLoading={eventQuery.isLoading}
             downloadFileName="product_sales_report.csv"
