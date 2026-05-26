@@ -20,6 +20,7 @@ import {VatSettingsModal} from './VatSettings/VatSettingsModal.tsx';
 import {VatNotice, getVatInfo} from './VatNotice';
 import {useGetAccountVatSetting} from '../../../../../../queries/useGetAccountVatSetting.ts';
 import {trackEvent, AnalyticsEvents} from "../../../../../../utilites/analytics.ts";
+import {MercadoPagoSettings} from './MercadoPagoSettings';
 
 interface FeePlanDisplayProps {
     configuration?: {
@@ -856,6 +857,10 @@ const PaymentSettings = () => {
                                 )}
                             </Grid.Col>
                         )}
+
+                        <Grid.Col span={{base: 12, md: 6}}>
+                            <MercadoPagoSettings/>
+                        </Grid.Col>
                     </Grid>
                 )}
             </Card>

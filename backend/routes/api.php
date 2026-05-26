@@ -46,7 +46,12 @@ use HiEvents\Http\Actions\CheckInLists\Public\GetCheckInListAttendeesPublicActio
 use HiEvents\Http\Actions\CheckInLists\Public\GetCheckInListPublicAction;
 use HiEvents\Http\Actions\CheckInLists\UpdateCheckInListAction;
 use HiEvents\Http\Actions\Common\GetColorThemesAction;
+use HiEvents\Http\Actions\Accounts\MercadoPago\ConnectMercadoPagoAccountAction;
+use HiEvents\Http\Actions\Accounts\MercadoPago\GetMercadoPagoConnectStatusAction;
+use HiEvents\Http\Actions\Accounts\MercadoPago\MercadoPagoOAuthCallbackAction;
+use HiEvents\Http\Actions\Common\Webhooks\MercadoPagoIncomingWebhookAction;
 use HiEvents\Http\Actions\Common\Webhooks\StripeIncomingWebhookAction;
+use HiEvents\Http\Actions\Orders\Payment\MercadoPago\CreateMercadoPagoPreferenceActionPublic;
 use HiEvents\Http\Actions\Events\CreateEventAction;
 use HiEvents\Http\Actions\Events\DuplicateEventAction;
 use HiEvents\Http\Actions\Events\GetEventAction;
@@ -268,6 +273,10 @@ $router->middleware(['auth:api'])->group(
         $router->put('/accounts/{account_id?}', UpdateAccountAction::class);
         $router->get('/accounts/{account_id}/stripe/connect_accounts', GetStripeConnectAccountsAction::class);
         $router->post('/accounts/{account_id}/stripe/connect', CreateStripeConnectAccountAction::class);
+
+        // MercadoPago Connect
+        $router->get('/accounts/{account_id}/mercadopago/connect', ConnectMercadoPagoAccountAction::class);
+        $router->get('/accounts/{account_id}/mercadopago/status', GetMercadoPagoConnectStatusAction::class);
 
         // VAT Settings
         $router->get('/accounts/{account_id}/vat-settings', GetAccountVatSettingAction::class);
@@ -529,11 +538,18 @@ $router->prefix('/public')->group(
         $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class);
         $router->get('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', GetPaymentIntentActionPublic::class);
 
+        // MercadoPago payment gateway
+        $router->post('/events/{event_id}/order/{order_short_id}/mercadopago/preference', CreateMercadoPagoPreferenceActionPublic::class);
+
+        // MercadoPago OAuth callback (public, no auth)
+        $router->get('/mercadopago/oauth/callback', MercadoPagoOAuthCallbackAction::class);
+
         // Questions
         $router->get('/events/{event_id}/questions', GetQuestionsPublicAction::class);
 
         // Webhooks
         $router->post('/webhooks/stripe', StripeIncomingWebhookAction::class);
+        $router->post('/webhooks/mercadopago', MercadoPagoIncomingWebhookAction::class)->name('webhooks.mercadopago');
 
         // Check-In
         $router->get('/check-in-lists/{check_in_list_short_id}', GetCheckInListPublicAction::class);

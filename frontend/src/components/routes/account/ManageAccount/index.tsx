@@ -33,7 +33,7 @@ export const ManageAccount = () => {
                             </Tabs.Tab>
                         )}
 
-                        {(isUserAdmin && account && account.is_saas_mode_enabled) && (
+                        {isUserAdmin && (
                             <Tabs.Tab value="payment" leftSection={<IconCreditCard/>}>
                                 {t`Payment & Plan`}
                             </Tabs.Tab>

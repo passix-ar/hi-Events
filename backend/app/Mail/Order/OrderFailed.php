@@ -10,6 +10,7 @@ use HiEvents\Helper\Url;
 use HiEvents\Mail\BaseMail;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Support\Facades\Config;
 
 /**
  * @uses /backend/resources/views/emails/orders/order-failed.blade.php
@@ -47,7 +48,9 @@ class OrderFailed extends BaseMail
                     Url::getFrontEndUrlFromConfig(Url::EVENT_HOMEPAGE),
                     $this->event->getId(),
                     $this->event->getSlug(),
-                )
+                ),
+                'supportEmail' => $this->eventSettings->getSupportEmail()
+                    ?? Config::get('app.platform_support_email'),
             ]
         );
     }

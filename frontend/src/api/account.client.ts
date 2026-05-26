@@ -30,5 +30,20 @@ export const accountClient = {
     getStripeConnectAccounts: async (accountId: IdParam) => {
         const response = await api.get<GenericDataResponse<StripeConnectAccountsResponse>>(`accounts/${accountId}/stripe/connect_accounts`);
         return response.data;
-    }
+    },
+    getMercadoPagoConnectUrl: async (accountId: IdParam) => {
+        const response = await api.get<{
+            authorization_url: string;
+            is_connected: boolean;
+        }>(`accounts/${accountId}/mercadopago/connect`);
+        return response.data;
+    },
+    getMercadoPagoStatus: async (accountId: IdParam) => {
+        const response = await api.get<{
+            is_connected: boolean;
+            mp_user_id: string | null;
+            connected_at: string | null;
+        }>(`accounts/${accountId}/mercadopago/status`);
+        return response.data;
+    },
 }

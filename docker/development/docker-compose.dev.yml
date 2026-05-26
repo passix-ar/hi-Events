@@ -14,12 +14,48 @@ services:
         environment:
               APP_ENV: '${APP_ENV:-local}'
               APP_KEY: '${APP_KEY}'
+              APP_FRONTEND_URL: '${APP_FRONTEND_URL:-https://localhost:8443}'
+              MP_CLIENT_ID: '${MP_CLIENT_ID}'
+              MP_CLIENT_SECRET: '${MP_CLIENT_SECRET}'
+              MP_PLATFORM_ACCESS_TOKEN: '${MP_PLATFORM_ACCESS_TOKEN}'
+              MP_WEBHOOK_SECRET: '${MP_WEBHOOK_SECRET}'
+              MP_MARKETPLACE_FEE_PERCENT: '${MP_MARKETPLACE_FEE_PERCENT:-0}'
+              MP_OAUTH_REDIRECT_URI: '${MP_OAUTH_REDIRECT_URI}'
+              MP_SANDBOX: '${MP_SANDBOX:-true}'
         depends_on:
             - redis
             - mailpit
             - pgsql
         networks:
             - app
+
+    queue:
+        build:
+            context: ./../../backend
+            dockerfile: Dockerfile.dev
+        container_name: queue
+        command: php artisan queue:work --sleep=3 --tries=3 --timeout=90 --queue=default,webhooks
+        volumes:
+            - ./../../backend:/var/www/html
+            - ./../../backend/storage:/var/www/html/storage
+        environment:
+              APP_ENV: '${APP_ENV:-local}'
+              APP_KEY: '${APP_KEY}'
+              APP_FRONTEND_URL: '${APP_FRONTEND_URL:-https://localhost:8443}'
+              MP_CLIENT_ID: '${MP_CLIENT_ID}'
+              MP_CLIENT_SECRET: '${MP_CLIENT_SECRET}'
+              MP_PLATFORM_ACCESS_TOKEN: '${MP_PLATFORM_ACCESS_TOKEN}'
+              MP_WEBHOOK_SECRET: '${MP_WEBHOOK_SECRET}'
+              MP_MARKETPLACE_FEE_PERCENT: '${MP_MARKETPLACE_FEE_PERCENT:-0}'
+              MP_OAUTH_REDIRECT_URI: '${MP_OAUTH_REDIRECT_URI}'
+              MP_SANDBOX: '${MP_SANDBOX:-true}'
+              WEBHOOK_QUEUE_NAME: 'webhooks'
+        depends_on:
+            - redis
+            - pgsql
+        networks:
+            - app
+        restart: unless-stopped
 
     frontend-csr:
         build:

@@ -163,6 +163,16 @@ export const orderClientPublic = {
         return response.data;
     },
 
+    createMercadoPagoPreference: async (eventId: number, orderShortId: string) => {
+        const response = await publicApi.post<{
+            preference_id: string,
+            init_point: string,
+            sandbox_init_point: string,
+            is_sandbox: boolean,
+        }>(`events/${eventId}/order/${orderShortId}/mercadopago/preference`);
+        return response.data;
+    },
+
     transitionToOfflinePayment: async (eventId: IdParam, orderShortId: IdParam) => {
         const response = await publicApi.post<GenericDataResponse<Order>>(`events/${eventId}/order/${orderShortId}/await-offline-payment`);
         return response.data;

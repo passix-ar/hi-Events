@@ -86,6 +86,11 @@ export const PaymentAndInvoicingSettings = () => {
             description: t`Accept credit card payments with Stripe`
         },
         {
+            value: "MERCADOPAGO",
+            label: t`MercadoPago`,
+            description: t`Accept payments through MercadoPago`
+        },
+        {
             value: "OFFLINE",
             label: t`Offline Payments`,
             description: t`Accept bank transfers, checks, or other offline payment methods`

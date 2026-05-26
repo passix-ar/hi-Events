@@ -185,28 +185,28 @@
   white-space: nowrap;
 
   &[data-status="COMPLETED"] {
-    background: var(--mantine-color-green-1);
-    color: var(--mantine-color-green-9);
+    background: rgba(47, 158, 68, 0.2);
+    color: var(--mantine-color-green-4);
   }
 
   &[data-status="RESERVED"] {
-    background: var(--mantine-color-blue-1);
-    color: var(--mantine-color-blue-9);
+    background: rgba(34, 139, 230, 0.2);
+    color: var(--mantine-color-blue-4);
   }
 
   &[data-status="AWAITING_OFFLINE_PAYMENT"] {
-    background: var(--mantine-color-yellow-1);
-    color: var(--mantine-color-yellow-9);
+    background: rgba(245, 159, 0, 0.2);
+    color: var(--mantine-color-yellow-4);
   }
 
   &[data-status="CANCELLED"] {
-    background: var(--mantine-color-red-1);
-    color: var(--mantine-color-red-9);
+    background: rgba(250, 82, 82, 0.2);
+    color: var(--mantine-color-red-4);
   }
 
   &[data-status="ABANDONED"] {
-    background: var(--hi-color-gray-2);
-    color: var(--hi-text);
+    background: var(--mantine-color-dark-5);
+    color: var(--mantine-color-dimmed);
   }
 }
 
