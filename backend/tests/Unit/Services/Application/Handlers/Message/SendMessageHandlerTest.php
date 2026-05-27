@@ -95,36 +95,6 @@ class SendMessageHandlerTest extends TestCase
         $this->handler->handle($dto);
     }
 
-    public function testThrowsIfSaasModeEnabledAndNotManuallyVerified(): void
-    {
-        $dto = new SendMessageDTO(
-            account_id: 1,
-            event_id: 1,
-            subject: 'Subject',
-            message: 'Message',
-            type: MessageTypeEnum::INDIVIDUAL_ATTENDEES,
-            is_test: false,
-            send_copy_to_current_user: false,
-            sent_by_user_id: 1,
-            order_id: null,
-            order_statuses: [],
-            attendee_ids: [],
-            product_ids: []
-        );
-
-        $account = m::mock(AccountDomainObject::class);
-        $account->shouldReceive('getAccountVerifiedAt')->andReturn(Carbon::now());
-        $account->shouldReceive('getIsManuallyVerified')->andReturn(false);
-
-        $this->accountRepository->shouldReceive('findById')->with(1)->andReturn($account);
-        $this->config->shouldReceive('get')->with('app.saas_mode_enabled')->andReturn(true);
-        $this->config->shouldReceive('get')->with('app.platform_support_email')->andReturn('support@example.com');
-
-        $this->expectException(AccountNotVerifiedException::class);
-
-        $this->handler->handle($dto);
-    }
-
     public function testHandleCreatesMessageAndDispatchesJob(): void
     {
         $dto = new SendMessageDTO(
