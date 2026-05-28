@@ -75,8 +75,9 @@ services:
     image: prom/node-exporter:v1.7.0
     container_name: passix_node_exporter
     restart: unless-stopped
-    network_mode: host
     pid: host
+    networks:
+      - monitoring
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro

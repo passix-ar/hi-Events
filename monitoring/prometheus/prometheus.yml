@@ -15,10 +15,10 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   # Métricas del servidor host (CPU, RAM, disco, red)
-  # node-exporter corre con network_mode:host → se accede por host.docker.internal
+  # node-exporter corre con pid:host + montajes /proc /sys → accesible por nombre de container
   - job_name: node-exporter
     static_configs:
-      - targets: ['host.docker.internal:9100']
+      - targets: ['node-exporter:9100']
 
   # Health checks HTTP del sitio
   - job_name: blackbox
@@ -27,7 +27,7 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets:
-          - ${APP_URL:-https://app.passix.com.ar}
+          - https://app.passix.com.ar
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
