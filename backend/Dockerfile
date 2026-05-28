@@ -1,4 +1,4 @@
-FROM serversideup/php:8.4-fpm-nginx-alpine
+FROM serversideup/php:8.4-fpm-nginx-alpine AS app
 
 ENV PHP_OPCACHE_ENABLE=1
 
@@ -32,3 +32,13 @@ RUN mkdir -p /var/www/html/vendor/ezyang/htmlpurifier/library/HTMLPurifier/Defin
     && chown -R www-data:www-data /var/www/html/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
 
 EXPOSE 8080
+
+# ── Worker stage (queue:work, sin nginx) ──────────────────────────────────
+FROM app AS worker
+ENTRYPOINT ["/bin/sh"]
+CMD ["scripts/deploy/run-worker.sh"]
+
+# ── Scheduler stage (schedule:run loop, sin nginx) ────────────────────────
+FROM app AS scheduler
+ENTRYPOINT ["/bin/sh"]
+CMD ["scripts/deploy/run-scheduler.sh"]
