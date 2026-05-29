@@ -22,6 +22,17 @@ export const statusBadgeColor = (status?: string) => {
     }
 };
 
+export const statusLabel = (status?: string): string => {
+    const map: Record<string, string> = {
+        'SENT': t`Sent`,
+        'PROCESSING': t`Processing`,
+        'SCHEDULED': t`Scheduled`,
+        'CANCELLED': t`Cancelled`,
+        'FAILED': t`Failed`,
+    };
+    return map[status ?? ''] ?? status ?? '';
+};
+
 export const typeLabel = (type: MessageType) => {
     const map: Record<string, string> = {
         [MessageType.OrderOwnersWithProduct]: t`Order owners with products`,
@@ -74,7 +85,7 @@ const MessageItem = ({message, isSelected, onSelect}: {
                 <div className={classes.preview}>{message.message_preview}</div>
                 <div className={classes.itemBottomRow}>
                     <Badge size="xs" color={statusBadgeColor(message.status)} variant="outline">
-                        {message.status}
+                        {statusLabel(message.status)}
                     </Badge>
                     <span className={classes.typeLabel}>{typeLabel(message.type)}</span>
                 </div>
