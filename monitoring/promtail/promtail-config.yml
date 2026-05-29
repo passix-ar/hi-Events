@@ -7,27 +7,36 @@ positions:
 
 clients:
   - url: http://loki:3100/loki/api/v1/push
-    batchwait: 1s
-    batchsize: 102400
 
 scrape_configs:
-
-  # Auto-discovery de todos los containers Docker
   - job_name: docker
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
     relabel_configs:
-      # Label: nombre del container (sin la barra inicial)
       - source_labels: ['__meta_docker_container_name']
         regex: '/(.*)'
         target_label: 'container'
-      # Label: stdout vs stderr
       - source_labels: ['__meta_docker_container_log_stream']
         target_label: 'logstream'
-      # Label: servicio de docker compose
       - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
         target_label: 'service'
-      # Label: proyecto de docker compose (passix vs monitoring)
       - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
         target_label: 'project'
+      # Mapeo UUID Coolify → nombre legible (actualizar si cambian los UUIDs)
+      - source_labels: ['container']
+        regex: 'zier04egd4ndbovxa9htic7v.*'
+        target_label: 'app'
+        replacement: 'backend'
+      - source_labels: ['container']
+        regex: 'zp5jtqml8hghr5ee7ys9p5w7.*'
+        target_label: 'app'
+        replacement: 'frontend'
+      - source_labels: ['container']
+        regex: 'gzd7tm8swa8nlaktbvzqkje5.*'
+        target_label: 'app'
+        replacement: 'worker'
+      - source_labels: ['container']
+        regex: 'q116dg56lfj6wt99kv6xd9x6.*'
+        target_label: 'app'
+        replacement: 'scheduler'
