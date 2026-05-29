@@ -10,7 +10,6 @@ import {HeadingWithDescription} from "../../../../../common/Card/CardHeading";
 import {Organizer} from "../../../../../../types.ts";
 import {useGetOrganizer} from "../../../../../../queries/useGetOrganizer.ts";
 import {InputGroup} from "../../../../../common/InputGroup";
-import {currencies} from "../../../../../../../data/currencies.ts";
 import {timezones} from "../../../../../../../data/timezones.ts";
 import {Editor} from "../../../../../common/Editor";
 import {useUpdateOrganizer} from "../../../../../../mutations/useUpdateOrganizer.ts";
@@ -107,14 +106,13 @@ const Settings = () => {
                     <InputGroup>
                         <Select
                             {...form.getInputProps('currency')}
-                            searchable
                             required
-                            data={Object.entries(currencies).map(([key, value]) => ({
-                                value: value,
-                                label: key,
-                            }))}
+                            data={[
+                                {value: 'ARS', label: 'Peso Argentino (ARS)'},
+                                {value: 'USD', label: 'US Dollar (USD)'},
+                            ]}
                             label={t`Currency`}
-                            placeholder={t`EUR`}
+                            placeholder={t`ARS`}
                             description={t`The default currency for your events.`}
                         />
                         <Select

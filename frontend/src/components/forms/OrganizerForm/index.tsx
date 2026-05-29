@@ -6,7 +6,6 @@ import {useEffect} from "react";
 import {LoadingContainer} from "../../common/LoadingContainer";
 import {t} from "@lingui/macro";
 import {Button, Select, Stack, TextInput} from "@mantine/core";
-import {currencies} from "../../../../data/currencies.ts";
 import {timezones} from "../../../../data/timezones.ts";
 import {useFormErrorResponseHandler} from "../../../hooks/useFormErrorResponseHandler.tsx";
 import {useGetMe} from "../../../queries/useGetMe.ts";
@@ -41,12 +40,11 @@ export const OrganizerForm = ({form}: { form: UseFormReturnType<Partial<Organize
             <div className={classes.dateTimeGrid}>
                 <Select
                     {...form.getInputProps('currency')}
-                    searchable
                     required
-                    data={Object.entries(currencies).map(([key, value]) => ({
-                        value: value,
-                        label: `${key} (${value})`,
-                    }))}
+                    data={[
+                        {value: 'ARS', label: 'Peso Argentino (ARS)'},
+                        {value: 'USD', label: 'US Dollar (USD)'},
+                    ]}
                     label={t`Currency`}
                     placeholder={t`Select currency`}
                     size="lg"
@@ -73,7 +71,7 @@ export const OrganizerCreateForm = ({onSuccess, onCancel}: OrganizerFormProps) =
         initialValues: {
             name: '',
             email: '',
-            currency: '',
+            currency: 'ARS',
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         }
     });
