@@ -44,13 +44,14 @@ export const router: RouteObject[] = [
                     return { Component: Login.default };
                 },
             },
-            {
-                path: "register",
-                async lazy() {
-                    const Register = await import("./components/routes/auth/Register");
-                    return { Component: Register.default };
-                }
-            },
+            // DISABLED: registro público deshabilitado en producción (feature incompleta)
+            // {
+            //     path: "register",
+            //     async lazy() {
+            //         const Register = await import("./components/routes/auth/Register");
+            //         return { Component: Register.default };
+            //     }
+            // },
             {
                 path: "forgot-password",
                 async lazy() {

@@ -231,7 +231,8 @@ $router->prefix('/auth')->group(
         // Auth
         $router->post('/login', LoginAction::class)->name('auth.login');
         $router->post('/logout', LogoutAction::class)->name('auth.logout');
-        $router->post('/register', CreateAccountAction::class)->name('auth.register');
+        // DISABLED: registro público deshabilitado en producción (feature incompleta)
+        // $router->post('/register', CreateAccountAction::class)->name('auth.register');
         $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password');
 
         // Invitations
