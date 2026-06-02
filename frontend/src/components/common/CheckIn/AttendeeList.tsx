@@ -75,15 +75,15 @@ export const AttendeeList = ({
                 return (
                     <div className={classes.attendee} key={attendee.public_id}>
                         <div className={classes.details}>
-                            <div>
-                                <b>{attendee.first_name} {attendee.last_name}</b>
+                            <div className={classes.name}>
+                                {attendee.first_name} {attendee.last_name}
                             </div>
                             {attendee.status === 'CANCELLED' ? (
-                                <div style={{fontSize: '0.8em', color: 'red'}}>
+                                <div className={classes.cancelled}>
                                     {t`Ticket Cancelled`}
                                 </div>
                             ) : null}
-                            <div style={{fontSize: '0.8em', color: '#555'}}>
+                            <div className={classes.email}>
                                 {attendee.email}
                             </div>
                             {isAttendeeAwaitingPayment && (
@@ -91,8 +91,8 @@ export const AttendeeList = ({
                                     {t`Awaiting payment`}
                                 </div>
                             )}
-                            <div>
-                                <span>{attendee.public_id}</span>
+                            <div className={classes.publicId}>
+                                {attendee.public_id}
                             </div>
                             <div className={classes.product}>
                                 <IconTicket
@@ -108,6 +108,7 @@ export const AttendeeList = ({
                                 disabled={isCheckInPending || isDeletePending || attendee.status === 'CANCELLED'}
                                 loading={isCheckInPending || isDeletePending}
                                 color={getButtonColor(attendee)}
+                                radius="md"
                             >
                                 {checkInButtonText(attendee)}
                             </Button>
