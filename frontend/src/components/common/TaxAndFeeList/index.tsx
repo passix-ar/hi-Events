@@ -52,7 +52,7 @@ export const TaxAndFeeList = () => {
                                 {isTax ? <IconPercentage size={16}/> : <IconReceipt size={16}/>}
                             </div>
                             <div className={classes.type}>
-                                {tax.type.toLocaleLowerCase()}
+                                {tax.type === TaxAndFeeType.Tax ? t`Tax` : t`Fee`}
                             </div>
                             <div className={classes.action}>
                                 <Menu shadow="md" width={200}>

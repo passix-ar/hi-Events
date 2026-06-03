@@ -5,50 +5,50 @@
   margin-top: 20px;
 
   .taxBlock {
-    border: 1px solid var(--mantine-color-gray-3);
+    border: 1px solid #26262f;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    background: var(--hi-color-gray);
+    background: #131319;
     transition: all 0.2s ease;
     overflow: hidden;
 
     &:hover {
-      border-color: var(--mantine-color-primary-3);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: rgba(214, 255, 61, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     &.taxType {
       .header {
-        background: var(--mantine-color-primary-0);
-        color: var(--mantine-color-primary-8);
+        background: rgba(99, 146, 255, 0.08);
+        color: #6392ff;
       }
 
       .iconWrapper {
-        background: var(--mantine-color-primary-1);
-        color: var(--mantine-color-primary-7);
+        background: rgba(99, 146, 255, 0.12);
+        color: #6392ff;
       }
 
       .rateBadge {
-        background: var(--mantine-color-primary-1);
-        color: var(--mantine-color-primary-8);
+        background: rgba(99, 146, 255, 0.12);
+        color: #6392ff;
       }
     }
 
     &.feeType {
       .header {
-        background: var(--mantine-color-secondary-0);
-        color: var(--mantine-color-secondary-8);
+        background: rgba(214, 255, 61, 0.08);
+        color: #d6ff3d;
       }
 
       .iconWrapper {
-        background: var(--mantine-color-secondary-1);
-        color: var(--mantine-color-secondary-7);
+        background: rgba(214, 255, 61, 0.12);
+        color: #d6ff3d;
       }
 
       .rateBadge {
-        background: var(--mantine-color-secondary-1);
-        color: var(--mantine-color-secondary-8);
+        background: rgba(214, 255, 61, 0.12);
+        color: #d6ff3d;
       }
     }
 
@@ -122,10 +122,10 @@
 .noTaxes {
   text-align: center;
   padding: 40px 20px;
-  color: var(--mantine-color-gray-6);
-  background: var(--hi-color-gray);
+  color: #8e8e98;
+  background: #131319;
   border-radius: 12px;
-  border: 1px dashed var(--mantine-color-gray-3);
+  border: 1px dashed #26262f;
   margin-top: 20px;
 
   p {

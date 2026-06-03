@@ -10,7 +10,7 @@ const AdminLayout = () => {
     const navigate = useNavigate();
     const navItems: NavItem[] = [
         {label: t`Admin`},
-        {link: '', label: t`Dashboard`, icon: IconLayoutDashboard},
+        {link: '', label: t`Dashboard`, icon: IconLayoutDashboard, isActive: () => typeof window !== 'undefined' && /^\/admin\/?$/.test(window.location.pathname)},
         {link: 'accounts', label: t`Accounts`, icon: IconBuildingBank},
         {link: 'users', label: t`Users`, icon: IconUsers},
         {link: 'events', label: t`Events`, icon: IconCalendar},
