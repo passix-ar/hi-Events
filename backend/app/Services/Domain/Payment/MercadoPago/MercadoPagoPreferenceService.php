@@ -3,11 +3,13 @@
 // Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Services\Domain\Payment\MercadoPago;
 
+use HiEvents\DomainObjects\AccountConfigurationDomainObject;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\DomainObjects\OrderDomainObject;
 use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\Exceptions\MercadoPago\CreateMercadoPagoPreferenceFailedException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoClientConfigurationException;
+use HiEvents\Services\Domain\Order\OrderApplicationFeeCalculationService;
 use Illuminate\Config\Repository as Config;
 use MercadoPago\Client\Preference\PreferenceClient;
 use MercadoPago\MercadoPagoConfig;
@@ -17,25 +19,28 @@ use Throwable;
 class MercadoPagoPreferenceService
 {
     public function __construct(
-        private readonly Config          $config,
-        private readonly LoggerInterface $logger,
+        private readonly Config                             $config,
+        private readonly LoggerInterface                   $logger,
+        private readonly OrderApplicationFeeCalculationService $feeCalculationService,
     ) {
     }
 
     /**
      * Create a Checkout Pro preference using the organizer's OAuth access token.
-     * The marketplace_fee is automatically routed to the platform account.
+     * The marketplace_fee is routed to the platform account using the same fee
+     * calculation as Stripe (from account_configurations, not env vars).
      *
      * @throws MercadoPagoClientConfigurationException
      * @throws CreateMercadoPagoPreferenceFailedException
      */
     public function createPreference(
-        OrderDomainObject                    $order,
+        OrderDomainObject                      $order,
         AccountMercadopagoPlatformDomainObject $platform,
-        string                               $successUrl,
-        string                               $failureUrl,
-        string                               $pendingUrl,
-        string                               $webhookUrl,
+        ?AccountConfigurationDomainObject      $accountConfiguration,
+        string                                 $successUrl,
+        string                                 $failureUrl,
+        string                                 $pendingUrl,
+        string                                 $webhookUrl,
     ): object {
         if (!$platform->getAccessToken()) {
             throw new MercadoPagoClientConfigurationException(
@@ -46,7 +51,7 @@ class MercadoPagoPreferenceService
         MercadoPagoConfig::setAccessToken($platform->getAccessToken());
         MercadoPagoConfig::setRuntimeEnviroment(MercadoPagoConfig::LOCAL);
 
-        $marketplaceFee = $this->calculateMarketplaceFee($order->getTotalGross());
+        $marketplaceFee = $this->calculateMarketplaceFee($accountConfiguration, $order);
         $items = $this->buildItems($order);
 
         try {
@@ -86,15 +91,21 @@ class MercadoPagoPreferenceService
         }
     }
 
-    private function calculateMarketplaceFee(float $orderTotal): float
-    {
-        $feePercent = (float) $this->config->get('mercadopago.marketplace_fee_percent', 0);
-
-        if ($feePercent <= 0) {
+    private function calculateMarketplaceFee(
+        ?AccountConfigurationDomainObject $accountConfiguration,
+        OrderDomainObject                 $order,
+    ): float {
+        if (!$accountConfiguration || !$this->config->get('app.saas_mode_enabled')) {
             return 0.0;
         }
 
-        return round($orderTotal * ($feePercent / 100), 2);
+        if ($accountConfiguration->getBypassApplicationFees()) {
+            return 0.0;
+        }
+
+        $fee = $this->feeCalculationService->calculateApplicationFee($accountConfiguration, $order);
+
+        return $fee ? round($fee->grossApplicationFee->toFloat(), 2) : 0.0;
     }
 
     private function buildItems(OrderDomainObject $order): array

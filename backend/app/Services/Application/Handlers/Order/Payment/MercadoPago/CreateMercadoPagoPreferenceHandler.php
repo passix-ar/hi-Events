@@ -3,6 +3,7 @@
 // Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Services\Application\Handlers\Order\Payment\MercadoPago;
 
+use HiEvents\DomainObjects\AccountConfigurationDomainObject;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Generated\MercadopagoPreferenceDomainObjectAbstract;
@@ -15,6 +16,7 @@ use HiEvents\Exceptions\ResourceConflictException;
 use HiEvents\Exceptions\UnauthorizedException;
 use HiEvents\Repository\Eloquent\Value\Relationship;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
+use HiEvents\Repository\Interfaces\AccountRepositoryInterface;
 use HiEvents\Repository\Interfaces\MercadopagoPreferenceRepositoryInterface;
 use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Order\Payment\MercadoPago\DTO\CreateMercadoPagoPreferenceDTO;
@@ -32,6 +34,7 @@ class CreateMercadoPagoPreferenceHandler
         private readonly MercadopagoPreferenceRepositoryInterface      $preferenceRepository,
         private readonly MercadoPagoPreferenceService                  $preferenceService,
         private readonly CheckoutSessionManagementService              $sessionService,
+        private readonly AccountRepositoryInterface                    $accountRepository,
         private readonly Config                                        $config,
         private readonly UrlGenerator                                  $urlGenerator,
     ) {
@@ -63,6 +66,13 @@ class CreateMercadoPagoPreferenceHandler
         if (!$event) {
             throw new CannotAcceptPaymentException(__('Event not found for this order.'));
         }
+
+        $account = $this->accountRepository
+            ->loadRelation(new Relationship(
+                domainObject: AccountConfigurationDomainObject::class,
+                name: 'configuration',
+            ))
+            ->findByEventId($order->getEventId());
 
         $platform = $this->platformRepository->findFirstWhere([
             'account_id' => $event->getAccountId(),
@@ -97,6 +107,7 @@ class CreateMercadoPagoPreferenceHandler
         $preference = $this->preferenceService->createPreference(
             order: $order,
             platform: $platform,
+            accountConfiguration: $account->getConfiguration(),
             successUrl: $successUrl,
             failureUrl: $failureUrl,
             pendingUrl: $pendingUrl,
