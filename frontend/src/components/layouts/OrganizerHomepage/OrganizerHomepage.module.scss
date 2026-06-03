@@ -67,10 +67,10 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 // Main page wrapper
 .pageWrapper {
   min-height: 100vh;
-  --background-overlay: #{rgba(white, 0.5)};
+  --background-overlay: #{rgba(black, 0.65)};
 
-  &[data-mode="dark"] {
-    --background-overlay: #{rgba(black, 0.6)};
+  &[data-mode="light"] {
+    --background-overlay: #{rgba(white, 0.5)};
   }
 }
 
@@ -92,9 +92,9 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .wrapper {
-  max-width: 920px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 24px 16px;
+  padding: 24px 32px 16px;
 
   @include mixins.respond-below(md) {
     padding: 0;
@@ -496,9 +496,13 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .eventsContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
   gap: 12px;
+
+  @include mixins.respond-below(md) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .noEvents {

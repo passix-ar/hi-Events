@@ -105,12 +105,12 @@ class UpdateEventSettingsDTO extends BaseDTO
             email_footer_message: null,
             continue_button_text: __('Continue'),
             support_email: $organizer->getEmail(),
-            homepage_background_color: '#ffffff',
-            homepage_primary_color: '#7b5db8',
-            homepage_primary_text_color: '#000000',
-            homepage_secondary_color: '#7b5eb9',
-            homepage_secondary_text_color: '#ffffff',
-            homepage_body_background_color: '#7a5eb9',
+            homepage_background_color: '#0b0b0e',
+            homepage_primary_color: '#d6ff3d',
+            homepage_primary_text_color: '#f4f1ea',
+            homepage_secondary_color: '#8e8e98',
+            homepage_secondary_text_color: '#0b0b0e',
+            homepage_body_background_color: '#0b0b0e',
             homepage_background_type: HomepageBackgroundType::COLOR,
             require_attendee_details: false,
             attendee_details_collection_method: AttendeeDetailsCollectionMethod::PER_TICKET,
@@ -159,11 +159,11 @@ class UpdateEventSettingsDTO extends BaseDTO
             // Platform fee defaults
             pass_platform_fee_to_buyer: false,
 
-            // Homepage theme defaults (simplified 2-color + mode system)
+            // Homepage theme defaults — Passix dark
             homepage_theme_settings: [
-                'accent' => '#8b5cf6',
-                'background' => '#f5f3ff',
-                'mode' => 'light',
+                'accent' => '#d6ff3d',
+                'background' => '#0b0b0e',
+                'mode' => 'dark',
                 'background_type' => 'COLOR',
             ],
 

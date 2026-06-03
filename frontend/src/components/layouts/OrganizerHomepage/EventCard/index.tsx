@@ -17,13 +17,25 @@ interface EventCardProps {
     primaryColor?: string;
 }
 
-const placeholderEmojis = ['🎉', '🎪', '🎸', '🎨', '🌟'];
+const categoryDefaultImages: Record<string, string> = {
+    MUSIC:      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80',
+    TECH:       'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80',
+    FOOD_DRINK: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80',
+    SPORTS:     'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80',
+    FESTIVAL:   'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80',
+    NIGHTLIFE:  'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=600&q=80',
+    BUSINESS:   'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&q=80',
+    EDUCATION:  'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80',
+    WORKSHOP:   'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80',
+    ART:        'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80',
+    COMEDY:     'https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=600&q=80',
+    THEATER:    'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',
+    OTHER:      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80',
+};
 
-export const EventCard: React.FC<EventCardProps> = ({event, primaryColor = '#8b5cf6'}) => {
+export const EventCard: React.FC<EventCardProps> = ({event, primaryColor = '#d6ff3d'}) => {
     const dateTextColor = isLightColor(primaryColor) ? '#000000' : '#ffffff';
-
-    const emojiIndex = event.id ? Number(event.id) % placeholderEmojis.length : 0;
-    const placeholderEmoji = placeholderEmojis[emojiIndex];
+    const placeholderImage = categoryDefaultImages[event.category] ?? categoryDefaultImages.OTHER;
 
     // Format dates using the event's timezone
     const startMonth = formatDateWithLocale(event.start_date, "monthShort", event.timezone);
@@ -90,17 +102,11 @@ export const EventCard: React.FC<EventCardProps> = ({event, primaryColor = '#8b5
                                 loading="lazy"
                             />
                         ) : (
-                            <div className={classes.placeholderImage}
-                                 style={{'--date-text-color': dateTextColor} as React.CSSProperties}>
-                                <div className={classes.placeholderContent}>
-                                    <span className={classes.placeholderIcon}>{placeholderEmoji}</span>
-                                    <div className={classes.sparkles}>
-                                        <span className={classes.sparkle}>✨</span>
-                                        <span className={classes.sparkle}>✨</span>
-                                        <span className={classes.sparkle}>✨</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <img
+                                src={placeholderImage}
+                                alt={event.title}
+                                loading="lazy"
+                            />
                         )}
 
                         {/* Floating elements on image */}

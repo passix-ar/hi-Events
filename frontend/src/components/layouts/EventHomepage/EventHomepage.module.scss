@@ -67,10 +67,10 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 // Main page wrapper
 .pageWrapper {
   min-height: 100vh;
-  --background-overlay: #{rgba(white, 0.5)};
+  --background-overlay: #{rgba(black, 0.65)};
 
-  &[data-mode="dark"] {
-    --background-overlay: #{rgba(black, 0.6)};
+  &[data-mode="light"] {
+    --background-overlay: #{rgba(white, 0.5)};
   }
 }
 
@@ -132,17 +132,17 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 .coverWrapper {
   position: relative;
   width: 100%;
+  min-height: 380px;
   max-height: 560px;
   overflow: hidden;
-  background-color: var(--accent-soft);
+  background: linear-gradient(135deg, #131319 0%, #1a1a2e 50%, #16161d 100%);
 
-  // When aspect ratio is provided via CSS custom property, use it
-  // Otherwise fall back to auto sizing based on image
   &[style*="--cover-aspect-ratio"] {
     aspect-ratio: var(--cover-aspect-ratio);
   }
 
   @include mixins.respond-below(md) {
+    min-height: 260px;
     max-height: 400px;
   }
 }

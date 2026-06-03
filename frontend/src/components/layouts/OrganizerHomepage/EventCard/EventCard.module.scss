@@ -82,12 +82,12 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   flex: 0 0 auto;
 
   @include mixins.respond-below('sm') {
-    height: 160px;
+    height: 200px;
   }
 
   @include mixins.respond-above('sm') {
-    width: 200px;
-    height: 120px;
+    width: 240px;
+    height: 150px;
   }
 }
 
@@ -116,83 +116,8 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 .placeholderImage {
   width: 100%;
   height: 100%;
-  background: var(--bg-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
-}
-
-.placeholderContent {
-  position: relative;
-  transition: transform $transition-slow;
-}
-
-.placeholderIcon {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-  color: var(--badge-text, white);
-  animation: float 4s ease-in-out infinite;
-
-  @media (max-width: 640px) {
-    font-size: 2rem;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-6px) rotate(-2deg);
-  }
-  75% {
-    transform: translateY(3px) rotate(2deg);
-  }
-}
-
-// Sparkles
-.sparkles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.sparkle {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  animation: sparkle 3s ease-in-out infinite;
-
-  &:nth-child(1) {
-    top: 15%;
-    left: 20%;
-    animation-delay: 0s;
-  }
-
-  &:nth-child(2) {
-    top: 70%;
-    right: 25%;
-    animation-delay: 1s;
-  }
-
-  &:nth-child(3) {
-    bottom: 25%;
-    left: 30%;
-    animation-delay: 2s;
-  }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(180deg);
-  }
 }
 
 // Image Overlay - contains floating elements

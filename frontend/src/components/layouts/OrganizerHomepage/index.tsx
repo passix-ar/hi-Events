@@ -160,28 +160,26 @@ export const OrganizerHomepage = ({
                     <div className={classes.wrapper}>
                         {/* Hero Section */}
                         <div className={classes.heroSection}>
-                            {organizerCover && (
-                                <div
-                                    className={classes.coverWrapper}
-                                    style={organizerCover?.width && organizerCover?.height ? {
-                                        '--cover-aspect-ratio': `${organizerCover.width} / ${organizerCover.height}`,
-                                    } as React.CSSProperties : undefined}
-                                >
-                                    {organizerCover?.lqip_base64 && (
-                                        <img
-                                            src={organizerCover.lqip_base64}
-                                            alt=""
-                                            aria-hidden="true"
-                                            className={classes.coverLqip}
-                                        />
-                                    )}
+                            <div
+                                className={classes.coverWrapper}
+                                style={organizerCover?.width && organizerCover?.height ? {
+                                    '--cover-aspect-ratio': `${organizerCover.width} / ${organizerCover.height}`,
+                                } as React.CSSProperties : undefined}
+                            >
+                                {organizerCover?.lqip_base64 && (
                                     <img
-                                        src={organizerCover.url}
-                                        alt="Cover"
-                                        className={classes.coverImage}
+                                        src={organizerCover.lqip_base64}
+                                        alt=""
+                                        aria-hidden="true"
+                                        className={classes.coverLqip}
                                     />
-                                </div>
-                            )}
+                                )}
+                                <img
+                                    src={organizerCover?.url ?? 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80'}
+                                    alt="Cover"
+                                    className={classes.coverImage}
+                                />
+                            </div>
                             <div className={classes.organizerContentWrapper}>
                                 <div className={classes.organizerContent}>
                                     <div className={classes.organizerProfile}>
