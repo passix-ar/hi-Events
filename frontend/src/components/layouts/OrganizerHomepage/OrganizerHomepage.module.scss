@@ -72,6 +72,20 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   &[data-mode="light"] {
     --background-overlay: #{rgba(white, 0.5)};
   }
+
+  // Degradé de acento sobre el fondo
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 100% 45% at 50% 0%,
+      color-mix(in srgb, var(--organizer-primary-color, #d6ff3d) 18%, transparent) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
 }
 
 .container {

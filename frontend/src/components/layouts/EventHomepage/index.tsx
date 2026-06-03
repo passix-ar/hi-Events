@@ -219,7 +219,7 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
                 ) : (
                     <div
                         className={classes.background}
-                        style={{backgroundColor: 'var(--event-bg-color)'}}
+                        style={{backgroundColor: themeSettings.background}}
                     />
                 )}
                 <div

@@ -146,7 +146,7 @@ export const OrganizerHomepage = ({
                 ) : (
                     <div
                         className={classes.background}
-                        style={{backgroundColor: 'var(--organizer-bg-color)'}}
+                        style={{backgroundColor: themeSettings.background}}
                     />
                 )}
                 <div
