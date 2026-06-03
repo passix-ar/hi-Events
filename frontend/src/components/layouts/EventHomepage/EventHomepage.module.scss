@@ -105,9 +105,9 @@ $transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .wrapper {
-  max-width: 920px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 24px 16px;
+  padding: 24px 32px 16px;
 
   @include mixins.respond-below(md) {
     padding: 0;
