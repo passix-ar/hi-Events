@@ -43,7 +43,6 @@ export const OrganizerForm = ({form}: { form: UseFormReturnType<Partial<Organize
                     required
                     data={[
                         {value: 'ARS', label: 'Peso Argentino (ARS)'},
-                        {value: 'USD', label: 'US Dollar (USD)'},
                     ]}
                     label={t`Currency`}
                     placeholder={t`Select currency`}
