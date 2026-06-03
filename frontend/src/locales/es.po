@@ -10601,3 +10601,51 @@ msgstr "Pago no conectado"
 #: src/components/routes/admin/Attribution/index.tsx
 msgid "MP Connected"
 msgstr "MP Conectado"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "MercadoPago connected successfully!"
+msgstr "¡MercadoPago conectado con éxito!"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "There was a problem connecting MercadoPago. Please try again."
+msgstr "Hubo un problema al conectar MercadoPago. Por favor intentá de nuevo."
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "Redirecting to MercadoPago..."
+msgstr "Redirigiendo a MercadoPago..."
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "Failed to get MercadoPago authorization URL."
+msgstr "No se pudo obtener la URL de autorización de MercadoPago."
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "MercadoPago is connected"
+msgstr "MercadoPago está conectado"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "Your MercadoPago account is connected and ready to process payments."
+msgstr "Tu cuenta de MercadoPago está conectada y lista para procesar pagos."
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "Reconnect MercadoPago"
+msgstr "Reconectar MercadoPago"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx
+msgid "Connect your MercadoPago account to start accepting payments in Argentina."
+msgstr "Conectá tu cuenta de MercadoPago para empezar a aceptar pagos en Argentina."
+
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx
+msgid "Could not initialize MercadoPago payment. Please try again."
+msgstr "No se pudo inicializar el pago con MercadoPago. Por favor intentá de nuevo."
+
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx
+msgid "You will be redirected to MercadoPago to complete your payment securely."
+msgstr "Serás redirigido a MercadoPago para completar tu pago de forma segura."
+
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx
+msgid "Pay with MercadoPago"
+msgstr "Pagar con MercadoPago"
+
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx
+msgid "Accept payments through MercadoPago"
+msgstr "Aceptá pagos a través de MercadoPago"
