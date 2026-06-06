@@ -237,6 +237,56 @@ const AdminDashboard = () => {
                     </SimpleGrid>
                 </div>
 
+                {/* Passix Commission Revenue */}
+                <div>
+                    <Title order={2} mb="xs">
+                        <Group gap="xs">
+                            <IconCurrencyDollar size={24} />
+                            <Trans>Passix Commission Revenue</Trans>
+                        </Group>
+                    </Title>
+                    <Text size="xs" c="dimmed" mb="md">
+                        <Trans>Expected platform income from application fees on completed orders</Trans>
+                    </Text>
+                    <SimpleGrid cols={{base: 1, sm: 2}} spacing="md">
+                        <Paper shadow="sm" p="md" radius="md" withBorder>
+                            <Group gap="xs">
+                                <IconCurrencyDollar size={32} color="var(--mantine-color-indigo-6)" />
+                                <div style={{flex: 1}}>
+                                    <Text size="xs" c="dimmed" fw={500}>
+                                        {t`Today's Revenue`}
+                                    </Text>
+                                    {isLoadingDashboard ? (
+                                        <Skeleton height={28} width={80} mt={4} />
+                                    ) : (
+                                        <Text size="xl" fw={700}>
+                                            {formatCurrency(dashboardData?.today_platform_revenue || 0)}
+                                        </Text>
+                                    )}
+                                </div>
+                            </Group>
+                        </Paper>
+
+                        <Paper shadow="sm" p="md" radius="md" withBorder>
+                            <Group gap="xs">
+                                <IconCurrencyDollar size={32} color="var(--mantine-color-grape-6)" />
+                                <div style={{flex: 1}}>
+                                    <Text size="xs" c="dimmed" fw={500}>
+                                        {t`Last 5 Days Revenue`}
+                                    </Text>
+                                    {isLoadingDashboard ? (
+                                        <Skeleton height={28} width={80} mt={4} />
+                                    ) : (
+                                        <Text size="xl" fw={700}>
+                                            {formatCurrency(dashboardData?.last_5_days_platform_revenue || 0)}
+                                        </Text>
+                                    )}
+                                </div>
+                            </Group>
+                        </Paper>
+                    </SimpleGrid>
+                </div>
+
                 {/* Popular Events */}
                 <div>
                     <Title order={2} mb="md">

@@ -169,6 +169,8 @@ export interface AdminDashboardData {
     recent_orders_count: number;
     recent_orders_total: number;
     recent_signups_count: number;
+    today_platform_revenue: number;
+    last_5_days_platform_revenue: number;
 }
 
 export interface GetAdminDashboardParams {

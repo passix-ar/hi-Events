@@ -26,6 +26,8 @@ class GetAdminDashboardDataHandler
             recent_orders_count: $this->getRecentOrdersCount($since),
             recent_orders_total: $this->getRecentOrdersTotal($since),
             recent_signups_count: $this->getRecentSignupsCount($since),
+            today_platform_revenue: $this->getPlatformRevenue(Carbon::now()->startOfDay()),
+            last_5_days_platform_revenue: $this->getPlatformRevenue(Carbon::now()->subDays(5)),
         );
     }
 
@@ -218,5 +220,27 @@ class GetAdminDashboardDataHandler
         $result = DB::selectOne($query, ['since' => $since]);
 
         return (int)($result->count ?? 0);
+    }
+
+    private function getPlatformRevenue(Carbon $since): float
+    {
+        $query = <<<SQL
+            SELECT COALESCE(SUM(oppf.application_fee_gross_amount), 0) as total
+            FROM order_payment_platform_fees oppf
+            INNER JOIN orders o ON o.id = oppf.order_id
+            WHERE o.created_at >= :since
+              AND o.deleted_at IS NULL
+              AND o.status = :statusCompleted
+              AND o.payment_status = :paymentStatusPaid
+              AND oppf.deleted_at IS NULL
+        SQL;
+
+        $result = DB::selectOne($query, [
+            'since' => $since,
+            'statusCompleted' => OrderStatus::COMPLETED->name,
+            'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
+        ]);
+
+        return (float)($result->total ?? 0);
     }
 }
