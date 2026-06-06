@@ -173,6 +173,10 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
             return null;
         }
 
+        if (event.lifecycle_status === EventLifecycleStatus.ENDED) {
+            return null;
+        }
+
         return {text: t`Tickets Available`, variant: 'success'};
     };
 
