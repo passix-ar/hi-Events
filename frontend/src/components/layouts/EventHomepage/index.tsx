@@ -4,7 +4,7 @@ import "../../../styles/widget/default.scss";
 import React, {useEffect, useRef, useState} from "react";
 import {EventDocumentHead} from "../../common/EventDocumentHead";
 import {eventCoverImage, eventHomepageUrl, imageUrl, organizerHomepageUrl} from "../../../utilites/urlHelper.ts";
-import {Event, OrganizerStatus} from "../../../types.ts";
+import {Event, EventLifecycleStatus, OrganizerStatus} from "../../../types.ts";
 import {EventNotAvailable} from "./EventNotAvailable";
 import {
     IconArrowUpRight,
@@ -19,7 +19,7 @@ import {
     IconTicket,
     IconWorld
 } from "@tabler/icons-react";
-import {Anchor} from "@mantine/core";
+import {Alert, Anchor} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
@@ -494,6 +494,16 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
                             {/* Tickets Section */}
                             <div className={`${classes.section} ${classes.ticketsSection}`} ref={ticketsSectionRef}
                                  id="tickets">
+                                {event.lifecycle_status === EventLifecycleStatus.ENDED && (
+                                    <Alert
+                                        icon={<IconCalendarOff size={16}/>}
+                                        title={t`This event has ended`}
+                                        color="gray"
+                                        mb="md"
+                                    >
+                                        {t`Sales for this event are closed.`}
+                                    </Alert>
+                                )}
                                 <SelectProducts
                                     colors={{
                                         background: "transparent",

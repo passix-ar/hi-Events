@@ -176,7 +176,13 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     ];
 
     const {eventId} = useParams();
-    const [opened, {toggle}] = useDisclosure(false);
+    const [opened, {toggle, open: openAdvanced}] = useDisclosure(false);
+
+    useEffect(() => {
+        if (form.errors.sale_end_date) {
+            openAdvanced();
+        }
+    }, [form.errors.sale_end_date]);
     const [taxFeeModalOpen, {open: openTaxFeeModal, close: closeTaxFeeModal}] = useDisclosure(false);
     const isFreeProduct = form.values.type === 'FREE';
     const isDonationProduct = form.values.type === 'DONATION';
@@ -454,7 +460,8 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                             <TextInput type={'datetime-local'} {...form.getInputProps('sale_start_date')}
                                        label={t`Sale Start Date`}/>
                             <TextInput type={'datetime-local'} {...form.getInputProps('sale_end_date')}
-                                       label={t`Sale End Date`}/>
+                                       label={t`Sale End Date`}
+                                       withAsterisk={form.values.product_type === 'TICKET'}/>
                         </InputGroup>
                     </Fieldset>
 

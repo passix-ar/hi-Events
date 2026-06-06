@@ -19,6 +19,14 @@ export const CreateProductModal = ({onClose, selectedCategoryId = undefined}: Cr
     const {data: taxesAndFees, isFetched: taxesAndFeesLoaded} = useGetTaxesAndFees();
     const createProductMutation = useCreateProduct();
     const form = useForm<Product>({
+        validate: {
+            sale_end_date: (value, values) => {
+                if (values.product_type === ProductType.Ticket && !value) {
+                    return t`A sale end date is required for ticket products`;
+                }
+                return null;
+            },
+        },
         initialValues: {
             title: '',
             description: '',

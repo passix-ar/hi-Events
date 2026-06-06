@@ -20,6 +20,14 @@ export const EditProductModal = ({onClose, productId}: GenericModalProps & { pro
     const {data: event} = useGetEvent(eventId);
     const errorHandler = useFormErrorResponseHandler();
     const form = useForm<Product>({
+        validate: {
+            sale_end_date: (value, values) => {
+                if (values.product_type === ProductType.Ticket && !value) {
+                    return t`A sale end date is required for ticket products`;
+                }
+                return null;
+            },
+        },
         initialValues: {
             title: '',
             description: '',
