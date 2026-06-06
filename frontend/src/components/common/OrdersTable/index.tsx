@@ -378,7 +378,7 @@ export const OrdersTable = ({orders, event}: OrdersTableProps) => {
                     const order = info.row.original;
                     return (
                         <div className={classes.paymentStatus}>
-                            {order.payment_provider === 'STRIPE' ? (
+                            {order.payment_provider === 'MERCADOPAGO' ? (
                                 <>
                                     <IconCreditCard size={16}/>
                                     <Text>{t`MercadoPago`}</Text>

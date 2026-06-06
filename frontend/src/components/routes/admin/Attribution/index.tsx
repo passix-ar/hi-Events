@@ -156,7 +156,7 @@ const Attribution = () => {
                                                         <Text size="sm">{stat.live_events.toLocaleString()}</Text>
                                                     </Table.Td>
                                                     <Table.Td>
-                                                        <Text size="sm">{stat.stripe_connected.toLocaleString()}</Text>
+                                                        <Text size="sm">{stat.mp_connected.toLocaleString()}</Text>
                                                     </Table.Td>
                                                     <Table.Td>
                                                         <Text size="sm">{stat.verified_accounts.toLocaleString()}</Text>

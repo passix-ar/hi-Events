@@ -4,9 +4,10 @@ namespace HiEvents\Services\Domain\Message;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\AccountMessagingTierDomainObject;
-use HiEvents\DomainObjects\AccountStripePlatformDomainObject;
+use HiEvents\DomainObjects\Generated\AccountMercadopagoPlatformDomainObjectAbstract;
 use HiEvents\DomainObjects\Enums\MessagingEligibilityFailureEnum;
 use HiEvents\DomainObjects\Enums\MessagingTierViolationEnum;
+use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\AccountMessagingTierRepositoryInterface;
 use HiEvents\Repository\Interfaces\AccountRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
@@ -25,14 +26,13 @@ class MessagingEligibilityService
         private readonly MessageRepositoryInterface $messageRepository,
         private readonly AccountMessagingTierRepositoryInterface $accountMessagingTierRepository,
         private readonly OrderRepositoryInterface $orderRepository,
+        private readonly AccountMercadopagoPlatformRepositoryInterface $mercadopagoPlatformRepository,
     ) {
     }
 
     public function checkEligibility(int $accountId, int $eventId): ?MessagingEligibilityFailureDTO
     {
-        $account = $this->accountRepository
-            ->loadRelation(AccountStripePlatformDomainObject::class)
-            ->findById($accountId);
+        $account = $this->accountRepository->findById($accountId);
 
         $tier = $this->getAccountMessagingTier($account->getAccountMessagingTierId());
 
@@ -43,8 +43,8 @@ class MessagingEligibilityService
 
         $failures = [];
 
-        if (!$account->isStripeSetupComplete()) {
-            $failures[] = MessagingEligibilityFailureEnum::STRIPE_NOT_CONNECTED;
+        if (!$this->isMercadoPagoConnected($accountId)) {
+            $failures[] = MessagingEligibilityFailureEnum::PAYMENT_NOT_CONNECTED;
         }
 
         if (!$this->hasPaidOrder($accountId)) {
@@ -110,6 +110,15 @@ class MessagingEligibilityService
         return $this->accountMessagingTierRepository->findFirstWhere([
             'name' => self::UNTRUSTED_TIER_NAME,
         ]);
+    }
+
+    private function isMercadoPagoConnected(int $accountId): bool
+    {
+        $platform = $this->mercadopagoPlatformRepository->findFirstWhere([
+            AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $accountId,
+        ]);
+
+        return $platform?->getSetupCompletedAt() !== null;
     }
 
     private function hasPaidOrder(int $accountId): bool

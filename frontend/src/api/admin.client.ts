@@ -154,7 +154,7 @@ export interface RecentAccount {
     name: string;
     email: string;
     created_at: string;
-    stripe_connect_setup_complete: boolean;
+    mercadopago_connected: boolean;
     account_verified_at: string | null;
     events_count: number;
     users_count: number;
@@ -269,7 +269,7 @@ export interface UtmAttributionStats {
     total_accounts: number;
     total_events: number;
     live_events: number;
-    stripe_connected: number;
+    mp_connected: number;
     verified_accounts: number;
     total_revenue: number;
     total_orders: number;

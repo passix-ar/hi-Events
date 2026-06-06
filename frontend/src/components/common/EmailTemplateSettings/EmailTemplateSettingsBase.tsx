@@ -346,9 +346,9 @@ export const EmailTemplateSettingsBase = ({
             )}
 
             {accountRequiresManualVerification && (
-                <Alert icon={<IconAlertCircle size={16}/>} variant="light" mb="lg" color="orange" title={t`Connect Stripe to enable email template editing`}>
+                <Alert icon={<IconAlertCircle size={16}/>} variant="light" mb="lg" color="orange" title={t`Connect a payment account to enable email template editing`}>
                     <Text size="sm">
-                        {t`Due to the high risk of spam, you must connect a Stripe account before you can modify email templates. This is to ensure that all event organizers are verified and accountable.`}
+                        {t`Due to the high risk of spam, you must connect a payment account before you can modify email templates. This is to ensure that all event organizers are verified and accountable.`}
                     </Text>
                     <div style={{marginTop: '0.75rem'}}>
                         <StripeConnectButton/>

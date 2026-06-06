@@ -47,7 +47,7 @@ export const StripePaymentMethod = ({enabled, setSubmitHandler}: StripePaymentMe
                 <HomepageInfoMessage
                     status="warning"
                     message={t`Payments not available`}
-                    subtitle={t`Stripe payments are not enabled for this event.`}
+                    subtitle={t`Card payments are not enabled for this event.`}
                     link={eventHomepagePath(event as Event)}
                     linkText={t`Return to Event`}
                 />
