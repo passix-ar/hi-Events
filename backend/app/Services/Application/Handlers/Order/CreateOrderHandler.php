@@ -11,10 +11,13 @@ use HiEvents\DomainObjects\Generated\AffiliateDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\PromoCodeDomainObjectAbstract;
 use HiEvents\DomainObjects\OrderDomainObject;
 use HiEvents\DomainObjects\PromoCodeDomainObject;
+use HiEvents\DomainObjects\Enums\ProductType;
+use HiEvents\DomainObjects\Generated\ProductDomainObjectAbstract;
 use HiEvents\DomainObjects\Status\AffiliateStatus;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
 use HiEvents\Services\Domain\Order\OrderItemProcessingService;
@@ -31,6 +34,7 @@ class CreateOrderHandler
         private readonly EventRepositoryInterface               $eventRepository,
         private readonly PromoCodeRepositoryInterface           $promoCodeRepository,
         private readonly AffiliateRepositoryInterface           $affiliateRepository,
+        private readonly ProductRepositoryInterface             $productRepository,
         private readonly OrderManagementService                 $orderManagementService,
         private readonly OrderItemProcessingService             $orderItemProcessingService,
         private readonly AvailableProductQuantitiesFetchService $availableProductQuantitiesFetchService,
@@ -127,9 +131,16 @@ class CreateOrderHandler
         }
 
         if ($event->isEventInPast()) {
-            throw ValidationException::withMessages([
-                'event' => __('This event has ended and is no longer accepting ticket orders.'),
-            ]);
+            $productIds = $createOrderPublicDTO->products->pluck('product_id')->toArray();
+            $products = $this->productRepository->findWhereIn(ProductDomainObjectAbstract::ID, $productIds);
+            $hasTicketProducts = $products->some(
+                fn($product) => $product->getProductType() === ProductType::TICKET->name
+            );
+            if ($hasTicketProducts) {
+                throw ValidationException::withMessages([
+                    'event' => __('This event has ended and is no longer accepting ticket orders.'),
+                ]);
+            }
         }
     }
 

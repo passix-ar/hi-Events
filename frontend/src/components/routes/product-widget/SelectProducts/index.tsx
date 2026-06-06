@@ -30,7 +30,7 @@ import classNames from 'classnames';
 import '../../../../styles/widget/default.scss';
 import {ProductAvailabilityMessage} from "../../../common/ProductPriceAvailability";
 import {PoweredByFooter} from "../../../common/PoweredByFooter";
-import {Event, Product} from "../../../../types.ts";
+import {Event, EventLifecycleStatus, Product} from "../../../../types.ts";
 import {eventsClientPublic} from "../../../../api/event.client.ts";
 import {promoCodeClientPublic} from "../../../../api/promo-code.client.ts";
 import {IconChevronRight, IconX} from "@tabler/icons-react"

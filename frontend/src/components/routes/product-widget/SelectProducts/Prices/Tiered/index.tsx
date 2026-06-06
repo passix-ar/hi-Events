@@ -1,5 +1,5 @@
 import {Currency, ProductPriceDisplay} from "../../../../../common/Currency";
-import {Event, Product} from "../../../../../../types.ts";
+import {Event, EventLifecycleStatus, Product} from "../../../../../../types.ts";
 import {Group, TextInput} from "@mantine/core";
 import {NumberSelector} from "../../../../../common/NumberSelector";
 import {UseFormReturnType} from "@mantine/form";
@@ -57,7 +57,7 @@ export const TieredPricing = ({product, event, form, productIndex}: TieredPricin
                                 </div>
                             </div>
                             <div className={'hi-product-quantity-selector'}>
-                                {(product.is_available && price.is_available) && (
+                                {(product.is_available && price.is_available && !(event.lifecycle_status === EventLifecycleStatus.ENDED && product.product_type === 'TICKET')) && (
                                     <>
                                         <NumberSelector
                                             className={'hi-product-quantity-selector'}
