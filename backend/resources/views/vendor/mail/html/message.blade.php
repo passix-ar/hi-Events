@@ -6,8 +6,8 @@
                 <img src="{{ $appLogo }}" class="logo" alt="{{ config('app.name') }}"
                      style="max-width: 300px;">
             @else
-                <img src="{{ config('app.frontend_url') }}/logos/hi-events-stacked-light.png" class="logo" alt="{{ config('app.name') }}"
-                     style="max-width: 300px;">
+                <img src="{{ config('app.frontend_url') }}/logos/passix-email-logo.png" class="logo" alt="{{ config('app.name') }}"
+                     style="max-width: 200px;">
             @endif
         </x-mail::header>
     </x-slot:header>

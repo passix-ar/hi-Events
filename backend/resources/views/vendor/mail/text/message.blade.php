@@ -21,7 +21,7 @@
     {{-- Footer --}}
     <x-slot:footer>
         <x-mail::footer>
-            © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            © {{ date('Y') }} {{ config('app.name') }} | Powered by Hi.Events (https://hi.events) | Source: https://github.com/passix-ar/hi-Events
         </x-mail::footer>
     </x-slot:footer>
 </x-mail::layout>
