@@ -81,11 +81,6 @@ export const PaymentAndInvoicingSettings = () => {
 
     const paymentOptions = [
         {
-            value: "STRIPE",
-            label: t`Stripe`,
-            description: t`Accept credit card payments with Stripe`
-        },
-        {
             value: "MERCADOPAGO",
             label: t`MercadoPago`,
             description: t`Accept payments through MercadoPago`
