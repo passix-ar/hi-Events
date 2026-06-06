@@ -6,7 +6,6 @@ namespace HiEvents\Services\Domain\Payment\MercadoPago;
 use HiEvents\DomainObjects\AccountConfigurationDomainObject;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\DomainObjects\OrderDomainObject;
-use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\Exceptions\MercadoPago\CreateMercadoPagoPreferenceFailedException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoClientConfigurationException;
 use HiEvents\Services\Domain\Order\OrderApplicationFeeCalculationService;
@@ -108,28 +107,28 @@ class MercadoPagoPreferenceService
         return $fee ? round($fee->grossApplicationFee->toFloat(), 2) : 0.0;
     }
 
+    /**
+     * Build the Checkout Pro line items.
+     *
+     * We charge a single line equal to the order's total_gross. This is the amount
+     * the buyer actually owes — it already includes taxes, service fees and (when
+     * enabled) the platform fee passed through to the buyer. Itemising per ticket
+     * with the pre-additions price would undercharge whenever any of those exist,
+     * so a single authoritative total avoids any mismatch with the order.
+     */
     private function buildItems(OrderDomainObject $order): array
     {
-        $orderItems = $order->getOrderItems();
+        $event = $order->getEvent();
+        $title = $event?->getTitle()
+            ? __('Tickets · :event', ['event' => $event->getTitle()])
+            : __('Order :id', ['id' => $order->getShortId()]);
 
-        if (!$orderItems || $orderItems->isEmpty()) {
-            return [[
-                'id'          => $order->getShortId(),
-                'title'       => __('Order :id', ['id' => $order->getShortId()]),
-                'quantity'    => 1,
-                'unit_price'  => (float) $order->getTotalGross(),
-                'currency_id' => strtoupper($order->getCurrency()),
-            ]];
-        }
-
-        return $orderItems->map(static fn(OrderItemDomainObject $item) => [
-            'id'          => (string) $item->getId(),
-            'title'       => $item->getItemName() ?? __('Ticket'),
-            'quantity'    => $item->getQuantity(),
-            'unit_price'  => $item->getQuantity() > 0
-                ? (float) ($item->getTotalBeforeAdditions() / $item->getQuantity())
-                : (float) $item->getTotalBeforeAdditions(),
+        return [[
+            'id'          => $order->getShortId(),
+            'title'       => $title,
+            'quantity'    => 1,
+            'unit_price'  => round((float) $order->getTotalGross(), 2),
             'currency_id' => strtoupper($order->getCurrency()),
-        ])->values()->toArray();
+        ]];
     }
 }

@@ -7,14 +7,19 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Psr\Log\LoggerInterface;
 
 class MercadoPagoOAuthService
 {
+    private const STATE_TTL_SECONDS = 900;
+
     public function __construct(
         private readonly Config          $config,
         private readonly Client         $httpClient,
         private readonly LoggerInterface $logger,
+        private readonly Encrypter       $encrypter,
     ) {
     }
 
@@ -61,18 +66,57 @@ class MercadoPagoOAuthService
         }
     }
 
+    /**
+     * Decode and validate the OAuth state.
+     *
+     * The state is authenticated-encrypted (AES-256 + HMAC) with the app key, so it
+     * cannot be forged: an attacker cannot craft a valid state pointing at another
+     * organizer's account. It also carries a timestamp and is rejected once stale,
+     * limiting replay.
+     *
+     * @throws MercadoPagoOAuthException
+     */
     public function decodeState(string $state): int
     {
-        $decoded = base64_decode($state, true);
-        if ($decoded === false) {
+        try {
+            $decoded = $this->encrypter->decrypt($this->fromUrlSafe($state));
+        } catch (DecryptException $e) {
+            throw new MercadoPagoOAuthException(__('Invalid OAuth state parameter.'), previous: $e);
+        }
+
+        if (!is_array($decoded) || !isset($decoded['account_id'], $decoded['ts'])) {
             throw new MercadoPagoOAuthException(__('Invalid OAuth state parameter.'));
         }
 
-        return (int) $decoded;
+        if (time() - (int) $decoded['ts'] > self::STATE_TTL_SECONDS) {
+            throw new MercadoPagoOAuthException(__('Your MercadoPago connection request expired. Please try again.'));
+        }
+
+        return (int) $decoded['account_id'];
     }
 
     private function encodeState(int $accountId): string
     {
-        return base64_encode((string) $accountId);
+        return $this->toUrlSafe($this->encrypter->encrypt([
+            'account_id' => $accountId,
+            'ts'         => time(),
+        ]));
+    }
+
+    /**
+     * Make the encrypted blob URL-safe so it survives the OAuth redirect round-trip
+     * through MercadoPago without any character-encoding ambiguity.
+     */
+    private function toUrlSafe(string $value): string
+    {
+        return rtrim(strtr($value, '+/', '-_'), '=');
+    }
+
+    private function fromUrlSafe(string $value): string
+    {
+        $restored = strtr($value, '-_', '+/');
+        $padding = strlen($restored) % 4;
+
+        return $padding === 0 ? $restored : $restored . str_repeat('=', 4 - $padding);
     }
 }

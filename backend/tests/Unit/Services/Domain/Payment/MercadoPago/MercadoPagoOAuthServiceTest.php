@@ -7,6 +7,8 @@ use GuzzleHttp\Psr7\Response;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Services\Domain\Payment\MercadoPago\MercadoPagoOAuthService;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use Illuminate\Encryption\Encrypter;
 use Mockery;
 use Mockery\MockInterface;
 use Psr\Log\LoggerInterface;
@@ -17,6 +19,7 @@ class MercadoPagoOAuthServiceTest extends TestCase
     private Config|MockInterface $config;
     private Client|MockInterface $httpClient;
     private LoggerInterface|MockInterface $logger;
+    private EncrypterContract $encrypter;
     private MercadoPagoOAuthService $service;
 
     protected function setUp(): void
@@ -26,12 +29,19 @@ class MercadoPagoOAuthServiceTest extends TestCase
         $this->config = Mockery::mock(Config::class);
         $this->httpClient = Mockery::mock(Client::class);
         $this->logger = Mockery::mock(LoggerInterface::class);
+        $this->encrypter = new Encrypter(str_repeat('a', 32), 'AES-256-CBC');
 
         $this->service = new MercadoPagoOAuthService(
             $this->config,
             $this->httpClient,
             $this->logger,
+            $this->encrypter,
         );
+    }
+
+    private function makeState(int $accountId, int $ts): string
+    {
+        return $this->encrypter->encrypt(['account_id' => $accountId, 'ts' => $ts]);
     }
 
     public function test_builds_authorization_url_with_correct_params(): void
@@ -54,14 +64,59 @@ class MercadoPagoOAuthServiceTest extends TestCase
         $this->assertStringContainsString('redirect_uri=', $url);
     }
 
-    public function test_decode_state_returns_account_id(): void
+    public function test_decode_state_returns_account_id_for_valid_state(): void
     {
-        $accountId = 99;
-        $encoded = base64_encode((string) $accountId);
+        $state = $this->makeState(99, time());
 
-        $result = $this->service->decodeState($encoded);
+        $this->assertSame(99, $this->service->decodeState($state));
+    }
 
-        $this->assertSame($accountId, $result);
+    /**
+     * Full round-trip through the public API: the state produced for the authorization
+     * URL must be URL-safe and decode back to the same account id after surviving the
+     * (url-encoded) redirect. This guards against breaking the working OAuth connect.
+     */
+    public function test_state_from_authorization_url_round_trips(): void
+    {
+        $this->config->shouldReceive('get')->with('mercadopago.client_id')->andReturn('id');
+        $this->config->shouldReceive('get')->with('mercadopago.redirect_uri')->andReturn('https://example.com/callback');
+        $this->config->shouldReceive('get')->with('mercadopago.auth_url')->andReturn('https://auth.mercadopago.com.ar/authorization');
+
+        $url = $this->service->buildAuthorizationUrl(7);
+        parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
+
+        $state = $query['state'];
+        $this->assertDoesNotMatchRegularExpression('/[+\/=]/', $state, 'State must be URL-safe (no + / =)');
+        $this->assertSame(7, $this->service->decodeState($state));
+    }
+
+    /**
+     * Security regression: the old forgeable format (base64 of the raw account id)
+     * must be rejected. Otherwise an attacker could craft a state pointing at any
+     * organizer's account and hijack their MercadoPago connection.
+     */
+    public function test_decode_state_rejects_forged_legacy_state(): void
+    {
+        $this->expectException(MercadoPagoOAuthException::class);
+
+        $this->service->decodeState(base64_encode('99'));
+    }
+
+    public function test_decode_state_rejects_expired_state(): void
+    {
+        $this->expectException(MercadoPagoOAuthException::class);
+
+        $this->service->decodeState($this->makeState(99, time() - 1000));
+    }
+
+    public function test_decode_state_rejects_state_encrypted_with_a_different_key(): void
+    {
+        $foreignEncrypter = new Encrypter(str_repeat('b', 32), 'AES-256-CBC');
+        $foreignState = $foreignEncrypter->encrypt(['account_id' => 99, 'ts' => time()]);
+
+        $this->expectException(MercadoPagoOAuthException::class);
+
+        $this->service->decodeState($foreignState);
     }
 
     public function test_decode_state_throws_for_invalid_input(): void
