@@ -132,7 +132,11 @@ class CreateOrderHandler
 
         if ($event->isEventInPast()) {
             $productIds = $createOrderPublicDTO->products->pluck('product_id')->toArray();
-            $products = $this->productRepository->findWhereIn(ProductDomainObjectAbstract::ID, $productIds);
+            $products = $this->productRepository->findWhereIn(
+                ProductDomainObjectAbstract::ID,
+                $productIds,
+                [ProductDomainObjectAbstract::EVENT_ID => $event->getId()]
+            );
             $hasTicketProducts = $products->some(
                 fn($product) => $product->getProductType() === ProductType::TICKET->name
             );
