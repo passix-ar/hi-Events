@@ -125,6 +125,12 @@ class CreateOrderHandler
                 __('This event is not live.')
             );
         }
+
+        if ($event->isEventInPast()) {
+            throw ValidationException::withMessages([
+                'event' => __('This event has ended and is no longer accepting ticket orders.'),
+            ]);
+        }
     }
 
     /**
