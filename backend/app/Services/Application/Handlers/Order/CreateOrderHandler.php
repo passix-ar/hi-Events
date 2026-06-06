@@ -131,19 +131,25 @@ class CreateOrderHandler
         }
 
         if ($event->isEventInPast()) {
-            $productIds = $createOrderPublicDTO->products->pluck('product_id')->toArray();
-            $products = $this->productRepository->findWhereIn(
-                ProductDomainObjectAbstract::ID,
-                $productIds,
-                [ProductDomainObjectAbstract::EVENT_ID => $event->getId()]
-            );
-            $hasTicketProducts = $products->some(
-                fn($product) => $product->getProductType() === ProductType::TICKET->name
-            );
-            if ($hasTicketProducts) {
-                throw ValidationException::withMessages([
-                    'event' => __('This event has ended and is no longer accepting ticket orders.'),
-                ]);
+            $productIds = $createOrderPublicDTO->products
+                ->filter(fn($p) => $p->quantities->sum('quantity') > 0)
+                ->pluck('product_id')
+                ->toArray();
+
+            if (!empty($productIds)) {
+                $products = $this->productRepository->findWhereIn(
+                    ProductDomainObjectAbstract::ID,
+                    $productIds,
+                    [ProductDomainObjectAbstract::EVENT_ID => $event->getId()]
+                );
+                $hasTicketProducts = $products->some(
+                    fn($product) => $product->getProductType() === ProductType::TICKET->name
+                );
+                if ($hasTicketProducts) {
+                    throw ValidationException::withMessages([
+                        'event' => __('This event has ended and is no longer accepting ticket orders.'),
+                    ]);
+                }
             }
         }
     }
