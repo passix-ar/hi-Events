@@ -48,6 +48,7 @@ export interface ProductFormPayload {
     promo_code: string | null,
     affiliate_code?: string | null,
     session_identifier?: string,
+    captcha_token?: string,
 }
 
 export interface RefundOrderPayload {

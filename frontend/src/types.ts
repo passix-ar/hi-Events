@@ -23,7 +23,9 @@ export type ConfigKeys =
     | 'VITE_I_HAVE_PURCHASED_A_LICENCE'
     | 'VITE_DEFAULT_IMAGE_URL'
     | 'VITE_COOKIE_CONSENT_ENABLED'
-    | 'VITE_COOKIE_CONSENT_TEXT';
+    | 'VITE_COOKIE_CONSENT_TEXT'
+    | 'VITE_TURNSTILE_ENABLED'
+    | 'VITE_TURNSTILE_SITE_KEY';
 
 export enum StripePlatform {
     Canada = 'ca',

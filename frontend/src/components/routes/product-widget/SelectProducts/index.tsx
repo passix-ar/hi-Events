@@ -37,6 +37,8 @@ import {IconChevronRight, IconX} from "@tabler/icons-react"
 import {getSessionIdentifier} from "../../../../utilites/sessionIdentifier.ts";
 import {Constants} from "../../../../constants.ts";
 import {clearWaitlistJoinedForEvent} from "../../../../hooks/useWaitlistJoined.ts";
+import {getConfig} from "../../../../utilites/config.ts";
+import {Turnstile, TurnstileInstance} from "@marsidev/react-turnstile";
 
 const AFFILIATE_EXPIRY_DAYS = 30;
 
@@ -90,6 +92,11 @@ const SelectProducts = (props: SelectProductsProps) => {
     const [resizeRef, resizeObserverRect] = useResizeObserver();
     const [collapsedProducts, setCollapsedProducts] = useState<{ [key: number]: boolean }>({});
     const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
+
+    const captchaEnabled = getConfig('VITE_TURNSTILE_ENABLED') === 'true';
+    const captchaSiteKey = getConfig('VITE_TURNSTILE_SITE_KEY');
+    const turnstileRef = useRef<TurnstileInstance>(null);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     useEffect(() => sendHeightToIframeWidgets(), [resizeObserverRect.height]);
 
@@ -163,12 +170,19 @@ const SelectProducts = (props: SelectProductsProps) => {
             }),
 
         onError: (error: any) => {
-            if (error?.response?.data?.errors) {
-                form.setErrors(error.response.data.errors);
+            // Turnstile tokens are single-use: force a fresh challenge on any failure.
+            if (captchaEnabled) {
+                turnstileRef.current?.reset();
+                setCaptchaToken(null);
+            }
+
+            const errors = error?.response?.data?.errors;
+            if (errors) {
+                form.setErrors(errors);
             }
 
             notifications.show({
-                message: error.response.data.errors?.products[0] || t`Unable to create product. Please check your details`,
+                message: errors?.products?.[0] || errors?.captcha?.[0] || t`Unable to create product. Please check your details`,
                 color: 'red',
             });
         }
@@ -279,7 +293,8 @@ const SelectProducts = (props: SelectProductsProps) => {
         if (values && selectedProductQuantitySum > 0) {
             productMutation.mutate({
                 ...values,
-                session_identifier: getSessionIdentifier()
+                session_identifier: getSessionIdentifier(),
+                captcha_token: captchaEnabled ? (captchaToken ?? undefined) : undefined,
             });
         } else {
             showInfo(t`Please select at least one product`);
@@ -299,6 +314,7 @@ const SelectProducts = (props: SelectProductsProps) => {
         || !productAreAvailable
         || selectedProductQuantitySum === 0
         || props.widgetMode === 'preview'
+        || (captchaEnabled && !captchaToken)
         || products?.every(product => product.is_sold_out);
 
     let productIndex = 0;
@@ -543,6 +559,18 @@ const SelectProducts = (props: SelectProductsProps) => {
                             <div dangerouslySetInnerHTML={{
                                 __html: event.settings.product_page_message.replace(/\n/g, '<br/>')
                             }} className={'hi-product-page-message'}/>
+                        )}
+                        {captchaEnabled && captchaSiteKey && (
+                            <div className={'hi-captcha-row'} style={{marginBottom: '12px'}}>
+                                <Turnstile
+                                    ref={turnstileRef}
+                                    siteKey={captchaSiteKey}
+                                    onSuccess={setCaptchaToken}
+                                    onError={() => setCaptchaToken(null)}
+                                    onExpire={() => setCaptchaToken(null)}
+                                    options={{theme: 'auto'}}
+                                />
+                            </div>
                         )}
                         <Button disabled={isButtonDisabled} fullWidth className={'hi-continue-button'}
                                 type={"submit"}

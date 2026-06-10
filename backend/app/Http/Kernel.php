@@ -14,6 +14,7 @@ use HiEvents\Http\Middleware\SetUserLocaleMiddleware;
 use HiEvents\Http\Middleware\TrimStrings;
 use HiEvents\Http\Middleware\TrustProxies;
 use HiEvents\Http\Middleware\ValidateSignature;
+use HiEvents\Http\Middleware\VerifyTurnstileToken;
 use HiEvents\Http\Middleware\VaporBinaryResponseMiddleware;
 use HiEvents\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -94,6 +95,7 @@ class Kernel extends HttpKernel
         'password.confirm' => RequirePassword::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
+        'turnstile' => VerifyTurnstileToken::class,
         'verified' => EnsureEmailIsVerified::class,
     ];
 }

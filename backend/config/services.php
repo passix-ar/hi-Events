@@ -52,4 +52,11 @@ return [
     'open_exchange_rates' => [
         'app_id' => env('OPEN_EXCHANGE_RATES_APP_ID'),
     ],
+
+    // Added by Passix: Cloudflare Turnstile (anti-bot CAPTCHA on the public checkout)
+    'turnstile' => [
+        'enabled' => (bool)env('TURNSTILE_ENABLED', false),
+        'secret_key' => env('TURNSTILE_SECRET_KEY'),
+        'verify_url' => env('TURNSTILE_VERIFY_URL', 'https://challenges.cloudflare.com/turnstile/v0/siteverify'),
+    ],
 ];
