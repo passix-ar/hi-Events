@@ -39,6 +39,7 @@ import {Constants} from "../../../../constants.ts";
 import {clearWaitlistJoinedForEvent} from "../../../../hooks/useWaitlistJoined.ts";
 import {getConfig} from "../../../../utilites/config.ts";
 import {Turnstile, TurnstileInstance} from "@marsidev/react-turnstile";
+import {detectMode} from "../../../../utilites/themeUtils.ts";
 
 const AFFILIATE_EXPIRY_DAYS = 30;
 
@@ -95,6 +96,7 @@ const SelectProducts = (props: SelectProductsProps) => {
 
     const captchaEnabled = getConfig('VITE_TURNSTILE_ENABLED') === 'true';
     const captchaSiteKey = getConfig('VITE_TURNSTILE_SITE_KEY');
+    const captchaTheme = props.colors?.background ? detectMode(props.colors.background) : 'auto';
     const turnstileRef = useRef<TurnstileInstance>(null);
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
@@ -568,7 +570,7 @@ const SelectProducts = (props: SelectProductsProps) => {
                                     onSuccess={setCaptchaToken}
                                     onError={() => setCaptchaToken(null)}
                                     onExpire={() => setCaptchaToken(null)}
-                                    options={{theme: 'auto'}}
+                                    options={{theme: captchaTheme}}
                                 />
                             </div>
                         )}
