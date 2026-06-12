@@ -50,16 +50,26 @@ class SendOrderDetailsService
         }
 
         if ($order->isOrderFailed()) {
-            $this->mailer
-                ->to($order->getEmail())
-                ->locale($order->getLocale())
-                ->send(new OrderFailed(
-                    order: $order,
-                    event: $event,
-                    organizer: $event->getOrganizer(),
-                    eventSettings: $event->getEventSettings(),
-                ));
+            $this->sendOrderFailedEmail($order, $event);
         }
+    }
+
+    public function sendOrderFailedEmail(OrderDomainObject $order, ?EventDomainObject $event = null): void
+    {
+        $event ??= $this->eventRepository
+            ->loadRelation(new Relationship(OrganizerDomainObject::class, name: 'organizer'))
+            ->loadRelation(new Relationship(EventSettingDomainObject::class))
+            ->findById($order->getEventId());
+
+        $this->mailer
+            ->to($order->getEmail())
+            ->locale($order->getLocale())
+            ->send(new OrderFailed(
+                order: $order,
+                event: $event,
+                organizer: $event->getOrganizer(),
+                eventSettings: $event->getEventSettings(),
+            ));
     }
 
     public function sendCustomerOrderSummary(
