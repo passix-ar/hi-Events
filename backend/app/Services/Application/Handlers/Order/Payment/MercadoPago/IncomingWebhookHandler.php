@@ -88,18 +88,20 @@ class IncomingWebhookHandler
             return false;
         }
 
+        if (!preg_match('/ts=([^,]+)/', $dto->xSignature, $tsMatch)
+            || !preg_match('/v1=([^,]+)/', $dto->xSignature, $hashMatch)) {
+            return false;
+        }
+
+        $ts           = trim($tsMatch[1]);
+        $receivedHash = trim($hashMatch[1]);
+
         $payload = json_decode($dto->payload, true);
-        $dataId  = $payload['data']['id'] ?? '';
+        // MercadoPago lowercases alphanumeric resource ids before signing.
+        $dataId = strtolower((string) ($payload['data']['id'] ?? ''));
 
-        $manifest = "id:{$dataId};request-id:{$dto->xRequestId};ts:";
-
-        preg_match('/ts=(\d+)/', $dto->xSignature, $tsMatch);
-        $ts = $tsMatch[1] ?? '';
-        $manifest .= $ts;
-
-        preg_match('/v1=([^,]+)/', $dto->xSignature, $hashMatch);
-        $receivedHash = $hashMatch[1] ?? '';
-
+        // Manifest template per MercadoPago spec — note the trailing semicolons.
+        $manifest     = "id:{$dataId};request-id:{$dto->xRequestId};ts:{$ts};";
         $expectedHash = hash_hmac('sha256', $manifest, $secret);
 
         return hash_equals($expectedHash, $receivedHash);
