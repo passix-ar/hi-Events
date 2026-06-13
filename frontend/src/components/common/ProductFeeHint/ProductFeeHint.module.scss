@@ -1,0 +1,26 @@
+.hint {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: var(--hi-color-gray);
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  line-height: 1.6;
+  color: var(--mantine-color-gray-7);
+}
+
+.value {
+  font-weight: 500;
+  color: var(--mantine-color-gray-8);
+}
+
+.valueStrong {
+  font-weight: 700;
+  color: var(--mantine-color-gray-9);
+}

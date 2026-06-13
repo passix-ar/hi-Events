@@ -38,7 +38,9 @@ import {useEffect} from "react";
 import {CustomSelect, ItemProps} from "../../common/CustomSelect";
 import {formatCurrency, getCurrencySymbol} from "../../../utilites/currency.ts";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
+import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetTaxesAndFees} from "../../../queries/useGetTaxesAndFees.ts";
+import {ProductFeeHint} from "../../common/ProductFeeHint";
 import {Card} from "../../common/Card";
 import classes from './ProductForm.module.scss';
 import {Fieldset} from "../../common/Fieldset";
@@ -55,7 +57,7 @@ interface ProductFormProps {
     event?: Event,
 }
 
-const ProductPriceTierForm = ({form, product, event}: ProductFormProps) => {
+const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormProps & {passToBuyer: boolean}) => {
     return form?.values?.prices?.map((price, index) => {
         const existingPrice = product?.prices?.find((p) => Number(p.id) === Number(price.id));
         const deleteDisabled = form?.values?.prices?.length === 1 || (existingPrice && Number(existingPrice?.quantity_sold) > 0);
@@ -87,6 +89,14 @@ const ProductPriceTierForm = ({form, product, event}: ProductFormProps) => {
                         required
                     />
                 </InputGroup>
+                {event?.id && event?.currency && (
+                    <ProductFeeHint
+                        eventId={event.id}
+                        price={Number(price.price) || 0}
+                        currency={event.currency}
+                        passToBuyer={passToBuyer}
+                    />
+                )}
                 <NumberInput
                     placeholder={t`Unlimited`}
                     {...form.getInputProps(`prices.${index}.initial_quantity_available`)}
@@ -187,7 +197,10 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     const isFreeProduct = form.values.type === 'FREE';
     const isDonationProduct = form.values.type === 'DONATION';
     const {data: event} = useGetEvent(eventId);
+    const {data: eventSettings} = useGetEventSettings(eventId);
     const {data: taxesAndFees} = useGetTaxesAndFees();
+
+    const passToBuyer = eventSettings?.pass_platform_fee_to_buyer ?? false;
 
     const handleTaxOrFeeCreated = (taxOrFee: TaxAndFee) => {
         const currentIds = form.values.tax_and_fee_ids || [];
@@ -302,6 +315,7 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
             />
 
             {form.values.type !== ProductPriceType.Tiered && (
+                <>
                 <InputGroup>
                     <NumberInput decimalScale={2}
                                  min={0}
@@ -343,12 +357,21 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                                  />}
                     />
                 </InputGroup>
+                {!isFreeProduct && event?.id && event?.currency && (
+                    <ProductFeeHint
+                        eventId={event.id}
+                        price={Number(form.values.prices?.[0]?.price) || 0}
+                        currency={event.currency}
+                        passToBuyer={passToBuyer}
+                    />
+                )}
+                </>
             )}
 
             {form.values.type === ProductPriceType.Tiered && (
                 <Fieldset legend={t`Price Tiers`} mt={20} mb={20}>
                     <div className={classes.priceTiers}>
-                        <ProductPriceTierForm product={product} form={form} event={event}/>
+                        <ProductPriceTierForm product={product} form={form} event={event} passToBuyer={passToBuyer}/>
                         <Button
                             className={classes.addTierButton}
                             size={'xs'}
