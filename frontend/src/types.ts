@@ -72,12 +72,19 @@ export interface ColorTheme {
     homepage_secondary_text_color: string;
 }
 
+export interface CoverImagePosition {
+    x: number;
+    y: number;
+}
+
 export interface HomepageThemeSettings {
     accent: string;
     background: string;
     mode: 'light' | 'dark';
     background_type: 'COLOR' | 'MIRROR_COVER_IMAGE';
     font_family?: string;
+    cover_image_position?: CoverImagePosition;
+    cover_image_scale?: number;
 }
 
 export interface LoginResponse {

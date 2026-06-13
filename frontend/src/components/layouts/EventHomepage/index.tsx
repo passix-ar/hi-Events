@@ -133,6 +133,8 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
         '--event-accent-muted': cssVars['--theme-accent-muted'],
         '--event-border-color': cssVars['--theme-border'],
         '--theme-font-family': cssVars['--theme-font-family'],
+        '--cover-pos': `${themeSettings.cover_image_position!.x}% ${themeSettings.cover_image_position!.y}%`,
+        '--cover-scale': themeSettings.cover_image_scale,
         fontFamily: cssVars['--theme-font-family'],
     } as React.CSSProperties;
 

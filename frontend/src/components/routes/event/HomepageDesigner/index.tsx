@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import {useGetEventSettings} from "../../../../queries/useGetEventSettings.ts";
 import {useUpdateEventSettings} from "../../../../mutations/useUpdateEventSettings.ts";
 import {useFormErrorResponseHandler} from "../../../../hooks/useFormErrorResponseHandler.tsx";
-import {EventSettings, HomepageThemeSettings, IdParam} from "../../../../types.ts";
+import {CoverImagePosition, EventSettings, HomepageThemeSettings, IdParam} from "../../../../types.ts";
 import {showSuccess} from "../../../../utilites/notifications.tsx";
 import {t} from "@lingui/macro";
 import {useForm} from "@mantine/form";
@@ -16,11 +16,16 @@ import {GET_EVENT_IMAGES_QUERY_KEY, useGetEventImages} from "../../../../queries
 import {eventPreviewPath} from "../../../../utilites/urlHelper.ts";
 import {LoadingMask} from "../../../common/LoadingMask";
 import {ImageUploadDropzone} from "../../../common/ImageUploadDropzone";
+import {CoverImageEditor} from "../../../common/CoverImageEditor";
 import {queryClient} from "../../../../utilites/queryClient.ts";
 import {GET_EVENT_PUBLIC_QUERY_KEY} from "../../../../queries/useGetEventPublic.ts";
 import {ThemeColorControls} from "../../../common/ThemeColorControls";
 import {ThemeFontControl} from "../../../common/ThemeFontControl";
-import {validateThemeSettings} from "../../../../utilites/themeUtils.ts";
+import {
+    DEFAULT_COVER_IMAGE_POSITION,
+    DEFAULT_COVER_IMAGE_SCALE,
+    validateThemeSettings
+} from "../../../../utilites/themeUtils.ts";
 import {DEFAULT_HOMEPAGE_FONT} from "../../../../constants/homepageFonts.ts";
 
 interface FormValues {
@@ -119,6 +124,20 @@ const HomepageDesigner = () => {
         });
     };
 
+    const handleCoverAdjust = ({position, scale}: { position: CoverImagePosition; scale: number }) => {
+        form.setFieldValue('homepage_theme_settings', {
+            ...form.values.homepage_theme_settings,
+            cover_image_position: position,
+            cover_image_scale: scale,
+        });
+    };
+
+    const handleCoverUpload = () => {
+        // A new image rarely fits the previous framing, so start fresh.
+        handleCoverAdjust({position: {...DEFAULT_COVER_IMAGE_POSITION}, scale: DEFAULT_COVER_IMAGE_SCALE});
+        handleImageChange();
+    };
+
     const sendSettingsToIframe = () => {
         if (iframeRef.current?.contentWindow && iframeLoaded) {
             const themeSettings = validateThemeSettings(form.values.homepage_theme_settings);
@@ -188,7 +207,7 @@ const HomepageDesigner = () => {
                                         <ImageUploadDropzone
                                             imageType="EVENT_COVER"
                                             entityId={eventId}
-                                            onUploadSuccess={handleImageChange}
+                                            onUploadSuccess={handleCoverUpload}
                                             onDeleteSuccess={handleImageChange}
                                             existingImageData={{
                                                 url: existingCover?.url,
@@ -197,6 +216,19 @@ const HomepageDesigner = () => {
                                             helpText={t`Cover image will be displayed at the top of your event page`}
                                             displayMode="compact"
                                         />
+                                        {existingCover?.url && (
+                                            <CoverImageEditor
+                                                imageUrl={existingCover.url}
+                                                aspectRatio={(existingCover.width && existingCover.height)
+                                                    ? existingCover.width / existingCover.height
+                                                    : undefined}
+                                                position={form.values.homepage_theme_settings.cover_image_position
+                                                    ?? DEFAULT_COVER_IMAGE_POSITION}
+                                                scale={form.values.homepage_theme_settings.cover_image_scale
+                                                    ?? DEFAULT_COVER_IMAGE_SCALE}
+                                                onChange={handleCoverAdjust}
+                                            />
+                                        )}
                                     </div>
                                 </Stack>
                             </Accordion.Panel>

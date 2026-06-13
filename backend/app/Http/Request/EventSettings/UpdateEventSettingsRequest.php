@@ -100,6 +100,10 @@ class UpdateEventSettingsRequest extends BaseRequest
             'homepage_theme_settings.mode' => ['nullable', 'string', Rule::in(['light', 'dark'])],
             'homepage_theme_settings.background_type' => ['nullable', 'string', Rule::in(HomepageBackgroundType::valuesArray())],
             'homepage_theme_settings.font_family' => ['nullable', 'string', Rule::in(HomepageFontFamily::valuesArray())],
+            'homepage_theme_settings.cover_image_position' => ['nullable', 'array'],
+            'homepage_theme_settings.cover_image_position.x' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'homepage_theme_settings.cover_image_position.y' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'homepage_theme_settings.cover_image_scale' => ['nullable', 'numeric', 'min:1', 'max:3'],
 
             // Self-service settings
             'allow_attendee_self_edit' => ['boolean'],

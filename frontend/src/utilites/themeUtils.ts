@@ -158,6 +158,9 @@ export function computeThemeVariables(settings: HomepageThemeSettings): ThemeCSS
     };
 }
 
+export const DEFAULT_COVER_IMAGE_POSITION = {x: 50, y: 50};
+export const DEFAULT_COVER_IMAGE_SCALE = 1;
+
 export function getDefaultThemeSettings(): HomepageThemeSettings {
     return {
         accent: '#d6ff3d',
@@ -165,6 +168,8 @@ export function getDefaultThemeSettings(): HomepageThemeSettings {
         mode: 'dark',
         background_type: 'COLOR',
         font_family: DEFAULT_HOMEPAGE_FONT,
+        cover_image_position: {...DEFAULT_COVER_IMAGE_POSITION},
+        cover_image_scale: DEFAULT_COVER_IMAGE_SCALE,
     };
 }
 
@@ -183,6 +188,11 @@ export function validateThemeSettings(
         mode: settings.mode || detectMode(settings.background || defaults.background),
         background_type: settings.background_type || defaults.background_type,
         font_family: settings.font_family || defaults.font_family,
+        cover_image_position: {
+            x: settings.cover_image_position?.x ?? defaults.cover_image_position!.x,
+            y: settings.cover_image_position?.y ?? defaults.cover_image_position!.y,
+        },
+        cover_image_scale: settings.cover_image_scale ?? defaults.cover_image_scale,
     };
 }
 

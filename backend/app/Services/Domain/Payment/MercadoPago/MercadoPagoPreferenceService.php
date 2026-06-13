@@ -52,11 +52,12 @@ class MercadoPagoPreferenceService
 
         $marketplaceFee = $this->calculateMarketplaceFee($accountConfiguration, $order);
         $items = $this->buildItems($order);
+        $payer = $this->buildPayer($order);
 
         try {
             $client = new PreferenceClient();
 
-            $preference = $client->create([
+            $preferenceData = [
                 'items'              => $items,
                 'marketplace_fee'    => $marketplaceFee,
                 'external_reference' => $order->getShortId(),
@@ -68,7 +69,13 @@ class MercadoPagoPreferenceService
                 'auto_return'        => 'approved',
                 'notification_url'   => $webhookUrl,
                 'statement_descriptor' => substr(config('app.name', 'Passix'), 0, 22),
-            ]);
+            ];
+
+            if ($payer) {
+                $preferenceData['payer'] = $payer;
+            }
+
+            $preference = $client->create($preferenceData);
 
             $this->logger->info('MercadoPago preference created', [
                 'preference_id'   => $preference->id,
@@ -126,9 +133,28 @@ class MercadoPagoPreferenceService
         return [[
             'id'          => $order->getShortId(),
             'title'       => $title,
+            'description' => $title,
+            'category_id' => 'tickets',
             'quantity'    => 1,
             'unit_price'  => round((float) $order->getTotalGross(), 2),
             'currency_id' => strtoupper($order->getCurrency()),
         ]];
+    }
+
+    /**
+     * Build the Checkout Pro payer block from the order's buyer details.
+     *
+     * MercadoPago uses this to improve approval rates and integration quality
+     * scoring. Only the fields we actually have are included.
+     */
+    private function buildPayer(OrderDomainObject $order): ?array
+    {
+        $payer = array_filter([
+            'name'    => $order->getFirstName(),
+            'surname' => $order->getLastName(),
+            'email'   => $order->getEmail(),
+        ], static fn ($value) => $value !== null && $value !== '');
+
+        return $payer === [] ? null : $payer;
     }
 }
