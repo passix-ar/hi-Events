@@ -28,7 +28,7 @@ export const PoweredByFooter = (
         <>
             {t`Powered by`}{" "}
             <a
-                href="https://passix.com.ar"
+                href="https://getpassix.com"
                 target="_blank"
                 title={"Passix — ticketing para tus eventos"}
             >

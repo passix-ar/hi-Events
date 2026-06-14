@@ -57,11 +57,11 @@ Todos los servicios deben estar en estado `Up`.
 
 ### 4. Exponer Grafana vía Coolify
 
-En Coolify, agregar un nuevo servicio apuntando al puerto `3001` con el dominio `grafana.passix.com.ar`. Coolify gestiona el SSL automáticamente.
+En Coolify, agregar un nuevo servicio apuntando al puerto `3001` con el dominio `grafana.getpassix.com`. Coolify gestiona el SSL automáticamente.
 
 ### 5. Primer login
 
-- URL: `https://grafana.passix.com.ar`
+- URL: `https://grafana.getpassix.com`
 - Usuario: `admin`
 - Contraseña: el valor de `GRAFANA_PASSWORD` en tu `.env`
 
@@ -134,7 +134,7 @@ docker compose -f docker-compose.monitoring.yml down -v
 UptimeRobot (gratis) hace health checks desde fuera del servidor — si el servidor entero cae, Grafana también cae y no puede alertar. UptimeRobot sí avisa.
 
 1. Crear cuenta en [uptimerobot.com](https://uptimerobot.com)
-2. Add Monitor → HTTP(s) → URL: `https://app.passix.com.ar`
+2. Add Monitor → HTTP(s) → URL: `https://app.getpassix.com`
 3. Intervalo: 5 minutos
 4. Alertas: email o Telegram
 

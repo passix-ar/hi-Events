@@ -179,7 +179,7 @@ class PassixDemoSeeder extends Seeder
             // 2. Create event settings
             DB::table('event_settings')->insert([
                 'event_id'                     => $eventId,
-                'support_email'                => "hola@passix.com.ar",
+                'support_email'                => "hola@getpassix.com",
                 'homepage_background_color'    => '#0b0b0e',
                 'homepage_primary_color'       => '#d6ff3d',
                 'homepage_primary_text_color'  => '#0b0b0e',
