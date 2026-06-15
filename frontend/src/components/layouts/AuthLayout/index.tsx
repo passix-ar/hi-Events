@@ -156,7 +156,7 @@ const AuthLayout = () => {
                         <div className={classes.logo} onClick={handleLogoClick} style={{cursor: 'pointer'}}>
                             <img
                                 src={"/logos/passix-dark-bg.svg"}
-                                alt={t`${getConfig("VITE_APP_NAME", "Hi.Events")} logo`}
+                                alt={t`${getConfig("VITE_APP_NAME", "Passix")} logo`}
                             />
                         </div>
                         <div className={classes.wrapper}>

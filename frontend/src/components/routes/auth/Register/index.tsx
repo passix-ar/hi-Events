@@ -130,7 +130,7 @@ export const Register = () => {
                     <Checkbox
                         mb="md"
                         {...form.getInputProps('marketing_opt_in', {type: 'checkbox'})}
-                        label={<Trans>Receive product updates from {getConfig("VITE_APP_NAME", "Hi.Events")}.</Trans>}
+                        label={<Trans>Receive product updates from {getConfig("VITE_APP_NAME", "Passix")}.</Trans>}
                     />
 
                     <Button color="secondary.5" type="submit" fullWidth disabled={mutate.isPending}>

@@ -181,7 +181,7 @@ const Payment = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {getConfig('VITE_APP_NAME', 'Hi.Events')} Terms of Service
+                                    {getConfig('VITE_APP_NAME', 'Passix')} Terms of Service
                                 </a>
                             </Trans>
                         </p>

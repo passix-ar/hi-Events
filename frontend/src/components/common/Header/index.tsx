@@ -13,7 +13,7 @@ export const Header = ({rightContent, fullWidth = false}: HeaderProps) => {
         <header className={classes.header}>
             <Container size="md" className={classes.inner} fluid={fullWidth}>
                 <NavLink className={classes.logo} to={'/manage/events'}>
-                    <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Hi.Events")} logo`} className={classes.logo}/>
+                    <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Passix")} logo`} className={classes.logo}/>
                 </NavLink>
 
                 <div className={classes.rightContent}>

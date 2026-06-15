@@ -41,7 +41,7 @@ export const ErrorDisplay = () => {
                     <Stack gap="xl" align="center">
                         <Image
                             src={"/logos/passix-dark-bg.svg"}
-                            alt={getConfig("VITE_APP_NAME", "Hi.Events") + " Logo"}
+                            alt={getConfig("VITE_APP_NAME", "Passix") + " Logo"}
                             w={rem(140)}
                             h="auto"
                             fit="contain"

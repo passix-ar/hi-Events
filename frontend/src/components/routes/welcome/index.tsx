@@ -467,11 +467,11 @@ const Welcome = () => {
             <Container size="sm" className={classes.welcomeContent}>
                 <div className={classes.welcomeHeader}>
                     <div className={classes.logo}>
-                        <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Hi.Events")} logo`} className={classes.logo}/>
+                        <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Passix")} logo`} className={classes.logo}/>
                     </div>
                     <h1 className={classes.welcomeTitle}>
                         <Trans>
-                            Welcome to {getConfig("VITE_APP_NAME", "Hi.Events")}, {userData?.first_name} 👋
+                            Welcome to {getConfig("VITE_APP_NAME", "Passix")}, {userData?.first_name} 👋
                         </Trans>
                     </h1>
                 </div>

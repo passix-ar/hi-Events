@@ -26,7 +26,6 @@ export const PoweredByFooter = (
 
     const footerContent = (
         <>
-            {t`Powered by`}{" "}
             <a
                 href="https://getpassix.com"
                 target="_blank"
@@ -34,8 +33,8 @@ export const PoweredByFooter = (
             >
                 Passix
             </a>
-            {", "}
-            {t`based on`}{" "}
+            {" | "}
+            {t`Powered by`}{" "}
             <a
                 href="https://hi.events"
                 target="_blank"

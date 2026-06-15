@@ -38,7 +38,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 </div>
                 <div className={classes.logo}>
                     <NavLink to={ `/manage/events` }>
-                        <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Hi.Events")} logo`} className={classes.logo}/>
+                        <img src={"/logos/passix-dark-bg.svg"} alt={`${getConfig("VITE_APP_NAME", "Passix")} logo`} className={classes.logo}/>
                     </NavLink>
                 </div>
 
