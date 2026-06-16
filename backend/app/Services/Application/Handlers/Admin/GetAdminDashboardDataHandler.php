@@ -4,6 +4,7 @@ namespace HiEvents\Services\Application\Handlers\Admin;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\DomainObjects\Status\OrderApplicationFeeStatus;
 use HiEvents\DomainObjects\Status\OrderPaymentStatus;
 use HiEvents\DomainObjects\Status\OrderStatus;
 use HiEvents\Services\Application\Handlers\Admin\DTO\AdminDashboardResponseDTO;
@@ -225,20 +226,22 @@ class GetAdminDashboardDataHandler
     private function getPlatformRevenue(Carbon $since): float
     {
         $query = <<<SQL
-            SELECT COALESCE(SUM(oppf.application_fee_gross_amount), 0) as total
-            FROM order_payment_platform_fees oppf
-            INNER JOIN orders o ON o.id = oppf.order_id
+            SELECT COALESCE(SUM(oaf.amount), 0) as total
+            FROM order_application_fees oaf
+            INNER JOIN orders o ON o.id = oaf.order_id
             WHERE o.created_at >= :since
               AND o.deleted_at IS NULL
               AND o.status = :statusCompleted
               AND o.payment_status = :paymentStatusPaid
-              AND oppf.deleted_at IS NULL
+              AND oaf.deleted_at IS NULL
+              AND oaf.status = :feeStatusPaid
         SQL;
 
         $result = DB::selectOne($query, [
             'since' => $since,
             'statusCompleted' => OrderStatus::COMPLETED->name,
             'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
+            'feeStatusPaid' => OrderApplicationFeeStatus::PAID->value,
         ]);
 
         return (float)($result->total ?? 0);

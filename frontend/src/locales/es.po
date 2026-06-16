@@ -3658,7 +3658,7 @@ msgstr "Excepción"
 
 #: src/components/routes/admin/Dashboard/index.tsx:249
 msgid "Expected platform income from application fees on completed orders"
-msgstr ""
+msgstr "Ingreso estimado de la plataforma por comisiones sobre órdenes completadas"
 
 #: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Expiration date"
@@ -4884,7 +4884,7 @@ msgstr "Últimas 48 horas"
 
 #: src/components/routes/admin/Dashboard/index.tsx:275
 msgid "Last 5 Days Revenue"
-msgstr ""
+msgstr "Ingresos de los últimos 5 días"
 
 #: src/components/common/OrganizerReportTable/index.tsx:60
 #: src/components/common/ReportTable/index.tsx:51
@@ -6399,7 +6399,7 @@ msgstr "Passix cobra tarifas de plataforma para mantener y mejorar nuestros serv
 
 #: src/components/routes/admin/Dashboard/index.tsx:245
 msgid "Passix Commission Revenue"
-msgstr ""
+msgstr "Ingresos por comisiones de Passix"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
 #: src/components/routes/auth/Login/index.tsx:99
@@ -9276,7 +9276,7 @@ msgstr "Para recibir pagos con tarjeta de crédito, debes conectar tu cuenta de 
 
 #: src/components/routes/admin/Dashboard/index.tsx:257
 msgid "Today's Revenue"
-msgstr ""
+msgstr "Ingresos de hoy"
 
 #: src/components/common/ColumnVisibilityToggle/index.tsx:26
 msgid "Toggle columns"
