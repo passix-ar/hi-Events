@@ -89,6 +89,10 @@ class PaymentApprovedHandler
                 return;
             }
 
+            if (!$this->paymentMatchesOrder($order, $paymentData)) {
+                return;
+            }
+
             $this->storeMercadoPagoPayment($mpPaymentId, $order->getId(), $paymentData);
 
             $updatedOrder = $this->orderRepository
@@ -123,6 +127,35 @@ class PaymentApprovedHandler
             $this->storeApplicationFee($updatedOrder, $paymentData);
             $this->markAsHandled($mpPaymentId, $updatedOrder);
         });
+    }
+
+    /**
+     * Reconcile the approved payment against the order before fulfilling it. The
+     * preference is created charging the order's total_gross in its own currency, so
+     * the amount paid must cover that total and the currency must match. A divergence
+     * means the payment does not correspond to this order and must not grant tickets.
+     */
+    private function paymentMatchesOrder(OrderDomainObject $order, array $paymentData): bool
+    {
+        $paidAmount = (float) ($paymentData['transaction_amount'] ?? 0);
+        $paidCurrency = strtoupper((string) ($paymentData['currency_id'] ?? ''));
+
+        $expectedAmount = round((float) $order->getTotalGross(), 2);
+        $expectedCurrency = strtoupper($order->getCurrency());
+
+        if ($paidCurrency !== $expectedCurrency || $paidAmount + 0.01 < $expectedAmount) {
+            $this->logger->error('MercadoPago payment does not match order, skipping fulfilment', [
+                'order_id'          => $order->getId(),
+                'paid_amount'       => $paidAmount,
+                'expected_amount'   => $expectedAmount,
+                'paid_currency'     => $paidCurrency,
+                'expected_currency' => $expectedCurrency,
+            ]);
+
+            return false;
+        }
+
+        return true;
     }
 
     private function storeMercadoPagoPayment(string $mpPaymentId, int $orderId, array $data): void

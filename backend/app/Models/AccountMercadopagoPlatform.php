@@ -15,6 +15,8 @@ class AccountMercadopagoPlatform extends BaseModel
     protected function getCastMap(): array
     {
         return [
+            'access_token'        => 'encrypted',
+            'refresh_token'       => 'encrypted',
             'token_expires_at'    => 'datetime',
             'setup_completed_at'  => 'datetime',
         ];
