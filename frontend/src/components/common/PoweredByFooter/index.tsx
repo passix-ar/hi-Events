@@ -44,7 +44,7 @@ export const PoweredByFooter = (
             </a>
             {" ("}
             <a
-                href="https://github.com/passix-ar/hi-Events"
+                href="https://github.com/HiEventsDev/hi.events"
                 target="_blank"
                 title={"Source code — AGPL v3"}
             >
