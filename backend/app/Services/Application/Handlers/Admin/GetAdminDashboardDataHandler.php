@@ -4,7 +4,6 @@ namespace HiEvents\Services\Application\Handlers\Admin;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\Status\EventStatus;
-use HiEvents\DomainObjects\Status\OrderApplicationFeeStatus;
 use HiEvents\DomainObjects\Status\OrderPaymentStatus;
 use HiEvents\DomainObjects\Status\OrderStatus;
 use HiEvents\Services\Application\Handlers\Admin\DTO\AdminDashboardResponseDTO;
@@ -27,8 +26,7 @@ class GetAdminDashboardDataHandler
             recent_orders_count: $this->getRecentOrdersCount($since),
             recent_orders_total: $this->getRecentOrdersTotal($since),
             recent_signups_count: $this->getRecentSignupsCount($since),
-            today_platform_revenue: $this->getPlatformRevenue(Carbon::now()->startOfDay()),
-            last_5_days_platform_revenue: $this->getPlatformRevenue(Carbon::now()->subDays(5)),
+            total_passix_commission: $this->getTotalPassixCommission($since),
             mercadopago_reconciliation: $this->getMercadoPagoReconciliation($since, $limit),
         );
     }
@@ -224,25 +222,24 @@ class GetAdminDashboardDataHandler
         return (int)($result->count ?? 0);
     }
 
-    private function getPlatformRevenue(Carbon $since): float
+    private function getTotalPassixCommission(Carbon $since): float
     {
         $query = <<<SQL
-            SELECT COALESCE(SUM(oaf.amount), 0) as total
-            FROM order_application_fees oaf
-            INNER JOIN orders o ON o.id = oaf.order_id
+            SELECT COALESCE(SUM(mp.marketplace_fee), 0) as total
+            FROM mercadopago_payments mp
+            INNER JOIN orders o ON o.id = mp.order_id
             WHERE o.created_at >= :since
               AND o.deleted_at IS NULL
+              AND mp.deleted_at IS NULL
+              AND mp.status = 'approved'
               AND o.status = :statusCompleted
               AND o.payment_status = :paymentStatusPaid
-              AND oaf.deleted_at IS NULL
-              AND oaf.status = :feeStatusPaid
         SQL;
 
         $result = DB::selectOne($query, [
             'since' => $since,
             'statusCompleted' => OrderStatus::COMPLETED->name,
             'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
-            'feeStatusPaid' => OrderApplicationFeeStatus::PAID->value,
         ]);
 
         return (float)($result->total ?? 0);
@@ -252,7 +249,8 @@ class GetAdminDashboardDataHandler
     {
         $query = <<<SQL
             SELECT
-                a.id as account_id,
+                e.id as event_id,
+                e.title as event_title,
                 a.name as account_name,
                 UPPER(COALESCE(mp.currency_id, e.currency)) as currency,
                 COUNT(DISTINCT o.id) as orders_count,
@@ -270,8 +268,8 @@ class GetAdminDashboardDataHandler
               AND mp.status = 'approved'
               AND o.status = :statusCompleted
               AND o.payment_status = :paymentStatusPaid
-            GROUP BY a.id, a.name, UPPER(COALESCE(mp.currency_id, e.currency))
-            ORDER BY gross_collected DESC
+            GROUP BY e.id, e.title, a.name, UPPER(COALESCE(mp.currency_id, e.currency))
+            ORDER BY passix_commission DESC
             LIMIT :limit
         SQL;
 

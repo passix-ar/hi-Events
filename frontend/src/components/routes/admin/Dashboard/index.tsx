@@ -237,17 +237,36 @@ const AdminDashboard = () => {
                     </SimpleGrid>
                 </div>
 
-                {/* MercadoPago Reconciliation */}
+                {/* Passix Commission per Event */}
                 <div>
                     <Title order={2} mb="xs">
                         <Group gap="xs">
                             <IconCurrencyDollar size={24} />
-                            <Trans>MercadoPago Reconciliation (Last 14 Days)</Trans>
+                            <Trans>Passix Commission per Event (Last 14 Days)</Trans>
                         </Group>
                     </Title>
                     <Text size="xs" c="dimmed" mb="md">
-                        <Trans>Estimated from approved MercadoPago payments. Organizer net is gross collected minus Passix commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here.</Trans>
+                        <Trans>Our commission per event, taken from the marketplace fee on approved MercadoPago payments. Organizer net is gross collected minus our commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here.</Trans>
                     </Text>
+
+                    <Paper shadow="sm" p="md" radius="md" withBorder mb="md" bg="var(--mantine-color-lime-light)">
+                        <Group gap="xs">
+                            <IconCurrencyDollar size={32} color="var(--mantine-color-lime-7)" />
+                            <div style={{flex: 1}}>
+                                <Text size="xs" c="dimmed" fw={500}>
+                                    {t`Total Passix Commission (Last 14 Days)`}
+                                </Text>
+                                {isLoadingDashboard ? (
+                                    <Skeleton height={28} width={120} mt={4} />
+                                ) : (
+                                    <Text size="xl" fw={700}>
+                                        {formatCurrency(dashboardData?.total_passix_commission || 0)}
+                                    </Text>
+                                )}
+                            </div>
+                        </Group>
+                    </Paper>
+
                     {isLoadingDashboard ? (
                         <Skeleton height={160} radius="md" />
                     ) : dashboardData?.mercadopago_reconciliation && dashboardData.mercadopago_reconciliation.length > 0 ? (
@@ -255,7 +274,7 @@ const AdminDashboard = () => {
                             <Table striped highlightOnHover>
                                 <Table.Thead>
                                     <Table.Tr>
-                                        <Table.Th>{t`Account`}</Table.Th>
+                                        <Table.Th>{t`Event`}</Table.Th>
                                         <Table.Th ta="right">{t`Paid Orders`}</Table.Th>
                                         <Table.Th ta="right">{t`Gross Collected`}</Table.Th>
                                         <Table.Th ta="right">{t`Passix Commission`}</Table.Th>
@@ -264,14 +283,14 @@ const AdminDashboard = () => {
                                 </Table.Thead>
                                 <Table.Tbody>
                                     {dashboardData.mercadopago_reconciliation.map((row) => (
-                                        <Table.Tr key={`${row.account_id}-${row.currency}`}>
+                                        <Table.Tr key={`${row.event_id}-${row.currency}`}>
                                             <Table.Td>
-                                                <Text fw={500}>{row.account_name || '-'}</Text>
-                                                <Text size="xs" c="dimmed">{row.currency}</Text>
+                                                <Text fw={500}>{row.event_title}</Text>
+                                                <Text size="xs" c="dimmed">{row.account_name || '-'} · {row.currency}</Text>
                                             </Table.Td>
                                             <Table.Td ta="right">{formatNumber(row.orders_count)}</Table.Td>
                                             <Table.Td ta="right">{formatCurrency(row.gross_collected, row.currency)}</Table.Td>
-                                            <Table.Td ta="right">{formatCurrency(row.passix_commission, row.currency)}</Table.Td>
+                                            <Table.Td ta="right"><Text fw={600}>{formatCurrency(row.passix_commission, row.currency)}</Text></Table.Td>
                                             <Table.Td ta="right">{formatCurrency(row.organizer_net, row.currency)}</Table.Td>
                                         </Table.Tr>
                                     ))}
@@ -288,56 +307,6 @@ const AdminDashboard = () => {
                             </Stack>
                         </Paper>
                     )}
-                </div>
-
-                {/* Passix Commission Revenue */}
-                <div>
-                    <Title order={2} mb="xs">
-                        <Group gap="xs">
-                            <IconCurrencyDollar size={24} />
-                            <Trans>Passix Commission Revenue</Trans>
-                        </Group>
-                    </Title>
-                    <Text size="xs" c="dimmed" mb="md">
-                        <Trans>Expected platform income from application fees on completed orders</Trans>
-                    </Text>
-                    <SimpleGrid cols={{base: 1, sm: 2}} spacing="md">
-                        <Paper shadow="sm" p="md" radius="md" withBorder>
-                            <Group gap="xs">
-                                <IconCurrencyDollar size={32} color="var(--mantine-color-indigo-6)" />
-                                <div style={{flex: 1}}>
-                                    <Text size="xs" c="dimmed" fw={500}>
-                                        {t`Today's Revenue`}
-                                    </Text>
-                                    {isLoadingDashboard ? (
-                                        <Skeleton height={28} width={80} mt={4} />
-                                    ) : (
-                                        <Text size="xl" fw={700}>
-                                            {formatCurrency(dashboardData?.today_platform_revenue || 0)}
-                                        </Text>
-                                    )}
-                                </div>
-                            </Group>
-                        </Paper>
-
-                        <Paper shadow="sm" p="md" radius="md" withBorder>
-                            <Group gap="xs">
-                                <IconCurrencyDollar size={32} color="var(--mantine-color-grape-6)" />
-                                <div style={{flex: 1}}>
-                                    <Text size="xs" c="dimmed" fw={500}>
-                                        {t`Last 5 Days Revenue`}
-                                    </Text>
-                                    {isLoadingDashboard ? (
-                                        <Skeleton height={28} width={80} mt={4} />
-                                    ) : (
-                                        <Text size="xl" fw={700}>
-                                            {formatCurrency(dashboardData?.last_5_days_platform_revenue || 0)}
-                                        </Text>
-                                    )}
-                                </div>
-                            </Group>
-                        </Paper>
-                    </SimpleGrid>
                 </div>
 
                 {/* Popular Events */}

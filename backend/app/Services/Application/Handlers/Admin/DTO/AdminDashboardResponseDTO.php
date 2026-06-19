@@ -15,8 +15,7 @@ class AdminDashboardResponseDTO extends BaseDataObject
         public readonly int $recent_orders_count,
         public readonly float $recent_orders_total,
         public readonly int $recent_signups_count,
-        public readonly float $today_platform_revenue,
-        public readonly float $last_5_days_platform_revenue,
+        public readonly float $total_passix_commission,
         public readonly array $mercadopago_reconciliation,
     ) {
     }
