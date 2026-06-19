@@ -63,11 +63,6 @@ export function Dashboard() {
         return <Navigate to={'/welcome'}/>
     }
 
-    // If there's only one organizer, redirect to their dashboard
-    if (organizersQuery.isFetched && organizers?.length === 1) {
-        return <Navigate to={'/manage/organizer/' + organizers[0].id}/>;
-    }
-
     const getHeading = () => {
         if (eventsState === 'upcoming' || !eventsState) {
             return t`All Upcoming Events`;
