@@ -168,7 +168,7 @@ const AdminDashboard = () => {
                                 <IconCurrencyDollar size={32} color="var(--mantine-color-teal-6)" />
                                 <div style={{flex: 1}}>
                                     <Text size="xs" c="dimmed" fw={500}>
-                                        {t`Platform Revenue`}
+                                        {t`Gross Sales`}
                                     </Text>
                                     {isLoadingDashboard ? (
                                         <Skeleton height={28} width={80} mt={4} />
@@ -235,6 +235,59 @@ const AdminDashboard = () => {
                             </Group>
                         </Paper>
                     </SimpleGrid>
+                </div>
+
+                {/* MercadoPago Reconciliation */}
+                <div>
+                    <Title order={2} mb="xs">
+                        <Group gap="xs">
+                            <IconCurrencyDollar size={24} />
+                            <Trans>MercadoPago Reconciliation (Last 14 Days)</Trans>
+                        </Group>
+                    </Title>
+                    <Text size="xs" c="dimmed" mb="md">
+                        <Trans>Estimated from approved MercadoPago payments. Organizer net is gross collected minus Passix commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here.</Trans>
+                    </Text>
+                    {isLoadingDashboard ? (
+                        <Skeleton height={160} radius="md" />
+                    ) : dashboardData?.mercadopago_reconciliation && dashboardData.mercadopago_reconciliation.length > 0 ? (
+                        <Paper shadow="sm" radius="md" withBorder>
+                            <Table striped highlightOnHover>
+                                <Table.Thead>
+                                    <Table.Tr>
+                                        <Table.Th>{t`Account`}</Table.Th>
+                                        <Table.Th ta="right">{t`Paid Orders`}</Table.Th>
+                                        <Table.Th ta="right">{t`Gross Collected`}</Table.Th>
+                                        <Table.Th ta="right">{t`Passix Commission`}</Table.Th>
+                                        <Table.Th ta="right">{t`Estimated Organizer Net`}</Table.Th>
+                                    </Table.Tr>
+                                </Table.Thead>
+                                <Table.Tbody>
+                                    {dashboardData.mercadopago_reconciliation.map((row) => (
+                                        <Table.Tr key={`${row.account_id}-${row.currency}`}>
+                                            <Table.Td>
+                                                <Text fw={500}>{row.account_name || '-'}</Text>
+                                                <Text size="xs" c="dimmed">{row.currency}</Text>
+                                            </Table.Td>
+                                            <Table.Td ta="right">{formatNumber(row.orders_count)}</Table.Td>
+                                            <Table.Td ta="right">{formatCurrency(row.gross_collected, row.currency)}</Table.Td>
+                                            <Table.Td ta="right">{formatCurrency(row.passix_commission, row.currency)}</Table.Td>
+                                            <Table.Td ta="right">{formatCurrency(row.organizer_net, row.currency)}</Table.Td>
+                                        </Table.Tr>
+                                    ))}
+                                </Table.Tbody>
+                            </Table>
+                        </Paper>
+                    ) : (
+                        <Paper shadow="sm" p="xl" radius="md" withBorder>
+                            <Stack align="center" gap="xs">
+                                <IconCurrencyDollar size={48} color="var(--mantine-color-dimmed)" />
+                                <Text size="lg" c="dimmed">
+                                    <Trans>No approved MercadoPago payments in the last 14 days</Trans>
+                                </Text>
+                            </Stack>
+                        </Paper>
+                    )}
                 </div>
 
                 {/* Passix Commission Revenue */}

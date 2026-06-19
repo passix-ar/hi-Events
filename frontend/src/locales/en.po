@@ -10759,3 +10759,31 @@ msgstr "Zip or Postal Code"
 #: src/components/routes/product-widget/CollectInformation/index.tsx:549
 msgid "ZIP or Postal Code"
 msgstr "ZIP or Postal Code"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "Estimated from approved MercadoPago payments. Organizer net is gross collected minus Passix commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here."
+msgstr "Estimated from approved MercadoPago payments. Organizer net is gross collected minus Passix commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here."
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "Estimated Organizer Net"
+msgstr "Estimated Organizer Net"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "Gross Collected"
+msgstr "Gross Collected"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "MercadoPago Reconciliation (Last 14 Days)"
+msgstr "MercadoPago Reconciliation (Last 14 Days)"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "No approved MercadoPago payments in the last 14 days"
+msgstr "No approved MercadoPago payments in the last 14 days"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "Paid Orders"
+msgstr "Paid Orders"
+
+#: src/components/routes/admin/Dashboard/index.tsx
+msgid "Passix Commission"
+msgstr "Passix Commission"

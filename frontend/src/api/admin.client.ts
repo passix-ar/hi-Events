@@ -160,6 +160,16 @@ export interface RecentAccount {
     users_count: number;
 }
 
+export interface MercadoPagoReconciliation {
+    account_id: IdParam;
+    account_name: string | null;
+    currency: string;
+    orders_count: number;
+    gross_collected: number;
+    passix_commission: number;
+    organizer_net: number;
+}
+
 export interface AdminDashboardData {
     popular_events: PopularEvent[];
     most_viewed_events: MostViewedEvent[];
@@ -171,6 +181,7 @@ export interface AdminDashboardData {
     recent_signups_count: number;
     today_platform_revenue: number;
     last_5_days_platform_revenue: number;
+    mercadopago_reconciliation: MercadoPagoReconciliation[];
 }
 
 export interface GetAdminDashboardParams {

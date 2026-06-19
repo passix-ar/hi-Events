@@ -29,6 +29,7 @@ class GetAdminDashboardDataHandler
             recent_signups_count: $this->getRecentSignupsCount($since),
             today_platform_revenue: $this->getPlatformRevenue(Carbon::now()->startOfDay()),
             last_5_days_platform_revenue: $this->getPlatformRevenue(Carbon::now()->subDays(5)),
+            mercadopago_reconciliation: $this->getMercadoPagoReconciliation($since, $limit),
         );
     }
 
@@ -245,5 +246,38 @@ class GetAdminDashboardDataHandler
         ]);
 
         return (float)($result->total ?? 0);
+    }
+
+    private function getMercadoPagoReconciliation(Carbon $since, int $limit): array
+    {
+        $query = <<<SQL
+            SELECT
+                a.id as account_id,
+                a.name as account_name,
+                UPPER(COALESCE(mp.currency_id, o.currency)) as currency,
+                COUNT(DISTINCT o.id) as orders_count,
+                COALESCE(SUM(mp.transaction_amount), 0) as gross_collected,
+                COALESCE(SUM(mp.marketplace_fee), 0) as passix_commission,
+                COALESCE(SUM(mp.transaction_amount - COALESCE(mp.marketplace_fee, 0)), 0) as organizer_net
+            FROM mercadopago_payments mp
+            INNER JOIN orders o ON o.id = mp.order_id
+            LEFT JOIN accounts a ON a.id = o.account_id
+            WHERE o.created_at >= :since
+              AND o.deleted_at IS NULL
+              AND mp.deleted_at IS NULL
+              AND mp.status = 'approved'
+              AND o.status = :statusCompleted
+              AND o.payment_status = :paymentStatusPaid
+            GROUP BY a.id, a.name, UPPER(COALESCE(mp.currency_id, o.currency))
+            ORDER BY gross_collected DESC
+            LIMIT :limit
+        SQL;
+
+        return DB::select($query, [
+            'since' => $since,
+            'statusCompleted' => OrderStatus::COMPLETED->name,
+            'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
+            'limit' => $limit,
+        ]);
     }
 }
