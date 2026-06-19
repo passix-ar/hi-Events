@@ -11,6 +11,7 @@ import {
     NumberInput,
     Select,
     Switch,
+    Text,
     TextInput
 } from "@mantine/core";
 import {
@@ -58,29 +59,33 @@ interface ProductFormProps {
     event?: Event,
 }
 
+// UI-only helpers: convert between the seller's net payout and the sale price,
+// inverting the same estimate shown in the fee breakdown (ProductFeeHint). The net
+// is never persisted — editing it just fills in the price, which stays the saved value.
+type FeeRates = { percentage_fee: number, fixed_fee_converted: number };
+
+const netFromPrice = (price: number, fee: FeeRates, passToBuyer: boolean) => {
+    const platformRate = fee.percentage_fee / 100;
+    const fixedFee = fee.fixed_fee_converted;
+    const mpRate = MP_FEE_PERCENT / 100;
+    const net = passToBuyer
+        ? (price * (1 - mpRate - platformRate) - fixedFee * mpRate) / (1 - platformRate)
+        : price * (1 - platformRate - mpRate) - fixedFee;
+    return Math.round(net * 100) / 100;
+};
+
+const priceFromNet = (net: number, fee: FeeRates, passToBuyer: boolean) => {
+    const platformRate = fee.percentage_fee / 100;
+    const fixedFee = fee.fixed_fee_converted;
+    const mpRate = MP_FEE_PERCENT / 100;
+    const price = passToBuyer
+        ? (net * (1 - platformRate) + fixedFee * mpRate) / (1 - mpRate - platformRate)
+        : (net + fixedFee) / (1 - platformRate - mpRate);
+    return Math.round(price * 100) / 100;
+};
+
 const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormProps & {passToBuyer: boolean}) => {
     const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
-
-    // UI-only helper: convert between the seller's net payout and the sale price,
-    // inverting the same estimate shown in the fee breakdown. The net is never
-    // persisted — editing it just fills in the price, which stays the saved value.
-    const platformRate = fee ? fee.percentage_fee / 100 : 0;
-    const fixedFee = fee ? fee.fixed_fee_converted : 0;
-    const mpRate = MP_FEE_PERCENT / 100;
-
-    const netFromPrice = (price: number) => {
-        const net = passToBuyer
-            ? (price * (1 - mpRate - platformRate) - fixedFee * mpRate) / (1 - platformRate)
-            : price * (1 - platformRate - mpRate) - fixedFee;
-        return Math.round(net * 100) / 100;
-    };
-
-    const priceFromNet = (net: number) => {
-        const price = passToBuyer
-            ? (net * (1 - platformRate) + fixedFee * mpRate) / (1 - mpRate - platformRate)
-            : (net + fixedFee) / (1 - platformRate - mpRate);
-        return Math.round(price * 100) / 100;
-    };
 
     return form?.values?.prices?.map((price, index) => {
         const existingPrice = product?.prices?.find((p) => Number(p.id) === Number(price.id));
@@ -103,12 +108,12 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormPr
                         <NumberInput decimalScale={2}
                                      min={0}
                                      leftSection={getCurrencySymbol(event.currency)}
-                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price)) : ''}
+                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price), fee, passToBuyer) : ''}
                                      onChange={(value) => {
                                          const net = Number(value);
                                          form.setFieldValue(
                                              `prices.${index}.price`,
-                                             Number.isFinite(net) && net > 0 ? priceFromNet(net) : 0
+                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer) : 0
                                          );
                                      }}
                                      label={t`You want to receive (net)`}
@@ -128,6 +133,11 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormPr
                         required
                     />
                 </InputGroup>
+                {fee && event?.currency && (
+                    <Text size="xs" c="dimmed" mt={4}>
+                        {t`Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term.`}
+                    </Text>
+                )}
                 {event?.id && event?.currency && (
                     <ProductFeeHint
                         eventId={event.id}
@@ -240,6 +250,7 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     const {data: taxesAndFees} = useGetTaxesAndFees();
 
     const passToBuyer = eventSettings?.pass_platform_fee_to_buyer ?? false;
+    const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
 
     const handleTaxOrFeeCreated = (taxOrFee: TaxAndFee) => {
         const currentIds = form.values.tax_and_fee_ids || [];
@@ -356,6 +367,22 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
             {form.values.type !== ProductPriceType.Tiered && (
                 <>
                 <InputGroup>
+                    {!isFreeProduct && fee && event?.currency && (
+                        <NumberInput decimalScale={2}
+                                     min={0}
+                                     leftSection={getCurrencySymbol(event.currency)}
+                                     value={Number(form.values.prices?.[0]?.price) > 0
+                                         ? netFromPrice(Number(form.values.prices?.[0]?.price), fee, passToBuyer) : ''}
+                                     onChange={(value) => {
+                                         const net = Number(value);
+                                         form.setFieldValue(
+                                             'prices.0.price',
+                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer) : 0
+                                         );
+                                     }}
+                                     label={t`You want to receive (net)`}
+                                     placeholder="19.99"/>
+                    )}
                     <NumberInput decimalScale={2}
                                  min={0}
                                  fixedDecimalScale
@@ -396,6 +423,11 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                                  />}
                     />
                 </InputGroup>
+                {!isFreeProduct && fee && event?.currency && (
+                    <Text size="xs" c="dimmed" mt={4}>
+                        {t`Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term.`}
+                    </Text>
+                )}
                 {!isFreeProduct && event?.id && event?.currency && (
                     <ProductFeeHint
                         eventId={event.id}

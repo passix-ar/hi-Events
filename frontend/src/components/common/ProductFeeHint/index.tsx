@@ -1,5 +1,4 @@
 import {t} from "@lingui/macro";
-import {Text} from "@mantine/core";
 import {IdParam} from "../../../types.ts";
 import {useGetPlatformFeePreview} from "../../../queries/useGetPlatformFeePreview.ts";
 import {formatCurrency} from "../../../utilites/currency.ts";
@@ -34,27 +33,24 @@ export const ProductFeeHint = ({eventId, price, currency, passToBuyer}: ProductF
     const buyerPays = Math.round((passToBuyer ? price + platformFee : price) * 100) / 100;
     const mpFee = Math.round(buyerPays * (MP_FEE_PERCENT / 100) * 100) / 100;
     const youReceive = Math.round((buyerPays - platformFee - mpFee) * 100) / 100;
-    const totalFees = Math.round((platformFee + mpFee) * 100) / 100;
-
     return (
         <div className={classes.hint}>
-            {passToBuyer && (
-                <div className={classes.row}>
-                    <span>{t`Buyer pays`}</span>
-                    <span className={classes.value}>{formatCurrency(buyerPays, currency)}</span>
-                </div>
-            )}
             <div className={classes.row}>
-                <span>{t`You receive approximately`}</span>
+                <span>{t`Buyer pays`}</span>
+                <span className={classes.value}>{formatCurrency(buyerPays, currency)}</span>
+            </div>
+            <div className={classes.row}>
+                <span>{t`Passix platform`}</span>
+                <span className={classes.value}>− {formatCurrency(platformFee, currency)}</span>
+            </div>
+            <div className={classes.row}>
+                <span>{t`MercadoPago approx.`}</span>
+                <span className={classes.value}>− {formatCurrency(mpFee, currency)}</span>
+            </div>
+            <div className={`${classes.row} ${classes.total}`}>
+                <span>{t`You receive`}</span>
                 <span className={classes.valueStrong}>{formatCurrency(youReceive, currency)}</span>
             </div>
-            <div className={classes.row}>
-                <span>{t`Fees & charges`}</span>
-                <span className={classes.value}>{formatCurrency(totalFees, currency)}</span>
-            </div>
-            <Text size="xs" c="dimmed" mt={4}>
-                {t`Platform ${formatCurrency(platformFee, currency)} · MercadoPago approx. ${formatCurrency(mpFee, currency)}`}
-            </Text>
         </div>
     );
 };
