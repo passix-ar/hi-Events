@@ -254,21 +254,23 @@ class GetAdminDashboardDataHandler
             SELECT
                 a.id as account_id,
                 a.name as account_name,
-                UPPER(COALESCE(mp.currency_id, o.currency)) as currency,
+                UPPER(COALESCE(mp.currency_id, e.currency)) as currency,
                 COUNT(DISTINCT o.id) as orders_count,
                 COALESCE(SUM(mp.transaction_amount), 0) as gross_collected,
                 COALESCE(SUM(mp.marketplace_fee), 0) as passix_commission,
                 COALESCE(SUM(mp.transaction_amount - COALESCE(mp.marketplace_fee, 0)), 0) as organizer_net
             FROM mercadopago_payments mp
             INNER JOIN orders o ON o.id = mp.order_id
-            LEFT JOIN accounts a ON a.id = o.account_id
+            INNER JOIN events e ON e.id = o.event_id
+            LEFT JOIN accounts a ON a.id = e.account_id
             WHERE o.created_at >= :since
               AND o.deleted_at IS NULL
+              AND e.deleted_at IS NULL
               AND mp.deleted_at IS NULL
               AND mp.status = 'approved'
               AND o.status = :statusCompleted
               AND o.payment_status = :paymentStatusPaid
-            GROUP BY a.id, a.name, UPPER(COALESCE(mp.currency_id, o.currency))
+            GROUP BY a.id, a.name, UPPER(COALESCE(mp.currency_id, e.currency))
             ORDER BY gross_collected DESC
             LIMIT :limit
         SQL;

@@ -1,5 +1,6 @@
 import {IconUsers, IconBuildingBank, IconLayoutDashboard, IconCalendar, IconReceipt, IconSettings, IconChartBar, IconAlertTriangle, IconMail} from "@tabler/icons-react";
 import {t} from "@lingui/macro";
+import {useEffect} from "react";
 import {NavItem, BreadcrumbItem} from "../AppLayout/types";
 import AppLayout from "../AppLayout";
 import {useIsCurrentUserSuperAdmin} from "../../../hooks/useIsCurrentUserAdmin.ts";
@@ -8,6 +9,13 @@ import {useNavigate} from "react-router";
 const AdminLayout = () => {
     const isSuperAdmin = useIsCurrentUserSuperAdmin();
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (!isSuperAdmin) {
+            navigate('/');
+        }
+    }, [isSuperAdmin, navigate]);
+    
     const navItems: NavItem[] = [
         {label: t`Admin`},
         {link: '', label: t`Dashboard`, icon: IconLayoutDashboard, isActive: () => typeof window !== 'undefined' && /^\/admin\/?$/.test(window.location.pathname)},
@@ -29,8 +37,7 @@ const AdminLayout = () => {
     ];
 
     if (!isSuperAdmin) {
-        navigate('/');
-        return ;
+        return null;
     }
 
     return (
