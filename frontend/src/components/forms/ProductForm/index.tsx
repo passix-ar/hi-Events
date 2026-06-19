@@ -40,7 +40,8 @@ import {formatCurrency, getCurrencySymbol} from "../../../utilites/currency.ts";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetTaxesAndFees} from "../../../queries/useGetTaxesAndFees.ts";
-import {ProductFeeHint} from "../../common/ProductFeeHint";
+import {ProductFeeHint, MP_FEE_PERCENT, FEE_RATE_SAMPLE_PRICE} from "../../common/ProductFeeHint";
+import {useGetPlatformFeePreview} from "../../../queries/useGetPlatformFeePreview.ts";
 import {Card} from "../../common/Card";
 import classes from './ProductForm.module.scss';
 import {Fieldset} from "../../common/Fieldset";
@@ -58,6 +59,29 @@ interface ProductFormProps {
 }
 
 const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormProps & {passToBuyer: boolean}) => {
+    const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
+
+    // UI-only helper: convert between the seller's net payout and the sale price,
+    // inverting the same estimate shown in the fee breakdown. The net is never
+    // persisted — editing it just fills in the price, which stays the saved value.
+    const platformRate = fee ? fee.percentage_fee / 100 : 0;
+    const fixedFee = fee ? fee.fixed_fee_converted : 0;
+    const mpRate = MP_FEE_PERCENT / 100;
+
+    const netFromPrice = (price: number) => {
+        const net = passToBuyer
+            ? (price * (1 - mpRate - platformRate) - fixedFee * mpRate) / (1 - platformRate)
+            : price * (1 - platformRate - mpRate) - fixedFee;
+        return Math.round(net * 100) / 100;
+    };
+
+    const priceFromNet = (net: number) => {
+        const price = passToBuyer
+            ? (net * (1 - platformRate) + fixedFee * mpRate) / (1 - mpRate - platformRate)
+            : (net + fixedFee) / (1 - platformRate - mpRate);
+        return Math.round(price * 100) / 100;
+    };
+
     return form?.values?.prices?.map((price, index) => {
         const existingPrice = product?.prices?.find((p) => Number(p.id) === Number(price.id));
         const deleteDisabled = form?.values?.prices?.length === 1 || (existingPrice && Number(existingPrice?.quantity_sold) > 0);
@@ -75,6 +99,21 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormPr
             <Card key={`price-${index}`} className={classes.priceTierCard}>
                 <h3>{price.label || <Trans>Tier {index + 1}</Trans>}</h3>
                 <InputGroup>
+                    {fee && event?.currency && (
+                        <NumberInput decimalScale={2}
+                                     min={0}
+                                     leftSection={getCurrencySymbol(event.currency)}
+                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price)) : ''}
+                                     onChange={(value) => {
+                                         const net = Number(value);
+                                         form.setFieldValue(
+                                             `prices.${index}.price`,
+                                             Number.isFinite(net) && net > 0 ? priceFromNet(net) : 0
+                                         );
+                                     }}
+                                     label={t`You want to receive (net)`}
+                                     placeholder="19.99"/>
+                    )}
                     <NumberInput decimalScale={2}
                                  min={0}
                                  fixedDecimalScale

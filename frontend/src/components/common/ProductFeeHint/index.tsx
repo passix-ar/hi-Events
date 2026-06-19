@@ -14,10 +14,10 @@ interface ProductFeeHintProps {
 
 // MercadoPago AR Checkout Pro ≈ 6.29% + 21% IVA (immediate accreditation).
 // Estimate only, to show an approximate net payout — not used for charging.
-const MP_FEE_PERCENT = 6.29 * 1.21;
+export const MP_FEE_PERCENT = 6.29 * 1.21;
 
 // Platform fee rates are price-independent, so one fixed-sample fetch is enough.
-const FEE_RATE_SAMPLE_PRICE = 1000;
+export const FEE_RATE_SAMPLE_PRICE = 1000;
 
 export const ProductFeeHint = ({eventId, price, currency, passToBuyer}: ProductFeeHintProps) => {
     const {data: fee} = useGetPlatformFeePreview(eventId, FEE_RATE_SAMPLE_PRICE);
