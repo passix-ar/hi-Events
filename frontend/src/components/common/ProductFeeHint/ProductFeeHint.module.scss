@@ -1,34 +1,85 @@
 .hint {
-  margin-top: 8px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  background-color: var(--hi-color-gray);
+  margin-top: 10px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background-color: var(--mantine-color-default);
   border: 1px solid var(--mantine-color-default-border);
-  font-size: 13px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   gap: 12px;
-  line-height: 1.7;
+  padding: 3px 0;
+  font-size: 14px;
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
   color: var(--mantine-color-dimmed);
 }
 
 .value {
-  font-weight: 500;
+  flex-shrink: 0;
+  font-weight: 600;
   color: var(--mantine-color-text);
+  white-space: nowrap;
 }
 
-.valueStrong {
+.deduction {
+  flex-shrink: 0;
+  font-weight: 500;
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+}
+
+.subtotal {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mantine-color-default-border);
+}
+
+.subtotal .value {
   font-weight: 700;
-  color: var(--mantine-color-primary-text);
 }
 
 .total {
-  margin-top: 6px;
-  padding-top: 8px;
+  margin-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid var(--mantine-color-default-border);
+  align-items: center;
+}
+
+.totalLabel {
+  font-weight: 600;
+  font-size: 15px;
   color: var(--mantine-color-text);
+}
+
+.totalValue {
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--mantine-color-primary-text);
+  white-space: nowrap;
+}
+
+@media (max-width: 36em) {
+  .hint {
+    padding: 12px 13px;
+  }
+
+  .row {
+    font-size: 13px;
+  }
+
+  .totalLabel {
+    font-size: 14px;
+  }
+
+  .totalValue {
+    font-size: 16px;
+  }
 }

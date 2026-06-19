@@ -41,7 +41,7 @@ import {formatCurrency, getCurrencySymbol} from "../../../utilites/currency.ts";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetTaxesAndFees} from "../../../queries/useGetTaxesAndFees.ts";
-import {ProductFeeHint, MP_FEE_PERCENT, FEE_RATE_SAMPLE_PRICE} from "../../common/ProductFeeHint";
+import {ProductFeeHint, FEE_RATE_SAMPLE_PRICE, computeFeeBreakdown, FeePreviewRates} from "../../common/ProductFeeHint";
 import {useGetPlatformFeePreview} from "../../../queries/useGetPlatformFeePreview.ts";
 import {Card} from "../../common/Card";
 import classes from './ProductForm.module.scss';
@@ -59,32 +59,23 @@ interface ProductFormProps {
     event?: Event,
 }
 
-// UI-only helpers: convert between the seller's net payout and the sale price,
-// inverting the same estimate shown in the fee breakdown (ProductFeeHint). The net
-// is never persisted — editing it just fills in the price, which stays the saved value.
-type FeeRates = { percentage_fee: number, fixed_fee_converted: number };
+// UI-only helpers: convert between the seller's net payout and the sale price using
+// the same estimate shown in the fee breakdown (ProductFeeHint). The net is never
+// persisted — editing it just fills in the price, which stays the saved value.
+const round2 = (value: number) => Math.round(value * 100) / 100;
 
-const netFromPrice = (price: number, fee: FeeRates, passToBuyer: boolean) => {
-    const platformRate = fee.percentage_fee / 100;
-    const fixedFee = fee.fixed_fee_converted;
-    const mpRate = MP_FEE_PERCENT / 100;
-    const net = passToBuyer
-        ? (price * (1 - mpRate - platformRate) - fixedFee * mpRate) / (1 - platformRate)
-        : price * (1 - platformRate - mpRate) - fixedFee;
-    return Math.round(net * 100) / 100;
+const netFromPrice = (price: number, fee: FeePreviewRates, passToBuyer: boolean, taxesAndFees: TaxAndFee[]) =>
+    round2(computeFeeBreakdown(price, fee, passToBuyer, taxesAndFees).youReceive);
+
+// "You receive" is linear in price, so invert it from two sample evaluations. This
+// stays exact regardless of taxes/fees or whether the platform fee is passed on.
+const priceFromNet = (net: number, fee: FeePreviewRates, passToBuyer: boolean, taxesAndFees: TaxAndFee[]) => {
+    const intercept = computeFeeBreakdown(0, fee, passToBuyer, taxesAndFees).youReceive;
+    const slope = computeFeeBreakdown(1, fee, passToBuyer, taxesAndFees).youReceive - intercept;
+    return slope ? round2((net - intercept) / slope) : 0;
 };
 
-const priceFromNet = (net: number, fee: FeeRates, passToBuyer: boolean) => {
-    const platformRate = fee.percentage_fee / 100;
-    const fixedFee = fee.fixed_fee_converted;
-    const mpRate = MP_FEE_PERCENT / 100;
-    const price = passToBuyer
-        ? (net * (1 - platformRate) + fixedFee * mpRate) / (1 - mpRate - platformRate)
-        : (net + fixedFee) / (1 - platformRate - mpRate);
-    return Math.round(price * 100) / 100;
-};
-
-const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormProps & {passToBuyer: boolean}) => {
+const ProductPriceTierForm = ({form, product, event, passToBuyer, selectedTaxesAndFees}: ProductFormProps & {passToBuyer: boolean, selectedTaxesAndFees: TaxAndFee[]}) => {
     const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
 
     return form?.values?.prices?.map((price, index) => {
@@ -108,12 +99,12 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormPr
                         <NumberInput decimalScale={2}
                                      min={0}
                                      leftSection={getCurrencySymbol(event.currency)}
-                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price), fee, passToBuyer) : ''}
+                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price), fee, passToBuyer, selectedTaxesAndFees) : ''}
                                      onChange={(value) => {
                                          const net = Number(value);
                                          form.setFieldValue(
                                              `prices.${index}.price`,
-                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer) : 0
+                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer, selectedTaxesAndFees) : 0
                                          );
                                      }}
                                      label={t`You want to receive (net)`}
@@ -144,6 +135,7 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer}: ProductFormPr
                         price={Number(price.price) || 0}
                         currency={event.currency}
                         passToBuyer={passToBuyer}
+                        taxesAndFees={selectedTaxesAndFees}
                     />
                 )}
                 <NumberInput
@@ -252,6 +244,10 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     const passToBuyer = eventSettings?.pass_platform_fee_to_buyer ?? false;
     const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
 
+    const selectedTaxesAndFees = (taxesAndFees?.data ?? []).filter(
+        (taxOrFee) => (form.values.tax_and_fee_ids ?? []).map(String).includes(String(taxOrFee.id))
+    );
+
     const handleTaxOrFeeCreated = (taxOrFee: TaxAndFee) => {
         const currentIds = form.values.tax_and_fee_ids || [];
         form.setFieldValue('tax_and_fee_ids', [...currentIds, String(taxOrFee.id)]);
@@ -285,10 +281,51 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     };
 
     // Context-aware helpers
-    const hasTaxes = form.values.tax_and_fee_ids && form.values.tax_and_fee_ids.length > 0;
     const hasLimits = form.values.min_per_order || form.values.max_per_order;
     const hasSalePeriod = form.values.sale_start_date || form.values.sale_end_date;
     const hasHighlight = form.values.is_highlighted;
+
+    // Shown above the payout summary so taxes/fees are configured before the totals
+    // they affect — rendered in both the standard and tiered pricing flows.
+    const taxesAndFeesSection = (
+        <Fieldset mt={15} legend={
+            <span className={classes.fieldsetLegend}>
+                <IconReceipt size={16}/>
+                {t`Taxes and Fees`}
+            </span>
+        }>
+            <MultiSelect
+                {...form.getInputProps('tax_and_fee_ids')}
+                label={t`Taxes and Fees`}
+                placeholder={t`Select...`}
+                data={[{
+                    group: t`Taxes`,
+                    items: taxAndFeeOptions(TaxAndFeeType.Tax),
+                }, {
+                    group: t`Fees`,
+                    items: taxAndFeeOptions(TaxAndFeeType.Fee),
+                }]}
+            />
+            <Button
+                variant="subtle"
+                size="compact-sm"
+                leftSection={<IconPlus size={14}/>}
+                onClick={openTaxFeeModal}
+                className={classes.addTaxFeeButton}
+            >
+                {t`Create Tax or Fee`}
+            </Button>
+
+            {(form.values.type === ProductPriceType.Free && !!form.values.tax_and_fee_ids?.length) && (
+                <Alert mt={15}>
+                    <p>
+                        {t`You have taxes and fees added to a Free Product. Would you like to remove them?`}
+                    </p>
+                    <Button onClick={removeTaxesAndFees} size={'xs'}>{t`Yes, remove them`}</Button>
+                </Alert>
+            )}
+        </Fieldset>
+    );
 
     return (
         <>
@@ -372,12 +409,12 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                                      min={0}
                                      leftSection={getCurrencySymbol(event.currency)}
                                      value={Number(form.values.prices?.[0]?.price) > 0
-                                         ? netFromPrice(Number(form.values.prices?.[0]?.price), fee, passToBuyer) : ''}
+                                         ? netFromPrice(Number(form.values.prices?.[0]?.price), fee, passToBuyer, selectedTaxesAndFees) : ''}
                                      onChange={(value) => {
                                          const net = Number(value);
                                          form.setFieldValue(
                                              'prices.0.price',
-                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer) : 0
+                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer, selectedTaxesAndFees) : 0
                                          );
                                      }}
                                      label={t`You want to receive (net)`}
@@ -428,21 +465,25 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                         {t`Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term.`}
                     </Text>
                 )}
+                {taxesAndFeesSection}
                 {!isFreeProduct && event?.id && event?.currency && (
                     <ProductFeeHint
                         eventId={event.id}
                         price={Number(form.values.prices?.[0]?.price) || 0}
                         currency={event.currency}
                         passToBuyer={passToBuyer}
+                        taxesAndFees={selectedTaxesAndFees}
                     />
                 )}
                 </>
             )}
 
+            {form.values.type === ProductPriceType.Tiered && taxesAndFeesSection}
+
             {form.values.type === ProductPriceType.Tiered && (
                 <Fieldset legend={t`Price Tiers`} mt={20} mb={20}>
                     <div className={classes.priceTiers}>
-                        <ProductPriceTierForm product={product} form={form} event={event} passToBuyer={passToBuyer}/>
+                        <ProductPriceTierForm product={product} form={form} event={event} passToBuyer={passToBuyer} selectedTaxesAndFees={selectedTaxesAndFees}/>
                         <Button
                             className={classes.addTierButton}
                             size={'xs'}
@@ -473,14 +514,13 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                 <div className={classes.toggleMain}>
                     {opened ? <IconChevronUp size={16}/> : <IconChevronDown size={16}/>}
                     <span className={classes.toggleLabel}>
-                        {opened ? t`Hide Options` : t`Taxes, Fees, Visibility, Sale Period, Product Highlight & Order Limits`}
+                        {opened ? t`Hide Options` : t`Visibility, Sale Period, Product Highlight & Order Limits`}
                     </span>
                 </div>
                 {!opened && (
                     <div className={classes.toggleMeta}>
                         <span className={classes.toggleDescription}>
                             {[
-                                hasTaxes && t`Taxes configured`,
                                 hasLimits && t`Order limits set`,
                                 hasSalePeriod && t`Sale period set`,
                                 hasHighlight && t`Highlighted`,
@@ -492,44 +532,6 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
 
             <Collapse in={opened}>
                 <div className={classes.additionalOptionsContent}>
-                    <Fieldset legend={
-                        <span className={classes.fieldsetLegend}>
-                            <IconReceipt size={16}/>
-                            {t`Taxes and Fees`}
-                        </span>
-                    }>
-                        <MultiSelect
-                            {...form.getInputProps('tax_and_fee_ids')}
-                            label={t`Taxes and Fees`}
-                            placeholder={t`Select...`}
-                            data={[{
-                                group: t`Taxes`,
-                                items: taxAndFeeOptions(TaxAndFeeType.Tax),
-                            }, {
-                                group: t`Fees`,
-                                items: taxAndFeeOptions(TaxAndFeeType.Fee),
-                            }]}
-                        />
-                        <Button
-                            variant="subtle"
-                            size="compact-sm"
-                            leftSection={<IconPlus size={14}/>}
-                            onClick={openTaxFeeModal}
-                            className={classes.addTaxFeeButton}
-                        >
-                            {t`Create Tax or Fee`}
-                        </Button>
-
-                        {(form.values.type === ProductPriceType.Free && !!form.values.tax_and_fee_ids?.length) && (
-                            <Alert mt={15}>
-                                <p>
-                                    {t`You have taxes and fees added to a Free Product. Would you like to remove them?`}
-                                </p>
-                                <Button onClick={removeTaxesAndFees} size={'xs'}>{t`Yes, remove them`}</Button>
-                            </Alert>
-                        )}
-                    </Fieldset>
-
                     <Fieldset legend={
                         <span className={classes.fieldsetLegend}>
                             <IconShoppingCart size={16}/>
