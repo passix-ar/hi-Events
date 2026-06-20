@@ -4,7 +4,7 @@ import {createBrowserRouter, matchRoutes, RouterProvider} from "react-router-dom
 import {router} from "./router";
 import {App} from "./App";
 import {queryClient} from "./utilites/queryClient";
-import {dynamicActivateLocale, getClientLocale, getSupportedLocale,} from "./locales.ts";
+import {dynamicActivateLocale, getClientLocale, getSupportedLocale, setLocaleCookie,} from "./locales.ts";
 
 declare global {
     interface Window {
@@ -18,6 +18,9 @@ async function initClientApp() {
     const rawLocale = getClientLocale();
     const locale = getSupportedLocale(rawLocale);
     await dynamicActivateLocale(locale);
+    // Persist the active locale so the backend localizes API responses (e.g. sort labels)
+    // to match the UI. Without this, an authenticated user falls back to their stored DB locale.
+    setLocaleCookie(locale);
 
     // Resolve lazy-loaded routes before hydration
     const matches = matchRoutes(router, window.location)?.filter((m) => m.route.lazy);

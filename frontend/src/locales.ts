@@ -48,6 +48,12 @@ export const getClientLocale = () => {
     return "es";
 };
 
+export const setLocaleCookie = (locale: string) => {
+    if (typeof document !== "undefined") {
+        document.cookie = `locale=${locale};path=/;max-age=31536000`;
+    }
+};
+
 export async function dynamicActivateLocale(locale: string) {
     try {
         locale = availableLocales.includes(locale) ? locale : "es";
