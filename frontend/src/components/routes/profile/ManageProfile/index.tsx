@@ -13,7 +13,7 @@ import {useCancelEmailChange} from "../../../../mutations/useCancelEmailChange.t
 import {useFormErrorResponseHandler} from "../../../../hooks/useFormErrorResponseHandler.tsx";
 import {t, Trans} from "@lingui/macro";
 import {useResendEmailConfirmation} from "../../../../mutations/useResendEmailConfirmation.ts";
-import {localeToFlagEmojiMap, localeToNameMap, SupportedLocales} from "../../../../locales.ts";
+import {localeToFlagEmojiMap, localeToNameMap, setLocaleCookie, SupportedLocales} from "../../../../locales.ts";
 import {Fieldset} from "../../../common/Fieldset";
 import {InputGroup} from "../../../common/InputGroup";
 import {getConfig} from "../../../../utilites/config.ts";
@@ -67,7 +67,7 @@ export const ManageProfile = () => {
             onSuccess: () => {
                 form.reset();
                 showSuccess(t`Profile updated successfully`);
-                document.cookie = `locale=${formValues.locale};path=/;max-age=31536000`;
+                setLocaleCookie(formValues.locale as string);
 
                 if (form.isDirty('locale')) {
                     window.location.reload();

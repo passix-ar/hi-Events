@@ -49,9 +49,23 @@ export const getClientLocale = () => {
 };
 
 export const setLocaleCookie = (locale: string) => {
-    if (typeof document !== "undefined") {
-        document.cookie = `locale=${locale};path=/;max-age=31536000`;
+    if (typeof document === "undefined" || typeof window === "undefined") {
+        return;
     }
+
+    // Scope the cookie to the parent domain (e.g. .getpassix.com) when running on a
+    // subdomain, so it's also sent to the API subdomain (api.getpassix.com). Without this
+    // a host-only cookie on app.getpassix.com never reaches the API and the backend falls
+    // back to the user's stored locale. On localhost / IP / apex hosts it stays host-only.
+    const host = window.location.hostname;
+    const labels = host.split(".");
+    const isIp = /^[0-9.]+$/.test(host);
+    const domainAttr = (!isIp && host !== "localhost" && labels.length > 2)
+        ? `;domain=.${labels.slice(-2).join(".")}`
+        : "";
+    const secure = window.location.protocol === "https:" ? ";secure" : "";
+
+    document.cookie = `locale=${locale};path=/;max-age=31536000;samesite=lax${domainAttr}${secure}`;
 };
 
 export async function dynamicActivateLocale(locale: string) {

@@ -1,5 +1,5 @@
 import {Select} from "@mantine/core";
-import {dynamicActivateLocale, getClientLocale, localeToNameMap, SupportedLocales} from "../../../locales.ts";
+import {dynamicActivateLocale, getClientLocale, localeToNameMap, setLocaleCookie, SupportedLocales} from "../../../locales.ts";
 import {t} from "@lingui/macro";
 import {IconWorld} from "@tabler/icons-react";
 import {useLingui} from "@lingui/react";
@@ -42,7 +42,7 @@ export const LanguageSwitcher = () => {
                 placeholder={t`English`}
                 onChange={(value) =>
                     dynamicActivateLocale(value as string).then(() => {
-                        document.cookie = `locale=${value};path=/;max-age=31536000`;
+                        setLocaleCookie(value as string);
                         // this shouldn't be necessary, but it is due to the wide use of t`...` in the codebase
                         window.location.reload();
                     })}
