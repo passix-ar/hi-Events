@@ -7,7 +7,8 @@ import RevenueSummaryReport from "../RevenueSummaryReport";
 import EventsPerformanceReport from "../EventsPerformanceReport";
 import TaxSummaryReport from "../TaxSummaryReport";
 import CheckInSummaryReport from "../CheckInSummaryReport";
-import PlatformFeesReport from "../PlatformFeesReport";
+// Passix: PlatformFeesReport ocultado. Descomentar para volver a habilitar la ruta.
+// import PlatformFeesReport from "../PlatformFeesReport";
 import {t} from "@lingui/macro";
 
 const renderReport = (reportType: string) => {
@@ -20,8 +21,10 @@ const renderReport = (reportType: string) => {
             return <TaxSummaryReport/>;
         case OrganizerReportTypes.CheckInSummary:
             return <CheckInSummaryReport/>;
-        case OrganizerReportTypes.PlatformFees:
-            return <PlatformFeesReport/>;
+        // Passix: "Platform Fees" deshabilitado. Descomentar para volver a habilitarlo
+        // (recordar restaurar el import de PlatformFeesReport arriba).
+        // case OrganizerReportTypes.PlatformFees:
+        //     return <PlatformFeesReport/>;
         default:
             return <div>{t`Report not found`}</div>;
     }

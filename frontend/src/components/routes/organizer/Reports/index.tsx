@@ -1,7 +1,7 @@
 import {PageTitle} from "../../../common/PageTitle";
 import {t} from "@lingui/macro";
 import {PageBody} from "../../../common/PageBody";
-import {IconChartBar, IconChevronRight, IconReceipt, IconReceiptTax, IconReportMoney, IconUserCheck} from "@tabler/icons-react";
+import {IconChartBar, IconChevronRight, /* IconReceipt, */ IconReceiptTax, IconReportMoney, IconUserCheck} from "@tabler/icons-react";
 import classes from './Reports.module.scss';
 import {Card} from "../../../common/Card";
 import {Avatar, UnstyledButton} from "@mantine/core";
@@ -36,12 +36,14 @@ const OrganizerReports = () => {
             description: t`Attendance and check-in rates across all events`,
             icon: <Avatar size={40} color={'#5FB98B'}><IconUserCheck/></Avatar>
         },
-        {
-            id: OrganizerReportTypes.PlatformFees,
-            title: t`Platform Fees`,
-            description: t`Platform fees and VAT breakdown by transaction`,
-            icon: <Avatar size={40} color={'#E67C63'}><IconReceipt/></Avatar>
-        }
+        // Passix: "Platform Fees" report ocultado del listado. Descomentar para volver a mostrarlo
+        // (recordar restaurar el import de IconReceipt arriba).
+        // {
+        //     id: OrganizerReportTypes.PlatformFees,
+        //     title: t`Platform Fees`,
+        //     description: t`Platform fees and VAT breakdown by transaction`,
+        //     icon: <Avatar size={40} color={'#E67C63'}><IconReceipt/></Avatar>
+        // }
     ];
 
     return (
