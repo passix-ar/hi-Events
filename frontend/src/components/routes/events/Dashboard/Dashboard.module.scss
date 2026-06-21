@@ -61,6 +61,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  max-width: 100%; // never overflow its container on small screens
+  min-width: 0;    // allow the button to shrink so the name can truncate
   margin-top: 0.25rem; // Slight offset to align better
   
   @include mixins.respond-below(md) {
@@ -108,10 +110,32 @@
   color: var(--mantine-color-gray-6);
 }
 
+.organizerText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+  max-width: 220px;
+
+  @include mixins.respond-below(sm) {
+    max-width: 150px;
+  }
+}
+
+.organizerActionLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--mantine-color-gray-6);
+  @include mixins.ellipsis();
+}
+
 .organizerName {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--mantine-color-dark-9);
+  @include mixins.ellipsis();
 }
 
 .organizerCount {

@@ -88,6 +88,7 @@ export function Dashboard() {
                     <button
                         className={classes.organizerButton}
                         onClick={() => navigate(`/manage/organizer/${organizers[0].id}`)}
+                        title={t`Go to organizer panel`}
                     >
                         <div className={classes.organizerLogo}>
                             {organizers[0].images?.find((image) => image.type === 'ORGANIZER_LOGO') ? (
@@ -101,7 +102,10 @@ export function Dashboard() {
                                 </div>
                             )}
                         </div>
-                        <span className={classes.organizerName}>{organizers[0].name}</span>
+                        <div className={classes.organizerText}>
+                            <span className={classes.organizerActionLabel}>{t`Organizer`}</span>
+                            <span className={classes.organizerName}>{organizers[0].name}</span>
+                        </div>
                         <IconArrowRight size={16} className={classes.arrowIcon}/>
                     </button>
                 ) : organizers && organizers.length > 1 ? (
