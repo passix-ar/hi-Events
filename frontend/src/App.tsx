@@ -1,5 +1,6 @@
 import React, {FC, PropsWithChildren, useCallback, useEffect} from "react";
 import {MantineProvider, type CSSVariablesResolver} from "@mantine/core";
+import {DatesProvider} from "@mantine/dates";
 import {Notifications} from "@mantine/notifications";
 import {i18n} from "@lingui/core";
 import {I18nProvider} from "@lingui/react";
@@ -33,6 +34,9 @@ import '@mantine/dates/styles.css';
 import "@mantine/charts/styles.css";
 import "./styles/global.scss";
 import {isSsr} from "./utilites/helpers.ts";
+import {getSupportedLocale} from "./locales.ts";
+// Side-effect import: registers the dayjs locales (es, en, …) used by the date pickers.
+import "./utilites/dateLocales.ts";
 import {StartupChecks} from "./StartupChecks.tsx";
 import {ThirdPartyScripts} from "./components/common/ThirdPartyScripts";
 import {getConfig} from "./utilites/config.ts";
@@ -54,6 +58,7 @@ export const App: FC<
     }>
 > = (props) => {
     const [isLoadedOnBrowser, setIsLoadedOnBrowser] = React.useState(false);
+    const dateLocale = getSupportedLocale(props.locale);
     const showGlobalConsentBanner = getConfig('VITE_COOKIE_CONSENT_ENABLED') === 'true'
         && !isSsr() && isConsentPending();
 
@@ -103,6 +108,7 @@ export const App: FC<
             >
                 <HelmetProvider context={props.helmetContext}>
                     <I18nProvider i18n={i18n}>
+                      <DatesProvider settings={{locale: dateLocale}}>
                         <QueryClientProvider client={props.queryClient}>
                             <HydrationBoundary state={props.dehydratedState}>
                                 <StartupChecks/>
@@ -123,6 +129,7 @@ export const App: FC<
                                 )}
                             </HydrationBoundary>
                         </QueryClientProvider>
+                      </DatesProvider>
                     </I18nProvider>
                 </HelmetProvider>
             </MantineProvider>

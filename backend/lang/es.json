@@ -150,6 +150,8 @@
     "You cannot delete this question as there as answers associated with it. You can hide the question instead.": "No puede eliminar esta pregunta ya que hay respuestas asociadas a ella. En su lugar, puede ocultar la pregunta.",
     "One or more of the ordered question IDs do not exist for the event.": "Uno o más de los ID de pregunta ordenados no existen para el evento.",
     "You cannot delete this ticket because it has orders associated with it. You can hide it instead.": "No puede eliminar este ticket porque tiene pedidos asociados. En su lugar, puede ocultarlo.",
+    "You cannot delete the last organizer on your account.": "No puedes eliminar el último organizador de tu cuenta.",
+    "This organizer has events with completed orders. Please cancel or refund all orders first.": "Este organizador tiene eventos con pedidos completados. Cancela o reembolsa todos los pedidos primero.",
     "Ticket type cannot be changed as tickets have been registered for this type": "No se puede cambiar el tipo de billete, ya que se han registrado billetes de este tipo.",
     "The ordered ticket IDs must exactly match all tickets for the event without missing or extra IDs.": "Las identificaciones de las entradas solicitadas deben coincidir exactamente con todas las entradas del evento, sin que falten identificaciones ni sobren identificaciones.",
     "No email change pending": "Ningún cambio de correo electrónico pendiente",
