@@ -115,7 +115,6 @@ export const App: FC<
                                 <ThirdPartyScripts/>
                                 <ModalsProvider>
                                     <Helmet>
-                                        <html lang={getConfig("VITE_APP_LANG", "es")}/>
                                         <title>{getConfig("VITE_APP_NAME", "Passix")}</title>
                                         <link rel="icon"
                                               type="image/svg+xml"

@@ -11,7 +11,6 @@ export type ConfigKeys =
     | 'VITE_APP_SECONDARY_COLOR'
     | 'VITE_APP_NAME'
     | 'VITE_APP_DESCRIPTION'
-    | 'VITE_APP_LANG'
     | 'VITE_APP_OG_LOCALE'
     | 'VITE_APP_FAVICON'
     | 'VITE_APP_LOGO_DARK'
