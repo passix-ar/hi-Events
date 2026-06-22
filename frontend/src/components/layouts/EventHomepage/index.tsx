@@ -22,6 +22,7 @@ import {
 import {Alert, Anchor} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
+import {DiscoverEventsFab} from "../../common/DiscoverEventsFab";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
 import {socialMediaConfig} from "../../../constants/socialMediaConfig";
 import {
@@ -188,6 +189,8 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
 
     return (
         <>
+            <DiscoverEventsFab/>
+
             {event?.status && event?.id && (
                 <StatusToggle
                     entityType="event"
