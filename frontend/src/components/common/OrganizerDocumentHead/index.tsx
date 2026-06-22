@@ -18,7 +18,7 @@ export const OrganizerDocumentHead = ({organizer}: OrganizerDocumentHeadProps) =
     const url = organizerHomepageUrl(organizer);
 
     const address = organizerSettings?.location_details ? {
-        "@type": "http://schema.org/PostalAddress",
+        "@type": "PostalAddress",
         streetAddress: organizerSettings.location_details.address_line_1,
         addressLocality: organizerSettings.location_details.city,
         addressRegion: organizerSettings.location_details.state_or_region,
@@ -38,7 +38,7 @@ export const OrganizerDocumentHead = ({organizer}: OrganizerDocumentHeadProps) =
     }
 
     const location = address && Object.keys(address).length > 1 ? {
-        "@type": "http://schema.org/Place",
+        "@type": "Place",
         name: organizerSettings?.location_details?.venue_name,
         address
     } : undefined;
@@ -59,8 +59,8 @@ export const OrganizerDocumentHead = ({organizer}: OrganizerDocumentHeadProps) =
     }
 
     const schemaOrgJSONLD = {
-        "@context": "http://schema.org",
-        "@type": "http://schema.org/Organization",
+        "@context": "https://schema.org",
+        "@type": "Organization",
         name: organizer.name,
         description: description,
         url: url,

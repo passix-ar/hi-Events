@@ -115,11 +115,17 @@ export const App: FC<
                                 <ThirdPartyScripts/>
                                 <ModalsProvider>
                                     <Helmet>
+                                        <html lang={getConfig("VITE_APP_LANG", "es")}/>
                                         <title>{getConfig("VITE_APP_NAME", "Passix")}</title>
                                         <link rel="icon"
                                               type="image/svg+xml"
                                               href={getConfig("VITE_APP_FAVICON", "/favicon.svg")}
                                         />
+                                        <meta name="description" content={getConfig("VITE_APP_DESCRIPTION", "Descubrí eventos y comprá entradas con QR. Pagá con MercadoPago, sin apps que descargar.")}/>
+                                        <meta property="og:site_name" content={getConfig("VITE_APP_NAME", "Passix")}/>
+                                        <meta property="og:type" content="website"/>
+                                        <meta property="og:locale" content={getConfig("VITE_APP_OG_LOCALE", "es_AR")}/>
+                                        <meta name="twitter:card" content="summary_large_image"/>
                                     </Helmet>
                                     {props.children}
                                 </ModalsProvider>

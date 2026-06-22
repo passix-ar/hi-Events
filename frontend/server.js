@@ -64,8 +64,25 @@ async function main() {
 
     app.get('/robots.txt', (req, res) => {
         const frontendUrl = process.env.VITE_FRONTEND_URL || `${req.protocol}://${req.get('host')}`;
+        // Indexable: home, páginas públicas de eventos y organizadores.
+        // Bloqueado: paneles, auth y rutas con datos personales / tokens (órdenes,
+        // tickets, checkout, check-in) y previews de contenido no publicado.
         const robotsTxt = `User-agent: *
-Allow: /
+Allow: /$
+Allow: /event/
+Allow: /events/
+Disallow: /organizer/
+Disallow: /manage
+Disallow: /account
+Disallow: /auth
+Disallow: /welcome
+Disallow: /checkout/
+Disallow: /order/
+Disallow: /my-tickets/
+Disallow: /product/
+Disallow: /check-in/
+Disallow: /widget/
+Disallow: /*/preview$
 
 Sitemap: ${frontendUrl}/sitemap.xml
 `;
