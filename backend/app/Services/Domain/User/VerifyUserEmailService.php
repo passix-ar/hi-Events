@@ -20,6 +20,12 @@ class VerifyUserEmailService
 
     public function markEmailAsVerified(UserDomainObject $user, int $accountId): void
     {
+        // Idempotency guard: if the email is already verified, the confirmation link was
+        // used before, so there is nothing to do. Avoids re-stamping the verified timestamps.
+        if ($user->getEmailVerifiedAt() !== null) {
+            return;
+        }
+
         $this->userRepository->updateWhere(
             attributes: [
                 'email_verified_at' => now(),

@@ -66,7 +66,7 @@ class EmailConfirmationService
 
         $token = $this->encryptedPayloadService->encryptPayload([
             'id' => $user->getId(),
-        ], Carbon::now()->addMonths(6));
+        ], Carbon::now()->addHours(48));
 
         $this->mailer
             ->to($user->getEmail())
