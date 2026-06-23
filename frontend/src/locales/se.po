@@ -73,6 +73,10 @@ msgstr "{0} kvar"
 msgid "{0} logo"
 msgstr "{0} logotyp"
 
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:120
+#~ msgid "{0} organizations"
+#~ msgstr ""
+
 #: src/components/routes/events/Dashboard/index.tsx:140
 msgid "{0} organizers"
 msgstr "{0} arrangörer"
@@ -114,9 +118,18 @@ msgstr "{minutes} minuter och {seconds} sekunder"
 msgid "{organizerName}'s first event"
 msgstr "{organizerName}s första evenemang"
 
+#: src/components/common/AdminAccountsTable/index.tsx:71
+#~ msgid "{orgCount} organizations"
+#~ msgstr ""
+
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
 msgstr "{totalCount} biljettkategorier"
+
+#: src/components/common/AdminAccountsTable/index.tsx:78
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:123
+msgid "+{extraOrganizers} more"
+msgstr ""
 
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:97
 msgid "+1 234 567 890"
@@ -361,9 +374,11 @@ msgstr ""
 msgid "Access Denied"
 msgstr "Åtkomst nekad"
 
+#: src/components/common/AdminAccountsTable/index.tsx:84
 #: src/components/common/AdminOrdersTable/index.tsx:70
 #: src/components/routes/account/ManageAccount/index.tsx:24
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:53
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:138
 #: src/components/routes/admin/Dashboard/index.tsx:425
 #: src/components/routes/admin/Dashboard/index.tsx:472
 #: src/components/routes/admin/Messages/index.tsx:164
@@ -379,7 +394,7 @@ msgstr "Kontot är redan anslutet!"
 msgid "Account configuration updated successfully"
 msgstr "Kontokonfiguration uppdaterades"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:123
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:145
 msgid "Account Information"
 msgstr "Kontoinformation"
 
@@ -807,7 +822,7 @@ msgstr "Eventuella frågor från produktinnehavare kommer att skickas till denna
 msgid "Appearance"
 msgstr "Utseende"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:176
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:198
 msgid "Application Fees Configuration"
 msgstr "Konfiguration av avgifter"
 
@@ -1036,11 +1051,11 @@ msgstr "Fråga en gång per order"
 msgid "Ask once per product"
 msgstr "Fråga en gång per produkt"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:179
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:201
 msgid "Assigned Configuration"
 msgstr "Tilldelad konfiguration"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:224
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:246
 msgid "Assigned Tier"
 msgstr "Tilldelad nivå"
 
@@ -1246,7 +1261,7 @@ msgstr "Awesome Events Ltd."
 msgid "Awesome Organizer Ltd."
 msgstr "Awesome Organizer Ltd."
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:114
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:115
 msgid "Back to Accounts"
 msgstr "Tillbaka till konton"
 
@@ -1337,7 +1352,7 @@ msgid "Business address for VAT purposes"
 msgstr "Företagsadress för momsändamål"
 
 #: src/components/modals/EditAccountVatSettingsModal/index.tsx:140
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:294
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:316
 msgid "Business Name"
 msgstr "Företagsnamn"
 
@@ -2401,7 +2416,7 @@ msgstr "Skapa ditt första evenemang för att börja sälja biljetter och hanter
 msgid "Create your own event"
 msgstr "Skapa ditt eget evenemang"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:132
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:154
 #: src/components/routes/admin/Messages/index.tsx:169
 #: src/components/routes/admin/Messages/index.tsx:309
 msgid "Created"
@@ -2430,7 +2445,7 @@ msgstr "CTA-text är obligatorisk"
 #: src/components/common/OrganizerReportTable/index.tsx:314
 #: src/components/forms/OrganizerForm/index.tsx:47
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:73
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:149
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:171
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:115
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:51
 #: src/components/routes/organizer/Reports/PlatformFeesReport/index.tsx:99
@@ -2931,7 +2946,7 @@ msgstr "Early bird"
 #: src/components/common/TaxAndFeeList/index.tsx:70
 #: src/components/modals/ManageAttendeeModal/index.tsx:221
 #: src/components/modals/ManageOrderModal/index.tsx:203
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:268
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:290
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:236
 msgid "Edit"
 msgstr "Redigera"
@@ -3079,7 +3094,7 @@ msgstr "Giltiga incheckningslistor"
 #: src/components/modals/EditUserModal/index.tsx:80
 #: src/components/modals/InviteUserModal/index.tsx:61
 #: src/components/modals/JoinWaitlistModal/index.tsx:171
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:128
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:150
 #: src/components/routes/admin/Dashboard/index.tsx:473
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
@@ -3572,10 +3587,10 @@ msgstr ""
 msgid "Event Venue"
 msgstr "Evenemangslokal"
 
-#: src/components/common/AdminAccountsTable/index.tsx:82
+#: src/components/common/AdminAccountsTable/index.tsx:112
 #: src/components/layouts/Admin/index.tsx:24
 #: src/components/layouts/OrganizerLayout/index.tsx:87
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:159
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:181
 #: src/components/routes/admin/Attribution/index.tsx:133
 #: src/components/routes/admin/Dashboard/index.tsx:475
 #: src/components/routes/admin/Events/index.tsx:77
@@ -4064,7 +4079,7 @@ msgid "Fixed amount"
 msgstr "Fast belopp"
 
 #: src/components/modals/EditAccountConfigurationModal/index.tsx:89
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:191
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:213
 #: src/components/routes/admin/Configurations/index.tsx:93
 #: src/components/routes/admin/Configurations/index.tsx:235
 msgid "Fixed Fee"
@@ -4516,7 +4531,7 @@ msgstr "Bilder"
 msgid "Images only · Max 5MB"
 msgstr ""
 
-#: src/components/common/AdminAccountsTable/index.tsx:133
+#: src/components/common/AdminAccountsTable/index.tsx:176
 #: src/components/common/AdminUsersTable/index.tsx:84
 #: src/components/common/AdminUsersTable/index.tsx:96
 msgid "Impersonate"
@@ -4622,7 +4637,7 @@ msgstr "Omedelbara utbetalningar"
 msgid "Integrations"
 msgstr "Integrationer"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:289
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:311
 msgid "Invalid"
 msgstr "Ogiltig"
 
@@ -4914,7 +4929,7 @@ msgstr ""
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:248
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:270
 msgid "Links Allowed"
 msgstr "Länkar tillåtna"
 
@@ -5100,11 +5115,11 @@ msgstr "Lägg till deltagare manuellt"
 msgid "Mark as paid"
 msgstr "Markera som betald"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:236
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:258
 msgid "Max Messages / 24h"
 msgstr "Max meddelanden / 24h"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:242
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:264
 msgid "Max Recipients / Message"
 msgstr "Max mottagare / meddelande"
 
@@ -5204,8 +5219,8 @@ msgstr "Meddelande skickat"
 msgid "Messages"
 msgstr "Meddelanden"
 
-#: src/components/common/AdminAccountsTable/index.tsx:96
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:215
+#: src/components/common/AdminAccountsTable/index.tsx:126
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:237
 msgid "Messaging Tier"
 msgstr "Meddelandenivå"
 
@@ -5374,8 +5389,8 @@ msgstr "Nya registreringar"
 msgid "Nightlife"
 msgstr "Nattliv"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:250
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:277
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:272
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:299
 msgid "No"
 msgstr "Nej"
 
@@ -5656,7 +5671,7 @@ msgstr "Inga kommande evenemang"
 msgid "No users found"
 msgstr "Inga användare hittades"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:308
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:330
 msgid "No VAT settings configured"
 msgstr "Inga momsinställningar är konfigurerade"
 
@@ -6166,6 +6181,11 @@ msgstr "Organisationsuppgifter"
 msgid "Organization Name"
 msgstr "Organisationsnamn"
 
+#: src/components/common/AdminAccountsTable/index.tsx:105
+#: src/components/common/AdminAccountsTable/index.tsx:139
+msgid "Organizations"
+msgstr ""
+
 #: src/components/common/AdminEventsTable/index.tsx:87
 #: src/components/common/AttendeeTicket/index.tsx:82
 #: src/components/layouts/EventHomepage/index.tsx:538
@@ -6244,6 +6264,10 @@ msgstr "Arrangörsstatus uppdaterad"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:212
 msgid "Organizer/default template will be used"
 msgstr "Arrangörens eller standardmall kommer att användas"
+
+#: src/components/common/AdminAccountsTable/index.tsx:110
+#~ msgid "Organizers"
+#~ msgstr ""
 
 #: src/components/modals/EditUserModal/index.tsx:57
 #: src/components/modals/InviteUserModal/index.tsx:49
@@ -6554,7 +6578,7 @@ msgid "Percentage Amount"
 msgstr "Procentbelopp"
 
 #: src/components/modals/EditAccountConfigurationModal/index.tsx:99
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:198
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:220
 #: src/components/routes/admin/Configurations/index.tsx:100
 #: src/components/routes/admin/Configurations/index.tsx:246
 msgid "Percentage Fee"
@@ -7600,8 +7624,8 @@ msgid "Search affiliates..."
 msgstr "Sök affiliates..."
 
 #: src/components/routes/admin/Accounts/index.tsx:60
-msgid "Search by account name or email..."
-msgstr "Sök på kontonamn eller e-post..."
+#~ msgid "Search by account name or email..."
+#~ msgstr "Sök på kontonamn eller e-post..."
 
 #: src/components/routes/event/attendees.tsx:188
 msgid "Search by attendee name, email or order #..."
@@ -7643,6 +7667,10 @@ msgstr "Sök på namn..."
 #: src/components/routes/admin/Orders/index.tsx:47
 msgid "Search by order ID, customer name, or email..."
 msgstr "Sök på order-ID, kundnamn eller e-post..."
+
+#: src/components/routes/admin/Accounts/index.tsx:60
+msgid "Search by organizer, account name or email..."
+msgstr ""
 
 #: src/components/routes/admin/Messages/index.tsx:113
 msgid "Search by subject, event, or account..."
@@ -7690,7 +7718,7 @@ msgstr "Välj {0}"
 msgid "Select a category"
 msgstr "Välj en kategori"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:184
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:206
 msgid "Select a configuration"
 msgstr "Välj en konfiguration"
 
@@ -7698,7 +7726,7 @@ msgstr "Välj en konfiguration"
 msgid "Select a message to view its contents"
 msgstr "Välj ett meddelande för att visa dess innehåll"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:229
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:251
 msgid "Select a tier"
 msgstr "Välj en nivå"
 
@@ -7787,7 +7815,7 @@ msgstr "Välj status"
 msgid "Select the country where VAT is registered"
 msgstr "Välj landet där moms är registrerad"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:225
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:247
 msgid "Select the messaging tier for this account. This controls message limits and link permissions."
 msgstr "Välj meddelandenivå för detta konto. Detta styr meddelandegränser och länkbehörigheter."
 
@@ -7818,7 +7846,7 @@ msgstr "Välj vilka deltagare som ska få detta meddelande"
 msgid "Select which events will trigger this webhook"
 msgstr "Välj vilka evenemang som ska utlösa denna webhook"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:180
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:202
 msgid "Select which fee configuration applies to this account. Fixed fees are converted to the order currency at checkout."
 msgstr "Välj vilken avgiftskonfiguration som gäller för detta konto. Fasta avgifter konverteras till ordervalutan vid kassan."
 
@@ -9143,7 +9171,7 @@ msgstr "Antal gånger använd"
 
 #: src/components/forms/OrganizerForm/index.tsx:56
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:82
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:140
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:162
 #: src/components/routes/auth/AcceptInvitation/index.tsx:119
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:124
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:122
@@ -9160,7 +9188,7 @@ msgstr "DRICKS"
 msgid "To"
 msgstr "Till"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:207
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:229
 msgid "To edit configurations, go to the Configurations section in the admin menu."
 msgstr "För att redigera konfigurationer, gå till avsnittet Konfigurationer i administratörsmenyn."
 
@@ -9433,7 +9461,7 @@ msgstr "Obetald order"
 msgid "Unpublish Event"
 msgstr "Avpublicera evenemang"
 
-#: src/components/common/AdminAccountsTable/index.tsx:101
+#: src/components/common/AdminAccountsTable/index.tsx:131
 msgid "Untrusted"
 msgstr "Ej betrodd"
 
@@ -9559,12 +9587,12 @@ msgstr "Användare"
 msgid "User Management"
 msgstr "Användarhantering"
 
-#: src/components/common/AdminAccountsTable/index.tsx:89
-#: src/components/common/AdminAccountsTable/index.tsx:109
+#: src/components/common/AdminAccountsTable/index.tsx:119
+#: src/components/common/AdminAccountsTable/index.tsx:152
 #: src/components/layouts/Admin/index.tsx:23
 #: src/components/routes/account/ManageAccount/index.tsx:32
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:166
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:316
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:188
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:338
 #: src/components/routes/admin/Dashboard/index.tsx:476
 #: src/components/routes/admin/Users/index.tsx:57
 msgid "Users"
@@ -9589,11 +9617,11 @@ msgstr "UTM-analys"
 msgid "UUID"
 msgstr "UUID"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:289
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:311
 msgid "Valid"
 msgstr "Giltig"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:287
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:309
 msgid "Validated"
 msgstr "Validerad"
 
@@ -9606,7 +9634,7 @@ msgid "VAT"
 msgstr "Moms"
 
 #: src/components/modals/EditAccountVatSettingsModal/index.tsx:131
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:300
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:322
 msgid "VAT Country"
 msgstr "Momsland"
 
@@ -9620,7 +9648,7 @@ msgstr "Moms kan tillämpas på plattformsavgifter beroende på din momsregistre
 
 #: src/components/modals/EditAccountVatSettingsModal/index.tsx:123
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:216
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:283
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:305
 msgid "VAT Number"
 msgstr "Momsregistreringsnummer"
 
@@ -9654,7 +9682,7 @@ msgid "VAT Rate"
 msgstr "Momssats"
 
 #: src/components/modals/EditAccountVatSettingsModal/index.tsx:115
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:275
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:297
 msgid "VAT Registered"
 msgstr "Momsregistrerad"
 
@@ -9663,7 +9691,7 @@ msgstr "Momsregistrerad"
 msgid "VAT Registration Information"
 msgstr "Information om momsregistrering"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:261
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:283
 msgid "VAT Settings"
 msgstr "Momsinställningar"
 
@@ -9746,7 +9774,7 @@ msgstr "Visa svar"
 msgid "View Attendee Details"
 msgstr "Visa deltagardetaljer"
 
-#: src/components/common/AdminAccountsTable/index.tsx:73
+#: src/components/common/AdminAccountsTable/index.tsx:96
 #: src/components/routes/admin/FailedJobs/index.tsx:190
 msgid "View Details"
 msgstr "Visa detaljer"
@@ -10238,8 +10266,8 @@ msgstr "X (Twitter)"
 msgid "Year to date"
 msgstr "Hittills i år"
 
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:250
-#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:277
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:272
+#: src/components/routes/admin/Accounts/AccountDetail/index.tsx:299
 msgid "Yes"
 msgstr "Ja"
 

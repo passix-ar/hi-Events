@@ -28,6 +28,13 @@ class AdminAccountDetailResource extends BaseResource
             'updated_at' => $this->resource->updated_at,
             'events_count' => $this->resource->events_count ?? 0,
             'users_count' => $this->resource->users_count ?? 0,
+            'organizers_count' => $this->resource->organizers_count ?? 0,
+            'organizers' => $this->resource->relationLoaded('organizers')
+                ? $this->resource->organizers->map(fn($organizer) => [
+                    'id' => $organizer->id,
+                    'name' => $organizer->name,
+                ])
+                : [],
             'configuration' => $configuration ? [
                 'id' => $configuration->id,
                 'name' => $configuration->name,

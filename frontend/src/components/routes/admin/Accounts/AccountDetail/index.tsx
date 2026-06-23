@@ -100,6 +100,7 @@ const AccountDetail = () => {
     }));
 
     const selectedTierDetails = getSelectedTierDetails();
+    const extraOrganizers = (account.organizers_count ?? 1) - 1;
 
     return (
         <>
@@ -115,7 +116,28 @@ const AccountDetail = () => {
                         </Button>
                     </Group>
 
-                    <Title order={1}>{account.name}</Title>
+                    <Group gap="xs" align="center">
+                        <Title order={1}>{account.organizers?.[0]?.name ?? account.name}</Title>
+                        {extraOrganizers > 0 && (
+                            <Badge size="lg" variant="light" color="green">
+                                {t`+${extraOrganizers} more`}
+                            </Badge>
+                        )}
+                    </Group>
+                    {(account.organizers?.length ?? 0) > 0 && (
+                        <>
+                            {account.organizers.length > 1 && (
+                                <Group gap={6} mt={4}>
+                                    {account.organizers.map((organizer) => (
+                                        <Badge key={organizer.id} variant="light" color="green">
+                                            {organizer.name}
+                                        </Badge>
+                                    ))}
+                                </Group>
+                            )}
+                            <Text size="sm" c="dimmed" mt={6}>{t`Account`}: {account.name}</Text>
+                        </>
+                    )}
 
                     <Card className={classes.accountCard}>
                         <Stack gap="md">

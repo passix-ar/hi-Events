@@ -1,7 +1,7 @@
 import {Badge, Button, Stack, Text} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {AdminAccount} from "../../../api/admin.client";
-import {IconCalendar, IconWorld, IconBuildingBank, IconUsers, IconEye, IconMessage} from "@tabler/icons-react";
+import {IconCalendar, IconWorld, IconBuildingBank, IconUsers, IconEye, IconMessage, IconBuildingStore} from "@tabler/icons-react";
 import classes from "./AdminAccountsTable.module.scss";
 import {IdParam} from "../../../types";
 import {useNavigate} from "react-router";
@@ -57,12 +57,35 @@ const AdminAccountsTable = ({accounts, onImpersonate, isLoading}: AdminAccountsT
 
     return (
         <div className={classes.cardsContainer}>
-            {accounts.map((account) => (
+            {accounts.map((account) => {
+                // An account represents an organization. Lead with the first organization's
+                // name, flag how many more it has, and list them all below. Fall back to the
+                // raw account name only when no organization exists yet.
+                const organizers = account.organizers ?? [];
+                const orgCount = account.organizers_count ?? 0;
+                const primaryOrganizer = organizers[0];
+                const title = primaryOrganizer?.name ?? account.name;
+                const extraOrganizers = orgCount - 1;
+
+                return (
                 <div key={account.id} className={classes.accountCard}>
                     <div className={classes.cardHeader}>
                         <div className={classes.accountInfo}>
-                            <h3 className={classes.accountName}>{account.name}</h3>
-                            <span className={classes.accountEmail}>{account.email}</span>
+                            <h3 className={classes.accountName}>
+                                {title}
+                                {extraOrganizers > 0 && (
+                                    <Badge size="sm" variant="light" color="green" ml="xs">
+                                        {t`+${extraOrganizers} more`}
+                                    </Badge>
+                                )}
+                            </h3>
+                            {primaryOrganizer ? (
+                                <span className={classes.accountEmail}>
+                                    {t`Account`}: {account.name} · {account.email}
+                                </span>
+                            ) : (
+                                <span className={classes.accountEmail}>{account.email}</span>
+                            )}
                         </div>
                         <Button
                             size="xs"
@@ -76,6 +99,13 @@ const AdminAccountsTable = ({accounts, onImpersonate, isLoading}: AdminAccountsT
 
                     <div className={classes.cardBody}>
                         <div className={classes.statsGrid}>
+                            <div className={classes.statItem}>
+                                <IconBuildingStore size={18} />
+                                <Stack gap={2}>
+                                    <Text size="xs" c="dimmed">{t`Organizations`}</Text>
+                                    <Text size="lg" fw={600}>{account.organizers_count ?? 0}</Text>
+                                </Stack>
+                            </div>
                             <div className={classes.statItem}>
                                 <IconBuildingBank size={18} />
                                 <Stack gap={2}>
@@ -103,6 +133,19 @@ const AdminAccountsTable = ({accounts, onImpersonate, isLoading}: AdminAccountsT
                                 </Stack>
                             </div>
                         </div>
+
+                        {organizers.length > 1 && (
+                            <div className={classes.usersSection}>
+                                <Text size="sm" fw={600} mb="xs">{t`Organizations`}</Text>
+                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 6}}>
+                                    {organizers.map((organizer) => (
+                                        <Badge key={organizer.id} variant="light" color="green">
+                                            {organizer.name}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {account.users && account.users.length > 0 && (
                             <div className={classes.usersSection}>
@@ -162,7 +205,8 @@ const AdminAccountsTable = ({accounts, onImpersonate, isLoading}: AdminAccountsT
                         </div>
                     </div>
                 </div>
-            ))}
+                );
+            })}
         </div>
     );
 };

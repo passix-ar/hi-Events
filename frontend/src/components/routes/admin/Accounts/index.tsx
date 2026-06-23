@@ -57,7 +57,7 @@ const Accounts = () => {
                 <Title order={1}>{t`Accounts`}</Title>
 
                 <TextInput
-                    placeholder={t`Search by account name or email...`}
+                    placeholder={t`Search by organizer, account name or email...`}
                     leftSection={<IconSearch size={16} />}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}

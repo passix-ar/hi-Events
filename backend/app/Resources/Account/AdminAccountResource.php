@@ -18,6 +18,13 @@ class AdminAccountResource extends BaseResource
             'created_at' => $this->resource->created_at,
             'events_count' => $this->resource->events_count ?? 0,
             'users_count' => $this->resource->users_count ?? 0,
+            'organizers_count' => $this->resource->organizers_count ?? 0,
+            'organizers' => $this->resource->relationLoaded('organizers')
+                ? $this->resource->organizers->map(fn($organizer) => [
+                    'id' => $organizer->id,
+                    'name' => $organizer->name,
+                ])
+                : [],
             'users' => $this->resource->users->map(function ($user) {
                 return [
                     'id' => $user->id,

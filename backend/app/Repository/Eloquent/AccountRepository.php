@@ -42,11 +42,15 @@ class AccountRepository extends BaseRepository implements AccountRepositoryInter
     {
         $query = $this->model
             ->select('accounts.*')
-            ->withCount(['events', 'users'])
+            ->withCount(['events', 'users', 'organizers'])
             ->with([
                 'users' => function ($query) {
                     $query->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                         ->withPivot('role');
+                },
+                'organizers' => function ($query) {
+                    $query->select('organizers.id', 'organizers.account_id', 'organizers.name')
+                        ->orderBy('organizers.id');
                 },
                 'messagingTier',
             ]);
@@ -57,6 +61,9 @@ class AccountRepository extends BaseRepository implements AccountRepositoryInter
                     ->orWhere('accounts.email', 'like', "{$search}%")
                     ->orWhereHas('users', function ($userQuery) use ($search) {
                         $userQuery->where('users.email', 'like', "{$search}%");
+                    })
+                    ->orWhereHas('organizers', function ($organizerQuery) use ($search) {
+                        $organizerQuery->where('organizers.name', 'like', "{$search}%");
                     });
             });
         }
@@ -67,7 +74,7 @@ class AccountRepository extends BaseRepository implements AccountRepositoryInter
     public function getAccountWithDetails(int $accountId): Account
     {
         return $this->model
-            ->withCount(['events', 'users'])
+            ->withCount(['events', 'users', 'organizers'])
             ->with([
                 'configuration',
                 'account_vat_setting',
@@ -75,7 +82,11 @@ class AccountRepository extends BaseRepository implements AccountRepositoryInter
                 'users' => function ($query) {
                     $query->select('users.id', 'users.first_name', 'users.last_name', 'users.email')
                         ->withPivot('role');
-                }
+                },
+                'organizers' => function ($query) {
+                    $query->select('organizers.id', 'organizers.account_id', 'organizers.name')
+                        ->orderBy('organizers.id');
+                },
             ])
             ->findOrFail($accountId);
     }

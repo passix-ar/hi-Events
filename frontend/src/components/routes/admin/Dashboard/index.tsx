@@ -481,7 +481,7 @@ const AdminDashboard = () => {
                                     {dashboardData.recent_accounts.map((account) => (
                                         <Table.Tr key={account.id}>
                                             <Table.Td>
-                                                <Text fw={500}>{account.name}</Text>
+                                                <Text fw={500}>{account.primary_organizer_name || account.name}</Text>
                                             </Table.Td>
                                             <Table.Td>{account.email}</Table.Td>
                                             <Table.Td>{dayjs(account.created_at).fromNow()}</Table.Td>

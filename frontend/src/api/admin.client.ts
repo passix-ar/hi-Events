@@ -28,6 +28,11 @@ export interface AccountMessagingTier {
     links_allowed: boolean;
 }
 
+export interface AdminAccountOrganizer {
+    id: IdParam;
+    name: string;
+}
+
 export interface AdminAccount {
     id: IdParam;
     name: string;
@@ -37,6 +42,8 @@ export interface AdminAccount {
     created_at: string;
     events_count: number;
     users_count: number;
+    organizers_count: number;
+    organizers: AdminAccountOrganizer[];
     users: AdminAccountUser[];
     messaging_tier?: {
         id: number;
@@ -153,6 +160,8 @@ export interface RecentAccount {
     id: IdParam;
     name: string;
     email: string;
+    primary_organizer_name: string | null;
+    organizers_count: number;
     created_at: string;
     mercadopago_connected: boolean;
     account_verified_at: string | null;

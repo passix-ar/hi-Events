@@ -133,6 +133,15 @@ class GetAdminDashboardDataHandler
                 a.name,
                 a.email,
                 a.created_at,
+                (
+                    SELECT o.name FROM organizers o
+                    WHERE o.account_id = a.id AND o.deleted_at IS NULL
+                    ORDER BY o.id LIMIT 1
+                ) as primary_organizer_name,
+                (
+                    SELECT COUNT(*) FROM organizers o
+                    WHERE o.account_id = a.id AND o.deleted_at IS NULL
+                ) as organizers_count,
                 EXISTS (
                     SELECT 1 FROM account_mercadopago_platforms amp
                     WHERE amp.account_id = a.id AND amp.setup_completed_at IS NOT NULL
