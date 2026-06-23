@@ -8,7 +8,6 @@ import {t, Trans} from "@lingui/macro";
 import classes from "./Register.module.scss";
 import {getClientLocale} from "../../../../locales.ts";
 import {useEffect} from "react";
-import {getUserCurrency} from "../../../../utilites/currency.ts";
 import {getConfig} from "../../../../utilites/config.ts";
 import {captureUtmData, getStoredUtmData, clearStoredUtmData} from "../../../../utilites/utm.ts";
 
@@ -29,7 +28,9 @@ export const Register = () => {
                 : 'UTC',
             locale: getClientLocale(),
             invite_token: '',
-            currency_code: getUserCurrency(),
+            // Passix opera solo en ARS (ver backend/data/currencies.php). Adivinar la
+            // moneda por el locale del browser hacía que el backend rechazara el alta con 422.
+            currency_code: 'ARS',
             marketing_opt_in: false,
         },
         validate: {
