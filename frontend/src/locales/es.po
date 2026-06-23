@@ -304,7 +304,7 @@ msgstr "Una breve descripción del evento que se mostrará en los resultados del
 
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:88
 msgid "A short description of your organizer that will be displayed to your users."
-msgstr "Una breve descripción de tu organizador que se mostrará a tus usuarios."
+msgstr "Una breve descripción de tu organización que se mostrará a tus usuarios."
 
 #: src/components/forms/QuestionForm/index.tsx:102
 msgid "A single line text input"
@@ -549,7 +549,7 @@ msgstr "Agregar al calendario"
 
 #: src/components/routes/organizer/Settings/Sections/TrackingPixelSettings/index.tsx:172
 msgid "Add tracking pixels to your public event pages and organizer homepage. A cookie consent banner will be shown to visitors when tracking is active."
-msgstr "Añade píxeles de seguimiento a tus páginas de eventos públicos y a la página de inicio del organizador. Se mostrará un banner de consentimiento de cookies a los visitantes cuando el seguimiento esté activo."
+msgstr "Añade píxeles de seguimiento a tus páginas de eventos públicos y a la página de inicio de la organización. Se mostrará un banner de consentimiento de cookies a los visitantes cuando el seguimiento esté activo."
 
 #: src/components/common/OrganizerWebhookTable/index.tsx:223
 #: src/components/common/WebhookTable/index.tsx:223
@@ -560,7 +560,7 @@ msgstr "Agregar Webhook"
 
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:185
 msgid "Add your social media handles and website URL. These will be displayed on your public organizer page."
-msgstr "Agrega tus redes sociales y la URL de tu sitio web. Estos se mostrarán en tu página pública de organizador."
+msgstr "Agrega tus redes sociales y la URL de tu sitio web. Estos se mostrarán en tu página pública de la organización."
 
 #: src/components/common/PlatformFeesSettings/index.tsx:257
 msgid "Additional Fees"
@@ -871,7 +871,7 @@ msgstr "Archivar evento"
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
 msgid "Archive Organizer"
-msgstr "Archivar organizador"
+msgstr "Archivar organización"
 
 #: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
 msgid "Archive this event to hide it from the public. You can restore it later."
@@ -879,7 +879,7 @@ msgstr "Archiva este evento para ocultarlo al público. Puedes restaurarlo más 
 
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
-msgstr "Archiva este organizador. Esto también archivará todos los eventos pertenecientes a este organizador."
+msgstr "Archiva esta organización. Esto también archivará todos los eventos pertenecientes a esta organización."
 
 #: src/components/common/EventCard/index.tsx:78
 #: src/components/common/EventsDashboardStatusButtons/index.tsx:32
@@ -889,7 +889,7 @@ msgstr "Archivado"
 
 #: src/components/modals/SwitchOrganizerModal/index.tsx:106
 msgid "Archived Organizers"
-msgstr "Organizadores archivados"
+msgstr "Organizaciones archivadas"
 
 #: src/components/common/AttendeeTable/index.tsx:82
 msgid "Are you sure you want to activate this attendee?"
@@ -905,7 +905,7 @@ msgstr "¿Estás seguro de que quieres archivar este evento? Ya no será visible
 
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
-msgstr "¿Estás seguro de que quieres archivar este organizador? Esto también archivará todos los eventos pertenecientes a este organizador."
+msgstr "¿Estás seguro de que quieres archivar esta organización? Esto también archivará todos los eventos pertenecientes a esta organización."
 
 #: src/components/common/AttendeeTable/index.tsx:83
 msgid "Are you sure you want to cancel this attendee? This will void their ticket"
@@ -937,7 +937,7 @@ msgstr "¿Está seguro de que desea eliminar esta plantilla? Esta acción no se 
 
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:100
 msgid "Are you sure you want to delete this template? This action cannot be undone and emails will fall back to the organizer or default template."
-msgstr "¿Está seguro de que desea eliminar esta plantilla? Esta acción no se puede deshacer y los correos volverán a la plantilla del organizador o predeterminada."
+msgstr "¿Está seguro de que desea eliminar esta plantilla? Esta acción no se puede deshacer y los correos volverán a la plantilla de la organización o predeterminada."
 
 #: src/components/common/OrganizerWebhookTable/index.tsx:122
 #: src/components/common/WebhookTable/index.tsx:122
@@ -960,11 +960,11 @@ msgstr "¿Estás seguro de que quieres hacer público este evento? Esto hará qu
 
 #: src/components/layouts/OrganizerLayout/index.tsx:129
 msgid "Are you sure you want to make this organizer draft? This will make the organizer page invisible to the public"
-msgstr "¿Estás seguro de que quieres poner este organizador como borrador? Esto hará que la página del organizador sea invisible al público."
+msgstr "¿Estás seguro de que quieres poner esta organización como borrador? Esto hará que la página de la organización sea invisible al público."
 
 #: src/components/layouts/OrganizerLayout/index.tsx:130
 msgid "Are you sure you want to make this organizer public? This will make the organizer page visible to the public"
-msgstr "¿Estás seguro de que quieres hacer público este organizador? Esto hará que la página del organizador sea visible al público."
+msgstr "¿Estás seguro de que quieres hacer público esta organización? Esto hará que la página de la organización sea visible al público."
 
 #: src/components/common/WaitlistTable/index.tsx:117
 msgid "Are you sure you want to offer a spot to this person? They will receive an email notification."
@@ -976,7 +976,7 @@ msgstr "¿Estás seguro de que quieres publicar este evento? Una vez publicado, 
 
 #: src/components/common/StatusToggle/index.tsx:39
 msgid "Are you sure you want to publish this organizer profile? Once published, it will be visible to the public."
-msgstr "¿Estás seguro de que quieres publicar este perfil de organizador? Una vez publicado, será visible al público."
+msgstr "¿Estás seguro de que quieres publicar este perfil de la organización? Una vez publicado, será visible al público."
 
 #: src/components/common/WaitlistTable/index.tsx:100
 msgid "Are you sure you want to remove this entry from the waitlist?"
@@ -1000,7 +1000,7 @@ msgstr "¿Está seguro de que desea restaurar este evento? Será restaurado como
 
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
 msgid "Are you sure you want to restore this organizer?"
-msgstr "¿Estás seguro de que quieres restaurar este organizador?"
+msgstr "¿Estás seguro de que quieres restaurar esta organización?"
 
 #: src/components/common/StatusToggle/index.tsx:41
 msgid "Are you sure you want to unpublish this event? It will no longer be visible to the public."
@@ -1259,7 +1259,7 @@ msgstr "Awesome Events S.A."
 
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:73
 msgid "Awesome Organizer Ltd."
-msgstr "Impresionante organizador Ltd."
+msgstr "Impresionante organización Ltd."
 
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:115
 msgid "Back to Accounts"
@@ -2240,7 +2240,7 @@ msgstr "La imagen de portada se mostrará en la parte superior de la página del
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
-msgstr "La imagen de portada se mostrará en la parte superior de tu página de organizador"
+msgstr "La imagen de portada se mostrará en la parte superior de tu página de la organización"
 
 #: src/components/routes/event/attendees.tsx:196
 #: src/components/routes/event/products.tsx:76
@@ -2277,7 +2277,7 @@ msgstr "Crear un boleto"
 
 #: src/components/modals/CreateOrganizerModal/index.tsx:24
 msgid "Create additional organizers to manage separate brands, departments, or event series under one account. Each organizer has its own events, settings, and public page."
-msgstr "Crea organizadores adicionales para gestionar marcas, departamentos o series de eventos separados bajo una cuenta. Cada organizador tiene sus propios eventos, configuraciones y página pública."
+msgstr "Crea organizaciones adicionales para gestionar marcas, departamentos o series de eventos separados bajo una cuenta. Cada organización tiene sus propios eventos, configuraciones y página pública."
 
 #: src/components/common/AffiliateTable/index.tsx:68
 #: src/components/modals/CreateAffiliateModal/index.tsx:77
