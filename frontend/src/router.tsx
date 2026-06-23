@@ -67,6 +67,16 @@ export const router: RouteObject[] = [
         ]
     },
     {
+        // Standalone (no AuthLayout): session-less email confirmation, so the link
+        // from the email works whether or not the user is logged in.
+        path: "auth/confirm-email/:token",
+        errorElement: <ErrorPage />,
+        async lazy() {
+            const ConfirmEmailAddressPublic = await import("./components/routes/auth/ConfirmEmailAddressPublic");
+            return { Component: ConfirmEmailAddressPublic.default };
+        }
+    },
+    {
         path: "manage",
         errorElement: <ErrorPage />,
         async lazy() {

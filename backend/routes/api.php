@@ -23,6 +23,7 @@ use HiEvents\Http\Actions\Attendees\GetAttendeesAction;
 use HiEvents\Http\Actions\Attendees\PartialEditAttendeeAction;
 use HiEvents\Http\Actions\Attendees\ResendAttendeeTicketAction;
 use HiEvents\Http\Actions\Auth\AcceptInvitationAction;
+use HiEvents\Http\Actions\Auth\ConfirmEmailAddressPublicAction;
 use HiEvents\Http\Actions\Auth\ForgotPasswordAction;
 use HiEvents\Http\Actions\Auth\GetUserInvitationAction;
 use HiEvents\Http\Actions\Auth\LoginAction;
@@ -233,6 +234,7 @@ $router->prefix('/auth')->group(
         $router->post('/logout', LogoutAction::class)->name('auth.logout');
         $router->post('/register', CreateAccountAction::class)->name('auth.register');
         $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password');
+        $router->post('/confirm-email/{token}', ConfirmEmailAddressPublicAction::class)->name('auth.confirm-email');
 
         // Invitations
         $router->get('/invitation/{invite_token}', GetUserInvitationAction::class)->name('auth.invitation');

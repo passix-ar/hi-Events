@@ -728,7 +728,7 @@ msgstr "¡Casi terminamos! Complete la conexión de su cuenta de Stripe para com
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "¡Casi listo! Solo estamos esperando que se procese tu pago. Esto debería tomar solo unos segundos."
 
-#: src/components/routes/auth/Register/index.tsx:75
+#: src/components/routes/auth/Register/index.tsx:76
 msgid "Already have an account? <0>{0}</0>"
 msgstr "¿Ya tienes una cuenta? <0>{0}</0>"
 
@@ -1367,7 +1367,7 @@ msgstr "Al añadir píxeles de seguimiento, reconoces que tú y esta plataforma 
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "Al continuar, aceptas los <0>Términos de Servicio de {0}</0>"
 
-#: src/components/routes/auth/Register/index.tsx:141
+#: src/components/routes/auth/Register/index.tsx:142
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "Al registrarte, aceptas nuestras <0>Condiciones de servicio</0> y nuestra <1>Política de privacidad</1>."
 
@@ -1943,12 +1943,12 @@ msgid "Confirm New Password"
 msgstr "Confirmar nueva contraseña"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Register/index.tsx:119
+#: src/components/routes/auth/Register/index.tsx:120
 msgid "Confirm password"
 msgstr "Confirmar Contraseña"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:133
-#: src/components/routes/auth/Register/index.tsx:118
+#: src/components/routes/auth/Register/index.tsx:119
 #: src/components/routes/auth/ResetPassword/index.tsx:70
 msgid "Confirm Password"
 msgstr "Confirmar Contraseña"
@@ -1961,6 +1961,10 @@ msgstr "Confirma tu correo electrónico para acceder a todas las funciones."
 msgid "Confirmation email sent! Please check your inbox."
 msgstr "¡Correo de confirmación enviado! Por favor, revisa tu bandeja de entrada."
 
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:81
+msgid "Confirmation link invalid"
+msgstr "Enlace de confirmación inválido"
+
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:197
 msgid "Confirmation sent to"
 msgstr "Confirmación enviada a"
@@ -1968,6 +1972,10 @@ msgstr "Confirmación enviada a"
 #: src/components/routes/profile/ConfirmEmailAddress/index.tsx:36
 msgid "Confirming email address..."
 msgstr "Confirmando dirección de correo electrónico..."
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:59
+msgid "Confirming your email address..."
+msgstr "Confirmando tu dirección de email..."
 
 #: src/components/routes/event/GettingStarted/index.tsx:96
 msgid "Congratulations on creating an event!"
@@ -3076,7 +3084,7 @@ msgstr "Listas de Check-In Elegibles"
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
 #: src/components/routes/auth/Login/index.tsx:93
-#: src/components/routes/auth/Register/index.tsx:104
+#: src/components/routes/auth/Register/index.tsx:105
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3137,6 +3145,10 @@ msgstr "Confirmación por correo electrónico reenviada"
 #: src/components/routes/profile/ManageProfile/index.tsx:100
 msgid "Email confirmation resent successfully"
 msgstr "La confirmación por correo electrónico se reenvió correctamente"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:64
+msgid "Email confirmed!"
+msgstr "¡Email confirmado!"
 
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:67
 msgid "Email footer message"
@@ -4020,7 +4032,7 @@ msgstr "Primer Nombre"
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
 #: src/components/routes/auth/AcceptInvitation/index.tsx:97
-#: src/components/routes/auth/Register/index.tsx:90
+#: src/components/routes/auth/Register/index.tsx:91
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4159,7 +4171,7 @@ msgstr "Cómo llegar"
 msgid "Get paid immediately via MercadoPago"
 msgstr "Cobrá al instante con MercadoPago"
 
-#: src/components/routes/auth/Register/index.tsx:73
+#: src/components/routes/auth/Register/index.tsx:74
 msgid "Get started"
 msgstr "Comenzar"
 
@@ -4191,6 +4203,14 @@ msgstr "Ir a la página del evento"
 #: src/components/common/ErrorDisplay/index.tsx:67
 msgid "Go to home page"
 msgstr "Ir a la página de inicio"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:91
+msgid "Go to login"
+msgstr "Ingresar"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:74
+msgid "Go to my dashboard"
+msgstr "Ir a mi panel"
 
 #: src/components/routes/events/Dashboard/index.tsx:91
 msgid "Go to organizer panel"
@@ -4724,7 +4744,7 @@ msgid "Job queued for retry"
 msgstr "Trabajo en cola para reintentar"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:91
+#: src/components/routes/auth/Register/index.tsx:92
 msgid "John"
 msgstr "John"
 
@@ -4832,7 +4852,7 @@ msgstr "Apellido"
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
 #: src/components/routes/auth/AcceptInvitation/index.tsx:102
-#: src/components/routes/auth/Register/index.tsx:96
+#: src/components/routes/auth/Register/index.tsx:97
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4950,7 +4970,7 @@ msgid "Location"
 msgstr "Ubicación"
 
 #: src/components/routes/auth/Login/index.tsx:104
-#: src/components/routes/auth/Register/index.tsx:78
+#: src/components/routes/auth/Register/index.tsx:79
 msgid "Log in"
 msgstr "Acceso"
 
@@ -6340,7 +6360,7 @@ msgstr "Plataforma Passix"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
 #: src/components/routes/auth/Login/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:112
+#: src/components/routes/auth/Register/index.tsx:113
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "Contraseña"
@@ -6349,7 +6369,7 @@ msgstr "Contraseña"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "La contraseña debe tener un mínimo de 8 caracteres."
 
-#: src/components/routes/auth/Register/index.tsx:36
+#: src/components/routes/auth/Register/index.tsx:37
 msgid "Password must be at least 8 characters"
 msgstr "La contraseña debe tener al menos 8 caracteres"
 
@@ -6358,7 +6378,7 @@ msgid "Password reset successfully. Please login with your new password."
 msgstr "Restablecimiento de contraseña exitoso. Por favor inicie sesión con su nueva contraseña."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:37
+#: src/components/routes/auth/Register/index.tsx:38
 msgid "Passwords are not the same"
 msgstr "Las contraseñas no son similares"
 
@@ -6624,7 +6644,7 @@ msgid "Please check your email and password and try again"
 msgstr "Por favor revisa tu correo electrónico y contraseña y vuelve a intentarlo."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:38
+#: src/components/routes/auth/Register/index.tsx:39
 msgid "Please check your email is valid"
 msgstr "Por favor verifique que su correo electrónico sea válido"
 
@@ -7080,7 +7100,7 @@ msgid "Real-Time Analytics"
 msgstr "Análisis en tiempo real"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:157
-#: src/components/routes/auth/Register/index.tsx:133
+#: src/components/routes/auth/Register/index.tsx:134
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "Recibir actualizaciones de productos de {0}."
@@ -7206,7 +7226,7 @@ msgstr "Reembolsos"
 msgid "Regional Settings"
 msgstr "Configuración regional"
 
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:138
 msgid "Register"
 msgstr "Registro"
 
@@ -8072,7 +8092,7 @@ msgid "Skip this step"
 msgstr "Salta este paso"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:103
-#: src/components/routes/auth/Register/index.tsx:97
+#: src/components/routes/auth/Register/index.tsx:98
 msgid "Smith"
 msgstr "Herrero"
 
@@ -8812,6 +8832,10 @@ msgstr "Este código se usará para rastrear ventas. Solo se permiten letras, n�
 #: src/components/common/ThemeColorControls/index.tsx:104
 msgid "This color combination may be hard to read for some users"
 msgstr "Esta combinación de colores puede ser difícil de leer para algunos usuarios"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:83
+msgid "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
+msgstr "Este enlace de confirmación es inválido o expiró. Iniciá sesión y pedí uno nuevo desde tu perfil."
 
 #: src/components/layouts/EventHomepage/index.tsx:367
 #: src/components/layouts/EventHomepage/index.tsx:509
@@ -10193,7 +10217,7 @@ msgstr "Laboral"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:138
 msgid "Working..."
 msgstr "Procesando..."
 
@@ -10443,6 +10467,10 @@ msgstr "Tus detalles"
 msgid "Your Email"
 msgstr "Tu correo electrónico"
 
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:66
+msgid "Your email address has been verified. You can now publish events and start selling tickets."
+msgstr "Tu email fue verificado. Ya podés publicar eventos y empezar a vender entradas."
+
 #: src/components/routes/profile/ManageProfile/index.tsx:128
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Su solicitud de cambio de correo electrónico a <0>{0}</0> está pendiente. Por favor revisa tu correo para confirmar"
@@ -10516,7 +10544,7 @@ msgid "Your organizer address"
 msgstr "La dirección de tu organizador"
 
 #: src/components/routes/auth/Login/index.tsx:99
-#: src/components/routes/auth/Register/index.tsx:113
+#: src/components/routes/auth/Register/index.tsx:114
 msgid "Your password"
 msgstr "Tu contraseña"
 

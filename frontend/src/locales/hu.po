@@ -728,7 +728,7 @@ msgstr "Majdnem kész! Fejezze be Stripe fiókja csatlakoztatását a kifizetés
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "Majdnem kész! Csak a fizetés feldolgozására várunk. Ez csak néhány másodpercet vesz igénybe."
 
-#: src/components/routes/auth/Register/index.tsx:75
+#: src/components/routes/auth/Register/index.tsx:76
 msgid "Already have an account? <0>{0}</0>"
 msgstr "Már van fiókja? <0>{0}</0>"
 
@@ -1367,7 +1367,7 @@ msgstr ""
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "A folytatással elfogadja a(z) <0>{0} Szolgáltatási feltételeket</0>"
 
-#: src/components/routes/auth/Register/index.tsx:141
+#: src/components/routes/auth/Register/index.tsx:142
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "A regisztrációval elfogadja <0>Szolgáltatási feltételeinket</0> és <1>Adatvédelmi irányelveinket</1>."
 
@@ -1943,12 +1943,12 @@ msgid "Confirm New Password"
 msgstr "Új jelszó megerősítése"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Register/index.tsx:119
+#: src/components/routes/auth/Register/index.tsx:120
 msgid "Confirm password"
 msgstr "Jelszó megerősítése"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:133
-#: src/components/routes/auth/Register/index.tsx:118
+#: src/components/routes/auth/Register/index.tsx:119
 #: src/components/routes/auth/ResetPassword/index.tsx:70
 msgid "Confirm Password"
 msgstr "Jelszó megerősítése"
@@ -1961,6 +1961,10 @@ msgstr "Erősítse meg e-mail címét az összes funkció eléréséhez."
 msgid "Confirmation email sent! Please check your inbox."
 msgstr "Megerősítő e-mail elküldve! Kérjük, ellenőrizze postaládáját."
 
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:81
+msgid "Confirmation link invalid"
+msgstr ""
+
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:197
 msgid "Confirmation sent to"
 msgstr "Megerősítés elküldve a következő címre:"
@@ -1968,6 +1972,10 @@ msgstr "Megerősítés elküldve a következő címre:"
 #: src/components/routes/profile/ConfirmEmailAddress/index.tsx:36
 msgid "Confirming email address..."
 msgstr "E-mail cím megerősítése..."
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:59
+msgid "Confirming your email address..."
+msgstr ""
 
 #: src/components/routes/event/GettingStarted/index.tsx:96
 msgid "Congratulations on creating an event!"
@@ -3076,7 +3084,7 @@ msgstr "Jogosult bejelentkezési listák"
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
 #: src/components/routes/auth/Login/index.tsx:93
-#: src/components/routes/auth/Register/index.tsx:104
+#: src/components/routes/auth/Register/index.tsx:105
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3137,6 +3145,10 @@ msgstr "E-mail megerősítés újraküldve"
 #: src/components/routes/profile/ManageProfile/index.tsx:100
 msgid "Email confirmation resent successfully"
 msgstr "E-mail megerősítés sikeresen újraküldve"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:64
+msgid "Email confirmed!"
+msgstr ""
 
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:67
 msgid "Email footer message"
@@ -4020,7 +4032,7 @@ msgstr "Keresztnév"
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
 #: src/components/routes/auth/AcceptInvitation/index.tsx:97
-#: src/components/routes/auth/Register/index.tsx:90
+#: src/components/routes/auth/Register/index.tsx:91
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4159,7 +4171,7 @@ msgstr "Útvonal"
 msgid "Get paid immediately via MercadoPago"
 msgstr ""
 
-#: src/components/routes/auth/Register/index.tsx:73
+#: src/components/routes/auth/Register/index.tsx:74
 msgid "Get started"
 msgstr "Kezdés"
 
@@ -4191,6 +4203,14 @@ msgstr "Esemény oldalra"
 #: src/components/common/ErrorDisplay/index.tsx:67
 msgid "Go to home page"
 msgstr "Ugrás a főoldalra"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:91
+msgid "Go to login"
+msgstr ""
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:74
+msgid "Go to my dashboard"
+msgstr ""
 
 #: src/components/routes/events/Dashboard/index.tsx:91
 msgid "Go to organizer panel"
@@ -4724,7 +4744,7 @@ msgid "Job queued for retry"
 msgstr "Feladat újrapróbálásra sorba állítva"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:91
+#: src/components/routes/auth/Register/index.tsx:92
 msgid "John"
 msgstr "János"
 
@@ -4832,7 +4852,7 @@ msgstr "Vezetéknév"
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
 #: src/components/routes/auth/AcceptInvitation/index.tsx:102
-#: src/components/routes/auth/Register/index.tsx:96
+#: src/components/routes/auth/Register/index.tsx:97
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4950,7 +4970,7 @@ msgid "Location"
 msgstr "Helyszín"
 
 #: src/components/routes/auth/Login/index.tsx:104
-#: src/components/routes/auth/Register/index.tsx:78
+#: src/components/routes/auth/Register/index.tsx:79
 msgid "Log in"
 msgstr "Bejelentkezés"
 
@@ -6340,7 +6360,7 @@ msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
 #: src/components/routes/auth/Login/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:112
+#: src/components/routes/auth/Register/index.tsx:113
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "Jelszó"
@@ -6349,7 +6369,7 @@ msgstr "Jelszó"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "A jelszónak legalább 8 karakterből kell állnia"
 
-#: src/components/routes/auth/Register/index.tsx:36
+#: src/components/routes/auth/Register/index.tsx:37
 msgid "Password must be at least 8 characters"
 msgstr "A jelszónak legalább 8 karakter hosszúnak kell lennie."
 
@@ -6358,7 +6378,7 @@ msgid "Password reset successfully. Please login with your new password."
 msgstr "Jelszó sikeresen visszaállítva. Kérjük, jelentkezzen be új jelszavával."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:37
+#: src/components/routes/auth/Register/index.tsx:38
 msgid "Passwords are not the same"
 msgstr "A jelszavak nem egyeznek."
 
@@ -6624,7 +6644,7 @@ msgid "Please check your email and password and try again"
 msgstr "Kérjük, ellenőrizze e-mail címét és jelszavát, majd próbálja újra."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:38
+#: src/components/routes/auth/Register/index.tsx:39
 msgid "Please check your email is valid"
 msgstr "Kérjük, ellenőrizze, hogy az e-mail címe érvényes-e."
 
@@ -7080,7 +7100,7 @@ msgid "Real-Time Analytics"
 msgstr "Valós idejű elemzések"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:157
-#: src/components/routes/auth/Register/index.tsx:133
+#: src/components/routes/auth/Register/index.tsx:134
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "Termékfrissítések fogadása a {0}-től."
@@ -7206,7 +7226,7 @@ msgstr "Visszatérítések"
 msgid "Regional Settings"
 msgstr "Regionális beállítások"
 
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:138
 msgid "Register"
 msgstr "Regisztráció"
 
@@ -8072,7 +8092,7 @@ msgid "Skip this step"
 msgstr "Lépés kihagyása"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:103
-#: src/components/routes/auth/Register/index.tsx:97
+#: src/components/routes/auth/Register/index.tsx:98
 msgid "Smith"
 msgstr "Smith"
 
@@ -8812,6 +8832,10 @@ msgstr "Ezt a kódot az értékesítések nyomon követésére használjuk. Csak
 #: src/components/common/ThemeColorControls/index.tsx:104
 msgid "This color combination may be hard to read for some users"
 msgstr "Ez a színkombináció nehezen olvasható lehet egyes felhasználók számára"
+
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:83
+msgid "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
+msgstr ""
 
 #: src/components/layouts/EventHomepage/index.tsx:367
 #: src/components/layouts/EventHomepage/index.tsx:509
@@ -10193,7 +10217,7 @@ msgstr "Dolgozik"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:138
 msgid "Working..."
 msgstr "Dolgozik..."
 
@@ -10443,6 +10467,10 @@ msgstr "Az Ön adatai"
 msgid "Your Email"
 msgstr "Az Ön e-mail címe"
 
+#: src/components/routes/auth/ConfirmEmailAddressPublic/index.tsx:66
+msgid "Your email address has been verified. You can now publish events and start selling tickets."
+msgstr ""
+
 #: src/components/routes/profile/ManageProfile/index.tsx:128
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "E-mail cím módosítási kérelme a következőre: <0>{0}</0> függőben. Kérjük, ellenőrizze e-mail címét a megerősítéshez."
@@ -10516,7 +10544,7 @@ msgid "Your organizer address"
 msgstr "Szervezői címe"
 
 #: src/components/routes/auth/Login/index.tsx:99
-#: src/components/routes/auth/Register/index.tsx:113
+#: src/components/routes/auth/Register/index.tsx:114
 msgid "Your password"
 msgstr "Az Ön jelszava"
 

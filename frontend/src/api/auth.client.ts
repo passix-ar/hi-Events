@@ -52,5 +52,12 @@ export const authClient = {
     acceptInvitation: async (token: string, acceptData: AcceptInvitationRequest) => {
         const response = await api.post(`auth/invitation/${token}`, acceptData);
         return response.data;
+    },
+
+    // Session-less email confirmation: the signed token is the proof of ownership,
+    // so this works whether or not the user is logged in.
+    confirmEmailAddress: async (token: string) => {
+        const response = await api.post(`auth/confirm-email/${token}`);
+        return response.data;
     }
 }

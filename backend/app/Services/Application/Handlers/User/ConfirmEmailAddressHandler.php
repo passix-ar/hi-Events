@@ -22,4 +22,15 @@ readonly class ConfirmEmailAddressHandler
     {
         $this->emailConfirmationService->confirmEmailAddress($data->token, $data->accountId);
     }
+
+    /**
+     * Session-less confirmation: the signed token carries the identity, so no
+     * authenticated account is required.
+     *
+     * @throws DecryptionFailedException|Throwable
+     */
+    public function handleFromToken(string $token): void
+    {
+        $this->emailConfirmationService->confirmEmailAddressFromToken($token);
+    }
 }

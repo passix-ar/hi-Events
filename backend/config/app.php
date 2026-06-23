@@ -43,7 +43,7 @@ return [
      * Frontend URL patterns for various actions. It is unlikely you will need to change these
      */
     'frontend_urls' => [
-        'confirm_email_address' => '/manage/profile/confirm-email-address/%s',
+        'confirm_email_address' => '/auth/confirm-email/%s',
         'reset_password' => '/auth/reset-password/%s',
         'confirm_email_change' => '/manage/profile/confirm-email-change/%s',
         'accept_invitation' => '/auth/accept-invitation/%s',
