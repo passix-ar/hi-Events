@@ -42,6 +42,7 @@ class CreateAccountAction extends BaseAuthAction
             $accountData = $this->createAccountHandler->handle(CreateAccountDTO::fromArray([
                 'first_name' => $request->validated('first_name'),
                 'last_name' => $request->validated('last_name'),
+                'business_name' => $request->validated('business_name'),
                 'email' => $request->validated('email'),
                 'password' => $request->validated('password'),
                 'timezone' => $request->validated('timezone'),

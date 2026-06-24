@@ -20,6 +20,7 @@ export const Register = () => {
         initialValues: {
             first_name: '',
             last_name: '',
+            business_name: '',
             email: '',
             password: '',
             password_confirmation: '',
@@ -34,6 +35,7 @@ export const Register = () => {
             marketing_opt_in: false,
         },
         validate: {
+            business_name: hasLength({min: 1}, t`Please enter your business name`),
             password: hasLength({min: 8}, t`Password must be at least 8 characters`),
             password_confirmation: matchesField('password', t`Passwords are not the same`),
             email: isEmail(t`Please check your email is valid`),
@@ -98,6 +100,15 @@ export const Register = () => {
                             placeholder={t`Smith`}
                         />
                     </SimpleGrid>
+
+                    <TextInput
+                        mb="md"
+                        {...form.getInputProps('business_name')}
+                        label={t`Business name`}
+                        placeholder={t`Acme Inc.`}
+                        description={t`This name appears on your event pages and in emails.`}
+                        required
+                    />
 
                     <TextInput
                         mb={0}

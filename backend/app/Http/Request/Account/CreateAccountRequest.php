@@ -19,6 +19,7 @@ class CreateAccountRequest extends BaseRequest
         return [
             'first_name' => RulesHelper::REQUIRED_STRING,
             'last_name' => RulesHelper::STRING,
+            'business_name' => RulesHelper::REQUIRED_STRING,
             'email' => RulesHelper::REQUIRED_EMAIL,
             'password' => ['required', 'confirmed', Password::min(8)],
             'timezone' => ['timezone:all'],

@@ -61,7 +61,7 @@ class CreateAccountHandler
             $account = $this->accountRepository->create([
                 'timezone' => $this->getTimezone($accountData),
                 'currency_code' => $this->getCurrencyCode($accountData),
-                'name' => $accountData->first_name . ($accountData->last_name ? ' ' . $accountData->last_name : ''),
+                'name' => trim($accountData->business_name),
                 'email' => strtolower($accountData->email),
                 'short_id' => IdHelper::shortId(IdHelper::ACCOUNT_PREFIX),
                 'account_verified_at' => $isSaasMode ? null : now()->toDateTimeString(),
