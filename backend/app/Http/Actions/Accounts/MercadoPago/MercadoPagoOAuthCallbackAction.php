@@ -35,10 +35,18 @@ class MercadoPagoOAuthCallbackAction extends BaseAction
         try {
             $this->handler->handle($code, $state);
         } catch (MercadoPagoOAuthException $e) {
-            $this->logger->error('MercadoPago OAuth callback failed', ['error' => $e->getMessage()]);
+            $this->logger->error('MercadoPago OAuth callback failed', [
+                'exception' => $e::class,
+                'message'   => $e->getMessage(),
+            ]);
             return $this->redirector->to($frontendUrl . '/account/payment?mp_error=oauth_failed');
         } catch (Throwable $e) {
-            $this->logger->error('Unexpected error in MercadoPago OAuth callback', ['error' => $e->getMessage()]);
+            $this->logger->error('Unexpected error in MercadoPago OAuth callback', [
+                'exception' => $e::class,
+                'message'   => $e->getMessage(),
+                'location'  => $e->getFile() . ':' . $e->getLine(),
+                'trace'     => $e->getTraceAsString(),
+            ]);
             return $this->redirector->to($frontendUrl . '/account/payment?mp_error=unknown');
         }
 
