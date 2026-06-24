@@ -67,7 +67,7 @@ export const GlobalMenu = () => {
         icon: IconLifebuoy,
         onClick: (event: any) => {
             event.preventDefault();
-            window.location.href = `mailto:soporte@getpassix.com`;
+            window.location.href = `mailto:getpassix@gmail.com`;
         },
     });
 
