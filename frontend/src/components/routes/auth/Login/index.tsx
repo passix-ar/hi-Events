@@ -79,14 +79,6 @@ const Login = () => {
         <>
             <header className={classes.header}>
                 <h2>{t`Welcome back`}</h2>
-                <p>
-                    <Trans>
-                        Don't have an account?{' '}
-                        <NavLink to={`/auth/register${location.search}`}>
-                            Sign up
-                        </NavLink>
-                    </Trans>
-                </p>
             </header>
             <div className={classes.loginCard}>
                 <form onSubmit={form.onSubmit((values) => loginUser(values))}>
@@ -108,6 +100,14 @@ const Login = () => {
                         <NavLink to={`/auth/forgot-password`}>
                             {t`Forgot password?`}
                         </NavLink>
+                    </p>
+                    <p className={classes.signupPrompt}>
+                        <Trans>
+                            Don't have an account?{' '}
+                            <NavLink to={`/auth/register${location.search}`}>
+                                Sign up
+                            </NavLink>
+                        </Trans>
                     </p>
                 </form>
             </div>

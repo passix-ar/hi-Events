@@ -29,6 +29,24 @@
       }
     }
   }
+
+  // "Don't have an account? Sign up" — moved below the forgot-password link,
+  // kept as an accent CTA (matches the prominence it had in the header).
+  .signupPrompt {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--hi-color-gray-dark);
+
+    a {
+      font-size: inherit;
+      color: var(--mantine-color-secondary-5);
+      font-weight: 600;
+
+      &:hover {
+        color: var(--mantine-color-secondary-7);
+      }
+    }
+  }
 }
 
 // Ticket Lookup Section
