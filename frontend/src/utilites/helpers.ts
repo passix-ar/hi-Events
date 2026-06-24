@@ -1,4 +1,4 @@
-import {Event, Product} from "../types.ts";
+import {Event, Product, User} from "../types.ts";
 import {MantineColor} from "@mantine/core";
 import {getConfig} from "./config.ts";
 
@@ -92,6 +92,14 @@ export const formatNumber = (number: number) => {
 }
 
 export const isSsr = () => import.meta.env.SSR;
+
+/**
+ * Where a user should land after authenticating. SUPERADMINs go straight to the admin
+ * panel (they may not have any organizations); everyone else goes to event management.
+ * Fails safe: an unknown/missing role never resolves to /admin.
+ */
+export const getUserHomePath = (user?: Pick<User, 'role'> | null): string =>
+    user?.role === 'SUPERADMIN' ? '/admin' : '/manage/events';
 
 /**
  * (c) Hi.Events Ltd 2025

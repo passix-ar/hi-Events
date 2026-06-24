@@ -17,7 +17,7 @@ import {
 } from '@tabler/icons-react';
 import {useCallback, useMemo, useRef} from "react";
 import {getConfig} from "../../../utilites/config.ts";
-import {isHiEvents} from "../../../utilites/helpers.ts";
+import {isHiEvents, getUserHomePath} from "../../../utilites/helpers.ts";
 import {showInfo} from "../../../utilites/notifications.tsx";
 
 const allFeatures = [
@@ -145,7 +145,7 @@ const AuthLayout = () => {
     }
 
     if (me.isSuccess) {
-        return <Navigate to={'/manage/events'} />;
+        return <Navigate to={getUserHomePath(me.data)} />;
     }
 
     return (

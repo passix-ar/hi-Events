@@ -4,6 +4,7 @@ import { useGetMe } from "./queries/useGetMe.ts";
 import { publicEventRouteLoader } from "./routeLoaders/publicEventRouteLoader.ts";
 import { publicOrganizerRouteLoader } from "./routeLoaders/publicOrganizerRouteLoader.ts";
 import { organizerPreviewRouteLoader } from "./routeLoaders/organizerPreviewRouteLoader.ts";
+import { getUserHomePath } from "./utilites/helpers.ts";
 
 const Root = () => {
     const me = useGetMe();
@@ -11,7 +12,7 @@ const Root = () => {
     if (!me.isFetched) return null;
 
     const searchParams = typeof window !== 'undefined' ? window.location.search : '';
-    const basePath = me.isSuccess ? "/manage/events" : "/auth/login";
+    const basePath = me.isSuccess ? getUserHomePath(me.data) : "/auth/login";
     return <Navigate to={basePath + searchParams} replace={true} />;
 };
 
