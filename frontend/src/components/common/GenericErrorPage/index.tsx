@@ -71,8 +71,7 @@ export const GenericErrorPage: React.FC<GenericErrorPageProps> = ({
                                     component="a"
                                     href={buttonUrl}
                                     leftSection={buttonIcon}
-                                    variant="gradient"
-                                    gradient={{from: 'purple', to: 'pink'}}
+                                    variant="filled"
                                     className={classes.button}
                                 >
                                     {buttonText}
