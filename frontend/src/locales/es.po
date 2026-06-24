@@ -5253,8 +5253,8 @@ msgid "Mobile Optimized"
 msgstr "Optimizado para móviles"
 
 #: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with offline support and real-time tracking"
-msgstr "Escáner móvil con soporte sin conexión y seguimiento en tiempo real"
+msgid "Mobile scanner with real-time tracking"
+msgstr "Escáner móvil con seguimiento en tiempo real"
 
 #: src/components/routes/admin/Dashboard/index.tsx:163
 msgid "Monetary values are approximate totals across all currencies"

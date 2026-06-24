@@ -5253,7 +5253,7 @@ msgid "Mobile Optimized"
 msgstr "移动优化"
 
 #: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with offline support and real-time tracking"
+msgid "Mobile scanner with real-time tracking"
 msgstr "支持离线和实时跟踪的移动扫描仪"
 
 #: src/components/routes/admin/Dashboard/index.tsx:163

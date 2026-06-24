@@ -5255,8 +5255,8 @@ msgid "Mobile Optimized"
 msgstr "Mobile Optimized"
 
 #: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with offline support and real-time tracking"
-msgstr "Mobile scanner with offline support and real-time tracking"
+msgid "Mobile scanner with real-time tracking"
+msgstr "Mobile scanner with real-time tracking"
 
 #: src/components/routes/admin/Dashboard/index.tsx:163
 msgid "Monetary values are approximate totals across all currencies"

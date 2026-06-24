@@ -5253,7 +5253,7 @@ msgid "Mobile Optimized"
 msgstr "Mobilra optimalizált"
 
 #: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with offline support and real-time tracking"
+msgid "Mobile scanner with real-time tracking"
 msgstr "Mobil szkenner offline támogatással és valós idejű követéssel"
 
 #: src/components/routes/admin/Dashboard/index.tsx:163

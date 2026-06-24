@@ -29,7 +29,7 @@ const allFeatures = [
     {
         icon: IconQrcode,
         title: t`QR Code Check-in`,
-        description: t`Mobile scanner with offline support and real-time tracking`
+        description: t`Mobile scanner with real-time tracking`
     },
     {
         icon: IconCreditCard,

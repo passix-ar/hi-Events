@@ -5253,7 +5253,7 @@ msgid "Mobile Optimized"
 msgstr "Tối ưu hóa di động"
 
 #: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with offline support and real-time tracking"
+msgid "Mobile scanner with real-time tracking"
 msgstr "Máy quét di động với hỗ trợ ngoại tuyến và theo dõi thời gian thực"
 
 #: src/components/routes/admin/Dashboard/index.tsx:163
