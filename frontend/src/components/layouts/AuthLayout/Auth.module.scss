@@ -37,7 +37,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  // `safe center` falls back to start-alignment when the form is taller than
+  // the viewport, so the logo at the top stays reachable instead of being
+  // clipped and unscrollable (classic flex-centering + overflow bug).
+  justify-content: safe center;
   flex: 1;
   padding: 1.25rem 2rem;
   min-height: 100%;

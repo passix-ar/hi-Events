@@ -64,6 +64,19 @@ a {
   color: var(--hi-link-color);
 }
 
+// Prevent iOS Safari from auto-zooming the page when a form field is focused.
+// Mobile Safari zooms in whenever a focused control's font-size is below 16px
+// (Mantine's "sm"/"xs" inputs are 14px), and never zooms back out — which is
+// the "everything looks zoomed in" effect on phones. Forcing 16px on native
+// controls below the md breakpoint stops it without disabling user pinch-zoom.
+@include mixins.respond-below(md) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
 // Mantine overrides
 .mantine-InputWrapper-root, .mantine-Switch-root {
   margin-bottom: var(--hi-spacing-lg);
