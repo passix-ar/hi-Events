@@ -6,7 +6,6 @@ import {authClient} from "../../../../api/auth.client.ts";
 import {LoginData, LoginResponse} from "../../../../types.ts";
 import {useForm} from "@mantine/form";
 import {redirectToPreviousUrl} from "../../../../api/client.ts";
-import {getUserHomePath} from "../../../../utilites/helpers.ts";
 import classes from "./Login.module.scss";
 import {t, Trans} from "@lingui/macro";
 import {useEffect, useState} from "react";
@@ -39,7 +38,7 @@ const Login = () => {
 
         onSuccess: (response: LoginResponse) => {
             if (response.token) {
-                redirectToPreviousUrl(getUserHomePath(response.user));
+                redirectToPreviousUrl();
                 return;
             }
 

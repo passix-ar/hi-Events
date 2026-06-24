@@ -58,8 +58,8 @@ api.interceptors.response.use(
 
 axios.defaults.withCredentials = true;
 
-export const redirectToPreviousUrl = (fallback: string = '/manage/events') => {
-    const previousUrl = window?.localStorage?.getItem(PREVIOUS_URL_KEY) || fallback;
+export const redirectToPreviousUrl = () => {
+    const previousUrl = window?.localStorage?.getItem(PREVIOUS_URL_KEY) || '/';
     window?.localStorage?.removeItem(PREVIOUS_URL_KEY);
     if (typeof window !== "undefined") {
         window.location.href = previousUrl;
