@@ -1014,6 +1014,10 @@ msgstr "¿Estás seguro de que deseas eliminar esta Asignación de Capacidad?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "¿Está seguro de que desea eliminar esta lista de registro?"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
+msgid "Are you sure? You won't be able to receive payments until you reconnect."
+msgstr "¿Estás seguro? No vas a poder recibir pagos hasta que vuelvas a conectar."
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:198
 msgid "Are you VAT registered in the EU?"
 msgstr "¿Está registrado para el IVA en la UE?"
@@ -1424,6 +1428,7 @@ msgstr "Campaña"
 #: src/components/common/QuestionAndAnswerList/index.tsx:149
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/common/WaitlistTable/index.tsx:132
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
 #: src/components/routes/event/messages.tsx:80
 #: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
@@ -2026,7 +2031,7 @@ msgstr "Conectar MercadoPago"
 msgid "Connect payment processing"
 msgstr "Conectar procesamiento de pagos"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:90
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:132
 #: src/components/routes/event/GettingStarted/index.tsx:162
 msgid "Connect with MercadoPago"
 msgstr "Conectar MercadoPago"
@@ -2042,7 +2047,7 @@ msgstr "Conéctate con Stripe"
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr "Conectá tu cuenta de MercadoPago para aceptar pagos por entradas y productos."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:80
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:122
 msgid "Connect your MercadoPago account to start accepting payments in Argentina."
 msgstr "Conectá tu cuenta de MercadoPago para empezar a aceptar pagos en Argentina."
 
@@ -2775,6 +2780,15 @@ msgstr "¿No recibiste el código?"
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
 msgstr "Deshabilitar esta capacidad rastreará las ventas pero no las detendrá cuando se alcance el límite"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
+msgid "Disconnect"
+msgstr "Desconectar"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
+msgid "Disconnect MercadoPago"
+msgstr "Desconectar MercadoPago"
+
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:71
 msgid "Discord"
 msgstr "Discord"
@@ -2815,7 +2829,7 @@ msgstr "Documentación"
 msgid "Don't forget!"
 msgstr "¡No lo olvides!"
 
-#: src/components/routes/auth/Login/index.tsx:82
+#: src/components/routes/auth/Login/index.tsx:104
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr "¿No tenés cuenta? <0>Registrate</0>"
 
@@ -3098,7 +3112,7 @@ msgstr "Listas de Check-In Elegibles"
 #: src/components/routes/admin/Dashboard/index.tsx:473
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
-#: src/components/routes/auth/Login/index.tsx:93
+#: src/components/routes/auth/Login/index.tsx:85
 #: src/components/routes/auth/Register/index.tsx:116
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
@@ -3765,6 +3779,10 @@ msgstr "Error al eliminar la pregunta"
 msgid "Failed to delete template"
 msgstr "Error al eliminar la plantilla"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+msgid "Failed to disconnect MercadoPago."
+msgstr "No se pudo desconectar MercadoPago."
+
 #: src/components/common/OrdersTable/index.tsx:107
 #: src/components/layouts/Checkout/index.tsx:95
 msgid "Failed to download invoice. Please try again."
@@ -3786,7 +3804,7 @@ msgstr "Error al exportar pedidos"
 msgid "Failed to export report. Please try again."
 msgstr "Error al exportar el informe. Por favor, inténtelo de nuevo."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:38
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:42
 msgid "Failed to get MercadoPago authorization URL."
 msgstr "No se pudo obtener la URL de autorización de MercadoPago."
 
@@ -4122,7 +4140,7 @@ msgstr "Comida y bebida"
 msgid "Footer Text"
 msgstr "Texto del Pie"
 
-#: src/components/routes/auth/Login/index.tsx:108
+#: src/components/routes/auth/Login/index.tsx:100
 msgid "Forgot password?"
 msgstr "¿Has olvidado tu contraseña?"
 
@@ -4984,12 +5002,12 @@ msgstr "Cargando..."
 msgid "Location"
 msgstr "Ubicación"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:96
 #: src/components/routes/auth/Register/index.tsx:81
 msgid "Log in"
 msgstr "Acceso"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:96
 msgid "Logging in"
 msgstr "Iniciando sesión"
 
@@ -5132,7 +5150,7 @@ msgid "Medium"
 msgstr "Medio"
 
 #: src/components/common/OrdersTable/index.tsx:384
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:83
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:85
 #: src/components/routes/product-widget/Payment/index.tsx:144
 msgid "MercadoPago"
@@ -5142,11 +5160,15 @@ msgstr ""
 msgid "MercadoPago approx."
 msgstr "MercadoPago aprox."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:23
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:25
 msgid "MercadoPago connected successfully!"
 msgstr "¡MercadoPago conectado con éxito!"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:62
+msgid "MercadoPago disconnected."
+msgstr "MercadoPago desconectado."
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:92
 msgid "MercadoPago is connected"
 msgstr "MercadoPago está conectado"
 
@@ -6379,7 +6401,7 @@ msgid "Passix platform"
 msgstr "Plataforma Passix"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
-#: src/components/routes/auth/Login/index.tsx:98
+#: src/components/routes/auth/Login/index.tsx:90
 #: src/components/routes/auth/Register/index.tsx:124
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
@@ -7164,7 +7186,7 @@ msgstr "Destinatarios"
 msgid "Recipients are available after the message is sent"
 msgstr "Los destinatarios estarán disponibles después de enviar el mensaje"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:74
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:105
 msgid "Reconnect MercadoPago"
 msgstr "Reconectar MercadoPago"
 
@@ -7176,7 +7198,7 @@ msgstr "Reconectar Stripe →"
 msgid "Reddit"
 msgstr "Reddit"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:35
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:39
 msgid "Redirecting to MercadoPago..."
 msgstr "Redirigiendo a MercadoPago..."
 
@@ -8785,7 +8807,7 @@ msgstr "No hay productos disponibles en esta categoría"
 msgid "There is a refund pending. Please wait for it to complete before requesting another refund."
 msgstr "Hay un reembolso pendiente. Espere a que se complete antes de solicitar otro reembolso."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:26
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:30
 msgid "There was a problem connecting MercadoPago. Please try again."
 msgstr "Hubo un problema al conectar MercadoPago. Por favor intentá de nuevo."
 
@@ -8902,6 +8924,10 @@ msgstr "Este enlace es inválido o ha caducado."
 #: src/components/routes/product-widget/OrderSummaryAndProducts/LinkExpiredMessage/index.tsx:27
 msgid "This link is no longer valid"
 msgstr "Este enlace ya no es válido"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:28
+msgid "This MercadoPago account is already connected to another Passix account."
+msgstr "Esta cuenta de MercadoPago ya está conectada a otra cuenta de Passix."
 
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:69
 msgid "This message will be included in the footer of all emails sent from this event"
@@ -10515,7 +10541,7 @@ msgstr "Tu evento debe estar activo antes de que puedas vender entradas a los as
 msgid "Your logo, colors, and style on every page"
 msgstr "Tu logo, colores y estilo en cada página"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:95
 msgid "Your MercadoPago account is connected and ready to process payments."
 msgstr "Tu cuenta de MercadoPago está conectada y lista para procesar pagos."
 
@@ -10571,7 +10597,7 @@ msgstr "Tus pedidos aparecerán aquí una vez que comiencen a llegar."
 msgid "Your organizer address"
 msgstr "La dirección de tu organizador"
 
-#: src/components/routes/auth/Login/index.tsx:99
+#: src/components/routes/auth/Login/index.tsx:91
 #: src/components/routes/auth/Register/index.tsx:125
 msgid "Your password"
 msgstr "Tu contraseña"

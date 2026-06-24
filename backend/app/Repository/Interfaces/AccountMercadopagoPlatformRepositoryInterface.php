@@ -10,4 +10,9 @@ use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
  */
 interface AccountMercadopagoPlatformRepositoryInterface extends RepositoryInterface
 {
+    /**
+     * Permanently remove an account's MercadoPago connection. Hard delete (not soft)
+     * so the unique mp_user_id is freed and the seller can reconnect afterwards.
+     */
+    public function forceDeleteByAccountId(int $accountId): void;
 }

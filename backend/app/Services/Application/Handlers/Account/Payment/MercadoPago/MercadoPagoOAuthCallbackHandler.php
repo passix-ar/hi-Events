@@ -5,6 +5,7 @@ namespace HiEvents\Services\Application\Handlers\Account\Payment\MercadoPago;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\Generated\AccountMercadopagoPlatformDomainObjectAbstract;
+use HiEvents\Exceptions\MercadoPago\MercadoPagoAccountAlreadyLinkedException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Services\Domain\Payment\MercadoPago\MercadoPagoOAuthService;
@@ -36,21 +37,42 @@ class MercadoPagoOAuthCallbackHandler
 
         $mpUserId = (string) ($tokenData['user_id'] ?? '');
 
-        // Reconnecting must be idempotent. The unique constraint on mp_user_id also
-        // covers soft-deleted rows in Postgres, so a plain insert fails whenever this
-        // MercadoPago seller was connected before — under this account, another
-        // account, or a since-disconnected (soft-deleted) row. Look the seller up by
-        // mp_user_id first (including trashed) and update that row in place; only fall
-        // back to the account's own row when the seller id is unknown.
-        $existing = $mpUserId !== ''
-            ? $this->platformRepository
+        // One MercadoPago seller = one Passix account. The DB enforces this with a
+        // unique index on mp_user_id (which also covers soft-deleted rows in Postgres).
+        // If this seller is already linked to a *different* account, reject with a
+        // clear message instead of crashing on the constraint or hijacking it.
+        // Select only the columns we need for these checks: hydrating the full row
+        // would decrypt the token casts, so a single corrupted row would make even
+        // this lookup blow up.
+        if ($mpUserId !== '') {
+            $sellerRow = $this->platformRepository
                 ->includeDeleted()
-                ->findFirstWhere([AccountMercadopagoPlatformDomainObjectAbstract::MP_USER_ID => $mpUserId])
-            : null;
+                ->findFirstWhere(
+                    [AccountMercadopagoPlatformDomainObjectAbstract::MP_USER_ID => $mpUserId],
+                    [
+                        AccountMercadopagoPlatformDomainObjectAbstract::ID,
+                        AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID,
+                        AccountMercadopagoPlatformDomainObjectAbstract::MP_USER_ID,
+                    ],
+                );
 
-        $existing ??= $this->platformRepository->findFirstWhere([
-            AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $accountId,
-        ]);
+            if ($sellerRow && $sellerRow->getAccountId() !== $accountId) {
+                throw new MercadoPagoAccountAlreadyLinkedException(
+                    __('This MercadoPago account is already connected to another Passix account.')
+                );
+            }
+        }
+
+        // The account's own connection, if it reconnects (active or soft-deleted).
+        $existing = $this->platformRepository
+            ->includeDeleted()
+            ->findFirstWhere(
+                [AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $accountId],
+                [
+                    AccountMercadopagoPlatformDomainObjectAbstract::ID,
+                    AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID,
+                ],
+            );
 
         $expiresAt = isset($tokenData['expires_in'])
             ? Carbon::now()->addSeconds($tokenData['expires_in'])->toDateTimeString()
@@ -67,14 +89,11 @@ class MercadoPagoOAuthCallbackHandler
         ];
 
         if ($existing) {
-            // Direct UPDATE (works for active or soft-deleted rows) that also restores
-            // the row, claiming the connection for the account completing the OAuth.
-            $this->platformRepository
-                ->includeDeleted()
-                ->updateWhere(
-                    $attributes + [AccountMercadopagoPlatformDomainObjectAbstract::DELETED_AT => null],
-                    [AccountMercadopagoPlatformDomainObjectAbstract::ID => $existing->getId()],
-                );
+            // updateFromArray fills + saves the model, so the `encrypted` casts run and
+            // the tokens are stored encrypted. (A raw builder update like updateWhere
+            // bypasses the casts and would persist the tokens in plaintext, which then
+            // fails to decrypt on read.)
+            $this->platformRepository->includeDeleted()->updateFromArray($existing->getId(), $attributes);
         } else {
             $this->platformRepository->create($attributes);
         }

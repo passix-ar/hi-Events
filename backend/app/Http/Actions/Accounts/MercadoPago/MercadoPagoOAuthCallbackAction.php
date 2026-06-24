@@ -3,6 +3,7 @@
 // Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Http\Actions\Accounts\MercadoPago;
 
+use HiEvents\Exceptions\MercadoPago\MercadoPagoAccountAlreadyLinkedException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Http\Actions\BaseAction;
 use HiEvents\Services\Application\Handlers\Account\Payment\MercadoPago\MercadoPagoOAuthCallbackHandler;
@@ -34,6 +35,11 @@ class MercadoPagoOAuthCallbackAction extends BaseAction
 
         try {
             $this->handler->handle($code, $state);
+        } catch (MercadoPagoAccountAlreadyLinkedException $e) {
+            $this->logger->warning('MercadoPago account already linked to another Passix account', [
+                'message' => $e->getMessage(),
+            ]);
+            return $this->redirector->to($frontendUrl . '/account/payment?mp_error=already_connected');
         } catch (MercadoPagoOAuthException $e) {
             $this->logger->error('MercadoPago OAuth callback failed', [
                 'exception' => $e::class,

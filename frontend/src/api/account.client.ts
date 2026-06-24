@@ -46,4 +46,8 @@ export const accountClient = {
         }>(`accounts/${accountId}/mercadopago/status`);
         return response.data;
     },
+    disconnectMercadoPago: async (accountId: IdParam) => {
+        const response = await api.delete<{ is_connected: boolean }>(`accounts/${accountId}/mercadopago`);
+        return response.data;
+    },
 }

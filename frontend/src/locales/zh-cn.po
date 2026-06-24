@@ -1014,6 +1014,10 @@ msgstr "您确定要删除此容量分配吗？"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "您确定要删除此签到列表吗？"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
+msgid "Are you sure? You won't be able to receive payments until you reconnect."
+msgstr ""
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:198
 msgid "Are you VAT registered in the EU?"
 msgstr "您在欧盟注册了增值税吗?"
@@ -1424,6 +1428,7 @@ msgstr "活动"
 #: src/components/common/QuestionAndAnswerList/index.tsx:149
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/common/WaitlistTable/index.tsx:132
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
 #: src/components/routes/event/messages.tsx:80
 #: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
@@ -2026,7 +2031,7 @@ msgstr ""
 msgid "Connect payment processing"
 msgstr "连接支付处理"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:90
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:132
 #: src/components/routes/event/GettingStarted/index.tsx:162
 msgid "Connect with MercadoPago"
 msgstr ""
@@ -2042,7 +2047,7 @@ msgstr "与 Stripe 连接"
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:80
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:122
 msgid "Connect your MercadoPago account to start accepting payments in Argentina."
 msgstr ""
 
@@ -2775,6 +2780,15 @@ msgstr "没有收到验证码？"
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
 msgstr "禁用此容量将跟踪销售情况，但不会在达到限制时停止销售"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
+msgid "Disconnect"
+msgstr ""
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
+msgid "Disconnect MercadoPago"
+msgstr ""
+
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:71
 msgid "Discord"
 msgstr "Discord"
@@ -2815,7 +2829,7 @@ msgstr "文档"
 msgid "Don't forget!"
 msgstr "别忘了！"
 
-#: src/components/routes/auth/Login/index.tsx:82
+#: src/components/routes/auth/Login/index.tsx:104
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr ""
 
@@ -3098,7 +3112,7 @@ msgstr "符合条件的签到列表"
 #: src/components/routes/admin/Dashboard/index.tsx:473
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
-#: src/components/routes/auth/Login/index.tsx:93
+#: src/components/routes/auth/Login/index.tsx:85
 #: src/components/routes/auth/Register/index.tsx:116
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
@@ -3765,6 +3779,10 @@ msgstr "删除问题失败"
 msgid "Failed to delete template"
 msgstr "删除模板失败"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+msgid "Failed to disconnect MercadoPago."
+msgstr ""
+
 #: src/components/common/OrdersTable/index.tsx:107
 #: src/components/layouts/Checkout/index.tsx:95
 msgid "Failed to download invoice. Please try again."
@@ -3786,7 +3804,7 @@ msgstr "导出订单失败"
 msgid "Failed to export report. Please try again."
 msgstr "导出报告失败。请重试。"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:38
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:42
 msgid "Failed to get MercadoPago authorization URL."
 msgstr ""
 
@@ -4122,7 +4140,7 @@ msgstr "美食美酒"
 msgid "Footer Text"
 msgstr "页脚文字"
 
-#: src/components/routes/auth/Login/index.tsx:108
+#: src/components/routes/auth/Login/index.tsx:100
 msgid "Forgot password?"
 msgstr "忘记密码？"
 
@@ -4984,12 +5002,12 @@ msgstr "加载中..."
 msgid "Location"
 msgstr "地点"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:96
 #: src/components/routes/auth/Register/index.tsx:81
 msgid "Log in"
 msgstr "登录"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:96
 msgid "Logging in"
 msgstr "登录"
 
@@ -5132,7 +5150,7 @@ msgid "Medium"
 msgstr "媒介"
 
 #: src/components/common/OrdersTable/index.tsx:384
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:83
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:85
 #: src/components/routes/product-widget/Payment/index.tsx:144
 msgid "MercadoPago"
@@ -5142,11 +5160,15 @@ msgstr ""
 msgid "MercadoPago approx."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:23
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:25
 msgid "MercadoPago connected successfully!"
 msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:62
+msgid "MercadoPago disconnected."
+msgstr ""
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:92
 msgid "MercadoPago is connected"
 msgstr ""
 
@@ -6379,7 +6401,7 @@ msgid "Passix platform"
 msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
-#: src/components/routes/auth/Login/index.tsx:98
+#: src/components/routes/auth/Login/index.tsx:90
 #: src/components/routes/auth/Register/index.tsx:124
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
@@ -7164,7 +7186,7 @@ msgstr "收件人"
 msgid "Recipients are available after the message is sent"
 msgstr "收件人在消息发送后可用"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:74
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:105
 msgid "Reconnect MercadoPago"
 msgstr ""
 
@@ -7176,7 +7198,7 @@ msgstr "重新连接 Stripe →"
 msgid "Reddit"
 msgstr "Reddit"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:35
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:39
 msgid "Redirecting to MercadoPago..."
 msgstr ""
 
@@ -8785,7 +8807,7 @@ msgstr "此类别中没有可用产品"
 msgid "There is a refund pending. Please wait for it to complete before requesting another refund."
 msgstr "退款正在处理中。请等待退款完成后再申请退款。"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:26
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:30
 msgid "There was a problem connecting MercadoPago. Please try again."
 msgstr ""
 
@@ -8902,6 +8924,10 @@ msgstr "此链接无效或已过期。"
 #: src/components/routes/product-widget/OrderSummaryAndProducts/LinkExpiredMessage/index.tsx:27
 msgid "This link is no longer valid"
 msgstr "此链接不再有效"
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:28
+msgid "This MercadoPago account is already connected to another Passix account."
+msgstr ""
 
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:69
 msgid "This message will be included in the footer of all emails sent from this event"
@@ -10515,7 +10541,7 @@ msgstr "在向与会者销售门票之前，您的活动必须处于上线状态
 msgid "Your logo, colors, and style on every page"
 msgstr "您的徽标、颜色和样式在每一页上"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:95
 msgid "Your MercadoPago account is connected and ready to process payments."
 msgstr ""
 
@@ -10571,7 +10597,7 @@ msgstr "您的订单一旦开始滚动，就会出现在这里。"
 msgid "Your organizer address"
 msgstr "您组织者的地址"
 
-#: src/components/routes/auth/Login/index.tsx:99
+#: src/components/routes/auth/Login/index.tsx:91
 #: src/components/routes/auth/Register/index.tsx:125
 msgid "Your password"
 msgstr "您的密码"

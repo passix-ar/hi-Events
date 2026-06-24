@@ -21,4 +21,11 @@ class AccountMercadopagoPlatformRepository extends BaseRepository implements Acc
     {
         return AccountMercadopagoPlatformDomainObject::class;
     }
+
+    public function forceDeleteByAccountId(int $accountId): void
+    {
+        AccountMercadopagoPlatform::withTrashed()
+            ->where('account_id', $accountId)
+            ->forceDelete();
+    }
 }

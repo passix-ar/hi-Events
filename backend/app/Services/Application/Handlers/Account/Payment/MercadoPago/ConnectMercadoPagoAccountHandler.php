@@ -18,9 +18,12 @@ class ConnectMercadoPagoAccountHandler
 
     public function handle(ConnectMercadoPagoAccountDTO $command): ConnectMercadoPagoAccountResponseDTO
     {
-        $existing = $this->platformRepository->findFirstWhere([
-            'account_id' => $command->accountId,
-        ]);
+        // Select only what we need: hydrating the full row would decrypt the token
+        // casts, so a corrupted/legacy token would 500 the connect endpoint.
+        $existing = $this->platformRepository->findFirstWhere(
+            ['account_id' => $command->accountId],
+            ['id', 'account_id', 'setup_completed_at'],
+        );
 
         $isConnected = $existing?->isSetupComplete() ?? false;
 

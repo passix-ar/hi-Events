@@ -21,9 +21,17 @@ class GetMercadoPagoConnectStatusAction extends BaseAction
     {
         $this->isActionAuthorized($account_id, AccountDomainObject::class, Role::ADMIN);
 
-        $platform = $this->platformRepository->findFirstWhere([
-            AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $account_id,
-        ]);
+        // Select only what the status needs. Loading the full row would decrypt the
+        // token casts, so a single corrupted/legacy token would 500 this endpoint.
+        $platform = $this->platformRepository->findFirstWhere(
+            [AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $account_id],
+            [
+                AccountMercadopagoPlatformDomainObjectAbstract::ID,
+                AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID,
+                AccountMercadopagoPlatformDomainObjectAbstract::MP_USER_ID,
+                AccountMercadopagoPlatformDomainObjectAbstract::SETUP_COMPLETED_AT,
+            ],
+        );
 
         return $this->jsonResponse([
             'is_connected'   => $platform?->isSetupComplete() ?? false,

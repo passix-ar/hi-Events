@@ -48,6 +48,7 @@ use HiEvents\Http\Actions\CheckInLists\Public\GetCheckInListPublicAction;
 use HiEvents\Http\Actions\CheckInLists\UpdateCheckInListAction;
 use HiEvents\Http\Actions\Common\GetColorThemesAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\ConnectMercadoPagoAccountAction;
+use HiEvents\Http\Actions\Accounts\MercadoPago\DisconnectMercadoPagoAccountAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\GetMercadoPagoConnectStatusAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\MercadoPagoOAuthCallbackAction;
 use HiEvents\Http\Actions\Common\Webhooks\MercadoPagoIncomingWebhookAction;
@@ -279,6 +280,7 @@ $router->middleware(['auth:api'])->group(
         // MercadoPago Connect
         $router->get('/accounts/{account_id}/mercadopago/connect', ConnectMercadoPagoAccountAction::class);
         $router->get('/accounts/{account_id}/mercadopago/status', GetMercadoPagoConnectStatusAction::class);
+        $router->delete('/accounts/{account_id}/mercadopago', DisconnectMercadoPagoAccountAction::class);
 
         // VAT Settings
         $router->get('/accounts/{account_id}/vat-settings', GetAccountVatSettingAction::class);
