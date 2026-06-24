@@ -4,13 +4,11 @@ import {getEventPublicQuery} from "../queries/useGetEventPublic.ts";
 import {getQueryClient} from "../utilites/ssrQueryClient.ts";
 
 export const publicEventRouteLoader = async ({params, request}: LoaderFunctionArgs) => {
+    const queryParams = new URLSearchParams(new URL(request.url).search);
+    const promoCode = queryParams.get("promo_code") ?? null;
+    let promoCodeValid: boolean | undefined = undefined;
+
     try {
-        const url = new URL(request.url);
-        const queryParams = new URLSearchParams(url.search);
-        const promoCode = queryParams.get("promo_code") ?? null;
-
-        let promoCodeValid: boolean | undefined = undefined;
-
         if (promoCode) {
             const {valid} = await promoCodeClientPublic.validateCode(params.eventId, promoCode);
             promoCodeValid = valid;
@@ -39,7 +37,14 @@ export const publicEventRouteLoader = async ({params, request}: LoaderFunctionAr
         }
 
         if (error?.response?.status === 404) {
-            return {event: null, promoCodeValid: undefined, promoCode: null};
+            // During SSR the request runs from the SSR server's host, which does
+            // not receive the session cookie (it is scoped to the API host), so
+            // draft events the user is allowed to preview come back as 404. We
+            // can't distinguish that from a genuinely missing event here, so we
+            // defer the verdict: the client re-fetches with the session cookie
+            // attached (see PublicEvent). The promo code was already validated
+            // above, so we carry its result through for the client re-fetch.
+            return {event: null, promoCodeValid, promoCode, unresolved: true};
         }
 
         console.error(error);
