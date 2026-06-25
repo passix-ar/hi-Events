@@ -8,7 +8,7 @@ import {OrganizerDocumentHead} from "../../common/OrganizerDocumentHead";
 import {IconExternalLink, IconMail, IconMapPin, IconWorld} from '@tabler/icons-react';
 import {t} from "@lingui/macro";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
-import {DiscoverEventsFab} from "../../common/DiscoverEventsFab";
+import {DiscoverEventsBanner} from "../../common/DiscoverEventsBanner";
 import {socialMediaConfig} from "../../../constants/socialMediaConfig";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
 import {formatAddress, getShortLocationDisplay} from "../../../utilites/addressUtilities.ts";
@@ -115,7 +115,6 @@ export const OrganizerHomepage = ({
     return (
         <>
             <ScrollToTop/>
-            <DiscoverEventsFab/>
             {organizer?.status && organizer?.id && (
                 <StatusToggle
                     entityType="organizer"
@@ -330,6 +329,8 @@ export const OrganizerHomepage = ({
                                 </div>
                             )}
                         </div>
+
+                        <DiscoverEventsBanner/>
 
                         {/* Footer */}
                         <div className={classes.footerSection}>
