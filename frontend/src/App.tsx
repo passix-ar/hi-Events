@@ -117,8 +117,14 @@ export const App: FC<
                                     <Helmet>
                                         <title>{getConfig("VITE_APP_NAME", "Passix")}</title>
                                         <link rel="icon"
-                                              type="image/svg+xml"
-                                              href={getConfig("VITE_APP_FAVICON", "/favicon.svg")}
+                                              type="image/png"
+                                              href="/manifest-icons/favicon-light.png"
+                                              media="(prefers-color-scheme: light)"
+                                        />
+                                        <link rel="icon"
+                                              type="image/png"
+                                              href="/manifest-icons/favicon-dark.png"
+                                              media="(prefers-color-scheme: dark)"
                                         />
                                         <meta name="description" content={getConfig("VITE_APP_DESCRIPTION", "Descubrí eventos y comprá entradas con QR. Pagá con MercadoPago, sin apps que descargar.")}/>
                                         <meta property="og:site_name" content={getConfig("VITE_APP_NAME", "Passix")}/>
