@@ -22,7 +22,6 @@ import {
 import {Alert, Anchor} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
-import {DiscoverEventsBanner} from "../../common/DiscoverEventsBanner";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
 import {socialMediaConfig} from "../../../constants/socialMediaConfig";
 import {
@@ -32,7 +31,6 @@ import {
     isAddressSet
 } from "../../../utilites/addressUtilities.ts";
 import {StatusToggle} from "../../common/StatusToggle";
-import {getConfig} from "../../../utilites/config.ts";
 import {computeThemeVariables, validateThemeSettings} from "../../../utilites/themeUtils.ts";
 import {useOrganizerTrackingPixels} from "../../../hooks/useOrganizerTrackingPixels";
 import {trackPixelEvent, hasActivePixels} from "../../../utilites/trackingPixels";
@@ -630,24 +628,8 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
                             )}
                         </div>
 
-                        <DiscoverEventsBanner/>
-
                         {/* Footer */}
                         <div className={classes.footerSection}>
-                            <div className={classes.footerLinks}>
-                                <Anchor
-                                    href={getConfig('VITE_PRIVACY_URL', 'https://hi.events/privacy-policy?utm_source=app-event-footer')}
-                                    className={classes.footerLink}
-                                >
-                                    {t`Privacy Policy`}
-                                </Anchor>
-                                <Anchor
-                                    href={getConfig('VITE_TOS_URL', 'https://hi.events/terms-of-service?utm_source=app-event-footer')}
-                                    className={classes.footerLink}
-                                >
-                                    {t`Terms of Service`}
-                                </Anchor>
-                            </div>
                             <PoweredByFooter className={classes.poweredByFooter}/>
                         </div>
                     </div>

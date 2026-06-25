@@ -22,7 +22,12 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background: #0b0b0e;
+  // Degradado con profundidad en vez de negro plano: base charcoal, un
+  // susurro de lima arriba-izquierda y un frío sutil abajo-derecha.
+  background:
+    radial-gradient(135% 95% at 6% -5%, rgba(214, 255, 61, 0.07) 0%, rgba(214, 255, 61, 0) 40%),
+    radial-gradient(120% 90% at 105% 108%, rgba(120, 132, 170, 0.08) 0%, rgba(120, 132, 170, 0) 48%),
+    linear-gradient(165deg, #15151c 0%, #101015 48%, #0c0c11 100%);
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 2;
@@ -132,9 +137,9 @@
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(11, 11, 14, 0.90) 0%,
-    rgba(19, 19, 25, 0.85) 65%,
-    rgba(214, 255, 61, 0.18) 100%
+    rgba(18, 18, 24, 0.86) 0%,
+    rgba(16, 16, 21, 0.78) 58%,
+    rgba(214, 255, 61, 0.16) 100%
   );
   opacity: 1;
 }
@@ -180,9 +185,10 @@
   position: relative;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: safe center;
   justify-content: center;
   padding: 3rem;
+  overflow-y: auto;
   z-index: 1;
 
   @include mixins.respond-below(lg) {
@@ -191,43 +197,57 @@
 }
 
 .content {
-  max-width: 400px;
+  max-width: 460px;
   width: 100%;
 
   @include mixins.respond-below(lg) {
-    max-width: 340px;
+    max-width: 380px;
   }
 }
 
-// Badge at top
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  color: white;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  backdrop-filter: blur(8px);
+// Eyebrow — pill lima outline, como el org-panel-badge de la landing
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d6ff3d;
+  border: 1px solid rgba(214, 255, 61, 0.55);
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 1.1rem;
+}
+
+// Editorial headline — Syne, tono landing
+.headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.75rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #f5f4f0;
+  margin: 0 0 0.85rem;
+  text-wrap: balance;
 
   @include mixins.respond-below(lg) {
-    margin-bottom: 1.5rem;
-    font-size: 0.75rem;
-    padding: 0.375rem 0.875rem;
-  }
-
-  svg {
-    width: 14px;
-    height: 14px;
-    opacity: 0.9;
+    font-size: 1.45rem;
   }
 }
 
-// Feature grid
+.subtitle {
+  margin: 0 0 1.75rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(245, 244, 240, 0.66);
+
+  @include mixins.respond-below(lg) {
+    font-size: 0.875rem;
+    margin-bottom: 1.4rem;
+  }
+}
+
+// Feature cards
 .featureGrid {
   display: flex;
   flex-direction: column;
@@ -256,8 +276,8 @@
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(214, 255, 61, 0.45);
     transform: translateX(4px);
   }
 }
@@ -270,8 +290,8 @@
   height: 36px;
   min-width: 36px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
+  background: rgba(214, 255, 61, 0.12);
+  color: #d6ff3d;
 
   @include mixins.respond-below(lg) {
     width: 32px;

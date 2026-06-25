@@ -5,70 +5,34 @@ import {useGetMe} from "../../../queries/useGetMe.ts";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
 import {LanguageSwitcher} from "../../common/LanguageSwitcher";
 import {
-    IconChartBar,
+    IconCalendarPlus,
     IconCreditCard,
-    IconDeviceMobile,
-    IconPalette,
     IconQrcode,
-    IconShieldCheck,
-    IconSparkles,
-    IconTicket,
-    IconUsers,
 } from '@tabler/icons-react';
-import {useCallback, useMemo, useRef} from "react";
+import {useCallback, useRef} from "react";
 import {getConfig} from "../../../utilites/config.ts";
 import {isHiEvents, getUserHomePath} from "../../../utilites/helpers.ts";
 import {showInfo} from "../../../utilites/notifications.tsx";
 
-const allFeatures = [
+const benefits = [
     {
-        icon: IconTicket,
-        title: t`Flexible Ticketing`,
-        description: t`Paid, free, tiered pricing, and donation-based tickets`
-    },
-    {
-        icon: IconQrcode,
-        title: t`QR Code Check-in`,
-        description: t`Mobile scanner with real-time tracking`
+        icon: IconCalendarPlus,
+        title: t`Creá tu evento en minutos`,
+        description: t`Elegí si las entradas son pagas, gratuitas o con donaciones. Cambiá precios cuando quieras y empezá a vender al instante.`,
     },
     {
         icon: IconCreditCard,
-        title: t`Instant Payouts`,
-        description: t`Get paid immediately via MercadoPago`
+        title: t`Vendé sin complicarte`,
+        description: t`Cobrás directamente con Mercado Pago. El dinero va a tu cuenta y vos mantenés el control de todo.`,
     },
     {
-        icon: IconChartBar,
-        title: t`Real-Time Analytics`,
-        description: t`Track sales, revenue, and attendance with detailed reports`
-    },
-    {
-        icon: IconPalette,
-        title: t`Custom Branding`,
-        description: t`Your logo, colors, and style on every page`
-    },
-    {
-        icon: IconDeviceMobile,
-        title: t`Mobile Optimized`,
-        description: t`Beautiful checkout experience on any device`
-    },
-    {
-        icon: IconUsers,
-        title: t`Team Management`,
-        description: t`Invite unlimited team members with custom roles`
-    },
-    {
-        icon: IconShieldCheck,
-        title: t`Data Ownership`,
-        description: t`You own 100% of your attendee data, always`
+        icon: IconQrcode,
+        title: t`El ingreso fluye solo`,
+        description: t`Escaneá las entradas desde cualquier celular y seguí el ingreso en tiempo real. Menos filas, menos problemas, más tranquilidad.`,
     },
 ];
 
 const FeaturePanel = () => {
-    const selectedFeatures = useMemo(() => {
-        const shuffled = [...allFeatures].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, 4);
-    }, []);
-
     return (
         <div className={classes.rightPanel}>
             <div className={classes.backgroundImage} />
@@ -79,13 +43,16 @@ const FeaturePanel = () => {
 
             <div className={classes.overlay}>
                 <div className={classes.content}>
-                    <div className={classes.badge}>
-                        <IconSparkles size={14} />
-                        <span>{t`Event Management Platform`}</span>
-                    </div>
+                    <span className={classes.eyebrow}>{t`Empezá gratis`}</span>
+                    <h2 className={classes.headline}>
+                        {t`Vos armás el evento. Nosotros hacemos que todo funcione.`}
+                    </h2>
+                    <p className={classes.subtitle}>
+                        {t`Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás.`}
+                    </p>
 
                     <div className={classes.featureGrid}>
-                        {selectedFeatures.map((feature, index) => {
+                        {benefits.map((feature, index) => {
                             const Icon = feature.icon;
                             return (
                                 <div key={index} className={classes.feature}>

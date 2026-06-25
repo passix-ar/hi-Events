@@ -8,7 +8,6 @@ import {OrganizerDocumentHead} from "../../common/OrganizerDocumentHead";
 import {IconExternalLink, IconMail, IconMapPin, IconWorld} from '@tabler/icons-react';
 import {t} from "@lingui/macro";
 import {PoweredByFooter} from "../../common/PoweredByFooter";
-import {DiscoverEventsBanner} from "../../common/DiscoverEventsBanner";
 import {socialMediaConfig} from "../../../constants/socialMediaConfig";
 import {ContactOrganizerModal} from "../../common/ContactOrganizerModal";
 import {formatAddress, getShortLocationDisplay} from "../../../utilites/addressUtilities.ts";
@@ -329,8 +328,6 @@ export const OrganizerHomepage = ({
                                 </div>
                             )}
                         </div>
-
-                        <DiscoverEventsBanner/>
 
                         {/* Footer */}
                         <div className={classes.footerSection}>
