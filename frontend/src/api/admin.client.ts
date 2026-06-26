@@ -179,6 +179,7 @@ export interface MercadoPagoReconciliation {
     passix_commission: number;
     organizer_net: number;
     tickets_sold: number;
+    total_tickets_sold: number;
     checked_in: number;
 }
 
@@ -192,6 +193,8 @@ export interface AdminDashboardData {
     recent_orders_total: number;
     recent_signups_count: number;
     total_passix_commission: number;
+    passix_commission_this_month: number;
+    passix_commission_last_month: number;
     mercadopago_reconciliation: MercadoPagoReconciliation[];
 }
 

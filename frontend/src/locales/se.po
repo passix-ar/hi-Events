@@ -69,7 +69,7 @@ msgid "{0} left"
 msgstr "{0} kvar"
 
 #: src/components/layouts/AppLayout/Sidebar/index.tsx:81
-#: src/components/layouts/AuthLayout/index.tsx:159
+#: src/components/layouts/AuthLayout/index.tsx:126
 msgid "{0} logo"
 msgstr "{0} logotyp"
 
@@ -318,7 +318,7 @@ msgstr "En standardskatt, såsom moms"
 msgid "Abandoned"
 msgstr "Övergiven"
 
-#: src/components/layouts/EventHomepage/index.tsx:422
+#: src/components/layouts/EventHomepage/index.tsx:418
 msgid "About"
 msgstr "Om"
 
@@ -345,7 +345,7 @@ msgstr "Accentfärg"
 msgid "Accept"
 msgstr "Acceptera"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:91
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:93
 msgid "Accept bank transfers, checks, or other offline payment methods"
 msgstr "Acceptera banköverföringar, checkar eller andra offline-betalningsmetoder"
 
@@ -357,7 +357,7 @@ msgstr "Acceptera inbjudan"
 msgid "Accept Invitation"
 msgstr "Acceptera inbjudan"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:86
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:88
 msgid "Accept payments through MercadoPago"
 msgstr ""
 
@@ -371,8 +371,7 @@ msgstr "Åtkomst nekad"
 #: src/components/routes/account/ManageAccount/index.tsx:24
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:53
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:138
-#: src/components/routes/admin/Dashboard/index.tsx:425
-#: src/components/routes/admin/Dashboard/index.tsx:472
+#: src/components/routes/admin/Dashboard/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:164
 #: src/components/routes/admin/Messages/index.tsx:281
 msgid "Account"
@@ -411,6 +410,7 @@ msgstr "Kontot uppdaterades"
 #: src/components/layouts/Admin/index.tsx:22
 #: src/components/routes/admin/Accounts/index.tsx:57
 #: src/components/routes/admin/Attribution/index.tsx:132
+#: src/components/routes/admin/Dashboard/index.tsx:158
 msgid "Accounts"
 msgstr "Konton"
 
@@ -456,10 +456,6 @@ msgstr "Aktiveringsdatum"
 msgid "Active"
 msgstr "Aktiv"
 
-#: src/components/routes/admin/Dashboard/index.tsx:426
-msgid "Active Events"
-msgstr "Aktiva evenemang"
-
 #: src/components/forms/CheckInListForm/index.tsx:53
 msgid "Add a description for this check-in list"
 msgstr "Lägg till en beskrivning för denna incheckningslista"
@@ -492,7 +488,7 @@ msgstr "Lägg till beskrivning"
 msgid "Add event details and manage event settings."
 msgstr "Lägg till evenemangsdetaljer och hantera evenemangsinställningar."
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:153
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:155
 msgid "Add instructions for offline payments (e.g., bank transfer details, where to send checks, payment deadlines)"
 msgstr "Lägg till instruktioner för offline-betalningar (t.ex. banköverföringsuppgifter, vart man skickar checkar, betalningsfrister)"
 
@@ -539,7 +535,7 @@ msgstr "Lägg till prisnivå"
 
 #: src/components/common/AddEventToCalendarButton/index.tsx:14
 #: src/components/common/AddToCalendarCTA/index.tsx:24
-#: src/components/layouts/EventHomepage/index.tsx:355
+#: src/components/layouts/EventHomepage/index.tsx:351
 msgid "Add to Calendar"
 msgstr "Lägg till i kalendern"
 
@@ -608,7 +604,7 @@ msgstr "Administratörsåtkomst krävs"
 
 #: src/components/common/GlobalMenu/index.tsx:59
 #: src/components/layouts/Admin/index.tsx:35
-#: src/components/routes/admin/Dashboard/index.tsx:70
+#: src/components/routes/admin/Dashboard/index.tsx:57
 msgid "Admin Dashboard"
 msgstr "Adminpanel"
 
@@ -708,7 +704,7 @@ msgstr "Alla statusar"
 msgid "All Upcoming Events"
 msgstr "Alla kommande evenemang"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:157
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:159
 msgid "Allow attendees associated with unpaid orders to check in"
 msgstr "Tillåt incheckning av deltagare kopplade till obetalda order"
 
@@ -1068,6 +1064,10 @@ msgstr "Minst en evenemangstyp måste väljas"
 msgid "Attempts"
 msgstr "Försök"
 
+#: src/components/routes/admin/Dashboard/index.tsx:123
+msgid "Attendance"
+msgstr ""
+
 #: src/components/routes/organizer/Reports/index.tsx:36
 msgid "Attendance and check-in rates across all events"
 msgstr "Närvaro och incheckningsfrekvens för alla evenemang"
@@ -1310,10 +1310,6 @@ msgstr ""
 msgid "Basic Information"
 msgstr "Grundläggande information"
 
-#: src/components/layouts/AuthLayout/index.tsx:52
-msgid "Beautiful checkout experience on any device"
-msgstr "Vacker kassaupplevelse på alla enheter"
-
 #: src/components/routes/event/GettingStarted/index.tsx:100
 msgid "Before your event can go live, there are a few things you need to do. Complete all the steps below to get started."
 msgstr "Innan ditt evenemang kan publiceras finns det några saker du behöver göra. Slutför alla stegen nedan för att komma igång."
@@ -1323,7 +1319,7 @@ msgstr "Innan ditt evenemang kan publiceras finns det några saker du behöver g
 msgid "Billing Address"
 msgstr "Faktureringsadress"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:167
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:169
 msgid "Billing Settings"
 msgstr "Faktureringsinställningar"
 
@@ -1745,6 +1741,10 @@ msgstr "Stäng dialogruta"
 msgid "Close sidebar"
 msgstr "Stäng sidofält"
 
+#: src/components/layouts/AuthLayout/index.tsx:26
+msgid "Cobrás directamente con Mercado Pago. El dinero va a tu cuenta y vos mantenés el control de todo."
+msgstr ""
+
 #: src/components/common/AffiliateTable/index.tsx:81
 #: src/components/common/PromoCodeTable/index.tsx:69
 #: src/components/forms/AffiliateForm/index.tsx:38
@@ -1795,6 +1795,10 @@ msgstr "Hämta detaljer per order"
 msgid "Collect details per ticket"
 msgstr "Hämta detaljer per biljett"
 
+#: src/components/routes/admin/Dashboard/index.tsx:124
+msgid "Collected (MercadoPago)"
+msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:249
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
@@ -1828,6 +1832,18 @@ msgstr "Kommer snart"
 #: src/components/routes/organizer/Settings/Sections/SeoSettings/index.tsx:75
 msgid "Comma seperated keywords that describe the event. These will be used by search engines to help categorize and index the event"
 msgstr "Kommaseparerade nyckelord som beskriver evenemanget. Dessa används av sökmotorer för att kategorisera och indexera evenemanget."
+
+#: src/components/routes/admin/Dashboard/index.tsx:109
+msgid "Commission taken from the marketplace fee on approved MercadoPago payments. Organizer net is gross collected minus our commission."
+msgstr ""
+
+#: src/components/routes/admin/Dashboard/index.tsx:74
+msgid "Commissions Last Month"
+msgstr ""
+
+#: src/components/routes/admin/Dashboard/index.tsx:68
+msgid "Commissions This Month"
+msgstr ""
 
 #: src/components/routes/profile/ManageProfile/index.tsx:204
 msgid "Communication Preferences"
@@ -2077,8 +2093,8 @@ msgid "Connection Details"
 msgstr "Anslutningsuppgifter"
 
 #: src/components/common/WaitlistTable/index.tsx:149
-#: src/components/layouts/EventHomepage/index.tsx:626
-#: src/components/layouts/OrganizerHomepage/index.tsx:258
+#: src/components/layouts/EventHomepage/index.tsx:622
+#: src/components/layouts/OrganizerHomepage/index.tsx:256
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -2246,6 +2262,10 @@ msgstr "Omslagsbilden visas högst upp på din evenemangssida"
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
 msgstr "Omslagsbilden visas högst upp på din organisatörssida"
+
+#: src/components/layouts/AuthLayout/index.tsx:20
+msgid "Creá tu evento en minutos"
+msgstr ""
 
 #: src/components/routes/event/attendees.tsx:196
 #: src/components/routes/event/products.tsx:76
@@ -2479,10 +2499,6 @@ msgstr "Validering av nuvarande momsnummer misslyckades"
 msgid "Currently available for purchase"
 msgstr "För närvarande tillgänglig för köp"
 
-#: src/components/layouts/AuthLayout/index.tsx:46
-msgid "Custom Branding"
-msgstr "Anpassat varumärke"
-
 #: src/components/modals/SendMessageModal/index.tsx:405
 msgid "Custom date and time"
 msgstr "Anpassat datum och tid"
@@ -2626,10 +2642,6 @@ msgstr "Mörk"
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:213
 msgid "Dashboard"
 msgstr "Instrumentpanel"
-
-#: src/components/layouts/AuthLayout/index.tsx:61
-msgid "Data Ownership"
-msgstr "Dataägandeskap"
 
 #: src/components/common/AdminOrdersTable/index.tsx:94
 #: src/components/common/OrderDetails/index.tsx:39
@@ -2817,7 +2829,7 @@ msgstr "Stäng detta meddelande"
 msgid "Display a checkbox allowing customers to opt-in to receive marketing communications from this event organizer."
 msgstr "Visa en kryssruta som låter kunder välja att ta emot marknadsföringskommunikation från denna organisatör."
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:190
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:192
 msgid "Document Label"
 msgstr "Dokumentetikett"
 
@@ -3093,6 +3105,14 @@ msgstr "t.ex. 2,50 för 2,50 $"
 msgid "eg. 23.5 for 23.5%"
 msgstr "t.ex. 23,5 för 23,5 %"
 
+#: src/components/layouts/AuthLayout/index.tsx:30
+msgid "El ingreso fluye solo"
+msgstr ""
+
+#: src/components/layouts/AuthLayout/index.tsx:21
+msgid "Elegí si las entradas son pagas, gratuitas o con donaciones. Cambiá precios cuando quieras y empezá a vender al instante."
+msgstr ""
+
 #: src/components/routes/admin/Messages/index.tsx:324
 msgid "Eligibility Failures"
 msgstr "Behörighetsfel"
@@ -3109,7 +3129,7 @@ msgstr "Giltiga incheckningslistor"
 #: src/components/modals/InviteUserModal/index.tsx:61
 #: src/components/modals/JoinWaitlistModal/index.tsx:171
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:150
-#: src/components/routes/admin/Dashboard/index.tsx:473
+#: src/components/routes/admin/Dashboard/index.tsx:168
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
 #: src/components/routes/auth/Login/index.tsx:85
@@ -3223,6 +3243,10 @@ msgstr "Inbäddningsskript"
 msgid "Embed Widget"
 msgstr "Bädda in widget"
 
+#: src/components/layouts/AuthLayout/index.tsx:46
+msgid "Empezá gratis"
+msgstr ""
+
 #: src/components/common/SelfServiceSettings/index.tsx:19
 msgid "Enable attendee self-service"
 msgstr "Aktivera självservice för deltagare"
@@ -3231,7 +3255,7 @@ msgstr "Aktivera självservice för deltagare"
 msgid "Enable attendee self-service by default"
 msgstr "Aktivera självservice för deltagare som standard"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:181
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:183
 msgid "Enable Invoicing"
 msgstr "Aktivera fakturering"
 
@@ -3380,8 +3404,8 @@ msgstr "Fel vid bekräftelse av ändring av e-postadress"
 msgid "Error loading logs"
 msgstr "Fel vid inläsning av loggar"
 
-#: src/components/routes/admin/Dashboard/index.tsx:281
-msgid "Estimated Organizer Net"
+#: src/components/layouts/AuthLayout/index.tsx:31
+msgid "Escaneá las entradas desde cualquier celular y seguí el ingreso en tiempo real. Menos filas, menos problemas, más tranquilidad."
 msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/index.tsx:68
@@ -3409,9 +3433,7 @@ msgstr "EUR"
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:72
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:73
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:74
-#: src/components/routes/admin/Dashboard/index.tsx:277
-#: src/components/routes/admin/Dashboard/index.tsx:328
-#: src/components/routes/admin/Dashboard/index.tsx:377
+#: src/components/routes/admin/Dashboard/index.tsx:119
 #: src/components/routes/admin/Messages/index.tsx:163
 #: src/components/routes/admin/Messages/index.tsx:277
 #: src/components/routes/event/EventDashboard/index.tsx:302
@@ -3501,10 +3523,6 @@ msgstr "Evenemangsplats"
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:85
 msgid "Event location & venue details"
 msgstr "Plats- och lokalinformation för evenemanget"
-
-#: src/components/layouts/AuthLayout/index.tsx:84
-msgid "Event Management Platform"
-msgstr "Evenemangshanteringsplattform"
 
 #: src/components/routes/welcome/index.tsx:352
 msgid "Event name"
@@ -3606,7 +3624,7 @@ msgstr "Evenemangslokal"
 #: src/components/layouts/OrganizerLayout/index.tsx:87
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:181
 #: src/components/routes/admin/Attribution/index.tsx:133
-#: src/components/routes/admin/Dashboard/index.tsx:475
+#: src/components/routes/admin/Dashboard/index.tsx:170
 #: src/components/routes/admin/Events/index.tsx:77
 #: src/components/routes/organizer/Events/index.tsx:43
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:286
@@ -3617,10 +3635,6 @@ msgstr "Evenemang"
 #: src/components/routes/organizer/Reports/index.tsx:23
 msgid "Events Performance"
 msgstr "Evenemangens resultat"
-
-#: src/components/routes/admin/Dashboard/index.tsx:522
-msgid "Events Starting in Next 24 Hours"
-msgstr "Evenemang som startar inom 24 timmar"
 
 #: src/components/common/EmailTemplateEditor/CTAConfiguration.tsx:23
 msgid "Every email template must include a call-to-action button that links to the appropriate page"
@@ -4048,7 +4062,7 @@ msgstr "Första 90 dagarna från evenemangets start"
 msgid "First attendee"
 msgstr "Första deltagare"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:206
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:208
 msgid "First Invoice Number"
 msgstr "Första fakturanummer"
 
@@ -4124,10 +4138,6 @@ msgstr "Fast avgift:"
 msgid "Flash is not available on this device"
 msgstr "Blixt är inte tillgänglig på den här enheten"
 
-#: src/components/layouts/AuthLayout/index.tsx:26
-msgid "Flexible Ticketing"
-msgstr "Flexibel biljettförsäljning"
-
 #: src/components/common/ThemeFontControl/index.tsx:65
 msgid "Font Family"
 msgstr "Teckensnitt"
@@ -4196,19 +4206,15 @@ msgstr "Generera"
 msgid "Generate code"
 msgstr "Generera kod"
 
-#: src/components/layouts/EventHomepage/index.tsx:453
+#: src/components/layouts/EventHomepage/index.tsx:449
 msgid "Get Directions"
 msgstr "Få vägbeskrivning"
-
-#: src/components/layouts/AuthLayout/index.tsx:37
-msgid "Get paid immediately via MercadoPago"
-msgstr ""
 
 #: src/components/routes/auth/Register/index.tsx:76
 msgid "Get started"
 msgstr "Sätt igång"
 
-#: src/components/layouts/EventHomepage/index.tsx:662
+#: src/components/layouts/EventHomepage/index.tsx:644
 msgid "Get Tickets"
 msgstr "Köp biljetter"
 
@@ -4257,10 +4263,6 @@ msgstr "God läsbarhet"
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: src/components/routes/admin/Dashboard/index.tsx:279
-msgid "Gross Collected"
-msgstr ""
-
 #: src/components/common/EventCard/index.tsx:230
 msgid "Gross revenue"
 msgstr "Bruttointäkter"
@@ -4273,8 +4275,7 @@ msgstr "Bruttointäkter"
 msgid "Gross sales"
 msgstr "Bruttoförsäljning"
 
-#: src/components/routes/admin/Dashboard/index.tsx:171
-#: src/components/routes/admin/Dashboard/index.tsx:331
+#: src/components/routes/admin/Dashboard/index.tsx:86
 #: src/components/routes/event/EventDashboard/index.tsx:373
 #: src/components/routes/event/Reports/ProductSalesReport/index.tsx:29
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:172
@@ -4294,7 +4295,7 @@ msgstr "Gäster"
 msgid "Have a promo code?"
 msgstr "Har du en kampanjkod?"
 
-#: src/components/routes/admin/Dashboard/index.tsx:74
+#: src/components/routes/admin/Dashboard/index.tsx:60
 msgid "Hello {0}, manage your platform from here."
 msgstr "Hej {0}, hantera din plattform härifrån."
 
@@ -4427,6 +4428,10 @@ msgstr "Markerad"
 msgid "Highlighted products will have a different background color to make them stand out on the event page."
 msgstr "Markerade produkter får en annan bakgrundsfärg för att sticka ut på evenemangssidan."
 
+#: src/components/routes/admin/Dashboard/index.tsx:80
+msgid "Historical Commissions"
+msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:182
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
@@ -4508,7 +4513,7 @@ msgstr "Om tomt kommer adressen att användas för att generera en Google Maps-l
 msgid "If checked, this category will be hidden from the public."
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:158
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:160
 msgid "If enabled, check-in staff can either mark attendees as checked in or mark the order as paid and check in the attendees. If disabled, attendees associated with unpaid orders cannot be checked in."
 msgstr "Om detta är aktiverat kan incheckningspersonal antingen markera deltagare som incheckade eller markera beställningen som betald och checka in deltagarna. Om detta är inaktiverat kan deltagare som är kopplade till obetalda beställningar inte checkas in."
 
@@ -4581,14 +4586,6 @@ msgstr "Viktigt: Om du ändrar din e-postadress uppdateras länken för att komm
 msgid "Important: Stripe reconnection required"
 msgstr "Viktigt: återanslutning till Stripe krävs"
 
-#: src/components/routes/admin/Dashboard/index.tsx:44
-msgid "In {diffHours} hours"
-msgstr "Om {diffHours} timmar"
-
-#: src/components/routes/admin/Dashboard/index.tsx:42
-msgid "In {diffMinutes} minutes"
-msgstr "Om {diffMinutes} minuter"
-
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
@@ -4646,10 +4643,6 @@ msgstr "Infoga variabel"
 msgid "Instagram"
 msgstr "Instagram"
 
-#: src/components/layouts/AuthLayout/index.tsx:36
-msgid "Instant Payouts"
-msgstr "Omedelbara utbetalningar"
-
 #: src/components/layouts/Event/index.tsx:125
 #: src/components/layouts/OrganizerLayout/index.tsx:93
 msgid "Integrations"
@@ -4703,10 +4696,6 @@ msgstr "Bjud in teammedlem"
 msgid "Invite Team Members"
 msgstr "Bjud in teammedlemmar"
 
-#: src/components/layouts/AuthLayout/index.tsx:57
-msgid "Invite unlimited team members with custom roles"
-msgstr "Bjud in obegränsat antal teammedlemmar med anpassade roller"
-
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:144
 msgid "Invite User"
 msgstr "Bjud in användare"
@@ -4724,15 +4713,15 @@ msgstr "Faktura"
 msgid "Invoice downloaded successfully"
 msgstr "Fakturan laddades ner"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:252
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:254
 msgid "Invoice Notes"
 msgstr "Fakturanoteringar"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:197
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:199
 msgid "Invoice Numbering"
 msgstr "Fakturanumrering"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:177
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:179
 msgid "Invoice Settings"
 msgstr "Fakturainställningar"
 
@@ -4785,7 +4774,7 @@ msgstr "John"
 msgid "Johnson"
 msgstr "Johnson"
 
-#: src/components/layouts/EventHomepage/index.tsx:381
+#: src/components/layouts/EventHomepage/index.tsx:377
 msgid "Join from anywhere"
 msgstr "Delta varifrån som helst"
 
@@ -4833,10 +4822,6 @@ msgstr "Senaste 12 månaderna"
 #: src/components/common/OrganizerReportTable/index.tsx:57
 #: src/components/common/ReportTable/index.tsx:48
 msgid "Last 14 days"
-msgstr "Senaste 14 dagarna"
-
-#: src/components/routes/admin/Dashboard/index.tsx:159
-msgid "Last 14 Days"
 msgstr "Senaste 14 dagarna"
 
 #: src/components/common/OrganizerReportTable/index.tsx:54
@@ -4915,7 +4900,7 @@ msgstr "Senast utlöst"
 msgid "Last Used"
 msgstr "Senast använd"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:191
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:193
 msgid "Leave blank to use the default word \"Invoice\""
 msgstr "Lämna tomt för att använda standardordet \"Faktura\""
 
@@ -4963,7 +4948,6 @@ msgid "LIVE"
 msgstr "LIVE"
 
 #: src/components/routes/admin/Attribution/index.tsx:134
-#: src/components/routes/admin/Dashboard/index.tsx:122
 msgid "Live Events"
 msgstr "Liveevenemang"
 
@@ -4994,7 +4978,7 @@ msgid "Loading..."
 msgstr "Laddar..."
 
 #: src/components/common/AttendeeTicket/index.tsx:91
-#: src/components/layouts/EventHomepage/index.tsx:435
+#: src/components/layouts/EventHomepage/index.tsx:431
 #: src/components/routes/event/Settings/index.tsx:42
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:84
 #: src/components/routes/my-tickets/index.tsx:73
@@ -5045,7 +5029,7 @@ msgstr "Hitta mina biljetter"
 msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat elementum..."
 msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam placerat elementum..."
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:170
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:172
 msgid "Make billing address mandatory during checkout"
 msgstr "Gör faktureringsadress obligatorisk i kassan"
 
@@ -5080,7 +5064,7 @@ msgstr "Hantera evenemang"
 msgid "Manage order"
 msgstr "Hantera order"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:99
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:101
 msgid "Manage payment and invoicing settings for this event."
 msgstr "Hantera betalnings- och fakturainställningar för detta evenemang."
 
@@ -5151,7 +5135,7 @@ msgstr "Medium"
 
 #: src/components/common/OrdersTable/index.tsx:384
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:83
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:87
 #: src/components/routes/product-widget/Payment/index.tsx:144
 msgid "MercadoPago"
 msgstr ""
@@ -5270,18 +5254,6 @@ msgstr "Övrigt"
 msgid "Miscellaneous Settings"
 msgstr "Övriga inställningar"
 
-#: src/components/layouts/AuthLayout/index.tsx:51
-msgid "Mobile Optimized"
-msgstr "Mobiloptimerad"
-
-#: src/components/layouts/AuthLayout/index.tsx:32
-msgid "Mobile scanner with real-time tracking"
-msgstr "Mobil skanner med offline-stöd och spårning i realtid"
-
-#: src/components/routes/admin/Dashboard/index.tsx:163
-msgid "Monetary values are approximate totals across all currencies"
-msgstr "Monetära värden är ungefärliga totaler över alla valutor"
-
 #: src/components/routes/admin/FailedJobs/index.tsx:115
 msgid "Monitor and manage failed background jobs"
 msgstr "Övervaka och hantera misslyckade bakgrundsjobb"
@@ -5290,11 +5262,7 @@ msgstr "Övervaka och hantera misslyckade bakgrundsjobb"
 msgid "Month"
 msgstr "Månad"
 
-#: src/components/routes/admin/Dashboard/index.tsx:366
-msgid "Most Viewed Events (Last 14 Days)"
-msgstr "Mest visade evenemang (Senaste 14 dagarna)"
-
-#: src/components/routes/admin/Dashboard/index.tsx:496
+#: src/components/routes/admin/Dashboard/index.tsx:187
 msgid "MP"
 msgstr ""
 
@@ -5403,10 +5371,6 @@ msgstr ""
 msgid "New Password"
 msgstr "Nytt lösenord"
 
-#: src/components/routes/admin/Dashboard/index.tsx:225
-msgid "New Signups"
-msgstr "Nya registreringar"
-
 #: src/constants/eventCategories.ts:4
 msgid "Nightlife"
 msgstr "Nattliv"
@@ -5428,6 +5392,10 @@ msgstr "Inga konton"
 msgid "No accounts found"
 msgstr "Inga konton hittades"
 
+#: src/components/routes/admin/Dashboard/index.tsx:200
+msgid "No accounts yet"
+msgstr ""
+
 #: src/components/routes/event/Webhooks/index.tsx:22
 #: src/components/routes/organizer/Webhooks/index.tsx:23
 msgid "No Active Webhooks"
@@ -5437,8 +5405,8 @@ msgstr "Inga aktiva webhooks"
 msgid "No Affiliates to show"
 msgstr "Inga affiliates att visa"
 
-#: src/components/routes/admin/Dashboard/index.tsx:305
-msgid "No approved MercadoPago payments in the last 14 days"
+#: src/components/routes/admin/Dashboard/index.tsx:150
+msgid "No approved MercadoPago payments yet"
 msgstr ""
 
 #: src/components/common/NoEventsBlankSlate/index.tsx:21
@@ -5517,10 +5485,6 @@ msgstr "Inga avslutade evenemang att visa."
 msgid "No events found"
 msgstr "Inga evenemang hittades"
 
-#: src/components/routes/admin/Dashboard/index.tsx:561
-msgid "No events starting in the next 24 hours"
-msgstr "Inga evenemang startar inom de närmaste 24 timmarna"
-
 #: src/components/common/NoEventsBlankSlate/index.tsx:14
 msgid "No events to show"
 msgstr "Inga evenemang att visa"
@@ -5578,10 +5542,6 @@ msgstr "Inga ordrar att visa"
 msgid "No orders yet"
 msgstr "Inga ordrar ännu"
 
-#: src/components/routes/admin/Dashboard/index.tsx:449
-msgid "No organizer activity in the last 14 days"
-msgstr "Ingen arrangörsaktivitet de senaste 14 dagarna"
-
 #: src/components/modals/SwitchOrganizerModal/index.tsx:57
 msgid "No other organizers available"
 msgstr "Inga andra arrangörer tillgängliga"
@@ -5590,7 +5550,7 @@ msgstr "Inga andra arrangörer tillgängliga"
 msgid "No Paid Orders"
 msgstr "Inga betalda beställningar"
 
-#: src/components/layouts/OrganizerHomepage/index.tsx:299
+#: src/components/layouts/OrganizerHomepage/index.tsx:297
 msgid "No past events"
 msgstr "Inga tidigare evenemang"
 
@@ -5601,10 +5561,6 @@ msgstr "Inga betalningsmetoder är tillgängliga för närvarande. Kontakta arra
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:56
 msgid "No Payment Required"
 msgstr "Ingen betalning krävs"
-
-#: src/components/routes/admin/Dashboard/index.tsx:354
-msgid "No popular events in the last 14 days"
-msgstr "Inga populära evenemang de senaste 14 dagarna"
 
 #: src/components/modals/ManageAttendeeModal/index.tsx:177
 msgid "No product associated with this attendee."
@@ -5641,10 +5597,6 @@ msgstr "Inga frågor har besvarats av denna deltagare."
 #: src/components/modals/ManageOrderModal/index.tsx:119
 msgid "No questions have been asked for this order."
 msgstr "Inga frågor har ställts för denna order."
-
-#: src/components/routes/admin/Dashboard/index.tsx:510
-msgid "No recent account signups"
-msgstr "Inga nya kontoregistreringar"
 
 #: src/components/modals/MessageRecipientsModal/index.tsx:54
 msgid "No recipients found"
@@ -5685,7 +5637,7 @@ msgstr "Inga skatter eller avgifter har lagts till."
 msgid "No Tickets Found"
 msgstr "Inga biljetter hittades"
 
-#: src/components/layouts/OrganizerHomepage/index.tsx:299
+#: src/components/layouts/OrganizerHomepage/index.tsx:297
 msgid "No upcoming events"
 msgstr "Inga kommande evenemang"
 
@@ -5696,10 +5648,6 @@ msgstr "Inga användare hittades"
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:330
 msgid "No VAT settings configured"
 msgstr "Inga momsinställningar är konfigurerade"
-
-#: src/components/routes/admin/Dashboard/index.tsx:401
-msgid "No viewed events in the last 14 days"
-msgstr "Inga visade evenemang de senaste 14 dagarna"
 
 #: src/components/common/WaitlistTable/index.tsx:236
 msgid "No waitlist entries"
@@ -5760,11 +5708,11 @@ msgstr "Aviseringsinställningar"
 msgid "Notify organizer of new orders"
 msgstr "Meddela arrangören om nya ordrar"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:217
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:219
 msgid "Number of days allowed for payment (leave blank to omit payment terms from invoices)"
 msgstr "Antal dagar tillåtet för betalning (lämna tomt för att utelämna betalningsvillkor från fakturor)"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:199
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:201
 msgid "Number Prefix"
 msgstr "Nummerprefix"
 
@@ -5812,7 +5760,7 @@ msgstr "Kontors- eller lokalnamn"
 msgid "Offline"
 msgstr "Offline"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:145
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:147
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
 msgstr "Offlineordrar återspeglas inte i evenemangsstatistiken förrän ordern markeras som betald."
 
@@ -5827,19 +5775,19 @@ msgstr "Offlinebetalningen misslyckades. Försök igen eller kontakta arrangöre
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:49
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:82
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:151
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:153
 msgid "Offline Payment Instructions"
 msgstr "Instruktioner för offlinebetalning"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:90
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:92
 msgid "Offline Payments"
 msgstr "Offlinebetalningar"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:139
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:141
 msgid "Offline Payments Information"
 msgstr "Information om offlinebetalningar"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:134
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:136
 msgid "Offline Payments Settings"
 msgstr "Inställningar för offlinebetalningar"
 
@@ -5879,7 +5827,7 @@ msgstr "Pågående"
 msgid "Online"
 msgstr "Online"
 
-#: src/components/layouts/EventHomepage/index.tsx:379
+#: src/components/layouts/EventHomepage/index.tsx:375
 #: src/components/layouts/OrganizerHomepage/EventCard/index.tsx:173
 msgid "Online Event"
 msgstr "Onlineevenemang"
@@ -5923,11 +5871,11 @@ msgstr "Öppna Stripe-instrumentpanelen"
 msgid "Option {i}"
 msgstr "Alternativ {i}"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:253
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:255
 msgid "Optional additional information to appear on all invoices (e.g., payment terms, late payment fees, return policy)"
 msgstr "Valfri extra information som visas på alla fakturor, till exempel betalningsvillkor, förseningsavgifter eller returpolicy"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:200
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:202
 msgid "Optional prefix for invoice numbers (e.g., INV-)"
 msgstr "Valfritt prefix för fakturanummer, till exempel INV-"
 
@@ -6163,17 +6111,9 @@ msgstr "Ordern avbröts"
 msgid "Orders"
 msgstr "Ordrar"
 
-#: src/components/routes/admin/Dashboard/index.tsx:189
-msgid "Orders Completed"
-msgstr "Slutförda beställningar"
-
 #: src/components/routes/event/orders.tsx:94
 msgid "Orders Exported"
 msgstr "Ordrar exporterade"
-
-#: src/components/routes/admin/Dashboard/index.tsx:207
-msgid "Orders Total"
-msgstr "Totalt antal beställningar"
 
 #: src/components/common/AdminEventsTable/index.tsx:142
 msgid "Orders:"
@@ -6190,16 +6130,16 @@ msgstr "Naturliga konton"
 msgid "Organization"
 msgstr "Organisation"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:235
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:237
 msgid "Organization Address"
 msgstr "Organisationens adress"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:226
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:228
 msgid "Organization Details"
 msgstr "Organisationsuppgifter"
 
 #: src/components/forms/OrganizerForm/index.tsx:27
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:228
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:230
 msgid "Organization Name"
 msgstr "Organisationsnamn"
 
@@ -6210,12 +6150,9 @@ msgstr ""
 
 #: src/components/common/AdminEventsTable/index.tsx:87
 #: src/components/common/AttendeeTicket/index.tsx:82
-#: src/components/layouts/EventHomepage/index.tsx:538
+#: src/components/layouts/EventHomepage/index.tsx:534
 #: src/components/modals/EditUserModal/index.tsx:55
 #: src/components/modals/InviteUserModal/index.tsx:47
-#: src/components/routes/admin/Dashboard/index.tsx:329
-#: src/components/routes/admin/Dashboard/index.tsx:378
-#: src/components/routes/admin/Dashboard/index.tsx:424
 #: src/components/routes/events/Dashboard/index.tsx:106
 #: src/components/routes/events/Dashboard/index.tsx:193
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:332
@@ -6302,10 +6239,6 @@ msgstr "Övrigt"
 msgid "Other Lists (Ticket Not Included)"
 msgstr "Andra listor (biljett ingår inte)"
 
-#: src/components/routes/admin/Dashboard/index.tsx:249
-msgid "Our commission per event, taken from the marketplace fee on approved MercadoPago payments. Organizer net is gross collected minus our commission; MercadoPago fees, withdrawals, taxes and refunds are not deducted here."
-msgstr ""
-
 #: src/components/routes/admin/Messages/index.tsx:107
 msgid "Outgoing Messages"
 msgstr "Utgående meddelanden"
@@ -6314,6 +6247,10 @@ msgstr "Utgående meddelanden"
 #: src/components/layouts/OrganizerLayout/index.tsx:77
 msgid "Overview"
 msgstr "Översikt"
+
+#: src/components/routes/admin/Dashboard/index.tsx:120
+msgid "Owner"
+msgstr ""
 
 #: src/components/common/WidgetEditor/index.tsx:236
 msgid "Padding"
@@ -6351,17 +6288,9 @@ msgstr "betald"
 msgid "Paid Accounts"
 msgstr "Betalda konton"
 
-#: src/components/routes/admin/Dashboard/index.tsx:278
-msgid "Paid Orders"
-msgstr ""
-
 #: src/components/forms/ProductForm/index.tsx:205
 msgid "Paid Product"
 msgstr "Betald produkt"
-
-#: src/components/layouts/AuthLayout/index.tsx:27
-msgid "Paid, free, tiered pricing, and donation-based tickets"
-msgstr "Betalda, gratis, nivåbaserade och donationsbaserade biljetter"
 
 #: src/components/modals/RefundOrderModal/index.tsx:109
 msgid "Partial refund"
@@ -6388,12 +6317,16 @@ msgstr "För över till köparen"
 msgid "Passix charges platform fees to maintain and improve our services. These fees are automatically deducted from each transaction."
 msgstr ""
 
-#: src/components/routes/admin/Dashboard/index.tsx:280
+#: src/components/routes/admin/Dashboard/index.tsx:125
 msgid "Passix Commission"
 msgstr ""
 
-#: src/components/routes/admin/Dashboard/index.tsx:245
-msgid "Passix Commission per Event (Last 14 Days)"
+#: src/components/routes/admin/Dashboard/index.tsx:107
+msgid "Passix Commission per Event"
+msgstr ""
+
+#: src/components/layouts/AuthLayout/index.tsx:51
+msgid "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
 msgstr ""
 
 #: src/components/common/ProductFeeHint/index.tsx:97
@@ -6424,12 +6357,12 @@ msgstr "Lösenordet har återställts. Logga in med ditt nya lösenord."
 msgid "Passwords are not the same"
 msgstr "Lösenorden är inte samma"
 
-#: src/components/layouts/OrganizerHomepage/index.tsx:291
+#: src/components/layouts/OrganizerHomepage/index.tsx:289
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:30
 msgid "Past"
 msgstr "Tidigare"
 
-#: src/components/layouts/OrganizerHomepage/index.tsx:278
+#: src/components/layouts/OrganizerHomepage/index.tsx:276
 msgid "Past Events"
 msgstr "Tidigare evenemang"
 
@@ -6485,7 +6418,7 @@ msgstr "Betalning"
 msgid "Payment & Invoicing"
 msgstr "Betalning och fakturering"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:98
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:100
 msgid "Payment & Invoicing Settings"
 msgstr "Inställningar för betalning och fakturering"
 
@@ -6497,7 +6430,7 @@ msgstr "Betalning och abonnemang"
 msgid "Payment Date"
 msgstr "Betalningsdatum"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:216
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:218
 msgid "Payment Due Period"
 msgstr "Betalningsfrist"
 
@@ -6518,7 +6451,7 @@ msgstr "Betalningsinstruktioner"
 msgid "Payment method"
 msgstr "Betalningsmetod"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:105
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:107
 msgid "Payment Methods"
 msgstr "Betalningsmetoder"
 
@@ -6556,7 +6489,7 @@ msgstr "Betalningsstatus"
 msgid "Payment succeeded!"
 msgstr "Betalningen lyckades!"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:214
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:216
 msgid "Payment Terms"
 msgstr "Betalningsvillkor"
 
@@ -6790,10 +6723,6 @@ msgstr "Vänta medan vi förbereder din faktura..."
 msgid "Please wait while we prepare your orders for export..."
 msgstr "Vänta medan vi förbereder dina ordrar för export..."
 
-#: src/components/routes/admin/Dashboard/index.tsx:317
-msgid "Popular Events (Last 14 Days)"
-msgstr "Populära evenemang (Senaste 14 dagarna)"
-
 #: src/components/routes/event/Settings/Sections/HomepageAndCheckoutSettings/index.tsx:95
 msgid "Post Checkout message"
 msgstr "Meddelande efter checkout"
@@ -6885,8 +6814,7 @@ msgid "Print to PDF"
 msgstr "Skriv ut till PDF"
 
 #: src/components/common/CookieConsentBanner/index.tsx:51
-#: src/components/layouts/EventHomepage/index.tsx:642
-#: src/components/layouts/OrganizerHomepage/index.tsx:341
+#: src/components/layouts/OrganizerHomepage/index.tsx:339
 msgid "Privacy Policy"
 msgstr "Integritetspolicy"
 
@@ -6982,8 +6910,6 @@ msgstr "Produkter"
 msgid "Products sold"
 msgstr "Sålda produkter"
 
-#: src/components/routes/admin/Dashboard/index.tsx:330
-#: src/components/routes/admin/Dashboard/index.tsx:427
 #: src/components/routes/event/EventDashboard/index.tsx:335
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:44
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:178
@@ -7071,10 +6997,6 @@ msgstr "Köpt"
 msgid "QR Code"
 msgstr "QR-kod"
 
-#: src/components/layouts/AuthLayout/index.tsx:31
-msgid "QR Code Check-in"
-msgstr "QR-kodsincheckning"
-
 #: src/components/modals/OfferWaitlistModal/index.tsx:164
 msgid "Qty"
 msgstr "Ant."
@@ -7141,10 +7063,6 @@ msgstr "Erbjud plats igen"
 msgid "Ready to upgrade? This takes only a few minutes."
 msgstr "Redo att uppgradera? Det tar bara några minuter."
 
-#: src/components/layouts/AuthLayout/index.tsx:41
-msgid "Real-Time Analytics"
-msgstr "Analys i realtid"
-
 #: src/components/routes/auth/AcceptInvitation/index.tsx:157
 #: src/components/routes/auth/Register/index.tsx:145
 #: src/components/routes/profile/ManageProfile/index.tsx:209
@@ -7154,10 +7072,6 @@ msgstr "Ta emot produktuppdateringar från {0}."
 #: src/components/routes/event/EventDashboard/index.tsx:270
 msgid "Recent"
 msgstr "Senaste"
-
-#: src/components/routes/admin/Dashboard/index.tsx:461
-msgid "Recent Account Signups"
-msgstr "Senaste kontoregistreringar"
 
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:319
 msgid "Recent Orders"
@@ -7316,7 +7230,7 @@ msgstr "Rapporter"
 msgid "Request a new link"
 msgstr "Begär en ny länk"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:169
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:171
 msgid "Require Billing Address"
 msgstr "Kräv faktureringsadress"
 
@@ -7525,7 +7439,7 @@ msgstr "Försäljningen är pausad"
 msgid "Sales ended"
 msgstr "Försäljningen är avslutad"
 
-#: src/components/layouts/EventHomepage/index.tsx:513
+#: src/components/layouts/EventHomepage/index.tsx:509
 msgid "Sales for this event are closed."
 msgstr ""
 
@@ -7567,7 +7481,7 @@ msgstr "San Francisco"
 #: src/components/routes/event/Settings/Sections/HomepageAndCheckoutSettings/index.tsx:132
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:166
 #: src/components/routes/event/Settings/Sections/MiscSettings/index.tsx:102
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:265
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:267
 #: src/components/routes/event/Settings/Sections/SeoSettings/index.tsx:85
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:76
 #: src/components/routes/organizer/Settings/Sections/AddressSettings/index.tsx:116
@@ -8002,7 +7916,7 @@ msgstr "Ange standardinställningar för plattformsavgifter för nya evenemang s
 msgid "Set default settings for new events created under this organizer."
 msgstr "Ange standardinställningar för nya evenemang som skapas under denna arrangör."
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:207
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:209
 msgid "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 msgstr "Ange startnummer för fakturanumrering. Detta kan inte ändras när fakturor väl har skapats."
 
@@ -8042,7 +7956,7 @@ msgid "Setup & Design"
 msgstr "Konfiguration och design"
 
 #: src/components/common/ShareIcon/index.tsx:30
-#: src/components/layouts/EventHomepage/index.tsx:328
+#: src/components/layouts/EventHomepage/index.tsx:324
 #: src/components/layouts/OrganizerLayout/index.tsx:240
 #: src/components/modals/ShareModal/index.tsx:37
 #: src/components/modals/ShareModal/index.tsx:165
@@ -8120,7 +8034,7 @@ msgstr "Visas för kunden innan de slutför köpet"
 msgid "Shows common address fields, including country"
 msgstr "Visar vanliga adressfält, inklusive land"
 
-#: src/components/routes/admin/Dashboard/index.tsx:474
+#: src/components/routes/admin/Dashboard/index.tsx:169
 msgid "Signed Up"
 msgstr "Registrerad"
 
@@ -8169,7 +8083,7 @@ msgid "Sold out"
 msgstr "Slutsålt"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:81
-#: src/components/layouts/EventHomepage/index.tsx:172
+#: src/components/layouts/EventHomepage/index.tsx:170
 msgid "Sold Out"
 msgstr "Slutsålt"
 
@@ -8287,7 +8201,7 @@ msgstr "Statistiken baseras på kontots skapandedatum"
 #: src/components/forms/WebhookForm/index.tsx:157
 #: src/components/modals/EditUserModal/index.tsx:103
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:157
-#: src/components/routes/admin/Dashboard/index.tsx:477
+#: src/components/routes/admin/Dashboard/index.tsx:171
 #: src/components/routes/admin/Messages/index.tsx:120
 #: src/components/routes/admin/Messages/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:293
@@ -8449,7 +8363,7 @@ msgstr "Ordern uppdaterades"
 msgid "Successfully Updated Organizer"
 msgstr "Arrangören uppdaterades"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:74
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:76
 msgid "Successfully Updated Payment & Invoicing Settings"
 msgstr "Betalnings- och faktureringsinställningarna uppdaterades"
 
@@ -8560,11 +8474,11 @@ msgstr "Moms och avgifter"
 msgid "Tax collected grouped by tax type and event"
 msgstr "Insamlad moms grupperad efter momstyp och evenemang"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:243
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:245
 msgid "Tax Details"
 msgstr "Momsuppgifter"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:244
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:246
 msgid "Tax information to appear at the bottom of all invoices (e.g., VAT number, tax registration)"
 msgstr "Momsinformation som ska visas längst ned på alla fakturor (t.ex. momsnummer, skatteregistrering)"
 
@@ -8599,10 +8513,6 @@ msgstr "Moms och avgifter tillämpade"
 #: src/components/forms/ProductForm/index.tsx:299
 msgid "Taxes and Fees"
 msgstr "Moms och avgifter"
-
-#: src/components/layouts/AuthLayout/index.tsx:56
-msgid "Team Management"
-msgstr "Teamhantering"
 
 #: src/constants/eventCategories.ts:18
 msgid "Tech"
@@ -8640,8 +8550,7 @@ msgstr "Mallen togs bort"
 msgid "Template saved successfully"
 msgstr "Mallen sparades"
 
-#: src/components/layouts/EventHomepage/index.tsx:648
-#: src/components/layouts/OrganizerHomepage/index.tsx:348
+#: src/components/layouts/OrganizerHomepage/index.tsx:346
 msgid "Terms of Service"
 msgstr "Användarvillkor"
 
@@ -8883,8 +8792,8 @@ msgstr "Den här färgkombinationen kan vara svår att läsa för vissa använda
 msgid "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
 msgstr ""
 
-#: src/components/layouts/EventHomepage/index.tsx:367
-#: src/components/layouts/EventHomepage/index.tsx:509
+#: src/components/layouts/EventHomepage/index.tsx:363
+#: src/components/layouts/EventHomepage/index.tsx:505
 msgid "This event has ended"
 msgstr "Det här evenemanget har avslutats"
 
@@ -8892,7 +8801,7 @@ msgstr "Det här evenemanget har avslutats"
 msgid "This event is not published yet"
 msgstr "Det här evenemanget är inte publicerat ännu"
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:152
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:154
 msgid "This information will be shown on the payment page, order summary page, and order confirmation email."
 msgstr "Den här informationen visas på betalningssidan, ordersammanfattningen och i orderbekräftelsen via e-post."
 
@@ -9146,6 +9055,10 @@ msgstr "biljetter"
 msgid "Tickets"
 msgstr "Biljetter"
 
+#: src/components/routes/admin/Dashboard/index.tsx:122
+msgid "Tickets (MercadoPago)"
+msgstr ""
+
 #: src/components/layouts/Event/index.tsx:111
 #: src/components/routes/event/products.tsx:48
 msgid "Tickets & Products"
@@ -9155,7 +9068,7 @@ msgstr "Biljetter och produkter"
 msgid "Tickets are automatically offered to waitlisted customers when capacity becomes available."
 msgstr "Biljetter erbjuds automatiskt till kunder på väntelistan när kapacitet blir tillgänglig."
 
-#: src/components/layouts/EventHomepage/index.tsx:183
+#: src/components/layouts/EventHomepage/index.tsx:181
 msgid "Tickets Available"
 msgstr "Tillgängliga biljetter"
 
@@ -9163,7 +9076,7 @@ msgstr "Tillgängliga biljetter"
 msgid "Tickets for"
 msgstr "Biljetter för"
 
-#: src/components/routes/admin/Dashboard/index.tsx:140
+#: src/components/routes/admin/Dashboard/index.tsx:98
 msgid "Tickets Sold"
 msgstr "Sålda biljetter"
 
@@ -9234,17 +9147,13 @@ msgstr "Växla kolumner"
 msgid "Tools"
 msgstr "Verktyg"
 
-#: src/components/routes/admin/Dashboard/index.tsx:413
-msgid "Top Organizers (Last 14 Days)"
-msgstr "Topparrangörer (Senaste 14 dagarna)"
-
 #: src/components/common/AdminOrdersTable/index.tsx:81
 #: src/components/common/InlineOrderSummary/index.tsx:203
 #: src/components/common/OrderSummary/index.tsx:92
 msgid "Total"
 msgstr "Totalt"
 
-#: src/components/routes/admin/Dashboard/index.tsx:104
+#: src/components/routes/admin/Dashboard/index.tsx:92
 msgid "Total Accounts"
 msgstr "Totalt antal konton"
 
@@ -9295,10 +9204,6 @@ msgstr "Totalt orderbelopp"
 msgid "Total Orders"
 msgstr "Totalt antal ordrar"
 
-#: src/components/routes/admin/Dashboard/index.tsx:257
-msgid "Total Passix Commission (Last 14 Days)"
-msgstr ""
-
 #: src/components/common/OrderDetails/index.tsx:67
 msgid "Total refunded"
 msgstr "Totalt återbetalt"
@@ -9315,11 +9220,10 @@ msgstr "Totalt återbetalt"
 msgid "Total Tax"
 msgstr "Total skatt"
 
-#: src/components/routes/admin/Dashboard/index.tsx:86
-msgid "Total Users"
-msgstr "Totalt antal användare"
+#: src/components/routes/admin/Dashboard/index.tsx:121
+msgid "Total Tickets"
+msgstr ""
 
-#: src/components/routes/admin/Dashboard/index.tsx:379
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:66
 msgid "Total Views"
 msgstr "Totala visningar"
@@ -9327,10 +9231,6 @@ msgstr "Totala visningar"
 #: src/components/routes/admin/Attribution/index.tsx:32
 msgid "Track account growth and performance by attribution source"
 msgstr "Spåra kontotillväxt och resultat efter attribueringskälla"
-
-#: src/components/layouts/AuthLayout/index.tsx:42
-msgid "Track sales, revenue, and attendance with detailed reports"
-msgstr "Följ försäljning, intäkter och närvaro med detaljerade rapporter"
 
 #: src/components/routes/organizer/Settings/index.tsx:66
 #: src/components/routes/organizer/Settings/Sections/TrackingPixelSettings/index.tsx:171
@@ -9493,12 +9393,12 @@ msgstr "Ej betrodd"
 
 #: src/components/common/EventsDashboardStatusButtons/index.tsx:20
 #: src/components/common/EventStatusBadge/index.tsx:16
-#: src/components/layouts/OrganizerHomepage/index.tsx:285
+#: src/components/layouts/OrganizerHomepage/index.tsx:283
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:33
 msgid "Upcoming"
 msgstr "Kommande"
 
-#: src/components/layouts/OrganizerHomepage/index.tsx:278
+#: src/components/layouts/OrganizerHomepage/index.tsx:276
 msgid "Upcoming Events"
 msgstr "Kommande evenemang"
 
@@ -9619,7 +9519,6 @@ msgstr "Användarhantering"
 #: src/components/routes/account/ManageAccount/index.tsx:32
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:188
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:338
-#: src/components/routes/admin/Dashboard/index.tsx:476
 #: src/components/routes/admin/Users/index.tsx:57
 msgid "Users"
 msgstr "Användare"
@@ -9746,24 +9645,20 @@ msgstr "Momshantering för plattformsavgifter: EU-momsregistrerade företag kan 
 msgid "VAT validation service temporarily unavailable"
 msgstr "Valideringstjänsten för moms är tillfälligt otillgänglig"
 
+#: src/components/layouts/AuthLayout/index.tsx:25
+msgid "Vendé sin complicarte"
+msgstr ""
+
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:116
 msgid "Venue Name"
 msgstr "Platsnamn"
-
-#: src/components/common/DiscoverEventsFab/index.tsx:17
-msgid "Ver más eventos"
-msgstr ""
-
-#: src/components/common/DiscoverEventsFab/index.tsx:14
-msgid "Ver más eventos en Passix"
-msgstr ""
 
 #: src/components/routes/welcome/index.tsx:159
 msgid "Verification code"
 msgstr "Verifieringskod"
 
 #: src/components/routes/admin/Attribution/index.tsx:136
-#: src/components/routes/admin/Dashboard/index.tsx:493
+#: src/components/routes/admin/Dashboard/index.tsx:184
 msgid "Verified"
 msgstr "Verifierad"
 
@@ -9806,7 +9701,6 @@ msgid "View Details"
 msgstr "Visa detaljer"
 
 #: src/components/common/AdminEventsTable/index.tsx:157
-#: src/components/routes/admin/Dashboard/index.tsx:550
 msgid "View Event"
 msgstr "Visa evenemang"
 
@@ -9823,7 +9717,7 @@ msgstr "Visa evenemangsida"
 msgid "View logs"
 msgstr "Visa loggar"
 
-#: src/components/layouts/EventHomepage/index.tsx:494
+#: src/components/layouts/EventHomepage/index.tsx:490
 msgid "View Map"
 msgstr "Visa karta"
 
@@ -9831,7 +9725,7 @@ msgstr "Visa karta"
 msgid "View Message"
 msgstr "Visa meddelande"
 
-#: src/components/layouts/EventHomepage/index.tsx:407
+#: src/components/layouts/EventHomepage/index.tsx:403
 msgid "View on Google Maps"
 msgstr "Visa på Google Maps"
 
@@ -9894,6 +9788,10 @@ msgstr "Endast synlig för incheckningspersonal. Hjälper till att identifiera l
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:104
 msgid "VK"
 msgstr "VK"
+
+#: src/components/layouts/AuthLayout/index.tsx:48
+msgid "Vos armás el evento. Nosotros hacemos que todo funcione."
+msgstr ""
 
 #: src/components/common/WaitlistStats/index.tsx:12
 #: src/components/common/WaitlistTable/index.tsx:24
@@ -10210,7 +10108,7 @@ msgstr "När incheckningen öppnar"
 msgid "When customers purchase tickets, their orders will appear here."
 msgstr "När kunder köper biljetter visas deras ordrar här."
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:182
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:184
 msgid "When enabled, invoices will be generated for ticket orders. Invoices will sent along with the order confirmation email. Attendees can also download their invoices from the order confirmation page."
 msgstr "När detta är aktiverat skapas fakturor för biljettordrar. Fakturor skickas tillsammans med orderbekräftelsen via e-post. Deltagare kan även ladda ner sina fakturor från orderbekräftelsesidan."
 
@@ -10226,7 +10124,7 @@ msgstr "När detta är aktiverat visar nya evenemang en kryssruta för marknadsf
 msgid "When enabled, no application fees will be charged on MercadoPago transactions. Use this for countries where application fees are not supported."
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:141
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:143
 msgid "When offline payments are enabled, users will be able to complete their orders and receive their tickets. Their tickets will clearly indicate the order is not paid, and the check-in tool will notify the check-in staff if an order requires payment."
 msgstr "När offlinebetalningar är aktiverade kan användare slutföra sina ordrar och få sina biljetter. Biljetterna visar tydligt att ordern inte är betald, och incheckningsverktyget meddelar incheckningspersonalen om en order kräver betalning."
 
@@ -10431,10 +10329,6 @@ msgstr "Du behöver verifiera kontots e-postadress innan du kan ändra e-postmal
 msgid "You need to verify your account email before you can send messages."
 msgstr "Du behöver verifiera kontots e-postadress innan du kan skicka meddelanden."
 
-#: src/components/layouts/AuthLayout/index.tsx:62
-msgid "You own 100% of your attendee data, always"
-msgstr "Du äger alltid 100 % av din deltagardata"
-
 #: src/components/common/PlatformFeesSettings/index.tsx:67
 #: src/components/common/ProductFeeHint/index.tsx:105
 msgid "You receive"
@@ -10449,7 +10343,7 @@ msgstr ""
 msgid "You will be redirected to MercadoPago to complete your payment securely."
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:143
+#: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:145
 msgid "You will have to mark an order as paid manually. This can be done on the manage order page."
 msgstr "Du behöver markera en order som betald manuellt. Det kan göras på sidan för att hantera ordern."
 
@@ -10536,10 +10430,6 @@ msgstr "Ditt evenemang är live!"
 #: src/components/routes/event/EventDashboard/index.tsx:197
 msgid "Your event must be live before you can sell tickets to attendees."
 msgstr "Ditt evenemang måste vara live innan du kan sälja biljetter till deltagare."
-
-#: src/components/layouts/AuthLayout/index.tsx:47
-msgid "Your logo, colors, and style on every page"
-msgstr "Din logotyp, dina färger och din stil på varje sida"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:95
 msgid "Your MercadoPago account is connected and ready to process payments."
