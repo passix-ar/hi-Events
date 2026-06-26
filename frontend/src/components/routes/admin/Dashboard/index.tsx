@@ -1,6 +1,6 @@
 import {Badge, Container, Group, Paper, SimpleGrid, Skeleton, Stack, Table, Text, Title} from "@mantine/core";
 import {t, Trans} from "@lingui/macro";
-import {IconBuildingBank, IconCurrencyDollar, IconReceipt2, IconTicket} from "@tabler/icons-react";
+import {IconBuildingBank, IconCalendarMonth, IconCalendarStats, IconCurrencyDollar, IconReceipt2, IconTicket} from "@tabler/icons-react";
 import {useGetMe} from "../../../../queries/useGetMe";
 import {useGetAdminStats} from "../../../../queries/useGetAdminStats";
 import {useGetAdminDashboardData} from "../../../../queries/useGetAdminDashboardData";
@@ -63,9 +63,21 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* KPIs */}
-                <SimpleGrid cols={{base: 1, sm: 2, md: 4}} spacing="md">
+                <SimpleGrid cols={{base: 1, sm: 2, md: 3}} spacing="md">
                     <StatCard
-                        label={t`Passix Commission`}
+                        label={t`Commissions This Month`}
+                        value={formatCurrency(dashboardData?.passix_commission_this_month || 0)}
+                        icon={<IconCalendarStats size={32} color="var(--mantine-color-lime-7)"/>}
+                        loading={isLoadingDashboard}
+                    />
+                    <StatCard
+                        label={t`Commissions Last Month`}
+                        value={formatCurrency(dashboardData?.passix_commission_last_month || 0)}
+                        icon={<IconCalendarMonth size={32} color="var(--mantine-color-lime-8)"/>}
+                        loading={isLoadingDashboard}
+                    />
+                    <StatCard
+                        label={t`Historical Commissions`}
                         value={formatCurrency(dashboardData?.total_passix_commission || 0)}
                         icon={<IconCurrencyDollar size={32} color="var(--mantine-color-lime-7)"/>}
                         loading={isLoadingDashboard}

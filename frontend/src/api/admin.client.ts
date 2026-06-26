@@ -193,6 +193,8 @@ export interface AdminDashboardData {
     recent_orders_total: number;
     recent_signups_count: number;
     total_passix_commission: number;
+    passix_commission_this_month: number;
+    passix_commission_last_month: number;
     mercadopago_reconciliation: MercadoPagoReconciliation[];
 }
 

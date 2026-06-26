@@ -371,7 +371,7 @@ msgstr "Acesso negado"
 #: src/components/routes/account/ManageAccount/index.tsx:24
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:53
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:138
-#: src/components/routes/admin/Dashboard/index.tsx:155
+#: src/components/routes/admin/Dashboard/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:164
 #: src/components/routes/admin/Messages/index.tsx:281
 msgid "Account"
@@ -410,7 +410,7 @@ msgstr "Conta atualizada com sucesso"
 #: src/components/layouts/Admin/index.tsx:22
 #: src/components/routes/admin/Accounts/index.tsx:57
 #: src/components/routes/admin/Attribution/index.tsx:132
-#: src/components/routes/admin/Dashboard/index.tsx:146
+#: src/components/routes/admin/Dashboard/index.tsx:158
 msgid "Accounts"
 msgstr "Contas"
 
@@ -1064,7 +1064,7 @@ msgstr "Pelo menos um tipo de evento deve ser selecionado"
 msgid "Attempts"
 msgstr "Tentativas"
 
-#: src/components/routes/admin/Dashboard/index.tsx:111
+#: src/components/routes/admin/Dashboard/index.tsx:123
 msgid "Attendance"
 msgstr ""
 
@@ -1795,7 +1795,7 @@ msgstr "Coletar dados por pedido"
 msgid "Collect details per ticket"
 msgstr "Coletar dados por ingresso"
 
-#: src/components/routes/admin/Dashboard/index.tsx:112
+#: src/components/routes/admin/Dashboard/index.tsx:124
 msgid "Collected (MercadoPago)"
 msgstr ""
 
@@ -1833,8 +1833,16 @@ msgstr "Em breve"
 msgid "Comma seperated keywords that describe the event. These will be used by search engines to help categorize and index the event"
 msgstr "Palavras-chave separadas por vírgulas que descrevem o evento. Elas serão usadas pelos mecanismos de pesquisa para ajudar a categorizar e indexar o evento"
 
-#: src/components/routes/admin/Dashboard/index.tsx:97
+#: src/components/routes/admin/Dashboard/index.tsx:109
 msgid "Commission taken from the marketplace fee on approved MercadoPago payments. Organizer net is gross collected minus our commission."
+msgstr ""
+
+#: src/components/routes/admin/Dashboard/index.tsx:74
+msgid "Commissions Last Month"
+msgstr ""
+
+#: src/components/routes/admin/Dashboard/index.tsx:68
+msgid "Commissions This Month"
 msgstr ""
 
 #: src/components/routes/profile/ManageProfile/index.tsx:204
@@ -3121,7 +3129,7 @@ msgstr "Listas de Check-In Elegíveis"
 #: src/components/modals/InviteUserModal/index.tsx:61
 #: src/components/modals/JoinWaitlistModal/index.tsx:171
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:150
-#: src/components/routes/admin/Dashboard/index.tsx:156
+#: src/components/routes/admin/Dashboard/index.tsx:168
 #: src/components/routes/auth/AcceptInvitation/index.tsx:112
 #: src/components/routes/auth/ForgotPassword/index.tsx:65
 #: src/components/routes/auth/Login/index.tsx:85
@@ -3425,7 +3433,7 @@ msgstr "EUR"
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:72
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:73
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:74
-#: src/components/routes/admin/Dashboard/index.tsx:107
+#: src/components/routes/admin/Dashboard/index.tsx:119
 #: src/components/routes/admin/Messages/index.tsx:163
 #: src/components/routes/admin/Messages/index.tsx:277
 #: src/components/routes/event/EventDashboard/index.tsx:302
@@ -3616,7 +3624,7 @@ msgstr "Local do Evento"
 #: src/components/layouts/OrganizerLayout/index.tsx:87
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:181
 #: src/components/routes/admin/Attribution/index.tsx:133
-#: src/components/routes/admin/Dashboard/index.tsx:158
+#: src/components/routes/admin/Dashboard/index.tsx:170
 #: src/components/routes/admin/Events/index.tsx:77
 #: src/components/routes/organizer/Events/index.tsx:43
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:286
@@ -4267,7 +4275,7 @@ msgstr "Receita Bruta"
 msgid "Gross sales"
 msgstr "Vendas brutas"
 
-#: src/components/routes/admin/Dashboard/index.tsx:74
+#: src/components/routes/admin/Dashboard/index.tsx:86
 #: src/components/routes/event/EventDashboard/index.tsx:373
 #: src/components/routes/event/Reports/ProductSalesReport/index.tsx:29
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:172
@@ -4419,6 +4427,10 @@ msgstr "Destacado"
 #: src/components/forms/ProductForm/index.tsx:610
 msgid "Highlighted products will have a different background color to make them stand out on the event page."
 msgstr "Os produtos em destaque terão uma cor de fundo diferente para se destacarem na página do evento."
+
+#: src/components/routes/admin/Dashboard/index.tsx:80
+msgid "Historical Commissions"
+msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:182
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
@@ -5250,7 +5262,7 @@ msgstr "Monitorar e gerenciar trabalhos em segundo plano com falha"
 msgid "Month"
 msgstr "Mês"
 
-#: src/components/routes/admin/Dashboard/index.tsx:175
+#: src/components/routes/admin/Dashboard/index.tsx:187
 msgid "MP"
 msgstr ""
 
@@ -5380,7 +5392,7 @@ msgstr "Sem contas"
 msgid "No accounts found"
 msgstr "Nenhuma conta encontrada"
 
-#: src/components/routes/admin/Dashboard/index.tsx:188
+#: src/components/routes/admin/Dashboard/index.tsx:200
 msgid "No accounts yet"
 msgstr ""
 
@@ -5393,7 +5405,7 @@ msgstr "Nenhum webhook ativo"
 msgid "No Affiliates to show"
 msgstr "Sem afiliados para mostrar"
 
-#: src/components/routes/admin/Dashboard/index.tsx:138
+#: src/components/routes/admin/Dashboard/index.tsx:150
 msgid "No approved MercadoPago payments yet"
 msgstr ""
 
@@ -6236,7 +6248,7 @@ msgstr "Mensagens enviadas"
 msgid "Overview"
 msgstr "Visão geral"
 
-#: src/components/routes/admin/Dashboard/index.tsx:108
+#: src/components/routes/admin/Dashboard/index.tsx:120
 msgid "Owner"
 msgstr ""
 
@@ -6305,12 +6317,11 @@ msgstr "Passar para o comprador"
 msgid "Passix charges platform fees to maintain and improve our services. These fees are automatically deducted from each transaction."
 msgstr ""
 
-#: src/components/routes/admin/Dashboard/index.tsx:68
-#: src/components/routes/admin/Dashboard/index.tsx:113
+#: src/components/routes/admin/Dashboard/index.tsx:125
 msgid "Passix Commission"
 msgstr ""
 
-#: src/components/routes/admin/Dashboard/index.tsx:95
+#: src/components/routes/admin/Dashboard/index.tsx:107
 msgid "Passix Commission per Event"
 msgstr ""
 
@@ -8023,7 +8034,7 @@ msgstr "Mostrado ao cliente antes do checkout"
 msgid "Shows common address fields, including country"
 msgstr "Mostra campos de endereço comuns, incluindo o país"
 
-#: src/components/routes/admin/Dashboard/index.tsx:157
+#: src/components/routes/admin/Dashboard/index.tsx:169
 msgid "Signed Up"
 msgstr "Cadastrado"
 
@@ -8190,7 +8201,7 @@ msgstr "As estatísticas são baseadas na data de criação da conta"
 #: src/components/forms/WebhookForm/index.tsx:157
 #: src/components/modals/EditUserModal/index.tsx:103
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:157
-#: src/components/routes/admin/Dashboard/index.tsx:159
+#: src/components/routes/admin/Dashboard/index.tsx:171
 #: src/components/routes/admin/Messages/index.tsx:120
 #: src/components/routes/admin/Messages/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:293
@@ -9044,7 +9055,7 @@ msgstr "ingressos"
 msgid "Tickets"
 msgstr "Ingressos"
 
-#: src/components/routes/admin/Dashboard/index.tsx:110
+#: src/components/routes/admin/Dashboard/index.tsx:122
 msgid "Tickets (MercadoPago)"
 msgstr ""
 
@@ -9065,7 +9076,7 @@ msgstr "Ingressos disponíveis"
 msgid "Tickets for"
 msgstr "Ingressos para"
 
-#: src/components/routes/admin/Dashboard/index.tsx:86
+#: src/components/routes/admin/Dashboard/index.tsx:98
 msgid "Tickets Sold"
 msgstr "Ingressos Vendidos"
 
@@ -9142,7 +9153,7 @@ msgstr "Ferramentas"
 msgid "Total"
 msgstr "Total"
 
-#: src/components/routes/admin/Dashboard/index.tsx:80
+#: src/components/routes/admin/Dashboard/index.tsx:92
 msgid "Total Accounts"
 msgstr "Total de Contas"
 
@@ -9209,7 +9220,7 @@ msgstr "Total Reembolsado"
 msgid "Total Tax"
 msgstr "Imposto total"
 
-#: src/components/routes/admin/Dashboard/index.tsx:109
+#: src/components/routes/admin/Dashboard/index.tsx:121
 msgid "Total Tickets"
 msgstr ""
 
@@ -9647,7 +9658,7 @@ msgid "Verification code"
 msgstr "Código de verificação"
 
 #: src/components/routes/admin/Attribution/index.tsx:136
-#: src/components/routes/admin/Dashboard/index.tsx:172
+#: src/components/routes/admin/Dashboard/index.tsx:184
 msgid "Verified"
 msgstr "Verificado"
 

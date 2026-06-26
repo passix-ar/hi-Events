@@ -17,6 +17,9 @@ class GetAdminDashboardDataHandler
         $since = Carbon::now()->subDays($dto->days);
         $limit = $dto->limit;
 
+        $startThisMonth = Carbon::now()->startOfMonth();
+        $startLastMonth = Carbon::now()->subMonthNoOverflow()->startOfMonth();
+
         return new AdminDashboardResponseDTO(
             popular_events: $this->getPopularEvents($since, $limit),
             most_viewed_events: $this->getMostViewedEvents($since, $limit),
@@ -27,6 +30,8 @@ class GetAdminDashboardDataHandler
             recent_orders_total: $this->getRecentOrdersTotal($since),
             recent_signups_count: $this->getRecentSignupsCount($since),
             total_passix_commission: $this->getTotalPassixCommission(),
+            passix_commission_this_month: $this->getPassixCommissionBetween($startThisMonth, null),
+            passix_commission_last_month: $this->getPassixCommissionBetween($startLastMonth, $startThisMonth),
             mercadopago_reconciliation: $this->getMercadoPagoReconciliation($limit),
         );
     }
@@ -248,6 +253,38 @@ class GetAdminDashboardDataHandler
             'statusCompleted' => OrderStatus::COMPLETED->name,
             'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
         ]);
+
+        return (float)($result->total ?? 0);
+    }
+
+    private function getPassixCommissionBetween(Carbon $start, ?Carbon $end): float
+    {
+        $endCondition = $end !== null ? 'AND mp.created_at < :end' : '';
+
+        $query = <<<SQL
+            SELECT COALESCE(SUM(mp.marketplace_fee), 0) as total
+            FROM mercadopago_payments mp
+            INNER JOIN orders o ON o.id = mp.order_id
+            WHERE o.deleted_at IS NULL
+              AND mp.deleted_at IS NULL
+              AND mp.status = 'approved'
+              AND o.status = :statusCompleted
+              AND o.payment_status = :paymentStatusPaid
+              AND mp.created_at >= :start
+              $endCondition
+        SQL;
+
+        $bindings = [
+            'statusCompleted' => OrderStatus::COMPLETED->name,
+            'paymentStatusPaid' => OrderPaymentStatus::PAYMENT_RECEIVED->name,
+            'start' => $start,
+        ];
+
+        if ($end !== null) {
+            $bindings['end'] = $end;
+        }
+
+        $result = DB::selectOne($query, $bindings);
 
         return (float)($result->total ?? 0);
     }
