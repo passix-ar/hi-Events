@@ -178,6 +178,8 @@ export interface MercadoPagoReconciliation {
     gross_collected: number;
     passix_commission: number;
     organizer_net: number;
+    tickets_sold: number;
+    checked_in: number;
 }
 
 export interface AdminDashboardData {
