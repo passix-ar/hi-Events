@@ -19,6 +19,7 @@ abstract class MercadopagoPreferenceDomainObjectAbstract extends \HiEvents\Domai
     final public const STATUS = 'status';
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
+    final public const MARKETPLACE_FEE = 'marketplace_fee';
 
     protected int $id;
     protected int $order_id;
@@ -28,6 +29,7 @@ abstract class MercadopagoPreferenceDomainObjectAbstract extends \HiEvents\Domai
     protected string $status = 'pending';
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
+    protected ?float $marketplace_fee = null;
 
     public function toArray(): array
     {
@@ -40,6 +42,7 @@ abstract class MercadopagoPreferenceDomainObjectAbstract extends \HiEvents\Domai
             'status'             => $this->status ?? null,
             'created_at'         => $this->created_at ?? null,
             'updated_at'         => $this->updated_at ?? null,
+            'marketplace_fee'    => $this->marketplace_fee ?? null,
         ];
     }
 
@@ -66,4 +69,7 @@ abstract class MercadopagoPreferenceDomainObjectAbstract extends \HiEvents\Domai
 
     public function setUpdatedAt(?string $updated_at): self { $this->updated_at = $updated_at; return $this; }
     public function getUpdatedAt(): ?string { return $this->updated_at; }
+
+    public function setMarketplaceFee(?float $marketplace_fee): self { $this->marketplace_fee = $marketplace_fee; return $this; }
+    public function getMarketplaceFee(): ?float { return $this->marketplace_fee; }
 }

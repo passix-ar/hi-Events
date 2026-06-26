@@ -104,6 +104,8 @@ class CreateMercadoPagoPreferenceHandler
         $pendingUrl  = $baseUrl . "/checkout/{$command->eventId}/{$command->orderShortId}/summary?payment=pending";
         $webhookUrl  = $this->urlGenerator->route('webhooks.mercadopago');
 
+        $marketplaceFee = $this->preferenceService->calculateMarketplaceFee($account->getConfiguration(), $order);
+
         $preference = $this->preferenceService->createPreference(
             order: $order,
             platform: $platform,
@@ -120,6 +122,7 @@ class CreateMercadoPagoPreferenceHandler
             MercadopagoPreferenceDomainObjectAbstract::INIT_POINT        => $preference->init_point,
             MercadopagoPreferenceDomainObjectAbstract::SANDBOX_INIT_POINT => $preference->sandbox_init_point,
             MercadopagoPreferenceDomainObjectAbstract::STATUS            => 'pending',
+            MercadopagoPreferenceDomainObjectAbstract::MARKETPLACE_FEE   => $marketplaceFee,
         ]);
 
         $isSandbox = (bool) $this->config->get('mercadopago.sandbox', true);

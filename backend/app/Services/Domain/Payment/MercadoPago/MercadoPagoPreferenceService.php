@@ -97,7 +97,7 @@ class MercadoPagoPreferenceService
         }
     }
 
-    private function calculateMarketplaceFee(
+    public function calculateMarketplaceFee(
         ?AccountConfigurationDomainObject $accountConfiguration,
         OrderDomainObject                 $order,
     ): float {

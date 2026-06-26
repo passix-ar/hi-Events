@@ -93,6 +93,12 @@ class PaymentApprovedHandler
                 return;
             }
 
+            $preference = $this->preferenceRepository->findFirstWhere([
+                MercadopagoPreferenceDomainObjectAbstract::ORDER_ID => $order->getId(),
+            ]);
+            $paymentData['marketplace_fee'] = $preference?->getMarketplaceFee()
+                ?? ($paymentData['marketplace_fee'] ?? 0);
+
             $this->storeMercadoPagoPayment($mpPaymentId, $order->getId(), $paymentData);
 
             $updatedOrder = $this->orderRepository
