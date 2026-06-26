@@ -14,6 +14,13 @@ class MercadopagoPreference extends BaseModel
         return true;
     }
 
+    protected function getCastMap(): array
+    {
+        return [
+            'marketplace_fee' => 'float',
+        ];
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
