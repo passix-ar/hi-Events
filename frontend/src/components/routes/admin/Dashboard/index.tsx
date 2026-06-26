@@ -106,9 +106,10 @@ const AdminDashboard = () => {
                                     <Table.Tr>
                                         <Table.Th>{t`Event`}</Table.Th>
                                         <Table.Th>{t`Owner`}</Table.Th>
-                                        <Table.Th ta="right">{t`Tickets Sold`}</Table.Th>
+                                        <Table.Th ta="right">{t`Total Tickets`}</Table.Th>
+                                        <Table.Th ta="right">{t`Tickets (MercadoPago)`}</Table.Th>
                                         <Table.Th ta="right">{t`Attendance`}</Table.Th>
-                                        <Table.Th ta="right">{t`Gross Collected`}</Table.Th>
+                                        <Table.Th ta="right">{t`Collected (MercadoPago)`}</Table.Th>
                                         <Table.Th ta="right">{t`Passix Commission`}</Table.Th>
                                     </Table.Tr>
                                 </Table.Thead>
@@ -120,6 +121,7 @@ const AdminDashboard = () => {
                                                 <Text>{row.account_name || '-'}</Text>
                                                 <Text size="xs" c="dimmed">{row.currency}</Text>
                                             </Table.Td>
+                                            <Table.Td ta="right">{formatNumber(row.total_tickets_sold)}</Table.Td>
                                             <Table.Td ta="right">{formatNumber(row.tickets_sold)}</Table.Td>
                                             <Table.Td ta="right">{formatNumber(row.checked_in)}</Table.Td>
                                             <Table.Td ta="right">{formatCurrency(row.gross_collected, row.currency)}</Table.Td>

@@ -179,6 +179,7 @@ export interface MercadoPagoReconciliation {
     passix_commission: number;
     organizer_net: number;
     tickets_sold: number;
+    total_tickets_sold: number;
     checked_in: number;
 }
 

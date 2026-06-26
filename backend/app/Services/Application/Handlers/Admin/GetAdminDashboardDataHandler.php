@@ -286,6 +286,13 @@ class GetAdminDashboardDataHandler
                 ) as tickets_sold,
                 (
                     SELECT COUNT(*)
+                    FROM attendees att_all
+                    WHERE att_all.event_id = e.id
+                      AND att_all.status = 'ACTIVE'
+                      AND att_all.deleted_at IS NULL
+                ) as total_tickets_sold,
+                (
+                    SELECT COUNT(*)
                     FROM attendee_check_ins ci
                     WHERE ci.event_id = e.id AND ci.deleted_at IS NULL
                 ) as checked_in
