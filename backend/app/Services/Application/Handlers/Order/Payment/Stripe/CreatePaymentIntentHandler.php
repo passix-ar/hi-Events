@@ -95,6 +95,14 @@ readonly class CreatePaymentIntentHandler
             $stripePlatform = null; // This will use default keys in StripeClientFactory
         }
 
+        // Stripe may be disabled on this platform (no secret key). Fail with a clean
+        // 422 instead of letting StripeClientFactory throw an uncaught 500.
+        if (empty($this->stripeConfigurationService->getSecretKey($stripePlatform))) {
+            throw new CreatePaymentIntentFailedException(
+                __('Card payments are not available for this event.')
+            );
+        }
+
         $stripeClient = $this->stripeClientFactory->createForPlatform($stripePlatform);
         $publicKey = $this->stripeConfigurationService->getPublicKey($stripePlatform);
 

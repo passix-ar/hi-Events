@@ -2,6 +2,7 @@
 
 namespace HiEvents\Resources\Event;
 
+use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\DomainObjects\EventSettingDomainObject;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -66,7 +67,7 @@ class EventSettingsResourcePublic extends JsonResource
             'price_display_mode' => $this->getPriceDisplayMode(),
 
             // Payment settings
-            'payment_providers' => $this->getPaymentProviders(),
+            'payment_providers' => $this->getAvailablePaymentProviders(),
             'offline_payment_instructions' => $this->getOfflinePaymentInstructions(),
             'allow_orders_awaiting_offline_payment_to_check_in' => $this->getAllowOrdersAwaitingOfflinePaymentToCheckIn(),
 
@@ -90,5 +91,24 @@ class EventSettingsResourcePublic extends JsonResource
             'waitlist_auto_process' => $this->getWaitlistAutoProcess(),
             'waitlist_offer_timeout_minutes' => $this->getWaitlistOfferTimeoutMinutes(),
         ];
+    }
+
+    /**
+     * Only advertise payment providers that the platform can actually process.
+     * Stripe is hidden when no Stripe secret key is configured, otherwise the
+     * checkout offers a card option whose payment-intent creation always 500s.
+     */
+    private function getAvailablePaymentProviders(): array
+    {
+        $providers = (array)($this->getPaymentProviders() ?? []);
+
+        if (empty(config('services.stripe.secret_key'))) {
+            $providers = array_values(array_filter(
+                $providers,
+                static fn($provider) => $provider !== PaymentProviders::STRIPE->value,
+            ));
+        }
+
+        return $providers;
     }
 }

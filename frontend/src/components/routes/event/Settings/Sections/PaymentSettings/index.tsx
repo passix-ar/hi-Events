@@ -36,7 +36,9 @@ export const PaymentAndInvoicingSettings = () => {
         },
         transformValues: (values) => ({
             ...values,
-            payment_providers: Array.isArray(values.payment_providers) ? values.payment_providers : [],
+            // Solo permitimos los métodos soportados; nunca persistir STRIPE u otros legacy.
+            payment_providers: (Array.isArray(values.payment_providers) ? values.payment_providers : [])
+                .filter((p) => p === "MERCADOPAGO" || p === "OFFLINE"),
             offline_payment_instructions: isEmptyHtml(values.offline_payment_instructions) ? null : values.offline_payment_instructions,
             invoice_notes: isEmptyHtml(values.invoice_notes) ? null : values.invoice_notes,
             invoice_tax_details: isEmptyHtml(values.invoice_tax_details) ? null : values.invoice_tax_details,
