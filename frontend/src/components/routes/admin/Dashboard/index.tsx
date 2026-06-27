@@ -47,7 +47,7 @@ const AdminDashboard = () => {
     const {data: dashboardData, isLoading: isLoadingDashboard} = useGetAdminDashboardData({limit: 20});
 
     const reconciliation = dashboardData?.mercadopago_reconciliation ?? [];
-    const totalGross = reconciliation.reduce((sum, row) => sum + (row.gross_collected || 0), 0);
+    const totalGross = reconciliation.reduce((sum, row) => sum + Number(row.gross_collected || 0), 0);
     const accounts = dashboardData?.recent_accounts ?? [];
 
     return (

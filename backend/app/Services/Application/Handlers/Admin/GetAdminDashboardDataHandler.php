@@ -348,6 +348,17 @@ class GetAdminDashboardDataHandler
             LIMIT :limit
         SQL;
 
-        return DB::select($query, ['limit' => $limit]);
+        $rows = DB::select($query, ['limit' => $limit]);
+
+        return array_map(static function ($row) {
+            $row->orders_count       = (int)   $row->orders_count;
+            $row->gross_collected    = (float) $row->gross_collected;
+            $row->passix_commission  = (float) $row->passix_commission;
+            $row->organizer_net      = (float) $row->organizer_net;
+            $row->tickets_sold       = (int)   $row->tickets_sold;
+            $row->total_tickets_sold = (int)   $row->total_tickets_sold;
+            $row->checked_in         = (int)   $row->checked_in;
+            return $row;
+        }, $rows);
     }
 }
