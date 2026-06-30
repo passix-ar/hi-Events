@@ -83,9 +83,6 @@ export const AttendeeList = ({
                                     {t`Ticket Cancelled`}
                                 </div>
                             ) : null}
-                            <div className={classes.email}>
-                                {attendee.email}
-                            </div>
                             {isAttendeeAwaitingPayment && (
                                 <div className={classes.awaitingPayment}>
                                     {t`Awaiting payment`}
