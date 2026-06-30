@@ -544,7 +544,8 @@ $router->prefix('/public')->group(
         $router->get('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', GetPaymentIntentActionPublic::class);
 
         // MercadoPago payment gateway
-        $router->post('/events/{event_id}/order/{order_short_id}/mercadopago/preference', CreateMercadoPagoPreferenceActionPublic::class);
+        $router->post('/events/{event_id}/order/{order_short_id}/mercadopago/preference', CreateMercadoPagoPreferenceActionPublic::class)
+            ->middleware('throttle:30,1');
 
         // MercadoPago OAuth callback (public, no auth)
         $router->get('/mercadopago/oauth/callback', MercadoPagoOAuthCallbackAction::class);
@@ -554,7 +555,9 @@ $router->prefix('/public')->group(
 
         // Webhooks
         $router->post('/webhooks/stripe', StripeIncomingWebhookAction::class);
-        $router->post('/webhooks/mercadopago', MercadoPagoIncomingWebhookAction::class)->name('webhooks.mercadopago');
+        $router->post('/webhooks/mercadopago', MercadoPagoIncomingWebhookAction::class)
+            ->middleware('throttle:600,1')
+            ->name('webhooks.mercadopago');
 
         // Check-In
         $router->get('/check-in-lists/{check_in_list_short_id}', GetCheckInListPublicAction::class);

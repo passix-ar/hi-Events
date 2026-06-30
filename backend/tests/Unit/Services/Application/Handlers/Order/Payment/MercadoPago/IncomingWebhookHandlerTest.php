@@ -67,8 +67,10 @@ class IncomingWebhookHandlerTest extends TestCase
         ];
 
         $this->logger->shouldReceive('debug')->zeroOrMoreTimes();
+        $this->logger->shouldReceive('warning')->zeroOrMoreTimes();
         $this->cache->shouldReceive('has')->with('mp_webhook_' . $paymentId)->andReturn(false);
         $this->config->shouldReceive('get')->with('mercadopago.webhook_secret')->andReturn(null);
+        $this->config->shouldReceive('get')->with('app.env')->andReturn('testing');
         $this->config->shouldReceive('get')->with('mercadopago.platform_access_token')->andReturn('test_token');
 
         $responseMock = new Response(200, [], json_encode($paymentData));
@@ -95,6 +97,32 @@ class IncomingWebhookHandlerTest extends TestCase
         $this->logger->shouldReceive('debug')->zeroOrMoreTimes();
         $this->cache->shouldReceive('has')->with('mp_webhook_' . $paymentId)->andReturn(true);
 
+        $this->approvedHandler->shouldNotReceive('handle');
+        $this->rejectedHandler->shouldNotReceive('handle');
+        $this->refundedHandler->shouldNotReceive('handle');
+
+        $this->handler->handle(new MercadoPagoWebhookDTO(
+            payload: $payload,
+            xSignature: '',
+            xRequestId: '',
+        ));
+    }
+
+    public function test_missing_secret_in_production_rejects_webhook(): void
+    {
+        $paymentId = '777';
+        $payload = json_encode([
+            'type' => 'payment',
+            'data' => ['id' => $paymentId],
+        ]);
+
+        $this->logger->shouldReceive('debug')->zeroOrMoreTimes();
+        $this->logger->shouldReceive('error')->atLeast()->once();
+        $this->cache->shouldReceive('has')->with('mp_webhook_' . $paymentId)->andReturn(false);
+        $this->config->shouldReceive('get')->with('mercadopago.webhook_secret')->andReturn(null);
+        $this->config->shouldReceive('get')->with('app.env')->andReturn('production');
+
+        $this->httpClient->shouldNotReceive('get');
         $this->approvedHandler->shouldNotReceive('handle');
         $this->rejectedHandler->shouldNotReceive('handle');
         $this->refundedHandler->shouldNotReceive('handle');

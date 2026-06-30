@@ -56,7 +56,19 @@ class IncomingWebhookHandler
         }
 
         $secret = $this->config->get('mercadopago.webhook_secret');
-        if ($secret && !$this->verifySignature($dto)) {
+
+        if (!$secret) {
+            // Fail closed in production: a missing secret must never silently disable
+            // signature verification (e.g. if the env var is dropped by mistake).
+            // Outside production we let it through so the flow can be exercised
+            // locally / in sandbox / in tests without a configured secret.
+            if ($this->config->get('app.env') === 'production') {
+                $this->logger->error('MercadoPago webhook secret not configured in production; rejecting webhook');
+                return;
+            }
+
+            $this->logger->warning('MercadoPago webhook secret not configured; skipping signature verification (non-production)');
+        } elseif (!$this->verifySignature($dto)) {
             $this->logger->warning('MercadoPago webhook signature verification failed');
             return;
         }
