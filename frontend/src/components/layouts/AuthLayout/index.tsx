@@ -122,7 +122,14 @@ const AuthLayout = () => {
                     <main className={classes.container}>
                         <div className={classes.logo} onClick={handleLogoClick} style={{cursor: 'pointer'}}>
                             <img
-                                src={"/logos/passix-dark-bg.svg"}
+                                className={classes.logoMark}
+                                src={"/logos/passix-mark.png?v=3"}
+                                alt=""
+                                aria-hidden="true"
+                            />
+                            <img
+                                className={classes.logoWordmark}
+                                src={"/logos/passix-dark-bg.svg?v=3"}
                                 alt={t`${getConfig("VITE_APP_NAME", "Passix")} logo`}
                             />
                         </div>

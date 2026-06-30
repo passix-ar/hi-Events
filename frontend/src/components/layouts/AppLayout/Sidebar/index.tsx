@@ -76,8 +76,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className={classes.logo}>
                 <NavLink to={`/manage/events`}>
                     <img
-                        style={{maxWidth: '160px', margin: "10px auto"}}
-                        src={"/logos/passix-dark-bg.svg"}
+                        style={{width: '40px', height: '40px', margin: "10px 8px 10px auto"}}
+                        src={"/logos/passix-mark.png?v=3"}
+                        alt=""
+                        aria-hidden="true"
+                    />
+                    <img
+                        style={{maxWidth: '140px', margin: "10px auto 10px 0"}}
+                        src={"/logos/passix-dark-bg.svg?v=3"}
                         alt={t`${getConfig("VITE_APP_NAME", "Passix")} logo`}
                     />
                 </NavLink>
