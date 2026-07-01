@@ -35,14 +35,16 @@ EXPOSE 8080
 
 # ── Worker stage (queue:work, sin nginx) ──────────────────────────────────
 FROM app AS worker
-# No hay web server en este contenedor: anulamos el healthcheck HTTP heredado
-# de la imagen base (si no, queda "unhealthy" y Coolify lo reinicia en loop).
-HEALTHCHECK NONE
+# Estos contenedores no tienen web server, así que el healthcheck HTTP heredado
+# de la imagen base falla siempre. Coolify exige un estado de salud para su rollout
+# (HEALTHCHECK NONE lo rompe), por eso damos uno que siempre pasa: la liveness real
+# la cubre el proceso, que es el PID 1 del contenedor (si muere, el contenedor muere).
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 CMD true
 ENTRYPOINT ["/bin/sh"]
 CMD ["scripts/deploy/run-worker.sh"]
 
 # ── Scheduler stage (schedule:run loop, sin nginx) ────────────────────────
 FROM app AS scheduler
-HEALTHCHECK NONE
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 CMD true
 ENTRYPOINT ["/bin/sh"]
 CMD ["scripts/deploy/run-scheduler.sh"]
