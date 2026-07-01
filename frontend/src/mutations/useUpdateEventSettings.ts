@@ -2,6 +2,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {EventSettings, IdParam} from "../types.ts";
 import {eventsSettingsClient} from "../api/event-settings.client.ts";
 import {GET_EVENT_SETTINGS_QUERY_KEY} from "../queries/useGetEventSettings.ts";
+import {GET_EVENT_QUERY_KEY} from "../queries/useGetEvent.ts";
 
 export const useUpdateEventSettings = () => {
     const queryClient = useQueryClient();
@@ -15,6 +16,11 @@ export const useUpdateEventSettings = () => {
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
                 queryKey: [GET_EVENT_SETTINGS_QUERY_KEY, variables.eventId]
+            });
+            // The event payload also carries settings (e.g. pass_platform_fee_to_buyer, used
+            // by the product form's price breakdown), so refresh it too.
+            queryClient.invalidateQueries({
+                queryKey: [GET_EVENT_QUERY_KEY, variables.eventId]
             });
         }
     });

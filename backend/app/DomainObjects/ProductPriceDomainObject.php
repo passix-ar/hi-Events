@@ -16,6 +16,8 @@ class ProductPriceDomainObject extends Generated\ProductPriceDomainObjectAbstrac
 
     private ?float $feeTotal = null;
 
+    private ?float $platformFeeTotal = null;
+
     private ?bool $isAvailable = null;
 
     private ?string $offSaleReason = null;
@@ -54,6 +56,18 @@ class ProductPriceDomainObject extends Generated\ProductPriceDomainObjectAbstrac
     public function getFeeTotal(): ?float
     {
         return $this->feeTotal ?? null;
+    }
+
+    public function setPlatformFeeTotal(?float $platformFeeTotal): self
+    {
+        $this->platformFeeTotal = $platformFeeTotal;
+
+        return $this;
+    }
+
+    public function getPlatformFeeTotal(): ?float
+    {
+        return $this->platformFeeTotal ?? 0.00;
     }
 
     public function getPriceIncludingTaxAndServiceFee(): float

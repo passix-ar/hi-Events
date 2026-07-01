@@ -32,7 +32,12 @@ export const InlineOrderSummary = ({
         event?.settings?.location_details?.venue_name ||
         null;
 
-    const totalFee = order.taxes_and_fees_rollup?.fees?.reduce((sum, fee) => sum + fee.value, 0) || 0;
+    // The platform fee ("service fee") is charged to the buyer but shown on its own line,
+    // so keep it out of the generic "Fees" total/breakdown.
+    const allFees = order.taxes_and_fees_rollup?.fees ?? [];
+    const platformFee = allFees.find((fee) => fee.is_platform_fee);
+    const otherFees = allFees.filter((fee) => !fee.is_platform_fee);
+    const totalFee = otherFees.reduce((sum, fee) => sum + fee.value, 0);
     const totalTax = order.taxes_and_fees_rollup?.taxes?.reduce((sum, tax) => sum + tax.value, 0) || 0;
     const totalDiscount = order.order_items?.reduce((sum, item) => {
         if (item.total_before_discount && item.total_before_additions) {
@@ -135,10 +140,10 @@ export const InlineOrderSummary = ({
                             </span>
                         </div>
 
-                        <div className={classes.totalsRow}>
-                            <span className={classes.totalsLabelWithInfo}>
-                                <span>{t`Fees`}</span>
-                                {order.taxes_and_fees_rollup?.fees && order.taxes_and_fees_rollup.fees.length > 0 && (
+                        {otherFees.length > 0 && (
+                            <div className={classes.totalsRow}>
+                                <span className={classes.totalsLabelWithInfo}>
+                                    <span>{t`Fees`}</span>
                                     <Popover position="top" withArrow shadow="sm" width={220}>
                                         <Popover.Target>
                                             <span className={classes.infoIcon}>
@@ -147,7 +152,7 @@ export const InlineOrderSummary = ({
                                         </Popover.Target>
                                         <Popover.Dropdown>
                                             <div className={classes.breakdownList}>
-                                                {order.taxes_and_fees_rollup.fees.map((fee, index) => (
+                                                {otherFees.map((fee, index) => (
                                                     <div key={index} className={classes.breakdownItem}>
                                                         <span className={classes.breakdownName}>{fee.name}</span>
                                                         <span className={classes.breakdownValue}>
@@ -158,14 +163,21 @@ export const InlineOrderSummary = ({
                                             </div>
                                         </Popover.Dropdown>
                                     </Popover>
-                                )}
-                            </span>
-                            <span className={classNames(classes.totalsValue, {
-                                [classes.totalsValueFree]: totalFee === 0
-                            })}>
-                                {formatCurrency(totalFee, order.currency)}
-                            </span>
-                        </div>
+                                </span>
+                                <span className={classes.totalsValue}>
+                                    {formatCurrency(totalFee, order.currency)}
+                                </span>
+                            </div>
+                        )}
+
+                        {platformFee && (
+                            <div className={classes.totalsRow}>
+                                <span className={classes.totalsLabel}>{t`Service fee`}</span>
+                                <span className={classes.totalsValue}>
+                                    {formatCurrency(platformFee.value, order.currency)}
+                                </span>
+                            </div>
+                        )}
 
                         {totalTax > 0 && (
                             <div className={classes.totalsRow}>

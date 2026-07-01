@@ -122,7 +122,11 @@
       .hi-price-tier-row {
         margin-bottom: 15px;
 
+        // Allow the price/label column to shrink so the taxes note wraps instead of
+        // pushing the quantity selector off-screen on small viewports.
         .hi-price-tier {
+          min-width: 0;
+
           .hi-price-tier-label {
             font-weight: bold;
           }
@@ -130,10 +134,19 @@
           .hi-price-tier-price {
             .hi-price-tier-price-amount {
               display: flex;
-              gap: 5px;
+              flex-direction: column;
+              gap: 2px;
+              min-width: 0;
+
+              // Small "taxes & fees" note shown under the price.
+              > div:last-child span {
+                font-size: 0.78em;
+                line-height: 1.25;
+              }
 
               svg {
-                margin-top: 3px;
+                margin-top: 0;
+                flex-shrink: 0;
               }
             }
 
@@ -148,6 +161,8 @@
         }
 
         .hi-product-quantity-selector {
+          flex-shrink: 0;
+
           .button-input {
             input {
               color: var(--widget-primary-text-color, var(--hi-primary));
@@ -265,6 +280,50 @@
       padding: 10px 20px;
       border-radius: 5px;
       background-color: var(--widget-secondary-color, var(--hi-secondary));
+    }
+
+    .hi-order-summary {
+      margin-bottom: 20px;
+
+      .hi-order-summary-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.04);
+
+        .hi-order-summary-label {
+          font-weight: 500;
+        }
+
+        .hi-order-summary-value {
+          font-weight: 600;
+          white-space: nowrap;
+        }
+      }
+
+      .hi-order-summary-total {
+        margin-top: 4px;
+        margin-bottom: 0;
+        // No filled block here: the only lime CTA is the Continue button. Keep the total as
+        // an emphasised row with a divider so text always contrasts on light and dark themes.
+        background-color: transparent;
+        border-radius: 0;
+        border-top: 1px solid rgba(128, 128, 128, 0.25);
+
+        .hi-order-summary-label {
+          font-weight: 700;
+          font-size: 1.15em;
+        }
+
+        .hi-order-summary-value {
+          font-weight: 800;
+          font-size: 1.3em;
+        }
+      }
     }
 
     .hi-continue-button {

@@ -28,6 +28,9 @@ class ProductPriceResource extends BaseResource
             'is_hidden' => $this->getIsHidden(),
             'off_sale_reason' => $this->getOffSaleReason(),
             'price_including_taxes_and_fees' => $this->getPriceIncludingTaxAndServiceFee(),
+            'tax_total' => $this->getTaxTotal(),
+            'fee_total' => $this->getFeeTotal(),
+            'platform_fee_total' => $this->getPlatformFeeTotal(),
         ];
     }
 }

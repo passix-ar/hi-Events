@@ -11,7 +11,6 @@ import {
     NumberInput,
     Select,
     Switch,
-    Text,
     TextInput
 } from "@mantine/core";
 import {
@@ -41,8 +40,8 @@ import {formatCurrency, getCurrencySymbol} from "../../../utilites/currency.ts";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetTaxesAndFees} from "../../../queries/useGetTaxesAndFees.ts";
-import {ProductFeeHint, FEE_RATE_SAMPLE_PRICE, computeFeeBreakdown, FeePreviewRates} from "../../common/ProductFeeHint";
-import {useGetPlatformFeePreview} from "../../../queries/useGetPlatformFeePreview.ts";
+import {useGetAccount} from "../../../queries/useGetAccount.ts";
+import {ProductFeeHint} from "../../common/ProductFeeHint";
 import {Card} from "../../common/Card";
 import classes from './ProductForm.module.scss';
 import {Fieldset} from "../../common/Fieldset";
@@ -59,25 +58,23 @@ interface ProductFormProps {
     event?: Event,
 }
 
-// UI-only helpers: convert between the seller's net payout and the sale price using
-// the same estimate shown in the fee breakdown (ProductFeeHint). The net is never
-// persisted — editing it just fills in the price, which stays the saved value.
-const round2 = (value: number) => Math.round(value * 100) / 100;
+// Shown below the price field: MercadoPago's own commission is not estimated here
+// (it depends on the organizer's settlement term and is deducted by MercadoPago at
+// payout). We surface it as guidance and point to the taxes/fees section, where the
+// organizer can add it to pass the cost on to the buyer if they choose.
+const MercadoPagoNote = () => (
+    <Alert mt={10} variant="light" color="gray" icon={<IconInfoCircle size={18}/>}>
+        {t`MercadoPago charges a commission based on your settlement term, which you configure in your MercadoPago account. If you'd like to pass this cost on to the buyer, add it as a tax or fee below.`}
+    </Alert>
+);
 
-const netFromPrice = (price: number, fee: FeePreviewRates, passToBuyer: boolean, taxesAndFees: TaxAndFee[]) =>
-    round2(computeFeeBreakdown(price, fee, passToBuyer, taxesAndFees).youReceive);
-
-// "You receive" is linear in price, so invert it from two sample evaluations. This
-// stays exact regardless of taxes/fees or whether the platform fee is passed on.
-const priceFromNet = (net: number, fee: FeePreviewRates, passToBuyer: boolean, taxesAndFees: TaxAndFee[]) => {
-    const intercept = computeFeeBreakdown(0, fee, passToBuyer, taxesAndFees).youReceive;
-    const slope = computeFeeBreakdown(1, fee, passToBuyer, taxesAndFees).youReceive - intercept;
-    return slope ? round2((net - intercept) / slope) : 0;
+type PlatformFeeHintProps = {
+    platformFeePercentage: number;
+    platformFeeFixed: number;
+    passPlatformFeeToBuyer: boolean;
 };
 
-const ProductPriceTierForm = ({form, product, event, passToBuyer, selectedTaxesAndFees}: ProductFormProps & {passToBuyer: boolean, selectedTaxesAndFees: TaxAndFee[]}) => {
-    const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
-
+const ProductPriceTierForm = ({form, product, event, selectedTaxesAndFees, platformFeeHintProps}: ProductFormProps & {selectedTaxesAndFees: TaxAndFee[], platformFeeHintProps: PlatformFeeHintProps}) => {
     return form?.values?.prices?.map((price, index) => {
         const existingPrice = product?.prices?.find((p) => Number(p.id) === Number(price.id));
         const deleteDisabled = form?.values?.prices?.length === 1 || (existingPrice && Number(existingPrice?.quantity_sold) > 0);
@@ -95,21 +92,6 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer, selectedTaxesA
             <Card key={`price-${index}`} className={classes.priceTierCard}>
                 <h3>{price.label || <Trans>Tier {index + 1}</Trans>}</h3>
                 <InputGroup>
-                    {fee && event?.currency && (
-                        <NumberInput decimalScale={2}
-                                     min={0}
-                                     leftSection={getCurrencySymbol(event.currency)}
-                                     value={Number(price.price) > 0 ? netFromPrice(Number(price.price), fee, passToBuyer, selectedTaxesAndFees) : ''}
-                                     onChange={(value) => {
-                                         const net = Number(value);
-                                         form.setFieldValue(
-                                             `prices.${index}.price`,
-                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer, selectedTaxesAndFees) : 0
-                                         );
-                                     }}
-                                     label={t`You want to receive (net)`}
-                                     placeholder="19.99"/>
-                    )}
                     <NumberInput decimalScale={2}
                                  min={0}
                                  fixedDecimalScale
@@ -124,18 +106,12 @@ const ProductPriceTierForm = ({form, product, event, passToBuyer, selectedTaxesA
                         required
                     />
                 </InputGroup>
-                {fee && event?.currency && (
-                    <Text size="xs" c="dimmed" mt={4}>
-                        {t`Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term.`}
-                    </Text>
-                )}
-                {event?.id && event?.currency && (
+                {event?.currency && (
                     <ProductFeeHint
-                        eventId={event.id}
                         price={Number(price.price) || 0}
                         currency={event.currency}
-                        passToBuyer={passToBuyer}
                         taxesAndFees={selectedTaxesAndFees}
+                        {...platformFeeHintProps}
                     />
                 )}
                 <NumberInput
@@ -238,15 +214,26 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
     const isFreeProduct = form.values.type === 'FREE';
     const isDonationProduct = form.values.type === 'DONATION';
     const {data: event} = useGetEvent(eventId);
+    // Settings come from their own endpoint — the event payload from useGetEvent does not
+    // include them, so we read pass_platform_fee_to_buyer here (and it stays reactive because
+    // this query is invalidated whenever the settings are saved).
     const {data: eventSettings} = useGetEventSettings(eventId);
     const {data: taxesAndFees} = useGetTaxesAndFees();
-
-    const passToBuyer = eventSettings?.pass_platform_fee_to_buyer ?? false;
-    const {data: fee} = useGetPlatformFeePreview(event?.id, FEE_RATE_SAMPLE_PRICE);
+    const {data: account} = useGetAccount();
 
     const selectedTaxesAndFees = (taxesAndFees?.data ?? []).filter(
         (taxOrFee) => (form.values.tax_and_fee_ids ?? []).map(String).includes(String(taxOrFee.id))
     );
+
+    // Platform ("service") fee context for the price breakdown. The fixed fee is only applied
+    // when it is in the event's currency, otherwise we rely on the percentage to avoid mixing
+    // currencies (the exact fee is always reconciled server-side).
+    const appFees = account?.configuration?.application_fees;
+    const platformFeeHintProps = {
+        platformFeePercentage: appFees?.percentage ?? 0,
+        platformFeeFixed: appFees?.currency === event?.currency ? (appFees?.fixed ?? 0) : 0,
+        passPlatformFeeToBuyer: eventSettings?.pass_platform_fee_to_buyer ?? false,
+    };
 
     const handleTaxOrFeeCreated = (taxOrFee: TaxAndFee) => {
         const currentIds = form.values.tax_and_fee_ids || [];
@@ -404,22 +391,6 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
             {form.values.type !== ProductPriceType.Tiered && (
                 <>
                 <InputGroup>
-                    {!isFreeProduct && fee && event?.currency && (
-                        <NumberInput decimalScale={2}
-                                     min={0}
-                                     leftSection={getCurrencySymbol(event.currency)}
-                                     value={Number(form.values.prices?.[0]?.price) > 0
-                                         ? netFromPrice(Number(form.values.prices?.[0]?.price), fee, passToBuyer, selectedTaxesAndFees) : ''}
-                                     onChange={(value) => {
-                                         const net = Number(value);
-                                         form.setFieldValue(
-                                             'prices.0.price',
-                                             Number.isFinite(net) && net > 0 ? priceFromNet(net, fee, passToBuyer, selectedTaxesAndFees) : 0
-                                         );
-                                     }}
-                                     label={t`You want to receive (net)`}
-                                     placeholder="19.99"/>
-                    )}
                     <NumberInput decimalScale={2}
                                  min={0}
                                  fixedDecimalScale
@@ -460,30 +431,26 @@ export const ProductForm = ({form, product}: ProductFormProps) => {
                                  />}
                     />
                 </InputGroup>
-                {!isFreeProduct && fee && event?.currency && (
-                    <Text size="xs" c="dimmed" mt={4}>
-                        {t`Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term.`}
-                    </Text>
-                )}
+                {!isFreeProduct && event?.currency && <MercadoPagoNote/>}
                 {taxesAndFeesSection}
-                {!isFreeProduct && event?.id && event?.currency && (
+                {!isFreeProduct && event?.currency && (
                     <ProductFeeHint
-                        eventId={event.id}
                         price={Number(form.values.prices?.[0]?.price) || 0}
                         currency={event.currency}
-                        passToBuyer={passToBuyer}
                         taxesAndFees={selectedTaxesAndFees}
+                        {...platformFeeHintProps}
                     />
                 )}
                 </>
             )}
 
+            {form.values.type === ProductPriceType.Tiered && event?.currency && <MercadoPagoNote/>}
             {form.values.type === ProductPriceType.Tiered && taxesAndFeesSection}
 
             {form.values.type === ProductPriceType.Tiered && (
                 <Fieldset legend={t`Price Tiers`} mt={20} mb={20}>
                     <div className={classes.priceTiers}>
-                        <ProductPriceTierForm product={product} form={form} event={event} passToBuyer={passToBuyer} selectedTaxesAndFees={selectedTaxesAndFees}/>
+                        <ProductPriceTierForm product={product} form={form} event={event} selectedTaxesAndFees={selectedTaxesAndFees} platformFeeHintProps={platformFeeHintProps}/>
                         <Button
                             className={classes.addTierButton}
                             size={'xs'}

@@ -515,6 +515,7 @@ export interface ProductPrice {
     is_discounted?: boolean;
     tax_total?: number;
     fee_total?: number;
+    platform_fee_total?: number;
     is_available?: boolean;
     is_before_sale_start_date?: boolean;
     is_after_sale_end_date?: boolean;
@@ -630,6 +631,7 @@ export interface Address {
 interface TaxOrFee {
     name: string;
     value: number;
+    is_platform_fee?: boolean;
 }
 
 interface TaxesAndFeesRollup {

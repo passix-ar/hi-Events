@@ -25,6 +25,7 @@ import {range, useInputState, useResizeObserver} from "@mantine/hooks";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {showError, showInfo, showSuccess} from "../../../../utilites/notifications.tsx";
 import {addQueryStringToUrl, isObjectEmpty, removeQueryStringFromUrl} from "../../../../utilites/helpers.ts";
+import {formatCurrency} from "../../../../utilites/currency.ts";
 import {TieredPricing} from "./Prices/Tiered";
 import classNames from 'classnames';
 import '../../../../styles/widget/default.scss';
@@ -234,6 +235,52 @@ const SelectProducts = (props: SelectProductsProps) => {
 
         return total;
     }, [form.values.products]);
+
+    // Display-only summary. The authoritative amounts are always recalculated by the backend on
+    // order creation (see the Security section of the plan). `platform_fee_total` isolates the
+    // platform commission (computed server-side in ProductFilterService::processProductPrice) from
+    // any organiser-defined fees, which are already baked into the ticket price.
+    const orderSummary = (() => {
+        let subtotal = 0;
+        let taxes = 0;
+        let platformFee = 0;
+        let total = 0;
+        let hasDonation = false;
+
+        form.values.products?.forEach(({product_id, quantities}) => {
+            const product = products.find((p) => Number(p.id) === Number(product_id));
+
+            quantities?.forEach(({price_id, quantity, price}) => {
+                const qty = Number(quantity) || 0;
+                if (qty <= 0) {
+                    return;
+                }
+
+                // Donations use a buyer-entered amount with no client-computable commission.
+                if (product?.type === 'DONATION') {
+                    hasDonation = true;
+                    const amount = Number(price) || 0;
+                    subtotal += amount * qty;
+                    total += amount * qty;
+                    return;
+                }
+
+                const priceObj = product?.prices?.find((pr) => Number(pr.id) === Number(price_id));
+                const base = Number(priceObj?.price) || 0;
+                const taxPerUnit = Number(priceObj?.tax_total) || 0;
+                const commissionPerUnit = Number(priceObj?.platform_fee_total) || 0;
+                const inclPerUnit = priceObj?.price_including_taxes_and_fees
+                    ?? (base + taxPerUnit + (Number(priceObj?.fee_total) || 0));
+
+                subtotal += base * qty;
+                taxes += taxPerUnit * qty;
+                platformFee += commissionPerUnit * qty;
+                total += inclPerUnit * qty;
+            });
+        });
+
+        return {subtotal, taxes, platformFee, total, hasDonation};
+    })();
 
     useEffect(() => {
         if (form.values.promo_code) {
@@ -560,6 +607,54 @@ const SelectProducts = (props: SelectProductsProps) => {
                             <div dangerouslySetInnerHTML={{
                                 __html: event.settings.product_page_message.replace(/\n/g, '<br/>')
                             }} className={'hi-product-page-message'}/>
+                        )}
+                        {!orderSummary.hasDonation && (
+                            <div className={'hi-order-summary'}>
+                                {event?.settings?.price_display_mode !== 'INCLUSIVE' ? (
+                                    <>
+                                        <div className={'hi-order-summary-row'}>
+                                            <span className={'hi-order-summary-label'}>{t`Subtotal`}</span>
+                                            <span className={'hi-order-summary-value'}>
+                                                {formatCurrency(orderSummary.subtotal, event.currency)}
+                                            </span>
+                                        </div>
+                                        {orderSummary.platformFee > 0 && (
+                                            <div className={'hi-order-summary-row'}>
+                                                <span className={'hi-order-summary-label'}>{t`Service fee`}</span>
+                                                <span className={'hi-order-summary-value'}>
+                                                    {formatCurrency(orderSummary.platformFee, event.currency)}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {orderSummary.taxes > 0 && (
+                                            <div className={'hi-order-summary-row'}>
+                                                <span className={'hi-order-summary-label'}>{t`Taxes`}</span>
+                                                <span className={'hi-order-summary-value'}>
+                                                    {formatCurrency(orderSummary.taxes, event.currency)}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <div className={'hi-order-summary-row hi-order-summary-total'}>
+                                            <span className={'hi-order-summary-label'}>{t`Total`}</span>
+                                            <span className={'hi-order-summary-value'}>
+                                                {formatCurrency(orderSummary.total, event.currency)}
+                                            </span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className={'hi-order-summary-row hi-order-summary-total'}>
+                                            <span className={'hi-order-summary-label'}>{t`Total`}</span>
+                                            <span className={'hi-order-summary-value'}>
+                                                {formatCurrency(orderSummary.total, event.currency)}
+                                            </span>
+                                        </div>
+                                        <div style={{fontSize: 12, opacity: 0.7, textAlign: 'right', marginTop: 2}}>
+                                            {t`Taxes & fees included`}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         )}
                         {captchaEnabled && captchaSiteKey && (
                             <div className={'hi-captcha-row'} style={{marginBottom: '12px'}}>

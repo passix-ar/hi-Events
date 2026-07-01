@@ -8,6 +8,7 @@ import {IconArrowRight} from "@tabler/icons-react";
 import classes from "./PlatformFeesSettings.module.scss";
 import {AccountConfiguration} from "../../../types.ts";
 import {PlatformFeePreview} from "../../../api/event-settings.client.ts";
+import {computePlatformFee} from "../../../utilites/platformFee.ts";
 
 const formatPercentage = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -26,22 +27,7 @@ interface FeeBreakdownProps {
 }
 
 const FeeBreakdown = ({ticketPrice, feePercentage, fixedFee, currency, passToBuyer}: FeeBreakdownProps) => {
-    const percentageRate = feePercentage / 100;
-
-    let platformFee: number;
-    if (passToBuyer) {
-        // Gross-up formula: P = (fixed + total * r) / (1 - r)
-        // When passing to buyer, we need to add enough so that after Stripe takes
-        // its percentage from the new total, the platform still receives the full fee
-        platformFee = percentageRate >= 1
-            ? fixedFee + (ticketPrice * percentageRate)
-            : (fixedFee + (ticketPrice * percentageRate)) / (1 - percentageRate);
-    } else {
-        // Simple formula: fee = fixed + (total * percentage)
-        // When absorbing, the fee is calculated directly on the ticket price
-        platformFee = fixedFee + (ticketPrice * percentageRate);
-    }
-    const roundedPlatformFee = Math.round(platformFee * 100) / 100;
+    const roundedPlatformFee = computePlatformFee(ticketPrice, feePercentage, fixedFee, passToBuyer);
 
     const buyerPays = passToBuyer ? ticketPrice + roundedPlatformFee : ticketPrice;
     const organizerReceives = passToBuyer ? ticketPrice : ticketPrice - roundedPlatformFee;

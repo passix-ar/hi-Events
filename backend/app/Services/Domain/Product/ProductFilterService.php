@@ -218,7 +218,8 @@ class ProductFilterService
 
             $price
                 ->setTaxTotal(Currency::round($taxTotal))
-                ->setFeeTotal(Currency::round($feeTotal));
+                ->setFeeTotal(Currency::round($feeTotal))
+                ->setPlatformFeeTotal(Currency::round($platformFee));
         }
 
         $price->setIsAvailable($this->getPriceAvailability($price, $product));

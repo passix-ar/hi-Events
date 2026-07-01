@@ -66,6 +66,13 @@
   white-space: nowrap;
 }
 
+.note {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--mantine-color-dimmed);
+}
+
 @media (max-width: 36em) {
   .hint {
     padding: 12px 13px;

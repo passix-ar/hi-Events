@@ -14,6 +14,7 @@ import {
     IconAt,
     IconBrandGoogleAnalytics,
     IconBuildingStore,
+    IconCoin,
     IconCreditCard,
     IconHome,
     IconListCheck,
@@ -23,6 +24,7 @@ import {useMediaQuery} from "@mantine/hooks";
 import {useEffect, useMemo, useState} from "react";
 import {Card} from "../../../common/Card";
 import {PaymentAndInvoicingSettings} from "./Sections/PaymentSettings";
+import {PlatformFeesSettings} from "./Sections/PlatformFeesSettings";
 import {WaitlistSettings} from "./Sections/WaitlistSettings";
 import {DangerZoneSettings} from "./Sections/DangerZoneSettings";
 import {useGetAccount} from "../../../../queries/useGetAccount.ts";
@@ -78,6 +80,12 @@ export const Settings = () => {
                 label: t`Payment & Invoicing`,
                 icon: IconCreditCard,
                 component: PaymentAndInvoicingSettings,
+            },
+            {
+                id: 'platform-fees-settings',
+                label: t`Platform Fees`,
+                icon: IconCoin,
+                component: PlatformFeesSettings,
             },
             {
                 id: 'danger-zone',

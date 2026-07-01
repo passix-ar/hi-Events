@@ -102,6 +102,14 @@ export const SortableProduct = ({product, currencyCode, category, categories}: S
         return product.is_available ? t`Currently available for purchase` : t`Sales are paused`;
     }
 
+    // Price the buyer pays: base + taxes/fees the organizer added. The platform "service"
+    // fee is handled separately (passed to the buyer or absorbed), so it is excluded here
+    // to stay consistent with the product form breakdown.
+    const displayPrice = (productPrice: ProductPrice) => {
+        const incl = productPrice.price_including_taxes_and_fees ?? productPrice.price;
+        return incl - (productPrice.platform_fee_total ?? 0);
+    };
+
     const getPriceRange = (product: Product) => {
         const productPrices: ProductPrice[] = product.prices as ProductPrice[];
         if (!Array.isArray(productPrices) || productPrices.length === 0) {
@@ -112,16 +120,17 @@ export const SortableProduct = ({product, currencyCode, category, categories}: S
             if (productPrices[0].price <= 0) {
                 return {display: t`Free`, isFree: true};
             }
-            return {display: formatCurrency(productPrices[0].price, currencyCode), isFree: false};
+            return {display: formatCurrency(displayPrice(productPrices[0]), currencyCode), isFree: false};
         }
 
-        const prices = productPrices.map(productPrice => productPrice.price);
-        const minPrice = Math.min(...prices);
-        const maxPrice = Math.max(...prices);
-
-        if (minPrice <= 0 && maxPrice <= 0) {
+        const basePrices = productPrices.map(productPrice => productPrice.price);
+        if (Math.min(...basePrices) <= 0 && Math.max(...basePrices) <= 0) {
             return {display: t`Free`, isFree: true};
         }
+
+        const prices = productPrices.map(displayPrice);
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
 
         if (minPrice === maxPrice) {
             return {display: formatCurrency(minPrice, currencyCode), isFree: false};
@@ -369,7 +378,7 @@ export const SortableProduct = ({product, currencyCode, category, categories}: S
                                     <Tooltip label={getTaxFeeTooltip()} withArrow>
                                         <div className={classes.taxIndicator}>
                                             <IconReceipt size={14}/>
-                                            <span>{t`+Tax/Fees`}</span>
+                                            <span>{t`Taxes included`}</span>
                                         </div>
                                     </Tooltip>
                                 )}

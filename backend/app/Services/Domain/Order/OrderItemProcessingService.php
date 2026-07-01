@@ -182,6 +182,7 @@ class OrderItemProcessingService
             'rate' => $platformFee,
             'type' => TaxCalculationType::FIXED->name,
             'value' => $platformFee,
+            'is_platform_fee' => true,
         ];
 
         return $rollUp;

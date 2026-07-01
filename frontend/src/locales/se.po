@@ -56,7 +56,7 @@ msgstr "{0} <0>utcheckad</0> lyckades"
 msgid "{0} Active Webhooks"
 msgstr "{0} aktiva webhooks"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:493
+#: src/components/routes/product-widget/SelectProducts/index.tsx:540
 msgid "{0} available"
 msgstr "{0} tillgängliga"
 
@@ -64,12 +64,12 @@ msgstr "{0} tillgängliga"
 msgid "{0} created successfully"
 msgstr "{0} skapades framgångsrikt"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:399
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:408
 msgid "{0} left"
 msgstr "{0} kvar"
 
-#: src/components/layouts/AppLayout/Sidebar/index.tsx:81
-#: src/components/layouts/AuthLayout/index.tsx:126
+#: src/components/layouts/AppLayout/Sidebar/index.tsx:87
+#: src/components/layouts/AuthLayout/index.tsx:133
 msgid "{0} logo"
 msgstr "{0} logotyp"
 
@@ -118,6 +118,10 @@ msgstr "{organizerName}s första evenemang"
 msgid "{totalCount} ticket types"
 msgstr "{totalCount} biljettkategorier"
 
+#: src/components/common/Currency/index.tsx:80
+msgid "+ taxes & fees"
+msgstr ""
+
 #: src/components/common/AdminAccountsTable/index.tsx:78
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:123
 msgid "+{extraOrganizers} more"
@@ -128,8 +132,8 @@ msgid "+1 234 567 890"
 msgstr "+1 234 567 890"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:372
-msgid "+Tax/Fees"
-msgstr "+Skatt/Avgifter"
+#~ msgid "+Tax/Fees"
+#~ msgstr "+Skatt/Avgifter"
 
 #: src/components/common/CheckInListList/index.tsx:49
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
@@ -139,7 +143,7 @@ msgstr "<0>Incheckningslistor hjälper dig att hantera evenemangets entré per d
 msgid "<0>https://</0>your-website.com"
 msgstr "<0>https://</0>din-webbplats.com"
 
-#: src/components/forms/ProductForm/index.tsx:432
+#: src/components/forms/ProductForm/index.tsx:403
 msgid "<0>Please enter the price excluding taxes and fees.</0><1>Taxes and fees can be added below.</1>"
 msgstr "<0>Vänligen ange priset exklusive skatter och avgifter.</0><1>Skatter och avgifter kan läggas till nedan.</1>"
 
@@ -147,7 +151,7 @@ msgstr "<0>Vänligen ange priset exklusive skatter och avgifter.</0><1>Skatter o
 msgid "<0>Set a single total attendance limit that applies to multiple ticket types at once.</0><1>For example, if you link a <2>Day Pass</2> and a <3>Full Weekend</3> ticket, they will both draw from the same pool of spots. Once the limit is reached, all linked tickets automatically stop selling.</1>"
 msgstr "<0>Ställ in en enda total deltagarbegränsning som gäller för flera biljettyper samtidigt.</0><1>Om du till exempel länkar en <2>Dagsbiljett</2> och en <3>Helgbiljett</3>, kommer de båda att använda samma pool av platser. När gränsen är nådd slutar alla länkade biljetter automatiskt att säljas.</1>"
 
-#: src/components/forms/ProductForm/index.tsx:449
+#: src/components/forms/ProductForm/index.tsx:420
 msgid "<0>The number of products available for this product</0><1>This value can be overridden if there are <2>Capacity Limits</2> associated with this product.</1>"
 msgstr "<0>Antalet produkter tillgängliga för denna produkt</0><1>Detta värde kan åsidosättas om det finns <2>kapacitetsbegränsningar</2> kopplade till denna produkt.</1>"
 
@@ -156,7 +160,7 @@ msgstr "<0>Antalet produkter tillgängliga för denna produkt</0><1>Detta värde
 msgid "<0>Webhooks instantly notify external services when events happen, like adding a new attendee to your CRM or mailing list upon registration, ensuring seamless automation.</0><1>Use third-party services like <2>Zapier</2>, <3>IFTTT</3> or <4>Make</4> to create custom workflows and automate tasks.</1>"
 msgstr "<0>Webhooks meddelar omedelbart externa tjänster när händelser inträffar, till exempel att lägga till en ny deltagare i ditt CRM eller din e-postlista vid registrering, vilket ger sömlös automation.</0><1>Använd tredjepartstjänster som <2>Zapier</2>, <3>IFTTT</3> eller <4>Make</4> för att skapa anpassade arbetsflöden och automatisera uppgifter.</1>"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:160
+#: src/components/common/PlatformFeesSettings/index.tsx:146
 msgid "≈ {0} at current rate"
 msgstr "≈ {0} vid aktuell kurs"
 
@@ -328,11 +332,11 @@ msgstr "Om"
 msgid "About Stripe Connect"
 msgstr "Om Stripe Connect"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:192
+#: src/components/common/PlatformFeesSettings/index.tsx:178
 msgid "Absorb fee"
 msgstr "Absorbera avgift"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:229
+#: src/components/common/PlatformFeesSettings/index.tsx:215
 msgid "Absorb Fee"
 msgstr "Absorbera Avgift"
 
@@ -430,7 +434,7 @@ msgstr "Åtgärd krävs: Momsinformation krävs"
 #: src/components/common/AffiliateTable/index.tsx:167
 #: src/components/common/AttendeeTable/index.tsx:346
 #: src/components/common/OrdersTable/index.tsx:445
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:467
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:476
 #: src/components/common/WaitlistTable/index.tsx:55
 #: src/components/common/WaitlistTable/index.tsx:210
 #: src/components/routes/admin/FailedJobs/index.tsx:167
@@ -529,7 +533,7 @@ msgstr "Lägg till detta evenemang i din kalender"
 msgid "Add tickets"
 msgstr "Lägg till biljetter"
 
-#: src/components/forms/ProductForm/index.tsx:501
+#: src/components/forms/ProductForm/index.tsx:468
 msgid "Add tier"
 msgstr "Lägg till prisnivå"
 
@@ -554,7 +558,7 @@ msgstr "Lägg till webhook"
 msgid "Add your social media handles and website URL. These will be displayed on your public organizer page."
 msgstr "Lägg till dina sociala mediekonton och din webbplats URL. Dessa kommer att visas på din offentliga arrangörssida."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:257
+#: src/components/common/PlatformFeesSettings/index.tsx:243
 msgid "Additional Fees"
 msgstr "Ytterligare avgifter"
 
@@ -712,7 +716,7 @@ msgstr "Tillåt incheckning av deltagare kopplade till obetalda order"
 msgid "Allow attendees to update their ticket information (name, email) via a secure link sent with their order confirmation."
 msgstr "Tillåt deltagare att uppdatera deras biljettinformation (namn, epost) via säker länk skickad med deras orderinformation."
 
-#: src/components/forms/ProductForm/index.tsx:594
+#: src/components/forms/ProductForm/index.tsx:561
 msgid "Allow customers to join a waitlist when this product is sold out"
 msgstr "Tillåt kunder att gå med i en väntelista när denna produkt är slutsåld"
 
@@ -751,7 +755,7 @@ msgstr "Avboka även denna order"
 msgid "Also refund this order"
 msgstr "Återbetala även denna order"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:443
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:452
 msgid "Always available"
 msgstr "Alltid tillgänglig"
 
@@ -790,7 +794,7 @@ msgstr "Ett fel uppstod vid inläsning av sidan"
 msgid "An optional description of this category to display on the event page."
 msgstr ""
 
-#: src/components/forms/ProductForm/index.tsx:617
+#: src/components/forms/ProductForm/index.tsx:584
 msgid "An optional message to display on the highlighted product, e.g. \"Selling fast 🔥\" or \"Best value\""
 msgstr "Ett valfritt meddelande att visa på den markerade produkten, t.ex. \"Säljer snabbt 🔥\" eller \"Bästa värdet\""
 
@@ -818,7 +822,7 @@ msgstr "Utseende"
 msgid "Application Fees Configuration"
 msgstr "Konfiguration av avgifter"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:593
+#: src/components/routes/product-widget/SelectProducts/index.tsx:688
 msgid "applied"
 msgstr "tillämpat"
 
@@ -834,7 +838,7 @@ msgstr "Gäller 1 produkt"
 msgid "Apply"
 msgstr "Använd"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:621
+#: src/components/routes/product-widget/SelectProducts/index.tsx:716
 msgid "Apply Promo Code"
 msgstr "Använd kampanjkod"
 
@@ -1148,7 +1152,7 @@ msgid "Attendee's ticket not included in this list"
 msgstr "Deltagarens biljett ingår inte i denna lista"
 
 #: src/components/common/EventCard/index.tsx:227
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:382
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:391
 #: src/components/common/StatBoxes/index.tsx:45
 #: src/components/layouts/Event/index.tsx:118
 #: src/components/modals/ManageOrderModal/index.tsx:126
@@ -1301,7 +1305,8 @@ msgstr "Bakgrundsfärg"
 msgid "Background Type"
 msgstr "Bakgrundstyp"
 
-#: src/components/common/ProductFeeHint/index.tsx:83
+#: src/components/common/Currency/index.tsx:93
+#: src/components/common/ProductFeeHint/index.tsx:61
 msgid "Base price"
 msgstr ""
 
@@ -1364,12 +1369,12 @@ msgstr "Knapptext"
 msgid "Button Text"
 msgstr "Knapptext"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:63
-#: src/components/common/ProductFeeHint/index.tsx:93
+#: src/components/common/PlatformFeesSettings/index.tsx:49
+#: src/components/common/ProductFeeHint/index.tsx:80
 msgid "Buyer pays"
 msgstr "Köparen betalar"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:235
+#: src/components/common/PlatformFeesSettings/index.tsx:221
 msgid "Buyers see a clean price. The platform fee is deducted from your payout."
 msgstr "Köpare ser ett rent pris. Plattformavgiften dras från din utbetalning."
 
@@ -1517,7 +1522,7 @@ msgstr ""
 msgid "Categories allow you to group products together. For example, you might have a category for \"Tickets\" and another for \"Merchandise\"."
 msgstr "Kategorier låter dig gruppera produkter. Till exempel kan du ha en kategori för \"Biljetter\" och en annan för \"Merchandise\"."
 
-#: src/components/forms/ProductForm/index.tsx:395
+#: src/components/forms/ProductForm/index.tsx:382
 msgid "Categories help you organize your products. This title will be displayed on the public event page."
 msgstr "Kategorier hjälper dig att organisera dina produkter. Denna titel visas på den publika evenemangssidan."
 
@@ -1659,7 +1664,7 @@ msgstr "Kryssrutor"
 msgid "Checked In"
 msgstr "Incheckad"
 
-#: src/components/routes/event/Settings/index.tsx:48
+#: src/components/routes/event/Settings/index.tsx:50
 msgid "Checkout"
 msgstr "Kassa"
 
@@ -1720,7 +1725,7 @@ msgstr ""
 msgid "Click to view notes"
 msgstr "Klicka för att visa anteckningar"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:626
+#: src/components/routes/product-widget/SelectProducts/index.tsx:721
 msgid "close"
 msgstr "stäng"
 
@@ -1729,7 +1734,7 @@ msgstr "stäng"
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
 #: src/components/modals/JoinWaitlistModal/index.tsx:130
 #: src/components/modals/RefundOrderModal/index.tsx:169
-#: src/components/routes/product-widget/SelectProducts/index.tsx:627
+#: src/components/routes/product-widget/SelectProducts/index.tsx:722
 msgid "Close"
 msgstr "Stäng"
 
@@ -1737,7 +1742,7 @@ msgstr "Stäng"
 msgid "Close modal"
 msgstr "Stäng dialogruta"
 
-#: src/components/layouts/AppLayout/Sidebar/index.tsx:98
+#: src/components/layouts/AppLayout/Sidebar/index.tsx:104
 msgid "Close sidebar"
 msgstr "Stäng sidofält"
 
@@ -1778,7 +1783,7 @@ msgstr "Koden får vara högst 20 tecken"
 msgid "Collaborate with your team to create amazing events together."
 msgstr "Samarbeta med ditt team för att skapa fantastiska evenemang tillsammans."
 
-#: src/components/forms/ProductForm/index.tsx:576
+#: src/components/forms/ProductForm/index.tsx:543
 msgid "Collapse this product when the event page is initially loaded"
 msgstr "Fäll ihop denna produkt när evenemangssidan laddas"
 
@@ -1938,7 +1943,7 @@ msgstr "Konfiguration uppdaterad"
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: src/components/routes/event/Settings/index.tsx:145
+#: src/components/routes/event/Settings/index.tsx:153
 msgid "Configure event details, location, checkout options, and email notifications."
 msgstr "Konfigurera evenemangsdetaljer, plats, kassainställningar och epost notifikationer."
 
@@ -1946,7 +1951,7 @@ msgstr "Konfigurera evenemangsdetaljer, plats, kassainställningar och epost not
 msgid "Configure how attendee details are collected during checkout"
 msgstr "Konfigurera hur deltagaruppgifter samlas in i kassan"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:264
+#: src/components/common/PlatformFeesSettings/index.tsx:250
 msgid "Configure Taxes & Fees"
 msgstr "Konfigurera skatter och avgifter"
 
@@ -2113,7 +2118,7 @@ msgstr "Kontakt-e-post för support"
 
 #: src/components/common/WidgetEditor/index.tsx:29
 #: src/components/common/WidgetEditor/index.tsx:231
-#: src/components/routes/product-widget/SelectProducts/index.tsx:579
+#: src/components/routes/product-widget/SelectProducts/index.tsx:674
 msgid "Continue"
 msgstr "Fortsätt"
 
@@ -2132,7 +2137,7 @@ msgstr "Fortsätt konfigureringen"
 msgid "Continue Setup"
 msgstr "Fortsätt konfigurering"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:403
+#: src/components/routes/product-widget/SelectProducts/index.tsx:450
 msgid "Continue to Checkout"
 msgstr "Fortsätt till kassan"
 
@@ -2401,7 +2406,7 @@ msgstr "Skapa kampanjkod"
 msgid "Create Question"
 msgstr "Skapa fråga"
 
-#: src/components/forms/ProductForm/index.tsx:316
+#: src/components/forms/ProductForm/index.tsx:303
 #: src/components/modals/CreateTaxOrFeeModal/index.tsx:53
 msgid "Create Tax or Fee"
 msgstr "Skapa skatt eller avgift"
@@ -2620,7 +2625,7 @@ msgstr "Daglig sammanställning av försäljning, skatt och avgifter"
 #: src/components/common/CheckInListList/index.tsx:174
 #: src/components/common/OrdersTable/index.tsx:189
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:492
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
@@ -2628,7 +2633,7 @@ msgstr "Riskzon"
 
 #: src/components/common/AttendeeTable/index.tsx:367
 #: src/components/common/DangerZone/index.tsx:30
-#: src/components/routes/event/Settings/index.tsx:84
+#: src/components/routes/event/Settings/index.tsx:92
 #: src/components/routes/organizer/Settings/index.tsx:72
 msgid "Danger Zone"
 msgstr "Riskzon"
@@ -2694,7 +2699,7 @@ msgstr "Standardmall kommer att användas"
 msgid "delete"
 msgstr "ta bort"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:498
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
 #: src/components/common/TaxAndFeeList/index.tsx:78
@@ -2759,7 +2764,7 @@ msgid "Delete webhook"
 msgstr "Ta bort webhook"
 
 #: src/components/forms/ProductCategoryForm/index.tsx:29
-#: src/components/forms/ProductForm/index.tsx:386
+#: src/components/forms/ProductForm/index.tsx:373
 #: src/components/forms/TaxAndFeeForm/index.tsx:81
 #: src/components/modals/DuplicateEventModal/index.tsx:115
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:93
@@ -2821,7 +2826,7 @@ msgstr "Rabatt i {0}"
 msgid "Discount Type"
 msgstr "Rabattyp"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:420
+#: src/components/routes/product-widget/SelectProducts/index.tsx:467
 msgid "Dismiss this message"
 msgstr "Stäng detta meddelande"
 
@@ -2845,11 +2850,11 @@ msgstr "Glöm inte!"
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr ""
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:304
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:313
 msgid "Donation"
 msgstr "Donation"
 
-#: src/components/forms/ProductForm/index.tsx:217
+#: src/components/forms/ProductForm/index.tsx:193
 msgid "Donation / Pay what you'd like product"
 msgstr "Donation eller betala vad du vill-produkt"
 
@@ -2922,7 +2927,7 @@ msgid ""
 "This is to ensure that all event organizers are verified and accountable."
 msgstr ""
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:488
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:497
 msgid "Duplicate"
 msgstr "Duplicera"
 
@@ -2964,7 +2969,7 @@ msgstr "t.ex. Standard, Premium, Enterprise"
 msgid "Each person will receive an email with a reserved spot to complete their purchase."
 msgstr "Varje person kommer att få ett e-postmeddelande med en reserverad plats för att slutföra sitt köp."
 
-#: src/components/forms/ProductForm/index.tsx:123
+#: src/components/forms/ProductForm/index.tsx:105
 msgid "Early bird"
 msgstr "Early bird"
 
@@ -2977,7 +2982,7 @@ msgstr "Early bird"
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:482
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:491
 #: src/components/modals/EditTaxOrFeeModal/index.tsx:52
 msgid "Edit {0}"
 msgstr "Redigera {0}"
@@ -3146,7 +3151,7 @@ msgstr "E-post"
 msgid "Email & Notification Settings"
 msgstr "E-post- och aviseringsinställningar"
 
-#: src/components/routes/event/Settings/index.tsx:60
+#: src/components/routes/event/Settings/index.tsx:62
 msgid "Email & Templates"
 msgstr "E-post och mallar"
 
@@ -3267,7 +3272,7 @@ msgstr "Aktivera denna kapacitet för att stoppa försäljning när gränsen nå
 msgid "Enable this template for sending emails"
 msgstr "Aktivera denna mall för att skicka e-post"
 
-#: src/components/forms/ProductForm/index.tsx:596
+#: src/components/forms/ProductForm/index.tsx:563
 msgid "Enable Waitlist"
 msgstr "Aktivera väntelista"
 
@@ -3298,7 +3303,7 @@ msgstr "Sluttid (valfritt)"
 #: src/components/common/EventsDashboardStatusButtons/index.tsx:26
 #: src/components/common/EventStatusBadge/index.tsx:14
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:87
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:434
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:443
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:81
 msgid "Ended"
 msgstr "Avslutad"
@@ -3498,7 +3503,7 @@ msgstr "Evenemangsbeskrivning"
 msgid "Event details"
 msgstr "Evenemangsdetaljer"
 
-#: src/components/routes/event/Settings/index.tsx:36
+#: src/components/routes/event/Settings/index.tsx:38
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:606
 msgid "Event Details"
@@ -3559,7 +3564,7 @@ msgid "Event restored successfully"
 msgstr "Evenemanget har återställts"
 
 #: src/components/layouts/Event/index.tsx:104
-#: src/components/routes/event/Settings/index.tsx:146
+#: src/components/routes/event/Settings/index.tsx:154
 msgid "Event Settings"
 msgstr "Evenemangsinställningar"
 
@@ -3890,7 +3895,7 @@ msgstr "Misslyckades med att spara momsinställningar. Försök igen."
 msgid "Failed to send message. Please try again."
 msgstr "Misslyckades med att skicka meddelande. Försök igen."
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:229
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:238
 msgid "Failed to sort products"
 msgstr "Misslyckades med att sortera produkter"
 
@@ -3983,9 +3988,10 @@ msgstr "Avgiftsvaluta"
 msgid "Fee Handling"
 msgstr "Hantering av avgifter"
 
-#: src/components/common/InlineOrderSummary/index.tsx:140
+#: src/components/common/Currency/index.tsx:96
+#: src/components/common/InlineOrderSummary/index.tsx:146
 #: src/components/common/OrdersTable/index.tsx:359
-#: src/components/forms/ProductForm/index.tsx:305
+#: src/components/forms/ProductForm/index.tsx:292
 #: src/components/routes/organizer/Reports/RevenueSummaryReport/index.tsx:54
 msgid "Fees"
 msgstr "Avgifter"
@@ -4005,11 +4011,6 @@ msgstr "Festival"
 #: src/components/common/ImageUploadDropzone/index.tsx:58
 msgid "File is too large. Maximum size is 5MB."
 msgstr "Filen är för stor. Maximal storlek är 5 MB."
-
-#: src/components/forms/ProductForm/index.tsx:129
-#: src/components/forms/ProductForm/index.tsx:465
-msgid "Fill in either field and the other is calculated automatically. The MercadoPago fee is approximate and varies with the accreditation term."
-msgstr ""
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:469
 #: src/components/routes/product-widget/CollectInformation/index.tsx:489
@@ -4155,21 +4156,21 @@ msgid "Forgot password?"
 msgstr "Glömt lösenord?"
 
 #: src/components/common/AttendeeTicket/index.tsx:64
-#: src/components/common/Currency/index.tsx:90
+#: src/components/common/Currency/index.tsx:69
 #: src/components/common/OrderSummary/index.tsx:46
 #: src/components/common/OrderSummary/index.tsx:99
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:113
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:123
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:121
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:128
 #: src/components/layouts/OrganizerHomepage/EventCard/index.tsx:186
 #: src/components/routes/product-widget/SelectProducts/Prices/Tiered/index.tsx:53
 msgid "Free"
 msgstr "Gratis"
 
-#: src/components/forms/ProductForm/index.tsx:211
+#: src/components/forms/ProductForm/index.tsx:187
 msgid "Free Product"
 msgstr "Gratis produkt"
 
-#: src/components/forms/ProductForm/index.tsx:213
+#: src/components/forms/ProductForm/index.tsx:189
 msgid "Free product, no payment information required"
 msgstr "Gratis produkt, ingen betalningsinformation krävs"
 
@@ -4181,7 +4182,7 @@ msgstr "Hela evenemangets varaktighet"
 msgid "Full refund"
 msgstr "Full återbetalning"
 
-#: src/components/forms/ProductForm/index.tsx:196
+#: src/components/forms/ProductForm/index.tsx:172
 msgid "General"
 msgstr "Allmänt"
 
@@ -4291,7 +4292,7 @@ msgstr "Gästhantering"
 msgid "Guests"
 msgstr "Gäster"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:588
+#: src/components/routes/product-widget/SelectProducts/index.tsx:683
 msgid "Have a promo code?"
 msgstr "Har du en kampanjkod?"
 
@@ -4333,7 +4334,7 @@ msgid "Hi {0} 👋"
 msgstr "Hej {0} 👋"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:90
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:321
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:330
 msgid "Hidden"
 msgstr "Dold"
 
@@ -4342,7 +4343,7 @@ msgid "Hidden from attendees - only visible to organizers"
 msgstr "Dold för deltagare – endast synlig för arrangörer"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:101
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:310
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:319
 msgid "Hidden from public view"
 msgstr "Dold från offentlig vy"
 
@@ -4350,8 +4351,8 @@ msgstr "Dold från offentlig vy"
 msgid "Hidden questions are only visible to the event organizer and not to the customer."
 msgstr "Dolda frågor är endast synliga för arrangören och inte för kunden."
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:441
-#: src/components/routes/product-widget/SelectProducts/index.tsx:541
+#: src/components/routes/product-widget/SelectProducts/index.tsx:488
+#: src/components/routes/product-widget/SelectProducts/index.tsx:588
 msgid "Hide"
 msgstr "Dölj"
 
@@ -4363,23 +4364,23 @@ msgstr "Dölj svar"
 msgid "Hide getting started page"
 msgstr "Dölj kom igång-sidan"
 
-#: src/components/forms/ProductForm/index.tsx:517
+#: src/components/forms/ProductForm/index.tsx:484
 msgid "Hide Options"
 msgstr "Dölj alternativ"
 
-#: src/components/forms/ProductForm/index.tsx:574
+#: src/components/forms/ProductForm/index.tsx:541
 msgid "Hide product after sale end date"
 msgstr "Dölj produkt efter försäljningens slutdatum"
 
-#: src/components/forms/ProductForm/index.tsx:572
+#: src/components/forms/ProductForm/index.tsx:539
 msgid "Hide product before sale start date"
 msgstr "Dölj produkt före försäljningens startdatum"
 
-#: src/components/forms/ProductForm/index.tsx:586
+#: src/components/forms/ProductForm/index.tsx:553
 msgid "Hide product unless user has applicable promo code"
 msgstr "Dölj produkt om användaren saknar giltig kampanjkod"
 
-#: src/components/forms/ProductForm/index.tsx:580
+#: src/components/forms/ProductForm/index.tsx:547
 msgid "Hide product when sold out"
 msgstr "Dölj produkt när den är slutsåld"
 
@@ -4391,7 +4392,7 @@ msgstr "Dölj kom igång-sidan från sidofältet"
 msgid "Hide this category?"
 msgstr ""
 
-#: src/components/forms/ProductForm/index.tsx:591
+#: src/components/forms/ProductForm/index.tsx:558
 msgid "Hide this product from customers"
 msgstr "Dölj denna produkt för kunder"
 
@@ -4399,32 +4400,32 @@ msgstr "Dölj denna produkt för kunder"
 msgid "Hide this question"
 msgstr "Dölj denna fråga"
 
-#: src/components/forms/ProductForm/index.tsx:163
+#: src/components/forms/ProductForm/index.tsx:139
 msgid "Hide this tier from users"
 msgstr "Dölj denna nivå för användare"
 
-#: src/components/forms/ProductForm/index.tsx:161
+#: src/components/forms/ProductForm/index.tsx:137
 msgid "Hiding a product will prevent users from seeing it on the event page."
 msgstr "Att dölja en produkt förhindrar att användare ser den på evenemangssidan."
 
-#: src/components/forms/ProductForm/index.tsx:604
+#: src/components/forms/ProductForm/index.tsx:571
 msgid "Highlight"
 msgstr "Markera"
 
-#: src/components/forms/ProductForm/index.tsx:616
+#: src/components/forms/ProductForm/index.tsx:583
 msgid "Highlight Message"
 msgstr "Markeringsmeddelande"
 
-#: src/components/forms/ProductForm/index.tsx:609
+#: src/components/forms/ProductForm/index.tsx:576
 msgid "Highlight this product"
 msgstr "Markera denna produkt"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:336
-#: src/components/forms/ProductForm/index.tsx:526
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:345
+#: src/components/forms/ProductForm/index.tsx:493
 msgid "Highlighted"
 msgstr "Markerad"
 
-#: src/components/forms/ProductForm/index.tsx:610
+#: src/components/forms/ProductForm/index.tsx:577
 msgid "Highlighted products will have a different background color to make them stand out on the event page."
 msgstr "Markerade produkter får en annan bakgrundsfärg för att sticka ut på evenemangssidan."
 
@@ -4501,7 +4502,7 @@ msgstr "Jag godkänner <0>villkoren</0>"
 msgid "I confirm this is a transactional message related to this event"
 msgstr "Jag bekräftar att detta är ett transaktionsmeddelande relaterat till detta evenemang"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:380
+#: src/components/routes/product-widget/SelectProducts/index.tsx:427
 msgid "If a new tab did not open automatically, please click the button below to continue to checkout."
 msgstr "Om en ny flik inte öppnades automatiskt, klicka på knappen nedan för att fortsätta till kassan."
 
@@ -4804,7 +4805,7 @@ msgstr "Letar du bara efter dina biljetter?"
 msgid "Keep me updated on news and events from {0}"
 msgstr "Håll mig uppdaterad om nyheter och evenemang från {0}"
 
-#: src/components/forms/ProductForm/index.tsx:122
+#: src/components/forms/ProductForm/index.tsx:104
 msgid "Label"
 msgstr "Etikett"
 
@@ -4979,7 +4980,7 @@ msgstr "Laddar..."
 
 #: src/components/common/AttendeeTicket/index.tsx:91
 #: src/components/layouts/EventHomepage/index.tsx:431
-#: src/components/routes/event/Settings/index.tsx:42
+#: src/components/routes/event/Settings/index.tsx:44
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:84
 #: src/components/routes/my-tickets/index.tsx:73
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:313
@@ -5045,7 +5046,7 @@ msgstr "Gör ditt evenemang live"
 #: src/components/common/CheckInListList/index.tsx:143
 #: src/components/common/OrdersTable/index.tsx:151
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:461
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
@@ -5125,7 +5126,7 @@ msgstr "Max meddelanden / 24h"
 msgid "Max Recipients / Message"
 msgstr "Max mottagare / meddelande"
 
-#: src/components/forms/ProductForm/index.tsx:544
+#: src/components/forms/ProductForm/index.tsx:511
 msgid "Maximum Per Order"
 msgstr "Max per order"
 
@@ -5140,8 +5141,8 @@ msgstr "Medium"
 msgid "MercadoPago"
 msgstr ""
 
-#: src/components/common/ProductFeeHint/index.tsx:101
-msgid "MercadoPago approx."
+#: src/components/forms/ProductForm/index.tsx:67
+msgid "MercadoPago charges a commission based on your settlement term, which you configure in your MercadoPago account. If you'd like to pass this cost on to the buyer, add it as a tax or fee below."
 msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:25
@@ -5171,7 +5172,7 @@ msgstr "Meddelande godkänt"
 msgid "Message attendee"
 msgstr "Meddela deltagare"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:474
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:483
 msgid "Message Attendees"
 msgstr "Meddela deltagare"
 
@@ -5234,11 +5235,11 @@ msgstr "Meddelandenivå"
 msgid "Messaging tier updated successfully"
 msgstr "Meddelandenivå uppdaterad"
 
-#: src/components/forms/ProductForm/index.tsx:542
+#: src/components/forms/ProductForm/index.tsx:509
 msgid "Minimum Per Order"
 msgstr "Min per order"
 
-#: src/components/forms/ProductForm/index.tsx:430
+#: src/components/forms/ProductForm/index.tsx:401
 msgid "Minimum Price"
 msgstr "Minimipris"
 
@@ -5246,7 +5247,7 @@ msgstr "Minimipris"
 msgid "minutes"
 msgstr "minuter"
 
-#: src/components/routes/event/Settings/index.tsx:66
+#: src/components/routes/event/Settings/index.tsx:68
 msgid "Miscellaneous"
 msgstr "Övrigt"
 
@@ -5274,7 +5275,7 @@ msgstr ""
 msgid "Multi line text box"
 msgstr "Flerradigt textfält"
 
-#: src/components/forms/ProductForm/index.tsx:225
+#: src/components/forms/ProductForm/index.tsx:201
 msgid "Multiple price options. Perfect for early bird products etc."
 msgstr "Flera prisalternativ. Perfekt för till exempel early bird-produkter."
 
@@ -5315,7 +5316,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/forms/CheckInListForm/index.tsx:37
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
-#: src/components/forms/ProductForm/index.tsx:380
+#: src/components/forms/ProductForm/index.tsx:367
 #: src/components/forms/TaxAndFeeForm/index.tsx:61
 #: src/components/modals/DuplicateEventModal/index.tsx:109
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:63
@@ -5473,7 +5474,7 @@ msgstr "Ingen data att visa. Välj ett datumintervall"
 msgid "No Discount"
 msgstr "Ingen rabatt"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:439
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:448
 msgid "No end date"
 msgstr "Inget slutdatum"
 
@@ -5848,7 +5849,7 @@ msgstr "Endast kontoadministratörer kan ta bort eller arkivera arrangörer. Kon
 msgid "Only send to orders with these statuses"
 msgstr "Skicka endast till ordrar med dessa statusar"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:311
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:320
 msgid "Only visible with promo code"
 msgstr "Endast synlig med kampanjkod"
 
@@ -5995,11 +5996,11 @@ msgstr "Ordern väntar på offlinebetalning"
 msgid "Order Last Name"
 msgstr "Orderns efternamn"
 
-#: src/components/forms/ProductForm/index.tsx:538
+#: src/components/forms/ProductForm/index.tsx:505
 msgid "Order Limits"
 msgstr "Ordergränser"
 
-#: src/components/forms/ProductForm/index.tsx:524
+#: src/components/forms/ProductForm/index.tsx:491
 msgid "Order limits set"
 msgstr "Ordergräns satt"
 
@@ -6070,7 +6071,7 @@ msgstr "Orderstatus"
 msgid "Order statuses"
 msgstr "Orderstatusar"
 
-#: src/components/common/InlineOrderSummary/index.tsx:54
+#: src/components/common/InlineOrderSummary/index.tsx:59
 #: src/components/modals/ManageOrderModal/index.tsx:105
 msgid "Order Summary"
 msgstr "Ordersammanfattning"
@@ -6288,7 +6289,7 @@ msgstr "betald"
 msgid "Paid Accounts"
 msgstr "Betalda konton"
 
-#: src/components/forms/ProductForm/index.tsx:205
+#: src/components/forms/ProductForm/index.tsx:181
 msgid "Paid Product"
 msgstr "Betald produkt"
 
@@ -6305,11 +6306,11 @@ msgstr "Delvis återbetald"
 msgid "Partially refunded: {0}"
 msgstr "Delvis återbetald: {0}"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:191
+#: src/components/common/PlatformFeesSettings/index.tsx:177
 msgid "Pass fee to buyer"
 msgstr "För över avgiften till köparen"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:206
+#: src/components/common/PlatformFeesSettings/index.tsx:192
 msgid "Pass to Buyer"
 msgstr "För över till köparen"
 
@@ -6327,10 +6328,6 @@ msgstr ""
 
 #: src/components/layouts/AuthLayout/index.tsx:51
 msgid "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
-msgstr ""
-
-#: src/components/common/ProductFeeHint/index.tsx:97
-msgid "Passix platform"
 msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:127
@@ -6414,7 +6411,7 @@ msgstr ""
 msgid "Payment"
 msgstr "Betalning"
 
-#: src/components/routes/event/Settings/index.tsx:78
+#: src/components/routes/event/Settings/index.tsx:80
 msgid "Payment & Invoicing"
 msgstr "Betalning och fakturering"
 
@@ -6583,8 +6580,8 @@ msgstr "Pinterest"
 msgid "Place this in the <head> of your website."
 msgstr "Placera detta i <head>-delen på din webbplats."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:57
-#: src/components/common/PlatformFeesSettings/index.tsx:153
+#: src/components/common/PlatformFeesSettings/index.tsx:43
+#: src/components/common/PlatformFeesSettings/index.tsx:139
 msgid "Platform fee"
 msgstr "Plattformsavgift"
 
@@ -6592,11 +6589,13 @@ msgstr "Plattformsavgift"
 msgid "Platform Fee"
 msgstr ""
 
-#: src/components/common/PlatformFeesSettings/index.tsx:73
+#: src/components/common/PlatformFeesSettings/index.tsx:59
+#: src/components/common/ProductFeeHint/index.tsx:95
 msgid "Platform fee of {0} deducted from your payout"
 msgstr "Plattformsavgift på {0} dras från din utbetalning"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:249
+#: src/components/routes/event/Settings/index.tsx:86
 #: src/components/routes/event/Settings/Sections/PlatformFeesSettings/index.tsx:46
 #: src/components/routes/organizer/Settings/Sections/PlatformFeesSettings/index.tsx:42
 msgid "Platform Fees"
@@ -6627,7 +6626,7 @@ msgstr "Kontrollera att din e-postadress är giltig"
 msgid "Please check your email to confirm your email address"
 msgstr "Kontrollera din e-post för att bekräfta din e-postadress"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:371
+#: src/components/routes/product-widget/SelectProducts/index.tsx:418
 msgid "Please continue in the new tab"
 msgstr "Fortsätt i den nya fliken"
 
@@ -6688,7 +6687,7 @@ msgstr "Välj ett datumintervall"
 msgid "Please select an image."
 msgstr "Välj en bild."
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:301
+#: src/components/routes/product-widget/SelectProducts/index.tsx:348
 msgid "Please select at least one product"
 msgstr "Välj minst en produkt"
 
@@ -6758,9 +6757,9 @@ msgstr "Förhandsgranska kassaflödet"
 msgid "Preview Event page"
 msgstr "Förhandsgranska evenemangssidan"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:360
-#: src/components/forms/ProductForm/index.tsx:118
-#: src/components/forms/ProductForm/index.tsx:430
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:369
+#: src/components/forms/ProductForm/index.tsx:100
+#: src/components/forms/ProductForm/index.tsx:401
 msgid "Price"
 msgstr "Pris"
 
@@ -6768,7 +6767,7 @@ msgstr "Pris"
 msgid "Price display mode"
 msgstr "Visningsläge för pris"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:108
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:116
 msgid "Price not set"
 msgstr "Pris ej angivet"
 
@@ -6776,11 +6775,11 @@ msgstr "Pris ej angivet"
 msgid "Price of the ticket"
 msgstr "Biljettens pris"
 
-#: src/components/forms/ProductForm/index.tsx:484
+#: src/components/forms/ProductForm/index.tsx:451
 msgid "Price Tiers"
 msgstr "Prisnivåer"
 
-#: src/components/forms/ProductForm/index.tsx:355
+#: src/components/forms/ProductForm/index.tsx:342
 msgid "Price Type"
 msgstr "Pristyp"
 
@@ -6835,15 +6834,15 @@ msgid "Processing order"
 msgstr "Behandlar order"
 
 #: src/components/common/AttendeeDetails/index.tsx:30
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:285
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:482
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:294
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:491
 #: src/components/common/WaitlistTable/index.tsx:170
 #: src/components/modals/ManageAttendeeModal/index.tsx:119
 #: src/components/modals/OfferWaitlistModal/index.tsx:161
 msgid "Product"
 msgstr "Produkt"
 
-#: src/components/forms/ProductForm/index.tsx:394
+#: src/components/forms/ProductForm/index.tsx:381
 msgid "Product Category"
 msgstr "Produktkategori"
 
@@ -6863,7 +6862,7 @@ msgstr "Produkt borttagen"
 msgid "Product deleted successfully"
 msgstr "Produkten togs bort"
 
-#: src/components/forms/ProductForm/index.tsx:363
+#: src/components/forms/ProductForm/index.tsx:350
 msgid "Product Price Type"
 msgstr "Produktens pristyp"
 
@@ -6888,8 +6887,8 @@ msgstr "Produktnivå"
 msgid "Product Title"
 msgstr ""
 
-#: src/components/forms/ProductForm/index.tsx:340
-#: src/components/forms/ProductForm/index.tsx:348
+#: src/components/forms/ProductForm/index.tsx:327
+#: src/components/forms/ProductForm/index.tsx:335
 msgid "Product Type"
 msgstr "Produkttyp"
 
@@ -6917,7 +6916,7 @@ msgstr "Sålda produkter"
 msgid "Products Sold"
 msgstr "Sålda produkter"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:228
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:237
 msgid "Products sorted successfully"
 msgstr "Produkter sorterades korrekt"
 
@@ -6929,7 +6928,7 @@ msgstr "Profil"
 msgid "Profile updated successfully"
 msgstr "Profilen uppdaterades"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:241
+#: src/components/routes/product-widget/SelectProducts/index.tsx:288
 msgid "Promo {promo_code} code applied"
 msgstr "Kampanjkoden {promo_code} har tillämpats"
 
@@ -6941,7 +6940,7 @@ msgstr "Kampanjkod"
 msgid "Promo Code"
 msgstr "Kampanjkod"
 
-#: src/components/forms/ProductForm/index.tsx:584
+#: src/components/forms/ProductForm/index.tsx:551
 msgid "Promo Code page"
 msgstr "Sida för kampanjkoder"
 
@@ -6964,7 +6963,7 @@ msgstr "Kampanjkoder kan användas för att erbjuda rabatter, förköp eller sä
 msgid "Promo Codes Report"
 msgstr "Rapport för kampanjkoder"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:321
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:330
 msgid "Promo Only"
 msgstr "Endast kampanj"
 
@@ -7001,8 +7000,8 @@ msgstr "QR-kod"
 msgid "Qty"
 msgstr "Ant."
 
-#: src/components/forms/ProductForm/index.tsx:144
-#: src/components/forms/ProductForm/index.tsx:447
+#: src/components/forms/ProductForm/index.tsx:120
+#: src/components/forms/ProductForm/index.tsx:418
 msgid "Quantity Available"
 msgstr "Tillgängligt antal"
 
@@ -7199,14 +7198,14 @@ msgstr "Registreringsfrågor"
 msgid "Remaining Uses"
 msgstr "Återstående användningar"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:597
+#: src/components/routes/product-widget/SelectProducts/index.tsx:692
 msgid "remove"
 msgstr "ta bort"
 
 #: src/components/common/Editor/Controls/InsertImageControl/index.tsx:146
 #: src/components/common/WaitlistTable/index.tsx:78
 #: src/components/common/WaitlistTable/index.tsx:111
-#: src/components/routes/product-widget/SelectProducts/index.tsx:598
+#: src/components/routes/product-widget/SelectProducts/index.tsx:693
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -7391,8 +7390,8 @@ msgstr ""
 msgid "Role"
 msgstr "Roll"
 
-#: src/components/forms/ProductForm/index.tsx:155
-#: src/components/forms/ProductForm/index.tsx:559
+#: src/components/forms/ProductForm/index.tsx:131
+#: src/components/forms/ProductForm/index.tsx:526
 msgid "Sale End Date"
 msgstr "Slutdatum för försäljning"
 
@@ -7400,29 +7399,29 @@ msgstr "Slutdatum för försäljning"
 msgid "Sale ended {0}"
 msgstr "Försäljningen avslutades {0}"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:430
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:439
 msgid "Sale ends {0}"
 msgstr "Försäljningen avslutas {0}"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:414
-#: src/components/forms/ProductForm/index.tsx:552
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:423
+#: src/components/forms/ProductForm/index.tsx:519
 msgid "Sale Period"
 msgstr "Försäljningsperiod"
 
-#: src/components/forms/ProductForm/index.tsx:525
+#: src/components/forms/ProductForm/index.tsx:492
 msgid "Sale period set"
 msgstr "Försäljningsperiod angiven"
 
-#: src/components/forms/ProductForm/index.tsx:527
+#: src/components/forms/ProductForm/index.tsx:494
 msgid "Sale period, order limits, visibility"
 msgstr "Försäljningsperiod, ordergränser, synlighet"
 
-#: src/components/forms/ProductForm/index.tsx:150
-#: src/components/forms/ProductForm/index.tsx:557
+#: src/components/forms/ProductForm/index.tsx:126
+#: src/components/forms/ProductForm/index.tsx:524
 msgid "Sale Start Date"
 msgstr "Startdatum för försäljning"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:420
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:429
 msgid "Sale starts {0}"
 msgstr "Försäljningen startar {0}"
 
@@ -7460,7 +7459,7 @@ msgstr "Försäljning, ordrar och prestandamått för alla evenemang"
 msgid "Sales:"
 msgstr "Försäljning:"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:175
+#: src/components/common/PlatformFeesSettings/index.tsx:161
 msgid "Sample ticket price"
 msgstr "Exempel på biljettpris"
 
@@ -7474,7 +7473,7 @@ msgstr "Exempelplats"
 msgid "San Francisco"
 msgstr "San Francisco"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:249
+#: src/components/common/PlatformFeesSettings/index.tsx:235
 #: src/components/common/QuestionAndAnswerList/index.tsx:142
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:81
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:129
@@ -7636,7 +7635,7 @@ msgstr "Sekundär färg"
 msgid "Secondary Text Color"
 msgstr "Sekundär textfärg"
 
-#: src/components/common/InlineOrderSummary/index.tsx:215
+#: src/components/common/InlineOrderSummary/index.tsx:227
 msgid "Secure Checkout"
 msgstr "Säker kassa"
 
@@ -7682,7 +7681,7 @@ msgstr "Välj deltagargrupp"
 msgid "Select Camera"
 msgstr "Välj kamera"
 
-#: src/components/forms/ProductForm/index.tsx:397
+#: src/components/forms/ProductForm/index.tsx:384
 msgid "Select category..."
 msgstr "Välj kategori..."
 
@@ -7782,16 +7781,16 @@ msgstr "Välj vilka evenemang som ska utlösa denna webhook"
 msgid "Select which fee configuration applies to this account. Fixed fees are converted to the order currency at checkout."
 msgstr "Välj vilken avgiftskonfiguration som gäller för detta konto. Fasta avgifter konverteras till ordervalutan vid kassan."
 
-#: src/components/forms/ProductForm/index.tsx:300
+#: src/components/forms/ProductForm/index.tsx:287
 msgid "Select..."
 msgstr "Välj..."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:208
-#: src/components/common/PlatformFeesSettings/index.tsx:231
+#: src/components/common/PlatformFeesSettings/index.tsx:194
+#: src/components/common/PlatformFeesSettings/index.tsx:217
 msgid "Selected"
 msgstr "Vald"
 
-#: src/components/forms/ProductForm/index.tsx:618
+#: src/components/forms/ProductForm/index.tsx:585
 msgid "Selling fast 🔥"
 msgstr "Säljer snabbt 🔥"
 
@@ -7871,7 +7870,7 @@ msgstr "Skickas till kunder när de lägger en order"
 msgid "Sent to each attendee with their ticket details"
 msgstr "Skickas till varje deltagare med deras biljettuppgifter"
 
-#: src/components/routes/event/Settings/index.tsx:54
+#: src/components/routes/event/Settings/index.tsx:56
 #: src/components/routes/organizer/Settings/index.tsx:54
 msgid "SEO"
 msgstr "SEO"
@@ -7896,6 +7895,13 @@ msgstr "SEO-inställningar"
 msgid "SEO Title"
 msgstr "SEO-titel"
 
+#: src/components/common/Currency/index.tsx:95
+#: src/components/common/InlineOrderSummary/index.tsx:175
+#: src/components/common/ProductFeeHint/index.tsx:74
+#: src/components/routes/product-widget/SelectProducts/index.tsx:623
+msgid "Service fee"
+msgstr ""
+
 #: src/components/forms/TaxAndFeeForm/index.tsx:62
 msgid "Service Fee"
 msgstr "Serviceavgift"
@@ -7904,7 +7910,7 @@ msgstr "Serviceavgift"
 msgid "Service Fees"
 msgstr ""
 
-#: src/components/forms/ProductForm/index.tsx:219
+#: src/components/forms/ProductForm/index.tsx:195
 msgid "Set a minimum price and let users pay more if they choose"
 msgstr "Ange ett minimipris och låt användare betala mer om de vill"
 
@@ -7989,7 +7995,7 @@ msgstr "Delad kapacitetshantering"
 msgid "Show all platforms ({0} more with values)"
 msgstr "Visa alla plattformar ({0} till med värden)"
 
-#: src/components/forms/ProductForm/index.tsx:578
+#: src/components/forms/ProductForm/index.tsx:545
 msgid "Show available product quantity"
 msgstr "Visa tillgängligt produktantal"
 
@@ -8005,8 +8011,8 @@ msgstr "Visa kryssruta för samtycke till marknadsföring"
 msgid "Show marketing opt-in checkbox by default"
 msgstr "Visa kryssruta för samtycke till marknadsföring som standard"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:441
-#: src/components/routes/product-widget/SelectProducts/index.tsx:540
+#: src/components/routes/product-widget/SelectProducts/index.tsx:488
+#: src/components/routes/product-widget/SelectProducts/index.tsx:587
 msgid "Show more"
 msgstr "Visa mer"
 
@@ -8072,7 +8078,7 @@ msgstr "Sociala länkar"
 msgid "Social Links & Website"
 msgstr "Sociala länkar och webbplats"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:382
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:391
 msgid "Sold"
 msgstr "Sålda"
 
@@ -8128,7 +8134,7 @@ msgstr "Något gick fel. Försök igen."
 msgid "Sorry for the inconvenience."
 msgstr "Beklagar besväret."
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:310
+#: src/components/routes/product-widget/SelectProducts/index.tsx:357
 msgid "Sorry, this promo code is not recognized"
 msgstr "Tyvärr, den här kampanjkoden känns inte igen"
 
@@ -8144,7 +8150,7 @@ msgstr "Källa"
 msgid "Sports"
 msgstr "Sport"
 
-#: src/components/forms/ProductForm/index.tsx:207
+#: src/components/forms/ProductForm/index.tsx:183
 msgid "Standard product with a fixed price"
 msgstr "Standardprodukt med ett fast pris"
 
@@ -8245,8 +8251,9 @@ msgstr "Ämnet visas här"
 msgid "Subject:"
 msgstr "Ämne:"
 
-#: src/components/common/InlineOrderSummary/index.tsx:132
+#: src/components/common/InlineOrderSummary/index.tsx:137
 #: src/components/common/OrderSummary/index.tsx:41
+#: src/components/routes/product-widget/SelectProducts/index.tsx:616
 msgid "Subtotal"
 msgstr "Delsumma"
 
@@ -8443,7 +8450,7 @@ msgstr "Byt arrangör"
 msgid "System Default"
 msgstr "Systemstandard"
 
-#: src/components/forms/ProductForm/index.tsx:381
+#: src/components/forms/ProductForm/index.tsx:368
 msgid "T-shirt"
 msgstr "T-shirt"
 
@@ -8495,24 +8502,35 @@ msgstr "Moms eller avgift togs bort"
 msgid "Tax Summary"
 msgstr "Momssammanfattning"
 
-#: src/components/common/InlineOrderSummary/index.tsx:173
-#: src/components/forms/ProductForm/index.tsx:302
+#: src/components/common/Currency/index.tsx:94
+#: src/components/common/InlineOrderSummary/index.tsx:185
+#: src/components/forms/ProductForm/index.tsx:289
 #: src/components/routes/organizer/Reports/RevenueSummaryReport/index.tsx:48
+#: src/components/routes/product-widget/SelectProducts/index.tsx:631
 msgid "Taxes"
 msgstr "Moms"
 
-#: src/components/common/ProductFeeHint/index.tsx:87
+#: src/components/common/ProductFeeHint/index.tsx:67
 msgid "Taxes & fees"
 msgstr ""
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:143
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:152
 msgid "Taxes & fees applied"
 msgstr "Moms och avgifter tillämpade"
 
-#: src/components/forms/ProductForm/index.tsx:294
-#: src/components/forms/ProductForm/index.tsx:299
+#: src/components/common/Currency/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/index.tsx:653
+msgid "Taxes & fees included"
+msgstr ""
+
+#: src/components/forms/ProductForm/index.tsx:281
+#: src/components/forms/ProductForm/index.tsx:286
 msgid "Taxes and Fees"
 msgstr "Moms och avgifter"
+
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:381
+msgid "Taxes included"
+msgstr ""
 
 #: src/constants/eventCategories.ts:18
 msgid "Tech"
@@ -8566,8 +8584,8 @@ msgstr "Tack för att du deltog!"
 msgid "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgstr "Tack för ditt stöd när vi fortsätter att växa och förbättra Hi.Events!"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:201
-#: src/components/routes/product-widget/SelectProducts/index.tsx:249
+#: src/components/routes/product-widget/SelectProducts/index.tsx:202
+#: src/components/routes/product-widget/SelectProducts/index.tsx:296
 msgid "That promo code is invalid"
 msgstr "Den kampanjkoden är ogiltig"
 
@@ -8640,7 +8658,7 @@ msgstr "Länken du klickade på är ogiltig."
 msgid "The locale of the customer"
 msgstr "Kundens språk och region"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:525
+#: src/components/routes/product-widget/SelectProducts/index.tsx:572
 msgid "The maximum number of products for {0}is {1}"
 msgstr "Maximalt antal produkter för {0} är {1}"
 
@@ -8653,7 +8671,11 @@ msgstr "Arrangören du letar efter kunde inte hittas. Sidan kan ha flyttats, tag
 msgid "The page you are looking for does not exist"
 msgstr "Sidan du letar efter finns inte"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:212
+#: src/components/common/ProductFeeHint/index.tsx:94
+msgid "The platform fee is added to the price and paid by the buyer, so you receive the full amount."
+msgstr ""
+
+#: src/components/common/PlatformFeesSettings/index.tsx:198
 msgid "The platform fee is added to the ticket price. Buyers pay more, but you receive the full ticket price."
 msgstr "Plattformsavgiften läggs på biljettpriset. Köpare betalar mer, men du får hela biljettpriset."
 
@@ -8681,6 +8703,10 @@ msgstr "Den schemalagda tiden är obligatorisk"
 msgid "The scheduled time must be in the future"
 msgstr "Den schemalagda tiden måste vara i framtiden"
 
+#: src/components/common/ProductFeeHint/index.tsx:55
+#~ msgid "The service fee is added or absorbed based on your Platform Fees setting."
+#~ msgstr ""
+
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:145
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:176
 msgid "The template body contains invalid Liquid syntax. Please correct it and try again."
@@ -8704,11 +8730,11 @@ msgstr "Teater"
 msgid "Theme & Colors"
 msgstr "Tema och färger"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:337
+#: src/components/routes/product-widget/SelectProducts/index.tsx:384
 msgid "There are no products available for this event"
 msgstr "Det finns inga produkter tillgängliga för det här evenemanget"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:450
+#: src/components/routes/product-widget/SelectProducts/index.tsx:497
 msgid "There are no products available in this category"
 msgstr "Det finns inga produkter tillgängliga i den här kategorin"
 
@@ -8805,7 +8831,7 @@ msgstr "Det här evenemanget är inte publicerat ännu"
 msgid "This information will be shown on the payment page, order summary page, and order confirmation email."
 msgstr "Den här informationen visas på betalningssidan, ordersammanfattningen och i orderbekräftelsen via e-post."
 
-#: src/components/forms/ProductForm/index.tsx:198
+#: src/components/forms/ProductForm/index.tsx:174
 msgid "This is a general product, like a t-shirt or a mug. No ticket will be issued"
 msgstr "Det här är en vanlig produkt, som en t-shirt eller en mugg. Ingen biljett utfärdas"
 
@@ -8894,7 +8920,7 @@ msgstr "Den här ordern avbröts. Du kan starta en ny order när som helst."
 msgid "This organizer profile is not published yet"
 msgstr "Den här arrangörsprofilen är inte publicerad ännu"
 
-#: src/components/forms/ProductForm/index.tsx:589
+#: src/components/forms/ProductForm/index.tsx:556
 msgid "This overrides all visibility settings and will hide the product from all customers."
 msgstr "Detta åsidosätter alla synlighetsinställningar och döljer produkten för alla kunder."
 
@@ -8906,11 +8932,11 @@ msgstr "Den här förhandsvisningen visar hur ditt mejl kommer att se ut med exe
 msgid "This product cannot be deleted because it is associated with an order. You can hide it instead."
 msgstr "Den här produkten kan inte tas bort eftersom den är kopplad till en order. Du kan dölja den i stället."
 
-#: src/components/forms/ProductForm/index.tsx:192
+#: src/components/forms/ProductForm/index.tsx:168
 msgid "This product is a ticket. Buyers will be issued a ticket upon purchase"
 msgstr "Den här produkten är en biljett. Köpare får en biljett vid köp"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:327
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:336
 msgid "This product is highlighted on the event page"
 msgstr "Den här produkten är markerad på evenemangssidan"
 
@@ -8950,9 +8976,9 @@ msgstr "biljett"
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:59
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:60
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:276
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:482
-#: src/components/forms/ProductForm/index.tsx:190
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:285
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:491
+#: src/components/forms/ProductForm/index.tsx:166
 #: src/components/modals/CreateAttendeeModal/index.tsx:162
 msgid "Ticket"
 msgstr "Biljett"
@@ -9022,7 +9048,7 @@ msgstr "Biljett eller produkt"
 msgid "Ticket Preview for"
 msgstr "Biljettförhandsvisning för"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:52
+#: src/components/common/PlatformFeesSettings/index.tsx:38
 msgid "Ticket price"
 msgstr "Biljettpris"
 
@@ -9080,15 +9106,15 @@ msgstr "Biljetter för"
 msgid "Tickets Sold"
 msgstr "Sålda biljetter"
 
-#: src/components/forms/ProductForm/index.tsx:96
+#: src/components/forms/ProductForm/index.tsx:93
 msgid "Tier {0}"
 msgstr "Nivå {0}"
 
-#: src/components/forms/ProductForm/index.tsx:223
+#: src/components/forms/ProductForm/index.tsx:199
 msgid "Tiered Product"
 msgstr "Produkt med nivåer"
 
-#: src/components/forms/ProductForm/index.tsx:370
+#: src/components/forms/ProductForm/index.tsx:357
 msgid "Tiered products allow you to offer multiple price options for the same product. This is perfect for early bird products, or offering different price options for different groups of people."
 msgstr "Produkter med nivåer låter dig erbjuda flera prisalternativ för samma produkt. Perfekt för early bird-produkter eller för att erbjuda olika priser till olika grupper."
 
@@ -9148,10 +9174,17 @@ msgid "Tools"
 msgstr "Verktyg"
 
 #: src/components/common/AdminOrdersTable/index.tsx:81
-#: src/components/common/InlineOrderSummary/index.tsx:203
+#: src/components/common/Currency/index.tsx:98
+#: src/components/common/InlineOrderSummary/index.tsx:215
 #: src/components/common/OrderSummary/index.tsx:92
+#: src/components/routes/product-widget/SelectProducts/index.tsx:638
+#: src/components/routes/product-widget/SelectProducts/index.tsx:647
 msgid "Total"
 msgstr "Totalt"
+
+#: src/components/routes/product-widget/SelectProducts/index.tsx:632
+#~ msgid "Total (all included)"
+#~ msgstr ""
 
 #: src/components/routes/admin/Dashboard/index.tsx:92
 msgid "Total Accounts"
@@ -9303,7 +9336,7 @@ msgstr "Det gick inte att checka ut deltagaren"
 msgid "Unable to create product. Please check the your details"
 msgstr "Det gick inte att skapa produkten. Kontrollera dina uppgifter"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:186
+#: src/components/routes/product-widget/SelectProducts/index.tsx:187
 msgid "Unable to create product. Please check your details"
 msgstr "Det gick inte att skapa produkten. Kontrollera dina uppgifter"
 
@@ -9360,10 +9393,10 @@ msgstr "Okänd"
 msgid "Unknown Attendee"
 msgstr "Okänd deltagare"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:406
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:415
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:43
-#: src/components/forms/ProductForm/index.tsx:142
-#: src/components/forms/ProductForm/index.tsx:444
+#: src/components/forms/ProductForm/index.tsx:118
+#: src/components/forms/ProductForm/index.tsx:415
 #: src/components/forms/PromoCodeForm/index.tsx:112
 #: src/components/modals/OfferWaitlistModal/index.tsx:189
 #: src/components/routes/event/Reports/PromoCodesReport/index.tsx:78
@@ -9371,7 +9404,7 @@ msgstr "Okänd deltagare"
 msgid "Unlimited"
 msgstr "Obegränsat"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:488
+#: src/components/routes/product-widget/SelectProducts/index.tsx:535
 msgid "Unlimited available"
 msgstr "Obegränsat antal tillgängliga"
 
@@ -9769,15 +9802,15 @@ msgstr "Vimeo"
 msgid "VIP check-in list"
 msgstr "VIP-incheckningslista"
 
-#: src/components/forms/ProductForm/index.tsx:381
+#: src/components/forms/ProductForm/index.tsx:368
 msgid "VIP Ticket"
 msgstr "VIP-biljett"
 
-#: src/components/forms/ProductForm/index.tsx:567
+#: src/components/forms/ProductForm/index.tsx:534
 msgid "Visibility"
 msgstr "Synlighet"
 
-#: src/components/forms/ProductForm/index.tsx:517
+#: src/components/forms/ProductForm/index.tsx:484
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
@@ -9805,13 +9838,13 @@ msgid "Waiting for payment"
 msgstr "Väntar på betalning"
 
 #: src/components/layouts/Event/index.tsx:121
-#: src/components/routes/event/Settings/index.tsx:72
+#: src/components/routes/event/Settings/index.tsx:74
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:51
 #: src/components/routes/event/SoldOutWaitlist/index.tsx:49
 msgid "Waitlist"
 msgstr "Väntelista"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:295
+#: src/components/common/ProductsTable/SortableProduct/index.tsx:304
 msgid "Waitlist Enabled"
 msgstr ""
 
@@ -9988,7 +10021,7 @@ msgstr "Välkommen till {0}, {1} 👋"
 msgid "Welcome to {0}, here's a listing of all your events"
 msgstr "Välkommen till {0}, här är en lista över alla dina evenemang"
 
-#: src/components/forms/ProductForm/index.tsx:369
+#: src/components/forms/ProductForm/index.tsx:356
 msgid "What are Tiered Products?"
 msgstr "Vad är nivåindelade produkter?"
 
@@ -10203,7 +10236,7 @@ msgstr "Ja – jag har ett giltigt EU-momsregistreringsnummer"
 msgid "Yes, cancel my order"
 msgstr "Ja, avbryt min order"
 
-#: src/components/forms/ProductForm/index.tsx:324
+#: src/components/forms/ProductForm/index.tsx:311
 msgid "Yes, remove them"
 msgstr "Ja, ta bort dem"
 
@@ -10228,11 +10261,11 @@ msgstr "Du gör en delåterbetalning. Kunden kommer att få {0} {1} återbetalat
 msgid "You are offline"
 msgstr "Du är offline"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:259
+#: src/components/common/PlatformFeesSettings/index.tsx:245
 msgid "You can configure additional service fees and taxes in your account settings."
 msgstr "Du kan konfigurera ytterligare serviceavgifter och skatter i dina kontoinställningar."
 
-#: src/components/forms/ProductForm/index.tsx:582
+#: src/components/forms/ProductForm/index.tsx:549
 msgid "You can create a promo code which targets this product on the"
 msgstr "Du kan skapa en kampanjkod som riktar sig mot den här produkten på"
 
@@ -10244,7 +10277,7 @@ msgstr "Du kan fortfarande erbjuda biljetter manuellt vid behov."
 msgid "You cannot archive the last active organizer on your account."
 msgstr "Du kan inte arkivera den sista aktiva arrangören på ditt konto."
 
-#: src/components/forms/ProductForm/index.tsx:334
+#: src/components/forms/ProductForm/index.tsx:321
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Du kan inte ändra produkttyp eftersom det finns deltagare kopplade till den här produkten."
 
@@ -10257,7 +10290,7 @@ msgstr "Du kan inte checka in deltagare med obetalda ordrar. Den här inställni
 msgid "You cannot delete the last category."
 msgstr "Du kan inte ta bort den sista kategorin."
 
-#: src/components/forms/ProductForm/index.tsx:86
+#: src/components/forms/ProductForm/index.tsx:83
 msgid "You cannot delete this price tier because there are already products sold for this tier. You can hide it instead."
 msgstr "Du kan inte ta bort den här prisnivån eftersom det redan finns sålda produkter för nivån. Du kan dölja den i stället."
 
@@ -10289,7 +10322,7 @@ msgstr "Du har nått din meddelandegräns."
 msgid "You have run out of time to complete your order."
 msgstr "Tiden för att slutföra din order har gått ut."
 
-#: src/components/forms/ProductForm/index.tsx:322
+#: src/components/forms/ProductForm/index.tsx:309
 msgid "You have taxes and fees added to a Free Product. Would you like to remove them?"
 msgstr "Du har lagt till skatter och avgifter på en gratis produkt. Vill du ta bort dem?"
 
@@ -10313,7 +10346,7 @@ msgstr "Du måste godkänna villkoren"
 msgid "You must create a ticket before you can manually add an attendee."
 msgstr "Du måste skapa en biljett innan du kan lägga till en deltagare manuellt."
 
-#: src/components/forms/ProductForm/index.tsx:89
+#: src/components/forms/ProductForm/index.tsx:86
 msgid "You must have at least one price tier"
 msgstr "Du måste ha minst en prisnivå"
 
@@ -10329,15 +10362,10 @@ msgstr "Du behöver verifiera kontots e-postadress innan du kan ändra e-postmal
 msgid "You need to verify your account email before you can send messages."
 msgstr "Du behöver verifiera kontots e-postadress innan du kan skicka meddelanden."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:67
-#: src/components/common/ProductFeeHint/index.tsx:105
+#: src/components/common/PlatformFeesSettings/index.tsx:53
+#: src/components/common/ProductFeeHint/index.tsx:86
 msgid "You receive"
 msgstr "Du får"
-
-#: src/components/forms/ProductForm/index.tsx:110
-#: src/components/forms/ProductForm/index.tsx:420
-msgid "You want to receive (net)"
-msgstr ""
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:45
 msgid "You will be redirected to MercadoPago to complete your payment securely."
@@ -10496,7 +10524,7 @@ msgstr "Ditt lösenord"
 msgid "Your payment is processing."
 msgstr "Din betalning behandlas."
 
-#: src/components/common/InlineOrderSummary/index.tsx:217
+#: src/components/common/InlineOrderSummary/index.tsx:229
 msgid "Your payment is protected with bank-level encryption"
 msgstr "Din betalning skyddas med banknivå-kryptering"
 
@@ -10508,7 +10536,7 @@ msgstr "Din betalning lyckades inte, försök igen."
 msgid "Your payment was unsuccessful. Please try again."
 msgstr "Din betalning misslyckades. Försök igen."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:149
+#: src/components/common/PlatformFeesSettings/index.tsx:135
 msgid "Your Plan"
 msgstr "Din plan"
 
