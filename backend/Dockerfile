@@ -35,10 +35,14 @@ EXPOSE 8080
 
 # ── Worker stage (queue:work, sin nginx) ──────────────────────────────────
 FROM app AS worker
+# No hay web server en este contenedor: anulamos el healthcheck HTTP heredado
+# de la imagen base (si no, queda "unhealthy" y Coolify lo reinicia en loop).
+HEALTHCHECK NONE
 ENTRYPOINT ["/bin/sh"]
 CMD ["scripts/deploy/run-worker.sh"]
 
 # ── Scheduler stage (schedule:run loop, sin nginx) ────────────────────────
 FROM app AS scheduler
+HEALTHCHECK NONE
 ENTRYPOINT ["/bin/sh"]
 CMD ["scripts/deploy/run-scheduler.sh"]
