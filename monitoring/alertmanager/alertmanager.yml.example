@@ -1,0 +1,29 @@
+# Plantilla de Alertmanager → Telegram.
+#
+# El archivo REAL con el bot token NO va a git. En Coolify se carga como "file mount"
+# en /etc/alertmanager/alertmanager.yml con este contenido y los valores reales:
+#   __BOT_TOKEN__ → token de @BotFather (formato 123456789:AAA...)
+#   __CHAT_ID__   → chat id numérico (negativo si es grupo). Ver README.
+
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: telegram
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  # Re-avisa cada 4h si la alerta sigue activa (ej: disco lleno sin resolver).
+  repeat_interval: 4h
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: '__BOT_TOKEN__'
+        chat_id: __CHAT_ID__
+        parse_mode: HTML
+        send_resolved: true
+        message: |
+          {{ range .Alerts }}<b>{{ .Annotations.summary }}</b>
+          {{ .Annotations.description }}
+          {{ end }}

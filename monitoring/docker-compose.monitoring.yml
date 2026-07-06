@@ -19,19 +19,46 @@ services:
     networks:
       - monitoring
 
-  # ── Dashboards + Alertas ──────────────────────────────────────────────────
+  # ── Alertas → Telegram ────────────────────────────────────────────────────
+  # La config real (con el bot token) NO está en git: se inyecta como "file mount"
+  # de Coolify en /etc/alertmanager/alertmanager.yml. Ver alertmanager/alertmanager.yml.example.
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: passix_alertmanager
+    restart: unless-stopped
+    volumes:
+      - alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+
+  # ── Dashboards ────────────────────────────────────────────────────────────
   grafana:
     image: grafana/grafana:10.4.2
     container_name: passix_grafana
     restart: unless-stopped
-    ports:
-      - "3001:3000"
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.routers.grafana.rule=Host(`grafana.getpassix.com`)
+      - traefik.http.routers.grafana.entrypoints=https
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.tls.certresolver=letsencrypt
+      - traefik.http.routers.grafana-http.rule=Host(`grafana.getpassix.com`)
+      - traefik.http.routers.grafana-http.entrypoints=http
+      - traefik.http.routers.grafana-http.middlewares=grafana-redirect
+      - traefik.http.middlewares.grafana-redirect.redirectscheme.scheme=https
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
     environment:
       GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Definir GRAFANA_PASSWORD en .env}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Definir GRAFANA_PASSWORD en Coolify}
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_SERVER_DOMAIN: ${GRAFANA_DOMAIN:-localhost}
       GF_SERVER_ROOT_URL: "https://%(domain)s/"
@@ -39,6 +66,7 @@ services:
       GF_ALERTING_ENABLED: "false"
     networks:
       - monitoring
+      - coolify
     depends_on:
       - prometheus
       - loki
@@ -70,7 +98,7 @@ services:
       - loki
 
   # ── Host metrics ──────────────────────────────────────────────────────────
-  # network_mode: host para ver métricas reales del servidor
+  # pid:host + montajes /proc /sys para ver métricas reales del servidor
   node-exporter:
     image: prom/node-exporter:v1.7.0
     container_name: passix_node_exporter
@@ -88,6 +116,24 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
 
+  # ── Métricas por container (CPU, RAM, red, reinicios) ─────────────────────
+  # Provee container_last_seen / container_* que usa la alerta ContainerReiniciado
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: passix_cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - monitoring
+
   # ── Blackbox / Health checks HTTP ─────────────────────────────────────────
   blackbox-exporter:
     image: prom/blackbox-exporter:v0.24.0
@@ -99,14 +145,25 @@ services:
       - monitoring
 
 volumes:
+  # external: los volúmenes ya existen en el server con datos históricos.
+  # NO recrear (se perdería el histórico de Prometheus y la config de Grafana).
   prometheus_data:
+    external: true
     name: passix_prometheus_data
   grafana_data:
+    external: true
     name: passix_grafana_data
   loki_data:
+    external: true
     name: passix_loki_data
+  alertmanager_data:
+    name: passix_alertmanager_data
 
 networks:
   monitoring:
     name: passix_monitoring
     driver: bridge
+
+  # Red del proxy de Coolify (Traefik). Grafana se une para publicarse en grafana.getpassix.com.
+  coolify:
+    external: true

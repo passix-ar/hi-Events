@@ -1,25 +1,23 @@
 # Monitoring — Passix
 
-Stack de observabilidad self-hosted que corre en el mismo servidor que la app. Diseñado para ser liviano (~380MB RAM) y fácil de operar.
+Stack de observabilidad self-hosted que corre en el mismo servidor que la app, **gestionado por
+Coolify** (recurso Docker Compose conectado a este repo). Un push a `develop` que toque `monitoring/`
+redeploya el stack automáticamente — no más `docker compose up -d` a mano por SSH.
 
 ## Servicios
 
 | Servicio | Imagen | Función |
 |----------|--------|---------|
 | Prometheus | `prom/prometheus:v2.51.0` | Recolecta métricas cada 15s, retención 30 días |
-| Grafana | `grafana/grafana:10.4.2` | Dashboards + alertas |
+| Alertmanager | `prom/alertmanager:v0.27.0` | Enruta las alertas de Prometheus a Telegram |
+| Grafana | `grafana/grafana:10.4.2` | Dashboards (expuesto en `grafana.getpassix.com` vía Traefik/Coolify) |
 | Loki | `grafana/loki:2.9.4` | Almacena logs, retención 15 días |
-| Promtail | `grafana/promtail:2.9.4` | Envía logs de todos los containers → Loki |
+| Promtail | `grafana/promtail:2.9.4` | Envía logs de todos los containers → Loki (label `app`) |
 | node-exporter | `prom/node-exporter:v1.7.0` | CPU, RAM, disco, red del host |
-| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP del sitio |
+| cAdvisor | `gcr.io/cadvisor/cadvisor:v0.49.1` | Métricas por container (CPU, RAM, reinicios) |
+| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP de `app.getpassix.com` |
 
-## Métricas monitoreadas
-
-- **Host**: CPU, RAM, disco, tráfico de red, load average
-- **Uptime**: HTTP 200 del dominio público cada 15s
-- **Logs**: todos los containers (backend, frontend, nginx, worker, queue)
-
-## Alertas configuradas
+## Alertas configuradas (`prometheus/alert-rules.yml`)
 
 | Alerta | Condición | Severidad |
 |--------|-----------|-----------|
@@ -28,115 +26,67 @@ Stack de observabilidad self-hosted que corre en el mismo servidor que la app. D
 | DiskoCritico | Disco < 10% libre | critical |
 | RAMAlta | RAM > 90% por 5 min | warning |
 | CPUAlta | CPU > 90% por 10 min | warning |
+| ContainerReiniciado | container sin actividad (requiere cAdvisor) | warning |
+
+Todas se envían a **Alertmanager → Telegram**.
+
+## Dashboards (provisionados, versionados en git)
+
+Se cargan solos desde `grafana/provisioning/dashboards/`:
+
+| Dashboard | UID | Qué muestra |
+|-----------|-----|-------------|
+| Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco, CPU/mem por container |
+| Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL |
+| Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` |
+
+Opcional, importar por ID desde la UI: **Node Exporter Full** (`1860`) para detalle fino del host.
 
 ---
 
-## Deploy
+## Deploy (gestionado por Coolify)
 
-### 1. Configurar variables
+El stack es un recurso **Docker Compose** en Coolify apuntando a:
+- Repo: `passix-ar/hi-events` · Branch: `develop`
+- Compose path: `monitoring/docker-compose.monitoring.yml`
 
-```bash
-cd hi-events/monitoring
-cp .env.example .env
-nano .env   # completar GRAFANA_PASSWORD y APP_URL
-```
+### Variables de entorno (en Coolify, no en git)
+- `GRAFANA_PASSWORD` — contraseña del admin de Grafana
+- `GRAFANA_DOMAIN` — `grafana.getpassix.com`
 
-### 2. Levantar el stack
+### File mount (secreto, en Coolify, no en git)
+- Destino: `/etc/alertmanager/alertmanager.yml`
+- Contenido: copiar `alertmanager/alertmanager.yml.example` y reemplazar `__BOT_TOKEN__` y `__CHAT_ID__`.
 
-```bash
-docker compose -f docker-compose.monitoring.yml --env-file .env up -d
-```
-
-### 3. Verificar que todo esté corriendo
-
-```bash
-docker compose -f docker-compose.monitoring.yml ps
-```
-
-Todos los servicios deben estar en estado `Up`.
-
-### 4. Exponer Grafana vía Coolify
-
-En Coolify, agregar un nuevo servicio apuntando al puerto `3001` con el dominio `grafana.getpassix.com`. Coolify gestiona el SSL automáticamente.
-
-### 5. Primer login
-
-- URL: `https://grafana.getpassix.com`
-- Usuario: `admin`
-- Contraseña: el valor de `GRAFANA_PASSWORD` en tu `.env`
-
----
-
-## Importar dashboards
-
-En Grafana → Dashboards → Import, importar por ID:
-
-| Dashboard | ID | Qué muestra |
-|-----------|----|-------------|
-| Node Exporter Full | `1860` | CPU, RAM, disco, red del servidor |
-| Blackbox Exporter | `7587` | Uptime y latencia HTTP |
-| Loki Logs | `13639` | Explorador de logs por container |
+### Volúmenes
+Declarados `external: true` (`passix_prometheus_data`, `passix_grafana_data`, `passix_loki_data`) para
+preservar el histórico entre redeploys. **No borrar estos volúmenes.**
 
 ---
 
 ## Configurar alertas por Telegram
 
 ### Paso 1 — Crear el bot
-
-1. Abrir `@BotFather` en Telegram
-2. Enviar `/newbot` y seguir los pasos
-3. Guardar el **Bot Token** (formato `123456789:AAAA...`)
+1. Abrir `@BotFather` en Telegram → `/newbot` → guardar el **Bot Token** (`123456789:AAAA...`).
 
 ### Paso 2 — Obtener el Chat ID
+1. Escribirle un mensaje al bot (o agregarlo a un grupo y mandar un mensaje).
+2. Abrir `https://api.telegram.org/bot<TOKEN>/getUpdates` y copiar el `id` del objeto `chat` (negativo para grupos).
 
-1. Agregar el bot al grupo o canal de alertas
-2. Enviar un mensaje en el grupo
-3. Abrir `https://api.telegram.org/bot<TOKEN>/getUpdates`
-4. Copiar el `id` del objeto `chat` (negativo para grupos)
+### Paso 3 — Cargar en Coolify
+1. En el recurso de monitoring → **Storages → Add File Mount**.
+2. Path: `/etc/alertmanager/alertmanager.yml`.
+3. Contenido: el `.example` con el token y chat id reales.
+4. Redeploy.
 
-### Paso 3 — Configurar en Grafana
-
-1. Grafana → Alerting → Contact Points → Add contact point
-2. Tipo: **Telegram**
-3. Completar Bot Token y Chat ID
-4. Guardar y hacer click en **Test** para verificar
-
-### Paso 4 — Crear notification policy
-
-1. Grafana → Alerting → Notification policies
-2. Editar la política default → Contact point: Telegram
-3. Guardar
-
----
-
-## Comandos útiles
-
-```bash
-# Ver logs del stack de monitoring
-docker compose -f docker-compose.monitoring.yml logs -f
-
-# Reiniciar un servicio específico
-docker compose -f docker-compose.monitoring.yml restart grafana
-
-# Actualizar imágenes
-docker compose -f docker-compose.monitoring.yml pull
-docker compose -f docker-compose.monitoring.yml up -d
-
-# Bajar el stack (los datos persisten en volumes)
-docker compose -f docker-compose.monitoring.yml down
-
-# Bajar y borrar datos (cuidado)
-docker compose -f docker-compose.monitoring.yml down -v
-```
+### Paso 4 — Probar
+`docker exec passix_alertmanager amtool alert add test summary="prueba" --alertmanager.url=http://localhost:9093`
+→ debe llegar el mensaje a Telegram.
 
 ## Monitoreo externo complementario (recomendado)
 
-UptimeRobot (gratis) hace health checks desde fuera del servidor — si el servidor entero cae, Grafana también cae y no puede alertar. UptimeRobot sí avisa.
-
-1. Crear cuenta en [uptimerobot.com](https://uptimerobot.com)
-2. Add Monitor → HTTP(s) → URL: `https://app.getpassix.com`
-3. Intervalo: 5 minutos
-4. Alertas: email o Telegram
+Si el servidor entero cae, Grafana también cae y no puede alertar. **UptimeRobot** (gratis) o **Uptime
+Kuma** hacen el health check desde afuera. Configurar contra `https://app.getpassix.com`.
 
 ---
 
@@ -144,20 +94,25 @@ UptimeRobot (gratis) hace health checks desde fuera del servidor — si el servi
 
 ```
 monitoring/
-├── docker-compose.monitoring.yml
+├── docker-compose.monitoring.yml   ← recurso Docker Compose de Coolify
 ├── .env.example
 ├── prometheus/
-│   ├── prometheus.yml       ← scrape targets
+│   ├── prometheus.yml       ← scrape targets + alerting → alertmanager
 │   ├── alert-rules.yml      ← reglas de alertas
 │   └── blackbox.yml         ← módulos HTTP
+├── alertmanager/
+│   └── alertmanager.yml.example  ← plantilla Telegram (el real va en Coolify)
 ├── loki/
-│   └── loki-config.yml      ← retención 15 días
+│   └── loki-config.yml
 ├── promtail/
-│   └── promtail-config.yml  ← recolector de logs Docker
+│   └── promtail-config.yml  ← recolector Docker + label app
 └── grafana/
     └── provisioning/
         ├── datasources/
-        │   └── datasources.yml   ← Prometheus + Loki auto-conectados
+        │   └── datasources.yml   ← Prometheus + Loki
         └── dashboards/
-            └── dashboards.yml    ← directorio de dashboards
+            ├── dashboards.yml        ← provider
+            ├── passix-overview.json
+            ├── passix-uptime.json
+            └── passix-logs.json
 ```

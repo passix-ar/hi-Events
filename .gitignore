@@ -8,6 +8,9 @@ backend/.env
 docker/all-in-one/.env
 docker/development/.env
 monitoring/.env
+monitoring/**/*.bak
+monitoring/**/*.bak-*
+monitoring/alertmanager/alertmanager.yml
 docker-compose.override.yml
 todo.md
 /prompts/**

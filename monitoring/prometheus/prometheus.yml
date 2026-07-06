@@ -7,6 +7,12 @@ global:
 rule_files:
   - /etc/prometheus/alert-rules.yml
 
+# Las alertas de alert-rules.yml se envían a Alertmanager, que las enruta a Telegram.
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
 scrape_configs:
 
   # Prometheus se monitorea a sí mismo
@@ -19,6 +25,11 @@ scrape_configs:
   - job_name: node-exporter
     static_configs:
       - targets: ['node-exporter:9100']
+
+  # Métricas por container (CPU, RAM, red, reinicios) — alimenta la alerta ContainerReiniciado
+  - job_name: cadvisor
+    static_configs:
+      - targets: ['cadvisor:8080']
 
   # Health checks HTTP del sitio
   - job_name: blackbox
