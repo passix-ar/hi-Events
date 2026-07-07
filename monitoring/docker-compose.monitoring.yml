@@ -131,6 +131,9 @@ services:
     container_name: passix_cadvisor
     restart: unless-stopped
     privileged: true
+    # cgroup v2 + cgroupns: sin el namespace del host, cAdvisor no ve los otros
+    # containers (solo los system.slice). Con host resuelve los nombres (label name).
+    cgroup: host
     devices:
       - /dev/kmsg
     volumes:

@@ -4,7 +4,7 @@
   "tags": ["passix"],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 1,
+  "version": 2,
   "editable": true,
   "time": { "from": "now-24h", "to": "now" },
   "refresh": "30s",
@@ -13,36 +13,93 @@
   "panels": [
     {
       "id": 1,
-      "type": "timeseries",
-      "title": "Disponibilidad (1 = arriba)",
+      "type": "stat",
+      "title": "Uptime (en el rango visible)",
       "datasource": { "type": "prometheus", "uid": "prometheus" },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 0 },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{job=\"blackbox\"}", "legendFormat": "{{instance}}" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{instance=\"https://app.getpassix.com\"}", "legendFormat": "uptime" }
       ],
-      "fieldConfig": { "defaults": { "min": 0, "max": 1, "custom": { "drawStyle": "line", "lineInterpolation": "stepAfter", "fillOpacity": 20 } }, "overrides": [] }
+      "options": { "reduceOptions": { "calcs": ["mean"] }, "colorMode": "background", "graphMode": "none" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit", "min": 0, "max": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 0.99 }, { "color": "green", "value": 0.999 } ] }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 2,
-      "type": "timeseries",
-      "title": "Latencia HTTP",
+      "type": "stat",
+      "title": "Vence el certificado SSL",
       "datasource": { "type": "prometheus", "uid": "prometheus" },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "gridPos": { "h": 4, "w": 8, "x": 8, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{job=\"blackbox\"}", "legendFormat": "{{instance}}" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "(probe_ssl_earliest_cert_expiry{instance=\"https://app.getpassix.com\"} - time()) / 86400" }
       ],
-      "fieldConfig": { "defaults": { "unit": "s" }, "overrides": [] }
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "none" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d", "decimals": 0,
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 14 }, { "color": "green", "value": 30 } ] }
+        },
+        "overrides": []
+      }
     },
     {
       "id": 3,
-      "type": "timeseries",
-      "title": "Vencimiento del certificado SSL (días)",
+      "type": "stat",
+      "title": "Latencia HTTP (actual)",
       "datasource": { "type": "prometheus", "uid": "prometheus" },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "gridPos": { "h": 4, "w": 8, "x": 16, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "(probe_ssl_earliest_cert_expiry - time()) / 86400", "legendFormat": "{{instance}}" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{instance=\"https://app.getpassix.com\"}" }
       ],
-      "fieldConfig": { "defaults": { "unit": "d" }, "overrides": [] }
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 3 } ] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "state-timeline",
+      "title": "Disponibilidad (verde = arriba, rojo = caído)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 4 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{instance=\"https://app.getpassix.com\"}", "legendFormat": "app.getpassix.com" }
+      ],
+      "options": { "mergeValues": true, "showValue": "never", "rowHeight": 0.9, "legend": { "showLegend": false } },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "CAÍDO", "color": "red", "index": 0 } } },
+            { "type": "value", "options": { "1": { "text": "OK", "color": "green", "index": 1 } } }
+          ],
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [ { "color": "red", "value": null }, { "color": "green", "value": 1 } ] }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Latencia HTTP (histórico)",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 11 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{instance=\"https://app.getpassix.com\"}", "legendFormat": "latencia" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 15, "lineWidth": 2 } }, "overrides": [] }
     }
   ]
 }
