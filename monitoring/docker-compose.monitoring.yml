@@ -20,17 +20,25 @@ services:
       - monitoring
 
   # ── Alertas → Telegram ────────────────────────────────────────────────────
-  # La config real (con el bot token) NO está en git: se inyecta como "file mount"
-  # de Coolify en /etc/alertmanager/alertmanager.yml. Ver alertmanager/alertmanager.yml.example.
+  # El bot token/chat id NO van en git: se pasan como env vars (TELEGRAM_BOT_TOKEN /
+  # TELEGRAM_CHAT_ID). El entrypoint los inyecta en el template con sed al arrancar.
   alertmanager:
     image: prom/alertmanager:v0.27.0
     container_name: passix_alertmanager
     restart: unless-stopped
     volumes:
+      - ./alertmanager/alertmanager.tmpl.yml:/etc/alertmanager/alertmanager.tmpl.yml:ro
       - alertmanager_data:/alertmanager
-    command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-      - '--storage.path=/alertmanager'
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Definir TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?Definir TELEGRAM_CHAT_ID}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - >
+        sed -e "s|__BOT_TOKEN__|$${TELEGRAM_BOT_TOKEN}|" -e "s|__CHAT_ID__|$${TELEGRAM_CHAT_ID}|"
+        /etc/alertmanager/alertmanager.tmpl.yml > /tmp/alertmanager.yml &&
+        exec /bin/alertmanager --config.file=/tmp/alertmanager.yml --storage.path=/alertmanager
     networks:
       - monitoring
     depends_on:
