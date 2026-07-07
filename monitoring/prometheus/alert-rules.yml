@@ -57,13 +57,3 @@ groups:
         annotations:
           summary: "⚠️ CPU al {{ $value | printf \"%.0f\" }}%"
           description: "El uso de CPU supera el 90% por más de 10 minutos."
-
-      # Container caído (reinicio inesperado)
-      - alert: ContainerReiniciado
-        expr: increase(container_last_seen[5m]) == 0
-        for: 2m
-        labels:
-          severity: warning
-        annotations:
-          summary: "⚠️ Container sin actividad"
-          description: "El container {{ $labels.name }} parece haber dejado de correr."

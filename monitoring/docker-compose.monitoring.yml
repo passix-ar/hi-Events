@@ -124,32 +124,9 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
 
-  # ── Métricas por container (CPU, RAM, red, reinicios) ─────────────────────
-  # Provee container_last_seen / container_* que usa la alerta ContainerReiniciado
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1
-    container_name: passix_cadvisor
-    restart: unless-stopped
-    privileged: true
-    # cgroup v2 + cgroupns: sin el namespace del host, cAdvisor no ve los otros
-    # containers (solo los system.slice). Con host resuelve los nombres (label name).
-    cgroup: host
-    devices:
-      - /dev/kmsg
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
-    command:
-      # docker_only: ignora los system.slice; disable disk: evita el error
-      # "failed to identify read-write layer" que hacía descartar los containers.
-      - '--docker_only=true'
-      - '--housekeeping_interval=15s'
-      - '--disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,cpu_topology,resctrl'
-    networks:
-      - monitoring
+  # NOTA: cAdvisor se removió — Docker 29.x usa el storage driver `overlayfs`, que
+  # cAdvisor todavía no soporta (bug google/cadvisor#3860), así que no podía resolver
+  # los nombres de los containers en este host. Se puede reponer cuando lo arreglen upstream.
 
   # ── Blackbox / Health checks HTTP ─────────────────────────────────────────
   blackbox-exporter:

@@ -26,11 +26,6 @@ scrape_configs:
     static_configs:
       - targets: ['node-exporter:9100']
 
-  # Métricas por container (CPU, RAM, red, reinicios) — alimenta la alerta ContainerReiniciado
-  - job_name: cadvisor
-    static_configs:
-      - targets: ['cadvisor:8080']
-
   # Health checks HTTP del sitio
   - job_name: blackbox
     metrics_path: /probe
