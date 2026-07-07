@@ -2,6 +2,7 @@
 
 namespace HiEvents\Http\Request\Account;
 
+use HiEvents\Validators\Rules\ValidTimezoneRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -13,7 +14,7 @@ class UpdateAccountRequest extends FormRequest
 
         return [
             'name' => 'required|string',
-            'timezone' => 'required|timezone:all',
+            'timezone' => ['required', new ValidTimezoneRule()],
             'currency_code' => [Rule::in(array_values($currencies))],
         ];
     }

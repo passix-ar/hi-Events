@@ -4,6 +4,7 @@ namespace HiEvents\Http\Request\User;
 
 use HiEvents\Http\Request\BaseRequest;
 use HiEvents\Locale;
+use HiEvents\Validators\Rules\ValidTimezoneRule;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateMeRequest extends BaseRequest
@@ -18,7 +19,7 @@ class UpdateMeRequest extends BaseRequest
             'first_name' => 'required_without_all:current_password,password,password_confirmation|min:1',
             'last_name' => 'required_without_all:current_password,password,password_confirmation|min:1',
             'email' => 'required_without_all:current_password,password,password_confirmation|email',
-            'timezone' => 'required_without_all:current_password,password,password_confirmation|timezone',
+            'timezone' => ['required_without_all:current_password,password,password_confirmation', new ValidTimezoneRule()],
             'locale' => 'required_without_all:current_password,password,password_confirmation|in:' . implode(',', Locale::getSupportedLocales()),
 
             'current_password' => [

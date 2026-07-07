@@ -71,6 +71,35 @@ class RegisterTest extends TestCase
         $response->assertHeader('X-Auth-Token');
     }
 
+    public function test_register_user_with_legacy_timezone_alias(): void
+    {
+        $password = fake()->password(16);
+        $user = User::factory()->password($password)->make([
+            'email' => fake()->unique()->safeEmail()
+        ]);
+        $account = Account::factory()->make();
+
+        Config::set('app.disable_registration', false);
+
+        // "America/Cordoba" is a backward-compatibility alias for the canonical
+        // "America/Argentina/Cordoba" IANA identifier. It's a valid timezone that
+        // browsers can report via Intl.DateTimeFormat(), but is excluded from
+        // DateTimeZone::listIdentifiers(), which the old `timezone:all` rule relied on.
+        $response = $this->post(self::REGISTER_ROUTE, [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'password' => $password,
+            'password_confirmation' => $password,
+            'timezone' => 'America/Cordoba',
+            'currency_code' => $account->currency_code,
+            'locale' => $user->locale,
+            'invite_token' => null,
+        ]);
+
+        $response->assertStatus(201);
+    }
+
     public function test_registration_disabled(): void
     {
         $password = fake()->password(16);
