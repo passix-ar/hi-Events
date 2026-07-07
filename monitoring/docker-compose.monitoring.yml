@@ -142,6 +142,12 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
+    command:
+      # docker_only: ignora los system.slice; disable disk: evita el error
+      # "failed to identify read-write layer" que hacía descartar los containers.
+      - '--docker_only=true'
+      - '--housekeeping_interval=15s'
+      - '--disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,cpu_topology,resctrl'
     networks:
       - monitoring
 
