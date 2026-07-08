@@ -37,7 +37,7 @@ abstract class UserDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
     protected ?string $last_name = null;
     protected ?string $pending_email = null;
     protected string $timezone;
-    protected string $locale = 'en';
+    protected string $locale = 'es';
     protected ?string $marketing_opted_in_at = null;
 
     public function toArray(): array
