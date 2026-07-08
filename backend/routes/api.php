@@ -231,19 +231,19 @@ $router = app()->get('router');
 $router->prefix('/auth')->group(
     function (Router $router): void {
         // Auth
-        $router->post('/login', LoginAction::class)->name('auth.login');
+        $router->post('/login', LoginAction::class)->name('auth.login')->middleware('throttle:auth');
         $router->post('/logout', LogoutAction::class)->name('auth.logout');
-        $router->post('/register', CreateAccountAction::class)->name('auth.register');
-        $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password');
-        $router->post('/confirm-email/{token}', ConfirmEmailAddressPublicAction::class)->name('auth.confirm-email');
+        $router->post('/register', CreateAccountAction::class)->name('auth.register')->middleware('throttle:auth-register');
+        $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password')->middleware('throttle:auth-forgot');
+        $router->post('/confirm-email/{token}', ConfirmEmailAddressPublicAction::class)->name('auth.confirm-email')->middleware('throttle:auth-token');
 
         // Invitations
         $router->get('/invitation/{invite_token}', GetUserInvitationAction::class)->name('auth.invitation');
-        $router->post('/invitation/{invite_token}', AcceptInvitationAction::class)->name('auth.accept-invitation');
+        $router->post('/invitation/{invite_token}', AcceptInvitationAction::class)->name('auth.accept-invitation')->middleware('throttle:auth-token');
 
         // Reset Passwords
-        $router->get('/reset-password/{reset_token}', ValidateResetPasswordTokenAction::class)->name('auth.validate-reset-password-token');
-        $router->post('/reset-password/{reset_token}', ResetPasswordAction::class)->name('auth.reset-password');
+        $router->get('/reset-password/{reset_token}', ValidateResetPasswordTokenAction::class)->name('auth.validate-reset-password-token')->middleware('throttle:auth-token');
+        $router->post('/reset-password/{reset_token}', ResetPasswordAction::class)->name('auth.reset-password')->middleware('throttle:auth-token');
     }
 );
 
@@ -513,7 +513,8 @@ $router->prefix('/public')->group(
         // Organizers
         $router->get('/organizers/{organizer_id}', GetPublicOrganizerAction::class);
         $router->get('/organizers/{organizer_id}/events', GetOrganizerEventsPublicAction::class);
-        $router->post('/organizers/{organizer_id}/contact', SendOrganizerContactMessagePublicAction::class);
+        $router->post('/organizers/{organizer_id}/contact', SendOrganizerContactMessagePublicAction::class)
+            ->middleware('throttle:5,1');
 
         // Products
         $router->get('/events/{event_id}/products', GetEventPublicAction::class);
@@ -521,7 +522,8 @@ $router->prefix('/public')->group(
         // Orders
         $router->post('/events/{event_id}/order', CreateOrderActionPublic::class)
             ->middleware('turnstile');
-        $router->put('/events/{event_id}/order/{order_short_id}', CompleteOrderActionPublic::class);
+        $router->put('/events/{event_id}/order/{order_short_id}', CompleteOrderActionPublic::class)
+            ->middleware('throttle:30,1');
         $router->get('/events/{event_id}/order/{order_short_id}', GetOrderActionPublic::class);
         $router->post('/events/{event_id}/order/{order_short_id}/abandon', AbandonOrderActionPublic::class);
         $router->post('/events/{event_id}/order/{order_short_id}/await-offline-payment', TransitionOrderToOfflinePaymentPublicAction::class);
@@ -540,7 +542,8 @@ $router->prefix('/public')->group(
         $router->get('/events/{event_id}/promo-codes/{promo_code}', GetPromoCodePublic::class);
 
         // Stripe payment gateway
-        $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class);
+        $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class)
+            ->middleware('throttle:30,1');
         $router->get('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', GetPaymentIntentActionPublic::class);
 
         // MercadoPago payment gateway
