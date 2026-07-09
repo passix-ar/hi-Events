@@ -86,6 +86,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - ./loki/rules:/etc/loki/rules:ro
       - loki_data:/loki
     command: -config.file=/etc/loki/local-config.yaml
     networks:

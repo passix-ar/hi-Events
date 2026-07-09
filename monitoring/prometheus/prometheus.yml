@@ -26,14 +26,18 @@ scrape_configs:
     static_configs:
       - targets: ['node-exporter:9100']
 
-  # Health checks HTTP del sitio
+  # Health checks HTTP del sitio (frontend) y de la API (backend)
   - job_name: blackbox
     metrics_path: /probe
     params:
       module: [http_2xx]
     static_configs:
-      - targets:
-          - https://app.getpassix.com
+      - targets: [https://app.getpassix.com]
+        labels:
+          service: frontend
+      - targets: [https://api.getpassix.com]
+        labels:
+          service: backend
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

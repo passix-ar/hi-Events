@@ -1,0 +1,25 @@
+groups:
+  - name: passix_servicios
+    rules:
+
+      # Worker sin actividad — caza "caído" y también "colgado" cuando deja de emitir logs.
+      # El scheduler le encola jobs everyMinute() (Kernel.php), así que un worker sano
+      # loguea al menos una línea por minuto. 10 min de silencio total = problema.
+      # absent_over_time devuelve 1 cuando NO hay ninguna línea en la ventana.
+      - alert: WorkerSinActividad
+        expr: absent_over_time({app="worker"}[10m])
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 Worker sin actividad"
+          description: "El worker no logueó nada en 10 minutos: está caído o colgado sin procesar la cola."
+
+      # Scheduler sin actividad — mismo criterio (también loguea cada minuto).
+      # Si cae el scheduler, el worker también queda sin jobs: pueden disparar las dos juntas.
+      - alert: SchedulerSinActividad
+        expr: absent_over_time({app="scheduler"}[10m])
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 Scheduler sin actividad"
+          description: "El scheduler no logueó nada en 10 minutos: está caído o colgado y no despacha tareas."

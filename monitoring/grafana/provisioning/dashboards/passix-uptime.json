@@ -18,7 +18,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 8, "x": 0, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{instance=\"https://app.getpassix.com\"}", "legendFormat": "uptime" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{job=\"blackbox\"}", "legendFormat": "{{service}}" }
       ],
       "options": { "reduceOptions": { "calcs": ["mean"] }, "colorMode": "background", "graphMode": "none" },
       "fieldConfig": {
@@ -37,7 +37,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 8, "x": 8, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "(probe_ssl_earliest_cert_expiry{instance=\"https://app.getpassix.com\"} - time()) / 86400" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "(probe_ssl_earliest_cert_expiry{job=\"blackbox\"} - time()) / 86400", "legendFormat": "{{service}}" }
       ],
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "none" },
       "fieldConfig": {
@@ -56,7 +56,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 4, "w": 8, "x": 16, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{instance=\"https://app.getpassix.com\"}" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{job=\"blackbox\"}", "legendFormat": "{{service}}" }
       ],
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "area" },
       "fieldConfig": {
@@ -75,7 +75,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 7, "w": 24, "x": 0, "y": 4 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{instance=\"https://app.getpassix.com\"}", "legendFormat": "app.getpassix.com" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_success{job=\"blackbox\"}", "legendFormat": "{{service}}" }
       ],
       "options": { "mergeValues": true, "showValue": "never", "rowHeight": 0.9, "legend": { "showLegend": false } },
       "fieldConfig": {
@@ -97,7 +97,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 11 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{instance=\"https://app.getpassix.com\"}", "legendFormat": "latencia" }
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "probe_duration_seconds{job=\"blackbox\"}", "legendFormat": "{{service}}" }
       ],
       "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 15, "lineWidth": 2 } }, "overrides": [] }
     }

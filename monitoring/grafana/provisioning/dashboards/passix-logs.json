@@ -20,6 +20,14 @@
         "includeAll": true,
         "multi": true,
         "current": { "text": "All", "value": "$__all" }
+      },
+      {
+        "name": "buscar",
+        "label": "buscar",
+        "description": "Busca texto literal en las líneas de log (no distingue mayúsculas). Vacío = todo.",
+        "type": "textbox",
+        "query": "",
+        "current": { "text": "", "value": "" }
       }
     ]
   },
@@ -31,7 +39,7 @@
       "datasource": { "type": "loki", "uid": "loki" },
       "gridPos": { "h": 22, "w": 24, "x": 0, "y": 0 },
       "targets": [
-        { "refId": "A", "datasource": { "type": "loki", "uid": "loki" }, "expr": "{app=~\"$app\"}" }
+        { "refId": "A", "datasource": { "type": "loki", "uid": "loki" }, "expr": "{app=~\"$app\"} |~ `(?i)${buscar:regex}`" }
       ],
       "options": { "showTime": true, "wrapLogMessage": true, "enableLogDetails": true, "dedupStrategy": "none", "sortOrder": "Descending" }
     }

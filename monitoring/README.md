@@ -14,21 +14,32 @@ redeploya el stack automáticamente — no más `docker compose up -d` a mano po
 | Loki | `grafana/loki:2.9.4` | Almacena logs, retención 15 días |
 | Promtail | `grafana/promtail:2.9.4` | Envía logs de todos los containers → Loki (label `app`) |
 | node-exporter | `prom/node-exporter:v1.7.0` | CPU, RAM, disco, red del host |
-| cAdvisor | `gcr.io/cadvisor/cadvisor:v0.49.1` | Métricas por container (CPU, RAM, reinicios) |
-| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP de `app.getpassix.com` |
+| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP de `app.getpassix.com` (front) y `api.getpassix.com` (backend) |
 
-## Alertas configuradas (`prometheus/alert-rules.yml`)
+> **cAdvisor** (métricas por container) se removió: no soporta el storage driver `overlayfs` de Docker 29.x en este host. El estado de worker/scheduler se vigila por ausencia de logs en Loki (ver Alertas).
+
+## Alertas configuradas
+
+Métricas (`prometheus/alert-rules.yml`):
 
 | Alerta | Condición | Severidad |
 |--------|-----------|-----------|
-| SitioCalido | HTTP no responde > 2 min | critical |
+| ServicioCaido | front o backend no responde HTTP 200 > 2 min | critical |
 | DiscoAlto | Disco < 20% libre | warning |
 | DiskoCritico | Disco < 10% libre | critical |
 | RAMAlta | RAM > 90% por 5 min | warning |
 | CPUAlta | CPU > 90% por 10 min | warning |
-| ContainerReiniciado | container sin actividad (requiere cAdvisor) | warning |
 
-Todas se envían a **Alertmanager → Telegram**.
+Logs (`loki/rules/fake/rules.yaml`, evaluadas por el ruler de Loki):
+
+| Alerta | Condición | Severidad |
+|--------|-----------|-----------|
+| WorkerSinActividad | worker sin loguear nada por 10 min (caído o colgado) | critical |
+| SchedulerSinActividad | scheduler sin loguear nada por 10 min | critical |
+
+Todas se envían a **Alertmanager → Telegram**. El worker y el scheduler no tienen endpoint HTTP,
+por eso se vigilan por **ausencia de logs** en Loki (Promtail los etiqueta con `app=worker` /
+`app=scheduler` según el UUID de la app en Coolify — ver `promtail-config.yml`).
 
 ## Dashboards (provisionados, versionados en git)
 
@@ -36,9 +47,9 @@ Se cargan solos desde `grafana/provisioning/dashboards/`:
 
 | Dashboard | UID | Qué muestra |
 |-----------|-----|-------------|
-| Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco, CPU/mem por container |
-| Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL |
-| Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` |
+| Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco del host |
+| Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL (frontend y backend) |
+| Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` + búsqueda de texto |
 
 Opcional, importar por ID desde la UI: **Node Exporter Full** (`1860`) para detalle fino del host.
 
@@ -103,7 +114,8 @@ monitoring/
 ├── alertmanager/
 │   └── alertmanager.yml.example  ← plantilla Telegram (el real va en Coolify)
 ├── loki/
-│   └── loki-config.yml
+│   ├── loki-config.yml
+│   └── rules/fake/rules.yaml    ← alertas LogQL del ruler (worker/scheduler sin actividad)
 ├── promtail/
 │   └── promtail-config.yml  ← recolector Docker + label app
 └── grafana/
