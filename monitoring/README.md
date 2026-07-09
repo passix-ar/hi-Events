@@ -1,8 +1,9 @@
 # Monitoring — Passix
 
-Stack de observabilidad self-hosted que corre en el mismo servidor que la app, **gestionado por
-Coolify** (recurso Docker Compose conectado a este repo). Un push a `develop` que toque `monitoring/`
-redeploya el stack automáticamente — no más `docker compose up -d` a mano por SSH.
+Stack de observabilidad self-hosted que corre en el mismo servidor que la app, con **docker compose
+plano por SSH (NO Coolify)**. Se intentó migrarlo a un recurso Docker Compose de Coolify y falló:
+Coolify convierte los bind-mounts de archivos de config en "persistent storage" vacío y los servicios
+no encuentran su config. El deploy es manual (ver sección Deploy).
 
 ## Servicios
 
@@ -55,19 +56,26 @@ Opcional, importar por ID desde la UI: **Node Exporter Full** (`1860`) para deta
 
 ---
 
-## Deploy (gestionado por Coolify)
+## Deploy (manual por SSH — NO hay auto-deploy)
 
-El stack es un recurso **Docker Compose** en Coolify apuntando a:
-- Repo: `passix-ar/hi-events` · Branch: `develop`
-- Compose path: `monitoring/docker-compose.monitoring.yml`
+El stack vive en el server como clon de este repo en `/root/hi-events`, branch `develop`.
+Tras pushear cambios que toquen `monitoring/`:
 
-### Variables de entorno (en Coolify, no en git)
+```bash
+ssh -i ~/.ssh/passix_prod root@5.78.43.237
+cd /root/hi-events && git pull origin develop
+cd monitoring && docker compose -f docker-compose.monitoring.yml up -d
+# Los servicios cuya config es bind-mount NO se recrean solos si solo cambió el archivo:
+docker restart passix_promtail passix_prometheus passix_grafana   # según qué configs cambiaron
+```
+
+Loki solo se recrea solo si cambió el compose (mounts/imagen); si solo cambió
+`loki-config.yml` o `loki/rules/`, agregar `passix_loki` al restart.
+
+### Variables de entorno (en `/root/hi-events/monitoring/.env`, no en git)
 - `GRAFANA_PASSWORD` — contraseña del admin de Grafana
 - `GRAFANA_DOMAIN` — `grafana.getpassix.com`
-
-### File mount (secreto, en Coolify, no en git)
-- Destino: `/etc/alertmanager/alertmanager.yml`
-- Contenido: copiar `alertmanager/alertmanager.yml.example` y reemplazar `__BOT_TOKEN__` y `__CHAT_ID__`.
+- `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` — inyectadas al template de Alertmanager al arrancar
 
 ### Volúmenes
 Declarados `external: true` (`passix_prometheus_data`, `passix_grafana_data`, `passix_loki_data`) para
@@ -84,11 +92,10 @@ preservar el histórico entre redeploys. **No borrar estos volúmenes.**
 1. Escribirle un mensaje al bot (o agregarlo a un grupo y mandar un mensaje).
 2. Abrir `https://api.telegram.org/bot<TOKEN>/getUpdates` y copiar el `id` del objeto `chat` (negativo para grupos).
 
-### Paso 3 — Cargar en Coolify
-1. En el recurso de monitoring → **Storages → Add File Mount**.
-2. Path: `/etc/alertmanager/alertmanager.yml`.
-3. Contenido: el `.example` con el token y chat id reales.
-4. Redeploy.
+### Paso 3 — Cargar en el server
+1. Agregar `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` a `/root/hi-events/monitoring/.env`.
+2. `docker compose -f docker-compose.monitoring.yml up -d alertmanager` (el entrypoint inyecta
+   los valores en `alertmanager/alertmanager.tmpl.yml` con sed al arrancar).
 
 ### Paso 4 — Probar
 `docker exec passix_alertmanager amtool alert add test summary="prueba" --alertmanager.url=http://localhost:9093`
