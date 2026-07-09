@@ -1,0 +1,220 @@
+{
+  "uid": "passix-ventas",
+  "title": "Passix — Ventas",
+  "tags": ["passix", "negocio"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "time": { "from": "now-30d", "to": "now" },
+  "refresh": "5m",
+  "annotations": { "list": [] },
+  "templating": { "list": [] },
+  "panels": [
+
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Entradas vendidas",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 4, "w": 5, "x": 0, "y": 0 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COUNT(*)::float AS valor FROM attendees a JOIN orders o ON o.id = a.order_id WHERE a.status = 'ACTIVE' AND o.status = 'COMPLETED' AND $__timeFilter(a.created_at)" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "short", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Ingresos brutos",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 4, "w": 5, "x": 5, "y": 0 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(total_gross),0)::float AS valor FROM orders WHERE status = 'COMPLETED' AND $__timeFilter(created_at)" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Comisión Passix 💰",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 4, "w": 5, "x": 10, "y": 0 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(f.amount),0)::float AS valor FROM order_application_fees f JOIN orders o ON o.id = f.order_id WHERE $__timeFilter(o.created_at)" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Órdenes completadas",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 4, "w": 4, "x": 15, "y": 0 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COUNT(*)::float AS valor FROM orders WHERE status = 'COMPLETED' AND $__timeFilter(created_at)" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "short", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Conversión de checkout",
+      "description": "Órdenes completadas / (completadas + abandonadas). Bajo = mucha gente arranca la compra y la deja.",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 4, "w": 5, "x": 19, "y": 0 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COALESCE(ROUND(100.0 * COUNT(*) FILTER (WHERE status = 'COMPLETED') / NULLIF(COUNT(*) FILTER (WHERE status IN ('COMPLETED','ABANDONED')), 0), 1), 0)::float AS valor FROM orders WHERE $__timeFilter(created_at)" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "value", "graphMode": "none" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent", "decimals": 1,
+          "color": { "mode": "thresholds" },
+          "thresholds": { "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 40 }, { "color": "green", "value": 60 } ] }
+        },
+        "overrides": []
+      }
+    },
+
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Ingresos por día",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "time_series", "rawQuery": true,
+          "rawSql": "SELECT date::timestamptz AS time, SUM(sales_total_gross)::float AS \"Ingresos\" FROM event_daily_statistics WHERE $__timeFilter(date) GROUP BY 1 ORDER BY 1" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD", "decimals": 0,
+          "color": { "mode": "fixed", "fixedColor": "blue" },
+          "custom": { "drawStyle": "bars", "fillOpacity": 70, "lineWidth": 1, "barAlignment": 0, "axisSoftMin": 0 }
+        },
+        "overrides": []
+      },
+      "options": { "legend": { "showLegend": false }, "tooltip": { "mode": "single" } }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Entradas vendidas por día",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "time_series", "rawQuery": true,
+          "rawSql": "SELECT date::timestamptz AS time, SUM(products_sold)::float AS \"Entradas\" FROM event_daily_statistics WHERE $__timeFilter(date) GROUP BY 1 ORDER BY 1" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short", "decimals": 0,
+          "color": { "mode": "fixed", "fixedColor": "blue" },
+          "custom": { "drawStyle": "bars", "fillOpacity": 70, "lineWidth": 1, "barAlignment": 0, "axisSoftMin": 0 }
+        },
+        "overrides": []
+      },
+      "options": { "legend": { "showLegend": false }, "tooltip": { "mode": "single" } }
+    },
+
+    {
+      "id": 8,
+      "type": "table",
+      "title": "Por evento (histórico)",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 9, "w": 14, "x": 0, "y": 12 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT e.title AS \"Evento\", og.name AS \"Cliente\", COALESCE(v.entradas, 0) AS \"Entradas\", COALESCE(r.ingresos, 0)::float AS \"Ingresos\", COALESCE(f.comision, 0)::float AS \"Comisión Passix\" FROM events e JOIN organizers og ON og.id = e.organizer_id LEFT JOIN (SELECT event_id, COUNT(*) AS entradas FROM attendees WHERE status = 'ACTIVE' GROUP BY 1) v ON v.event_id = e.id LEFT JOIN (SELECT event_id, SUM(total_gross) AS ingresos FROM orders WHERE status = 'COMPLETED' GROUP BY 1) r ON r.event_id = e.id LEFT JOIN (SELECT o.event_id, SUM(fa.amount) AS comision FROM order_application_fees fa JOIN orders o ON o.id = fa.order_id GROUP BY 1) f ON f.event_id = e.id WHERE e.deleted_at IS NULL ORDER BY 4 DESC NULLS LAST" }
+      ],
+      "options": { "showHeader": true, "sortBy": [] },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Ingresos" }, "properties": [ { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 } ] },
+          { "matcher": { "id": "byName", "options": "Comisión Passix" }, "properties": [ { "id": "unit", "value": "currencyUSD" }, { "id": "decimals", "value": 0 } ] }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": "barchart",
+      "title": "Ingresos por cliente",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 9, "w": 10, "x": 14, "y": 12 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT og.name AS \"Cliente\", SUM(o.total_gross)::float AS \"Ingresos\" FROM orders o JOIN events e ON e.id = o.event_id JOIN organizers og ON og.id = e.organizer_id WHERE o.status = 'COMPLETED' AND $__timeFilter(o.created_at) GROUP BY 1 ORDER BY 2 DESC" }
+      ],
+      "options": { "orientation": "horizontal", "legend": { "showLegend": false }, "tooltip": { "mode": "single" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD", "decimals": 0,
+          "color": { "mode": "fixed", "fixedColor": "blue" },
+          "custom": { "fillOpacity": 70, "lineWidth": 1, "axisSoftMin": 0 }
+        },
+        "overrides": []
+      }
+    },
+
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "Órdenes por día y estado",
+      "description": "ABANDONED alto = gente que empieza el checkout y no termina. Vigilar si crece.",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 21 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "time_series", "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_at)::timestamptz AS time, status AS metric, COUNT(*)::float AS value FROM orders WHERE $__timeFilter(created_at) GROUP BY 1, 2 ORDER BY 1" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short", "decimals": 0,
+          "custom": { "drawStyle": "bars", "fillOpacity": 70, "lineWidth": 1, "barAlignment": 0, "stacking": { "mode": "normal" }, "axisSoftMin": 0 }
+        },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "COMPLETED" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } } ] },
+          { "matcher": { "id": "byName", "options": "ABANDONED" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
+          { "matcher": { "id": "byName", "options": "RESERVED" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
+          { "matcher": { "id": "byName", "options": "CANCELLED" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "text" } } ] }
+        ]
+      },
+      "options": { "legend": { "showLegend": true, "displayMode": "list", "placement": "bottom" }, "tooltip": { "mode": "multi" } }
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "Reembolsos (histórico)",
+      "datasource": { "type": "postgres", "uid": "passixdb" },
+      "gridPos": { "h": 8, "w": 4, "x": 12, "y": 21 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "postgres", "uid": "passixdb" }, "format": "table", "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(amount),0)::float AS valor FROM order_refunds" }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "none", "graphMode": "none" },
+      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 0 }, "overrides": [] }
+    },
+    {
+      "id": 12,
+      "type": "logs",
+      "title": "Errores recientes del backend",
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 21 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "loki", "uid": "loki" }, "expr": "{app=\"backend\"} |~ `(?i)(error|exception|failed)`" }
+      ],
+      "options": { "showTime": true, "wrapLogMessage": true, "enableLogDetails": true, "dedupStrategy": "none", "sortOrder": "Descending" }
+    }
+  ]
+}

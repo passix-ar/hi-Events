@@ -51,6 +51,11 @@ Se cargan solos desde `grafana/provisioning/dashboards/`:
 | Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco del host |
 | Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL (frontend y backend) |
 | Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` + búsqueda de texto |
+| Passix — Ventas | `passix-ventas` | Negocio: entradas, ingresos, comisión Passix, conversión, por cliente, reembolsos |
+
+El dashboard de Ventas lee la **DB de producción en solo lectura** vía el datasource `Passix DB`
+(usuario `grafana_ro`, solo SELECT; password en el `.env` del server como `PASSIX_DB_RO_PASSWORD`).
+Carga despreciable: consulta solo cuando el dashboard está abierto, refresh cada 5 min.
 
 Opcional, importar por ID desde la UI: **Node Exporter Full** (`1860`) para detalle fino del host.
 
