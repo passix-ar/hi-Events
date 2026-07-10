@@ -28,7 +28,7 @@ class CreateSeatingSectionHandler
             ->setProductId($data->product_id)
             ->setRowCount($data->row_count)
             ->setSeatsPerRow($data->seats_per_row)
-            ->setStatus($data->status->name);
+            ->setStatus($data->status);
 
         return $this->createSeatingSectionService->createSeatingSection($section);
     }
