@@ -10,9 +10,7 @@ class DeleteSeatingSectionHandler
 {
     public function __construct(
         private readonly DeleteSeatingSectionService $deleteSeatingSectionService,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws ResourceNotFoundException

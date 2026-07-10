@@ -12,9 +12,7 @@ class CreateSeatingSectionHandler
 {
     public function __construct(
         private readonly CreateSeatingSectionService $createSeatingSectionService,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws UnrecognizedProductIdException

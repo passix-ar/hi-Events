@@ -15,18 +15,18 @@ use Illuminate\Database\DatabaseManager;
 class CreateSeatingSectionService
 {
     public const MAX_ROWS = 100;
+
     public const MAX_SEATS_PER_ROW = 100;
+
     public const MAX_SEATS_PER_SECTION = 2000;
 
     public function __construct(
-        private readonly DatabaseManager                    $databaseManager,
-        private readonly SeatingSectionRepositoryInterface  $seatingSectionRepository,
-        private readonly SeatRepositoryInterface            $seatRepository,
-        private readonly ProductRepositoryInterface         $productRepository,
-        private readonly SeatGenerationService              $seatGenerationService,
-    )
-    {
-    }
+        private readonly DatabaseManager $databaseManager,
+        private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
+        private readonly SeatRepositoryInterface $seatRepository,
+        private readonly ProductRepositoryInterface $productRepository,
+        private readonly SeatGenerationService $seatGenerationService,
+    ) {}
 
     /**
      * @throws UnrecognizedProductIdException

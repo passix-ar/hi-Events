@@ -28,13 +28,13 @@ class SeatingSectionRepository extends BaseRepository implements SeatingSectionR
     public function findByEventId(int $eventId, QueryParamsDTO $params): LengthAwarePaginator
     {
         $where = [
-            [SeatingSectionDomainObjectAbstract::EVENT_ID, '=', $eventId]
+            [SeatingSectionDomainObjectAbstract::EVENT_ID, '=', $eventId],
         ];
 
-        if (!empty($params->query)) {
+        if (! empty($params->query)) {
             $where[] = static function (Builder $builder) use ($params) {
                 $builder
-                    ->where(SeatingSectionDomainObjectAbstract::NAME, 'ilike', '%' . $params->query . '%');
+                    ->where(SeatingSectionDomainObjectAbstract::NAME, 'ilike', '%'.$params->query.'%');
             };
         }
 

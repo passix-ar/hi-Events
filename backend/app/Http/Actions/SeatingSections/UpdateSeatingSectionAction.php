@@ -19,9 +19,7 @@ class UpdateSeatingSectionAction extends BaseAction
 {
     public function __construct(
         private readonly UpdateSeatingSectionHandler $updateSeatingSectionHandler,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(int $eventId, int $seatingSectionId, UpsertSeatingSectionRequest $request): JsonResponse
     {

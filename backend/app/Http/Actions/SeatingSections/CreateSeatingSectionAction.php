@@ -17,9 +17,7 @@ class CreateSeatingSectionAction extends BaseAction
 {
     public function __construct(
         private readonly CreateSeatingSectionHandler $createSeatingSectionHandler,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(int $eventId, UpsertSeatingSectionRequest $request): JsonResponse
     {

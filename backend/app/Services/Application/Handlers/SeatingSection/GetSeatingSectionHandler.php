@@ -14,10 +14,8 @@ class GetSeatingSectionHandler
 {
     public function __construct(
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly SeatRepositoryInterface           $seatRepository,
-    )
-    {
-    }
+        private readonly SeatRepositoryInterface $seatRepository,
+    ) {}
 
     /**
      * @throws ResourceNotFoundException

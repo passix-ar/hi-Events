@@ -14,10 +14,8 @@ class GetSeatingSectionsHandler
 {
     public function __construct(
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly SeatRepositoryInterface           $seatRepository,
-    )
-    {
-    }
+        private readonly SeatRepositoryInterface $seatRepository,
+    ) {}
 
     public function handle(GetSeatingSectionsDTO $dto): LengthAwarePaginator
     {
@@ -31,7 +29,7 @@ class GetSeatingSectionsHandler
         $seatCounts = $this->seatRepository->getSeatCountsBySection($dto->eventId);
 
         $sections->getCollection()->each(
-            static fn(SeatingSectionDomainObject $section) => $section->setSeatCounts(
+            static fn (SeatingSectionDomainObject $section) => $section->setSeatCounts(
                 $seatCounts[$section->getId()] ?? []
             )
         );

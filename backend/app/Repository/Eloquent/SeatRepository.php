@@ -30,7 +30,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
             if (empty($sectionIds)) {
                 return collect();
             }
-            $sectionFilter = 'AND seats.seating_section_id IN (' . implode(',', array_fill(0, count($sectionIds), '?')) . ')';
+            $sectionFilter = 'AND seats.seating_section_id IN ('.implode(',', array_fill(0, count($sectionIds), '?')).')';
         }
 
         $results = $this->db->select(<<<SQL
@@ -65,7 +65,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
             ...($sectionIds !== null ? array_values($sectionIds) : []),
         ]);
 
-        return collect($results)->map(static fn($row) => SeatDomainObject::hydrateFromArray((array)$row));
+        return collect($results)->map(static fn ($row) => SeatDomainObject::hydrateFromArray((array) $row));
     }
 
     public function claimSeats(int $orderId, int $eventId, array $seatIds, array $sectionIds): int
@@ -109,7 +109,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
 
     public function updateAttendeeSeatLabelsForSection(int $sectionId, string $sectionName): int
     {
-        return $this->db->update(<<<SQL
+        return $this->db->update(<<<'SQL'
             UPDATE attendees
             SET seat_label = ? || ' - ' || seats.label
             FROM seats
@@ -123,7 +123,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
 
     public function getSeatCountsBySection(int $eventId): array
     {
-        $results = $this->db->select(<<<SQL
+        $results = $this->db->select(<<<'SQL'
             SELECT
                 seats.seating_section_id,
                 CASE
@@ -151,7 +151,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
 
         $counts = [];
         foreach ($results as $row) {
-            $counts[$row->seating_section_id][$row->state] = (int)$row->seat_count;
+            $counts[$row->seating_section_id][$row->state] = (int) $row->seat_count;
         }
 
         return $counts;

@@ -13,10 +13,10 @@ class SeatGenerationServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new SeatGenerationService();
+        $this->service = new SeatGenerationService;
     }
 
-    public function testRowLabelsFollowSpreadsheetStyle(): void
+    public function test_row_labels_follow_spreadsheet_style(): void
     {
         $this->assertSame('A', $this->service->labelForRowIndex(0));
         $this->assertSame('B', $this->service->labelForRowIndex(1));
@@ -27,7 +27,7 @@ class SeatGenerationServiceTest extends TestCase
         $this->assertSame('BA', $this->service->labelForRowIndex(52));
     }
 
-    public function testGenerateGridProducesEverySeatWithLabels(): void
+    public function test_generate_grid_produces_every_seat_with_labels(): void
     {
         $grid = $this->service->generateGrid(3, 4);
 
@@ -37,7 +37,7 @@ class SeatGenerationServiceTest extends TestCase
         $this->assertSame(['row_label' => 'C', 'seat_number' => 4, 'label' => 'C4'], $grid[11]);
     }
 
-    public function testGridIsOrderedByRowThenSeatNumber(): void
+    public function test_grid_is_ordered_by_row_then_seat_number(): void
     {
         $grid = $this->service->generateGrid(2, 2);
 

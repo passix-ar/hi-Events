@@ -20,14 +20,12 @@ use Illuminate\Support\Collection;
 class UpdateSeatingSectionService
 {
     public function __construct(
-        private readonly DatabaseManager                   $databaseManager,
+        private readonly DatabaseManager $databaseManager,
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly SeatRepositoryInterface           $seatRepository,
-        private readonly CreateSeatingSectionService       $createSeatingSectionService,
-        private readonly SeatGenerationService             $seatGenerationService,
-    )
-    {
-    }
+        private readonly SeatRepositoryInterface $seatRepository,
+        private readonly CreateSeatingSectionService $createSeatingSectionService,
+        private readonly SeatGenerationService $seatGenerationService,
+    ) {}
 
     /**
      * @throws ResourceNotFoundException
@@ -90,7 +88,7 @@ class UpdateSeatingSectionService
     {
         return $this->seatRepository
             ->findByEventIdWithState($existing->getEventId(), [$existing->getId()])
-            ->filter(static fn(SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
+            ->filter(static fn (SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
     }
 
     /**
@@ -99,13 +97,12 @@ class UpdateSeatingSectionService
     private function validateShrink(
         SeatingSectionDomainObject $existing,
         SeatingSectionDomainObject $section,
-        Collection                 $occupiedSeats,
-    ): void
-    {
+        Collection $occupiedSeats,
+    ): void {
         $removedRowLabels = $this->getRemovedRowLabels($existing, $section);
 
         $blockingSeat = $occupiedSeats->first(
-            static fn(SeatDomainObject $seat) => in_array($seat->getRowLabel(), $removedRowLabels, true)
+            static fn (SeatDomainObject $seat) => in_array($seat->getRowLabel(), $removedRowLabels, true)
                 || $seat->getSeatNumber() > $section->getSeatsPerRow()
         );
 
@@ -132,14 +129,14 @@ class UpdateSeatingSectionService
         $removedRowLabels = $this->getRemovedRowLabels($existing, $section);
         $newSeatsPerRow = $section->getSeatsPerRow();
 
-        if (!empty($removedRowLabels) || $newSeatsPerRow < $existing->getSeatsPerRow()) {
+        if (! empty($removedRowLabels) || $newSeatsPerRow < $existing->getSeatsPerRow()) {
             $this->seatRepository->deleteWhere([
                 SeatDomainObjectAbstract::SEATING_SECTION_ID => $existing->getId(),
                 static function (Builder $builder) use ($removedRowLabels, $newSeatsPerRow) {
                     $builder->where(static function (Builder $query) use ($removedRowLabels, $newSeatsPerRow) {
                         $query->where(SeatDomainObjectAbstract::SEAT_NUMBER, '>', $newSeatsPerRow);
 
-                        if (!empty($removedRowLabels)) {
+                        if (! empty($removedRowLabels)) {
                             $query->orWhereIn(SeatDomainObjectAbstract::ROW_LABEL, $removedRowLabels);
                         }
                     });
@@ -149,13 +146,13 @@ class UpdateSeatingSectionService
 
         $existingSeatKeys = $this->seatRepository
             ->findWhere([SeatDomainObjectAbstract::SEATING_SECTION_ID => $existing->getId()])
-            ->map(static fn(SeatDomainObject $seat) => $seat->getRowLabel() . '|' . $seat->getSeatNumber())
+            ->map(static fn (SeatDomainObject $seat) => $seat->getRowLabel().'|'.$seat->getSeatNumber())
             ->flip();
 
         $inserts = [];
         foreach ($this->seatGenerationService->generateGrid($section->getRowCount(), $newSeatsPerRow) as $seat) {
-            $key = $seat[SeatDomainObjectAbstract::ROW_LABEL] . '|' . $seat[SeatDomainObjectAbstract::SEAT_NUMBER];
-            if (!isset($existingSeatKeys[$key])) {
+            $key = $seat[SeatDomainObjectAbstract::ROW_LABEL].'|'.$seat[SeatDomainObjectAbstract::SEAT_NUMBER];
+            if (! isset($existingSeatKeys[$key])) {
                 $inserts[] = array_merge($seat, [
                     SeatDomainObjectAbstract::EVENT_ID => $existing->getEventId(),
                     SeatDomainObjectAbstract::SEATING_SECTION_ID => $existing->getId(),
@@ -163,7 +160,7 @@ class UpdateSeatingSectionService
             }
         }
 
-        if (!empty($inserts)) {
+        if (! empty($inserts)) {
             $this->seatRepository->insert($inserts);
         }
     }

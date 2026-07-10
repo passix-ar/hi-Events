@@ -14,10 +14,8 @@ class GetSeatingSectionsPublicHandler
 {
     public function __construct(
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly SeatRepositoryInterface           $seatRepository,
-    )
-    {
-    }
+        private readonly SeatRepositoryInterface $seatRepository,
+    ) {}
 
     /**
      * @return Collection<int, SeatingSectionDomainObject>
@@ -36,12 +34,12 @@ class GetSeatingSectionsPublicHandler
         $seatsBySection = $this->seatRepository
             ->findByEventIdWithState(
                 $eventId,
-                $sections->map(static fn(SeatingSectionDomainObject $section) => $section->getId())->toArray(),
+                $sections->map(static fn (SeatingSectionDomainObject $section) => $section->getId())->toArray(),
             )
-            ->groupBy(static fn(SeatDomainObject $seat) => $seat->getSeatingSectionId());
+            ->groupBy(static fn (SeatDomainObject $seat) => $seat->getSeatingSectionId());
 
         return $sections->map(
-            static fn(SeatingSectionDomainObject $section) => $section->setSeats(
+            static fn (SeatingSectionDomainObject $section) => $section->setSeats(
                 $seatsBySection->get($section->getId()) ?? collect()
             )
         );

@@ -16,7 +16,9 @@ use Tests\TestCase;
 class SeatClaimServiceTest extends TestCase
 {
     private SeatRepositoryInterface|MockInterface $seatRepository;
+
     private SeatingSectionRepositoryInterface|MockInterface $seatingSectionRepository;
+
     private SeatClaimService $service;
 
     protected function setUp(): void
@@ -38,7 +40,7 @@ class SeatClaimServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function testNoSeatIdsIsANoOp(): void
+    public function test_no_seat_ids_is_a_no_op(): void
     {
         $this->seatingSectionRepository->shouldNotReceive('findWhere');
         $this->seatRepository->shouldNotReceive('claimSeats');
@@ -51,7 +53,7 @@ class SeatClaimServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testClaimsSeatsForTheProductsSections(): void
+    public function test_claims_seats_for_the_products_sections(): void
     {
         $this->seatingSectionRepository->shouldReceive('findWhere')
             ->once()
@@ -78,7 +80,7 @@ class SeatClaimServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testThrowsWhenFewerSeatsAreClaimedThanRequested(): void
+    public function test_throws_when_fewer_seats_are_claimed_than_requested(): void
     {
         $this->seatingSectionRepository->shouldReceive('findWhere')
             ->once()
@@ -94,7 +96,7 @@ class SeatClaimServiceTest extends TestCase
         );
     }
 
-    public function testThrowsWhenProductHasNoActiveSections(): void
+    public function test_throws_when_product_has_no_active_sections(): void
     {
         $this->seatingSectionRepository->shouldReceive('findWhere')
             ->once()
@@ -112,7 +114,7 @@ class SeatClaimServiceTest extends TestCase
 
     private function makeOrder(): OrderDomainObject
     {
-        return (new OrderDomainObject())
+        return (new OrderDomainObject)
             ->setId(1)
             ->setEventId(2);
     }
@@ -128,7 +130,7 @@ class SeatClaimServiceTest extends TestCase
 
     private function makeSection(int $id, int $productId): SeatingSectionDomainObject
     {
-        return (new SeatingSectionDomainObject())
+        return (new SeatingSectionDomainObject)
             ->setId($id)
             ->setProductId($productId);
     }

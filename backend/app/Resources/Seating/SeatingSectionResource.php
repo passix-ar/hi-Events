@@ -25,7 +25,7 @@ class SeatingSectionResource extends BaseResource
             'status' => $this->getStatus(),
             $this->mergeWhen(
                 condition: $this->getSeatCounts() !== null,
-                value: fn() => [
+                value: fn () => [
                     'seats_available' => $this->getSeatCounts()[SeatState::AVAILABLE->name] ?? 0,
                     'seats_held' => $this->getSeatCounts()[SeatState::HELD->name] ?? 0,
                     'seats_sold' => $this->getSeatCounts()[SeatState::SOLD->name] ?? 0,
@@ -33,7 +33,7 @@ class SeatingSectionResource extends BaseResource
             ),
             $this->mergeWhen(
                 condition: $this->getProduct() !== null,
-                value: fn() => [
+                value: fn () => [
                     'product' => [
                         'id' => $this->getProduct()->getId(),
                         'title' => $this->getProduct()->getTitle(),
@@ -42,7 +42,7 @@ class SeatingSectionResource extends BaseResource
             ),
             $this->mergeWhen(
                 condition: $this->getSeats() !== null,
-                value: fn() => [
+                value: fn () => [
                     'seats' => SeatResource::collection($this->getSeats()),
                 ],
             ),

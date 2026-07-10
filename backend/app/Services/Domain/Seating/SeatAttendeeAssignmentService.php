@@ -17,12 +17,10 @@ use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
 class SeatAttendeeAssignmentService
 {
     public function __construct(
-        private readonly SeatRepositoryInterface           $seatRepository,
+        private readonly SeatRepositoryInterface $seatRepository,
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly AttendeeRepositoryInterface       $attendeeRepository,
-    )
-    {
-    }
+        private readonly AttendeeRepositoryInterface $attendeeRepository,
+    ) {}
 
     /**
      * Maps the order's claimed seats to its freshly created attendees. Seats and attendees of
@@ -44,13 +42,13 @@ class SeatAttendeeAssignmentService
         $sectionsById = $this->seatingSectionRepository
             ->findWhereIn(
                 field: SeatDomainObjectAbstract::ID,
-                values: $seats->map(static fn(SeatDomainObject $seat) => $seat->getSeatingSectionId())->unique()->toArray(),
+                values: $seats->map(static fn (SeatDomainObject $seat) => $seat->getSeatingSectionId())->unique()->toArray(),
             )
-            ->keyBy(static fn(SeatingSectionDomainObject $section) => $section->getId());
+            ->keyBy(static fn (SeatingSectionDomainObject $section) => $section->getId());
 
         $seatQueues = $seats
-            ->groupBy(static fn(SeatDomainObject $seat) => $sectionsById->get($seat->getSeatingSectionId())->getProductId())
-            ->map(static fn($productSeats) => collect($productSeats->values()));
+            ->groupBy(static fn (SeatDomainObject $seat) => $sectionsById->get($seat->getSeatingSectionId())->getProductId())
+            ->map(static fn ($productSeats) => collect($productSeats->values()));
 
         $attendees = $this->attendeeRepository->findWhere(
             where: [AttendeeDomainObjectAbstract::ORDER_ID => $order->getId()],
@@ -70,7 +68,7 @@ class SeatAttendeeAssignmentService
             $section = $sectionsById->get($seat->getSeatingSectionId());
 
             $this->attendeeRepository->updateFromArray($attendee->getId(), [
-                AttendeeDomainObjectAbstract::SEAT_LABEL => $section->getName() . ' - ' . $seat->getLabel(),
+                AttendeeDomainObjectAbstract::SEAT_LABEL => $section->getName().' - '.$seat->getLabel(),
             ]);
 
             $this->seatRepository->updateFromArray($seat->getId(), [
@@ -78,7 +76,7 @@ class SeatAttendeeAssignmentService
             ]);
         }
 
-        $unassigned = $seatQueues->sum(static fn($queue) => $queue->count());
+        $unassigned = $seatQueues->sum(static fn ($queue) => $queue->count());
 
         if ($unassigned > 0) {
             throw new ResourceConflictException(

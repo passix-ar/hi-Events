@@ -15,9 +15,7 @@ class GetSeatingSectionsAction extends BaseAction
 {
     public function __construct(
         private readonly GetSeatingSectionsHandler $getSeatingSectionsHandler,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(int $eventId, Request $request): JsonResponse
     {

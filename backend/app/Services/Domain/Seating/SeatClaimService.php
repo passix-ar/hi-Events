@@ -16,24 +16,23 @@ use Illuminate\Support\Collection;
 class SeatClaimService
 {
     public function __construct(
-        private readonly SeatRepositoryInterface           $seatRepository,
+        private readonly SeatRepositoryInterface $seatRepository,
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-    )
-    {
-    }
+    ) {}
 
     /**
      * Atomically claims the requested seats for a freshly created order. Must be called inside
      * the order-creation transaction, while the per-event advisory lock is held.
      *
-     * @param Collection<ProductOrderDetailsDTO> $productsOrderDetails
+     * @param  Collection<ProductOrderDetailsDTO>  $productsOrderDetails
+     *
      * @throws SeatsUnavailableException
      */
     public function claimSeatsForOrder(OrderDomainObject $order, Collection $productsOrderDetails): void
     {
         $seatIdsByProduct = $productsOrderDetails
-            ->filter(static fn(ProductOrderDetailsDTO $product) => !empty($product->seat_ids))
-            ->mapWithKeys(static fn(ProductOrderDetailsDTO $product) => [$product->product_id => $product->seat_ids]);
+            ->filter(static fn (ProductOrderDetailsDTO $product) => ! empty($product->seat_ids))
+            ->mapWithKeys(static fn (ProductOrderDetailsDTO $product) => [$product->product_id => $product->seat_ids]);
 
         if ($seatIdsByProduct->isEmpty()) {
             return;
@@ -46,8 +45,8 @@ class SeatClaimService
 
         foreach ($seatIdsByProduct as $productId => $seatIds) {
             $sectionIds = $sections
-                ->filter(static fn(SeatingSectionDomainObject $section) => $section->getProductId() === $productId)
-                ->map(static fn(SeatingSectionDomainObject $section) => $section->getId())
+                ->filter(static fn (SeatingSectionDomainObject $section) => $section->getProductId() === $productId)
+                ->map(static fn (SeatingSectionDomainObject $section) => $section->getId())
                 ->toArray();
 
             $claimed = empty($sectionIds) ? 0 : $this->seatRepository->claimSeats(

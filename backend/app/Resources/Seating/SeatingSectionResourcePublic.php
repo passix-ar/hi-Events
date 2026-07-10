@@ -21,7 +21,7 @@ class SeatingSectionResourcePublic extends BaseResource
             'seats_per_row' => $this->getSeatsPerRow(),
             $this->mergeWhen(
                 condition: $this->getSeats() !== null,
-                value: fn() => [
+                value: fn () => [
                     'seats' => SeatResourcePublic::collection($this->getSeats()),
                 ],
             ),

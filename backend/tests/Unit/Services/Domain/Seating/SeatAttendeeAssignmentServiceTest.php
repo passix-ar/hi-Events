@@ -18,8 +18,11 @@ use Tests\TestCase;
 class SeatAttendeeAssignmentServiceTest extends TestCase
 {
     private SeatRepositoryInterface|MockInterface $seatRepository;
+
     private SeatingSectionRepositoryInterface|MockInterface $seatingSectionRepository;
+
     private AttendeeRepositoryInterface|MockInterface $attendeeRepository;
+
     private SeatAttendeeAssignmentService $service;
 
     protected function setUp(): void
@@ -43,7 +46,7 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function testNoSeatsIsANoOp(): void
+    public function test_no_seats_is_a_no_op(): void
     {
         $this->seatRepository->shouldReceive('findByOrderId')->once()->andReturn(collect());
         $this->attendeeRepository->shouldNotReceive('findWhere');
@@ -53,9 +56,9 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testAssignsSeatsToAttendeesPositionallyPerProduct(): void
+    public function test_assigns_seats_to_attendees_positionally_per_product(): void
     {
-        $section = (new SeatingSectionDomainObject())
+        $section = (new SeatingSectionDomainObject)
             ->setId(5)
             ->setProductId(10)
             ->setName('Balcony');
@@ -102,9 +105,9 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testThrowsWhenSeatsOutnumberAttendees(): void
+    public function test_throws_when_seats_outnumber_attendees(): void
     {
-        $section = (new SeatingSectionDomainObject())
+        $section = (new SeatingSectionDomainObject)
             ->setId(5)
             ->setProductId(10)
             ->setName('Balcony');
@@ -135,12 +138,12 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
 
     private function makeOrder(): OrderDomainObject
     {
-        return (new OrderDomainObject())->setId(1)->setEventId(2);
+        return (new OrderDomainObject)->setId(1)->setEventId(2);
     }
 
     private function makeSeat(int $id, int $sectionId, string $label): SeatDomainObject
     {
-        return (new SeatDomainObject())
+        return (new SeatDomainObject)
             ->setId($id)
             ->setSeatingSectionId($sectionId)
             ->setLabel($label);
@@ -148,7 +151,7 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
 
     private function makeAttendee(int $id, int $productId): AttendeeDomainObject
     {
-        return (new AttendeeDomainObject())
+        return (new AttendeeDomainObject)
             ->setId($id)
             ->setProductId($productId);
     }

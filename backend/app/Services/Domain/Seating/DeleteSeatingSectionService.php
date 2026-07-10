@@ -15,12 +15,10 @@ use Illuminate\Database\DatabaseManager;
 class DeleteSeatingSectionService
 {
     public function __construct(
-        private readonly DatabaseManager                   $databaseManager,
+        private readonly DatabaseManager $databaseManager,
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
-        private readonly SeatRepositoryInterface           $seatRepository,
-    )
-    {
-    }
+        private readonly SeatRepositoryInterface $seatRepository,
+    ) {}
 
     /**
      * @throws ResourceNotFoundException
@@ -39,7 +37,7 @@ class DeleteSeatingSectionService
 
         $hasOccupiedSeats = $this->seatRepository
             ->findByEventIdWithState($eventId, [$sectionId])
-            ->contains(static fn(SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
+            ->contains(static fn (SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
 
         if ($hasOccupiedSeats) {
             throw new SeatingSectionInUseException(

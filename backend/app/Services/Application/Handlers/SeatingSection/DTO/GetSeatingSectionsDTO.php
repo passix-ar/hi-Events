@@ -8,9 +8,7 @@ use HiEvents\Http\DTO\QueryParamsDTO;
 class GetSeatingSectionsDTO extends BaseDataObject
 {
     public function __construct(
-        public int            $eventId,
+        public int $eventId,
         public QueryParamsDTO $queryParams,
-    )
-    {
-    }
+    ) {}
 }

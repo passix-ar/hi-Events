@@ -21,9 +21,13 @@ use Tests\TestCase;
 class CreateSeatingSectionServiceTest extends TestCase
 {
     private DatabaseManager|MockInterface $databaseManager;
+
     private SeatingSectionRepositoryInterface|MockInterface $seatingSectionRepository;
+
     private SeatRepositoryInterface|MockInterface $seatRepository;
+
     private ProductRepositoryInterface|MockInterface $productRepository;
+
     private CreateSeatingSectionService $service;
 
     protected function setUp(): void
@@ -40,7 +44,7 @@ class CreateSeatingSectionServiceTest extends TestCase
             $this->seatingSectionRepository,
             $this->seatRepository,
             $this->productRepository,
-            new SeatGenerationService(),
+            new SeatGenerationService,
         );
     }
 
@@ -50,21 +54,21 @@ class CreateSeatingSectionServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function testRejectsLayoutsExceedingTheSeatCap(): void
+    public function test_rejects_layouts_exceeding_the_seat_cap(): void
     {
         $this->expectException(InvalidSeatingLayoutException::class);
 
         $this->service->validateLayout(50, 50);
     }
 
-    public function testRejectsZeroOrOversizedDimensions(): void
+    public function test_rejects_zero_or_oversized_dimensions(): void
     {
         $this->expectException(InvalidSeatingLayoutException::class);
 
         $this->service->validateLayout(0, 10);
     }
 
-    public function testRejectsProductsFromAnotherEvent(): void
+    public function test_rejects_products_from_another_event(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')->once()->andReturnNull();
 
@@ -73,28 +77,28 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->service->validateProduct(10, 2);
     }
 
-    public function testRejectsNonTicketProducts(): void
+    public function test_rejects_non_ticket_products(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')
             ->once()
-            ->andReturn((new ProductDomainObject())->setProductType(ProductType::GENERAL->name));
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::GENERAL->name));
 
         $this->expectException(UnrecognizedProductIdException::class);
 
         $this->service->validateProduct(10, 2);
     }
 
-    public function testCreatesSectionAndBulkInsertsSeats(): void
+    public function test_creates_section_and_bulk_inserts_seats(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')
             ->once()
-            ->andReturn((new ProductDomainObject())->setProductType(ProductType::TICKET->name));
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
 
         $this->databaseManager->shouldReceive('transaction')
             ->once()
-            ->andReturnUsing(fn($callback) => $callback());
+            ->andReturnUsing(fn ($callback) => $callback());
 
-        $created = (new SeatingSectionDomainObject())
+        $created = (new SeatingSectionDomainObject)
             ->setId(5)
             ->setEventId(2)
             ->setProductId(10)
@@ -114,7 +118,7 @@ class CreateSeatingSectionServiceTest extends TestCase
             })
             ->andReturn(true);
 
-        $section = (new SeatingSectionDomainObject())
+        $section = (new SeatingSectionDomainObject)
             ->setEventId(2)
             ->setProductId(10)
             ->setName('Balcony')

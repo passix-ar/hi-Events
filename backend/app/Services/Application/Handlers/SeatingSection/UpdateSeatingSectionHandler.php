@@ -14,9 +14,7 @@ class UpdateSeatingSectionHandler
 {
     public function __construct(
         private readonly UpdateSeatingSectionService $updateSeatingSectionService,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @throws ResourceNotFoundException

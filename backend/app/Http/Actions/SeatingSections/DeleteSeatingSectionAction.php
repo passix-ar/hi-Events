@@ -15,9 +15,7 @@ class DeleteSeatingSectionAction extends BaseAction
 {
     public function __construct(
         private readonly DeleteSeatingSectionHandler $deleteSeatingSectionHandler,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(int $eventId, int $seatingSectionId): Response|JsonResponse
     {

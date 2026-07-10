@@ -14,7 +14,7 @@ class SeatGenerationService
 
         while ($n > 0) {
             $n--;
-            $label = chr(65 + ($n % 26)) . $label;
+            $label = chr(65 + ($n % 26)).$label;
             $n = intdiv($n, 26);
         }
 
@@ -34,7 +34,7 @@ class SeatGenerationService
                 $grid[] = [
                     SeatDomainObjectAbstract::ROW_LABEL => $rowLabel,
                     SeatDomainObjectAbstract::SEAT_NUMBER => $seatNumber,
-                    SeatDomainObjectAbstract::LABEL => $rowLabel . $seatNumber,
+                    SeatDomainObjectAbstract::LABEL => $rowLabel.$seatNumber,
                 ];
             }
         }
@@ -48,7 +48,7 @@ class SeatGenerationService
     public function buildSeatInserts(SeatingSectionDomainObject $section): array
     {
         return array_map(
-            static fn(array $seat) => array_merge($seat, [
+            static fn (array $seat) => array_merge($seat, [
                 SeatDomainObjectAbstract::EVENT_ID => $section->getEventId(),
                 SeatDomainObjectAbstract::SEATING_SECTION_ID => $section->getId(),
             ]),
