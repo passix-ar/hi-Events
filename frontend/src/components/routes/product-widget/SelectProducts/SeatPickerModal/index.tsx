@@ -1,5 +1,6 @@
 import {t, Trans} from "@lingui/macro";
 import {Button, Modal} from "@mantine/core";
+import {useMediaQuery} from "@mantine/hooks";
 import {Seat, SeatingSection} from "../../../../../types.ts";
 import {SeatingChart, SeatingLegend} from "../../../../common/SeatingChart";
 
@@ -22,6 +23,8 @@ export const SeatPickerModal = ({
                                     maxSelectable,
                                     onChange,
                                 }: SeatPickerModalProps) => {
+    const isMobile = useMediaQuery('(max-width: 767px)');
+
     const handleToggleSeat = (seat: Seat) => {
         if (selectedSeatIds.includes(seat.id)) {
             onChange(selectedSeatIds.filter((id) => id !== seat.id));
@@ -39,6 +42,7 @@ export const SeatPickerModal = ({
             onClose={onClose}
             title={<b>{t`Choose your seats`} — {productTitle}</b>}
             size={'auto'}
+            fullScreen={isMobile}
             centered
         >
             <div style={{marginBottom: 12, fontSize: '0.9rem'}}>
