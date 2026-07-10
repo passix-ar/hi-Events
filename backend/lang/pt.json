@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Secção de lugares não encontrada.",
+    "Rows and seats per row must be between 1 and :max.": "As filas e os lugares por fila devem estar entre 1 e :max.",
+    "A section cannot have more than :max seats.": "Uma secção não pode ter mais de :max lugares.",
+    "Seating sections can only be linked to ticket products.": "As secções de lugares só podem ser ligadas a produtos de tipo bilhete.",
+    "The product cannot be changed while seats in this section are held or sold.": "O produto não pode ser alterado enquanto houver lugares reservados ou vendidos nesta secção.",
+    "The section cannot be made smaller: seat :label is held or sold.": "A secção não pode ser reduzida: o lugar :label está reservado ou vendido.",
+    "This section cannot be deleted while seats are held or sold.": "Esta secção não pode ser eliminada enquanto houver lugares reservados ou vendidos.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "Um ou mais dos lugares selecionados já não estão disponíveis. Por favor, escolha outros lugares.",
+    "Please select :count seat(s) for this product.": "Selecione :count lugar(es) para este produto.",
+    "Seat selection is not available for this product.": "A seleção de lugares não está disponível para este produto.",
+    "Seats were selected for a product with no quantity.": "Foram selecionados lugares para um produto sem quantidade.",
+    "Invalid seat selection.": "Seleção de lugares inválida.",
+    "The same seat cannot be selected more than once.": "O mesmo lugar não pode ser selecionado mais de uma vez.",
+    "The number of selected seats does not match the number of attendees.": "O número de lugares selecionados não corresponde ao número de participantes.",
+    "Please select a product.": "Selecione um produto.",
+    "Seat": "Lugar"
 }

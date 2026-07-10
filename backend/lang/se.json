@@ -490,5 +490,21 @@
     "You have received a new message from": "Du har fått ett nytt meddelande från",
     "Reply to :name": "Svara till :name",
     "This message was sent via your organizer contact form.": "Detta meddelande skickades via ditt kontaktformulär för arrangörer.",
-    "Your email confirmation code is:": "Din e-postbekräftelsekod är:"
+    "Your email confirmation code is:": "Din e-postbekräftelsekod är:",
+    "Seating section not found.": "Sittsektionen hittades inte.",
+    "Rows and seats per row must be between 1 and :max.": "Rader och platser per rad måste vara mellan 1 och :max.",
+    "A section cannot have more than :max seats.": "En sektion kan inte ha fler än :max platser.",
+    "Seating sections can only be linked to ticket products.": "Sittsektioner kan endast kopplas till biljettprodukter.",
+    "The product cannot be changed while seats in this section are held or sold.": "Produkten kan inte ändras medan platser i denna sektion är reserverade eller sålda.",
+    "The section cannot be made smaller: seat :label is held or sold.": "Sektionen kan inte göras mindre: plats :label är reserverad eller såld.",
+    "This section cannot be deleted while seats are held or sold.": "Denna sektion kan inte tas bort medan platser är reserverade eller sålda.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "En eller flera av dina valda platser är inte längre tillgängliga. Välj andra platser.",
+    "Please select :count seat(s) for this product.": "Välj :count plats(er) för denna produkt.",
+    "Seat selection is not available for this product.": "Platsval är inte tillgängligt för denna produkt.",
+    "Seats were selected for a product with no quantity.": "Platser valdes för en produkt utan antal.",
+    "Invalid seat selection.": "Ogiltigt platsval.",
+    "The same seat cannot be selected more than once.": "Samma plats kan inte väljas mer än en gång.",
+    "The number of selected seats does not match the number of attendees.": "Antalet valda platser stämmer inte överens med antalet deltagare.",
+    "Please select a product.": "Välj en produkt.",
+    "Seat": "Plats"
 }

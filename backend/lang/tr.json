@@ -677,5 +677,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Koltuk bölümü bulunamadı.",
+    "Rows and seats per row must be between 1 and :max.": "Sıralar ve sıra başına koltuklar 1 ile :max arasında olmalıdır.",
+    "A section cannot have more than :max seats.": "Bir bölümde en fazla :max koltuk olabilir.",
+    "Seating sections can only be linked to ticket products.": "Koltuk bölümleri yalnızca bilet ürünlerine bağlanabilir.",
+    "The product cannot be changed while seats in this section are held or sold.": "Bu bölümdeki koltuklar rezerve veya satılmışken ürün değiştirilemez.",
+    "The section cannot be made smaller: seat :label is held or sold.": "Bölüm küçültülemez: :label koltuğu rezerve veya satılmış.",
+    "This section cannot be deleted while seats are held or sold.": "Koltuklar rezerve veya satılmışken bu bölüm silinemez.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "Seçtiğiniz koltuklardan biri veya birkaçı artık müsait değil. Lütfen farklı koltuklar seçin.",
+    "Please select :count seat(s) for this product.": "Lütfen bu ürün için :count koltuk seçin.",
+    "Seat selection is not available for this product.": "Bu ürün için koltuk seçimi mevcut değil.",
+    "Seats were selected for a product with no quantity.": "Miktarı olmayan bir ürün için koltuk seçildi.",
+    "Invalid seat selection.": "Geçersiz koltuk seçimi.",
+    "The same seat cannot be selected more than once.": "Aynı koltuk birden fazla kez seçilemez.",
+    "The number of selected seats does not match the number of attendees.": "Seçilen koltuk sayısı katılımcı sayısıyla eşleşmiyor.",
+    "Please select a product.": "Lütfen bir ürün seçin.",
+    "Seat": "Koltuk"
 }

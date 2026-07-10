@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Section de sièges introuvable.",
+    "Rows and seats per row must be between 1 and :max.": "Les rangées et les places par rangée doivent être comprises entre 1 et :max.",
+    "A section cannot have more than :max seats.": "Une section ne peut pas avoir plus de :max places.",
+    "Seating sections can only be linked to ticket products.": "Les sections de sièges ne peuvent être liées qu'à des produits de type billet.",
+    "The product cannot be changed while seats in this section are held or sold.": "Le produit ne peut pas être modifié tant que des places de cette section sont réservées ou vendues.",
+    "The section cannot be made smaller: seat :label is held or sold.": "La section ne peut pas être réduite : la place :label est réservée ou vendue.",
+    "This section cannot be deleted while seats are held or sold.": "Cette section ne peut pas être supprimée tant que des places sont réservées ou vendues.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "Une ou plusieurs des places sélectionnées ne sont plus disponibles. Veuillez choisir d'autres places.",
+    "Please select :count seat(s) for this product.": "Veuillez sélectionner :count place(s) pour ce produit.",
+    "Seat selection is not available for this product.": "La sélection de places n'est pas disponible pour ce produit.",
+    "Seats were selected for a product with no quantity.": "Des places ont été sélectionnées pour un produit sans quantité.",
+    "Invalid seat selection.": "Sélection de places non valide.",
+    "The same seat cannot be selected more than once.": "La même place ne peut pas être sélectionnée plusieurs fois.",
+    "The number of selected seats does not match the number of attendees.": "Le nombre de places sélectionnées ne correspond pas au nombre de participants.",
+    "Please select a product.": "Veuillez sélectionner un produit.",
+    "Seat": "Place"
 }

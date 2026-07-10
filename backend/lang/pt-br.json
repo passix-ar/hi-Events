@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Seção de assentos não encontrada.",
+    "Rows and seats per row must be between 1 and :max.": "As fileiras e os assentos por fileira devem estar entre 1 e :max.",
+    "A section cannot have more than :max seats.": "Uma seção não pode ter mais de :max assentos.",
+    "Seating sections can only be linked to ticket products.": "As seções de assentos só podem ser vinculadas a produtos do tipo ingresso.",
+    "The product cannot be changed while seats in this section are held or sold.": "O produto não pode ser alterado enquanto houver assentos reservados ou vendidos nesta seção.",
+    "The section cannot be made smaller: seat :label is held or sold.": "A seção não pode ser reduzida: o assento :label está reservado ou vendido.",
+    "This section cannot be deleted while seats are held or sold.": "Esta seção não pode ser excluída enquanto houver assentos reservados ou vendidos.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "Um ou mais dos assentos selecionados não estão mais disponíveis. Por favor, escolha outros assentos.",
+    "Please select :count seat(s) for this product.": "Selecione :count assento(s) para este produto.",
+    "Seat selection is not available for this product.": "A seleção de assentos não está disponível para este produto.",
+    "Seats were selected for a product with no quantity.": "Foram selecionados assentos para um produto sem quantidade.",
+    "Invalid seat selection.": "Seleção de assentos inválida.",
+    "The same seat cannot be selected more than once.": "O mesmo assento não pode ser selecionado mais de uma vez.",
+    "The number of selected seats does not match the number of attendees.": "O número de assentos selecionados não corresponde ao número de participantes.",
+    "Please select a product.": "Selecione um produto.",
+    "Seat": "Assento"
 }

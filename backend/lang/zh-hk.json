@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "找不到座位分區。",
+    "Rows and seats per row must be between 1 and :max.": "行數和每行座位數必須在 1 到 :max 之間。",
+    "A section cannot have more than :max seats.": "一個分區不能超過 :max 個座位。",
+    "Seating sections can only be linked to ticket products.": "座位分區只能關聯門票產品。",
+    "The product cannot be changed while seats in this section are held or sold.": "此分區有座位被保留或售出時無法更改產品。",
+    "The section cannot be made smaller: seat :label is held or sold.": "無法縮小分區：座位 :label 已被保留或售出。",
+    "This section cannot be deleted while seats are held or sold.": "有座位被保留或售出時無法刪除此分區。",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "您選擇的一個或多個座位已不可用。請選擇其他座位。",
+    "Please select :count seat(s) for this product.": "請為此產品選擇 :count 個座位。",
+    "Seat selection is not available for this product.": "此產品不支援選座。",
+    "Seats were selected for a product with no quantity.": "為數量為零的產品選擇了座位。",
+    "Invalid seat selection.": "座位選擇無效。",
+    "The same seat cannot be selected more than once.": "同一座位不能重複選擇。",
+    "The number of selected seats does not match the number of attendees.": "所選座位數與參加者人數不符。",
+    "Please select a product.": "請選擇產品。",
+    "Seat": "座位"
 }

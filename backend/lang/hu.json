@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Az ülésszekció nem található.",
+    "Rows and seats per row must be between 1 and :max.": "A sorok és az ülések soronként 1 és :max között lehetnek.",
+    "A section cannot have more than :max seats.": "Egy szekció legfeljebb :max ülőhelyet tartalmazhat.",
+    "Seating sections can only be linked to ticket products.": "Az ülésszekciók csak jegytermékekhez kapcsolhatók.",
+    "The product cannot be changed while seats in this section are held or sold.": "A termék nem módosítható, amíg a szekcióban ülőhelyek vannak fenntartva vagy eladva.",
+    "The section cannot be made smaller: seat :label is held or sold.": "A szekció nem csökkenthető: a(z) :label ülőhely fenntartva vagy eladva.",
+    "This section cannot be deleted while seats are held or sold.": "Ez a szekció nem törölhető, amíg ülőhelyek vannak fenntartva vagy eladva.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "A kiválasztott ülőhelyek közül egy vagy több már nem elérhető. Kérjük, válasszon másik ülőhelyet.",
+    "Please select :count seat(s) for this product.": "Kérjük, válasszon :count ülőhelyet ehhez a termékhez.",
+    "Seat selection is not available for this product.": "Ehhez a termékhez nem érhető el ülőhelyválasztás.",
+    "Seats were selected for a product with no quantity.": "Ülőhelyeket választottak egy mennyiség nélküli termékhez.",
+    "Invalid seat selection.": "Érvénytelen ülőhelyválasztás.",
+    "The same seat cannot be selected more than once.": "Ugyanaz az ülőhely nem választható ki többször.",
+    "The number of selected seats does not match the number of attendees.": "A kiválasztott ülőhelyek száma nem egyezik a résztvevők számával.",
+    "Please select a product.": "Kérjük, válasszon egy terméket.",
+    "Seat": "Ülőhely"
 }

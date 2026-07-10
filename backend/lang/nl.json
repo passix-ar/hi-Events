@@ -662,5 +662,21 @@
     "Stripe payment account not connected": "",
     "No completed paid orders on this account": "",
     "Event was created less than 24 hours ago": "",
-    "Review Message": ""
+    "Review Message": "",
+    "Seating section not found.": "Zitplaatssectie niet gevonden.",
+    "Rows and seats per row must be between 1 and :max.": "Rijen en stoelen per rij moeten tussen 1 en :max liggen.",
+    "A section cannot have more than :max seats.": "Een sectie kan niet meer dan :max stoelen hebben.",
+    "Seating sections can only be linked to ticket products.": "Zitplaatssecties kunnen alleen aan ticketproducten worden gekoppeld.",
+    "The product cannot be changed while seats in this section are held or sold.": "Het product kan niet worden gewijzigd zolang stoelen in deze sectie gereserveerd of verkocht zijn.",
+    "The section cannot be made smaller: seat :label is held or sold.": "De sectie kan niet worden verkleind: stoel :label is gereserveerd of verkocht.",
+    "This section cannot be deleted while seats are held or sold.": "Deze sectie kan niet worden verwijderd zolang stoelen gereserveerd of verkocht zijn.",
+    "One or more of your selected seats are no longer available. Please choose different seats.": "Een of meer van je geselecteerde stoelen zijn niet meer beschikbaar. Kies andere stoelen.",
+    "Please select :count seat(s) for this product.": "Selecteer :count stoel(en) voor dit product.",
+    "Seat selection is not available for this product.": "Stoelselectie is niet beschikbaar voor dit product.",
+    "Seats were selected for a product with no quantity.": "Er zijn stoelen geselecteerd voor een product zonder aantal.",
+    "Invalid seat selection.": "Ongeldige stoelselectie.",
+    "The same seat cannot be selected more than once.": "Dezelfde stoel kan niet meer dan één keer worden geselecteerd.",
+    "The number of selected seats does not match the number of attendees.": "Het aantal geselecteerde stoelen komt niet overeen met het aantal deelnemers.",
+    "Please select a product.": "Selecteer een product.",
+    "Seat": "Stoel"
 }
