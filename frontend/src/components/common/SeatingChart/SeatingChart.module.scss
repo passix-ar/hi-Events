@@ -1,0 +1,135 @@
+.seatingChart {
+  width: 100%;
+}
+
+.scrollWrapper {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.grid {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 100%;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.rowLabel {
+  width: 26px;
+  min-width: 26px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mantine-color-gray-6);
+}
+
+.seat {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 6px 6px 3px 3px;
+  border: 1px solid var(--mantine-color-gray-4);
+  background: var(--mantine-color-white);
+  font-size: 0.65rem;
+  color: var(--mantine-color-gray-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: default;
+
+  &[data-state='AVAILABLE'] {
+    border-color: var(--mantine-color-teal-5);
+    background: var(--mantine-color-teal-0);
+    color: var(--mantine-color-teal-8);
+  }
+
+  &[data-state='SELECTED'] {
+    border-color: var(--mantine-color-blue-7);
+    background: var(--mantine-color-blue-6);
+    color: var(--mantine-color-white);
+    font-weight: 700;
+  }
+
+  &[data-state='HELD'] {
+    border-color: var(--mantine-color-yellow-5);
+    background: var(--mantine-color-yellow-1);
+    color: var(--mantine-color-yellow-8);
+    cursor: not-allowed;
+  }
+
+  &[data-state='SOLD'] {
+    border-color: var(--mantine-color-gray-4);
+    background: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-5);
+    cursor: not-allowed;
+  }
+
+  &[data-state='PREVIEW'] {
+    border-color: var(--mantine-color-gray-4);
+    background: var(--mantine-color-gray-0);
+  }
+
+  &[data-clickable] {
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.12);
+      transition: transform 0.1s ease-in-out;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.9;
+  }
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--mantine-color-gray-7);
+  flex-wrap: wrap;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid var(--mantine-color-gray-4);
+  display: inline-block;
+
+  &[data-state='AVAILABLE'] {
+    border-color: var(--mantine-color-teal-5);
+    background: var(--mantine-color-teal-0);
+  }
+
+  &[data-state='SELECTED'] {
+    border-color: var(--mantine-color-blue-7);
+    background: var(--mantine-color-blue-6);
+  }
+
+  &[data-state='HELD'] {
+    border-color: var(--mantine-color-yellow-5);
+    background: var(--mantine-color-yellow-1);
+  }
+
+  &[data-state='SOLD'] {
+    border-color: var(--mantine-color-gray-4);
+    background: var(--mantine-color-gray-3);
+  }
+}

@@ -31,10 +31,15 @@ import classNames from 'classnames';
 import '../../../../styles/widget/default.scss';
 import {ProductAvailabilityMessage} from "../../../common/ProductPriceAvailability";
 import {PoweredByFooter} from "../../../common/PoweredByFooter";
-import {Event, EventLifecycleStatus, Product} from "../../../../types.ts";
+import {Event, Product, SeatingSection} from "../../../../types.ts";
 import {eventsClientPublic} from "../../../../api/event.client.ts";
 import {promoCodeClientPublic} from "../../../../api/promo-code.client.ts";
-import {IconChevronRight, IconX} from "@tabler/icons-react"
+import {IconArmchair, IconChevronRight, IconX} from "@tabler/icons-react"
+import {
+    GET_EVENT_SEATING_SECTIONS_PUBLIC_QUERY_KEY,
+    useGetSeatingSectionsPublic
+} from "../../../../queries/useGetSeatingSectionsPublic.ts";
+import {SeatPickerModal} from "./SeatPickerModal";
 import {getSessionIdentifier} from "../../../../utilites/sessionIdentifier.ts";
 import {Constants} from "../../../../constants.ts";
 import {clearWaitlistJoinedForEvent} from "../../../../hooks/useWaitlistJoined.ts";
@@ -93,6 +98,17 @@ const SelectProducts = (props: SelectProductsProps) => {
     const [resizeRef, resizeObserverRect] = useResizeObserver();
     const [collapsedProducts, setCollapsedProducts] = useState<{ [key: number]: boolean }>({});
     const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
+    const [seatPickerProductId, setSeatPickerProductId] = useState<number | null>(null);
+
+    const {data: seatingSections} = useGetSeatingSectionsPublic(eventId);
+    const sectionsByProduct = useMemo(() => {
+        const map = new Map<number, SeatingSection[]>();
+        seatingSections?.forEach((section) => {
+            const existing = map.get(Number(section.product_id)) || [];
+            map.set(Number(section.product_id), [...existing, section]);
+        });
+        return map;
+    }, [seatingSections]);
 
     const captchaEnabled = getConfig('VITE_TURNSTILE_ENABLED') === 'true';
     const captchaSiteKey = getConfig('VITE_TURNSTILE_SITE_KEY');
@@ -178,6 +194,8 @@ const SelectProducts = (props: SelectProductsProps) => {
                 setCaptchaToken(null);
             }
 
+            queryClient.invalidateQueries({queryKey: [GET_EVENT_SEATING_SECTIONS_PUBLIC_QUERY_KEY, eventId]});
+
             const errors = error?.response?.data?.errors;
             if (errors) {
                 form.setErrors(errors);
@@ -235,6 +253,47 @@ const SelectProducts = (props: SelectProductsProps) => {
 
         return total;
     }, [form.values.products]);
+
+    const getProductQuantity = (productId: number): number => {
+        const productValue = form.values.products?.find((p) => Number(p.product_id) === productId);
+        return productValue?.quantities?.reduce((acc, {quantity}) => acc + Number(quantity), 0) || 0;
+    };
+
+    const getProductSeatIds = (productId: number): number[] => {
+        return form.values.products?.find((p) => Number(p.product_id) === productId)?.seat_ids || [];
+    };
+
+    const setProductSeatIds = (productId: number, seatIds: number[]) => {
+        const index = form.values.products?.findIndex((p) => Number(p.product_id) === productId);
+        if (index !== undefined && index >= 0) {
+            form.setFieldValue(`products.${index}.seat_ids`, seatIds);
+        }
+    };
+
+    // Trim seat selections when the quantity is reduced below the number of picked seats.
+    useEffect(() => {
+        form.values.products?.forEach((productValue, index) => {
+            const seatIds = productValue.seat_ids || [];
+            const quantity = productValue.quantities?.reduce((acc, {quantity}) => acc + Number(quantity), 0) || 0;
+            if (seatIds.length > quantity) {
+                form.setFieldValue(`products.${index}.seat_ids`, seatIds.slice(0, quantity));
+            }
+        });
+    }, [form.values.products]);
+
+    const seatSelectionsComplete = useMemo(() => {
+        if (!form.values.products || sectionsByProduct.size === 0) {
+            return true;
+        }
+        return form.values.products.every((productValue) => {
+            const productId = Number(productValue.product_id);
+            if (!sectionsByProduct.has(productId)) {
+                return true;
+            }
+            const quantity = productValue.quantities?.reduce((acc, {quantity}) => acc + Number(quantity), 0) || 0;
+            return quantity === 0 || (productValue.seat_ids?.length || 0) === quantity;
+        });
+    }, [form.values.products, sectionsByProduct]);
 
     // Display-only summary. The authoritative amounts are always recalculated by the backend on
     // order creation (see the Security section of the plan). `platform_fee_total` isolates the
@@ -327,6 +386,7 @@ const SelectProducts = (props: SelectProductsProps) => {
             productValues.push({
                 product_id: Number(product.id),
                 quantities: quantitiesValues,
+                seat_ids: existingProduct?.seat_ids || [],
             });
         });
 
@@ -363,6 +423,7 @@ const SelectProducts = (props: SelectProductsProps) => {
         || selectedProductQuantitySum === 0
         || props.widgetMode === 'preview'
         || (captchaEnabled && !captchaToken)
+        || !seatSelectionsComplete
         || products?.every(product => product.is_sold_out);
 
     let productIndex = 0;
@@ -567,6 +628,24 @@ const SelectProducts = (props: SelectProductsProps) => {
                                                             />
                                                         </div>
 
+                                                        {sectionsByProduct.has(Number(product.id)) && getProductQuantity(Number(product.id)) > 0 && (
+                                                            <div className={'hi-choose-seats-row'} style={{marginTop: 10}}>
+                                                                <Button
+                                                                    variant={getProductSeatIds(Number(product.id)).length === getProductQuantity(Number(product.id)) ? 'light' : 'filled'}
+                                                                    size={'sm'}
+                                                                    leftSection={<IconArmchair size={18}/>}
+                                                                    onClick={() => setSeatPickerProductId(Number(product.id))}
+                                                                >
+                                                                    {getProductSeatIds(Number(product.id)).length === getProductQuantity(Number(product.id))
+                                                                        ? t`Change seats`
+                                                                        : t`Choose your seats`}
+                                                                </Button>
+                                                                <span style={{marginLeft: 10, fontSize: '0.85rem'}}>
+                                                                    <Trans>{getProductSeatIds(Number(product.id)).length} of {getProductQuantity(Number(product.id))} seats selected</Trans>
+                                                                </span>
+                                                            </div>
+                                                        )}
+
                                                         {product.max_per_order && form.values.products && isObjectEmpty(form.errors) && (form.values.products[currentProductIndex]?.quantities.reduce((acc, {quantity}) => acc + Number(quantity), 0) > product.max_per_order) && (
                                                             <div className={'hi-product-quantity-error'}>
                                                                 <Trans>The maximum number of products
@@ -747,6 +826,17 @@ const SelectProducts = (props: SelectProductsProps) => {
                 <PoweredByFooter style={{
                     'color': props.colors?.primaryText || '#000',
                 }}/>
+            )}
+            {seatPickerProductId !== null && (
+                <SeatPickerModal
+                    opened
+                    onClose={() => setSeatPickerProductId(null)}
+                    productTitle={products.find((p) => Number(p.id) === seatPickerProductId)?.title || ''}
+                    sections={sectionsByProduct.get(seatPickerProductId) || []}
+                    selectedSeatIds={getProductSeatIds(seatPickerProductId)}
+                    maxSelectable={getProductQuantity(seatPickerProductId)}
+                    onChange={(seatIds) => setProductSeatIds(seatPickerProductId, seatIds)}
+                />
             )}
         </div>
     );

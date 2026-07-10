@@ -41,6 +41,7 @@ export interface ProductPriceQuantityFormValue {
 export interface ProductFormValue {
     product_id: number,
     quantities: ProductPriceQuantityFormValue[],
+    seat_ids?: number[],
 }
 
 export interface ProductFormPayload {

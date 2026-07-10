@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Order\CreateOrderHandler;
 use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
@@ -19,6 +20,7 @@ use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesDTO;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesResponseDTO;
 use HiEvents\Services\Domain\Product\DTO\OrderProductPriceDTO;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Validation\ValidationException;
 use Mockery;
@@ -30,9 +32,11 @@ class CreateOrderHandlerTest extends TestCase
     private EventRepositoryInterface|MockInterface $eventRepository;
     private PromoCodeRepositoryInterface|MockInterface $promoCodeRepository;
     private AffiliateRepositoryInterface|MockInterface $affiliateRepository;
+    private ProductRepositoryInterface|MockInterface $productRepository;
     private OrderManagementService|MockInterface $orderManagementService;
     private OrderItemProcessingService|MockInterface $orderItemProcessingService;
     private AvailableProductQuantitiesFetchService|MockInterface $availabilityService;
+    private SeatClaimService|MockInterface $seatClaimService;
     private DatabaseManager|MockInterface $databaseManager;
     private CreateOrderHandler $handler;
 
@@ -43,9 +47,12 @@ class CreateOrderHandlerTest extends TestCase
         $this->eventRepository = Mockery::mock(EventRepositoryInterface::class);
         $this->promoCodeRepository = Mockery::mock(PromoCodeRepositoryInterface::class);
         $this->affiliateRepository = Mockery::mock(AffiliateRepositoryInterface::class);
+        $this->productRepository = Mockery::mock(ProductRepositoryInterface::class);
         $this->orderManagementService = Mockery::mock(OrderManagementService::class);
         $this->orderItemProcessingService = Mockery::mock(OrderItemProcessingService::class);
         $this->availabilityService = Mockery::mock(AvailableProductQuantitiesFetchService::class);
+        $this->seatClaimService = Mockery::mock(SeatClaimService::class);
+        $this->seatClaimService->shouldReceive('claimSeatsForOrder')->byDefault();
         $this->databaseManager = Mockery::mock(DatabaseManager::class);
 
         $this->databaseManager->shouldReceive('transaction')
@@ -55,9 +62,11 @@ class CreateOrderHandlerTest extends TestCase
             $this->eventRepository,
             $this->promoCodeRepository,
             $this->affiliateRepository,
+            $this->productRepository,
             $this->orderManagementService,
             $this->orderItemProcessingService,
             $this->availabilityService,
+            $this->seatClaimService,
             $this->databaseManager,
         );
     }
@@ -169,6 +178,7 @@ class CreateOrderHandlerTest extends TestCase
         $event->shouldReceive('getId')->andReturn($eventId);
         $event->shouldReceive('getStatus')->andReturn(EventStatus::LIVE->name);
         $event->shouldReceive('getEventSettings')->andReturn($eventSettings);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
 
         $this->eventRepository->shouldReceive('loadRelation')->andReturnSelf();
         $this->eventRepository->shouldReceive('findById')->with($eventId)->andReturn($event);

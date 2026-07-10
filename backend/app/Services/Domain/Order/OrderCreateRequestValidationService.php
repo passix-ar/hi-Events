@@ -10,9 +10,15 @@ use HiEvents\DomainObjects\Generated\PromoCodeDomainObjectAbstract;
 use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\DomainObjects\ProductPriceDomainObject;
 use HiEvents\Helper\Currency;
+use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
+use HiEvents\DomainObjects\SeatDomainObject;
+use HiEvents\DomainObjects\SeatingSectionDomainObject;
+use HiEvents\DomainObjects\Status\SeatingSectionStatus;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesDTO;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesResponseDTO;
@@ -30,6 +36,8 @@ class OrderCreateRequestValidationService
         readonly private PromoCodeRepositoryInterface           $promoCodeRepository,
         readonly private EventRepositoryInterface               $eventRepository,
         readonly private AvailableProductQuantitiesFetchService $fetchAvailableProductQuantitiesService,
+        readonly private SeatingSectionRepositoryInterface      $seatingSectionRepository,
+        readonly private SeatRepositoryInterface                $seatRepository,
     )
     {
     }
@@ -45,6 +53,7 @@ class OrderCreateRequestValidationService
         $event = $this->eventRepository->findById($eventId);
         $this->validatePromoCode($eventId, $data);
         $this->validateProductSelection($data);
+        $this->validateSeatSelections($eventId, $data);
 
         $this->availableProductQuantities = $this->fetchAvailableProductQuantitiesService
             ->getAvailableProductQuantities(
@@ -87,6 +96,8 @@ class OrderCreateRequestValidationService
             'products.*.quantities.*.quantity' => 'required|integer|min:0',
             'products.*.quantities.*.price_id' => 'required|integer',
             'products.*.quantities.*.price' => 'numeric|min:0',
+            'products.*.seat_ids' => 'sometimes|nullable|array',
+            'products.*.seat_ids.*' => 'integer',
         ]);
 
         if ($validator->fails()) {
@@ -103,6 +114,83 @@ class OrderCreateRequestValidationService
         if ($productData->isEmpty() || $productData->sum(fn($product) => collect($product['quantities'])->sum('quantity')) === 0) {
             throw ValidationException::withMessages([
                 'products' => __('You haven\'t selected any products')
+            ]);
+        }
+    }
+
+    /**
+     * Structural validation only: seat counts must match quantities and seat ids must belong
+     * to active sections of the product being purchased. Availability is NOT checked here —
+     * the atomic claim inside the order-creation transaction is the only authority on that.
+     *
+     * @throws ValidationException
+     */
+    private function validateSeatSelections(int $eventId, array $data): void
+    {
+        $sections = $this->seatingSectionRepository->findWhere([
+            SeatingSectionDomainObjectAbstract::EVENT_ID => $eventId,
+            SeatingSectionDomainObjectAbstract::STATUS => SeatingSectionStatus::ACTIVE->name,
+        ]);
+
+        $allSeatIds = [];
+
+        foreach ($data['products'] as $productIndex => $productAndQuantities) {
+            $productId = $productAndQuantities['product_id'];
+            $totalQuantity = collect($productAndQuantities['quantities'])->sum('quantity');
+            $seatIds = array_values(array_unique($productAndQuantities['seat_ids'] ?? []));
+
+            $productSectionIds = $sections
+                ->filter(static fn(SeatingSectionDomainObject $section) => $section->getProductId() === $productId)
+                ->map(static fn(SeatingSectionDomainObject $section) => $section->getId())
+                ->toArray();
+
+            if (empty($productSectionIds)) {
+                if (!empty($seatIds)) {
+                    throw ValidationException::withMessages([
+                        "products.$productIndex" => __('Seat selection is not available for this product.'),
+                    ]);
+                }
+                continue;
+            }
+
+            if ($totalQuantity === 0) {
+                if (!empty($seatIds)) {
+                    throw ValidationException::withMessages([
+                        "products.$productIndex" => __('Seats were selected for a product with no quantity.'),
+                    ]);
+                }
+                continue;
+            }
+
+            if (count($seatIds) !== $totalQuantity) {
+                throw ValidationException::withMessages([
+                    "products.$productIndex" => __('Please select :count seat(s) for this product.', [
+                        'count' => $totalQuantity,
+                    ]),
+                ]);
+            }
+
+            $seats = $this->seatRepository->findWhereIn('id', $seatIds);
+
+            $allSeatsBelongToProduct = $seats->count() === count($seatIds)
+                && $seats->every(
+                    static fn(SeatDomainObject $seat) => in_array($seat->getSeatingSectionId(), $productSectionIds, true)
+                );
+
+            if (!$allSeatsBelongToProduct) {
+                throw ValidationException::withMessages([
+                    "products.$productIndex" => __('Invalid seat selection.'),
+                ]);
+            }
+
+            $allSeatIds[] = $seatIds;
+        }
+
+        $allSeatIds = array_merge(...$allSeatIds ?: [[]]);
+
+        if (count($allSeatIds) !== count(array_unique($allSeatIds))) {
+            throw ValidationException::withMessages([
+                'products' => __('The same seat cannot be selected more than once.'),
             ]);
         }
     }

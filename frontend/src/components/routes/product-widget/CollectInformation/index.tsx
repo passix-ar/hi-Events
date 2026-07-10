@@ -11,7 +11,7 @@ import {
     TextInput,
     Tooltip
 } from "@mantine/core";
-import {IconArrowRight, IconCheck, IconCircleCheck, IconClock} from "@tabler/icons-react";
+import {IconArmchair, IconArrowRight, IconCheck, IconCircleCheck, IconClock} from "@tabler/icons-react";
 import {t, Trans} from "@lingui/macro";
 import {useForm} from "@mantine/form";
 import {notifications} from "@mantine/notifications";
@@ -19,7 +19,9 @@ import {useGetOrderPublic} from "../../../../queries/useGetOrderPublic.ts";
 import {useGetEventPublic} from "../../../../queries/useGetEventPublic.ts";
 import {useGetEventQuestionsPublic} from "../../../../queries/useGetEventQuestionsPublic.ts";
 import {CheckoutOrderQuestions, CheckoutProductQuestions} from "../../../common/CheckoutQuestion";
-import {Event, IdParam, Question} from "../../../../types.ts";
+import {Event, IdParam, Question, Seat} from "../../../../types.ts";
+import {useGetSeatingSectionsPublic} from "../../../../queries/useGetSeatingSectionsPublic.ts";
+import {sortSeats} from "../../../../utilites/seats.ts";
 import {useEffect, useState} from "react";
 import {InputGroup} from "../../../common/InputGroup";
 import {Card} from "../../../common/Card";
@@ -72,6 +74,25 @@ export const CollectInformation = () => {
     const requireBillingAddress = event?.settings?.require_billing_address;
     const isPerOrderCollection = event?.settings?.attendee_details_collection_method === 'PER_ORDER';
     const [copyOption, setCopyOption] = useState<'none' | 'first' | 'all'>('none');
+    const {data: seatingSections} = useGetSeatingSectionsPublic(eventId);
+
+    // Seats are paired with attendees positionally: the backend assigns the Nth seat of a
+    // product (deterministic order, see sortSeats) to that product's Nth attendee.
+    const seatsByProduct = (() => {
+        const sectionById = new Map(seatingSections?.map((section) => [Number(section.id), section]) || []);
+        const map = new Map<number, { seat: Seat, sectionName: string }[]>();
+        sortSeats(order?.seats || []).forEach((seat) => {
+            const section = sectionById.get(Number(seat.seating_section_id));
+            if (!section) {
+                return;
+            }
+            const list = map.get(Number(section.product_id)) || [];
+            list.push({seat, sectionName: section.name});
+            map.set(Number(section.product_id), list);
+        });
+        return map;
+    })();
+    const seatCounters = new Map<number, number>();
 
     const isEmailValid = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -598,6 +619,13 @@ export const CollectInformation = () => {
                             </div>
                             {Array.from(Array(orderItem?.quantity)).map((_, index) => {
                                 const currentProductIndex = productIndex;
+                                const productSeats = seatsByProduct.get(Number(orderItem.product_id));
+                                let assignedSeat: { seat: Seat, sectionName: string } | undefined;
+                                if (productSeats?.length) {
+                                    const seatCursor = seatCounters.get(Number(orderItem.product_id)) || 0;
+                                    assignedSeat = productSeats[seatCursor];
+                                    seatCounters.set(Number(orderItem.product_id), seatCursor + 1);
+                                }
                                 const ticketIndices = getTicketAttendeeIndices();
                                 const isTicketAttendee = ticketIndices.includes(currentProductIndex);
                                 const isFirstTicketAttendee = currentProductIndex === getFirstTicketAttendeeIndex();
@@ -628,6 +656,13 @@ export const CollectInformation = () => {
                                                     </h4>
                                                     <span className={classes.attendeeTicketType}>
                                                         {orderItem?.item_name}
+                                                        {assignedSeat && (
+                                                            <>
+                                                                {' · '}
+                                                                <IconArmchair size={13} style={{verticalAlign: 'text-bottom'}}/>
+                                                                {' '}{assignedSeat.sectionName} - {assignedSeat.seat.label}
+                                                            </>
+                                                        )}
                                                     </span>
                                                 </div>
                                             </div>

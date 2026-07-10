@@ -7,6 +7,7 @@ import {
     IconDiscount2,
     IconExternalLink,
     IconEye,
+    IconArmchair,
     IconEyeOff,
     IconMailCheck,
     IconMailForward,
@@ -120,6 +121,7 @@ const EventLayout = () => {
         {link: 'messages', label: t`Messages`, icon: IconSend},
         {link: 'sold-out-waitlist', label: t`Waitlist`, icon: IconListCheck},
         {link: 'capacity-assignments', label: t`Capacity Management`, icon: IconUsersGroup},
+        {link: 'seating', label: t`Assigned Seating`, icon: IconArmchair},
 
         // 5. INTEGRATIONS
         {label: t`Integrations`},
