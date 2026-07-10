@@ -88,6 +88,64 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->service->validateProduct(10, 2);
     }
 
+    public function test_rejects_blocked_seats_outside_the_grid(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateDisabledSeats(['A1', 'Z99'], 3, 4);
+    }
+
+    public function test_rejects_blocking_every_seat(): void
+    {
+        $allLabels = ['A1', 'A2', 'B1', 'B2'];
+
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateDisabledSeats($allLabels, 2, 2);
+    }
+
+    public function test_marks_blocked_seats_on_create(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
+
+        $this->databaseManager->shouldReceive('transaction')
+            ->once()
+            ->andReturnUsing(fn ($callback) => $callback());
+
+        $created = (new SeatingSectionDomainObject)
+            ->setId(5)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setRowCount(3)
+            ->setSeatsPerRow(4);
+
+        $this->seatingSectionRepository->shouldReceive('create')->once()->andReturn($created);
+        $this->seatRepository->shouldReceive('insert')->once()->andReturn(true);
+
+        $this->seatRepository->shouldReceive('updateWhere')
+            ->once()
+            ->withArgs(function (array $attributes, array $where) {
+                return $attributes === ['is_disabled' => true]
+                    && $where['seating_section_id'] === 5
+                    && $where[0] === ['label', 'in', ['A2', 'B3']];
+            })
+            ->andReturn(2);
+
+        $section = (new SeatingSectionDomainObject)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setName('Balcony')
+            ->setRowCount(3)
+            ->setSeatsPerRow(4)
+            ->setStatus(SeatingSectionStatus::ACTIVE->name);
+
+        $result = $this->service->createSeatingSection($section, ['A2', 'B3']);
+
+        $this->assertSame(5, $result->getId());
+    }
+
     public function test_creates_section_and_bulk_inserts_seats(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')

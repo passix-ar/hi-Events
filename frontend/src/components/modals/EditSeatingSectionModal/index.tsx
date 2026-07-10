@@ -31,6 +31,7 @@ export const EditSeatingSectionModal = ({
             row_count: 10,
             seats_per_row: 10,
             status: 'ACTIVE',
+            disabled_seats: [],
         }
     });
     const editMutation = useEditSeatingSection();
@@ -60,6 +61,9 @@ export const EditSeatingSectionModal = ({
                 row_count: seatingSection.row_count,
                 seats_per_row: seatingSection.seats_per_row,
                 status: seatingSection.status,
+                disabled_seats: seatingSection.seats
+                    ?.filter((seat) => seat.state === 'DISABLED')
+                    .map((seat) => seat.label) ?? [],
             });
         }
     }, [seatingSection]);
@@ -68,7 +72,8 @@ export const EditSeatingSectionModal = ({
         <Modal opened onClose={onClose} heading={t`Edit Seating Section`}>
             <form onSubmit={form.onSubmit(handleSubmit)}>
                 {event && <SeatingSectionForm form={form}
-                                              productsCategories={event.product_categories as ProductCategory[]}/>}
+                                              productsCategories={event.product_categories as ProductCategory[]}
+                                              seats={seatingSection?.seats}/>}
                 <Button
                     type={'submit'}
                     fullWidth

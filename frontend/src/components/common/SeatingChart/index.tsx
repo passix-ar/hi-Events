@@ -11,6 +11,9 @@ interface SeatingChartProps {
     maxSelectable?: number;
     onToggleSeat?: (seat: Seat) => void;
     showLegend?: boolean;
+    editMode?: boolean;
+    blockedSeatLabels?: string[];
+    onToggleBlocked?: (label: string) => void;
 }
 
 export const SeatingChart = ({
@@ -21,13 +24,25 @@ export const SeatingChart = ({
                                  maxSelectable = 0,
                                  onToggleSeat,
                                  showLegend = true,
+                                 editMode = false,
+                                 blockedSeatLabels = [],
+                                 onToggleBlocked,
                              }: SeatingChartProps) => {
     const seatsByPosition = new Map<string, Seat>();
     seats?.forEach((seat) => seatsByPosition.set(`${seat.row_label}|${seat.seat_number}`, seat));
 
-    const isInteractive = !!onToggleSeat;
+    const isInteractive = !!onToggleSeat || (editMode && !!onToggleBlocked);
 
-    const getSeatState = (seat?: Seat): string => {
+    const getSeatState = (label: string, seat?: Seat): string => {
+        if (editMode) {
+            if (blockedSeatLabels.includes(label)) {
+                return 'BLOCKED';
+            }
+            if (seat && (seat.state === 'HELD' || seat.state === 'SOLD')) {
+                return seat.state;
+            }
+            return 'PREVIEW';
+        }
         if (!seat) {
             return 'PREVIEW';
         }
@@ -37,7 +52,14 @@ export const SeatingChart = ({
         return seat.state;
     };
 
-    const handleSeatClick = (seat?: Seat) => {
+    const handleSeatClick = (label: string, seat?: Seat) => {
+        if (editMode && onToggleBlocked) {
+            const state = getSeatState(label, seat);
+            if (state === 'BLOCKED' || state === 'PREVIEW') {
+                onToggleBlocked(label);
+            }
+            return;
+        }
         if (!seat || !onToggleSeat) {
             return;
         }
@@ -59,10 +81,13 @@ export const SeatingChart = ({
                                 <div className={classes.rowLabel}>{rowLabel}</div>
                                 {Array.from({length: seatsPerRow}, (_, seatIndex) => {
                                     const seatNumber = seatIndex + 1;
+                                    const label = `${rowLabel}${seatNumber}`;
                                     const seat = seatsByPosition.get(`${rowLabel}|${seatNumber}`);
-                                    const state = getSeatState(seat);
-                                    const isClickable = isInteractive && seat
-                                        && (state === 'SELECTED' || (state === 'AVAILABLE' && selectedSeatIds.length < maxSelectable));
+                                    const state = getSeatState(label, seat);
+                                    const isClickable = editMode
+                                        ? (state === 'BLOCKED' || state === 'PREVIEW')
+                                        : (isInteractive && seat
+                                            && (state === 'SELECTED' || (state === 'AVAILABLE' && selectedSeatIds.length < maxSelectable)));
 
                                     return (
                                         <button
@@ -72,9 +97,9 @@ export const SeatingChart = ({
                                             data-state={state}
                                             data-clickable={isClickable || undefined}
                                             disabled={isInteractive && !isClickable}
-                                            onClick={() => handleSeatClick(seat)}
-                                            title={seat ? seat.label : `${rowLabel}${seatNumber}`}
-                                            aria-label={seat ? seat.label : `${rowLabel}${seatNumber}`}
+                                            onClick={() => handleSeatClick(label, seat)}
+                                            title={label}
+                                            aria-label={label}
                                         >
                                             {seatNumber}
                                         </button>

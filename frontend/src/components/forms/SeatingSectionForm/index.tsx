@@ -1,19 +1,22 @@
 import {InputGroup} from "../../common/InputGroup";
-import {NumberInput, TextInput} from "@mantine/core";
+import {Input, NumberInput, TextInput} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {UseFormReturnType} from "@mantine/form";
-import {ProductCategory, SeatingSectionRequest} from "../../../types.ts";
+import {ProductCategory, Seat, SeatingSectionRequest} from "../../../types.ts";
 import {CustomSelect, ItemProps} from "../../common/CustomSelect";
 import {IconCheck, IconX} from "@tabler/icons-react";
 import {ProductSelector} from "../../common/ProductSelector";
 import {SeatingChart} from "../../common/SeatingChart";
+import {rowLabelForIndex} from "../../../utilites/seats.ts";
+import {useEffect} from "react";
 
 interface SeatingSectionFormProps {
     form: UseFormReturnType<SeatingSectionRequest>;
     productsCategories: ProductCategory[];
+    seats?: Seat[];
 }
 
-export const SeatingSectionForm = ({form, productsCategories}: SeatingSectionFormProps) => {
+export const SeatingSectionForm = ({form, productsCategories, seats}: SeatingSectionFormProps) => {
     const statusOptions: ItemProps[] = [
         {
             icon: <IconCheck/>,
@@ -36,6 +39,33 @@ export const SeatingSectionForm = ({form, productsCategories}: SeatingSectionFor
 
     const rowCount = Number(form.values.row_count) || 0;
     const seatsPerRow = Number(form.values.seats_per_row) || 0;
+    const disabledSeats = form.values.disabled_seats ?? [];
+
+    useEffect(() => {
+        if (rowCount < 1 || seatsPerRow < 1 || disabledSeats.length === 0) {
+            return;
+        }
+        const validLabels = new Set<string>();
+        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            const rowLabel = rowLabelForIndex(rowIndex);
+            for (let seatNumber = 1; seatNumber <= seatsPerRow; seatNumber++) {
+                validLabels.add(`${rowLabel}${seatNumber}`);
+            }
+        }
+        const pruned = disabledSeats.filter((label) => validLabels.has(label));
+        if (pruned.length !== disabledSeats.length) {
+            form.setFieldValue('disabled_seats', pruned);
+        }
+    }, [rowCount, seatsPerRow]);
+
+    const handleToggleBlocked = (label: string) => {
+        form.setFieldValue(
+            'disabled_seats',
+            disabledSeats.includes(label)
+                ? disabledSeats.filter((blocked) => blocked !== label)
+                : [...disabledSeats, label],
+        );
+    };
 
     return (
         <>
@@ -83,11 +113,20 @@ export const SeatingSectionForm = ({form, productsCategories}: SeatingSectionFor
             />
 
             {rowCount > 0 && seatsPerRow > 0 && rowCount * seatsPerRow <= 2000 && (
-                <SeatingChart
-                    rowCount={rowCount}
-                    seatsPerRow={seatsPerRow}
-                    showLegend={false}
-                />
+                <Input.Wrapper
+                    label={t`Venue shape`}
+                    description={t`Click seats to block them (aisles, pillars, missing seats). Blocked seats are not sold and appear as gaps on the seat map.`}
+                >
+                    <SeatingChart
+                        rowCount={rowCount}
+                        seatsPerRow={seatsPerRow}
+                        seats={seats}
+                        showLegend={false}
+                        editMode
+                        blockedSeatLabels={disabledSeats}
+                        onToggleBlocked={handleToggleBlocked}
+                    />
+                </Input.Wrapper>
             )}
         </>
     );

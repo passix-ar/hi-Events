@@ -9,8 +9,10 @@ use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\DomainObjects\ProductPriceDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
-use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
+use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
 use HiEvents\Services\Domain\Order\OrderCreateRequestValidationService;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesDTO;
@@ -24,9 +26,17 @@ use Tests\TestCase;
 class OrderCreateRequestValidationServiceTest extends TestCase
 {
     private ProductRepositoryInterface|MockInterface $productRepository;
+
     private PromoCodeRepositoryInterface|MockInterface $promoCodeRepository;
+
     private EventRepositoryInterface|MockInterface $eventRepository;
+
     private AvailableProductQuantitiesFetchService|MockInterface $availabilityService;
+
+    private SeatingSectionRepositoryInterface|MockInterface $seatingSectionRepository;
+
+    private SeatRepositoryInterface|MockInterface $seatRepository;
+
     private OrderCreateRequestValidationService $service;
 
     protected function setUp(): void
@@ -37,12 +47,18 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->promoCodeRepository = Mockery::mock(PromoCodeRepositoryInterface::class);
         $this->eventRepository = Mockery::mock(EventRepositoryInterface::class);
         $this->availabilityService = Mockery::mock(AvailableProductQuantitiesFetchService::class);
+        $this->seatingSectionRepository = Mockery::mock(SeatingSectionRepositoryInterface::class);
+        $this->seatRepository = Mockery::mock(SeatRepositoryInterface::class);
+
+        $this->seatingSectionRepository->shouldReceive('findWhere')->andReturn(collect())->byDefault();
 
         $this->service = new OrderCreateRequestValidationService(
             $this->productRepository,
             $this->promoCodeRepository,
             $this->eventRepository,
             $this->availabilityService,
+            $this->seatingSectionRepository,
+            $this->seatRepository,
         );
     }
 
@@ -52,7 +68,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         parent::tearDown();
     }
 
-    public function testZeroQuantityTiersAreSkippedDuringValidation(): void
+    public function test_zero_quantity_tiers_are_skipped_during_validation(): void
     {
         $eventId = 1;
         $productId = 10;
@@ -86,7 +102,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testZeroQuantityTierWithNegativeAvailabilityDoesNotThrow(): void
+    public function test_zero_quantity_tier_with_negative_availability_does_not_throw(): void
     {
         $eventId = 1;
         $productId = 10;
@@ -120,7 +136,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testNonZeroQuantityStillValidatesAgainstAvailability(): void
+    public function test_non_zero_quantity_still_validates_against_availability(): void
     {
         $eventId = 1;
         $productId = 10;
@@ -151,7 +167,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->service->validateRequestData($eventId, $data);
     }
 
-    public function testRejectsNegativeProductQuantity(): void
+    public function test_rejects_negative_product_quantity(): void
     {
         $eventId = 1;
         $productId = 10;
@@ -182,7 +198,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->service->validateRequestData($eventId, $data);
     }
 
-    public function testUnrelatedOverReservedCapacityDoesNotBlockSelectedProduct(): void
+    public function test_unrelated_over_reserved_capacity_does_not_block_selected_product(): void
     {
         $eventId = 1;
         $selectedProductId = 10;
@@ -193,7 +209,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $unrelatedProduct = Mockery::mock(ProductDomainObject::class);
         $unrelatedProduct->shouldReceive('getId')->andReturn($unrelatedProductId);
 
-        $unrelatedCapacity = (new CapacityAssignmentDomainObject())
+        $unrelatedCapacity = (new CapacityAssignmentDomainObject)
             ->setCapacity(10)
             ->setUsedCapacity(20)
             ->setProducts(collect([$unrelatedProduct]));
@@ -233,15 +249,14 @@ class OrderCreateRequestValidationServiceTest extends TestCase
     }
 
     private function setupMocks(
-        int         $eventId,
-        int         $productId,
-        array       $priceIds,
-        array       $priceLabels,
-        array       $availabilities,
+        int $eventId,
+        int $productId,
+        array $priceIds,
+        array $priceLabels,
+        array $availabilities,
         ?Collection $capacities = null,
-        array       $extraAvailabilities = [],
-    ): void
-    {
+        array $extraAvailabilities = [],
+    ): void {
         $event = Mockery::mock(EventDomainObject::class);
         $event->shouldReceive('getId')->andReturn($eventId);
         $event->shouldReceive('getStatus')->andReturn(EventStatus::LIVE->name);
@@ -249,7 +264,7 @@ class OrderCreateRequestValidationServiceTest extends TestCase
 
         $this->eventRepository->shouldReceive('findById')->with($eventId)->andReturn($event);
 
-        $productPrices = new Collection();
+        $productPrices = new Collection;
         foreach ($priceIds as $i => $priceId) {
             $price = Mockery::mock(ProductPriceDomainObject::class);
             $price->shouldReceive('getId')->andReturn($priceId);

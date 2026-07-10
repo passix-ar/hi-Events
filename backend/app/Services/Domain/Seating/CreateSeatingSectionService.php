@@ -3,6 +3,7 @@
 namespace HiEvents\Services\Domain\Seating;
 
 use HiEvents\DomainObjects\Enums\ProductType;
+use HiEvents\DomainObjects\Generated\SeatDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
 use HiEvents\DomainObjects\SeatingSectionDomainObject;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -32,12 +33,15 @@ class CreateSeatingSectionService
      * @throws UnrecognizedProductIdException
      * @throws InvalidSeatingLayoutException
      */
-    public function createSeatingSection(SeatingSectionDomainObject $section): SeatingSectionDomainObject
-    {
+    public function createSeatingSection(
+        SeatingSectionDomainObject $section,
+        ?array $disabledSeats = null,
+    ): SeatingSectionDomainObject {
         $this->validateLayout($section->getRowCount(), $section->getSeatsPerRow());
         $this->validateProduct($section->getProductId(), $section->getEventId());
+        $this->validateDisabledSeats($disabledSeats, $section->getRowCount(), $section->getSeatsPerRow());
 
-        return $this->databaseManager->transaction(function () use ($section) {
+        return $this->databaseManager->transaction(function () use ($section, $disabledSeats) {
             /** @var SeatingSectionDomainObject $created */
             $created = $this->seatingSectionRepository->create([
                 SeatingSectionDomainObjectAbstract::EVENT_ID => $section->getEventId(),
@@ -51,6 +55,16 @@ class CreateSeatingSectionService
             $this->seatRepository->insert(
                 $this->seatGenerationService->buildSeatInserts($created),
             );
+
+            if (! empty($disabledSeats)) {
+                $this->seatRepository->updateWhere(
+                    attributes: [SeatDomainObjectAbstract::IS_DISABLED => true],
+                    where: [
+                        SeatDomainObjectAbstract::SEATING_SECTION_ID => $created->getId(),
+                        [SeatDomainObjectAbstract::LABEL, 'in', array_values($disabledSeats)],
+                    ],
+                );
+            }
 
             return $created;
         });
@@ -70,6 +84,37 @@ class CreateSeatingSectionService
         if ($rowCount * $seatsPerRow > self::MAX_SEATS_PER_SECTION) {
             throw new InvalidSeatingLayoutException(
                 __('A section cannot have more than :max seats.', ['max' => self::MAX_SEATS_PER_SECTION])
+            );
+        }
+    }
+
+    /**
+     * @throws InvalidSeatingLayoutException
+     */
+    public function validateDisabledSeats(?array $disabledSeats, int $rowCount, int $seatsPerRow): void
+    {
+        if (empty($disabledSeats)) {
+            return;
+        }
+
+        $gridLabels = array_column(
+            $this->seatGenerationService->generateGrid($rowCount, $seatsPerRow),
+            SeatDomainObjectAbstract::LABEL,
+        );
+
+        $unknownLabels = array_diff($disabledSeats, $gridLabels);
+
+        if (! empty($unknownLabels)) {
+            throw new InvalidSeatingLayoutException(
+                __('These blocked seats do not exist in the layout: :labels', [
+                    'labels' => implode(', ', $unknownLabels),
+                ])
+            );
+        }
+
+        if (count($disabledSeats) >= $rowCount * $seatsPerRow) {
+            throw new InvalidSeatingLayoutException(
+                __('A section must have at least one available seat.')
             );
         }
     }

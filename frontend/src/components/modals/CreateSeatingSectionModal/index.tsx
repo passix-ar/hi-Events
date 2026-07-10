@@ -23,6 +23,7 @@ export const CreateSeatingSectionModal = ({onClose}: GenericModalProps) => {
             row_count: 10,
             seats_per_row: 10,
             status: 'ACTIVE',
+            disabled_seats: [],
         }
     });
     const createMutation = useCreateSeatingSection();

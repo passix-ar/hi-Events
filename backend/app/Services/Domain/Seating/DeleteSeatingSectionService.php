@@ -35,17 +35,23 @@ class DeleteSeatingSectionService
             throw new ResourceNotFoundException(__('Seating section not found.'));
         }
 
-        $hasOccupiedSeats = $this->seatRepository
-            ->findByEventIdWithState($eventId, [$sectionId])
-            ->contains(static fn (SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
+        $this->databaseManager->transaction(function () use ($sectionId, $eventId) {
+            $this->databaseManager->statement('SELECT pg_advisory_xact_lock(?)', [$eventId]);
 
-        if ($hasOccupiedSeats) {
-            throw new SeatingSectionInUseException(
-                __('This section cannot be deleted while seats are held or sold.')
-            );
-        }
+            $hasOccupiedSeats = $this->seatRepository
+                ->findByEventIdWithState($eventId, [$sectionId])
+                ->contains(static fn (SeatDomainObject $seat) => in_array(
+                    $seat->getState(),
+                    [SeatState::HELD->name, SeatState::SOLD->name],
+                    true,
+                ));
 
-        $this->databaseManager->transaction(function () use ($sectionId) {
+            if ($hasOccupiedSeats) {
+                throw new SeatingSectionInUseException(
+                    __('This section cannot be deleted while seats are held or sold.')
+                );
+            }
+
             $this->seatRepository->deleteWhere([
                 SeatDomainObjectAbstract::SEATING_SECTION_ID => $sectionId,
             ]);

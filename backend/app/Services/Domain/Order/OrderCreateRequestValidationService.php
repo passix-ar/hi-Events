@@ -183,6 +183,12 @@ class OrderCreateRequestValidationService
                 ]);
             }
 
+            if ($seats->contains(static fn(SeatDomainObject $seat) => $seat->getIsDisabled())) {
+                throw ValidationException::withMessages([
+                    "products.$productIndex" => __('One or more of the selected seats are not available for sale.'),
+                ]);
+            }
+
             $allSeatIds[] = $seatIds;
         }
 

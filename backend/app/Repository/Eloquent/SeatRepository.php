@@ -42,6 +42,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
                 seats.seat_number,
                 seats.label,
                 CASE
+                    WHEN seats.is_disabled THEN 'DISABLED'
                     WHEN seats.attendee_id IS NOT NULL THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL
@@ -83,6 +84,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
             WHERE seats.id IN ($seatPlaceholders)
               AND seats.event_id = ?
               AND seats.seating_section_id IN ($sectionPlaceholders)
+              AND seats.is_disabled = FALSE
               AND seats.attendee_id IS NULL
               AND (
                   seats.order_id IS NULL
@@ -127,6 +129,7 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
             SELECT
                 seats.seating_section_id,
                 CASE
+                    WHEN seats.is_disabled THEN 'DISABLED'
                     WHEN seats.attendee_id IS NOT NULL THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL

@@ -28,6 +28,6 @@ class CreateSeatingSectionHandler
             ->setSeatsPerRow($data->seats_per_row)
             ->setStatus($data->status);
 
-        return $this->createSeatingSectionService->createSeatingSection($section);
+        return $this->createSeatingSectionService->createSeatingSection($section, $data->disabled_seats);
     }
 }

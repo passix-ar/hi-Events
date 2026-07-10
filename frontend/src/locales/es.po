@@ -77,7 +77,7 @@ msgstr "Logo de {0}"
 msgid "{0} of {1} seats selected"
 msgstr "{0} de {1} asientos seleccionados"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:45
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:49
 msgid "{0} of {maxSelectable} seats selected"
 msgstr "{0} de {maxSelectable} asientos seleccionados"
 
@@ -467,7 +467,7 @@ msgstr "Fecha de activación"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
-#: src/components/forms/SeatingSectionForm/index.tsx:20
+#: src/components/forms/SeatingSectionForm/index.tsx:23
 #: src/components/modals/EditUserModal/index.tsx:110
 #: src/components/routes/event/attendees.tsx:26
 msgid "Active"
@@ -1245,7 +1245,7 @@ msgstr "Ajustar automáticamente la altura del widget según el contenido. Cuand
 msgid "available"
 msgstr "disponibles"
 
-#: src/components/common/SeatingChart/index.tsx:96
+#: src/components/common/SeatingChart/index.tsx:121
 #: src/components/modals/OfferWaitlistModal/index.tsx:163
 msgid "Available"
 msgstr "Disponible"
@@ -1332,7 +1332,7 @@ msgstr "Color de fondo"
 msgid "Background Type"
 msgstr "Tipo de fondo"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:46
+#: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Balcony"
 msgstr "Platea"
 
@@ -1737,7 +1737,7 @@ msgid "Choose who pays the platform fee. This does not affect additional fees yo
 msgstr "Elija quién paga la comisión de la plataforma. Esto no afecta las comisiones adicionales que haya configurado en su cuenta."
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:641
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:40
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:43
 msgid "Choose your seats"
 msgstr "Elige tus asientos"
 
@@ -1752,6 +1752,10 @@ msgstr "Ciudad"
 #: src/components/common/SearchBar/index.tsx:75
 msgid "Clear Search Text"
 msgstr "Borrar texto de búsqueda"
+
+#: src/components/forms/SeatingSectionForm/index.tsx:118
+msgid "Click seats to block them (aisles, pillars, missing seats). Blocked seats are not sold and appear as gaps on the seat map."
+msgstr "Haz clic en los asientos para bloquearlos (pasillos, columnas, asientos inexistentes). Los asientos bloqueados no se venden y aparecen como huecos en el mapa de asientos."
 
 #: src/components/common/PromoCodeTable/index.tsx:98
 msgid "Click to copy"
@@ -2034,7 +2038,7 @@ msgstr "Confirmar Contraseña"
 msgid "Confirm Password"
 msgstr "Confirmar Contraseña"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:72
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:76
 msgid "Confirm seats"
 msgstr "Confirmar asientos"
 
@@ -2338,7 +2342,7 @@ msgid "Create a password"
 msgstr "Crear una contraseña"
 
 #: src/components/modals/CreateCapacityAssignmentModal/index.tsx:59
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:65
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:66
 msgid "Create a Product"
 msgstr "Crear un producto"
 
@@ -2452,8 +2456,8 @@ msgid "Create Question"
 msgstr "Crear pregunta"
 
 #: src/components/common/SeatingSectionList/index.tsx:61
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:74
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:85
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:75
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:86
 #: src/components/routes/event/Seating/index.tsx:48
 msgid "Create Seating Section"
 msgstr "Crear sección de asientos"
@@ -3126,8 +3130,8 @@ msgstr "Editar código promocional"
 msgid "Edit Question"
 msgstr "Editar pregunta"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:68
-#: src/components/modals/EditSeatingSectionModal/index.tsx:77
+#: src/components/modals/EditSeatingSectionModal/index.tsx:72
+#: src/components/modals/EditSeatingSectionModal/index.tsx:82
 msgid "Edit Seating Section"
 msgstr "Editar sección de asientos"
 
@@ -4366,7 +4370,7 @@ msgstr "¿Tienes un código de promoción?"
 msgid "held"
 msgstr "reservados"
 
-#: src/components/common/SeatingChart/index.tsx:98
+#: src/components/common/SeatingChart/index.tsx:123
 msgid "Held"
 msgstr "Reservado"
 
@@ -4474,7 +4478,7 @@ msgstr "Ocultar este producto a los clientes"
 msgid "Hide this question"
 msgstr "Ocultar esta pregunta"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:28
+#: src/components/forms/SeatingSectionForm/index.tsx:31
 msgid "Hide this section from ticket buyers"
 msgstr "Ocultar esta sección a los compradores"
 
@@ -4670,7 +4674,7 @@ msgstr "Importante: Se requiere reconectar Stripe"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
-#: src/components/forms/SeatingSectionForm/index.tsx:26
+#: src/components/forms/SeatingSectionForm/index.tsx:29
 #: src/components/modals/EditUserModal/index.tsx:111
 msgid "Inactive"
 msgstr "Inactivo"
@@ -5801,7 +5805,7 @@ msgstr "Notificar al organizador de nuevos pedidos"
 msgid "Number of days allowed for payment (leave blank to omit payment terms from invoices)"
 msgstr "Número de días permitidos para el pago (dejar en blanco para omitir los términos de pago en las facturas)"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:64
+#: src/components/forms/SeatingSectionForm/index.tsx:94
 msgid "Number of rows"
 msgstr "Cantidad de filas"
 
@@ -6730,7 +6734,7 @@ msgstr "Por favor, cree un producto"
 msgid "Please create a ticket"
 msgstr "Por favor, crea un ticket"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:53
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:54
 msgid "Please create a ticket product"
 msgstr "Primero crea un producto de tipo entrada"
 
@@ -7732,7 +7736,7 @@ msgstr "Buscar..."
 msgid "Seat"
 msgstr "Asiento"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:42
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:43
 msgid "Seating section created successfully"
 msgstr "Sección de asientos creada correctamente"
 
@@ -7740,11 +7744,11 @@ msgstr "Sección de asientos creada correctamente"
 msgid "Seating section deleted successfully"
 msgstr "Sección de asientos eliminada correctamente"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:22
+#: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
 msgstr "Los compradores pueden elegir asientos de esta sección"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:72
+#: src/components/forms/SeatingSectionForm/index.tsx:102
 msgid "Seats per row"
 msgstr "Asientos por fila"
 
@@ -7756,7 +7760,7 @@ msgstr "Color secundario"
 msgid "Secondary Text Color"
 msgstr "Color de texto secundario"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:45
+#: src/components/forms/SeatingSectionForm/index.tsx:75
 msgid "Section name"
 msgstr "Nombre de la sección"
 
@@ -7769,7 +7773,7 @@ msgstr "Pago Seguro"
 msgid "Select {0}"
 msgstr "Seleccionar {0}"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:73
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:77
 msgid "Select {0} more seat(s)"
 msgstr "Selecciona {0} asiento(s) más"
 
@@ -7786,7 +7790,7 @@ msgstr "Seleccionar una configuración"
 msgid "Select a message to view its contents"
 msgstr "Seleccione un mensaje para ver su contenido"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:51
+#: src/components/forms/SeatingSectionForm/index.tsx:81
 msgid "Select a product"
 msgstr "Selecciona un producto"
 
@@ -7920,7 +7924,7 @@ msgstr "Seleccionar..."
 
 #: src/components/common/PlatformFeesSettings/index.tsx:194
 #: src/components/common/PlatformFeesSettings/index.tsx:217
-#: src/components/common/SeatingChart/index.tsx:97
+#: src/components/common/SeatingChart/index.tsx:122
 msgid "Selected"
 msgstr "Seleccionado"
 
@@ -8216,7 +8220,7 @@ msgid "sold"
 msgstr "vendidos"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:391
-#: src/components/common/SeatingChart/index.tsx:99
+#: src/components/common/SeatingChart/index.tsx:124
 msgid "Sold"
 msgstr "Vendido"
 
@@ -8342,7 +8346,7 @@ msgstr "Las estadísticas se basan en la fecha de creación de la cuenta"
 #: src/components/common/WebhookTable/index.tsx:238
 #: src/components/forms/AffiliateForm/index.tsx:98
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:56
-#: src/components/forms/SeatingSectionForm/index.tsx:78
+#: src/components/forms/SeatingSectionForm/index.tsx:108
 #: src/components/forms/WebhookForm/index.tsx:157
 #: src/components/modals/EditUserModal/index.tsx:103
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:157
@@ -8529,7 +8533,7 @@ msgstr "Producto actualizado correctamente"
 msgid "Successfully Updated Promo Code"
 msgstr "Código promocional actualizado correctamente"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:48
+#: src/components/modals/EditSeatingSectionModal/index.tsx:49
 msgid "Successfully updated Seating Section"
 msgstr "Sección de asientos actualizada correctamente"
 
@@ -9825,6 +9829,10 @@ msgstr ""
 msgid "Venue Name"
 msgstr "Nombre del lugar"
 
+#: src/components/forms/SeatingSectionForm/index.tsx:117
+msgid "Venue shape"
+msgstr "Forma del lugar"
+
 #: src/components/routes/welcome/index.tsx:159
 msgid "Verification code"
 msgstr "Código de verificación"
@@ -10300,7 +10308,7 @@ msgstr ""
 msgid "When offline payments are enabled, users will be able to complete their orders and receive their tickets. Their tickets will clearly indicate the order is not paid, and the check-in tool will notify the check-in staff if an order requires payment."
 msgstr "Cuando los pagos offline estén habilitados, los usuarios podrán completar sus pedidos y recibir sus boletos. Sus boletos indicarán claramente que el pedido no está pagado, y la herramienta de registro notificará al personal si un pedido requiere pago."
 
-#: src/components/forms/SeatingSectionForm/index.tsx:50
+#: src/components/forms/SeatingSectionForm/index.tsx:80
 msgid "Which product does this section sell seats for?"
 msgstr "¿Para qué producto vende asientos esta sección?"
 
@@ -10523,7 +10531,7 @@ msgstr "Deberá marcar un pedido como pagado manualmente. Esto se puede hacer en
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Necesitarás un boleto antes de poder crear una lista de registro."
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:57
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:58
 msgid "You'll need a ticket product before you can create a seating section."
 msgstr "Necesitas un producto de tipo entrada antes de crear una sección de asientos."
 

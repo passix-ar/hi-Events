@@ -9,4 +9,5 @@ enum SeatState
     case AVAILABLE;
     case HELD;
     case SOLD;
+    case DISABLED;
 }

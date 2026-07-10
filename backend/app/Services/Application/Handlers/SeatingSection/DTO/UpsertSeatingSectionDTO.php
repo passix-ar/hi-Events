@@ -13,6 +13,7 @@ class UpsertSeatingSectionDTO extends BaseDataObject
         public int $row_count,
         public int $seats_per_row,
         public string $status,
+        public ?array $disabled_seats = null,
         public ?int $id = null,
     ) {}
 }

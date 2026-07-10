@@ -29,6 +29,7 @@ class SeatingSectionResource extends BaseResource
                     'seats_available' => $this->getSeatCounts()[SeatState::AVAILABLE->name] ?? 0,
                     'seats_held' => $this->getSeatCounts()[SeatState::HELD->name] ?? 0,
                     'seats_sold' => $this->getSeatCounts()[SeatState::SOLD->name] ?? 0,
+                    'seats_disabled' => $this->getSeatCounts()[SeatState::DISABLED->name] ?? 0,
                 ],
             ),
             $this->mergeWhen(

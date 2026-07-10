@@ -20,6 +20,7 @@ abstract class SeatDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
     final public const LABEL = 'label';
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
+    final public const IS_DISABLED = 'is_disabled';
 
     protected int $id;
     protected int $event_id;
@@ -31,6 +32,7 @@ abstract class SeatDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
     protected string $label;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
+    protected bool $is_disabled = false;
 
     public function toArray(): array
     {
@@ -45,6 +47,7 @@ abstract class SeatDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
                     'label' => $this->label ?? null,
                     'created_at' => $this->created_at ?? null,
                     'updated_at' => $this->updated_at ?? null,
+                    'is_disabled' => $this->is_disabled ?? null,
                 ];
     }
 
@@ -156,5 +159,16 @@ abstract class SeatDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
     public function getUpdatedAt(): ?string
     {
         return $this->updated_at;
+    }
+
+    public function setIsDisabled(bool $is_disabled): self
+    {
+        $this->is_disabled = $is_disabled;
+        return $this;
+    }
+
+    public function getIsDisabled(): bool
+    {
+        return $this->is_disabled;
     }
 }

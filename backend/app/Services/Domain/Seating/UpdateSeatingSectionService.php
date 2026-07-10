@@ -33,8 +33,10 @@ class UpdateSeatingSectionService
      * @throws InvalidSeatingLayoutException
      * @throws SeatingSectionInUseException
      */
-    public function updateSeatingSection(SeatingSectionDomainObject $section): SeatingSectionDomainObject
-    {
+    public function updateSeatingSection(
+        SeatingSectionDomainObject $section,
+        ?array $disabledSeats = null,
+    ): SeatingSectionDomainObject {
         /** @var SeatingSectionDomainObject|null $existing */
         $existing = $this->seatingSectionRepository->findFirstWhere([
             SeatingSectionDomainObjectAbstract::ID => $section->getId(),
@@ -47,19 +49,28 @@ class UpdateSeatingSectionService
 
         $this->createSeatingSectionService->validateLayout($section->getRowCount(), $section->getSeatsPerRow());
         $this->createSeatingSectionService->validateProduct($section->getProductId(), $section->getEventId());
+        $this->createSeatingSectionService->validateDisabledSeats(
+            $disabledSeats,
+            $section->getRowCount(),
+            $section->getSeatsPerRow(),
+        );
 
-        $occupiedSeats = $this->getOccupiedSeats($existing);
+        return $this->databaseManager->transaction(function () use ($existing, $section, $disabledSeats) {
+            $this->databaseManager->statement('SELECT pg_advisory_xact_lock(?)', [$existing->getEventId()]);
 
-        if ($section->getProductId() !== $existing->getProductId() && $occupiedSeats->isNotEmpty()) {
-            throw new SeatingSectionInUseException(
-                __('The product cannot be changed while seats in this section are held or sold.')
-            );
-        }
+            $occupiedSeats = $this->getOccupiedSeats($existing);
 
-        $this->validateShrink($existing, $section, $occupiedSeats);
+            if ($section->getProductId() !== $existing->getProductId() && $occupiedSeats->isNotEmpty()) {
+                throw new SeatingSectionInUseException(
+                    __('The product cannot be changed while seats in this section are held or sold.')
+                );
+            }
 
-        return $this->databaseManager->transaction(function () use ($existing, $section) {
+            $this->validateShrink($existing, $section, $occupiedSeats);
+            $this->validateDisabledAreNotOccupied($disabledSeats, $occupiedSeats);
+
             $this->applyGridChanges($existing, $section);
+            $this->applyDisabledSeats($existing, $disabledSeats);
 
             /** @var SeatingSectionDomainObject $updated */
             $updated = $this->seatingSectionRepository->updateFromArray($existing->getId(), [
@@ -82,13 +93,17 @@ class UpdateSeatingSectionService
     }
 
     /**
-     * @return Collection<int, SeatDomainObject>
+     * @return Collection<int, SeatDomainObject> seats that are held or sold
      */
     private function getOccupiedSeats(SeatingSectionDomainObject $existing): Collection
     {
         return $this->seatRepository
             ->findByEventIdWithState($existing->getEventId(), [$existing->getId()])
-            ->filter(static fn (SeatDomainObject $seat) => $seat->getState() !== SeatState::AVAILABLE->name);
+            ->filter(static fn (SeatDomainObject $seat) => in_array(
+                $seat->getState(),
+                [SeatState::HELD->name, SeatState::SOLD->name],
+                true,
+            ));
     }
 
     /**
@@ -109,6 +124,48 @@ class UpdateSeatingSectionService
         if ($blockingSeat !== null) {
             throw new SeatingSectionInUseException(
                 __('The section cannot be made smaller: seat :label is held or sold.', ['label' => $blockingSeat->getLabel()])
+            );
+        }
+    }
+
+    /**
+     * @throws SeatingSectionInUseException
+     */
+    private function validateDisabledAreNotOccupied(?array $disabledSeats, Collection $occupiedSeats): void
+    {
+        if (empty($disabledSeats)) {
+            return;
+        }
+
+        $blockingSeat = $occupiedSeats->first(
+            static fn (SeatDomainObject $seat) => in_array($seat->getLabel(), $disabledSeats, true)
+        );
+
+        if ($blockingSeat !== null) {
+            throw new SeatingSectionInUseException(
+                __('Seat :label cannot be blocked because it is held or sold.', ['label' => $blockingSeat->getLabel()])
+            );
+        }
+    }
+
+    private function applyDisabledSeats(SeatingSectionDomainObject $existing, ?array $disabledSeats): void
+    {
+        if ($disabledSeats === null) {
+            return;
+        }
+
+        $this->seatRepository->updateWhere(
+            attributes: [SeatDomainObjectAbstract::IS_DISABLED => false],
+            where: [SeatDomainObjectAbstract::SEATING_SECTION_ID => $existing->getId()],
+        );
+
+        if (! empty($disabledSeats)) {
+            $this->seatRepository->updateWhere(
+                attributes: [SeatDomainObjectAbstract::IS_DISABLED => true],
+                where: [
+                    SeatDomainObjectAbstract::SEATING_SECTION_ID => $existing->getId(),
+                    [SeatDomainObjectAbstract::LABEL, 'in', array_values($disabledSeats)],
+                ],
             );
         }
     }

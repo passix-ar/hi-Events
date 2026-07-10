@@ -77,7 +77,7 @@ msgstr "{0} 標誌"
 msgid "{0} of {1} seats selected"
 msgstr "已選擇 {0}/{1} 個座位"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:45
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:49
 msgid "{0} of {maxSelectable} seats selected"
 msgstr "已選擇 {0}/{maxSelectable} 個座位"
 
@@ -467,7 +467,7 @@ msgstr "激活日期"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
-#: src/components/forms/SeatingSectionForm/index.tsx:20
+#: src/components/forms/SeatingSectionForm/index.tsx:23
 #: src/components/modals/EditUserModal/index.tsx:110
 #: src/components/routes/event/attendees.tsx:26
 msgid "Active"
@@ -1245,7 +1245,7 @@ msgstr "根據內容自動調整小工具高度。停用時，小工具將填滿
 msgid "available"
 msgstr "可選"
 
-#: src/components/common/SeatingChart/index.tsx:96
+#: src/components/common/SeatingChart/index.tsx:121
 #: src/components/modals/OfferWaitlistModal/index.tsx:163
 msgid "Available"
 msgstr "可用"
@@ -1332,7 +1332,7 @@ msgstr "背景顏色"
 msgid "Background Type"
 msgstr "背景類型"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:46
+#: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Balcony"
 msgstr "樓座"
 
@@ -1737,7 +1737,7 @@ msgid "Choose who pays the platform fee. This does not affect additional fees yo
 msgstr "選擇誰支付平台費用。這不會影響您在帳戶設置中配置的額外費用。"
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:641
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:40
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:43
 msgid "Choose your seats"
 msgstr "選擇您的座位"
 
@@ -1752,6 +1752,10 @@ msgstr "城市"
 #: src/components/common/SearchBar/index.tsx:75
 msgid "Clear Search Text"
 msgstr "清除搜索文本"
+
+#: src/components/forms/SeatingSectionForm/index.tsx:118
+msgid "Click seats to block them (aisles, pillars, missing seats). Blocked seats are not sold and appear as gaps on the seat map."
+msgstr "點擊座位以將其封鎖（通道、柱子、缺失的座位）。被封鎖的座位不會出售，並在座位圖上顯示為空位。"
 
 #: src/components/common/PromoCodeTable/index.tsx:98
 msgid "Click to copy"
@@ -2034,7 +2038,7 @@ msgstr "確認密碼"
 msgid "Confirm Password"
 msgstr "確認密碼"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:72
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:76
 msgid "Confirm seats"
 msgstr "確認座位"
 
@@ -2338,7 +2342,7 @@ msgid "Create a password"
 msgstr "建立密碼"
 
 #: src/components/modals/CreateCapacityAssignmentModal/index.tsx:59
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:65
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:66
 msgid "Create a Product"
 msgstr "創建一個產品"
 
@@ -2452,8 +2456,8 @@ msgid "Create Question"
 msgstr "創建問題"
 
 #: src/components/common/SeatingSectionList/index.tsx:61
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:74
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:85
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:75
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:86
 #: src/components/routes/event/Seating/index.tsx:48
 msgid "Create Seating Section"
 msgstr "建立座位分區"
@@ -3126,8 +3130,8 @@ msgstr "編輯促銷代碼"
 msgid "Edit Question"
 msgstr "編輯問題"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:68
-#: src/components/modals/EditSeatingSectionModal/index.tsx:77
+#: src/components/modals/EditSeatingSectionModal/index.tsx:72
+#: src/components/modals/EditSeatingSectionModal/index.tsx:82
 msgid "Edit Seating Section"
 msgstr "編輯座位分區"
 
@@ -4366,7 +4370,7 @@ msgstr "有促銷代碼嗎？"
 msgid "held"
 msgstr "保留"
 
-#: src/components/common/SeatingChart/index.tsx:98
+#: src/components/common/SeatingChart/index.tsx:123
 msgid "Held"
 msgstr "保留中"
 
@@ -4474,7 +4478,7 @@ msgstr "對客户隱藏此產品"
 msgid "Hide this question"
 msgstr "隱藏此問題"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:28
+#: src/components/forms/SeatingSectionForm/index.tsx:31
 msgid "Hide this section from ticket buyers"
 msgstr "對購票者隱藏此分區"
 
@@ -4670,7 +4674,7 @@ msgstr "重要：需要重新連接 Stripe"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
-#: src/components/forms/SeatingSectionForm/index.tsx:26
+#: src/components/forms/SeatingSectionForm/index.tsx:29
 #: src/components/modals/EditUserModal/index.tsx:111
 msgid "Inactive"
 msgstr "不活動"
@@ -5801,7 +5805,7 @@ msgstr "將新訂單通知組織者"
 msgid "Number of days allowed for payment (leave blank to omit payment terms from invoices)"
 msgstr "允許支付的天數（留空以從發票中省略付款條款）"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:64
+#: src/components/forms/SeatingSectionForm/index.tsx:94
 msgid "Number of rows"
 msgstr "行數"
 
@@ -6730,7 +6734,7 @@ msgstr "請創建一個產品"
 msgid "Please create a ticket"
 msgstr "請創建一張票"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:53
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:54
 msgid "Please create a ticket product"
 msgstr "請先建立門票產品"
 
@@ -7732,7 +7736,7 @@ msgstr "搜索..."
 msgid "Seat"
 msgstr "座位"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:42
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:43
 msgid "Seating section created successfully"
 msgstr "座位分區建立成功"
 
@@ -7740,11 +7744,11 @@ msgstr "座位分區建立成功"
 msgid "Seating section deleted successfully"
 msgstr "座位分區刪除成功"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:22
+#: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
 msgstr "購票者可以選擇此分區的座位"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:72
+#: src/components/forms/SeatingSectionForm/index.tsx:102
 msgid "Seats per row"
 msgstr "每行座位數"
 
@@ -7756,7 +7760,7 @@ msgstr "次要顏色"
 msgid "Secondary Text Color"
 msgstr "次要文字顏色"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:45
+#: src/components/forms/SeatingSectionForm/index.tsx:75
 msgid "Section name"
 msgstr "分區名稱"
 
@@ -7769,7 +7773,7 @@ msgstr "安全結帳"
 msgid "Select {0}"
 msgstr "選擇 {0}"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:73
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:77
 msgid "Select {0} more seat(s)"
 msgstr "請再選擇 {0} 個座位"
 
@@ -7786,7 +7790,7 @@ msgstr "選擇配置"
 msgid "Select a message to view its contents"
 msgstr "選擇一則訊息查看其內容"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:51
+#: src/components/forms/SeatingSectionForm/index.tsx:81
 msgid "Select a product"
 msgstr "選擇產品"
 
@@ -7920,7 +7924,7 @@ msgstr "選擇..."
 
 #: src/components/common/PlatformFeesSettings/index.tsx:194
 #: src/components/common/PlatformFeesSettings/index.tsx:217
-#: src/components/common/SeatingChart/index.tsx:97
+#: src/components/common/SeatingChart/index.tsx:122
 msgid "Selected"
 msgstr "已選擇"
 
@@ -8216,7 +8220,7 @@ msgid "sold"
 msgstr "已售"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:391
-#: src/components/common/SeatingChart/index.tsx:99
+#: src/components/common/SeatingChart/index.tsx:124
 msgid "Sold"
 msgstr "已售出"
 
@@ -8342,7 +8346,7 @@ msgstr "統計數據基於帳戶創建日期"
 #: src/components/common/WebhookTable/index.tsx:238
 #: src/components/forms/AffiliateForm/index.tsx:98
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:56
-#: src/components/forms/SeatingSectionForm/index.tsx:78
+#: src/components/forms/SeatingSectionForm/index.tsx:108
 #: src/components/forms/WebhookForm/index.tsx:157
 #: src/components/modals/EditUserModal/index.tsx:103
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:157
@@ -8529,7 +8533,7 @@ msgstr ""
 msgid "Successfully Updated Promo Code"
 msgstr "成功更新促銷代碼"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:48
+#: src/components/modals/EditSeatingSectionModal/index.tsx:49
 msgid "Successfully updated Seating Section"
 msgstr "座位分區更新成功"
 
@@ -9825,6 +9829,10 @@ msgstr ""
 msgid "Venue Name"
 msgstr "地點名稱"
 
+#: src/components/forms/SeatingSectionForm/index.tsx:117
+msgid "Venue shape"
+msgstr "場地形狀"
+
 #: src/components/routes/welcome/index.tsx:159
 msgid "Verification code"
 msgstr "驗證碼"
@@ -10300,7 +10308,7 @@ msgstr ""
 msgid "When offline payments are enabled, users will be able to complete their orders and receive their tickets. Their tickets will clearly indicate the order is not paid, and the check-in tool will notify the check-in staff if an order requires payment."
 msgstr "啟用線下支付後，用户可以完成訂單並收到門票。他們的門票將清楚地顯示訂單未支付，簽到工具會通知簽到工作人員訂單是否需要支付。"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:50
+#: src/components/forms/SeatingSectionForm/index.tsx:80
 msgid "Which product does this section sell seats for?"
 msgstr "此分區為哪個產品銷售座位？"
 
@@ -10523,7 +10531,7 @@ msgstr "您必須手動將訂單標記為已支付。這可以在訂單管理頁
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "在創建簽到列表之前，您需要先獲得票。"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:57
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:58
 msgid "You'll need a ticket product before you can create a seating section."
 msgstr "建立座位分區前需要先有門票產品。"
 

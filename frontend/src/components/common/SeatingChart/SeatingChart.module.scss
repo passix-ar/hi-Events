@@ -78,6 +78,19 @@
     background: var(--mantine-color-gray-0);
   }
 
+  &[data-state='DISABLED'] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &[data-state='BLOCKED'] {
+    border: 1px dashed var(--mantine-color-gray-5);
+    background: transparent;
+    color: var(--mantine-color-gray-5);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
   &[data-clickable] {
     cursor: pointer;
 

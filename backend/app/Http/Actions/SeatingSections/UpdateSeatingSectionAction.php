@@ -35,6 +35,7 @@ class UpdateSeatingSectionAction extends BaseAction
                     'row_count' => $request->validated('row_count'),
                     'seats_per_row' => $request->validated('seats_per_row'),
                     'status' => $request->validated('status'),
+                    'disabled_seats' => $request->validated('disabled_seats'),
                 ]),
             );
         } catch (ResourceNotFoundException $exception) {

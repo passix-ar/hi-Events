@@ -737,7 +737,7 @@ export type CapacityAssignmentRequest = Omit<CapacityAssignment, 'id' | 'event_i
     product_ids: IdParam[];
 };
 
-export type SeatState = 'AVAILABLE' | 'HELD' | 'SOLD';
+export type SeatState = 'AVAILABLE' | 'HELD' | 'SOLD' | 'DISABLED';
 
 export interface Seat {
     id: number;
@@ -760,6 +760,7 @@ export interface SeatingSection {
     seats_available?: number;
     seats_held?: number;
     seats_sold?: number;
+    seats_disabled?: number;
     product?: {
         id: number;
         title: string;
@@ -767,7 +768,9 @@ export interface SeatingSection {
     seats?: Seat[];
 }
 
-export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'>;
+export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'> & {
+    disabled_seats?: string[];
+};
 
 export interface CheckInList {
     id?: number;

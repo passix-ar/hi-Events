@@ -77,7 +77,7 @@ msgstr "{0} logosu"
 msgid "{0} of {1} seats selected"
 msgstr "{0}/{1} koltuk seçildi"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:45
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:49
 msgid "{0} of {maxSelectable} seats selected"
 msgstr "{0}/{maxSelectable} koltuk seçildi"
 
@@ -467,7 +467,7 @@ msgstr "Etkinleştirme tarihi"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
-#: src/components/forms/SeatingSectionForm/index.tsx:20
+#: src/components/forms/SeatingSectionForm/index.tsx:23
 #: src/components/modals/EditUserModal/index.tsx:110
 #: src/components/routes/event/attendees.tsx:26
 msgid "Active"
@@ -1245,7 +1245,7 @@ msgstr "Widget yüksekliğini içeriğe göre otomatik olarak boyutlandırır. D
 msgid "available"
 msgstr "müsait"
 
-#: src/components/common/SeatingChart/index.tsx:96
+#: src/components/common/SeatingChart/index.tsx:121
 #: src/components/modals/OfferWaitlistModal/index.tsx:163
 msgid "Available"
 msgstr "Mevcut"
@@ -1332,7 +1332,7 @@ msgstr "Arkaplan Rengi"
 msgid "Background Type"
 msgstr "Arkaplan Türü"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:46
+#: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Balcony"
 msgstr "Balkon"
 
@@ -1737,7 +1737,7 @@ msgid "Choose who pays the platform fee. This does not affect additional fees yo
 msgstr "Platform ücretini kimin ödeyeceğini seçin. Bu, hesap ayarlarınızda yapılandırdığınız ek ücretleri etkilemez."
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:641
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:40
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:43
 msgid "Choose your seats"
 msgstr "Koltuklarınızı seçin"
 
@@ -1752,6 +1752,10 @@ msgstr "Şehir"
 #: src/components/common/SearchBar/index.tsx:75
 msgid "Clear Search Text"
 msgstr "Arama Metnini Temizle"
+
+#: src/components/forms/SeatingSectionForm/index.tsx:118
+msgid "Click seats to block them (aisles, pillars, missing seats). Blocked seats are not sold and appear as gaps on the seat map."
+msgstr "Koltukları engellemek için üzerlerine tıklayın (koridorlar, sütunlar, olmayan koltuklar). Engellenen koltuklar satılmaz ve koltuk planında boşluk olarak görünür."
 
 #: src/components/common/PromoCodeTable/index.tsx:98
 msgid "Click to copy"
@@ -2034,7 +2038,7 @@ msgstr "Şifreyi onayla"
 msgid "Confirm Password"
 msgstr "Şifreyi Onayla"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:72
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:76
 msgid "Confirm seats"
 msgstr "Koltukları onayla"
 
@@ -2338,7 +2342,7 @@ msgid "Create a password"
 msgstr "Bir şifre oluşturun"
 
 #: src/components/modals/CreateCapacityAssignmentModal/index.tsx:59
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:65
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:66
 msgid "Create a Product"
 msgstr "Ürün Oluştur"
 
@@ -2452,8 +2456,8 @@ msgid "Create Question"
 msgstr "Soru Oluştur"
 
 #: src/components/common/SeatingSectionList/index.tsx:61
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:74
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:85
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:75
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:86
 #: src/components/routes/event/Seating/index.tsx:48
 msgid "Create Seating Section"
 msgstr "Koltuk bölümü oluştur"
@@ -3126,8 +3130,8 @@ msgstr "Promosyon Kodunu Düzenle"
 msgid "Edit Question"
 msgstr "Soruyu Düzenle"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:68
-#: src/components/modals/EditSeatingSectionModal/index.tsx:77
+#: src/components/modals/EditSeatingSectionModal/index.tsx:72
+#: src/components/modals/EditSeatingSectionModal/index.tsx:82
 msgid "Edit Seating Section"
 msgstr "Koltuk bölümünü düzenle"
 
@@ -4366,7 +4370,7 @@ msgstr "Promosyon kodunuz var mı?"
 msgid "held"
 msgstr "rezerve"
 
-#: src/components/common/SeatingChart/index.tsx:98
+#: src/components/common/SeatingChart/index.tsx:123
 msgid "Held"
 msgstr "Rezerve"
 
@@ -4474,7 +4478,7 @@ msgstr "Bu ürünü müşterilerden gizle"
 msgid "Hide this question"
 msgstr "Bu soruyu gizle"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:28
+#: src/components/forms/SeatingSectionForm/index.tsx:31
 msgid "Hide this section from ticket buyers"
 msgstr "Bu bölümü bilet alıcılarından gizle"
 
@@ -4670,7 +4674,7 @@ msgstr "Önemli: Stripe yeniden bağlantısı gerekli"
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
-#: src/components/forms/SeatingSectionForm/index.tsx:26
+#: src/components/forms/SeatingSectionForm/index.tsx:29
 #: src/components/modals/EditUserModal/index.tsx:111
 msgid "Inactive"
 msgstr "Pasif"
@@ -5801,7 +5805,7 @@ msgstr "Organizatörü yeni siparişler hakkında bilgilendir"
 msgid "Number of days allowed for payment (leave blank to omit payment terms from invoices)"
 msgstr "Ödeme için izin verilen gün sayısı (faturalardan ödeme koşullarını çıkarmak için boş bırakın)"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:64
+#: src/components/forms/SeatingSectionForm/index.tsx:94
 msgid "Number of rows"
 msgstr "Sıra sayısı"
 
@@ -6730,7 +6734,7 @@ msgstr "Lütfen bir ürün oluşturun"
 msgid "Please create a ticket"
 msgstr "Lütfen bir bilet oluşturun"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:53
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:54
 msgid "Please create a ticket product"
 msgstr "Lütfen önce bir bilet ürünü oluşturun"
 
@@ -7732,7 +7736,7 @@ msgstr "Ara..."
 msgid "Seat"
 msgstr "Koltuk"
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:42
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:43
 msgid "Seating section created successfully"
 msgstr "Koltuk bölümü başarıyla oluşturuldu"
 
@@ -7740,11 +7744,11 @@ msgstr "Koltuk bölümü başarıyla oluşturuldu"
 msgid "Seating section deleted successfully"
 msgstr "Koltuk bölümü başarıyla silindi"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:22
+#: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
 msgstr "Bu bölümdeki koltuklar bilet alıcıları tarafından seçilebilir"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:72
+#: src/components/forms/SeatingSectionForm/index.tsx:102
 msgid "Seats per row"
 msgstr "Sıra başına koltuk"
 
@@ -7756,7 +7760,7 @@ msgstr "İkincil Renk"
 msgid "Secondary Text Color"
 msgstr "İkincil Metin Rengi"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:45
+#: src/components/forms/SeatingSectionForm/index.tsx:75
 msgid "Section name"
 msgstr "Bölüm adı"
 
@@ -7769,7 +7773,7 @@ msgstr "Güvenli Ödeme"
 msgid "Select {0}"
 msgstr "{0} seç"
 
-#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:73
+#: src/components/routes/product-widget/SelectProducts/SeatPickerModal/index.tsx:77
 msgid "Select {0} more seat(s)"
 msgstr "{0} koltuk daha seçin"
 
@@ -7786,7 +7790,7 @@ msgstr "Bir yapılandırma seçin"
 msgid "Select a message to view its contents"
 msgstr "İçeriğini görüntülemek için bir mesaj seçin"
 
-#: src/components/forms/SeatingSectionForm/index.tsx:51
+#: src/components/forms/SeatingSectionForm/index.tsx:81
 msgid "Select a product"
 msgstr "Bir ürün seçin"
 
@@ -7920,7 +7924,7 @@ msgstr "Seç..."
 
 #: src/components/common/PlatformFeesSettings/index.tsx:194
 #: src/components/common/PlatformFeesSettings/index.tsx:217
-#: src/components/common/SeatingChart/index.tsx:97
+#: src/components/common/SeatingChart/index.tsx:122
 msgid "Selected"
 msgstr "Seçildi"
 
@@ -8216,7 +8220,7 @@ msgid "sold"
 msgstr "satıldı"
 
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:391
-#: src/components/common/SeatingChart/index.tsx:99
+#: src/components/common/SeatingChart/index.tsx:124
 msgid "Sold"
 msgstr "Satıldı"
 
@@ -8342,7 +8346,7 @@ msgstr "İstatistikler hesap oluşturma tarihine göre hesaplanır"
 #: src/components/common/WebhookTable/index.tsx:238
 #: src/components/forms/AffiliateForm/index.tsx:98
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:56
-#: src/components/forms/SeatingSectionForm/index.tsx:78
+#: src/components/forms/SeatingSectionForm/index.tsx:108
 #: src/components/forms/WebhookForm/index.tsx:157
 #: src/components/modals/EditUserModal/index.tsx:103
 #: src/components/routes/account/ManageAccount/sections/Users/index.tsx:157
@@ -8529,7 +8533,7 @@ msgstr ""
 msgid "Successfully Updated Promo Code"
 msgstr "Promosyon Kodu Başarıyla Güncellendi"
 
-#: src/components/modals/EditSeatingSectionModal/index.tsx:48
+#: src/components/modals/EditSeatingSectionModal/index.tsx:49
 msgid "Successfully updated Seating Section"
 msgstr "Koltuk bölümü başarıyla güncellendi"
 
@@ -9825,6 +9829,10 @@ msgstr ""
 msgid "Venue Name"
 msgstr "Mekan Adı"
 
+#: src/components/forms/SeatingSectionForm/index.tsx:117
+msgid "Venue shape"
+msgstr "Mekân şekli"
+
 #: src/components/routes/welcome/index.tsx:159
 msgid "Verification code"
 msgstr "Doğrulama kodu"
@@ -10300,7 +10308,7 @@ msgstr ""
 msgid "When offline payments are enabled, users will be able to complete their orders and receive their tickets. Their tickets will clearly indicate the order is not paid, and the check-in tool will notify the check-in staff if an order requires payment."
 msgstr "Çevrimdışı ödemeler etkinleştirildiğinde, kullanıcılar siparişlerini tamamlayabilir ve biletlerini alabilir. Biletleri siparişin ödenmediğini açıkça belirtecek ve check-in aracı, bir sipariş ödeme gerektiriyorsa check-in personelini bilgilendirecek."
 
-#: src/components/forms/SeatingSectionForm/index.tsx:50
+#: src/components/forms/SeatingSectionForm/index.tsx:80
 msgid "Which product does this section sell seats for?"
 msgstr "Bu bölüm hangi ürün için koltuk satıyor?"
 
@@ -10523,7 +10531,7 @@ msgstr "Bir siparişi elle ödenmiş olarak işaretlemeniz gerekecek. Bu, sipari
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Giriş listesi oluşturabilmek için önce bir bilete ihtiyacınız var."
 
-#: src/components/modals/CreateSeatingSectionModal/index.tsx:57
+#: src/components/modals/CreateSeatingSectionModal/index.tsx:58
 msgid "You'll need a ticket product before you can create a seating section."
 msgstr "Koltuk bölümü oluşturmadan önce bir bilet ürününe ihtiyacınız var."
 
