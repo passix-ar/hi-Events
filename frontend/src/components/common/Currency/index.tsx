@@ -51,19 +51,26 @@ export const ProductPriceDisplay: React.FC<ProductPriceProps> = ({
                                                                    currency = 'USD',
                                                                    className,
                                                                    freeLabel,
-                                                                   taxAndServiceFeeDisplayType = 'exclusive',
+                                                                   taxAndServiceFeeDisplayType = 'EXCLUSIVE',
                                                                }) => {
     const basePrice = price.price;
     const taxTotal = price.tax_total || 0;
     const platformFeeTotal = price.platform_fee_total || 0;
     const otherFeeTotal = Math.max((price.fee_total || 0) - platformFeeTotal, 0);
     const totalTaxAndFees = taxTotal + (price.fee_total || 0);
+    const nonPlatformTaxAndFees = taxTotal + otherFeeTotal;
 
     const isInclusive = taxAndServiceFeeDisplayType === 'INCLUSIVE';
-    // Price shown as the headline. Inclusive events show the all-in price; exclusive events
-    // show the base price and add taxes/fees at checkout.
-    const displayPrice = isInclusive ? basePrice + totalTaxAndFees : basePrice;
-    const allInPrice = basePrice + totalTaxAndFees;
+    const separatesServiceFee = isInclusive && platformFeeTotal > 0;
+    const allInPrice = price.price_including_taxes_and_fees ?? (basePrice + totalTaxAndFees);
+    const priceBeforeServiceFee = separatesServiceFee
+        ? Math.max(allInPrice - platformFeeTotal, 0)
+        : allInPrice;
+    // When the buyer pays the platform service fee, show it separately in the order summary
+    // instead of folding it into the ticket price.
+    const displayPrice = isInclusive ? priceBeforeServiceFee : basePrice;
+    const breakdownTotal = separatesServiceFee ? priceBeforeServiceFee : allInPrice;
+    const noteTaxAndFees = separatesServiceFee ? nonPlatformTaxAndFees : totalTaxAndFees;
 
     if (basePrice === 0 && totalTaxAndFees === 0) {
         return <span className={className}>{freeLabel || t`Free`}</span>;
@@ -79,7 +86,7 @@ export const ProductPriceDisplay: React.FC<ProductPriceProps> = ({
 
     const noteLabel = isInclusive ? t`Taxes & fees included` : t`+ taxes & fees`;
 
-    const note = totalTaxAndFees === 0 ? null : (
+    const note = noteTaxAndFees === 0 ? null : (
         <Popover width={260} withArrow position="bottom-start" shadow="md">
             <Popover.Target>
                 <span style={{display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer',
@@ -92,10 +99,10 @@ export const ProductPriceDisplay: React.FC<ProductPriceProps> = ({
                 <div style={{fontSize: 13, minWidth: 200}}>
                     {breakdownRow(t`Base price`, basePrice)}
                     {taxTotal > 0 && breakdownRow(t`Taxes`, taxTotal)}
-                    {platformFeeTotal > 0 && breakdownRow(t`Service fee`, platformFeeTotal)}
+                    {platformFeeTotal > 0 && !separatesServiceFee && breakdownRow(t`Service fee`, platformFeeTotal)}
                     {otherFeeTotal > 0 && breakdownRow(t`Fees`, otherFeeTotal)}
                     <div style={{borderTop: '1px solid var(--mantine-color-default-border)', marginTop: 6, paddingTop: 6}}>
-                        {breakdownRow(t`Total`, allInPrice, true)}
+                        {breakdownRow(t`Total`, breakdownTotal, true)}
                     </div>
                 </div>
             </Popover.Dropdown>
