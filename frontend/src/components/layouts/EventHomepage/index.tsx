@@ -7,6 +7,7 @@ import {eventCoverImage, eventHomepageUrl, imageUrl, organizerHomepageUrl} from 
 import {Event, EventLifecycleStatus, OrganizerStatus} from "../../../types.ts";
 import {EventNotAvailable} from "./EventNotAvailable";
 import {
+    IconArrowRight,
     IconArrowUpRight,
     IconCalendar,
     IconCalendarOff,
@@ -236,6 +237,38 @@ const EventHomepage = ({...loaderData}: EventHomepageProps) => {
 
                 <div className={classes.container}>
                     <div className={classes.wrapper}>
+                        {/* Passix top bar */}
+                        <header className={classes.passixTopBar}>
+                            <div className={classes.passixTopBarInner}>
+                                <a
+                                    href="https://getpassix.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={classes.passixBrand}
+                                    title="Passix"
+                                >
+                                    <img
+                                        src={themeSettings.mode === 'dark'
+                                            ? "/logos/passix-dark-bg.svg"
+                                            : "/logos/passix-light-bg.svg"}
+                                        alt="Passix"
+                                        className={classes.passixLogo}
+                                        width={200}
+                                        height={54}
+                                    />
+                                </a>
+                                <a
+                                    href="https://getpassix.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={classes.passixCreateLink}
+                                >
+                                    {t`Create your event`}
+                                    <IconArrowRight/>
+                                </a>
+                            </div>
+                        </header>
+
                         {/* Main unified card */}
                         <div className={classes.mainCard}>
                             {/* Hero Section */}
