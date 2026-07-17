@@ -4,6 +4,7 @@ namespace HiEvents\Http\Actions\Orders;
 
 use HiEvents\DomainObjects\Enums\QuestionBelongsTo;
 use HiEvents\DomainObjects\EventDomainObject;
+use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\QuestionAndAnswerViewDomainObject;
 use HiEvents\Exports\OrdersExport;
 use HiEvents\Http\Actions\BaseAction;
@@ -29,6 +30,7 @@ class ExportOrdersAction extends BaseAction
 
         $orders = $this->orderRepository
             ->setMaxPerPage(10000)
+            ->loadRelation(OrderItemDomainObject::class)
             ->loadRelation(QuestionAndAnswerViewDomainObject::class)
             ->findByEventId($eventId, new QueryParamsDTO(
                 page: 1,
