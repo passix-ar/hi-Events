@@ -3,6 +3,7 @@
 namespace HiEvents\Validators;
 
 use HiEvents\DomainObjects\Enums\EventCategory;
+use HiEvents\Validators\Rules\ValidTimezoneRule;
 use Illuminate\Validation\Rule;
 
 trait EventRules
@@ -12,7 +13,7 @@ trait EventRules
         $currencies = include __DIR__ . '/../../data/currencies.php';
 
         return array_merge($this->minimalRules(), [
-            'timezone' => ['timezone:all'],
+            'timezone' => ['nullable', new ValidTimezoneRule()],
             'organizer_id' => ['required', 'integer'],
             'currency' => [Rule::in(array_values($currencies))],
             'category' => ['nullable', Rule::in(EventCategory::valuesArray())],
