@@ -8,14 +8,14 @@ use HiEvents\Mail\User\ForgotPassword;
 use HiEvents\Mail\User\ResetPasswordSuccess;
 use HiEvents\Models\AccountConfiguration;
 use HiEvents\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Mail;
 use ReflectionClass;
 use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     private const RESET_PASSWORD_ROUTE = '/auth/reset-password';
     private const FORGOT_PASSWORD_ROUTE = '/auth/forgot-password';

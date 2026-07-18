@@ -7,13 +7,13 @@ namespace Tests\Feature\Auth;
 use HiEvents\Models\Account;
 use HiEvents\Models\AccountConfiguration;
 use HiEvents\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     private const REGISTER_ROUTE = '/auth/register';
 
@@ -44,6 +44,7 @@ class RegisterTest extends TestCase
         $response = $this->post(self::REGISTER_ROUTE, [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
+            'business_name' => $account->name,
             'email' => $user->email,
             'password' => $password,
             'password_confirmation' => $password,
@@ -88,6 +89,7 @@ class RegisterTest extends TestCase
         $response = $this->post(self::REGISTER_ROUTE, [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
+            'business_name' => $account->name,
             'email' => $user->email,
             'password' => $password,
             'password_confirmation' => $password,
@@ -111,6 +113,7 @@ class RegisterTest extends TestCase
         $response = $this->post(self::REGISTER_ROUTE, [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
+            'business_name' => $account->name,
             'email' => $user->email,
             'password' => $password,
             'password_confirmation' => $password,
@@ -131,6 +134,7 @@ class RegisterTest extends TestCase
         $data = [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
+            'business_name' => $account->name,
             'email' => $user->email,
             'password' => $password,
             'password_confirmation' => $password,
@@ -161,6 +165,7 @@ class RegisterTest extends TestCase
         $data = [
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
+            'business_name' => $account->name,
             'email' => $user->email,
             'password' => $password,
             'password_confirmation' => $password,
