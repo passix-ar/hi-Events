@@ -1385,7 +1385,7 @@ msgstr "Al continuar, aceptas los <0>Términos de Servicio de {0}</0>"
 
 #: src/components/routes/auth/Register/index.tsx:159
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
-msgstr "Al registrarte, aceptas nuestras <0>Condiciones de servicio</0> y nuestra <1>Política de privacidad</1>."
+msgstr "Al registrarte, aceptas nuestros <0>Términos y Condiciones</0> y nuestra <1>Política de privacidad</1>."
 
 #: src/components/routes/admin/Configurations/index.tsx:258
 msgid "Bypass Application Fees"

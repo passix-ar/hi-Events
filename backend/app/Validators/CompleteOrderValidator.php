@@ -61,7 +61,7 @@ class CompleteOrderValidator extends BaseValidator
             'event_id' => $this->route->parameter('event_id'),
         ]);
 
-        $addressRules = $eventSettings->getRequireBillingAddress() ? [
+        $addressRules = $eventSettings?->getRequireBillingAddress() ? [
             'order.address' => 'array',
             'order.address.address_line_1' => 'required|string|max:255',
             'order.address.address_line_2' => 'nullable|string|max:255',
@@ -80,7 +80,7 @@ class CompleteOrderValidator extends BaseValidator
             'products' => new ProductQuestionRule(
                 $productQuestions,
                 $products,
-                $eventSettings->getAttendeeDetailsCollectionMethod(),
+                $eventSettings?->getAttendeeDetailsCollectionMethod(),
             ),
             ...$addressRules
         ];
