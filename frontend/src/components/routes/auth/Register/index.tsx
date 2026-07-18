@@ -120,7 +120,7 @@ export const Register = () => {
                         mb={0}
                         {...form.getInputProps('email')}
                         label={t`Email`}
-                        placeholder={'your@email.com'}
+                        placeholder={t`your@email.com`}
                         required
                     />
 

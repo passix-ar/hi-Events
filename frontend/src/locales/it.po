@@ -10577,6 +10577,10 @@ msgstr "La tua partita IVA verrà convalidata al momento del salvataggio"
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr "La tua offerta di iscrizione alla lista d'attesa è scaduta e non siamo stati in grado di completare il tuo ordine. Ti preghiamo di iscriverti nuovamente alla lista d'attesa per essere avvisato quando si libereranno dei posti."
 
+#: src/components/routes/auth/Register/index.tsx:123
+msgid "your@email.com"
+msgstr ""
+
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:67
 msgid "YouTube"
 msgstr "YouTube"

@@ -10579,6 +10579,10 @@ msgstr "Your VAT number will be validated when you save"
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 
+#: src/components/routes/auth/Register/index.tsx:123
+msgid "your@email.com"
+msgstr "your@email.com"
+
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:67
 msgid "YouTube"
 msgstr "YouTube"

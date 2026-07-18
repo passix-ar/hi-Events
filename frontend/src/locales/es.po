@@ -4769,7 +4769,7 @@ msgstr "Trabajo en cola para reintentar"
 #: src/components/routes/auth/AcceptInvitation/index.tsx:105
 #: src/components/routes/auth/Register/index.tsx:100
 msgid "John"
-msgstr "John"
+msgstr "Juan"
 
 #: src/components/modals/CreateAttendeeModal/index.tsx:137
 msgid "Johnson"
@@ -10574,6 +10574,10 @@ msgstr "Tu número de IVA será validado cuando guardes"
 #: src/components/routes/product-widget/CollectInformation/index.tsx:374
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr "Tu oferta de la lista de espera ha expirado y no pudimos completar tu pedido. Por favor, vuelve a unirte a la lista de espera para ser notificado cuando haya más plazas disponibles."
+
+#: src/components/routes/auth/Register/index.tsx:123
+msgid "your@email.com"
+msgstr "tu@email.com"
 
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:67
 msgid "YouTube"

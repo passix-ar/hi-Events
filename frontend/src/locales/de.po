@@ -10575,6 +10575,10 @@ msgstr "Ihre Umsatzsteuer-Identifikationsnummer wird beim Speichern validiert"
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr ""
 
+#: src/components/routes/auth/Register/index.tsx:123
+msgid "your@email.com"
+msgstr ""
+
 #: src/components/routes/organizer/Settings/Sections/SocialLinks/index.tsx:67
 msgid "YouTube"
 msgstr "YouTube"
