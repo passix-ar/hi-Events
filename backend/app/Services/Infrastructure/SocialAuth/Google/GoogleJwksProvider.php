@@ -40,7 +40,9 @@ class GoogleJwksProvider
     {
         $cached = $this->cache->get(self::CACHE_KEY);
 
-        if ($cached !== null && $this->containsKeyId($cached, $keyId)) {
+        // A token without a kid can never match a fresher key either, so the cached set
+        // is as good as a refetch — and garbage tokens must not drive requests to Google.
+        if ($cached !== null && ($keyId === null || $this->containsKeyId($cached, $keyId))) {
             return $cached;
         }
 

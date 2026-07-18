@@ -10,7 +10,7 @@ use HiEvents\Models\User;
 use HiEvents\Models\UserSocialIdentity;
 use HiEvents\Services\Domain\Auth\SocialAuthNonceService;
 use HiEvents\Services\Infrastructure\SocialAuth\Google\GoogleJwksProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery;
 use OpenSSLAsymmetricKey;
 use Tests\TestCase;
@@ -21,7 +21,7 @@ use Tests\TestCase;
  */
 class GoogleLoginTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     private const GOOGLE_ROUTE = '/auth/google';
     private const COMPLETE_ROUTE = '/auth/google/complete-registration';

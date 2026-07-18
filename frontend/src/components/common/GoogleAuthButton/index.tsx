@@ -83,6 +83,36 @@ export const GoogleAuthButton = ({
             });
         };
 
+        const initializeWithNonce = (nonce: string) => {
+            window.google?.accounts.id.initialize({
+                client_id: getConfig('VITE_GOOGLE_CLIENT_ID'),
+                nonce,
+                ux_mode: 'popup',
+                auto_select: false,
+                cancel_on_tap_outside: true,
+                callback: (response: GoogleCredentialResponse) => {
+                    // Google stays silent when the user closes the popup, so there is no
+                    // cancellation branch here — no credential simply means no call.
+                    if (response?.credential) {
+                        onCredentialRef.current(response.credential);
+
+                        // The backend spends the nonce the moment it sees this credential,
+                        // so re-arm with a fresh one or every retry would be rejected.
+                        void fetchNonce()
+                            .then((freshNonce) => {
+                                if (!cancelled) {
+                                    initializeWithNonce(freshNonce);
+                                }
+                            })
+                            .catch(() => {
+                                // Keeping the stale nonce only affects a retry, which would
+                                // fail with the same clear error as before this re-arm existed.
+                            });
+                    }
+                },
+            });
+        };
+
         // The nonce comes from our backend, so setup has to wait for that round trip.
         const setUpButton = async () => {
             let nonce: string;
@@ -100,20 +130,7 @@ export const GoogleAuthButton = ({
                 return;
             }
 
-            window.google.accounts.id.initialize({
-                client_id: getConfig('VITE_GOOGLE_CLIENT_ID'),
-                nonce,
-                ux_mode: 'popup',
-                auto_select: false,
-                cancel_on_tap_outside: true,
-                callback: (response: GoogleCredentialResponse) => {
-                    // Google stays silent when the user closes the popup, so there is no
-                    // cancellation branch here — no credential simply means no call.
-                    if (response?.credential) {
-                        onCredentialRef.current(response.credential);
-                    }
-                },
-            });
+            initializeWithNonce(nonce);
 
             render();
 

@@ -10,6 +10,8 @@ use HiEvents\Exceptions\SocialAuth\SocialIdentityAlreadyLinkedException;
 use HiEvents\Repository\Interfaces\UserRepositoryInterface;
 use HiEvents\Repository\Interfaces\UserSocialIdentityRepositoryInterface;
 use HiEvents\Services\Infrastructure\SocialAuth\DTO\SocialUserProfileDTO;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 /**
  * Maps a verified social profile onto a Passix user.
@@ -22,6 +24,7 @@ readonly class SocialIdentityService
     public function __construct(
         private UserSocialIdentityRepositoryInterface $socialIdentityRepository,
         private UserRepositoryInterface               $userRepository,
+        private DatabaseManager                       $databaseManager,
     )
     {
     }
@@ -62,13 +65,33 @@ readonly class SocialIdentityService
 
         $this->assertUserHasNoOtherIdentityForProvider($user, $profile);
 
-        return $this->socialIdentityRepository->create([
-            'user_id' => $user->getId(),
-            'provider' => $profile->provider->value,
-            'provider_user_id' => $profile->providerUserId,
-            'email' => $profile->email,
-            'last_login_at' => now()->toDateTimeString(),
-        ]);
+        try {
+            // The nested transaction gives the insert its own savepoint: if the unique
+            // index rejects it, only the savepoint rolls back and the caller's
+            // transaction stays usable for the re-read below.
+            return $this->databaseManager->transaction(fn () => $this->socialIdentityRepository->create([
+                'user_id' => $user->getId(),
+                'provider' => $profile->provider->value,
+                'provider_user_id' => $profile->providerUserId,
+                'email' => $profile->email,
+                'last_login_at' => now()->toDateTimeString(),
+            ]));
+        } catch (UniqueConstraintViolationException $e) {
+            // A concurrent sign-in got there first. Whoever won holds the truth, so
+            // re-read and treat this attempt like any other already-linked profile.
+            $identity = $this->findIdentity($profile);
+
+            if ($identity === null) {
+                throw new SocialIdentityAlreadyLinkedException(
+                    __('Your Passix account is already linked to a different Google account. Please contact support.'),
+                    previous: $e,
+                );
+            }
+
+            $this->assertIdentityBelongsTo($identity, $user);
+
+            return $identity;
+        }
     }
 
     private function findIdentity(SocialUserProfileDTO $profile): ?UserSocialIdentityDomainObject

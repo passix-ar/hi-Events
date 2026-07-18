@@ -39,9 +39,8 @@ class CompleteSocialRegistrationAction extends BaseAuthAction
             $loginResponse = $this->completeRegistrationHandler->handle(new CompleteSocialRegistrationDTO(
                 registrationToken: $request->validated('registration_token'),
                 businessName: $request->validated('business_name'),
-                locale: $request->has('locale')
-                    ? $request->validated('locale')
-                    : $this->localeService->getLocaleOrDefault($request->getPreferredLanguage()),
+                locale: $request->validated('locale')
+                    ?? $this->localeService->getLocaleOrDefault($request->getPreferredLanguage()),
                 timezone: $request->validated('timezone'),
                 currencyCode: $request->validated('currency_code'),
                 marketingOptIn: (bool)$request->validated('marketing_opt_in'),
