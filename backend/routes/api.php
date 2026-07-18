@@ -23,6 +23,9 @@ use HiEvents\Http\Actions\Attendees\GetAttendeesAction;
 use HiEvents\Http\Actions\Attendees\PartialEditAttendeeAction;
 use HiEvents\Http\Actions\Attendees\ResendAttendeeTicketAction;
 use HiEvents\Http\Actions\Auth\AcceptInvitationAction;
+use HiEvents\Http\Actions\Auth\Social\CompleteSocialRegistrationAction;
+use HiEvents\Http\Actions\Auth\Social\GetSocialAuthNonceAction;
+use HiEvents\Http\Actions\Auth\Social\GoogleLoginAction;
 use HiEvents\Http\Actions\Auth\ConfirmEmailAddressPublicAction;
 use HiEvents\Http\Actions\Auth\ForgotPasswordAction;
 use HiEvents\Http\Actions\Auth\GetUserInvitationAction;
@@ -236,6 +239,11 @@ $router->prefix('/auth')->group(
         $router->post('/register', CreateAccountAction::class)->name('auth.register')->middleware('throttle:auth-register');
         $router->post('/forgot-password', ForgotPasswordAction::class)->name('auth.forgot-password')->middleware('throttle:auth-forgot');
         $router->post('/confirm-email/{token}', ConfirmEmailAddressPublicAction::class)->name('auth.confirm-email')->middleware('throttle:auth-token');
+
+        // Social sign in
+        $router->get('/social/nonce', GetSocialAuthNonceAction::class)->name('auth.social.nonce')->middleware('throttle:auth-social-nonce');
+        $router->post('/google', GoogleLoginAction::class)->name('auth.google')->middleware('throttle:auth-social');
+        $router->post('/google/complete-registration', CompleteSocialRegistrationAction::class)->name('auth.google.complete-registration')->middleware('throttle:auth-register');
 
         // Invitations
         $router->get('/invitation/{invite_token}', GetUserInvitationAction::class)->name('auth.invitation');

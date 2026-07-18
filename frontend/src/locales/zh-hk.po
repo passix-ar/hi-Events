@@ -414,7 +414,8 @@ msgstr "賬户更新成功"
 msgid "Accounts"
 msgstr "賬戶"
 
-#: src/components/routes/auth/Register/index.tsx:114
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:118
+#: src/components/routes/auth/Register/index.tsx:130
 msgid "Acme Inc."
 msgstr ""
 
@@ -735,7 +736,7 @@ msgstr "快完成了！完成連接您的 Stripe 帳戶以開始接受付款。"
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "快完成了！我們正在等待您的付款處理。這只需要幾秒鐘。"
 
-#: src/components/routes/auth/Register/index.tsx:84
+#: src/components/routes/auth/Register/index.tsx:88
 msgid "Already have an account? <0>{0}</0>"
 msgstr "已有帳戶？<0>{0}</0>"
 
@@ -1348,7 +1349,8 @@ msgstr "營業地址"
 msgid "Business address for VAT purposes"
 msgstr "用於增值稅目的的營業地址"
 
-#: src/components/routes/auth/Register/index.tsx:113
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:117
+#: src/components/routes/auth/Register/index.tsx:129
 msgid "Business name"
 msgstr ""
 
@@ -1383,7 +1385,7 @@ msgstr ""
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "繼續即表示您同意 <0>{0} 服務條款</0>"
 
-#: src/components/routes/auth/Register/index.tsx:159
+#: src/components/routes/auth/Register/index.tsx:175
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "註冊即表示您同意我們的<0>服務條款</0>和<1>隱私政策</1>。"
 
@@ -1576,7 +1578,7 @@ msgstr "看看這個活動吧！"
 msgid "Check your email"
 msgstr "查看你嘅電郵"
 
-#: src/components/routes/auth/Login/index.tsx:133
+#: src/components/routes/auth/Login/index.tsx:149
 #: src/components/routes/my-tickets/index.tsx:174
 msgid "Check your inbox! If tickets are associated with this email, you'll receive a link to view them."
 msgstr "請檢查您的收件箱！如果此郵箱有關聯的票，您將收到查看連結。"
@@ -1980,12 +1982,12 @@ msgid "Confirm New Password"
 msgstr "確認新密碼"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:141
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:153
 msgid "Confirm password"
 msgstr "確認密碼"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:140
-#: src/components/routes/auth/Register/index.tsx:136
+#: src/components/routes/auth/Register/index.tsx:152
 #: src/components/routes/auth/ResetPassword/index.tsx:75
 msgid "Confirm Password"
 msgstr "確認密碼"
@@ -2301,6 +2303,10 @@ msgstr "創建促銷代碼"
 msgid "Create a Ticket"
 msgstr "創建票單"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:132
+msgid "Create account"
+msgstr ""
+
 #: src/components/modals/CreateOrganizerModal/index.tsx:24
 msgid "Create additional organizers to manage separate brands, departments, or event series under one account. Each organizer has its own events, settings, and public page."
 msgstr "建立額外的主辦方以在一個帳戶下管理獨立的品牌、部門或活動系列。每個主辦方都有自己的活動、設定和公開頁面。"
@@ -2459,6 +2465,10 @@ msgstr "建立緊活動..."
 #: src/components/forms/OrganizerForm/index.tsx:122
 msgid "Creating Organizer..."
 msgstr "建立緊主辦方..."
+
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:132
+msgid "Creating your account"
+msgstr ""
 
 #: src/components/routes/welcome/index.tsx:408
 msgid "Creating your event, please wait"
@@ -2846,7 +2856,7 @@ msgstr "文檔"
 msgid "Don't forget!"
 msgstr "別忘了！"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:120
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr ""
 
@@ -3137,8 +3147,8 @@ msgstr "符合條件的簽到列表"
 #: src/components/routes/admin/Dashboard/index.tsx:168
 #: src/components/routes/auth/AcceptInvitation/index.tsx:119
 #: src/components/routes/auth/ForgotPassword/index.tsx:70
-#: src/components/routes/auth/Login/index.tsx:85
-#: src/components/routes/auth/Register/index.tsx:122
+#: src/components/routes/auth/Login/index.tsx:101
+#: src/components/routes/auth/Register/index.tsx:138
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3369,7 +3379,7 @@ msgid "Enter unique affiliate code"
 msgstr "輸入獨特推廣碼"
 
 #: src/components/common/ContactOrganizerModal/index.tsx:80
-#: src/components/routes/auth/Login/index.tsx:150
+#: src/components/routes/auth/Login/index.tsx:166
 #: src/components/routes/my-tickets/index.tsx:192
 msgid "Enter your email"
 msgstr "輸入您的電郵地址"
@@ -4080,7 +4090,7 @@ msgstr "姓名"
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
 #: src/components/routes/auth/AcceptInvitation/index.tsx:104
-#: src/components/routes/auth/Register/index.tsx:99
+#: src/components/routes/auth/Register/index.tsx:115
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4151,7 +4161,7 @@ msgstr "飲食"
 msgid "Footer Text"
 msgstr "頁腳文字"
 
-#: src/components/routes/auth/Login/index.tsx:100
+#: src/components/routes/auth/Login/index.tsx:116
 msgid "Forgot password?"
 msgstr "忘記密碼？"
 
@@ -4211,7 +4221,7 @@ msgstr "產生代碼"
 msgid "Get Directions"
 msgstr "取得路線"
 
-#: src/components/routes/auth/Register/index.tsx:82
+#: src/components/routes/auth/Register/index.tsx:86
 msgid "Get started"
 msgstr "開始使用"
 
@@ -4263,6 +4273,10 @@ msgstr "良好的可讀性"
 #: src/components/common/CalendarOptionsPopover/index.tsx:29
 msgid "Google Calendar"
 msgstr "谷歌日曆"
+
+#: src/components/common/GoogleAuthButton/index.tsx:140
+msgid "Google sign in is unavailable right now. Please use your email and password."
+msgstr ""
 
 #: src/components/common/EventCard/index.tsx:230
 msgid "Gross revenue"
@@ -4767,7 +4781,7 @@ msgid "Job queued for retry"
 msgstr "任務已排隊等待重試"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:105
-#: src/components/routes/auth/Register/index.tsx:100
+#: src/components/routes/auth/Register/index.tsx:116
 msgid "John"
 msgstr "約翰"
 
@@ -4797,7 +4811,7 @@ msgstr "已加入"
 msgid "Just click the button below to reconnect your Stripe account."
 msgstr "只需點擊下面的按鈕重新連接您的 Stripe 帳戶。"
 
-#: src/components/routes/auth/Login/index.tsx:121
+#: src/components/routes/auth/Login/index.tsx:137
 msgid "Just looking for your tickets?"
 msgstr "只是在找您的票？"
 
@@ -4871,7 +4885,7 @@ msgstr "姓氏"
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
 #: src/components/routes/auth/AcceptInvitation/index.tsx:109
-#: src/components/routes/auth/Register/index.tsx:105
+#: src/components/routes/auth/Register/index.tsx:121
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4987,12 +5001,12 @@ msgstr "加載中..."
 msgid "Location"
 msgstr "地點"
 
-#: src/components/routes/auth/Login/index.tsx:96
-#: src/components/routes/auth/Register/index.tsx:87
+#: src/components/routes/auth/Login/index.tsx:112
+#: src/components/routes/auth/Register/index.tsx:91
 msgid "Log in"
 msgstr "登錄"
 
-#: src/components/routes/auth/Login/index.tsx:96
+#: src/components/routes/auth/Login/index.tsx:112
 msgid "Logging in"
 msgstr "登錄"
 
@@ -5819,6 +5833,10 @@ msgstr "一旦開始收集數據，您將在這裏看到。"
 msgid "Once you're ready, set your event live and start selling products."
 msgstr "一旦準備就緒，將您的活動上線並開始銷售產品。"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:105
+msgid "One last step"
+msgstr ""
+
 #: src/components/common/EventStatusBadge/index.tsx:18
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:31
 msgid "Ongoing"
@@ -5893,6 +5911,8 @@ msgid "Options"
 msgstr "選項"
 
 #: src/components/modals/CreateEventModal/index.tsx:164
+#: src/components/routes/auth/Login/index.tsx:95
+#: src/components/routes/auth/Register/index.tsx:106
 msgid "or"
 msgstr "或"
 
@@ -6331,8 +6351,8 @@ msgid "Passix está pensado para organizadores de Argentina. Desde que publicás
 msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Login/index.tsx:90
-#: src/components/routes/auth/Register/index.tsx:130
+#: src/components/routes/auth/Login/index.tsx:106
+#: src/components/routes/auth/Register/index.tsx:146
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "密碼"
@@ -6341,7 +6361,7 @@ msgstr "密碼"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "密碼必須至少包含 8 個字符"
 
-#: src/components/routes/auth/Register/index.tsx:40
+#: src/components/routes/auth/Register/index.tsx:44
 msgid "Password must be at least 8 characters"
 msgstr "密碼必須至少包含 8 個字符"
 
@@ -6350,7 +6370,7 @@ msgid "Password reset successfully. Please login with your new password."
 msgstr "密碼重置成功。請使用新密碼登錄。"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:41
+#: src/components/routes/auth/Register/index.tsx:45
 msgid "Passwords are not the same"
 msgstr "密碼不一樣"
 
@@ -6613,12 +6633,12 @@ msgstr "請至少添加一個選項"
 msgid "Please check the provided information is correct"
 msgstr "請檢查所提供的信息是否正確"
 
-#: src/components/routes/auth/Login/index.tsx:56
+#: src/components/routes/auth/Login/index.tsx:60
 msgid "Please check your email and password and try again"
 msgstr "請檢查您的電子郵件和密碼並重試"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:42
+#: src/components/routes/auth/Register/index.tsx:46
 msgid "Please check your email is valid"
 msgstr "請檢查您的電子郵件是否有效"
 
@@ -6655,7 +6675,8 @@ msgstr "請輸入有效的 URL"
 msgid "Please enter the 5-digit code"
 msgstr "請輸入5位數驗證碼"
 
-#: src/components/routes/auth/Register/index.tsx:39
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:46
+#: src/components/routes/auth/Register/index.tsx:43
 msgid "Please enter your business name"
 msgstr ""
 
@@ -7063,7 +7084,7 @@ msgid "Ready to upgrade? This takes only a few minutes."
 msgstr "準備升級？這只需要幾分鐘。"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:164
-#: src/components/routes/auth/Register/index.tsx:151
+#: src/components/routes/auth/Register/index.tsx:167
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "接收 {0} 的產品更新。"
@@ -7185,7 +7206,7 @@ msgstr "退款"
 msgid "Regional Settings"
 msgstr "地區設定"
 
-#: src/components/routes/auth/Register/index.tsx:155
+#: src/components/routes/auth/Register/index.tsx:171
 msgid "Register"
 msgstr "註冊"
 
@@ -7794,7 +7815,7 @@ msgstr "已選擇"
 msgid "Selling fast 🔥"
 msgstr "熱賣中 🔥"
 
-#: src/components/routes/auth/Login/index.tsx:160
+#: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
 msgid "Send"
 msgstr "發送"
@@ -8044,6 +8065,10 @@ msgstr "顯示常用地址字段，包括國家"
 msgid "Signed Up"
 msgstr "註冊時間"
 
+#: src/hooks/useGoogleAuth.ts:77
+msgid "Signing in with Google is not available right now."
+msgstr ""
+
 #: src/components/modals/ManageAttendeeModal/index.tsx:111
 #: src/components/modals/ManageOrderModal/index.tsx:151
 msgid "Simpson"
@@ -8058,7 +8083,7 @@ msgid "Skip this step"
 msgstr "跳過此步驟"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:110
-#: src/components/routes/auth/Register/index.tsx:106
+#: src/components/routes/auth/Register/index.tsx:122
 msgid "Smith"
 msgstr "史密斯"
 
@@ -8100,6 +8125,10 @@ msgstr "售罄"
 msgid "Something went wrong"
 msgstr "出了點問題"
 
+#: src/hooks/useGoogleAuth.ts:84
+msgid "Something went wrong signing in with Google. Please try again."
+msgstr ""
+
 #: src/components/common/TaxAndFeeList/index.tsx:39
 msgid "Something went wrong while deleting the Tax or Fee"
 msgstr "刪除税費時出了問題"
@@ -8123,7 +8152,7 @@ msgstr "出了點問題。請稍後再試。"
 
 #: src/components/layouts/Event/index.tsx:78
 #: src/components/layouts/OrganizerLayout/index.tsx:106
-#: src/components/routes/auth/Login/index.tsx:72
+#: src/components/routes/auth/Login/index.tsx:76
 #: src/components/routes/my-tickets/index.tsx:145
 #: src/components/routes/profile/ManageProfile/index.tsx:90
 #: src/components/routes/profile/ManageProfile/index.tsx:104
@@ -8823,6 +8852,10 @@ msgstr "此活動已結束"
 msgid "This event is not published yet"
 msgstr "呢個活動未發佈"
 
+#: src/hooks/useGoogleAuth.ts:80
+msgid "This Google account is already linked to another user. Please contact support."
+msgstr ""
+
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:154
 msgid "This information will be shown on the payment page, order summary page, and order confirmation email."
 msgstr "這些信息將顯示在支付頁面、訂單摘要頁面和訂單確認電子郵件中。"
@@ -8868,7 +8901,8 @@ msgstr "此信息將包含在本次活動發送的所有電子郵件的頁腳中
 msgid "This message will only be shown if order is completed successfully. Orders awaiting payment will not show this message"
 msgstr "此消息僅在訂單成功完成後顯示。等待付款的訂單不會顯示此消息。"
 
-#: src/components/routes/auth/Register/index.tsx:115
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:119
+#: src/components/routes/auth/Register/index.tsx:131
 msgid "This name appears on your event pages and in emails."
 msgstr ""
 
@@ -9166,10 +9200,12 @@ msgid "Toggle columns"
 msgstr "切換欄位"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:82
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:74
 #: src/components/routes/auth/ForgotPassword/index.tsx:33
-#: src/components/routes/auth/Login/index.tsx:52
-#: src/components/routes/auth/Register/index.tsx:59
+#: src/components/routes/auth/Login/index.tsx:56
+#: src/components/routes/auth/Register/index.tsx:63
 #: src/components/routes/auth/ResetPassword/index.tsx:47
+#: src/hooks/useGoogleAuth.ts:82
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "嘗試次數過多。請稍候再試。"
 
@@ -9285,7 +9321,7 @@ msgstr "如果是離線付款則為真"
 msgid "True if payment pending"
 msgstr "如果付款待處理則為真"
 
-#: src/components/routes/auth/Login/index.tsx:141
+#: src/components/routes/auth/Login/index.tsx:157
 #: src/components/routes/my-tickets/index.tsx:183
 msgid "Try another email"
 msgstr "嘗試其他郵箱"
@@ -9889,9 +9925,18 @@ msgstr "我們找不到此訂單。它可能已被刪除。"
 msgid "We couldn't load the data. Please try again."
 msgstr "我們無法加載數據。請重試。"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:63
+#: src/hooks/useGoogleAuth.ts:70
+msgid "We couldn't reach the server. Please check your connection and try again."
+msgstr ""
+
 #: src/components/common/ProductsTable/SortableCategory/index.tsx:94
 msgid "We couldn't reorder the categories. Please try again."
 msgstr "我們無法重新排序類別。請再試一次。"
+
+#: src/hooks/useGoogleAuth.ts:75
+msgid "We couldn't verify your Google sign in. Please try again."
+msgstr ""
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:387
 msgid "We hit a snag loading this page. Please try again."
@@ -10006,7 +10051,7 @@ msgstr "微博"
 msgid "Welcome aboard! Please login to continue."
 msgstr "歡迎加入！請登錄以繼續。"
 
-#: src/components/routes/auth/Login/index.tsx:80
+#: src/components/routes/auth/Login/index.tsx:84
 msgid "Welcome back"
 msgstr "歡迎回來"
 
@@ -10203,7 +10248,7 @@ msgstr "工作"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:155
+#: src/components/routes/auth/Register/index.tsx:171
 msgid "Working..."
 msgstr "工作..."
 
@@ -10401,6 +10446,10 @@ msgstr "您將參加 {0}！"
 msgid "You're on the waitlist!"
 msgstr "您已加入候補名單！"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:107
+msgid "You're signing up as {0}"
+msgstr ""
+
 #: src/components/routes/product-widget/CollectInformation/index.tsx:410
 msgid "You've been offered a spot!"
 msgstr "您已獲得一個名額！"
@@ -10517,8 +10566,8 @@ msgstr "您的訂單一旦開始滾動，就會出現在這裏。"
 msgid "Your organizer address"
 msgstr "您主辦單位的地址"
 
-#: src/components/routes/auth/Login/index.tsx:91
-#: src/components/routes/auth/Register/index.tsx:131
+#: src/components/routes/auth/Login/index.tsx:107
+#: src/components/routes/auth/Register/index.tsx:147
 msgid "Your password"
 msgstr "您的密碼"
 
@@ -10545,6 +10594,10 @@ msgstr "您的計劃"
 #: src/components/modals/RefundOrderModal/index.tsx:58
 msgid "Your refund is processing."
 msgstr "您的退款正在處理中。"
+
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:68
+msgid "Your sign up session has expired. Please start again."
+msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:180
 msgid "Your Stripe account is connected and processing payments."
@@ -10575,7 +10628,7 @@ msgstr "保存時將驗證您的增值稅號碼"
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr ""
 
-#: src/components/routes/auth/Register/index.tsx:123
+#: src/components/routes/auth/Register/index.tsx:139
 msgid "your@email.com"
 msgstr ""
 

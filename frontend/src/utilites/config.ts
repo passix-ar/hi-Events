@@ -7,6 +7,8 @@ export const clientBuildEnv: { [K in ConfigKeys]: string } = {
     'VITE_APP_PRIMARY_COLOR': import.meta.env.VITE_APP_PRIMARY_COLOR,
     'VITE_APP_SECONDARY_COLOR': import.meta.env.VITE_APP_SECONDARY_COLOR,
     'VITE_APP_NAME': import.meta.env.VITE_APP_NAME,
+    'VITE_APP_DESCRIPTION': import.meta.env.VITE_APP_DESCRIPTION,
+    'VITE_APP_OG_LOCALE': import.meta.env.VITE_APP_OG_LOCALE,
     'VITE_APP_FAVICON': import.meta.env.VITE_APP_FAVICON,
     'VITE_APP_LOGO_DARK': import.meta.env.VITE_APP_LOGO_DARK,
     'VITE_APP_LOGO_LIGHT': import.meta.env.VITE_APP_LOGO_LIGHT,
@@ -26,6 +28,8 @@ export const clientBuildEnv: { [K in ConfigKeys]: string } = {
     'VITE_COOKIE_CONSENT_TEXT': import.meta.env.VITE_COOKIE_CONSENT_TEXT,
     'VITE_TURNSTILE_ENABLED': import.meta.env.VITE_TURNSTILE_ENABLED,
     'VITE_TURNSTILE_SITE_KEY': import.meta.env.VITE_TURNSTILE_SITE_KEY,
+    'VITE_GOOGLE_AUTH_ENABLED': import.meta.env.VITE_GOOGLE_AUTH_ENABLED,
+    'VITE_GOOGLE_CLIENT_ID': import.meta.env.VITE_GOOGLE_CLIENT_ID,
 }
 
 export const getConfig = (key: ConfigKeys, fallback?: string): string | undefined => {

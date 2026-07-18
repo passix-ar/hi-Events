@@ -48,6 +48,21 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->ip());
         });
 
+        // Social sign in carries no email in the body, and an ID token cannot be guessed,
+        // so this is not about brute force — it caps the signature-verification and
+        // database work one origin can force. Roomier than password login because a
+        // legitimate user may retry across several Google accounts.
+        RateLimiter::for('auth-social', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        // Nonces are issued once per page load, so they get their own budget rather than
+        // eating into the sign-in attempts above. Issuing one is cheap and grants nothing
+        // on its own — it only counts once it returns inside a token Google signed.
+        RateLimiter::for('auth-social-nonce', function (Request $request) {
+            return Limit::perMinute(30)->by($request->ip());
+        });
+
         // Password reset: protect a single victim from mail bombing (per email/hour)
         // and cap the overall mail volume from one origin (per IP/minute).
         RateLimiter::for('auth-forgot', function (Request $request) {

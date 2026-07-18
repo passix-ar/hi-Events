@@ -1,6 +1,9 @@
 import {
     AcceptInvitationRequest,
+    CompleteSocialRegistrationRequest,
     GenericDataResponse,
+    GoogleLoginRequest,
+    GoogleLoginResponse,
     LoginData,
     LoginResponse, RegisterAccountRequest,
     ResetPasswordRequest,
@@ -21,6 +24,21 @@ export const authClient = {
 
     login: async (user: LoginData) => {
         const response = await api.post<LoginResponse>('auth/login', user);
+        return response.data;
+    },
+
+    getSocialAuthNonce: async () => {
+        const response = await api.get<{ nonce: string }>('auth/social/nonce');
+        return response.data;
+    },
+
+    googleLogin: async (loginData: GoogleLoginRequest) => {
+        const response = await api.post<GoogleLoginResponse>('auth/google', loginData);
+        return response.data;
+    },
+
+    completeSocialRegistration: async (registrationData: CompleteSocialRegistrationRequest) => {
+        const response = await api.post<LoginResponse>('auth/google/complete-registration', registrationData);
         return response.data;
     },
 

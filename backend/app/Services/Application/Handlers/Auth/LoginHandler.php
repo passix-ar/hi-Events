@@ -2,16 +2,16 @@
 
 namespace HiEvents\Services\Application\Handlers\Auth;
 
-use HiEvents\Repository\Interfaces\AccountUserRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Auth\DTO\LoginCredentialsDTO;
 use HiEvents\Services\Domain\Auth\DTO\LoginResponse;
 use HiEvents\Services\Domain\Auth\LoginService;
+use HiEvents\Services\Domain\Auth\UserAccountContextService;
 
 readonly class LoginHandler
 {
     public function __construct(
-        private LoginService                   $loginService,
-        private AccountUserRepositoryInterface $accountUserRepository,
+        private LoginService              $loginService,
+        private UserAccountContextService $accountContextService,
     )
     {
     }
@@ -24,17 +24,10 @@ readonly class LoginHandler
             requestedAccountId: $loginCredentials->accountId,
         );
 
-        if ($loginResponse->accountId !== null) {
-            $this->accountUserRepository->updateWhere(
-                attributes: [
-                    'last_login_at' => now(),
-                ],
-                where: [
-                    'user_id' => $loginResponse->user->getId(),
-                    'account_id' => $loginResponse->accountId,
-                ],
-            );
-        }
+        $this->accountContextService->recordLogin(
+            userId: $loginResponse->user->getId(),
+            accountId: $loginResponse->accountId,
+        );
 
         return $loginResponse;
     }

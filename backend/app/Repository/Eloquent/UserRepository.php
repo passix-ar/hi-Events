@@ -12,6 +12,7 @@ use HiEvents\Repository\Interfaces\UserRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
@@ -27,6 +28,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function getDomainObject(): string
     {
         return UserDomainObject::class;
+    }
+
+    public function findAuthenticatableById(int $userId): ?JWTSubject
+    {
+        return $this->model->newQuery()->find($userId);
     }
 
     public function findByIdAndAccountId(int $userId, int $accountId): UserDomainObject

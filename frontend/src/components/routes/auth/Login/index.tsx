@@ -12,9 +12,13 @@ import {ChooseAccountModal} from "../../../modals/ChooseAccountModal";
 import {useSendTicketLookupEmail} from "../../../../mutations/useSendTicketLookupEmail.ts";
 import {showError} from "../../../../utilites/notifications.tsx";
 import {IconTicket, IconChevronDown} from "@tabler/icons-react";
+import {GoogleAuthButton} from "../../../common/GoogleAuthButton";
+import {useGoogleAuth} from "../../../../hooks/useGoogleAuth.ts";
+import {isGoogleAuthEnabled} from "../../../../hooks/useGoogleIdentityServices.ts";
 
 const Login = () => {
     const location = useLocation();
+    const googleAuth = useGoogleAuth();
     const form = useForm({
         initialValues: {
             email: '',
@@ -80,6 +84,18 @@ const Login = () => {
                 <h2>{t`Welcome back`}</h2>
             </header>
             <div className={classes.loginCard}>
+                <GoogleAuthButton
+                    onCredential={googleAuth.handleCredential}
+                    text="signin_with"
+                    disabled={isPending || googleAuth.isPending}
+                />
+
+                {isGoogleAuthEnabled() && (
+                    <div className={classes.divider}>
+                        <span>{t`or`}</span>
+                    </div>
+                )}
+
                 <form onSubmit={form.onSubmit((values) => loginUser(values))}>
                     <TextInput {...form.getInputProps('email')}
                                label={t`Email`}
@@ -170,6 +186,11 @@ const Login = () => {
                 form.setFieldValue('account_id', accountId as string);
             }
             } accounts={data.accounts}/>}
+
+            {googleAuth.accounts && <ChooseAccountModal
+                onAccountChosen={googleAuth.onAccountChosen}
+                accounts={googleAuth.accounts}
+            />}
         </>
     )
 }

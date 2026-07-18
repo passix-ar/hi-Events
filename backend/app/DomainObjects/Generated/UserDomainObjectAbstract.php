@@ -28,7 +28,7 @@ abstract class UserDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
     protected int $id;
     protected string $email;
     protected ?string $email_verified_at = null;
-    protected string $password;
+    protected ?string $password = null;
     protected ?string $remember_token = null;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
@@ -93,13 +93,13 @@ abstract class UserDomainObjectAbstract extends \HiEvents\DomainObjects\Abstract
         return $this->email_verified_at;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

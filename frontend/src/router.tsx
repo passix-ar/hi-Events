@@ -64,6 +64,13 @@ export const router: RouteObject[] = [
                     const AcceptInvitation = await import("./components/routes/auth/AcceptInvitation");
                     return { Component: AcceptInvitation.default };
                 }
+            },
+            {
+                path: "complete-registration",
+                async lazy() {
+                    const CompleteGoogleRegistration = await import("./components/routes/auth/CompleteGoogleRegistration");
+                    return { Component: CompleteGoogleRegistration.default };
+                }
             }
         ]
     },
