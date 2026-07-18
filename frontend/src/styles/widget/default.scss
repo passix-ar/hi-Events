@@ -308,20 +308,20 @@
       .hi-order-summary-total {
         margin-top: 4px;
         margin-bottom: 0;
-        // No filled block here: the only lime CTA is the Continue button. Keep the total as
-        // an emphasised row with a divider so text always contrasts on light and dark themes.
-        background-color: transparent;
-        border-radius: 0;
-        border-top: 1px solid rgba(128, 128, 128, 0.25);
+        // Filled block matching the Continue button: same accent background and text tokens,
+        // so both track the widget theme together.
+        background-color: var(--widget-secondary-color, var(--hi-primary));
 
         .hi-order-summary-label {
           font-weight: 700;
           font-size: 1.15em;
+          color: var(--widget-secondary-text-color, var(--hi-color-white));
         }
 
         .hi-order-summary-value {
           font-weight: 800;
           font-size: 1.3em;
+          color: var(--widget-secondary-text-color, var(--hi-color-white));
         }
       }
     }

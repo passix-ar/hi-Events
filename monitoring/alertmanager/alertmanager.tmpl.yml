@@ -20,6 +20,6 @@ receivers:
         parse_mode: HTML
         send_resolved: true
         message: |
-          {{ range .Alerts }}<b>{{ .Annotations.summary }}</b>
+          {{ range .Alerts }}{{ if eq .Status "firing" }}<b>{{ .Annotations.summary }}</b>{{ else }}✅ <b>RESUELTO:</b> {{ .Annotations.summary }}{{ end }}
           {{ .Annotations.description }}
           {{ end }}

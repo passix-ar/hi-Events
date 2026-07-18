@@ -282,6 +282,9 @@ const SelectProducts = (props: SelectProductsProps) => {
         return {subtotal, taxes, platformFee, total, hasDonation};
     })();
 
+    const usesInclusivePriceDisplay = event?.settings?.price_display_mode === 'INCLUSIVE';
+    const separatesServiceFee = usesInclusivePriceDisplay && orderSummary.platformFee > 0;
+
     useEffect(() => {
         if (form.values.promo_code) {
             const promo_code = form.values.promo_code;
@@ -610,7 +613,22 @@ const SelectProducts = (props: SelectProductsProps) => {
                         )}
                         {!orderSummary.hasDonation && (
                             <div className={'hi-order-summary'}>
-                                {event?.settings?.price_display_mode !== 'INCLUSIVE' ? (
+                                {separatesServiceFee ? (
+                                    <>
+                                        <div className={'hi-order-summary-row'}>
+                                            <span className={'hi-order-summary-label'}>{t`Service fee`}</span>
+                                            <span className={'hi-order-summary-value'}>
+                                                {formatCurrency(orderSummary.platformFee, event.currency)}
+                                            </span>
+                                        </div>
+                                        <div className={'hi-order-summary-row hi-order-summary-total'}>
+                                            <span className={'hi-order-summary-label'}>{t`Total`}</span>
+                                            <span className={'hi-order-summary-value'}>
+                                                {formatCurrency(orderSummary.total, event.currency)}
+                                            </span>
+                                        </div>
+                                    </>
+                                ) : !usesInclusivePriceDisplay ? (
                                     <>
                                         <div className={'hi-order-summary-row'}>
                                             <span className={'hi-order-summary-label'}>{t`Subtotal`}</span>

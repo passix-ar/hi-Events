@@ -33,10 +33,10 @@ scrape_configs:
         target_label: 'app'
         replacement: 'frontend'
       - source_labels: ['container']
-        regex: 'gzd7tm8swa8nlaktbvzqkje5.*'
+        regex: 'i5b5ekpjsqsrh6nqfvbvz7qm.*'
         target_label: 'app'
         replacement: 'worker'
       - source_labels: ['container']
-        regex: 'q116dg56lfj6wt99kv6xd9x6.*'
+        regex: 'gzd7tm8swa8nlaktbvzqkje5.*'
         target_label: 'app'
         replacement: 'scheduler'

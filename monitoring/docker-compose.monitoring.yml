@@ -67,6 +67,8 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Definir GRAFANA_PASSWORD en Coolify}
+      # password del usuario read-only de la DB de prod (interpolado en datasources.yml)
+      PASSIX_DB_RO_PASSWORD: ${PASSIX_DB_RO_PASSWORD:?Definir PASSIX_DB_RO_PASSWORD en el .env}
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_SERVER_DOMAIN: ${GRAFANA_DOMAIN:-localhost}
       GF_SERVER_ROOT_URL: "https://%(domain)s/"
@@ -86,6 +88,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - ./loki/rules:/etc/loki/rules:ro
       - loki_data:/loki
     command: -config.file=/etc/loki/local-config.yaml
     networks:

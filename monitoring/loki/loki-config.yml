@@ -45,5 +45,19 @@ query_range:
         enabled: true
         max_size_mb: 100
 
+# Ruler: evalúa reglas de alerta sobre los logs (LogQL) y las envía a Alertmanager.
+# Las reglas viven en git en loki/rules/fake/ (tenant "fake" porque auth_enabled=false).
+# El ring lo hereda del bloque common (inmemory). enable_api expone /loki/api/v1/rules
+# (solo red interna) para verificar que las reglas cargaron tras un deploy.
+ruler:
+  storage:
+    type: local
+    local:
+      directory: /etc/loki/rules
+  rule_path: /tmp/loki-rules
+  alertmanager_url: http://alertmanager:9093
+  enable_alertmanager_v2: true
+  enable_api: true
+
 analytics:
   reporting_enabled: false

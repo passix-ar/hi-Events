@@ -2,15 +2,15 @@ groups:
   - name: passix_infra
     rules:
 
-      # Sitio caído — dispara si no responde HTTP 200 por 2 minutos
-      - alert: SitioCalido
+      # Servicio HTTP caído — dispara si front o backend no responde HTTP 200 por 2 minutos
+      - alert: ServicioCaido
         expr: probe_success{job="blackbox"} == 0
         for: 2m
         labels:
           severity: critical
         annotations:
-          summary: "🔴 Passix no responde"
-          description: "El sitio {{ $labels.instance }} no responde HTTP 200 hace más de 2 minutos."
+          summary: "🔴 {{ $labels.service }} no responde"
+          description: "El servicio {{ $labels.service }} ({{ $labels.instance }}) no responde HTTP 200 hace más de 2 minutos."
 
       # Disco al 80%
       - alert: DiscoAlto

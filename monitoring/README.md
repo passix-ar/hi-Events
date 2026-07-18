@@ -1,8 +1,9 @@
 # Monitoring — Passix
 
-Stack de observabilidad self-hosted que corre en el mismo servidor que la app, **gestionado por
-Coolify** (recurso Docker Compose conectado a este repo). Un push a `develop` que toque `monitoring/`
-redeploya el stack automáticamente — no más `docker compose up -d` a mano por SSH.
+Stack de observabilidad self-hosted que corre en el mismo servidor que la app, con **docker compose
+plano por SSH (NO Coolify)**. Se intentó migrarlo a un recurso Docker Compose de Coolify y falló:
+Coolify convierte los bind-mounts de archivos de config en "persistent storage" vacío y los servicios
+no encuentran su config. El deploy es manual (ver sección Deploy).
 
 ## Servicios
 
@@ -14,21 +15,32 @@ redeploya el stack automáticamente — no más `docker compose up -d` a mano po
 | Loki | `grafana/loki:2.9.4` | Almacena logs, retención 15 días |
 | Promtail | `grafana/promtail:2.9.4` | Envía logs de todos los containers → Loki (label `app`) |
 | node-exporter | `prom/node-exporter:v1.7.0` | CPU, RAM, disco, red del host |
-| cAdvisor | `gcr.io/cadvisor/cadvisor:v0.49.1` | Métricas por container (CPU, RAM, reinicios) |
-| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP de `app.getpassix.com` |
+| blackbox-exporter | `prom/blackbox-exporter:v0.24.0` | Health check HTTP de `app.getpassix.com` (front) y `api.getpassix.com` (backend) |
 
-## Alertas configuradas (`prometheus/alert-rules.yml`)
+> **cAdvisor** (métricas por container) se removió: no soporta el storage driver `overlayfs` de Docker 29.x en este host. El estado de worker/scheduler se vigila por ausencia de logs en Loki (ver Alertas).
+
+## Alertas configuradas
+
+Métricas (`prometheus/alert-rules.yml`):
 
 | Alerta | Condición | Severidad |
 |--------|-----------|-----------|
-| SitioCalido | HTTP no responde > 2 min | critical |
+| ServicioCaido | front o backend no responde HTTP 200 > 2 min | critical |
 | DiscoAlto | Disco < 20% libre | warning |
 | DiskoCritico | Disco < 10% libre | critical |
 | RAMAlta | RAM > 90% por 5 min | warning |
 | CPUAlta | CPU > 90% por 10 min | warning |
-| ContainerReiniciado | container sin actividad (requiere cAdvisor) | warning |
 
-Todas se envían a **Alertmanager → Telegram**.
+Logs (`loki/rules/fake/rules.yaml`, evaluadas por el ruler de Loki):
+
+| Alerta | Condición | Severidad |
+|--------|-----------|-----------|
+| WorkerSinActividad | worker sin loguear nada por 10 min (caído o colgado) | critical |
+| SchedulerSinActividad | scheduler sin loguear nada por 10 min | critical |
+
+Todas se envían a **Alertmanager → Telegram**. El worker y el scheduler no tienen endpoint HTTP,
+por eso se vigilan por **ausencia de logs** en Loki (Promtail los etiqueta con `app=worker` /
+`app=scheduler` según el UUID de la app en Coolify — ver `promtail-config.yml`).
 
 ## Dashboards (provisionados, versionados en git)
 
@@ -36,27 +48,39 @@ Se cargan solos desde `grafana/provisioning/dashboards/`:
 
 | Dashboard | UID | Qué muestra |
 |-----------|-----|-------------|
-| Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco, CPU/mem por container |
-| Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL |
-| Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` |
+| Passix — Overview | `passix-overview` | Sitio, CPU/RAM/disco del host |
+| Passix — Uptime | `passix-uptime` | `probe_success`, latencia, vencimiento SSL (frontend y backend) |
+| Passix — Logs por app | `passix-logs` | Explorador de logs (Loki) filtrado por `app` + búsqueda de texto |
+| Passix — Ventas | `passix-ventas` | Negocio: entradas, ingresos, comisión Passix, conversión, por cliente, reembolsos |
+
+El dashboard de Ventas lee la **DB de producción en solo lectura** vía el datasource `Passix DB`
+(usuario `grafana_ro`, solo SELECT; password en el `.env` del server como `PASSIX_DB_RO_PASSWORD`).
+Carga despreciable: consulta solo cuando el dashboard está abierto, refresh cada 5 min.
 
 Opcional, importar por ID desde la UI: **Node Exporter Full** (`1860`) para detalle fino del host.
 
 ---
 
-## Deploy (gestionado por Coolify)
+## Deploy (manual por SSH — NO hay auto-deploy)
 
-El stack es un recurso **Docker Compose** en Coolify apuntando a:
-- Repo: `passix-ar/hi-events` · Branch: `develop`
-- Compose path: `monitoring/docker-compose.monitoring.yml`
+El stack vive en el server como clon de este repo en `/root/hi-events`, branch `develop`.
+Tras pushear cambios que toquen `monitoring/`:
 
-### Variables de entorno (en Coolify, no en git)
+```bash
+ssh -i ~/.ssh/passix_prod root@5.78.43.237
+cd /root/hi-events && git pull origin develop
+cd monitoring && docker compose -f docker-compose.monitoring.yml up -d
+# Los servicios cuya config es bind-mount NO se recrean solos si solo cambió el archivo:
+docker restart passix_promtail passix_prometheus passix_grafana   # según qué configs cambiaron
+```
+
+Loki solo se recrea solo si cambió el compose (mounts/imagen); si solo cambió
+`loki-config.yml` o `loki/rules/`, agregar `passix_loki` al restart.
+
+### Variables de entorno (en `/root/hi-events/monitoring/.env`, no en git)
 - `GRAFANA_PASSWORD` — contraseña del admin de Grafana
 - `GRAFANA_DOMAIN` — `grafana.getpassix.com`
-
-### File mount (secreto, en Coolify, no en git)
-- Destino: `/etc/alertmanager/alertmanager.yml`
-- Contenido: copiar `alertmanager/alertmanager.yml.example` y reemplazar `__BOT_TOKEN__` y `__CHAT_ID__`.
+- `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` — inyectadas al template de Alertmanager al arrancar
 
 ### Volúmenes
 Declarados `external: true` (`passix_prometheus_data`, `passix_grafana_data`, `passix_loki_data`) para
@@ -73,11 +97,10 @@ preservar el histórico entre redeploys. **No borrar estos volúmenes.**
 1. Escribirle un mensaje al bot (o agregarlo a un grupo y mandar un mensaje).
 2. Abrir `https://api.telegram.org/bot<TOKEN>/getUpdates` y copiar el `id` del objeto `chat` (negativo para grupos).
 
-### Paso 3 — Cargar en Coolify
-1. En el recurso de monitoring → **Storages → Add File Mount**.
-2. Path: `/etc/alertmanager/alertmanager.yml`.
-3. Contenido: el `.example` con el token y chat id reales.
-4. Redeploy.
+### Paso 3 — Cargar en el server
+1. Agregar `TELEGRAM_BOT_TOKEN` y `TELEGRAM_CHAT_ID` a `/root/hi-events/monitoring/.env`.
+2. `docker compose -f docker-compose.monitoring.yml up -d alertmanager` (el entrypoint inyecta
+   los valores en `alertmanager/alertmanager.tmpl.yml` con sed al arrancar).
 
 ### Paso 4 — Probar
 `docker exec passix_alertmanager amtool alert add test summary="prueba" --alertmanager.url=http://localhost:9093`
@@ -103,7 +126,8 @@ monitoring/
 ├── alertmanager/
 │   └── alertmanager.yml.example  ← plantilla Telegram (el real va en Coolify)
 ├── loki/
-│   └── loki-config.yml
+│   ├── loki-config.yml
+│   └── rules/fake/rules.yaml    ← alertas LogQL del ruler (worker/scheduler sin actividad)
 ├── promtail/
 │   └── promtail-config.yml  ← recolector Docker + label app
 └── grafana/

@@ -5,6 +5,7 @@ namespace HiEvents\Exports;
 use Carbon\Carbon;
 use HiEvents\DomainObjects\Enums\QuestionTypeEnum;
 use HiEvents\DomainObjects\OrderDomainObject;
+use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\QuestionDomainObject;
 use HiEvents\Resources\Order\OrderResource;
 use HiEvents\Services\Domain\Question\QuestionAnswerFormatter;
@@ -67,6 +68,8 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping, WithSty
             __('Notes'),
             __('Promo Code'),
             __('Opted In To Marketing'),
+            __('Ticket Quantity'),
+            __('Ticket Breakdown'),
         ], $questionTitles);
     }
 
@@ -85,6 +88,12 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping, WithSty
                 QuestionTypeEnum::fromName($question->getType()),
             );
         });
+
+        $orderItems = $order->getOrderItems();
+        $ticketQuantity = $orderItems?->sum(fn(OrderItemDomainObject $item) => $item->getQuantity()) ?? 0;
+        $ticketBreakdown = $orderItems
+            ?->map(fn(OrderItemDomainObject $item) => $item->getQuantity() . 'x ' . $item->getItemName())
+            ->implode(', ') ?? '';
 
         return array_merge([
             $order->getId(),
@@ -111,6 +120,8 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping, WithSty
             $order->getNotes(),
             $order->getPromoCode(),
             $order->getOptedIntoMarketingAt() ? 'Yes' : 'No',
+            $ticketQuantity,
+            $ticketBreakdown,
         ], $answers->toArray());
     }
 

@@ -1,5 +1,6 @@
 import {useParams} from "react-router";
 import {useGetEvent} from "../../../../../queries/useGetEvent.ts";
+import {PromoCodeDiscountType} from "../../../../../types.ts";
 import {formatCurrency} from "../../../../../utilites/currency.ts";
 import ReportTable from "../../../../common/ReportTable";
 import {t} from "@lingui/macro";
@@ -35,7 +36,7 @@ const PromoCodesReport = () => {
             label: t`Configured Discount`,
             sortable: true,
             render: (value: number, row: any) => {
-                if (row.discount_type === 'percentage') {
+                if (row.discount_type === PromoCodeDiscountType.Percentage) {
                     return `${value}%`;
                 }
                 return formatCurrency(value, event?.currency);
