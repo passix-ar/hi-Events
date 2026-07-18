@@ -287,7 +287,7 @@ msgstr "Una opción de Radio tiene múltiples opciones pero solo se puede selecc
 #: src/components/modals/CreateProductModal/index.tsx:25
 #: src/components/modals/EditProductModal/index.tsx:26
 msgid "A sale end date is required for ticket products"
-msgstr ""
+msgstr "Se requiere una fecha de fin de venta para los productos de tipo entrada"
 
 #: src/components/routes/event/Settings/Sections/SeoSettings/index.tsx:69
 #: src/components/routes/organizer/Settings/Sections/SeoSettings/index.tsx:69
@@ -1066,7 +1066,7 @@ msgstr "Intentos"
 
 #: src/components/routes/admin/Dashboard/index.tsx:123
 msgid "Attendance"
-msgstr ""
+msgstr "Asistencia"
 
 #: src/components/routes/organizer/Reports/index.tsx:36
 msgid "Attendance and check-in rates across all events"
@@ -1508,11 +1508,11 @@ msgstr "Gestión de capacidad"
 
 #: src/components/routes/product-widget/Payment/index.tsx:134
 msgid "Card"
-msgstr ""
+msgstr "Tarjeta"
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/Stripe/index.tsx:50
 msgid "Card payments are not enabled for this event."
-msgstr ""
+msgstr "Los pagos con tarjeta no están habilitados para este evento."
 
 #: src/components/modals/CreateProductCategoryModal/index.tsx:56
 msgid "Categories allow you to group products together. For example, you might have a category for \"Tickets\" and another for \"Merchandise\"."
@@ -1836,7 +1836,7 @@ msgstr "Palabras clave separadas por comas que describen el evento. Estos serán
 
 #: src/components/routes/admin/Dashboard/index.tsx:109
 msgid "Commission taken from the marketplace fee on approved MercadoPago payments. Organizer net is gross collected minus our commission."
-msgstr ""
+msgstr "Comisión tomada de la tarifa del marketplace sobre los pagos aprobados de MercadoPago. El neto del organizador es lo bruto recaudado menos nuestra comisión."
 
 #: src/components/routes/admin/Dashboard/index.tsx:74
 msgid "Commissions Last Month"
@@ -2028,11 +2028,11 @@ msgstr "Conectar y actualizar"
 
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:349
 msgid "Connect a payment account to enable email template editing"
-msgstr ""
+msgstr "Conecta una cuenta de pago para habilitar la edición de plantillas de correo"
 
 #: src/components/modals/SendMessageModal/index.tsx:240
 msgid "Connect a payment account to enable messaging"
-msgstr ""
+msgstr "Conecta una cuenta de pago para habilitar los mensajes"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:653
 msgid "Connect Documentation"
@@ -2907,11 +2907,11 @@ msgstr "Arrastrá y soltá o hacé clic para subir"
 
 #: src/components/common/CoverImageEditor/index.tsx:110
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
-msgstr ""
+msgstr "Arrastra la imagen y ajusta el zoom para elegir qué se ve en el banner."
 
 #: src/components/common/CoverImageEditor/index.tsx:79
 msgid "Drag to reposition"
-msgstr ""
+msgstr "Arrastra para reposicionar"
 
 #: src/components/forms/QuestionForm/index.tsx:124
 msgid "Dropdown selection"
@@ -2919,7 +2919,7 @@ msgstr "Selección desplegable"
 
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:351
 msgid "Due to the high risk of spam, you must connect a payment account before you can modify email templates. This is to ensure that all event organizers are verified and accountable."
-msgstr ""
+msgstr "Debido al alto riesgo de spam, debes conectar una cuenta de pago antes de poder modificar las plantillas de correo. Esto es para asegurar que todos los organizadores estén verificados y sean responsables."
 
 #: src/components/modals/SendMessageModal/index.tsx:241
 msgid ""
@@ -5365,7 +5365,7 @@ msgstr "Nunca"
 
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:293
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: src/components/routes/auth/ResetPassword/index.tsx:69
 #: src/components/routes/profile/ManageProfile/index.tsx:232
@@ -5395,7 +5395,7 @@ msgstr "No se encontraron cuentas"
 
 #: src/components/routes/admin/Dashboard/index.tsx:200
 msgid "No accounts yet"
-msgstr ""
+msgstr "Aún no hay cuentas"
 
 #: src/components/routes/event/Webhooks/index.tsx:22
 #: src/components/routes/organizer/Webhooks/index.tsx:23
@@ -5408,7 +5408,7 @@ msgstr "No hay afiliados para mostrar"
 
 #: src/components/routes/admin/Dashboard/index.tsx:150
 msgid "No approved MercadoPago payments yet"
-msgstr ""
+msgstr "Aún no hay pagos aprobados de MercadoPago"
 
 #: src/components/common/NoEventsBlankSlate/index.tsx:21
 msgid "No archived events to show."
@@ -6251,7 +6251,7 @@ msgstr "Resumen"
 
 #: src/components/routes/admin/Dashboard/index.tsx:120
 msgid "Owner"
-msgstr ""
+msgstr "Propietario"
 
 #: src/components/common/WidgetEditor/index.tsx:236
 msgid "Padding"
@@ -6324,7 +6324,7 @@ msgstr "Comisión Passix"
 
 #: src/components/routes/admin/Dashboard/index.tsx:107
 msgid "Passix Commission per Event"
-msgstr ""
+msgstr "Comisión de Passix por evento"
 
 #: src/components/layouts/AuthLayout/index.tsx:51
 msgid "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
@@ -6587,7 +6587,7 @@ msgstr "Comisión de plataforma"
 
 #: src/components/routes/organizer/Reports/PlatformFeesReport/index.tsx:75
 msgid "Platform Fee"
-msgstr ""
+msgstr "Tarifa de plataforma"
 
 #: src/components/common/PlatformFeesSettings/index.tsx:59
 #: src/components/common/ProductFeeHint/index.tsx:103
@@ -7440,7 +7440,7 @@ msgstr "Ventas terminadas"
 
 #: src/components/layouts/EventHomepage/index.tsx:542
 msgid "Sales for this event are closed."
-msgstr ""
+msgstr "Las ventas para este evento están cerradas."
 
 #: src/components/common/ProductPriceAvailability/index.tsx:29
 #: src/components/common/ProductPriceAvailability/index.tsx:58
@@ -8140,7 +8140,7 @@ msgstr "Lo sentimos, este código de promoción no se reconoce"
 
 #: src/components/common/PoweredByFooter/index.tsx:51
 msgid "source"
-msgstr ""
+msgstr "código"
 
 #: src/components/routes/admin/Attribution/index.tsx:106
 msgid "Source"
@@ -8942,7 +8942,7 @@ msgstr "Este producto está agotado"
 
 #: src/components/routes/organizer/Reports/PlatformFeesReport/index.tsx:118
 msgid "This report is for informational purposes only. Always consult with a tax professional before using this data for accounting or tax purposes. Please cross-reference with your payment processor dashboard as data may not be complete."
-msgstr ""
+msgstr "Este informe es solo con fines informativos. Consulta siempre con un profesional impositivo antes de usar estos datos con fines contables o fiscales. Verifica los datos con el panel de tu procesador de pagos, ya que podrían estar incompletos."
 
 #: src/components/routes/auth/ResetPassword/index.tsx:28
 msgid "This reset password link is invalid or expired."
@@ -10156,7 +10156,7 @@ msgstr "Cuando está habilitado, los nuevos eventos mostrarán una casilla de ac
 
 #: src/components/routes/admin/Configurations/index.tsx:259
 msgid "When enabled, no application fees will be charged on MercadoPago transactions. Use this for countries where application fees are not supported."
-msgstr ""
+msgstr "Cuando está activado, no se cobrarán tarifas de aplicación en las transacciones de MercadoPago. Úsalo para países donde no se admiten las tarifas de aplicación."
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:143
 msgid "When offline payments are enabled, users will be able to complete their orders and receive their tickets. Their tickets will clearly indicate the order is not paid, and the check-in tool will notify the check-in staff if an order requires payment."
