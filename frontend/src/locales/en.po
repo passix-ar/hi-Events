@@ -131,10 +131,6 @@ msgstr "+{extraOrganizers} more"
 msgid "+1 234 567 890"
 msgstr "+1 234 567 890"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:372
-#~ msgid "+Tax/Fees"
-#~ msgstr "+Tax/Fees"
-
 #: src/components/common/CheckInListList/index.tsx:49
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
@@ -322,7 +318,7 @@ msgstr "A standard tax, like VAT or GST"
 msgid "Abandoned"
 msgstr "Abandoned"
 
-#: src/components/layouts/EventHomepage/index.tsx:444
+#: src/components/layouts/EventHomepage/index.tsx:451
 msgid "About"
 msgstr "About"
 
@@ -353,11 +349,11 @@ msgstr "Accept"
 msgid "Accept bank transfers, checks, or other offline payment methods"
 msgstr "Accept bank transfers, checks, or other offline payment methods"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:87
+#: src/components/routes/auth/AcceptInvitation/index.tsx:94
 msgid "Accept invitation"
 msgstr "Accept invitation"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:166
+#: src/components/routes/auth/AcceptInvitation/index.tsx:173
 msgid "Accept Invitation"
 msgstr "Accept Invitation"
 
@@ -418,7 +414,7 @@ msgstr "Account updated successfully"
 msgid "Accounts"
 msgstr "Accounts"
 
-#: src/components/routes/auth/Register/index.tsx:108
+#: src/components/routes/auth/Register/index.tsx:114
 msgid "Acme Inc."
 msgstr "Acme Inc."
 
@@ -539,7 +535,7 @@ msgstr "Add tier"
 
 #: src/components/common/AddEventToCalendarButton/index.tsx:14
 #: src/components/common/AddToCalendarCTA/index.tsx:24
-#: src/components/layouts/EventHomepage/index.tsx:377
+#: src/components/layouts/EventHomepage/index.tsx:384
 msgid "Add to Calendar"
 msgstr "Add to Calendar"
 
@@ -739,7 +735,7 @@ msgstr "Almost there! Finish connecting your Stripe account to start accepting p
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 
-#: src/components/routes/auth/Register/index.tsx:78
+#: src/components/routes/auth/Register/index.tsx:84
 msgid "Already have an account? <0>{0}</0>"
 msgstr "Already have an account? <0>{0}</0>"
 
@@ -1245,7 +1241,7 @@ msgstr "Awaiting Offline Payment"
 msgid "Awaiting Offline Pmt."
 msgstr "Awaiting Offline Pmt."
 
-#: src/components/common/CheckIn/AttendeeList.tsx:91
+#: src/components/common/CheckIn/AttendeeList.tsx:88
 msgid "Awaiting payment"
 msgstr "Awaiting payment"
 
@@ -1280,9 +1276,9 @@ msgstr "Back to Event"
 msgid "Back to event page"
 msgstr "Back to event page"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:48
-#: src/components/routes/auth/ForgotPassword/index.tsx:74
-#: src/components/routes/auth/ResetPassword/index.tsx:79
+#: src/components/routes/auth/ForgotPassword/index.tsx:53
+#: src/components/routes/auth/ForgotPassword/index.tsx:79
+#: src/components/routes/auth/ResetPassword/index.tsx:84
 msgid "Back to login"
 msgstr "Back to login"
 
@@ -1352,7 +1348,7 @@ msgstr "Business Address"
 msgid "Business address for VAT purposes"
 msgstr "Business address for VAT purposes"
 
-#: src/components/routes/auth/Register/index.tsx:107
+#: src/components/routes/auth/Register/index.tsx:113
 msgid "Business name"
 msgstr "Business name"
 
@@ -1387,7 +1383,7 @@ msgstr "By adding tracking pixels, you acknowledge that you and this platform ar
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "By continuing, you agree to the <0>{0} Terms of Service</0>"
 
-#: src/components/routes/auth/Register/index.tsx:153
+#: src/components/routes/auth/Register/index.tsx:159
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 
@@ -1575,7 +1571,7 @@ msgstr "Check Out"
 msgid "Check out this event!"
 msgstr "Check out this event!"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:42
+#: src/components/routes/auth/ForgotPassword/index.tsx:47
 #: src/components/routes/welcome/index.tsx:142
 msgid "Check your email"
 msgstr "Check your email"
@@ -1883,7 +1879,7 @@ msgstr "Complete your order to secure your tickets. This offer is time-limited, 
 msgid "Complete your payment to secure your tickets."
 msgstr "Complete your payment to secure your tickets."
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:88
+#: src/components/routes/auth/AcceptInvitation/index.tsx:95
 msgid "Complete your profile to join the team."
 msgstr "Complete your profile to join the team."
 
@@ -1955,7 +1951,7 @@ msgstr "Configure how attendee details are collected during checkout"
 msgid "Configure Taxes & Fees"
 msgstr "Configure Taxes & Fees"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:35
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:36
 msgid "Configured Discount"
 msgstr "Configured Discount"
 
@@ -1975,7 +1971,7 @@ msgstr "Confirm Email Address"
 msgid "Confirm Email Change"
 msgstr "Confirm Email Change"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:71
+#: src/components/routes/auth/ResetPassword/index.tsx:76
 msgid "Confirm new password"
 msgstr "Confirm new password"
 
@@ -1983,14 +1979,14 @@ msgstr "Confirm new password"
 msgid "Confirm New Password"
 msgstr "Confirm New Password"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Register/index.tsx:131
+#: src/components/routes/auth/AcceptInvitation/index.tsx:141
+#: src/components/routes/auth/Register/index.tsx:137
 msgid "Confirm password"
 msgstr "Confirm password"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:133
-#: src/components/routes/auth/Register/index.tsx:130
-#: src/components/routes/auth/ResetPassword/index.tsx:70
+#: src/components/routes/auth/AcceptInvitation/index.tsx:140
+#: src/components/routes/auth/Register/index.tsx:136
+#: src/components/routes/auth/ResetPassword/index.tsx:75
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
@@ -2098,7 +2094,7 @@ msgid "Connection Details"
 msgstr "Connection Details"
 
 #: src/components/common/WaitlistTable/index.tsx:149
-#: src/components/layouts/EventHomepage/index.tsx:648
+#: src/components/layouts/EventHomepage/index.tsx:655
 #: src/components/layouts/OrganizerHomepage/index.tsx:256
 msgid "Contact"
 msgstr "Contact"
@@ -2289,7 +2285,7 @@ msgstr "Create {0} Template"
 msgid "Create a custom widget to sell tickets on your site."
 msgstr "Create a custom widget to sell tickets on your site."
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:128
+#: src/components/routes/auth/AcceptInvitation/index.tsx:135
 msgid "Create a password"
 msgstr "Create a password"
 
@@ -2381,7 +2377,7 @@ msgstr "Create Event"
 msgid "Create new"
 msgstr "Create new"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:57
+#: src/components/routes/auth/ResetPassword/index.tsx:62
 msgid "Create new password"
 msgstr "Create new password"
 
@@ -2430,7 +2426,7 @@ msgstr "Create trackable links to reward partners who promote your event."
 msgid "Create Webhook"
 msgstr "Create Webhook"
 
-#: src/components/layouts/EventHomepage/index.tsx:258
+#: src/components/layouts/EventHomepage/index.tsx:266
 msgid "Create your event"
 msgstr "Create your event"
 
@@ -3141,10 +3137,10 @@ msgstr "Eligible Check-In Lists"
 #: src/components/modals/JoinWaitlistModal/index.tsx:171
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:150
 #: src/components/routes/admin/Dashboard/index.tsx:168
-#: src/components/routes/auth/AcceptInvitation/index.tsx:112
-#: src/components/routes/auth/ForgotPassword/index.tsx:65
+#: src/components/routes/auth/AcceptInvitation/index.tsx:119
+#: src/components/routes/auth/ForgotPassword/index.tsx:70
 #: src/components/routes/auth/Login/index.tsx:85
-#: src/components/routes/auth/Register/index.tsx:116
+#: src/components/routes/auth/Register/index.tsx:122
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3362,7 +3358,7 @@ msgstr "Enter first name"
 msgid "Enter last name"
 msgstr "Enter last name"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:65
+#: src/components/routes/auth/ResetPassword/index.tsx:70
 msgid "Enter new password"
 msgstr "Enter new password"
 
@@ -3380,7 +3376,7 @@ msgstr "Enter unique affiliate code"
 msgid "Enter your email"
 msgstr "Enter your email"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:58
+#: src/components/routes/auth/ForgotPassword/index.tsx:63
 msgid "Enter your email and we'll send you instructions to reset your password."
 msgstr "Enter your email and we'll send you instructions to reset your password."
 
@@ -4085,8 +4081,8 @@ msgstr "First name"
 #: src/components/modals/EditUserModal/index.tsx:71
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
-#: src/components/routes/auth/AcceptInvitation/index.tsx:97
-#: src/components/routes/auth/Register/index.tsx:93
+#: src/components/routes/auth/AcceptInvitation/index.tsx:104
+#: src/components/routes/auth/Register/index.tsx:99
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4105,7 +4101,7 @@ msgstr "First name is required"
 msgid "First name must be between 1 and 50 characters"
 msgstr "First name must be between 1 and 50 characters"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:64
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:65
 msgid "First Used"
 msgstr "First Used"
 
@@ -4213,15 +4209,15 @@ msgstr "Generate"
 msgid "Generate code"
 msgstr "Generate code"
 
-#: src/components/layouts/EventHomepage/index.tsx:475
+#: src/components/layouts/EventHomepage/index.tsx:482
 msgid "Get Directions"
 msgstr "Get Directions"
 
-#: src/components/routes/auth/Register/index.tsx:76
+#: src/components/routes/auth/Register/index.tsx:82
 msgid "Get started"
 msgstr "Get started"
 
-#: src/components/layouts/EventHomepage/index.tsx:670
+#: src/components/layouts/EventHomepage/index.tsx:677
 msgid "Get Tickets"
 msgstr "Get Tickets"
 
@@ -4500,7 +4496,7 @@ msgstr "I acknowledge my responsibilities as a data controller"
 msgid "I agree to receive email notifications related to this event"
 msgstr "I agree to receive email notifications related to this event"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:142
+#: src/components/routes/auth/AcceptInvitation/index.tsx:149
 msgid "I agree to the <0>terms and conditions</0>"
 msgstr "I agree to the <0>terms and conditions</0>"
 
@@ -4536,7 +4532,7 @@ msgstr "If registered, provide your VAT number for validation"
 msgid "If you did not request this change, please immediately change your password."
 msgstr "If you did not request this change, please immediately change your password."
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:44
+#: src/components/routes/auth/ForgotPassword/index.tsx:49
 msgid "If you have an account with us, you will receive an email with instructions on how to reset your password."
 msgstr "If you have an account with us, you will receive an email with instructions on how to reset your password."
 
@@ -4772,8 +4768,8 @@ msgstr "Job Name"
 msgid "Job queued for retry"
 msgstr "Job queued for retry"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:94
+#: src/components/routes/auth/AcceptInvitation/index.tsx:105
+#: src/components/routes/auth/Register/index.tsx:100
 msgid "John"
 msgstr "John"
 
@@ -4781,7 +4777,7 @@ msgstr "John"
 msgid "Johnson"
 msgstr "Johnson"
 
-#: src/components/layouts/EventHomepage/index.tsx:403
+#: src/components/layouts/EventHomepage/index.tsx:410
 msgid "Join from anywhere"
 msgstr "Join from anywhere"
 
@@ -4876,8 +4872,8 @@ msgstr "Last name"
 #: src/components/modals/EditUserModal/index.tsx:72
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
-#: src/components/routes/auth/AcceptInvitation/index.tsx:102
-#: src/components/routes/auth/Register/index.tsx:99
+#: src/components/routes/auth/AcceptInvitation/index.tsx:109
+#: src/components/routes/auth/Register/index.tsx:105
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4903,7 +4899,7 @@ msgstr "Last Response"
 msgid "Last Triggered"
 msgstr "Last Triggered"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:70
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:71
 msgid "Last Used"
 msgstr "Last Used"
 
@@ -4985,7 +4981,7 @@ msgid "Loading..."
 msgstr "Loading..."
 
 #: src/components/common/AttendeeTicket/index.tsx:91
-#: src/components/layouts/EventHomepage/index.tsx:457
+#: src/components/layouts/EventHomepage/index.tsx:464
 #: src/components/routes/event/Settings/index.tsx:44
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:84
 #: src/components/routes/my-tickets/index.tsx:73
@@ -4994,7 +4990,7 @@ msgid "Location"
 msgstr "Location"
 
 #: src/components/routes/auth/Login/index.tsx:96
-#: src/components/routes/auth/Register/index.tsx:81
+#: src/components/routes/auth/Register/index.tsx:87
 msgid "Log in"
 msgstr "Log in"
 
@@ -5373,7 +5369,7 @@ msgstr "Never"
 msgid "New"
 msgstr "New"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:64
+#: src/components/routes/auth/ResetPassword/index.tsx:69
 #: src/components/routes/profile/ManageProfile/index.tsx:232
 msgid "New Password"
 msgstr "New Password"
@@ -5834,7 +5830,7 @@ msgstr "Ongoing"
 msgid "Online"
 msgstr "Online"
 
-#: src/components/layouts/EventHomepage/index.tsx:401
+#: src/components/layouts/EventHomepage/index.tsx:408
 #: src/components/layouts/OrganizerHomepage/EventCard/index.tsx:173
 msgid "Online Event"
 msgstr "Online Event"
@@ -6157,7 +6153,7 @@ msgstr "Organizations"
 
 #: src/components/common/AdminEventsTable/index.tsx:87
 #: src/components/common/AttendeeTicket/index.tsx:82
-#: src/components/layouts/EventHomepage/index.tsx:560
+#: src/components/layouts/EventHomepage/index.tsx:567
 #: src/components/modals/EditUserModal/index.tsx:55
 #: src/components/modals/InviteUserModal/index.tsx:47
 #: src/components/routes/events/Dashboard/index.tsx:106
@@ -6336,9 +6332,9 @@ msgstr "Passix Commission per Event"
 msgid "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
 msgstr "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:127
+#: src/components/routes/auth/AcceptInvitation/index.tsx:134
 #: src/components/routes/auth/Login/index.tsx:90
-#: src/components/routes/auth/Register/index.tsx:124
+#: src/components/routes/auth/Register/index.tsx:130
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "Password"
@@ -6347,16 +6343,16 @@ msgstr "Password"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "Password must be a minimum  of 8 characters"
 
-#: src/components/routes/auth/Register/index.tsx:39
+#: src/components/routes/auth/Register/index.tsx:40
 msgid "Password must be at least 8 characters"
 msgstr "Password must be at least 8 characters"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:49
+#: src/components/routes/auth/ResetPassword/index.tsx:54
 msgid "Password reset successfully. Please login with your new password."
 msgstr "Password reset successfully. Please login with your new password."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:40
+#: src/components/routes/auth/Register/index.tsx:41
 msgid "Passwords are not the same"
 msgstr "Passwords are not the same"
 
@@ -6619,12 +6615,12 @@ msgstr "Please add at least one option"
 msgid "Please check the provided information is correct"
 msgstr "Please check the provided information is correct"
 
-#: src/components/routes/auth/Login/index.tsx:53
+#: src/components/routes/auth/Login/index.tsx:56
 msgid "Please check your email and password and try again"
 msgstr "Please check your email and password and try again"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:41
+#: src/components/routes/auth/Register/index.tsx:42
 msgid "Please check your email is valid"
 msgstr "Please check your email is valid"
 
@@ -6661,7 +6657,7 @@ msgstr "Please enter a valid URL"
 msgid "Please enter the 5-digit code"
 msgstr "Please enter the 5-digit code"
 
-#: src/components/routes/auth/Register/index.tsx:38
+#: src/components/routes/auth/Register/index.tsx:39
 msgid "Please enter your business name"
 msgstr "Please enter your business name"
 
@@ -6942,7 +6938,7 @@ msgstr "Promo {promo_code} code applied"
 msgid "Promo code"
 msgstr "Promo code"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:20
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:21
 msgid "Promo Code"
 msgstr "Promo Code"
 
@@ -6965,7 +6961,7 @@ msgid "Promo codes can be used to offer discounts, presale access, or provide sp
 msgstr "Promo codes can be used to offer discounts, presale access, or provide special access to your event."
 
 #: src/components/routes/event/Reports/index.tsx:29
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:95
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:96
 msgid "Promo Codes Report"
 msgstr "Promo Codes Report"
 
@@ -7070,8 +7066,8 @@ msgstr "Re-offer Spot"
 msgid "Ready to upgrade? This takes only a few minutes."
 msgstr "Ready to upgrade? This takes only a few minutes."
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:157
-#: src/components/routes/auth/Register/index.tsx:145
+#: src/components/routes/auth/AcceptInvitation/index.tsx:164
+#: src/components/routes/auth/Register/index.tsx:151
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "Receive product updates from {0}."
@@ -7193,7 +7189,7 @@ msgstr "Refunds"
 msgid "Regional Settings"
 msgstr "Regional Settings"
 
-#: src/components/routes/auth/Register/index.tsx:149
+#: src/components/routes/auth/Register/index.tsx:155
 msgid "Register"
 msgstr "Register"
 
@@ -7202,7 +7198,7 @@ msgstr "Register"
 msgid "Registration Questions"
 msgstr "Registration Questions"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:82
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:83
 msgid "Remaining Uses"
 msgstr "Remaining Uses"
 
@@ -7302,12 +7298,12 @@ msgstr "Reserved until"
 msgid "Reset"
 msgstr "Reset"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:57
-#: src/components/routes/auth/ResetPassword/index.tsx:75
+#: src/components/routes/auth/ForgotPassword/index.tsx:62
+#: src/components/routes/auth/ResetPassword/index.tsx:80
 msgid "Reset password"
 msgstr "Reset password"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:75
+#: src/components/routes/auth/ResetPassword/index.tsx:80
 msgid "Resetting..."
 msgstr "Resetting..."
 
@@ -7446,7 +7442,7 @@ msgstr "Sales are paused"
 msgid "Sales ended"
 msgstr "Sales ended"
 
-#: src/components/layouts/EventHomepage/index.tsx:535
+#: src/components/layouts/EventHomepage/index.tsx:542
 msgid "Sales for this event are closed."
 msgstr "Sales for this event are closed."
 
@@ -7773,7 +7769,7 @@ msgid "Select time period"
 msgstr "Select time period"
 
 #: src/components/forms/OrganizerForm/index.tsx:57
-#: src/components/routes/auth/AcceptInvitation/index.tsx:120
+#: src/components/routes/auth/AcceptInvitation/index.tsx:127
 msgid "Select timezone"
 msgstr "Select timezone"
 
@@ -7844,7 +7840,7 @@ msgstr "Send real-time order and attendee data to your external systems."
 msgid "Send refund notification email"
 msgstr "Send refund notification email"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:70
+#: src/components/routes/auth/ForgotPassword/index.tsx:75
 msgid "Send reset link"
 msgstr "Send reset link"
 
@@ -7856,7 +7852,7 @@ msgstr "Send Test"
 msgid "Send your first message"
 msgstr "Send your first message"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:70
+#: src/components/routes/auth/ForgotPassword/index.tsx:75
 msgid "Sending..."
 msgstr "Sending..."
 
@@ -7970,7 +7966,7 @@ msgid "Setup & Design"
 msgstr "Setup & Design"
 
 #: src/components/common/ShareIcon/index.tsx:30
-#: src/components/layouts/EventHomepage/index.tsx:350
+#: src/components/layouts/EventHomepage/index.tsx:357
 #: src/components/layouts/OrganizerLayout/index.tsx:240
 #: src/components/modals/ShareModal/index.tsx:37
 #: src/components/modals/ShareModal/index.tsx:165
@@ -8065,8 +8061,8 @@ msgstr "Single line text box"
 msgid "Skip this step"
 msgstr "Skip this step"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:103
-#: src/components/routes/auth/Register/index.tsx:100
+#: src/components/routes/auth/AcceptInvitation/index.tsx:110
+#: src/components/routes/auth/Register/index.tsx:106
 msgid "Smith"
 msgstr "Smith"
 
@@ -8112,7 +8108,7 @@ msgstr "Something went wrong"
 msgid "Something went wrong while deleting the Tax or Fee"
 msgstr "Something went wrong while deleting the Tax or Fee"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:32
+#: src/components/routes/auth/ForgotPassword/index.tsx:37
 msgid "Something went wrong, please try again, or contact support if the problem persists"
 msgstr "Something went wrong, please try again, or contact support if the problem persists"
 
@@ -8219,7 +8215,7 @@ msgstr "Statistics are based on account creation date"
 #: src/components/routes/admin/Messages/index.tsx:120
 #: src/components/routes/admin/Messages/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:293
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:88
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:89
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:62
 msgid "Status"
 msgstr "Status"
@@ -8711,10 +8707,6 @@ msgstr "The scheduled time is required"
 msgid "The scheduled time must be in the future"
 msgstr "The scheduled time must be in the future"
 
-#: src/components/common/ProductFeeHint/index.tsx:55
-#~ msgid "The service fee is added or absorbed based on your Platform Fees setting."
-#~ msgstr "The service fee is added or absorbed based on your Platform Fees setting."
-
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:145
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:176
 msgid "The template body contains invalid Liquid syntax. Please correct it and try again."
@@ -8826,8 +8818,8 @@ msgstr "This color combination may be hard to read for some users"
 msgid "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
 msgstr "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
 
-#: src/components/layouts/EventHomepage/index.tsx:389
-#: src/components/layouts/EventHomepage/index.tsx:531
+#: src/components/layouts/EventHomepage/index.tsx:396
+#: src/components/layouts/EventHomepage/index.tsx:538
 msgid "This event has ended"
 msgstr "This event has ended"
 
@@ -8880,7 +8872,7 @@ msgstr "This message will be included in the footer of all emails sent from this
 msgid "This message will only be shown if order is completed successfully. Orders awaiting payment will not show this message"
 msgstr "This message will only be shown if order is completed successfully. Orders awaiting payment will not show this message"
 
-#: src/components/routes/auth/Register/index.tsx:109
+#: src/components/routes/auth/Register/index.tsx:115
 msgid "This name appears on your event pages and in emails."
 msgstr "This name appears on your event pages and in emails."
 
@@ -9138,14 +9130,14 @@ msgstr "Time left:"
 msgid "Times used"
 msgstr "Times used"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:25
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:26
 msgid "Times Used"
 msgstr "Times Used"
 
 #: src/components/forms/OrganizerForm/index.tsx:56
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:82
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:162
-#: src/components/routes/auth/AcceptInvitation/index.tsx:119
+#: src/components/routes/auth/AcceptInvitation/index.tsx:126
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:124
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:122
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:327
@@ -9177,6 +9169,14 @@ msgstr "To receive credit card payments, you need to connect your Stripe account
 msgid "Toggle columns"
 msgstr "Toggle columns"
 
+#: src/components/routes/auth/AcceptInvitation/index.tsx:82
+#: src/components/routes/auth/ForgotPassword/index.tsx:33
+#: src/components/routes/auth/Login/index.tsx:52
+#: src/components/routes/auth/Register/index.tsx:59
+#: src/components/routes/auth/ResetPassword/index.tsx:47
+msgid "Too many attempts. Please wait a moment and try again."
+msgstr "Too many attempts. Please wait a moment and try again."
+
 #: src/components/layouts/OrganizerLayout/index.tsx:90
 msgid "Tools"
 msgstr "Tools"
@@ -9191,10 +9191,6 @@ msgstr "Tools"
 msgid "Total"
 msgstr "Total"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:632
-#~ msgid "Total (all included)"
-#~ msgstr "Total (all included)"
-
 #: src/components/routes/admin/Dashboard/index.tsx:92
 msgid "Total Accounts"
 msgstr "Total Accounts"
@@ -9207,7 +9203,7 @@ msgstr "Total amount paid"
 msgid "Total Attendees"
 msgstr "Total Attendees"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:52
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:53
 msgid "Total Before Discounts"
 msgstr "Total Before Discounts"
 
@@ -9215,7 +9211,7 @@ msgstr "Total Before Discounts"
 msgid "Total Collected"
 msgstr "Total Collected"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:58
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:59
 msgid "Total Discount Amount"
 msgstr "Total Discount Amount"
 
@@ -9234,7 +9230,7 @@ msgstr "Total Fee"
 msgid "Total Fees"
 msgstr "Total Fees"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:46
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:47
 msgid "Total Gross Sales"
 msgstr "Total Gross Sales"
 
@@ -9373,7 +9369,7 @@ msgstr "Unable to update question. Please check the your details"
 msgid "Unattributed Accounts"
 msgstr "Unattributed Accounts"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:30
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:31
 msgid "Unique Customers"
 msgstr "Unique Customers"
 
@@ -9408,8 +9404,8 @@ msgstr "Unknown Attendee"
 #: src/components/forms/ProductForm/index.tsx:415
 #: src/components/forms/PromoCodeForm/index.tsx:112
 #: src/components/modals/OfferWaitlistModal/index.tsx:189
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:78
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:84
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:79
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:85
 msgid "Unlimited"
 msgstr "Unlimited"
 
@@ -9499,7 +9495,7 @@ msgstr "URL is required"
 msgid "Usage Example"
 msgstr "Usage Example"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:76
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:77
 msgid "Usage Limit"
 msgstr "Usage Limit"
 
@@ -9759,7 +9755,7 @@ msgstr "View Event Page"
 msgid "View logs"
 msgstr "View logs"
 
-#: src/components/layouts/EventHomepage/index.tsx:516
+#: src/components/layouts/EventHomepage/index.tsx:523
 msgid "View Map"
 msgstr "View Map"
 
@@ -9767,7 +9763,7 @@ msgstr "View Map"
 msgid "View Message"
 msgstr "View Message"
 
-#: src/components/layouts/EventHomepage/index.tsx:429
+#: src/components/layouts/EventHomepage/index.tsx:436
 msgid "View on Google Maps"
 msgstr "View on Google Maps"
 
@@ -10211,7 +10207,7 @@ msgstr "Working"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:149
+#: src/components/routes/auth/Register/index.tsx:155
 msgid "Working..."
 msgstr "Working..."
 
@@ -10489,7 +10485,7 @@ msgstr "Your messages will appear here"
 msgid "Your Name"
 msgstr "Your Name"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:58
+#: src/components/routes/auth/ResetPassword/index.tsx:63
 msgid "Your new password must be at least 8 characters long."
 msgstr "Your new password must be at least 8 characters long."
 
@@ -10526,7 +10522,7 @@ msgid "Your organizer address"
 msgstr "Your organizer address"
 
 #: src/components/routes/auth/Login/index.tsx:91
-#: src/components/routes/auth/Register/index.tsx:125
+#: src/components/routes/auth/Register/index.tsx:131
 msgid "Your password"
 msgstr "Your password"
 

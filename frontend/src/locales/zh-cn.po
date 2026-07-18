@@ -131,10 +131,6 @@ msgstr ""
 msgid "+1 234 567 890"
 msgstr "+1 234 567 890"
 
-#: src/components/common/ProductsTable/SortableProduct/index.tsx:372
-#~ msgid "+Tax/Fees"
-#~ msgstr "+税费"
-
 #: src/components/common/CheckInListList/index.tsx:49
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>签到列表帮助您按日期、区域或票务类型管理活动入场。您可以将票务链接到特定列表，如VIP区域或第1天通行证，并与工作人员共享安全的签到链接。无需账户。签到适用于移动设备、桌面或平板电脑，使用设备相机或HID USB扫描仪。                                </0>"
@@ -322,7 +318,7 @@ msgstr "标准税，如增值税或消费税"
 msgid "Abandoned"
 msgstr "已放弃"
 
-#: src/components/layouts/EventHomepage/index.tsx:444
+#: src/components/layouts/EventHomepage/index.tsx:451
 msgid "About"
 msgstr "关于"
 
@@ -353,11 +349,11 @@ msgstr "接受"
 msgid "Accept bank transfers, checks, or other offline payment methods"
 msgstr "接受银行转账、支票或其他线下支付方式"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:87
+#: src/components/routes/auth/AcceptInvitation/index.tsx:94
 msgid "Accept invitation"
 msgstr "接受邀请"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:166
+#: src/components/routes/auth/AcceptInvitation/index.tsx:173
 msgid "Accept Invitation"
 msgstr "接受邀请"
 
@@ -418,7 +414,7 @@ msgstr "账户更新成功"
 msgid "Accounts"
 msgstr "账户"
 
-#: src/components/routes/auth/Register/index.tsx:108
+#: src/components/routes/auth/Register/index.tsx:114
 msgid "Acme Inc."
 msgstr ""
 
@@ -539,7 +535,7 @@ msgstr "增加层级"
 
 #: src/components/common/AddEventToCalendarButton/index.tsx:14
 #: src/components/common/AddToCalendarCTA/index.tsx:24
-#: src/components/layouts/EventHomepage/index.tsx:377
+#: src/components/layouts/EventHomepage/index.tsx:384
 msgid "Add to Calendar"
 msgstr "添加到日历"
 
@@ -739,7 +735,7 @@ msgstr "快完成了！完成连接您的 Stripe 账户以开始接受付款。"
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "快完成了！我们正在等待您的付款处理。这只需要几秒钟。"
 
-#: src/components/routes/auth/Register/index.tsx:78
+#: src/components/routes/auth/Register/index.tsx:84
 msgid "Already have an account? <0>{0}</0>"
 msgstr "已有账户？<0>{0}</0>"
 
@@ -1245,7 +1241,7 @@ msgstr "等待线下付款"
 msgid "Awaiting Offline Pmt."
 msgstr "等待线下付款"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:91
+#: src/components/common/CheckIn/AttendeeList.tsx:88
 msgid "Awaiting payment"
 msgstr "等待付款"
 
@@ -1280,9 +1276,9 @@ msgstr "返回活动"
 msgid "Back to event page"
 msgstr "返回活动页面"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:48
-#: src/components/routes/auth/ForgotPassword/index.tsx:74
-#: src/components/routes/auth/ResetPassword/index.tsx:79
+#: src/components/routes/auth/ForgotPassword/index.tsx:53
+#: src/components/routes/auth/ForgotPassword/index.tsx:79
+#: src/components/routes/auth/ResetPassword/index.tsx:84
 msgid "Back to login"
 msgstr "返回登录"
 
@@ -1352,7 +1348,7 @@ msgstr "营业地址"
 msgid "Business address for VAT purposes"
 msgstr "用于增值税目的的营业地址"
 
-#: src/components/routes/auth/Register/index.tsx:107
+#: src/components/routes/auth/Register/index.tsx:113
 msgid "Business name"
 msgstr ""
 
@@ -1387,7 +1383,7 @@ msgstr ""
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "继续操作即表示您同意<0>{0}服务条款</0>"
 
-#: src/components/routes/auth/Register/index.tsx:153
+#: src/components/routes/auth/Register/index.tsx:159
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "注册即表示您同意我们的<0>服务条款</0>和<1>隐私政策</1>。"
 
@@ -1575,7 +1571,7 @@ msgstr "签出"
 msgid "Check out this event!"
 msgstr "看看这个活动吧！"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:42
+#: src/components/routes/auth/ForgotPassword/index.tsx:47
 #: src/components/routes/welcome/index.tsx:142
 msgid "Check your email"
 msgstr "查看您的邮箱"
@@ -1883,7 +1879,7 @@ msgstr "完成您的订单以确保获得门票。此优惠有时间限制，请
 msgid "Complete your payment to secure your tickets."
 msgstr "完成付款以确保您的门票。"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:88
+#: src/components/routes/auth/AcceptInvitation/index.tsx:95
 msgid "Complete your profile to join the team."
 msgstr "完成你的个人资料以加入团队。"
 
@@ -1955,7 +1951,7 @@ msgstr "配置结账时如何收集参与者信息"
 msgid "Configure Taxes & Fees"
 msgstr "配置税费"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:35
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:36
 msgid "Configured Discount"
 msgstr "已配置折扣"
 
@@ -1975,7 +1971,7 @@ msgstr "确认电子邮件地址"
 msgid "Confirm Email Change"
 msgstr "确认电子邮件更改"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:71
+#: src/components/routes/auth/ResetPassword/index.tsx:76
 msgid "Confirm new password"
 msgstr "确认新密码"
 
@@ -1983,14 +1979,14 @@ msgstr "确认新密码"
 msgid "Confirm New Password"
 msgstr "确认新密码"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Register/index.tsx:131
+#: src/components/routes/auth/AcceptInvitation/index.tsx:141
+#: src/components/routes/auth/Register/index.tsx:137
 msgid "Confirm password"
 msgstr "确认密码"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:133
-#: src/components/routes/auth/Register/index.tsx:130
-#: src/components/routes/auth/ResetPassword/index.tsx:70
+#: src/components/routes/auth/AcceptInvitation/index.tsx:140
+#: src/components/routes/auth/Register/index.tsx:136
+#: src/components/routes/auth/ResetPassword/index.tsx:75
 msgid "Confirm Password"
 msgstr "确认密码"
 
@@ -2098,7 +2094,7 @@ msgid "Connection Details"
 msgstr "连接详情"
 
 #: src/components/common/WaitlistTable/index.tsx:149
-#: src/components/layouts/EventHomepage/index.tsx:648
+#: src/components/layouts/EventHomepage/index.tsx:655
 #: src/components/layouts/OrganizerHomepage/index.tsx:256
 msgid "Contact"
 msgstr "联系"
@@ -2289,7 +2285,7 @@ msgstr "创建{0}模板"
 msgid "Create a custom widget to sell tickets on your site."
 msgstr "创建自定义小部件以在您的网站上销售门票。"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:128
+#: src/components/routes/auth/AcceptInvitation/index.tsx:135
 msgid "Create a password"
 msgstr "创建密码"
 
@@ -2381,7 +2377,7 @@ msgstr "创建活动"
 msgid "Create new"
 msgstr "创建新的"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:57
+#: src/components/routes/auth/ResetPassword/index.tsx:62
 msgid "Create new password"
 msgstr "创建新密码"
 
@@ -2430,7 +2426,7 @@ msgstr "创建可追踪链接以奖励推广您活动的合作伙伴。"
 msgid "Create Webhook"
 msgstr "创建 Webhook"
 
-#: src/components/layouts/EventHomepage/index.tsx:258
+#: src/components/layouts/EventHomepage/index.tsx:266
 msgid "Create your event"
 msgstr ""
 
@@ -3139,10 +3135,10 @@ msgstr "符合条件的签到列表"
 #: src/components/modals/JoinWaitlistModal/index.tsx:171
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:150
 #: src/components/routes/admin/Dashboard/index.tsx:168
-#: src/components/routes/auth/AcceptInvitation/index.tsx:112
-#: src/components/routes/auth/ForgotPassword/index.tsx:65
+#: src/components/routes/auth/AcceptInvitation/index.tsx:119
+#: src/components/routes/auth/ForgotPassword/index.tsx:70
 #: src/components/routes/auth/Login/index.tsx:85
-#: src/components/routes/auth/Register/index.tsx:116
+#: src/components/routes/auth/Register/index.tsx:122
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3360,7 +3356,7 @@ msgstr "输入名字"
 msgid "Enter last name"
 msgstr "输入姓氏"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:65
+#: src/components/routes/auth/ResetPassword/index.tsx:70
 msgid "Enter new password"
 msgstr "输入新密码"
 
@@ -3378,7 +3374,7 @@ msgstr "输入唯一推广码"
 msgid "Enter your email"
 msgstr "输入您的电子邮箱"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:58
+#: src/components/routes/auth/ForgotPassword/index.tsx:63
 msgid "Enter your email and we'll send you instructions to reset your password."
 msgstr "输入您的电子邮件，我们将向您发送重置密码的说明。"
 
@@ -4083,8 +4079,8 @@ msgstr "姓名"
 #: src/components/modals/EditUserModal/index.tsx:71
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
-#: src/components/routes/auth/AcceptInvitation/index.tsx:97
-#: src/components/routes/auth/Register/index.tsx:93
+#: src/components/routes/auth/AcceptInvitation/index.tsx:104
+#: src/components/routes/auth/Register/index.tsx:99
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4103,7 +4099,7 @@ msgstr "名字为必填项"
 msgid "First name must be between 1 and 50 characters"
 msgstr "名字必须在 1 至 50 个字符之间"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:64
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:65
 msgid "First Used"
 msgstr "首次使用"
 
@@ -4211,15 +4207,15 @@ msgstr "生成"
 msgid "Generate code"
 msgstr "生成代码"
 
-#: src/components/layouts/EventHomepage/index.tsx:475
+#: src/components/layouts/EventHomepage/index.tsx:482
 msgid "Get Directions"
 msgstr "获取路线"
 
-#: src/components/routes/auth/Register/index.tsx:76
+#: src/components/routes/auth/Register/index.tsx:82
 msgid "Get started"
 msgstr "开始使用"
 
-#: src/components/layouts/EventHomepage/index.tsx:670
+#: src/components/layouts/EventHomepage/index.tsx:677
 msgid "Get Tickets"
 msgstr "获取门票"
 
@@ -4498,7 +4494,7 @@ msgstr ""
 msgid "I agree to receive email notifications related to this event"
 msgstr "我同意接收与此活动相关的电子邮件通知"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:142
+#: src/components/routes/auth/AcceptInvitation/index.tsx:149
 msgid "I agree to the <0>terms and conditions</0>"
 msgstr "我同意<0>条款和条件</0>。"
 
@@ -4534,7 +4530,7 @@ msgstr "如已注册,请提供您的增值税号码以供验证"
 msgid "If you did not request this change, please immediately change your password."
 msgstr "如果您没有要求更改密码，请立即更改密码。"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:44
+#: src/components/routes/auth/ForgotPassword/index.tsx:49
 msgid "If you have an account with us, you will receive an email with instructions on how to reset your password."
 msgstr "如果您在我们这里有账户，您将收到一封包含如何重置密码说明的电子邮件。"
 
@@ -4770,8 +4766,8 @@ msgstr "任务名称"
 msgid "Job queued for retry"
 msgstr "任务已排队等待重试"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:98
-#: src/components/routes/auth/Register/index.tsx:94
+#: src/components/routes/auth/AcceptInvitation/index.tsx:105
+#: src/components/routes/auth/Register/index.tsx:100
 msgid "John"
 msgstr "约翰"
 
@@ -4779,7 +4775,7 @@ msgstr "约翰"
 msgid "Johnson"
 msgstr "约翰逊"
 
-#: src/components/layouts/EventHomepage/index.tsx:403
+#: src/components/layouts/EventHomepage/index.tsx:410
 msgid "Join from anywhere"
 msgstr "随时随地加入"
 
@@ -4874,8 +4870,8 @@ msgstr "姓氏"
 #: src/components/modals/EditUserModal/index.tsx:72
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
-#: src/components/routes/auth/AcceptInvitation/index.tsx:102
-#: src/components/routes/auth/Register/index.tsx:99
+#: src/components/routes/auth/AcceptInvitation/index.tsx:109
+#: src/components/routes/auth/Register/index.tsx:105
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4901,7 +4897,7 @@ msgstr "最新响应"
 msgid "Last Triggered"
 msgstr "最近触发"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:70
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:71
 msgid "Last Used"
 msgstr "最近一次使用"
 
@@ -4983,7 +4979,7 @@ msgid "Loading..."
 msgstr "加载中..."
 
 #: src/components/common/AttendeeTicket/index.tsx:91
-#: src/components/layouts/EventHomepage/index.tsx:457
+#: src/components/layouts/EventHomepage/index.tsx:464
 #: src/components/routes/event/Settings/index.tsx:44
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:84
 #: src/components/routes/my-tickets/index.tsx:73
@@ -4992,7 +4988,7 @@ msgid "Location"
 msgstr "地点"
 
 #: src/components/routes/auth/Login/index.tsx:96
-#: src/components/routes/auth/Register/index.tsx:81
+#: src/components/routes/auth/Register/index.tsx:87
 msgid "Log in"
 msgstr "登录"
 
@@ -5371,7 +5367,7 @@ msgstr "从不"
 msgid "New"
 msgstr ""
 
-#: src/components/routes/auth/ResetPassword/index.tsx:64
+#: src/components/routes/auth/ResetPassword/index.tsx:69
 #: src/components/routes/profile/ManageProfile/index.tsx:232
 msgid "New Password"
 msgstr "新密码"
@@ -5832,7 +5828,7 @@ msgstr "持续进行"
 msgid "Online"
 msgstr "在线"
 
-#: src/components/layouts/EventHomepage/index.tsx:401
+#: src/components/layouts/EventHomepage/index.tsx:408
 #: src/components/layouts/OrganizerHomepage/EventCard/index.tsx:173
 msgid "Online Event"
 msgstr "在线活动"
@@ -6155,7 +6151,7 @@ msgstr ""
 
 #: src/components/common/AdminEventsTable/index.tsx:87
 #: src/components/common/AttendeeTicket/index.tsx:82
-#: src/components/layouts/EventHomepage/index.tsx:560
+#: src/components/layouts/EventHomepage/index.tsx:567
 #: src/components/modals/EditUserModal/index.tsx:55
 #: src/components/modals/InviteUserModal/index.tsx:47
 #: src/components/routes/events/Dashboard/index.tsx:106
@@ -6334,9 +6330,9 @@ msgstr ""
 msgid "Passix está pensado para organizadores de Argentina. Desde que publicás el evento hasta que entra la última persona, te acompañamos para que todo salga como esperás."
 msgstr ""
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:127
+#: src/components/routes/auth/AcceptInvitation/index.tsx:134
 #: src/components/routes/auth/Login/index.tsx:90
-#: src/components/routes/auth/Register/index.tsx:124
+#: src/components/routes/auth/Register/index.tsx:130
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "密码"
@@ -6345,16 +6341,16 @@ msgstr "密码"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "密码必须至少包含 8 个字符"
 
-#: src/components/routes/auth/Register/index.tsx:39
+#: src/components/routes/auth/Register/index.tsx:40
 msgid "Password must be at least 8 characters"
 msgstr "密码必须至少包含 8 个字符"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:49
+#: src/components/routes/auth/ResetPassword/index.tsx:54
 msgid "Password reset successfully. Please login with your new password."
 msgstr "密码重置成功。请使用新密码登录。"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:40
+#: src/components/routes/auth/Register/index.tsx:41
 msgid "Passwords are not the same"
 msgstr "密码不一样"
 
@@ -6617,12 +6613,12 @@ msgstr "请至少添加一个选项"
 msgid "Please check the provided information is correct"
 msgstr "请检查所提供的信息是否正确"
 
-#: src/components/routes/auth/Login/index.tsx:53
+#: src/components/routes/auth/Login/index.tsx:56
 msgid "Please check your email and password and try again"
 msgstr "请检查您的电子邮件和密码并重试"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:41
+#: src/components/routes/auth/Register/index.tsx:42
 msgid "Please check your email is valid"
 msgstr "请检查您的电子邮件是否有效"
 
@@ -6659,7 +6655,7 @@ msgstr "请输入有效的 URL"
 msgid "Please enter the 5-digit code"
 msgstr "请输入5位数验证码"
 
-#: src/components/routes/auth/Register/index.tsx:38
+#: src/components/routes/auth/Register/index.tsx:39
 msgid "Please enter your business name"
 msgstr ""
 
@@ -6940,7 +6936,7 @@ msgstr "已使用促销 {promo_code} 代码"
 msgid "Promo code"
 msgstr "优惠码"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:20
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:21
 msgid "Promo Code"
 msgstr "促销代码"
 
@@ -6963,7 +6959,7 @@ msgid "Promo codes can be used to offer discounts, presale access, or provide sp
 msgstr "促销代码可用于提供折扣、预售权限或为您的活动提供特殊权限。"
 
 #: src/components/routes/event/Reports/index.tsx:29
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:95
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:96
 msgid "Promo Codes Report"
 msgstr "促销代码报告"
 
@@ -7066,8 +7062,8 @@ msgstr "重新提供名额"
 msgid "Ready to upgrade? This takes only a few minutes."
 msgstr "准备升级？这只需要几分钟。"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:157
-#: src/components/routes/auth/Register/index.tsx:145
+#: src/components/routes/auth/AcceptInvitation/index.tsx:164
+#: src/components/routes/auth/Register/index.tsx:151
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "接收 {0} 的产品更新。"
@@ -7189,7 +7185,7 @@ msgstr "退款"
 msgid "Regional Settings"
 msgstr "区域设置"
 
-#: src/components/routes/auth/Register/index.tsx:149
+#: src/components/routes/auth/Register/index.tsx:155
 msgid "Register"
 msgstr "注册"
 
@@ -7198,7 +7194,7 @@ msgstr "注册"
 msgid "Registration Questions"
 msgstr "注册问题"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:82
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:83
 msgid "Remaining Uses"
 msgstr "剩余使用次数"
 
@@ -7298,12 +7294,12 @@ msgstr "保留至"
 msgid "Reset"
 msgstr "重置"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:57
-#: src/components/routes/auth/ResetPassword/index.tsx:75
+#: src/components/routes/auth/ForgotPassword/index.tsx:62
+#: src/components/routes/auth/ResetPassword/index.tsx:80
 msgid "Reset password"
 msgstr "重置密码"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:75
+#: src/components/routes/auth/ResetPassword/index.tsx:80
 msgid "Resetting..."
 msgstr "正在重置..."
 
@@ -7442,7 +7438,7 @@ msgstr "销售已暂停"
 msgid "Sales ended"
 msgstr "销售结束"
 
-#: src/components/layouts/EventHomepage/index.tsx:535
+#: src/components/layouts/EventHomepage/index.tsx:542
 msgid "Sales for this event are closed."
 msgstr ""
 
@@ -7769,7 +7765,7 @@ msgid "Select time period"
 msgstr "选择时间段"
 
 #: src/components/forms/OrganizerForm/index.tsx:57
-#: src/components/routes/auth/AcceptInvitation/index.tsx:120
+#: src/components/routes/auth/AcceptInvitation/index.tsx:127
 msgid "Select timezone"
 msgstr "选择时区"
 
@@ -7840,7 +7836,7 @@ msgstr "将实时订单和参与者数据发送到您的外部系统。"
 msgid "Send refund notification email"
 msgstr "发送退款通知邮件"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:70
+#: src/components/routes/auth/ForgotPassword/index.tsx:75
 msgid "Send reset link"
 msgstr "发送重置链接"
 
@@ -7852,7 +7848,7 @@ msgstr "发送测试"
 msgid "Send your first message"
 msgstr "发送您的第一条消息"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:70
+#: src/components/routes/auth/ForgotPassword/index.tsx:75
 msgid "Sending..."
 msgstr "正在发送..."
 
@@ -7966,7 +7962,7 @@ msgid "Setup & Design"
 msgstr "设置与设计"
 
 #: src/components/common/ShareIcon/index.tsx:30
-#: src/components/layouts/EventHomepage/index.tsx:350
+#: src/components/layouts/EventHomepage/index.tsx:357
 #: src/components/layouts/OrganizerLayout/index.tsx:240
 #: src/components/modals/ShareModal/index.tsx:37
 #: src/components/modals/ShareModal/index.tsx:165
@@ -8061,8 +8057,8 @@ msgstr "单行文本框"
 msgid "Skip this step"
 msgstr "跳过此步骤"
 
-#: src/components/routes/auth/AcceptInvitation/index.tsx:103
-#: src/components/routes/auth/Register/index.tsx:100
+#: src/components/routes/auth/AcceptInvitation/index.tsx:110
+#: src/components/routes/auth/Register/index.tsx:106
 msgid "Smith"
 msgstr "史密斯"
 
@@ -8108,7 +8104,7 @@ msgstr "出了点问题"
 msgid "Something went wrong while deleting the Tax or Fee"
 msgstr "删除税费时出了问题"
 
-#: src/components/routes/auth/ForgotPassword/index.tsx:32
+#: src/components/routes/auth/ForgotPassword/index.tsx:37
 msgid "Something went wrong, please try again, or contact support if the problem persists"
 msgstr "出现问题，请重试，或在问题持续时联系客服"
 
@@ -8215,7 +8211,7 @@ msgstr "统计数据基于账户创建日期"
 #: src/components/routes/admin/Messages/index.tsx:120
 #: src/components/routes/admin/Messages/index.tsx:167
 #: src/components/routes/admin/Messages/index.tsx:293
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:88
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:89
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:62
 msgid "Status"
 msgstr "状态"
@@ -8707,10 +8703,6 @@ msgstr "定时时间为必填项"
 msgid "The scheduled time must be in the future"
 msgstr "定时时间必须是将来的时间"
 
-#: src/components/common/ProductFeeHint/index.tsx:55
-#~ msgid "The service fee is added or absorbed based on your Platform Fees setting."
-#~ msgstr ""
-
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:145
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:176
 msgid "The template body contains invalid Liquid syntax. Please correct it and try again."
@@ -8822,8 +8814,8 @@ msgstr "此颜色组合对某些用户来说可能难以阅读"
 msgid "This confirmation link is invalid or has expired. Log in and request a new one from your profile."
 msgstr ""
 
-#: src/components/layouts/EventHomepage/index.tsx:389
-#: src/components/layouts/EventHomepage/index.tsx:531
+#: src/components/layouts/EventHomepage/index.tsx:396
+#: src/components/layouts/EventHomepage/index.tsx:538
 msgid "This event has ended"
 msgstr "此活动已结束"
 
@@ -8876,7 +8868,7 @@ msgstr "此信息将包含在本次活动发送的所有电子邮件的页脚中
 msgid "This message will only be shown if order is completed successfully. Orders awaiting payment will not show this message"
 msgstr "此消息仅在订单成功完成后显示。等待付款的订单不会显示此消息。"
 
-#: src/components/routes/auth/Register/index.tsx:109
+#: src/components/routes/auth/Register/index.tsx:115
 msgid "This name appears on your event pages and in emails."
 msgstr ""
 
@@ -9134,14 +9126,14 @@ msgstr "剩余时间："
 msgid "Times used"
 msgstr "使用次数"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:25
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:26
 msgid "Times Used"
 msgstr "使用次数"
 
 #: src/components/forms/OrganizerForm/index.tsx:56
 #: src/components/routes/account/ManageAccount/sections/AccountSettings/index.tsx:82
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:162
-#: src/components/routes/auth/AcceptInvitation/index.tsx:119
+#: src/components/routes/auth/AcceptInvitation/index.tsx:126
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:124
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:122
 #: src/components/routes/product-widget/OrderSummaryAndProducts/index.tsx:327
@@ -9173,6 +9165,14 @@ msgstr "要接受信用卡付款，您需要连接您的 Stripe 账户。Stripe 
 msgid "Toggle columns"
 msgstr "切换列"
 
+#: src/components/routes/auth/AcceptInvitation/index.tsx:82
+#: src/components/routes/auth/ForgotPassword/index.tsx:33
+#: src/components/routes/auth/Login/index.tsx:52
+#: src/components/routes/auth/Register/index.tsx:59
+#: src/components/routes/auth/ResetPassword/index.tsx:47
+msgid "Too many attempts. Please wait a moment and try again."
+msgstr "尝试次数过多。请稍候再试。"
+
 #: src/components/layouts/OrganizerLayout/index.tsx:90
 msgid "Tools"
 msgstr "工具"
@@ -9187,10 +9187,6 @@ msgstr "工具"
 msgid "Total"
 msgstr "总计"
 
-#: src/components/routes/product-widget/SelectProducts/index.tsx:632
-#~ msgid "Total (all included)"
-#~ msgstr ""
-
 #: src/components/routes/admin/Dashboard/index.tsx:92
 msgid "Total Accounts"
 msgstr "总账户数"
@@ -9203,7 +9199,7 @@ msgstr "支付总金额"
 msgid "Total Attendees"
 msgstr "总参与人数"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:52
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:53
 msgid "Total Before Discounts"
 msgstr "折扣前总计"
 
@@ -9211,7 +9207,7 @@ msgstr "折扣前总计"
 msgid "Total Collected"
 msgstr "总收款"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:58
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:59
 msgid "Total Discount Amount"
 msgstr "折扣总金额"
 
@@ -9230,7 +9226,7 @@ msgstr "总费用"
 msgid "Total Fees"
 msgstr "总费用"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:46
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:47
 msgid "Total Gross Sales"
 msgstr "总销售额"
 
@@ -9369,7 +9365,7 @@ msgstr "无法更新问题。请检查您的详细信息"
 msgid "Unattributed Accounts"
 msgstr "未归因账户"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:30
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:31
 msgid "Unique Customers"
 msgstr "独立客户"
 
@@ -9404,8 +9400,8 @@ msgstr "未知参会者"
 #: src/components/forms/ProductForm/index.tsx:415
 #: src/components/forms/PromoCodeForm/index.tsx:112
 #: src/components/modals/OfferWaitlistModal/index.tsx:189
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:78
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:84
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:79
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:85
 msgid "Unlimited"
 msgstr "无限制"
 
@@ -9495,7 +9491,7 @@ msgstr "URL 是必填项"
 msgid "Usage Example"
 msgstr "使用示例"
 
-#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:76
+#: src/components/routes/event/Reports/PromoCodesReport/index.tsx:77
 msgid "Usage Limit"
 msgstr "使用限制"
 
@@ -9755,7 +9751,7 @@ msgstr "查看活动页面"
 msgid "View logs"
 msgstr "查看日志"
 
-#: src/components/layouts/EventHomepage/index.tsx:516
+#: src/components/layouts/EventHomepage/index.tsx:523
 msgid "View Map"
 msgstr "查看地图"
 
@@ -9763,7 +9759,7 @@ msgstr "查看地图"
 msgid "View Message"
 msgstr "查看消息"
 
-#: src/components/layouts/EventHomepage/index.tsx:429
+#: src/components/layouts/EventHomepage/index.tsx:436
 msgid "View on Google Maps"
 msgstr "在谷歌地图上查看"
 
@@ -10207,7 +10203,7 @@ msgstr "工作"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:149
+#: src/components/routes/auth/Register/index.tsx:155
 msgid "Working..."
 msgstr "工作..."
 
@@ -10485,7 +10481,7 @@ msgstr "您的消息将显示在此处"
 msgid "Your Name"
 msgstr "您的姓名"
 
-#: src/components/routes/auth/ResetPassword/index.tsx:58
+#: src/components/routes/auth/ResetPassword/index.tsx:63
 msgid "Your new password must be at least 8 characters long."
 msgstr "您的新密码长度必须至少为8个字符。"
 
@@ -10522,7 +10518,7 @@ msgid "Your organizer address"
 msgstr "您组织者的地址"
 
 #: src/components/routes/auth/Login/index.tsx:91
-#: src/components/routes/auth/Register/index.tsx:125
+#: src/components/routes/auth/Register/index.tsx:131
 msgid "Your password"
 msgstr "您的密码"
 
