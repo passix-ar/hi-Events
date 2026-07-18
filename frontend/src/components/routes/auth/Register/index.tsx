@@ -10,6 +10,7 @@ import {getClientLocale} from "../../../../locales.ts";
 import {useEffect} from "react";
 import {getConfig} from "../../../../utilites/config.ts";
 import {captureUtmData, getStoredUtmData, clearStoredUtmData} from "../../../../utilites/utm.ts";
+import {showError} from "../../../../utilites/notifications.tsx";
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -54,6 +55,11 @@ export const Register = () => {
                 navigate(`/welcome${location.search}`);
             },
             onError: (error: any) => {
+                if (error?.response?.status === 429) {
+                    showError(t`Too many attempts. Please wait a moment and try again.`);
+                    return;
+                }
+
                 errorHandler(form, error, error.response?.data?.message);
             },
         });

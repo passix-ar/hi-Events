@@ -77,7 +77,14 @@ const AcceptInvitation = () => {
                 showSuccess(t`Welcome aboard! Please login to continue.`);
                 navigate('/auth/login');
             },
-            onError: (error) => errorHandler(form, error),
+            onError: (error: any) => {
+                if (error?.response?.status === 429) {
+                    showError(t`Too many attempts. Please wait a moment and try again.`);
+                    return;
+                }
+
+                errorHandler(form, error);
+            },
         });
     }
 

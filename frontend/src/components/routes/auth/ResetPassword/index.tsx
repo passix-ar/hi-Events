@@ -42,7 +42,12 @@ export const ResetPassword = () => {
         token: String(token),
         resetData: values,
     }, {
-        onError: (error) => {
+        onError: (error: any) => {
+            if (error?.response?.status === 429) {
+                showError(t`Too many attempts. Please wait a moment and try again.`);
+                return;
+            }
+
             errorHandler(form, error);
         },
         onSuccess: () => {
