@@ -26,6 +26,12 @@ scrape_configs:
     static_configs:
       - targets: ['node-exporter:9100']
 
+  # Métricas por contenedor (CPU, RAM, red, IO) vía Telegraf + docker-socket-proxy.
+  # Reemplaza a cAdvisor, que no soporta el storage driver overlayfs de este host.
+  - job_name: telegraf-docker
+    static_configs:
+      - targets: ['telegraf:9273']
+
   # Health checks HTTP del sitio (frontend) y de la API (backend)
   - job_name: blackbox
     metrics_path: /probe

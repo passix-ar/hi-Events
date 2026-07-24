@@ -131,6 +131,36 @@ services:
   # cAdvisor todavía no soporta (bug google/cadvisor#3860), así que no podía resolver
   # los nombres de los containers en este host. Se puede reponer cuando lo arreglen upstream.
 
+  # ── Métricas por contenedor (reemplazo de cAdvisor) ───────────────────────
+  # Telegraf lee la API de Docker (lo mismo que `docker stats`) en vez del
+  # filesystem, así que el bug de overlayfs que rompía cAdvisor no lo afecta.
+  #
+  # El socket NO se le pasa directo: va detrás del proxy de Tecnativa, que con
+  # POST=0 solo deja pasar GET/HEAD. Montar /var/run/docker.sock en un container
+  # equivale a darle root en el host, y el `:ro` no protege (el socket es una API,
+  # no un archivo). Por eso el único que lo toca es el proxy.
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:v0.4.2
+    container_name: passix_docker_socket_proxy
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1   # listar containers + leer sus stats
+      INFO: 1         # /info, que el plugin usa al arrancar
+      POST: 0         # solo lectura
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - monitoring
+
+  telegraf:
+    image: telegraf:1.39.2-alpine
+    container_name: passix_telegraf
+    restart: unless-stopped
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    networks:
+      - monitoring
+
   # ── Blackbox / Health checks HTTP ─────────────────────────────────────────
   blackbox-exporter:
     image: prom/blackbox-exporter:v0.24.0
