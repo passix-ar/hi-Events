@@ -31,6 +31,12 @@ scrape_configs:
   - job_name: telegraf-docker
     static_configs:
       - targets: ['telegraf:9273']
+    metric_relabel_configs:
+      # container_id (hash de 64 chars) y container_version (SHA del commit) cambian
+      # en CADA redeploy de Coolify. Sin esto, cada deploy deja series huérfanas para
+      # siempre y el TSDB crece sin control.
+      - regex: 'container_id|container_version'
+        action: labeldrop
 
   # Health checks HTTP del sitio (frontend) y de la API (backend)
   - job_name: blackbox
