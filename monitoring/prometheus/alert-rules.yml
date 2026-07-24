@@ -47,6 +47,18 @@ groups:
           summary: "⚠️ RAM al {{ $value | printf \"%.0f\" }}%"
           description: "El uso de memoria supera el 90% por más de 5 minutos."
 
+      # Swap en uso sostenido — señal de que falta RAM, no de que falte swap.
+      # En bytes absolutos a propósito: un porcentaje dividiría por SwapTotal, que da
+      # cero si algún día se desactiva el swap, y la alerta quedaría rota en silencio.
+      - alert: SwapEnUso
+        expr: node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes > 536870912
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "⚠️ Swap en uso sostenido"
+          description: "El servidor lleva 15 minutos usando más de 512MB de swap. No falta swap: falta RAM. Considerar pasar a un plan más grande."
+
       # CPU > 90% sostenida
       - alert: CPUAlta
         expr: >
