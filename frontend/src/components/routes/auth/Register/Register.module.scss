@@ -9,6 +9,10 @@
   @include auth.auth-card;
   width: 100%;
 
+  .divider {
+    @include auth.auth-divider;
+  }
+
   form {
     @include auth.auth-inputs;
     @include auth.auth-button(0.5rem);

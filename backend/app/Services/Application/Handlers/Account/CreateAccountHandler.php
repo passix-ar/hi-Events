@@ -55,16 +55,24 @@ class CreateAccountHandler
         }
 
         $isSaasMode = $this->config->get('app.saas_mode_enabled');
-        $passwordHash = $this->hashManager->make($accountData->password);;
+        $passwordHash = $accountData->password === null
+            ? null
+            : $this->hashManager->make($accountData->password);
 
-        return $this->databaseManager->transaction(function () use ($isSaasMode, $passwordHash, $accountData) {
+        // A social provider that already proved ownership of the address makes our own
+        // confirmation round-trip redundant, so the account starts out verified.
+        $verifiedAt = ($isSaasMode && !$accountData->is_email_verified)
+            ? null
+            : now()->toDateTimeString();
+
+        return $this->databaseManager->transaction(function () use ($verifiedAt, $passwordHash, $accountData) {
             $account = $this->accountRepository->create([
                 'timezone' => $this->getTimezone($accountData),
                 'currency_code' => $this->getCurrencyCode($accountData),
                 'name' => trim($accountData->business_name),
                 'email' => strtolower($accountData->email),
                 'short_id' => IdHelper::shortId(IdHelper::ACCOUNT_PREFIX),
-                'account_verified_at' => $isSaasMode ? null : now()->toDateTimeString(),
+                'account_verified_at' => $verifiedAt,
                 'account_configuration_id' => $this->getAccountConfigurationId($accountData),
                 'account_messaging_tier_id' => $this->getDefaultMessagingTierId(),
             ]);
@@ -75,7 +83,7 @@ class CreateAccountHandler
                 'first_name' => $accountData->first_name,
                 'last_name' => $accountData->last_name,
                 'timezone' => $this->getTimezone($accountData),
-                'email_verified_at' => $isSaasMode ? null : now()->toDateTimeString(),
+                'email_verified_at' => $verifiedAt,
                 'locale' => $accountData->locale,
                 'marketing_opted_in_at' => $accountData->marketing_opt_in ? now()->toDateTimeString() : null,
             ]);
@@ -105,7 +113,9 @@ class CreateAccountHandler
                 ]);
             }
 
-            $this->emailConfirmationService->sendConfirmation($user, $account->getId());
+            if (!$accountData->is_email_verified) {
+                $this->emailConfirmationService->sendConfirmation($user, $account->getId());
+            }
 
             return $account;
         });

@@ -414,7 +414,8 @@ msgstr "Konto erfolgreich aktualisiert"
 msgid "Accounts"
 msgstr "Konten"
 
-#: src/components/routes/auth/Register/index.tsx:114
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:118
+#: src/components/routes/auth/Register/index.tsx:130
 msgid "Acme Inc."
 msgstr ""
 
@@ -735,7 +736,7 @@ msgstr "Fast geschafft! Schließen Sie die Verbindung Ihres Stripe-Kontos ab, um
 msgid "Almost there! We're just waiting for your payment to be processed. This should only take a few seconds."
 msgstr "Fast geschafft! Wir warten nur noch auf die Verarbeitung Ihrer Zahlung. Das sollte nur wenige Sekunden dauern."
 
-#: src/components/routes/auth/Register/index.tsx:84
+#: src/components/routes/auth/Register/index.tsx:88
 msgid "Already have an account? <0>{0}</0>"
 msgstr "Haben Sie bereits ein Konto? <0>{0}</0>"
 
@@ -1348,7 +1349,8 @@ msgstr "Geschäftsadresse"
 msgid "Business address for VAT purposes"
 msgstr "Geschäftsadresse für Umsatzsteuerzwecke"
 
-#: src/components/routes/auth/Register/index.tsx:113
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:117
+#: src/components/routes/auth/Register/index.tsx:129
 msgid "Business name"
 msgstr ""
 
@@ -1383,7 +1385,7 @@ msgstr ""
 msgid "By continuing, you agree to the <0>{0} Terms of Service</0>"
 msgstr "Durch Fortfahren stimmen Sie den <0>{0} Nutzungsbedingungen</0> zu"
 
-#: src/components/routes/auth/Register/index.tsx:159
+#: src/components/routes/auth/Register/index.tsx:175
 msgid "By registering you agree to our <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "Mit der Registrierung stimmen Sie unseren <0>Servicebedingungen</0> und <1>Datenschutzrichtlinie</1> zu."
 
@@ -1576,7 +1578,7 @@ msgstr "Schau dir dieses Event an!"
 msgid "Check your email"
 msgstr "Überprüfen Sie Ihre E-Mail"
 
-#: src/components/routes/auth/Login/index.tsx:133
+#: src/components/routes/auth/Login/index.tsx:149
 #: src/components/routes/my-tickets/index.tsx:174
 msgid "Check your inbox! If tickets are associated with this email, you'll receive a link to view them."
 msgstr "Überprüfen Sie Ihren Posteingang! Wenn Tickets mit dieser E-Mail verknüpft sind, erhalten Sie einen Link, um sie anzuzeigen."
@@ -1980,12 +1982,12 @@ msgid "Confirm New Password"
 msgstr "Bestätige neues Passwort"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:141
-#: src/components/routes/auth/Register/index.tsx:137
+#: src/components/routes/auth/Register/index.tsx:153
 msgid "Confirm password"
 msgstr "Bestätige das Passwort"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:140
-#: src/components/routes/auth/Register/index.tsx:136
+#: src/components/routes/auth/Register/index.tsx:152
 #: src/components/routes/auth/ResetPassword/index.tsx:75
 msgid "Confirm Password"
 msgstr "Bestätige das Passwort"
@@ -2301,6 +2303,10 @@ msgstr "Einen Promo-Code erstellen"
 msgid "Create a Ticket"
 msgstr "Ticket erstellen"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:132
+msgid "Create account"
+msgstr ""
+
 #: src/components/modals/CreateOrganizerModal/index.tsx:24
 msgid "Create additional organizers to manage separate brands, departments, or event series under one account. Each organizer has its own events, settings, and public page."
 msgstr "Erstellen Sie weitere Veranstalter, um separate Marken, Abteilungen oder Veranstaltungsreihen unter einem Konto zu verwalten. Jeder Veranstalter hat eigene Veranstaltungen, Einstellungen und eine öffentliche Seite."
@@ -2459,6 +2465,10 @@ msgstr "Veranstaltung wird erstellt..."
 #: src/components/forms/OrganizerForm/index.tsx:122
 msgid "Creating Organizer..."
 msgstr "Veranstalter wird erstellt..."
+
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:132
+msgid "Creating your account"
+msgstr ""
 
 #: src/components/routes/welcome/index.tsx:408
 msgid "Creating your event, please wait"
@@ -2846,7 +2856,7 @@ msgstr "Dokumentation"
 msgid "Don't forget!"
 msgstr "Nicht vergessen!"
 
-#: src/components/routes/auth/Login/index.tsx:104
+#: src/components/routes/auth/Login/index.tsx:120
 msgid "Don't have an account? <0>Sign up</0>"
 msgstr ""
 
@@ -3137,8 +3147,8 @@ msgstr "Berechtigte Check-In-Listen"
 #: src/components/routes/admin/Dashboard/index.tsx:168
 #: src/components/routes/auth/AcceptInvitation/index.tsx:119
 #: src/components/routes/auth/ForgotPassword/index.tsx:70
-#: src/components/routes/auth/Login/index.tsx:85
-#: src/components/routes/auth/Register/index.tsx:122
+#: src/components/routes/auth/Login/index.tsx:101
+#: src/components/routes/auth/Register/index.tsx:138
 #: src/components/routes/organizer/Settings/Sections/BasicSettings/index.tsx:77
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:68
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:68
@@ -3369,7 +3379,7 @@ msgid "Enter unique affiliate code"
 msgstr "Eindeutigen Partnercode eingeben"
 
 #: src/components/common/ContactOrganizerModal/index.tsx:80
-#: src/components/routes/auth/Login/index.tsx:150
+#: src/components/routes/auth/Login/index.tsx:166
 #: src/components/routes/my-tickets/index.tsx:192
 msgid "Enter your email"
 msgstr "Geben Sie Ihre E-Mail-Adresse ein"
@@ -4080,7 +4090,7 @@ msgstr "Vorname"
 #: src/components/modals/InviteUserModal/index.tsx:57
 #: src/components/modals/JoinWaitlistModal/index.tsx:161
 #: src/components/routes/auth/AcceptInvitation/index.tsx:104
-#: src/components/routes/auth/Register/index.tsx:99
+#: src/components/routes/auth/Register/index.tsx:115
 #: src/components/routes/product-widget/CollectInformation/index.tsx:434
 #: src/components/routes/product-widget/CollectInformation/index.tsx:646
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:53
@@ -4151,7 +4161,7 @@ msgstr "Essen & Trinken"
 msgid "Footer Text"
 msgstr "Fußzeilentext"
 
-#: src/components/routes/auth/Login/index.tsx:100
+#: src/components/routes/auth/Login/index.tsx:116
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
 
@@ -4211,7 +4221,7 @@ msgstr "Code generieren"
 msgid "Get Directions"
 msgstr "Wegbeschreibung"
 
-#: src/components/routes/auth/Register/index.tsx:82
+#: src/components/routes/auth/Register/index.tsx:86
 msgid "Get started"
 msgstr "Erste Schritte"
 
@@ -4263,6 +4273,10 @@ msgstr "Gute Lesbarkeit"
 #: src/components/common/CalendarOptionsPopover/index.tsx:29
 msgid "Google Calendar"
 msgstr "Google Kalender"
+
+#: src/components/common/GoogleAuthButton/index.tsx:140
+msgid "Google sign in is unavailable right now. Please use your email and password."
+msgstr ""
 
 #: src/components/common/EventCard/index.tsx:230
 msgid "Gross revenue"
@@ -4767,7 +4781,7 @@ msgid "Job queued for retry"
 msgstr "Job zur Wiederholung eingereiht"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:105
-#: src/components/routes/auth/Register/index.tsx:100
+#: src/components/routes/auth/Register/index.tsx:116
 msgid "John"
 msgstr "John"
 
@@ -4797,7 +4811,7 @@ msgstr "Beigetreten"
 msgid "Just click the button below to reconnect your Stripe account."
 msgstr "Klicken Sie einfach auf die Schaltfläche unten, um Ihr Stripe-Konto erneut zu verbinden."
 
-#: src/components/routes/auth/Login/index.tsx:121
+#: src/components/routes/auth/Login/index.tsx:137
 msgid "Just looking for your tickets?"
 msgstr "Suchen Sie nur nach Ihren Tickets?"
 
@@ -4871,7 +4885,7 @@ msgstr "Nachname"
 #: src/components/modals/InviteUserModal/index.tsx:58
 #: src/components/modals/JoinWaitlistModal/index.tsx:166
 #: src/components/routes/auth/AcceptInvitation/index.tsx:109
-#: src/components/routes/auth/Register/index.tsx:105
+#: src/components/routes/auth/Register/index.tsx:121
 #: src/components/routes/product-widget/CollectInformation/index.tsx:440
 #: src/components/routes/product-widget/CollectInformation/index.tsx:441
 #: src/components/routes/product-widget/CollectInformation/index.tsx:652
@@ -4987,12 +5001,12 @@ msgstr "Wird geladen..."
 msgid "Location"
 msgstr "Standort"
 
-#: src/components/routes/auth/Login/index.tsx:96
-#: src/components/routes/auth/Register/index.tsx:87
+#: src/components/routes/auth/Login/index.tsx:112
+#: src/components/routes/auth/Register/index.tsx:91
 msgid "Log in"
 msgstr "Anmelden"
 
-#: src/components/routes/auth/Login/index.tsx:96
+#: src/components/routes/auth/Login/index.tsx:112
 msgid "Logging in"
 msgstr "Einloggen"
 
@@ -5819,6 +5833,10 @@ msgstr "Sobald Sie Daten sammeln, werden sie hier angezeigt."
 msgid "Once you're ready, set your event live and start selling products."
 msgstr "Sobald Sie bereit sind, setzen Sie Ihre Veranstaltung live und beginnen Sie mit dem Verkauf von Produkten."
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:105
+msgid "One last step"
+msgstr ""
+
 #: src/components/common/EventStatusBadge/index.tsx:18
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:31
 msgid "Ongoing"
@@ -5893,6 +5911,8 @@ msgid "Options"
 msgstr "Optionen"
 
 #: src/components/modals/CreateEventModal/index.tsx:164
+#: src/components/routes/auth/Login/index.tsx:95
+#: src/components/routes/auth/Register/index.tsx:106
 msgid "or"
 msgstr "oder"
 
@@ -6331,8 +6351,8 @@ msgid "Passix está pensado para organizadores de Argentina. Desde que publicás
 msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:134
-#: src/components/routes/auth/Login/index.tsx:90
-#: src/components/routes/auth/Register/index.tsx:130
+#: src/components/routes/auth/Login/index.tsx:106
+#: src/components/routes/auth/Register/index.tsx:146
 #: src/components/routes/profile/ManageProfile/index.tsx:119
 msgid "Password"
 msgstr "Passwort"
@@ -6341,7 +6361,7 @@ msgstr "Passwort"
 msgid "Password must be a minimum  of 8 characters"
 msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
 
-#: src/components/routes/auth/Register/index.tsx:40
+#: src/components/routes/auth/Register/index.tsx:44
 msgid "Password must be at least 8 characters"
 msgstr "Das Passwort muss mindestens 8 Zeichen lang sein"
 
@@ -6350,7 +6370,7 @@ msgid "Password reset successfully. Please login with your new password."
 msgstr "Passwort erfolgreich zurückgesetzt. Bitte melden Sie sich mit Ihrem neuen Passwort an."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:32
-#: src/components/routes/auth/Register/index.tsx:41
+#: src/components/routes/auth/Register/index.tsx:45
 msgid "Passwords are not the same"
 msgstr "Passwörter sind nicht gleich"
 
@@ -6613,12 +6633,12 @@ msgstr "Bitte fügen Sie mindestens eine Option hinzu"
 msgid "Please check the provided information is correct"
 msgstr "Bitte überprüfen Sie, ob die angegebenen Informationen korrekt sind"
 
-#: src/components/routes/auth/Login/index.tsx:56
+#: src/components/routes/auth/Login/index.tsx:60
 msgid "Please check your email and password and try again"
 msgstr "Bitte überprüfen Sie Ihre E-Mail und Ihr Passwort und versuchen Sie es erneut"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:33
-#: src/components/routes/auth/Register/index.tsx:42
+#: src/components/routes/auth/Register/index.tsx:46
 msgid "Please check your email is valid"
 msgstr "Bitte überprüfen Sie, ob Ihre E-Mail gültig ist"
 
@@ -6655,7 +6675,8 @@ msgstr "Bitte geben Sie eine gültige URL ein"
 msgid "Please enter the 5-digit code"
 msgstr "Bitte geben Sie den 5-stelligen Code ein"
 
-#: src/components/routes/auth/Register/index.tsx:39
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:46
+#: src/components/routes/auth/Register/index.tsx:43
 msgid "Please enter your business name"
 msgstr ""
 
@@ -7063,7 +7084,7 @@ msgid "Ready to upgrade? This takes only a few minutes."
 msgstr "Bereit für das Upgrade? Das dauert nur wenige Minuten."
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:164
-#: src/components/routes/auth/Register/index.tsx:151
+#: src/components/routes/auth/Register/index.tsx:167
 #: src/components/routes/profile/ManageProfile/index.tsx:209
 msgid "Receive product updates from {0}."
 msgstr "Produktupdates von {0} erhalten."
@@ -7185,7 +7206,7 @@ msgstr "Rückerstattungen"
 msgid "Regional Settings"
 msgstr "Regionale Einstellungen"
 
-#: src/components/routes/auth/Register/index.tsx:155
+#: src/components/routes/auth/Register/index.tsx:171
 msgid "Register"
 msgstr "Registrieren"
 
@@ -7794,7 +7815,7 @@ msgstr "Ausgewählt"
 msgid "Selling fast 🔥"
 msgstr "Schnell verkauft 🔥"
 
-#: src/components/routes/auth/Login/index.tsx:160
+#: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
 msgid "Send"
 msgstr "Schicken"
@@ -8044,6 +8065,10 @@ msgstr "Zeigt allgemeine Adressfelder an, einschließlich Land"
 msgid "Signed Up"
 msgstr "Angemeldet"
 
+#: src/hooks/useGoogleAuth.ts:77
+msgid "Signing in with Google is not available right now."
+msgstr ""
+
 #: src/components/modals/ManageAttendeeModal/index.tsx:111
 #: src/components/modals/ManageOrderModal/index.tsx:151
 msgid "Simpson"
@@ -8058,7 +8083,7 @@ msgid "Skip this step"
 msgstr "Überspringe diesen Schritt"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:110
-#: src/components/routes/auth/Register/index.tsx:106
+#: src/components/routes/auth/Register/index.tsx:122
 msgid "Smith"
 msgstr "Schmied"
 
@@ -8100,6 +8125,10 @@ msgstr "Ausverkauft"
 msgid "Something went wrong"
 msgstr "Etwas ist schiefgelaufen"
 
+#: src/hooks/useGoogleAuth.ts:84
+msgid "Something went wrong signing in with Google. Please try again."
+msgstr ""
+
 #: src/components/common/TaxAndFeeList/index.tsx:39
 msgid "Something went wrong while deleting the Tax or Fee"
 msgstr "Beim Löschen der Steuer oder Gebühr ist ein Fehler aufgetreten"
@@ -8123,7 +8152,7 @@ msgstr "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut."
 
 #: src/components/layouts/Event/index.tsx:78
 #: src/components/layouts/OrganizerLayout/index.tsx:106
-#: src/components/routes/auth/Login/index.tsx:72
+#: src/components/routes/auth/Login/index.tsx:76
 #: src/components/routes/my-tickets/index.tsx:145
 #: src/components/routes/profile/ManageProfile/index.tsx:90
 #: src/components/routes/profile/ManageProfile/index.tsx:104
@@ -8823,6 +8852,10 @@ msgstr "Diese Veranstaltung ist beendet"
 msgid "This event is not published yet"
 msgstr "Diese Veranstaltung ist noch nicht veröffentlicht"
 
+#: src/hooks/useGoogleAuth.ts:80
+msgid "This Google account is already linked to another user. Please contact support."
+msgstr ""
+
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:154
 msgid "This information will be shown on the payment page, order summary page, and order confirmation email."
 msgstr "Diese Informationen werden auf der Zahlungsseite, der Bestellübersichtsseite und in der Bestellbestätigungs-E-Mail angezeigt."
@@ -8868,7 +8901,8 @@ msgstr "Diese Nachricht wird in die Fußzeile aller E-Mails aufgenommen, die von
 msgid "This message will only be shown if order is completed successfully. Orders awaiting payment will not show this message"
 msgstr "Diese Nachricht wird nur angezeigt, wenn die Bestellung erfolgreich abgeschlossen wurde. Bestellungen, die auf Zahlung warten, zeigen diese Nachricht nicht an."
 
-#: src/components/routes/auth/Register/index.tsx:115
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:119
+#: src/components/routes/auth/Register/index.tsx:131
 msgid "This name appears on your event pages and in emails."
 msgstr ""
 
@@ -9166,10 +9200,12 @@ msgid "Toggle columns"
 msgstr "Spalten umschalten"
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:82
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:74
 #: src/components/routes/auth/ForgotPassword/index.tsx:33
-#: src/components/routes/auth/Login/index.tsx:52
-#: src/components/routes/auth/Register/index.tsx:59
+#: src/components/routes/auth/Login/index.tsx:56
+#: src/components/routes/auth/Register/index.tsx:63
 #: src/components/routes/auth/ResetPassword/index.tsx:47
+#: src/hooks/useGoogleAuth.ts:82
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "Zu viele Versuche. Bitte warten Sie einen Moment und versuchen Sie es erneut."
 
@@ -9285,7 +9321,7 @@ msgstr "Wahr bei Offline-Zahlung"
 msgid "True if payment pending"
 msgstr "Wahr bei ausstehender Zahlung"
 
-#: src/components/routes/auth/Login/index.tsx:141
+#: src/components/routes/auth/Login/index.tsx:157
 #: src/components/routes/my-tickets/index.tsx:183
 msgid "Try another email"
 msgstr "Andere E-Mail versuchen"
@@ -9889,9 +9925,18 @@ msgstr "Wir konnten diese Bestellung nicht finden. Möglicherweise wurde sie ent
 msgid "We couldn't load the data. Please try again."
 msgstr "Wir konnten die Daten nicht laden. Bitte versuchen Sie es erneut."
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:63
+#: src/hooks/useGoogleAuth.ts:70
+msgid "We couldn't reach the server. Please check your connection and try again."
+msgstr ""
+
 #: src/components/common/ProductsTable/SortableCategory/index.tsx:94
 msgid "We couldn't reorder the categories. Please try again."
 msgstr "Wir konnten die Kategorien nicht neu ordnen. Bitte versuchen Sie es erneut."
+
+#: src/hooks/useGoogleAuth.ts:75
+msgid "We couldn't verify your Google sign in. Please try again."
+msgstr ""
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:387
 msgid "We hit a snag loading this page. Please try again."
@@ -10006,7 +10051,7 @@ msgstr "Weibo"
 msgid "Welcome aboard! Please login to continue."
 msgstr "Willkommen an Bord! Bitte melden Sie sich an, um fortzufahren."
 
-#: src/components/routes/auth/Login/index.tsx:80
+#: src/components/routes/auth/Login/index.tsx:84
 msgid "Welcome back"
 msgstr "Willkommen zurück"
 
@@ -10203,7 +10248,7 @@ msgstr "Arbeiten"
 #: src/components/modals/JoinWaitlistModal/index.tsx:188
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
-#: src/components/routes/auth/Register/index.tsx:155
+#: src/components/routes/auth/Register/index.tsx:171
 msgid "Working..."
 msgstr "Arbeiten..."
 
@@ -10401,6 +10446,10 @@ msgstr "Sie gehen zu {0}!"
 msgid "You're on the waitlist!"
 msgstr "Sie stehen auf der Warteliste!"
 
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:107
+msgid "You're signing up as {0}"
+msgstr ""
+
 #: src/components/routes/product-widget/CollectInformation/index.tsx:410
 msgid "You've been offered a spot!"
 msgstr "Ihnen wurde ein Platz angeboten!"
@@ -10517,8 +10566,8 @@ msgstr "Sobald Ihre Bestellungen eintreffen, werden sie hier angezeigt."
 msgid "Your organizer address"
 msgstr "Adresse Ihres Veranstalters"
 
-#: src/components/routes/auth/Login/index.tsx:91
-#: src/components/routes/auth/Register/index.tsx:131
+#: src/components/routes/auth/Login/index.tsx:107
+#: src/components/routes/auth/Register/index.tsx:147
 msgid "Your password"
 msgstr "Ihr Passwort"
 
@@ -10545,6 +10594,10 @@ msgstr "Ihr Tarif"
 #: src/components/modals/RefundOrderModal/index.tsx:58
 msgid "Your refund is processing."
 msgstr "Ihre Rückerstattung wird bearbeitet."
+
+#: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:68
+msgid "Your sign up session has expired. Please start again."
+msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:180
 msgid "Your Stripe account is connected and processing payments."
@@ -10575,7 +10628,7 @@ msgstr "Ihre Umsatzsteuer-Identifikationsnummer wird beim Speichern validiert"
 msgid "Your waitlist offer has expired and we were unable to complete your order. Please rejoin the waitlist to be notified when more spots become available."
 msgstr ""
 
-#: src/components/routes/auth/Register/index.tsx:123
+#: src/components/routes/auth/Register/index.tsx:139
 msgid "your@email.com"
 msgstr ""
 

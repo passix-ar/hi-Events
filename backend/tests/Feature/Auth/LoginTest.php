@@ -6,12 +6,12 @@ namespace Tests\Feature\Auth;
 
 use HiEvents\Models\AccountConfiguration;
 use HiEvents\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     private const LOGIN_ROUTE = '/auth/login';
 
