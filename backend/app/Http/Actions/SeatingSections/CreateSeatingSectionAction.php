@@ -25,7 +25,7 @@ class CreateSeatingSectionAction extends BaseAction
 
         try {
             $section = $this->createSeatingSectionHandler->handle(
-                UpsertSeatingSectionDTO::fromArray([
+                UpsertSeatingSectionDTO::from([
                     'name' => $request->validated('name'),
                     'event_id' => $eventId,
                     'product_id' => $request->validated('product_id'),

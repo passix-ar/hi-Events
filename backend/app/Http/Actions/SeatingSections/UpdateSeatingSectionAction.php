@@ -27,7 +27,7 @@ class UpdateSeatingSectionAction extends BaseAction
 
         try {
             $section = $this->updateSeatingSectionHandler->handle(
-                UpsertSeatingSectionDTO::fromArray([
+                UpsertSeatingSectionDTO::from([
                     'id' => $seatingSectionId,
                     'name' => $request->validated('name'),
                     'event_id' => $eventId,
