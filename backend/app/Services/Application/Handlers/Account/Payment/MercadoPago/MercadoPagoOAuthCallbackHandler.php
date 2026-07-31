@@ -103,13 +103,18 @@ class MercadoPagoOAuthCallbackHandler
             $this->platformRepository->create($attributes);
         }
 
-        try {
-            $this->enableMercadoPagoOnAllEvents($accountId);
-        } catch (Throwable $e) {
-            $this->logger->warning('Failed to auto-enable MercadoPago on events', [
-                'account_id' => $accountId,
-                'error' => $e->getMessage(),
-            ]);
+        // Only on the account's first connection: a re-auth while already connected
+        // must not re-tick MercadoPago on events where the organizer disabled it.
+        // (Disconnect hard-deletes the row, so disconnect + reconnect counts as first.)
+        if ($existing === null) {
+            try {
+                $this->enableMercadoPagoOnAllEvents($accountId);
+            } catch (Throwable $e) {
+                $this->logger->warning('Failed to auto-enable MercadoPago on events', [
+                    'account_id' => $accountId,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
     }
 

@@ -28,4 +28,11 @@ class AccountMercadopagoPlatformRepository extends BaseRepository implements Acc
             ->where('account_id', $accountId)
             ->forceDelete();
     }
+
+    public function isSetupCompleteForAccount(int $accountId): bool
+    {
+        return AccountMercadopagoPlatform::where('account_id', $accountId)
+            ->whereNotNull('setup_completed_at')
+            ->exists();
+    }
 }

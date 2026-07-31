@@ -53,9 +53,9 @@ class CreateEventServiceTest extends TestCase
         $this->mercadopagoPlatformRepository = Mockery::mock(AccountMercadopagoPlatformRepositoryInterface::class);
 
         // Default mock: no MercadoPago connected (returns empty payment_providers)
-        $this->mercadopagoPlatformRepository->shouldReceive('findFirstWhere')
+        $this->mercadopagoPlatformRepository->shouldReceive('isSetupCompleteForAccount')
             ->byDefault()
-            ->andReturn(null);
+            ->andReturn(false);
 
         $this->createEventService = new CreateEventService(
             $this->eventRepository,

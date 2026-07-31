@@ -6,6 +6,7 @@ use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\Exceptions\AccountNotVerifiedException;
 use HiEvents\Exceptions\ResourceConflictException;
+use HiEvents\Exceptions\ResourceNotFoundException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\AccountRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
@@ -55,6 +56,8 @@ readonly class UpdateEventStatusHandler
             );
         }
 
+        $this->fetchExistingEvent($updateEventStatusDTO);
+
         if ($updateEventStatusDTO->status === EventStatus::LIVE->name) {
             $this->validateEventCanBePublished($updateEventStatusDTO->eventId, $updateEventStatusDTO->accountId);
         }
@@ -77,10 +80,6 @@ readonly class UpdateEventStatusHandler
             'account_id' => $updateEventStatusDTO->accountId,
         ]);
 
-        if (!$event) {
-            throw new ResourceConflictException(__('Event not found after update.'));
-        }
-
         $eventType = $updateEventStatusDTO->status === EventStatus::ARCHIVED->name
             ? DomainEventType::EVENT_ARCHIVED
             : DomainEventType::EVENT_UPDATED;
@@ -89,6 +88,22 @@ readonly class UpdateEventStatusHandler
             $event->getId(),
             $eventType,
         );
+
+        return $event;
+    }
+
+    private function fetchExistingEvent(UpdateEventStatusDTO $updateEventStatusDTO): EventDomainObject
+    {
+        $event = $this->eventRepository->findFirstWhere([
+            'id' => $updateEventStatusDTO->eventId,
+            'account_id' => $updateEventStatusDTO->accountId,
+        ]);
+
+        if ($event === null) {
+            throw new ResourceNotFoundException(
+                __('Event :id not found', ['id' => $updateEventStatusDTO->eventId])
+            );
+        }
 
         return $event;
     }
@@ -121,16 +136,10 @@ readonly class UpdateEventStatusHandler
         $hasOffline = in_array(PaymentProviders::OFFLINE->value, $validProviders, true);
         $hasMercadoPago = in_array(PaymentProviders::MERCADOPAGO->value, $validProviders, true);
 
-        if ($hasMercadoPago && !$hasOffline) {
-            $platform = $this->platformRepository->findFirstWhere([
-                'account_id' => $accountId,
-            ]);
-
-            if (!$platform || !$platform->isSetupComplete()) {
-                throw new ResourceConflictException(
-                    __('MercadoPago is not connected. Please connect MercadoPago or enable offline payments before publishing.'),
-                );
-            }
+        if ($hasMercadoPago && !$hasOffline && !$this->platformRepository->isSetupCompleteForAccount($accountId)) {
+            throw new ResourceConflictException(
+                __('MercadoPago is not connected. Please connect MercadoPago or enable offline payments before publishing.'),
+            );
         }
     }
 }

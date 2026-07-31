@@ -242,15 +242,7 @@ class CreateEventService
 
     private function getDefaultPaymentProviders(int $accountId): array
     {
-        if ($accountId === 0) {
-            return [];
-        }
-
-        $platform = $this->mercadopagoPlatformRepository->findFirstWhere([
-            'account_id' => $accountId,
-        ]);
-
-        if ($platform && $platform->isSetupComplete()) {
+        if ($this->mercadopagoPlatformRepository->isSetupCompleteForAccount($accountId)) {
             return [PaymentProviders::MERCADOPAGO->value];
         }
 
