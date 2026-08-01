@@ -147,8 +147,8 @@ class UpdateEventSettingsHandlerTest extends TestCase
     public function testLiveEventCannotBeLeftWithoutPaymentMethods(): void
     {
         $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
 
-        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn(new EventSettingDomainObject());
         $this->eventSettingsRepository->shouldNotReceive('updateWhere');
 
         $this->expectException(ResourceConflictException::class);
@@ -159,9 +159,9 @@ class UpdateEventSettingsHandlerTest extends TestCase
     public function testLiveEventCannotKeepMercadoPagoAloneWhenDisconnected(): void
     {
         $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
         $this->platformRepository->shouldReceive('isSetupCompleteForAccount')->andReturn(false);
 
-        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn(new EventSettingDomainObject());
         $this->eventSettingsRepository->shouldNotReceive('updateWhere');
 
         $this->expectException(ResourceConflictException::class);
@@ -172,21 +172,43 @@ class UpdateEventSettingsHandlerTest extends TestCase
     public function testLiveEventCanKeepOfflineOnly(): void
     {
         $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
 
-        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn(new EventSettingDomainObject());
         $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
 
         $this->handler->handle($this->createDTO(paymentProviders: [PaymentProviders::OFFLINE->value]));
     }
 
+    /**
+     * Events created before this rule carry ["STRIPE"], which is not usable. Blocking
+     * them would freeze every settings screen on events already published.
+     */
+    public function testLiveEventThatAlreadyHadNoUsableMethodStaysEditable(): void
+    {
+        $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::STRIPE->value]);
+
+        $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
+
+        $this->handler->handle($this->createDTO(paymentProviders: [PaymentProviders::STRIPE->value]));
+    }
+
     public function testDraftEventCanBeLeftWithoutPaymentMethods(): void
     {
         $this->givenEventStatus(EventStatus::DRAFT->name);
+        $this->givenExistingProviders([]);
 
-        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn(new EventSettingDomainObject());
         $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
 
         $this->handler->handle($this->createDTO(paymentProviders: []));
+    }
+
+    private function givenExistingProviders(array $providers): void
+    {
+        $existing = new EventSettingDomainObject();
+        $existing->setPaymentProviders($providers);
+
+        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn($existing);
     }
 
     private function createDTO(?bool $waitlist_auto_process = null, array $paymentProviders = []): UpdateEventSettingsDTO

@@ -36,7 +36,7 @@ class UpdateEventSettingsHandler
             'event_id' => $settings->event_id,
         ]);
 
-        $this->validatePaymentProviders($settings);
+        $this->validatePaymentProviders($settings, $existingSettings);
 
         $wasAutoProcessEnabled = $existingSettings?->getWaitlistAutoProcess();
 
@@ -136,15 +136,32 @@ class UpdateEventSettingsHandler
      * otherwise it stays on sale while every purchase fails. Drafts are free to be
      * left unconfigured — publishing validates them again.
      *
+     * Only the transition is blocked, not the state: an event that already had no
+     * usable method stays editable. Otherwise every settings screen — SEO, the
+     * homepage designer, the ticket designer — would refuse to save on events
+     * predating this rule, over a field those screens don't even show.
+     *
      * @throws ResourceConflictException
      */
-    private function validatePaymentProviders(UpdateEventSettingsDTO $settings): void
+    private function validatePaymentProviders(
+        UpdateEventSettingsDTO    $settings,
+        ?EventSettingDomainObject $existingSettings,
+    ): void
     {
         $event = $this->eventRepository->findFirstWhere([
             'id' => $settings->event_id,
         ]);
 
         if ($event?->getStatus() !== EventStatus::LIVE->name) {
+            return;
+        }
+
+        $usableBefore = $this->eventPaymentMethodsService->getUsableProviders(
+            $existingSettings?->getPaymentProviders(),
+            $event->getAccountId(),
+        );
+
+        if ($usableBefore === []) {
             return;
         }
 
