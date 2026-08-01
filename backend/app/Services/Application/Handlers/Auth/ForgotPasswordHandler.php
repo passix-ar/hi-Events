@@ -78,7 +78,7 @@ class ForgotPasswordHandler
             ->to($user->getEmail())
             ->locale($user->getLocale())
             ->send(new ForgotPassword(
-                user: $user,
+                userEmail: $user->getEmail(),
                 token: $token,
             ));
     }
