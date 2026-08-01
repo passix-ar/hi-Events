@@ -89,6 +89,10 @@ msgstr "{0} atualizado com sucesso"
 msgid "{0}/{1} checked in"
 msgstr "{0}/{1} registrado"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:63
+msgid "{affectedEventCount, plural, one {# published event will stop offering MercadoPago. It can still sell with its other payment methods.} other {# published events will stop offering MercadoPago. They can still sell with their other payment methods.}}"
+msgstr "{affectedEventCount, plural, one {# evento publicado deixará de oferecer MercadoPago. Poderá continuar a vender com os seus outros métodos de pagamento.} other {# eventos publicados deixarão de oferecer MercadoPago. Poderão continuar a vender com os seus outros métodos de pagamento.}}"
+
 #: src/components/common/EventCard/index.tsx:123
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} de {totalCount} disponíveis"
@@ -1011,10 +1015,6 @@ msgstr "Tem certeza de que deseja excluir esta Atribuição de Capacidade?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Tem certeza de que deseja excluir esta lista de registro?"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
-msgid "Are you sure? You won't be able to receive payments until you reconnect."
-msgstr ""
-
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:198
 msgid "Are you VAT registered in the EU?"
 msgstr "Está registado para IVA na UE?"
@@ -1427,7 +1427,7 @@ msgstr "Campanha"
 #: src/components/common/QuestionAndAnswerList/index.tsx:149
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/common/WaitlistTable/index.tsx:132
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
 #: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
 #: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
@@ -2050,7 +2050,7 @@ msgstr ""
 msgid "Connect payment processing"
 msgstr "Conectar processamento de pagamento"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:132
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:174
 #: src/components/routes/event/GettingStarted/index.tsx:162
 msgid "Connect with MercadoPago"
 msgstr ""
@@ -2066,7 +2066,7 @@ msgstr "Conecte-se com Stripe"
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:122
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:164
 msgid "Connect your MercadoPago account to start accepting payments in Argentina."
 msgstr ""
 
@@ -2807,12 +2807,12 @@ msgstr "Não recebeu o código?"
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
 msgstr "Desativar esta capacidade rastreará as vendas, mas não as interromperá quando o limite for atingido"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:157
 msgid "Disconnect"
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:58
 msgid "Disconnect MercadoPago"
 msgstr ""
 
@@ -3808,7 +3808,7 @@ msgstr "Falha ao excluir pergunta"
 msgid "Failed to delete template"
 msgstr "Falha ao excluir modelo"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:87
 msgid "Failed to disconnect MercadoPago."
 msgstr ""
 
@@ -3833,7 +3833,7 @@ msgstr "Falha ao exportar pedidos"
 msgid "Failed to export report. Please try again."
 msgstr "Falha ao exportar relatório. Por favor, tente novamente."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:42
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
 msgid "Failed to get MercadoPago authorization URL."
 msgstr ""
 
@@ -4274,7 +4274,7 @@ msgstr "Boa legibilidade"
 msgid "Google Calendar"
 msgstr "Google Agenda"
 
-#: src/components/common/GoogleAuthButton/index.tsx:140
+#: src/components/common/GoogleAuthButton/index.tsx:157
 msgid "Google sign in is unavailable right now. Please use your email and password."
 msgstr ""
 
@@ -5149,25 +5149,29 @@ msgid "Medium"
 msgstr "Meio"
 
 #: src/components/common/OrdersTable/index.tsx:384
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:83
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:106
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:87
 #: src/components/routes/product-widget/Payment/index.tsx:144
 msgid "MercadoPago"
 msgstr ""
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:126
+msgid "MercadoPago can't be disconnected right now"
+msgstr "De momento não é possível desligar o MercadoPago"
+
 #: src/components/forms/ProductForm/index.tsx:67
 msgid "MercadoPago charges a commission based on your settlement term, which you configure in your MercadoPago account. If you'd like to pass this cost on to the buyer, add it as a tax or fee below."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:25
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:33
 msgid "MercadoPago connected successfully!"
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:62
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:84
 msgid "MercadoPago disconnected."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:92
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
 msgid "MercadoPago is connected"
 msgstr ""
 
@@ -6510,6 +6514,10 @@ msgstr "Pagamento realizado com sucesso!"
 msgid "Payment Terms"
 msgstr "Termos de pagamento"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:74
+msgid "Payments already started will still be credited, and past orders are not affected."
+msgstr "Os pagamentos já iniciados serão creditados na mesma, e os pedidos anteriores não são afetados."
+
 #: src/components/routes/product-widget/Payment/PaymentMethods/Stripe/index.tsx:49
 msgid "Payments not available"
 msgstr "Pagamentos não disponíveis"
@@ -7120,7 +7128,7 @@ msgstr "Destinatários"
 msgid "Recipients are available after the message is sent"
 msgstr "Os destinatários ficam disponíveis após o envio da mensagem"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:105
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr ""
 
@@ -7132,7 +7140,7 @@ msgstr "Reconectar Stripe →"
 msgid "Reddit"
 msgstr "Reddit"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:39
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:47
 msgid "Redirecting to MercadoPago..."
 msgstr ""
 
@@ -8767,7 +8775,7 @@ msgstr "Não há produtos disponíveis nesta categoria"
 msgid "There is a refund pending. Please wait for it to complete before requesting another refund."
 msgstr "Há um reembolso pendente. Aguarde a conclusão antes de solicitar outro reembolso."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:30
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:38
 msgid "There was a problem connecting MercadoPago. Please try again."
 msgstr ""
 
@@ -8889,7 +8897,7 @@ msgstr "Este link é inválido ou expirou."
 msgid "This link is no longer valid"
 msgstr "Este link já não é válido"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:28
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:36
 msgid "This MercadoPago account is already connected to another Passix account."
 msgstr ""
 
@@ -10422,6 +10430,10 @@ msgstr ""
 msgid "You will have to mark an order as paid manually. This can be done on the manage order page."
 msgstr "Você terá que marcar um pedido como pago manualmente. Isso pode ser feito na página de gerenciamento de pedidos."
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:71
+msgid "You won't be able to receive new MercadoPago payments until you reconnect."
+msgstr "Não poderá receber novos pagamentos do MercadoPago até voltar a ligar."
+
 #: src/components/modals/CreateCheckInListModal/index.tsx:56
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Você precisará de um ingresso antes de poder criar uma lista de registro."
@@ -10510,7 +10522,7 @@ msgstr "O seu evento está online!"
 msgid "Your event must be live before you can sell tickets to attendees."
 msgstr "Seu evento deve estar ativo antes que você possa vender ingressos para os participantes."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:95
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:118
 msgid "Your MercadoPago account is connected and ready to process payments."
 msgstr ""
 

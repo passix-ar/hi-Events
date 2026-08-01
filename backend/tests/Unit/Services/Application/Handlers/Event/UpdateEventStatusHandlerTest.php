@@ -16,6 +16,7 @@ use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\UpdateEventStatusDTO;
 use HiEvents\Services\Application\Handlers\Event\UpdateEventStatusHandler;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Queue;
 use Mockery as m;
@@ -55,7 +56,7 @@ class UpdateEventStatusHandlerTest extends TestCase
             $this->eventRepository,
             $this->accountRepository,
             $this->eventSettingsRepository,
-            $this->platformRepository,
+            new EventPaymentMethodsService($this->platformRepository),
             $logger,
             $databaseManager,
         );
@@ -142,7 +143,7 @@ class UpdateEventStatusHandlerTest extends TestCase
         $this->assertSame($event, $result);
     }
 
-    public function testPublishSucceedsWithMercadoPagoAndOfflineWithoutCheckingConnection(): void
+    public function testPublishSucceedsWithMercadoPagoAndOfflineWhenMercadoPagoIsDisconnected(): void
     {
         $this->givenVerifiedAccount();
         $event = $this->givenEventExists();
@@ -150,8 +151,9 @@ class UpdateEventStatusHandlerTest extends TestCase
             PaymentProviders::MERCADOPAGO->value,
             PaymentProviders::OFFLINE->value,
         ]);
-
-        $this->platformRepository->shouldNotReceive('isSetupCompleteForAccount');
+        $this->platformRepository->shouldReceive('isSetupCompleteForAccount')
+            ->with(self::ACCOUNT_ID)
+            ->andReturn(false);
 
         $this->expectStatusUpdate(EventStatus::LIVE->name);
 

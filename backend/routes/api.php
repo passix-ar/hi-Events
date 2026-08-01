@@ -53,6 +53,7 @@ use HiEvents\Http\Actions\Common\GetColorThemesAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\ConnectMercadoPagoAccountAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\DisconnectMercadoPagoAccountAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\GetMercadoPagoConnectStatusAction;
+use HiEvents\Http\Actions\Accounts\MercadoPago\GetMercadoPagoDisconnectStatusAction;
 use HiEvents\Http\Actions\Accounts\MercadoPago\MercadoPagoOAuthCallbackAction;
 use HiEvents\Http\Actions\Common\Webhooks\MercadoPagoIncomingWebhookAction;
 use HiEvents\Http\Actions\Common\Webhooks\StripeIncomingWebhookAction;
@@ -288,6 +289,7 @@ $router->middleware(['auth:api'])->group(
         // MercadoPago Connect
         $router->get('/accounts/{account_id}/mercadopago/connect', ConnectMercadoPagoAccountAction::class);
         $router->get('/accounts/{account_id}/mercadopago/status', GetMercadoPagoConnectStatusAction::class);
+        $router->get('/accounts/{account_id}/mercadopago/disconnect-status', GetMercadoPagoDisconnectStatusAction::class);
         $router->delete('/accounts/{account_id}/mercadopago', DisconnectMercadoPagoAccountAction::class);
 
         // VAT Settings

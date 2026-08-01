@@ -5,7 +5,9 @@ namespace HiEvents\Services\Application\Handlers\Order\Payment\MercadoPago;
 
 use HiEvents\DomainObjects\AccountConfigurationDomainObject;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
+use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\DomainObjects\EventDomainObject;
+use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\Generated\MercadopagoPreferenceDomainObjectAbstract;
 use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\Status\OrderStatus;
@@ -51,7 +53,9 @@ class CreateMercadoPagoPreferenceHandler
     {
         $order = $this->orderRepository
             ->loadRelation(new Relationship(OrderItemDomainObject::class))
-            ->loadRelation(new Relationship(EventDomainObject::class, name: 'event'))
+            ->loadRelation(new Relationship(EventDomainObject::class, name: 'event', nested: [
+                new Relationship(EventSettingDomainObject::class),
+            ]))
             ->findByShortId($command->orderShortId);
 
         if (!$order || !$this->sessionService->verifySession($order->getSessionId())) {
@@ -65,6 +69,16 @@ class CreateMercadoPagoPreferenceHandler
         $event = $order->getEvent();
         if (!$event) {
             throw new CannotAcceptPaymentException(__('Event not found for this order.'));
+        }
+
+        // The checkout page may have been loaded before the organizer turned MercadoPago
+        // off, so the enabled providers are re-checked here rather than trusted from the
+        // client. Mirrors the offline guard in TransitionOrderToOfflinePaymentHandler.
+        $enabledProviders = $event->getEventSettings()?->getPaymentProviders() ?? [];
+        if (!in_array(PaymentProviders::MERCADOPAGO->value, $enabledProviders, true)) {
+            throw new CannotAcceptPaymentException(
+                __('MercadoPago is not available for this event. Please choose another payment method.')
+            );
         }
 
         $account = $this->accountRepository

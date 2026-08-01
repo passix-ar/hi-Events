@@ -17,9 +17,10 @@ interface AccountMercadopagoPlatformRepositoryInterface extends RepositoryInterf
     public function forceDeleteByAccountId(int $accountId): void;
 
     /**
-     * Whether the account has a fully-connected MercadoPago account. Queries only
-     * setup_completed_at: hydrating the full row would run the encrypted token
-     * casts, so a single corrupted/legacy token would make the check blow up.
+     * Whether the account holds a MercadoPago connection that can still charge.
+     * Queries only the connection columns: hydrating the full row would run the
+     * encrypted token casts, so a single corrupted/legacy token would make the
+     * check blow up. An expired access token counts as not connected.
      */
     public function isSetupCompleteForAccount(int $accountId): bool;
 }

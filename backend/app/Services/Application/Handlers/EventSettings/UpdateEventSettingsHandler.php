@@ -4,9 +4,13 @@ namespace HiEvents\Services\Application\Handlers\EventSettings;
 
 use HiEvents\DomainObjects\Enums\CapacityChangeDirection;
 use HiEvents\DomainObjects\EventSettingDomainObject;
+use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Events\CapacityChangedEvent;
+use HiEvents\Exceptions\ResourceConflictException;
+use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Application\Handlers\EventSettings\DTO\UpdateEventSettingsDTO;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\Services\Infrastructure\HtmlPurifier\HtmlPurifierService;
 use Illuminate\Database\DatabaseManager;
 use Throwable;
@@ -15,6 +19,8 @@ class UpdateEventSettingsHandler
 {
     public function __construct(
         private readonly EventSettingsRepositoryInterface $eventSettingsRepository,
+        private readonly EventRepositoryInterface         $eventRepository,
+        private readonly EventPaymentMethodsService       $eventPaymentMethodsService,
         private readonly HtmlPurifierService              $purifier,
         private readonly DatabaseManager                  $databaseManager,
     )
@@ -22,13 +28,15 @@ class UpdateEventSettingsHandler
     }
 
     /**
-     * @throws Throwable
+     * @throws ResourceConflictException|Throwable
      */
     public function handle(UpdateEventSettingsDTO $settings): EventSettingDomainObject
     {
         $existingSettings = $this->eventSettingsRepository->findFirstWhere([
             'event_id' => $settings->event_id,
         ]);
+
+        $this->validatePaymentProviders($settings);
 
         $wasAutoProcessEnabled = $existingSettings?->getWaitlistAutoProcess();
 
@@ -121,5 +129,28 @@ class UpdateEventSettingsHandler
         }
 
         return $result;
+    }
+
+    /**
+     * A published event must keep a method the checkout can actually charge with,
+     * otherwise it stays on sale while every purchase fails. Drafts are free to be
+     * left unconfigured — publishing validates them again.
+     *
+     * @throws ResourceConflictException
+     */
+    private function validatePaymentProviders(UpdateEventSettingsDTO $settings): void
+    {
+        $event = $this->eventRepository->findFirstWhere([
+            'id' => $settings->event_id,
+        ]);
+
+        if ($event?->getStatus() !== EventStatus::LIVE->name) {
+            return;
+        }
+
+        $this->eventPaymentMethodsService->assertHasUsableProvider(
+            $settings->payment_providers,
+            $event->getAccountId(),
+        );
     }
 }

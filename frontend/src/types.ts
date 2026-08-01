@@ -221,6 +221,18 @@ export interface StripeConnectAccountsResponse {
     has_completed_setup: boolean;
 }
 
+export interface MercadoPagoAffectedEvent {
+    id: IdParam;
+    title: string;
+}
+
+export interface MercadoPagoDisconnectStatus {
+    can_disconnect: boolean;
+    reason: string | null;
+    blocking_events: MercadoPagoAffectedEvent[];
+    affected_events: MercadoPagoAffectedEvent[];
+}
+
 export interface LoginData {
     email: string;
     password: string;

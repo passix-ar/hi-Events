@@ -3,15 +3,14 @@
 namespace HiEvents\Services\Application\Handlers\Event;
 
 use HiEvents\DomainObjects\EventDomainObject;
-use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\Exceptions\AccountNotVerifiedException;
 use HiEvents\Exceptions\ResourceConflictException;
 use HiEvents\Exceptions\ResourceNotFoundException;
-use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\AccountRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\UpdateEventStatusDTO;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Jobs\Event\Webhook\DispatchEventWebhookJob;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
@@ -25,7 +24,7 @@ readonly class UpdateEventStatusHandler
         private EventRepositoryInterface   $eventRepository,
         private AccountRepositoryInterface $accountRepository,
         private EventSettingsRepositoryInterface $eventSettingsRepository,
-        private AccountMercadopagoPlatformRepositoryInterface $platformRepository,
+        private EventPaymentMethodsService $eventPaymentMethodsService,
         private LoggerInterface            $logger,
         private DatabaseManager            $databaseManager,
     )
@@ -117,29 +116,9 @@ readonly class UpdateEventStatusHandler
             'event_id' => $eventId,
         ]);
 
-        $paymentProviders = $eventSettings?->getPaymentProviders();
-        if (!is_array($paymentProviders)) {
-            $paymentProviders = [];
-        }
-
-        $validProviders = array_filter($paymentProviders, fn($provider) =>
-            $provider === PaymentProviders::MERCADOPAGO->value ||
-            $provider === PaymentProviders::OFFLINE->value
+        $this->eventPaymentMethodsService->assertHasUsableProvider(
+            $eventSettings?->getPaymentProviders(),
+            $accountId,
         );
-
-        if (empty($validProviders)) {
-            throw new ResourceConflictException(
-                __('Please configure at least one payment method (MercadoPago or Offline) before publishing this event.'),
-            );
-        }
-
-        $hasOffline = in_array(PaymentProviders::OFFLINE->value, $validProviders, true);
-        $hasMercadoPago = in_array(PaymentProviders::MERCADOPAGO->value, $validProviders, true);
-
-        if ($hasMercadoPago && !$hasOffline && !$this->platformRepository->isSetupCompleteForAccount($accountId)) {
-            throw new ResourceConflictException(
-                __('MercadoPago is not connected. Please connect MercadoPago or enable offline payments before publishing.'),
-            );
-        }
     }
 }
