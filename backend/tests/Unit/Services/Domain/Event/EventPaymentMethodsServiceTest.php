@@ -13,6 +13,11 @@ class EventPaymentMethodsServiceTest extends TestCase
 {
     private const ACCOUNT_ID = 10;
 
+    // Resolved through __() so the assertions follow the catalog instead of pinning
+    // the English source, which is what breaks once a message gets translated.
+    private const CONFIGURE_A_METHOD = 'Please configure at least one payment method (MercadoPago or Offline).';
+    private const CONNECT_MERCADOPAGO = 'MercadoPago is not connected. Please connect MercadoPago or enable offline payments.';
+
     private AccountMercadopagoPlatformRepositoryInterface $platformRepository;
     private EventPaymentMethodsService $service;
 
@@ -109,7 +114,7 @@ class EventPaymentMethodsServiceTest extends TestCase
     public function testAssertFailsWithNoProviders(): void
     {
         $this->expectException(ResourceConflictException::class);
-        $this->expectExceptionMessage('Please configure at least one payment method');
+        $this->expectExceptionMessage(__(self::CONFIGURE_A_METHOD));
 
         $this->service->assertHasUsableProvider([], self::ACCOUNT_ID);
     }
@@ -117,7 +122,7 @@ class EventPaymentMethodsServiceTest extends TestCase
     public function testAssertFailsWithStripeOnly(): void
     {
         $this->expectException(ResourceConflictException::class);
-        $this->expectExceptionMessage('Please configure at least one payment method');
+        $this->expectExceptionMessage(__(self::CONFIGURE_A_METHOD));
 
         $this->service->assertHasUsableProvider([PaymentProviders::STRIPE->value], self::ACCOUNT_ID);
     }
@@ -127,7 +132,7 @@ class EventPaymentMethodsServiceTest extends TestCase
         $this->givenMercadoPagoIsConnected(false);
 
         $this->expectException(ResourceConflictException::class);
-        $this->expectExceptionMessage('MercadoPago is not connected');
+        $this->expectExceptionMessage(__(self::CONNECT_MERCADOPAGO));
 
         $this->service->assertHasUsableProvider([PaymentProviders::MERCADOPAGO->value], self::ACCOUNT_ID);
     }
