@@ -602,8 +602,8 @@ msgstr "Linha de endereço 2"
 msgid "Admin"
 msgstr "Administrador"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:70
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:76
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:73
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:79
 msgid "Admin Access Required"
 msgstr "Acesso de administrador necessário"
 
@@ -851,8 +851,8 @@ msgstr "Aplicar este {type} a todos os novos produtos"
 msgid "Approve Message"
 msgstr "Aprovar mensagem"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Archive"
 msgstr "Arquivar"
 
@@ -860,21 +860,21 @@ msgstr "Arquivar"
 msgid "Archive event"
 msgstr "Arquivar evento"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Archive Event"
 msgstr "Arquivar evento"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Archive Organizer"
 msgstr "Arquivar organizador"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:129
 msgid "Archive this event to hide it from the public. You can restore it later."
 msgstr "Arquive este evento para ocultá-lo do público. Você pode restaurá-lo mais tarde."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:137
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
 msgstr "Arquive este organizador. Isso também arquivará todos os eventos pertencentes a este organizador."
 
@@ -896,11 +896,11 @@ msgstr "Tem certeza de que deseja ativar esse participante?"
 msgid "Are you sure you want to archive this event?"
 msgstr "Você tem certeza de que deseja arquivar este evento?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:47
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:50
 msgid "Are you sure you want to archive this event? It will no longer be visible to the public."
 msgstr "Tem certeza que deseja arquivar este evento? Ele não será mais visível para o público."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:56
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
 msgstr "Tem certeza que deseja arquivar este organizador? Isso também arquivará todos os eventos pertencentes a este organizador."
 
@@ -987,7 +987,7 @@ msgstr "Tem certeza de que deseja reenviar a confirmação do pedido para {0}?"
 msgid "Are you sure you want to resend the ticket to {0}?"
 msgstr "Tem certeza de que deseja reenviar o ingresso para {0}?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:46
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:49
 msgid "Are you sure you want to restore this event?"
 msgstr "Tem certeza que deseja restaurar este evento?"
 
@@ -995,7 +995,7 @@ msgstr "Tem certeza que deseja restaurar este evento?"
 msgid "Are you sure you want to restore this event? It will be restored as a draft event."
 msgstr "Você tem certeza de que deseja restaurar este evento? Ele será restaurado como um evento rascunho."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:55
 msgid "Are you sure you want to restore this organizer?"
 msgstr "Tem certeza que deseja restaurar este organizador?"
 
@@ -1429,8 +1429,8 @@ msgstr "Campanha"
 #: src/components/common/WaitlistTable/index.tsx:132
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:85
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:85
 #: src/utilites/confirmationDialog.tsx:17
@@ -2704,11 +2704,6 @@ msgstr "Gestão de taxas padrão"
 msgid "Default template will be used"
 msgstr "Modelo padrão será usado"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
-msgid "delete"
-msgstr "excluir"
-
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
@@ -2742,8 +2737,8 @@ msgstr "Excluir Lista de Registro"
 msgid "Delete code"
 msgstr "Excluir código"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:82
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:116
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:119
 msgid "Delete Event"
 msgstr "Excluir evento"
 
@@ -2755,8 +2750,8 @@ msgstr "Excluir imagem"
 msgid "Delete Job"
 msgstr "Excluir trabalho"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:88
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:122
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:125
 msgid "Delete Organizer"
 msgstr "Excluir organizador"
 
@@ -3464,7 +3459,7 @@ msgstr "Evento"
 msgid "Event Archived"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event archived successfully"
 msgstr "Evento arquivado com sucesso"
 
@@ -3498,7 +3493,7 @@ msgstr "Data do Evento"
 msgid "Event Defaults"
 msgstr "Padrões de eventos"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:34
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:37
 msgid "Event deleted successfully"
 msgstr "Evento excluído com sucesso"
 
@@ -3569,7 +3564,7 @@ msgstr "Nome do organizador do evento"
 msgid "Event Page"
 msgstr "Página do Evento"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event restored successfully"
 msgstr "Evento restaurado com sucesso"
 
@@ -3783,7 +3778,7 @@ msgstr "Falha ao criar modelo"
 msgid "Failed to delete configuration"
 msgstr "Falha ao excluir configuração"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:38
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:41
 msgid "Failed to delete event"
 msgstr "Falha ao excluir o evento"
 
@@ -3795,7 +3790,7 @@ msgstr "Falha ao excluir trabalho"
 msgid "Failed to delete jobs"
 msgstr "Falha ao excluir trabalhos"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:44
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:47
 msgid "Failed to delete organizer"
 msgstr "Falha ao excluir o organizador"
 
@@ -3943,7 +3938,7 @@ msgstr "Falha ao atualizar participante"
 msgid "Failed to update configuration"
 msgstr "Falha ao atualizar configuração"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:60
 msgid "Failed to update event status"
 msgstr "Falha ao atualizar o status do evento"
 
@@ -3955,7 +3950,7 @@ msgstr "Falha ao atualizar nível de mensagens"
 msgid "Failed to update order"
 msgstr "Falha ao atualizar pedido"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:66
 msgid "Failed to update organizer status"
 msgstr "Falha ao atualizar o status do organizador"
 
@@ -4987,8 +4982,8 @@ msgstr "Carregando webhooks"
 
 #: src/components/common/OrganizerReportTable/index.tsx:273
 #: src/components/common/ReportTable/index.tsx:213
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:86
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:92
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:89
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:95
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -5859,11 +5854,11 @@ msgstr "Evento online"
 msgid "Online Event Details"
 msgstr "Detalhes do evento on-line"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:72
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:75
 msgid "Only account administrators can delete or archive events. Contact your account admin for assistance."
 msgstr "Apenas administradores da conta podem excluir ou arquivar eventos. Entre em contato com o administrador da sua conta para obter ajuda."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:78
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:81
 msgid "Only account administrators can delete or archive organizers. Contact your account admin for assistance."
 msgstr "Apenas administradores da conta podem excluir ou arquivar organizadores. Entre em contato com o administrador da sua conta para obter ajuda."
 
@@ -6184,7 +6179,7 @@ msgstr "Organizações"
 msgid "Organizer"
 msgstr "Organizador"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer archived successfully"
 msgstr "Organizador arquivado com sucesso"
 
@@ -6194,7 +6189,7 @@ msgstr "Organizador arquivado com sucesso"
 msgid "Organizer Dashboard"
 msgstr "Painel do organizador"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:40
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:43
 msgid "Organizer deleted successfully"
 msgstr "Organizador excluído com sucesso"
 
@@ -6223,7 +6218,7 @@ msgstr "Nome do organizador"
 msgid "Organizer Not Found"
 msgstr "Organizador não encontrado"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer restored successfully"
 msgstr "Organizador restaurado com sucesso"
 
@@ -6580,11 +6575,11 @@ msgstr "Porcentagem do valor da transação"
 msgid "Performance"
 msgstr "Desempenho"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:88
 msgid "Permanently delete this event and all its associated data."
 msgstr "Excluir permanentemente este evento e todos os seus dados associados."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:94
 msgid "Permanently delete this organizer and all its events."
 msgstr "Excluir permanentemente este organizador e todos os seus eventos."
 
@@ -7345,8 +7340,8 @@ msgstr ""
 msgid "Response:"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Restore"
 msgstr "Restaurar"
 
@@ -7354,21 +7349,21 @@ msgstr "Restaurar"
 msgid "Restore event"
 msgstr "Restaurar evento"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Restore Event"
 msgstr "Restaurar evento"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Restore Organizer"
 msgstr "Restaurar organizador"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:128
 msgid "Restore this event to make it visible again."
 msgstr "Restaure este evento para torná-lo visível novamente."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Restore this organizer and make it active again."
 msgstr "Restaure este organizador e torne-o ativo novamente."
 
@@ -9354,10 +9349,10 @@ msgstr "Twitch"
 msgid "Type"
 msgstr "Tipo"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:98
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:104
-msgid "Type \"delete\" to confirm"
-msgstr "Digite \"excluir\" para confirmar"
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
+msgid "Type \"{confirmationWord}\" to confirm"
+msgstr "Digite \"{confirmationWord}\" para confirmar"
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 msgid "Type of ticket"
@@ -10327,7 +10322,7 @@ msgstr "Você pode criar um código promocional que direcione este produto no"
 msgid "You can still manually offer tickets if needed."
 msgstr "Você ainda pode oferecer ingressos manualmente, se necessário."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:133
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:136
 msgid "You cannot archive the last active organizer on your account."
 msgstr "Você não pode arquivar o último organizador ativo da sua conta."
 

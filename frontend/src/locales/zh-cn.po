@@ -602,8 +602,8 @@ msgstr "地址第 2 行"
 msgid "Admin"
 msgstr "管理员"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:70
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:76
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:73
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:79
 msgid "Admin Access Required"
 msgstr "需要管理员访问权限"
 
@@ -851,8 +851,8 @@ msgstr "将此{type}应用于所有新产品"
 msgid "Approve Message"
 msgstr "批准消息"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Archive"
 msgstr "归档"
 
@@ -860,21 +860,21 @@ msgstr "归档"
 msgid "Archive event"
 msgstr "归档活动"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Archive Event"
 msgstr "归档活动"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Archive Organizer"
 msgstr "归档主办方"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:129
 msgid "Archive this event to hide it from the public. You can restore it later."
 msgstr "归档此活动以向公众隐藏。您可以稍后恢复它。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:137
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
 msgstr "归档此主办方。这也将归档属于此主办方的所有活动。"
 
@@ -896,11 +896,11 @@ msgstr "您确定要激活该与会者吗？"
 msgid "Are you sure you want to archive this event?"
 msgstr "您确定要归档此活动吗?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:47
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:50
 msgid "Are you sure you want to archive this event? It will no longer be visible to the public."
 msgstr "您确定要归档此活动吗？它将不再对公众可见。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:56
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
 msgstr "您确定要归档此主办方吗？这也将归档属于此主办方的所有活动。"
 
@@ -987,7 +987,7 @@ msgstr "您确定要将订单确认重新发送到 {0} 吗？"
 msgid "Are you sure you want to resend the ticket to {0}?"
 msgstr "您确定要将门票重新发送到 {0} 吗？"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:46
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:49
 msgid "Are you sure you want to restore this event?"
 msgstr "您确定要恢复此活动吗？"
 
@@ -995,7 +995,7 @@ msgstr "您确定要恢复此活动吗？"
 msgid "Are you sure you want to restore this event? It will be restored as a draft event."
 msgstr "您确定要恢复此活动吗？它将作为草稿恢复。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:55
 msgid "Are you sure you want to restore this organizer?"
 msgstr "您确定要恢复此主办方吗？"
 
@@ -1429,8 +1429,8 @@ msgstr "活动"
 #: src/components/common/WaitlistTable/index.tsx:132
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:85
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:85
 #: src/utilites/confirmationDialog.tsx:17
@@ -2704,11 +2704,6 @@ msgstr "默认费用处理"
 msgid "Default template will be used"
 msgstr "将使用默认模板"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
-msgid "delete"
-msgstr "删除"
-
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
@@ -2742,8 +2737,8 @@ msgstr "删除签到列表"
 msgid "Delete code"
 msgstr "删除代码"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:82
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:116
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:119
 msgid "Delete Event"
 msgstr "删除活动"
 
@@ -2755,8 +2750,8 @@ msgstr "删除图片"
 msgid "Delete Job"
 msgstr "删除任务"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:88
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:122
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:125
 msgid "Delete Organizer"
 msgstr "删除主办方"
 
@@ -3464,7 +3459,7 @@ msgstr "活动"
 msgid "Event Archived"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event archived successfully"
 msgstr "活动已成功归档"
 
@@ -3498,7 +3493,7 @@ msgstr "活动日期"
 msgid "Event Defaults"
 msgstr "事件默认值"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:34
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:37
 msgid "Event deleted successfully"
 msgstr "活动已成功删除"
 
@@ -3569,7 +3564,7 @@ msgstr "活动组织者姓名"
 msgid "Event Page"
 msgstr "活动页面"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event restored successfully"
 msgstr "活动已成功恢复"
 
@@ -3783,7 +3778,7 @@ msgstr "创建模板失败"
 msgid "Failed to delete configuration"
 msgstr "配置删除失败"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:38
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:41
 msgid "Failed to delete event"
 msgstr "删除活动失败"
 
@@ -3795,7 +3790,7 @@ msgstr "删除任务失败"
 msgid "Failed to delete jobs"
 msgstr "删除任务失败"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:44
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:47
 msgid "Failed to delete organizer"
 msgstr "删除主办方失败"
 
@@ -3943,7 +3938,7 @@ msgstr "更新参与者失败"
 msgid "Failed to update configuration"
 msgstr "配置更新失败"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:60
 msgid "Failed to update event status"
 msgstr "更新活动状态失败"
 
@@ -3955,7 +3950,7 @@ msgstr "更新消息级别失败"
 msgid "Failed to update order"
 msgstr "更新订单失败"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:66
 msgid "Failed to update organizer status"
 msgstr "更新主办方状态失败"
 
@@ -4987,8 +4982,8 @@ msgstr "正在加载 Webhook"
 
 #: src/components/common/OrganizerReportTable/index.tsx:273
 #: src/components/common/ReportTable/index.tsx:213
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:86
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:92
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:89
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:95
 msgid "Loading..."
 msgstr "加载中..."
 
@@ -5859,11 +5854,11 @@ msgstr "在线活动"
 msgid "Online Event Details"
 msgstr "在线活动详情"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:72
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:75
 msgid "Only account administrators can delete or archive events. Contact your account admin for assistance."
 msgstr "只有账户管理员可以删除或归档活动。请联系您的账户管理员寻求帮助。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:78
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:81
 msgid "Only account administrators can delete or archive organizers. Contact your account admin for assistance."
 msgstr "只有账户管理员可以删除或归档主办方。请联系您的账户管理员寻求帮助。"
 
@@ -6184,7 +6179,7 @@ msgstr ""
 msgid "Organizer"
 msgstr "主办方"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer archived successfully"
 msgstr "主办方已成功归档"
 
@@ -6194,7 +6189,7 @@ msgstr "主办方已成功归档"
 msgid "Organizer Dashboard"
 msgstr "组织者仪表板"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:40
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:43
 msgid "Organizer deleted successfully"
 msgstr "主办方已成功删除"
 
@@ -6223,7 +6218,7 @@ msgstr "组织者姓名"
 msgid "Organizer Not Found"
 msgstr "未找到组织者"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer restored successfully"
 msgstr "主办方已成功恢复"
 
@@ -6580,11 +6575,11 @@ msgstr "交易金额的百分比"
 msgid "Performance"
 msgstr "绩效"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:88
 msgid "Permanently delete this event and all its associated data."
 msgstr "永久删除此活动及其所有相关数据。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:94
 msgid "Permanently delete this organizer and all its events."
 msgstr "永久删除此主办方及其所有活动。"
 
@@ -7345,8 +7340,8 @@ msgstr ""
 msgid "Response:"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Restore"
 msgstr "恢复"
 
@@ -7354,21 +7349,21 @@ msgstr "恢复"
 msgid "Restore event"
 msgstr "恢复活动"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Restore Event"
 msgstr "恢复活动"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Restore Organizer"
 msgstr "恢复主办方"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:128
 msgid "Restore this event to make it visible again."
 msgstr "恢复此活动以使其重新可见。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Restore this organizer and make it active again."
 msgstr "恢复此主办方并使其重新活跃。"
 
@@ -9354,10 +9349,10 @@ msgstr "Twitch"
 msgid "Type"
 msgstr "类型"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:98
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:104
-msgid "Type \"delete\" to confirm"
-msgstr "输入\"删除\"以确认"
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
+msgid "Type \"{confirmationWord}\" to confirm"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 msgid "Type of ticket"
@@ -10327,7 +10322,7 @@ msgstr "您可以创建一个促销代码，针对该产品"
 msgid "You can still manually offer tickets if needed."
 msgstr "如有需要，您仍然可以手动提供门票。"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:133
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:136
 msgid "You cannot archive the last active organizer on your account."
 msgstr "您无法归档账户中最后一个活跃的主办方。"
 

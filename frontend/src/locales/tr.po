@@ -602,8 +602,8 @@ msgstr "Adres Satırı 2"
 msgid "Admin"
 msgstr "Yönetici"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:70
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:76
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:73
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:79
 msgid "Admin Access Required"
 msgstr "Yönetici Erişimi Gerekli"
 
@@ -851,8 +851,8 @@ msgstr "Bu {type}'ı tüm yeni ürünlere uygula"
 msgid "Approve Message"
 msgstr "Mesajı Onayla"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Archive"
 msgstr "Arşivle"
 
@@ -860,21 +860,21 @@ msgstr "Arşivle"
 msgid "Archive event"
 msgstr "Etkinliği arşivle"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Archive Event"
 msgstr "Etkinliği Arşivle"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Archive Organizer"
 msgstr "Organizatörü Arşivle"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:129
 msgid "Archive this event to hide it from the public. You can restore it later."
 msgstr "Bu etkinliği halktan gizlemek için arşivleyin. Daha sonra geri yükleyebilirsiniz."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:137
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
 msgstr "Bu organizatörü arşivleyin. Bu, bu organizatöre ait tüm etkinlikleri de arşivleyecektir."
 
@@ -896,11 +896,11 @@ msgstr "Bu katılımcıyı etkinleştirmek istediğinizden emin misiniz?"
 msgid "Are you sure you want to archive this event?"
 msgstr "Bu etkinliği arşivlemek istediğinizden emin misiniz?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:47
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:50
 msgid "Are you sure you want to archive this event? It will no longer be visible to the public."
 msgstr "Bu etkinliği arşivlemek istediğinizden emin misiniz? Artık kamuya görünmeyecek."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:56
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
 msgstr "Bu organizatörü arşivlemek istediğinizden emin misiniz? Bu, bu organizatöre ait tüm etkinlikleri de arşivleyecektir."
 
@@ -987,7 +987,7 @@ msgstr "{0} adresine sipariş onayını tekrar göndermek istediğinizden emin m
 msgid "Are you sure you want to resend the ticket to {0}?"
 msgstr "{0} adresine bileti tekrar göndermek istediğinizden emin misiniz?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:46
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:49
 msgid "Are you sure you want to restore this event?"
 msgstr "Bu etkinliği geri yüklemek istediğinizden emin misiniz?"
 
@@ -995,7 +995,7 @@ msgstr "Bu etkinliği geri yüklemek istediğinizden emin misiniz?"
 msgid "Are you sure you want to restore this event? It will be restored as a draft event."
 msgstr "Bu etkinliği geri yüklemek istediğinizden emin misiniz? Taslak etkinlik olarak geri yüklenecektir."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:55
 msgid "Are you sure you want to restore this organizer?"
 msgstr "Bu organizatörü geri yüklemek istediğinizden emin misiniz?"
 
@@ -1429,8 +1429,8 @@ msgstr "Kampanya"
 #: src/components/common/WaitlistTable/index.tsx:132
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:85
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:85
 #: src/utilites/confirmationDialog.tsx:17
@@ -2704,11 +2704,6 @@ msgstr "Varsayılan ücret işleme"
 msgid "Default template will be used"
 msgstr "Varsayılan şablon kullanılacak"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
-msgid "delete"
-msgstr "sil"
-
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
@@ -2742,8 +2737,8 @@ msgstr "Check-In Listesini Sil"
 msgid "Delete code"
 msgstr "Kodu sil"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:82
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:116
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:119
 msgid "Delete Event"
 msgstr "Etkinliği Sil"
 
@@ -2755,8 +2750,8 @@ msgstr "Görseli sil"
 msgid "Delete Job"
 msgstr "İşi sil"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:88
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:122
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:125
 msgid "Delete Organizer"
 msgstr "Organizatörü Sil"
 
@@ -3464,7 +3459,7 @@ msgstr "Etkinlik"
 msgid "Event Archived"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event archived successfully"
 msgstr "Etkinlik başarıyla arşivlendi"
 
@@ -3498,7 +3493,7 @@ msgstr "Etkinlik Tarihi"
 msgid "Event Defaults"
 msgstr "Etkinlik Varsayılanları"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:34
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:37
 msgid "Event deleted successfully"
 msgstr "Etkinlik başarıyla silindi"
 
@@ -3569,7 +3564,7 @@ msgstr "Etkinlik organizatör adı"
 msgid "Event Page"
 msgstr "Etkinlik Sayfası"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event restored successfully"
 msgstr "Etkinlik başarıyla geri yüklendi"
 
@@ -3783,7 +3778,7 @@ msgstr "Şablon oluşturulamadı"
 msgid "Failed to delete configuration"
 msgstr "Yapılandırma silinemedi"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:38
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:41
 msgid "Failed to delete event"
 msgstr "Etkinlik silinemedi"
 
@@ -3795,7 +3790,7 @@ msgstr "İş silinemedi"
 msgid "Failed to delete jobs"
 msgstr "İşler silinemedi"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:44
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:47
 msgid "Failed to delete organizer"
 msgstr "Organizatör silinemedi"
 
@@ -3943,7 +3938,7 @@ msgstr "Katılımcı güncellenemedi"
 msgid "Failed to update configuration"
 msgstr "Yapılandırma güncellenemedi"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:60
 msgid "Failed to update event status"
 msgstr "Etkinlik durumu güncellenemedi"
 
@@ -3955,7 +3950,7 @@ msgstr "Mesajlaşma seviyesi güncellenemedi"
 msgid "Failed to update order"
 msgstr "Sipariş güncellenemedi"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:66
 msgid "Failed to update organizer status"
 msgstr "Organizatör durumu güncellenemedi"
 
@@ -4987,8 +4982,8 @@ msgstr "Webhook'lar Yükleniyor"
 
 #: src/components/common/OrganizerReportTable/index.tsx:273
 #: src/components/common/ReportTable/index.tsx:213
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:86
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:92
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:89
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:95
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
@@ -5859,11 +5854,11 @@ msgstr "Çevrimiçi Etkinlik"
 msgid "Online Event Details"
 msgstr "Online Etkinlik Detayları"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:72
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:75
 msgid "Only account administrators can delete or archive events. Contact your account admin for assistance."
 msgstr "Yalnızca hesap yöneticileri etkinlikleri silebilir veya arşivleyebilir. Yardım için hesap yöneticinizle iletişime geçin."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:78
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:81
 msgid "Only account administrators can delete or archive organizers. Contact your account admin for assistance."
 msgstr "Yalnızca hesap yöneticileri organizatörleri silebilir veya arşivleyebilir. Yardım için hesap yöneticinizle iletişime geçin."
 
@@ -6184,7 +6179,7 @@ msgstr ""
 msgid "Organizer"
 msgstr "Organizatör"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer archived successfully"
 msgstr "Organizatör başarıyla arşivlendi"
 
@@ -6194,7 +6189,7 @@ msgstr "Organizatör başarıyla arşivlendi"
 msgid "Organizer Dashboard"
 msgstr "Organizatör Paneli"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:40
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:43
 msgid "Organizer deleted successfully"
 msgstr "Organizatör başarıyla silindi"
 
@@ -6223,7 +6218,7 @@ msgstr "Organizatör Adı"
 msgid "Organizer Not Found"
 msgstr "Organizatör Bulunamadı"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer restored successfully"
 msgstr "Organizatör başarıyla geri yüklendi"
 
@@ -6580,11 +6575,11 @@ msgstr "İşlem tutarının yüzdesi"
 msgid "Performance"
 msgstr "Performans"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:88
 msgid "Permanently delete this event and all its associated data."
 msgstr "Bu etkinliği ve tüm ilgili verileri kalıcı olarak silin."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:94
 msgid "Permanently delete this organizer and all its events."
 msgstr "Bu organizatörü ve tüm etkinliklerini kalıcı olarak silin."
 
@@ -7345,8 +7340,8 @@ msgstr ""
 msgid "Response:"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Restore"
 msgstr "Geri Yükle"
 
@@ -7354,21 +7349,21 @@ msgstr "Geri Yükle"
 msgid "Restore event"
 msgstr "Etkinliği geri yükle"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Restore Event"
 msgstr "Etkinliği Geri Yükle"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Restore Organizer"
 msgstr "Organizatörü Geri Yükle"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:128
 msgid "Restore this event to make it visible again."
 msgstr "Bu etkinliği yeniden görünür hale getirmek için geri yükleyin."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Restore this organizer and make it active again."
 msgstr "Bu organizatörü geri yükleyin ve yeniden aktif hale getirin."
 
@@ -9354,10 +9349,10 @@ msgstr "Twitch"
 msgid "Type"
 msgstr "Tür"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:98
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:104
-msgid "Type \"delete\" to confirm"
-msgstr "Onaylamak için \"sil\" yazın"
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
+msgid "Type \"{confirmationWord}\" to confirm"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 msgid "Type of ticket"
@@ -10327,7 +10322,7 @@ msgstr "Bu ürünü hedefleyen bir promosyon kodu oluşturabilirsiniz"
 msgid "You can still manually offer tickets if needed."
 msgstr "Gerekirse biletleri manuel olarak da sunabilirsiniz."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:133
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:136
 msgid "You cannot archive the last active organizer on your account."
 msgstr "Hesabınızdaki son aktif organizatörü arşivleyemezsiniz."
 

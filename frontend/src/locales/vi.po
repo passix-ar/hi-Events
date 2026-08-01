@@ -602,8 +602,8 @@ msgstr "Dòng địa chỉ 2"
 msgid "Admin"
 msgstr "Quản trị viên"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:70
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:76
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:73
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:79
 msgid "Admin Access Required"
 msgstr "Yêu cầu quyền truy cập quản trị viên"
 
@@ -851,8 +851,8 @@ msgstr "Áp dụng {type} này cho tất cả các sản phẩm mới"
 msgid "Approve Message"
 msgstr "Phê duyệt tin nhắn"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Archive"
 msgstr "Lưu trữ"
 
@@ -860,21 +860,21 @@ msgstr "Lưu trữ"
 msgid "Archive event"
 msgstr "Lưu trữ sự kiện"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Archive Event"
 msgstr "Lưu trữ sự kiện"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Archive Organizer"
 msgstr "Lưu trữ ban tổ chức"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:129
 msgid "Archive this event to hide it from the public. You can restore it later."
 msgstr "Lưu trữ sự kiện này để ẩn khỏi công chúng. Bạn có thể khôi phục nó sau."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:137
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
 msgstr "Lưu trữ ban tổ chức này. Điều này cũng sẽ lưu trữ tất cả các sự kiện thuộc ban tổ chức này."
 
@@ -896,11 +896,11 @@ msgstr "Bạn có chắc mình muốn kích hoạt người tham dự này khôn
 msgid "Are you sure you want to archive this event?"
 msgstr "Bạn có chắc mình muốn lưu trữ sự kiện này không?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:47
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:50
 msgid "Are you sure you want to archive this event? It will no longer be visible to the public."
 msgstr "Bạn có chắc chắn muốn lưu trữ sự kiện này không? Nó sẽ không còn hiển thị với công chúng nữa."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:56
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
 msgstr "Bạn có chắc chắn muốn lưu trữ ban tổ chức này không? Điều này cũng sẽ lưu trữ tất cả các sự kiện thuộc ban tổ chức này."
 
@@ -987,7 +987,7 @@ msgstr "Bạn có chắc chắn muốn gửi lại xác nhận đơn hàng đế
 msgid "Are you sure you want to resend the ticket to {0}?"
 msgstr "Bạn có chắc chắn muốn gửi lại vé đến {0}?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:46
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:49
 msgid "Are you sure you want to restore this event?"
 msgstr "Bạn có chắc chắn muốn khôi phục sự kiện này không?"
 
@@ -995,7 +995,7 @@ msgstr "Bạn có chắc chắn muốn khôi phục sự kiện này không?"
 msgid "Are you sure you want to restore this event? It will be restored as a draft event."
 msgstr "Bạn có chắc chắn muốn khôi phục sự kiện này không? Sự kiện sẽ được khôi phục dưới dạng bản nháp."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:55
 msgid "Are you sure you want to restore this organizer?"
 msgstr "Bạn có chắc chắn muốn khôi phục ban tổ chức này không?"
 
@@ -1429,8 +1429,8 @@ msgstr "Chiến dịch"
 #: src/components/common/WaitlistTable/index.tsx:132
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:85
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:85
 #: src/utilites/confirmationDialog.tsx:17
@@ -2704,11 +2704,6 @@ msgstr "Xử lý phí mặc định"
 msgid "Default template will be used"
 msgstr "Mẫu mặc định sẽ được sử dụng"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
-msgid "delete"
-msgstr "xóa"
-
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
@@ -2742,8 +2737,8 @@ msgstr "Xóa danh sách check-in"
 msgid "Delete code"
 msgstr "Xóa mã"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:82
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:116
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:119
 msgid "Delete Event"
 msgstr "Xóa sự kiện"
 
@@ -2755,8 +2750,8 @@ msgstr "Xóa ảnh"
 msgid "Delete Job"
 msgstr "Xóa công việc"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:88
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:122
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:125
 msgid "Delete Organizer"
 msgstr "Xóa ban tổ chức"
 
@@ -3464,7 +3459,7 @@ msgstr "Sự kiện"
 msgid "Event Archived"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event archived successfully"
 msgstr "Sự kiện đã được lưu trữ thành công"
 
@@ -3498,7 +3493,7 @@ msgstr "Ngày sự kiện"
 msgid "Event Defaults"
 msgstr "Mặc định sự kiện"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:34
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:37
 msgid "Event deleted successfully"
 msgstr "Sự kiện đã được xóa thành công"
 
@@ -3569,7 +3564,7 @@ msgstr "Tên ban tổ chức sự kiện"
 msgid "Event Page"
 msgstr "Trang sự kiện"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event restored successfully"
 msgstr "Sự kiện đã được khôi phục thành công"
 
@@ -3783,7 +3778,7 @@ msgstr "Không thể tạo mẫu"
 msgid "Failed to delete configuration"
 msgstr "Không thể xóa cấu hình"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:38
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:41
 msgid "Failed to delete event"
 msgstr "Không thể xóa sự kiện"
 
@@ -3795,7 +3790,7 @@ msgstr "Không thể xóa công việc"
 msgid "Failed to delete jobs"
 msgstr "Không thể xóa các công việc"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:44
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:47
 msgid "Failed to delete organizer"
 msgstr "Không thể xóa ban tổ chức"
 
@@ -3943,7 +3938,7 @@ msgstr "Không thể cập nhật người tham dự"
 msgid "Failed to update configuration"
 msgstr "Không thể cập nhật cấu hình"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:60
 msgid "Failed to update event status"
 msgstr "Không thể cập nhật trạng thái sự kiện"
 
@@ -3955,7 +3950,7 @@ msgstr "Cập nhật cấp độ nhắn tin thất bại"
 msgid "Failed to update order"
 msgstr "Không thể cập nhật đơn hàng"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:66
 msgid "Failed to update organizer status"
 msgstr "Không thể cập nhật trạng thái ban tổ chức"
 
@@ -4987,8 +4982,8 @@ msgstr "Đang tải Webhooks"
 
 #: src/components/common/OrganizerReportTable/index.tsx:273
 #: src/components/common/ReportTable/index.tsx:213
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:86
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:92
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:89
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:95
 msgid "Loading..."
 msgstr "Đang tải ..."
 
@@ -5859,11 +5854,11 @@ msgstr "Sự kiện trực tuyến"
 msgid "Online Event Details"
 msgstr "Chi tiết sự kiện trực tuyến"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:72
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:75
 msgid "Only account administrators can delete or archive events. Contact your account admin for assistance."
 msgstr "Chỉ quản trị viên tài khoản mới có thể xóa hoặc lưu trữ sự kiện. Liên hệ quản trị viên tài khoản của bạn để được hỗ trợ."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:78
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:81
 msgid "Only account administrators can delete or archive organizers. Contact your account admin for assistance."
 msgstr "Chỉ quản trị viên tài khoản mới có thể xóa hoặc lưu trữ ban tổ chức. Liên hệ quản trị viên tài khoản của bạn để được hỗ trợ."
 
@@ -6184,7 +6179,7 @@ msgstr ""
 msgid "Organizer"
 msgstr "Người tổ chức"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer archived successfully"
 msgstr "Ban tổ chức đã được lưu trữ thành công"
 
@@ -6194,7 +6189,7 @@ msgstr "Ban tổ chức đã được lưu trữ thành công"
 msgid "Organizer Dashboard"
 msgstr "Bảng điều khiển nhà tổ chức"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:40
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:43
 msgid "Organizer deleted successfully"
 msgstr "Ban tổ chức đã được xóa thành công"
 
@@ -6223,7 +6218,7 @@ msgstr "Tên ban tổ chức"
 msgid "Organizer Not Found"
 msgstr "Không tìm thấy nhà tổ chức"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer restored successfully"
 msgstr "Ban tổ chức đã được khôi phục thành công"
 
@@ -6580,11 +6575,11 @@ msgstr "Phần trăm của số tiền giao dịch"
 msgid "Performance"
 msgstr "Hiệu suất"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:88
 msgid "Permanently delete this event and all its associated data."
 msgstr "Xóa vĩnh viễn sự kiện này và tất cả dữ liệu liên quan."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:94
 msgid "Permanently delete this organizer and all its events."
 msgstr "Xóa vĩnh viễn ban tổ chức này và tất cả các sự kiện của họ."
 
@@ -7345,8 +7340,8 @@ msgstr ""
 msgid "Response:"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Restore"
 msgstr "Khôi phục"
 
@@ -7354,21 +7349,21 @@ msgstr "Khôi phục"
 msgid "Restore event"
 msgstr "Khôi phục sự kiện"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Restore Event"
 msgstr "Khôi phục sự kiện"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Restore Organizer"
 msgstr "Khôi phục ban tổ chức"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:128
 msgid "Restore this event to make it visible again."
 msgstr "Khôi phục sự kiện này để làm cho nó hiển thị trở lại."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Restore this organizer and make it active again."
 msgstr "Khôi phục ban tổ chức này và làm cho nó hoạt động trở lại."
 
@@ -9354,10 +9349,10 @@ msgstr "Twitch"
 msgid "Type"
 msgstr "Loại"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:98
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:104
-msgid "Type \"delete\" to confirm"
-msgstr "Nhập \"xóa\" để xác nhận"
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
+msgid "Type \"{confirmationWord}\" to confirm"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 msgid "Type of ticket"
@@ -10327,7 +10322,7 @@ msgstr "Bạn có thể tạo mã khuyến mãi nhắm mục tiêu sản phẩm 
 msgid "You can still manually offer tickets if needed."
 msgstr "Bạn vẫn có thể cung cấp vé thủ công nếu cần."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:133
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:136
 msgid "You cannot archive the last active organizer on your account."
 msgstr "Bạn không thể lưu trữ ban tổ chức đang hoạt động cuối cùng trong tài khoản của mình."
 
