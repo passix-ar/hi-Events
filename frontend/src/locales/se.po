@@ -89,6 +89,10 @@ msgstr "{0} uppdaterades"
 msgid "{0}/{1} checked in"
 msgstr "{0}/{1} incheckade"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:63
+msgid "{affectedEventCount, plural, one {# published event will stop offering MercadoPago. It can still sell with its other payment methods.} other {# published events will stop offering MercadoPago. They can still sell with their other payment methods.}}"
+msgstr ""
+
 #: src/components/common/EventCard/index.tsx:123
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} av {totalCount} tillgängliga"
@@ -598,8 +602,8 @@ msgstr "Adressrad 2"
 msgid "Admin"
 msgstr "Admin"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:70
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:76
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:73
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:79
 msgid "Admin Access Required"
 msgstr "Administratörsåtkomst krävs"
 
@@ -847,8 +851,8 @@ msgstr "Tillämpa denna {type} på alla nya produkter"
 msgid "Approve Message"
 msgstr "Godkänn meddelande"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Archive"
 msgstr "Arkivera"
 
@@ -856,21 +860,21 @@ msgstr "Arkivera"
 msgid "Archive event"
 msgstr "Arkivera evenemang"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Archive Event"
 msgstr "Arkivera evenemang"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Archive Organizer"
 msgstr "Arkivera arrangör"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:126
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:129
 msgid "Archive this event to hide it from the public. You can restore it later."
 msgstr "Arkivera detta evenemang för att dölja det för allmänheten. Du kan återställa det senare."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:137
 msgid "Archive this organizer. This will also archive all events belonging to this organizer."
 msgstr "Arkivera denna arrangör. Detta kommer också att arkivera alla evenemang som tillhör denna arrangör."
 
@@ -892,11 +896,11 @@ msgstr "Är du säker på att du vill aktivera denna deltagare?"
 msgid "Are you sure you want to archive this event?"
 msgstr "Är du säker på att du vill arkivera detta evenemang?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:47
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:50
 msgid "Are you sure you want to archive this event? It will no longer be visible to the public."
 msgstr "Är du säker på att du vill arkivera detta evenemang? Det kommer inte längre att vara synligt för allmänheten."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:53
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:56
 msgid "Are you sure you want to archive this organizer? This will also archive all events belonging to this organizer."
 msgstr "Är du säker på att du vill arkivera denna arrangör? Detta kommer också att arkivera alla evenemang som tillhör denna arrangör."
 
@@ -983,7 +987,7 @@ msgstr "Vill du verkligen skicka om orderbekräftelsen till {0}?"
 msgid "Are you sure you want to resend the ticket to {0}?"
 msgstr "Vill du verkligen skicka om biljetten till {0}?"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:46
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:49
 msgid "Are you sure you want to restore this event?"
 msgstr "Är du säker på att du vill återställa detta evenemang?"
 
@@ -991,7 +995,7 @@ msgstr "Är du säker på att du vill återställa detta evenemang?"
 msgid "Are you sure you want to restore this event? It will be restored as a draft event."
 msgstr "Är du säker på att du vill återställa detta evenemang? Det kommer att återställas som ett utkast."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:52
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:55
 msgid "Are you sure you want to restore this organizer?"
 msgstr "Är du säker på att du vill återställa denna arrangör?"
 
@@ -1010,10 +1014,6 @@ msgstr "Är du säker på att du vill ta bort denna kapacitetstilldelning?"
 #: src/components/common/CheckInListList/index.tsx:181
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Är du säker på att du vill ta bort denna incheckningslista?"
-
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:53
-msgid "Are you sure? You won't be able to receive payments until you reconnect."
-msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:198
 msgid "Are you VAT registered in the EU?"
@@ -1427,10 +1427,10 @@ msgstr "Kampanj"
 #: src/components/common/QuestionAndAnswerList/index.tsx:149
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/common/WaitlistTable/index.tsx:132
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
 #: src/components/routes/event/messages.tsx:80
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditAttendeeModal/index.tsx:85
 #: src/components/routes/product-widget/OrderSummaryAndProducts/EditOrderModal/index.tsx:85
 #: src/utilites/confirmationDialog.tsx:17
@@ -2050,7 +2050,7 @@ msgstr ""
 msgid "Connect payment processing"
 msgstr "Anslut betalningshantering"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:132
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:174
 #: src/components/routes/event/GettingStarted/index.tsx:162
 msgid "Connect with MercadoPago"
 msgstr ""
@@ -2066,7 +2066,7 @@ msgstr "Anslut med Stripe"
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:122
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:164
 msgid "Connect your MercadoPago account to start accepting payments in Argentina."
 msgstr ""
 
@@ -2704,11 +2704,6 @@ msgstr "Standard avgiftshantering"
 msgid "Default template will be used"
 msgstr "Standardmall kommer att användas"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
-msgid "delete"
-msgstr "ta bort"
-
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:507
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionsTable/index.tsx:150
@@ -2742,8 +2737,8 @@ msgstr "Ta bort incheckningslista"
 msgid "Delete code"
 msgstr "Ta bort kod"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:82
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:116
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:119
 msgid "Delete Event"
 msgstr "Ta bort evenemang"
 
@@ -2755,8 +2750,8 @@ msgstr "Ta bort bild"
 msgid "Delete Job"
 msgstr "Ta bort jobb"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:88
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:122
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:125
 msgid "Delete Organizer"
 msgstr "Ta bort arrangör"
 
@@ -2807,12 +2802,12 @@ msgstr "Fick du inte koden?"
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
 msgstr "Om denna kapacitet inaktiveras spåras försäljningen men den stoppas inte när gränsen nås"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:56
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:78
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:157
 msgid "Disconnect"
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:58
 msgid "Disconnect MercadoPago"
 msgstr ""
 
@@ -3464,7 +3459,7 @@ msgstr "Evenemang"
 msgid "Event Archived"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event archived successfully"
 msgstr "Evenemanget har arkiverats"
 
@@ -3498,7 +3493,7 @@ msgstr "Evenemangsdatum"
 msgid "Event Defaults"
 msgstr "Standardinställningar för evenemang"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:34
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:37
 msgid "Event deleted successfully"
 msgstr "Evenemanget har tagits bort"
 
@@ -3569,7 +3564,7 @@ msgstr "Evenemangsarrangörens namn"
 msgid "Event Page"
 msgstr "Evenemangssida"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:54
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
 msgid "Event restored successfully"
 msgstr "Evenemanget har återställts"
 
@@ -3783,7 +3778,7 @@ msgstr "Misslyckades med att skapa mall"
 msgid "Failed to delete configuration"
 msgstr "Misslyckades med att ta bort konfiguration"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:38
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:41
 msgid "Failed to delete event"
 msgstr "Det gick inte att ta bort evenemanget"
 
@@ -3795,7 +3790,7 @@ msgstr "Misslyckades med att ta bort jobb"
 msgid "Failed to delete jobs"
 msgstr "Misslyckades med att ta bort jobb"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:44
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:47
 msgid "Failed to delete organizer"
 msgstr "Det gick inte att ta bort arrangören"
 
@@ -3808,7 +3803,7 @@ msgstr "Misslyckades med att ta bort frågan"
 msgid "Failed to delete template"
 msgstr "Misslyckades med att ta bort mall"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:65
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:87
 msgid "Failed to disconnect MercadoPago."
 msgstr ""
 
@@ -3833,7 +3828,7 @@ msgstr "Misslyckades med att exportera ordrar"
 msgid "Failed to export report. Please try again."
 msgstr "Misslyckades med att exportera rapport. Försök igen."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:42
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:50
 msgid "Failed to get MercadoPago authorization URL."
 msgstr ""
 
@@ -3943,7 +3938,7 @@ msgstr "Misslyckades med att uppdatera deltagare"
 msgid "Failed to update configuration"
 msgstr "Misslyckades med att uppdatera konfiguration"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:57
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:60
 msgid "Failed to update event status"
 msgstr "Det gick inte att uppdatera evenemangets status"
 
@@ -3955,7 +3950,7 @@ msgstr "Misslyckades med att uppdatera meddelandenivå"
 msgid "Failed to update order"
 msgstr "Misslyckades med att uppdatera order"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:66
 msgid "Failed to update organizer status"
 msgstr "Det gick inte att uppdatera arrangörens status"
 
@@ -4274,7 +4269,7 @@ msgstr "God läsbarhet"
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: src/components/common/GoogleAuthButton/index.tsx:140
+#: src/components/common/GoogleAuthButton/index.tsx:157
 msgid "Google sign in is unavailable right now. Please use your email and password."
 msgstr ""
 
@@ -4987,8 +4982,8 @@ msgstr "Laddar webhooks"
 
 #: src/components/common/OrganizerReportTable/index.tsx:273
 #: src/components/common/ReportTable/index.tsx:213
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:86
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:92
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:89
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:95
 msgid "Loading..."
 msgstr "Laddar..."
 
@@ -5149,25 +5144,29 @@ msgid "Medium"
 msgstr "Medium"
 
 #: src/components/common/OrdersTable/index.tsx:384
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:83
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:106
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:87
 #: src/components/routes/product-widget/Payment/index.tsx:144
 msgid "MercadoPago"
+msgstr ""
+
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:126
+msgid "MercadoPago can't be disconnected right now"
 msgstr ""
 
 #: src/components/forms/ProductForm/index.tsx:67
 msgid "MercadoPago charges a commission based on your settlement term, which you configure in your MercadoPago account. If you'd like to pass this cost on to the buyer, add it as a tax or fee below."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:25
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:33
 msgid "MercadoPago connected successfully!"
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:62
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:84
 msgid "MercadoPago disconnected."
 msgstr ""
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:92
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:115
 msgid "MercadoPago is connected"
 msgstr ""
 
@@ -5855,11 +5854,11 @@ msgstr "Onlineevenemang"
 msgid "Online Event Details"
 msgstr "Information om onlineevenemang"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:72
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:75
 msgid "Only account administrators can delete or archive events. Contact your account admin for assistance."
 msgstr "Endast kontoadministratörer kan ta bort eller arkivera evenemang. Kontakta din kontoadministratör för hjälp."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:78
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:81
 msgid "Only account administrators can delete or archive organizers. Contact your account admin for assistance."
 msgstr "Endast kontoadministratörer kan ta bort eller arkivera arrangörer. Kontakta din kontoadministratör för hjälp."
 
@@ -6180,7 +6179,7 @@ msgstr ""
 msgid "Organizer"
 msgstr "Arrangör"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer archived successfully"
 msgstr "Arrangören har arkiverats"
 
@@ -6190,7 +6189,7 @@ msgstr "Arrangören har arkiverats"
 msgid "Organizer Dashboard"
 msgstr "Arrangörens instrumentpanel"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:40
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:43
 msgid "Organizer deleted successfully"
 msgstr "Arrangören har tagits bort"
 
@@ -6219,7 +6218,7 @@ msgstr "Arrangörsnamn"
 msgid "Organizer Not Found"
 msgstr "Arrangör hittades inte"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:60
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:63
 msgid "Organizer restored successfully"
 msgstr "Arrangören har återställts"
 
@@ -6510,6 +6509,10 @@ msgstr "Betalningen lyckades!"
 msgid "Payment Terms"
 msgstr "Betalningsvillkor"
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:74
+msgid "Payments already started will still be credited, and past orders are not affected."
+msgstr ""
+
 #: src/components/routes/product-widget/Payment/PaymentMethods/Stripe/index.tsx:49
 msgid "Payments not available"
 msgstr "Betalningar är inte tillgängliga"
@@ -6572,11 +6575,11 @@ msgstr "Procent av transaktionsbeloppet"
 msgid "Performance"
 msgstr "Prestanda"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:85
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:88
 msgid "Permanently delete this event and all its associated data."
 msgstr "Ta bort detta evenemang och alla tillhörande data permanent."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:91
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:94
 msgid "Permanently delete this organizer and all its events."
 msgstr "Ta bort denna arrangör och alla dess evenemang permanent."
 
@@ -7120,7 +7123,7 @@ msgstr "Mottagare"
 msgid "Recipients are available after the message is sent"
 msgstr "Mottagare är tillgängliga efter att meddelandet har skickats"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:105
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr ""
 
@@ -7132,7 +7135,7 @@ msgstr "Återanslut Stripe →"
 msgid "Reddit"
 msgstr "Reddit"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:39
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:47
 msgid "Redirecting to MercadoPago..."
 msgstr ""
 
@@ -7337,8 +7340,8 @@ msgstr ""
 msgid "Response:"
 msgstr ""
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:61
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:67
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:64
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:70
 msgid "Restore"
 msgstr "Återställ"
 
@@ -7346,21 +7349,21 @@ msgstr "Återställ"
 msgid "Restore event"
 msgstr "Återställ evenemang"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:122
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:136
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:139
 msgid "Restore Event"
 msgstr "Återställ evenemang"
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:128
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:145
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:148
 msgid "Restore Organizer"
 msgstr "Återställ arrangör"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:125
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:128
 msgid "Restore this event to make it visible again."
 msgstr "Återställ detta evenemang för att göra det synligt igen."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:131
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:134
 msgid "Restore this organizer and make it active again."
 msgstr "Återställ denna arrangör och gör den aktiv igen."
 
@@ -8767,7 +8770,7 @@ msgstr "Det finns inga produkter tillgängliga i den här kategorin"
 msgid "There is a refund pending. Please wait for it to complete before requesting another refund."
 msgstr "En återbetalning väntar. Vänta tills den är slutförd innan du begär en ny återbetalning."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:30
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:38
 msgid "There was a problem connecting MercadoPago. Please try again."
 msgstr ""
 
@@ -8889,7 +8892,7 @@ msgstr "Den här länken är ogiltig eller har löpt ut."
 msgid "This link is no longer valid"
 msgstr "Den här länken är inte längre giltig"
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:28
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:36
 msgid "This MercadoPago account is already connected to another Passix account."
 msgstr ""
 
@@ -9346,10 +9349,10 @@ msgstr "Twitch"
 msgid "Type"
 msgstr "Typ"
 
-#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:98
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:104
-msgid "Type \"delete\" to confirm"
-msgstr "Skriv \"ta bort\" för att bekräfta"
+#: src/components/routes/event/Settings/Sections/DangerZoneSettings/index.tsx:101
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:107
+msgid "Type \"{confirmationWord}\" to confirm"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:58
 msgid "Type of ticket"
@@ -10319,7 +10322,7 @@ msgstr "Du kan skapa en kampanjkod som riktar sig mot den här produkten på"
 msgid "You can still manually offer tickets if needed."
 msgstr "Du kan fortfarande erbjuda biljetter manuellt vid behov."
 
-#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:133
+#: src/components/routes/organizer/Settings/Sections/DangerZoneSettings/index.tsx:136
 msgid "You cannot archive the last active organizer on your account."
 msgstr "Du kan inte arkivera den sista aktiva arrangören på ditt konto."
 
@@ -10422,6 +10425,10 @@ msgstr ""
 msgid "You will have to mark an order as paid manually. This can be done on the manage order page."
 msgstr "Du behöver markera en order som betald manuellt. Det kan göras på sidan för att hantera ordern."
 
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:71
+msgid "You won't be able to receive new MercadoPago payments until you reconnect."
+msgstr ""
+
 #: src/components/modals/CreateCheckInListModal/index.tsx:56
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Du behöver en biljett innan du kan skapa en incheckningslista."
@@ -10510,7 +10517,7 @@ msgstr "Ditt evenemang är live!"
 msgid "Your event must be live before you can sell tickets to attendees."
 msgstr "Ditt evenemang måste vara live innan du kan sälja biljetter till deltagare."
 
-#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:95
+#: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:118
 msgid "Your MercadoPago account is connected and ready to process payments."
 msgstr ""
 

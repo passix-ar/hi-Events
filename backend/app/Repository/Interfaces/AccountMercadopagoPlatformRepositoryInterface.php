@@ -15,4 +15,12 @@ interface AccountMercadopagoPlatformRepositoryInterface extends RepositoryInterf
      * so the unique mp_user_id is freed and the seller can reconnect afterwards.
      */
     public function forceDeleteByAccountId(int $accountId): void;
+
+    /**
+     * Whether the account holds a MercadoPago connection that can still charge.
+     * Queries only the connection columns: hydrating the full row would run the
+     * encrypted token casts, so a single corrupted/legacy token would make the
+     * check blow up. An expired access token counts as not connected.
+     */
+    public function isSetupCompleteForAccount(int $accountId): bool;
 }

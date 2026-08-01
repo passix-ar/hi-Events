@@ -4,7 +4,6 @@ namespace HiEvents\Services\Domain\Message;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\AccountMessagingTierDomainObject;
-use HiEvents\DomainObjects\Generated\AccountMercadopagoPlatformDomainObjectAbstract;
 use HiEvents\DomainObjects\Enums\MessagingEligibilityFailureEnum;
 use HiEvents\DomainObjects\Enums\MessagingTierViolationEnum;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
@@ -114,11 +113,7 @@ class MessagingEligibilityService
 
     private function isMercadoPagoConnected(int $accountId): bool
     {
-        $platform = $this->mercadopagoPlatformRepository->findFirstWhere([
-            AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID => $accountId,
-        ]);
-
-        return $platform?->getSetupCompletedAt() !== null;
+        return $this->mercadopagoPlatformRepository->isSetupCompleteForAccount($accountId);
     }
 
     private function hasPaidOrder(int $accountId): bool

@@ -4,9 +4,13 @@ namespace HiEvents\Services\Application\Handlers\Event;
 
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\Exceptions\AccountNotVerifiedException;
+use HiEvents\Exceptions\ResourceConflictException;
+use HiEvents\Exceptions\ResourceNotFoundException;
 use HiEvents\Repository\Interfaces\AccountRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\UpdateEventStatusDTO;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Jobs\Event\Webhook\DispatchEventWebhookJob;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
@@ -19,6 +23,8 @@ readonly class UpdateEventStatusHandler
     public function __construct(
         private EventRepositoryInterface   $eventRepository,
         private AccountRepositoryInterface $accountRepository,
+        private EventSettingsRepositoryInterface $eventSettingsRepository,
+        private EventPaymentMethodsService $eventPaymentMethodsService,
         private LoggerInterface            $logger,
         private DatabaseManager            $databaseManager,
     )
@@ -26,18 +32,17 @@ readonly class UpdateEventStatusHandler
     }
 
     /**
-     * @throws AccountNotVerifiedException|Throwable
+     * @throws AccountNotVerifiedException|ResourceConflictException|Throwable
      */
     public function handle(UpdateEventStatusDTO $updateEventStatusDTO): EventDomainObject
     {
         return $this->databaseManager->transaction(function () use ($updateEventStatusDTO) {
             return $this->updateEventStatus($updateEventStatusDTO);
         });
-
     }
 
     /**
-     * @throws AccountNotVerifiedException
+     * @throws AccountNotVerifiedException|ResourceConflictException
      */
     private function updateEventStatus(UpdateEventStatusDTO $updateEventStatusDTO): EventDomainObject
     {
@@ -48,6 +53,12 @@ readonly class UpdateEventStatusHandler
                 __('You must verify your account before you can update an event\'s status.
                 You can resend the confirmation by visiting your profile page.'),
             );
+        }
+
+        $this->fetchExistingEvent($updateEventStatusDTO);
+
+        if ($updateEventStatusDTO->status === EventStatus::LIVE->name) {
+            $this->validateEventCanBePublished($updateEventStatusDTO->eventId, $updateEventStatusDTO->accountId);
         }
 
         $this->eventRepository->updateWhere(
@@ -78,5 +89,36 @@ readonly class UpdateEventStatusHandler
         );
 
         return $event;
+    }
+
+    private function fetchExistingEvent(UpdateEventStatusDTO $updateEventStatusDTO): EventDomainObject
+    {
+        $event = $this->eventRepository->findFirstWhere([
+            'id' => $updateEventStatusDTO->eventId,
+            'account_id' => $updateEventStatusDTO->accountId,
+        ]);
+
+        if ($event === null) {
+            throw new ResourceNotFoundException(
+                __('Event :id not found', ['id' => $updateEventStatusDTO->eventId])
+            );
+        }
+
+        return $event;
+    }
+
+    /**
+     * @throws ResourceConflictException
+     */
+    private function validateEventCanBePublished(int $eventId, int $accountId): void
+    {
+        $eventSettings = $this->eventSettingsRepository->findFirstWhere([
+            'event_id' => $eventId,
+        ]);
+
+        $this->eventPaymentMethodsService->assertHasUsableProvider(
+            $eventSettings?->getPaymentProviders(),
+            $accountId,
+        );
     }
 }

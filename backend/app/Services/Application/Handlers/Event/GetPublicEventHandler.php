@@ -18,6 +18,7 @@ use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\GetPublicEventDTO;
 use HiEvents\Services\Domain\Event\EventPageViewIncrementService;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\Services\Domain\Product\ProductFilterService;
 
 class GetPublicEventHandler
@@ -27,6 +28,7 @@ class GetPublicEventHandler
         private readonly PromoCodeRepositoryInterface  $promoCodeRepository,
         private readonly ProductFilterService          $productFilterService,
         private readonly EventPageViewIncrementService $eventPageViewIncrementService,
+        private readonly EventPaymentMethodsService    $eventPaymentMethodsService,
     )
     {
     }
@@ -68,9 +70,30 @@ class GetPublicEventHandler
             $this->eventPageViewIncrementService->increment($data->eventId, $data->ipAddress);
         }
 
+        $this->hideUnusablePaymentProviders($event);
+
         return $event->setProductCategories($this->productFilterService->filter(
             productsCategories: $event->getProductCategories(),
             promoCode: $promoCodeDomainObject
+        ));
+    }
+
+    /**
+     * Never advertise a provider the checkout cannot charge with. Otherwise the buyer
+     * picks MercadoPago and the preference call fails on an account that disconnected
+     * or whose token expired.
+     */
+    private function hideUnusablePaymentProviders(EventDomainObject $event): void
+    {
+        $settings = $event->getEventSettings();
+
+        if (!$settings) {
+            return;
+        }
+
+        $settings->setPaymentProviders($this->eventPaymentMethodsService->getUsableProviders(
+            $settings->getPaymentProviders(),
+            $event->getAccountId(),
         ));
     }
 }

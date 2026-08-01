@@ -13,6 +13,7 @@ use HiEvents\Exceptions\OrganizerNotFoundException;
 use HiEvents\Helper\DateHelper;
 use HiEvents\Helper\IdHelper;
 use HiEvents\Helper\StringHelper;
+use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventStatisticRepositoryInterface;
@@ -36,6 +37,7 @@ class CreateEventService
         private readonly ImageRepositoryInterface          $imageRepository,
         private readonly Repository                        $config,
         private readonly FilesystemManager                 $filesystemManager,
+        private readonly AccountMercadopagoPlatformRepositoryInterface $mercadopagoPlatformRepository,
     )
     {
     }
@@ -164,7 +166,7 @@ class CreateEventService
         ?EventSettingDomainObject $eventSettings,
         EventDomainObject         $event,
         OrganizerDomainObject     $organizer,
-        bool                      $eventCoverCreated = false
+        bool                      $eventCoverCreated = false,
     ): void
     {
         if ($eventSettings !== null) {
@@ -213,7 +215,7 @@ class CreateEventService
             'continue_button_text' => __('Continue'),
             'support_email' => $organizer->getEmail(),
 
-            'payment_providers' => [PaymentProviders::STRIPE->value],
+            'payment_providers' => $this->getDefaultPaymentProviders($event->getAccountId()),
             'offline_payment_instructions' => null,
 
             'enable_invoicing' => false,
@@ -236,5 +238,14 @@ class CreateEventService
             'waitlist_auto_process' => true,
             'waitlist_offer_timeout_minutes' => 120,
         ]);
+    }
+
+    private function getDefaultPaymentProviders(int $accountId): array
+    {
+        if ($this->mercadopagoPlatformRepository->isSetupCompleteForAccount($accountId)) {
+            return [PaymentProviders::MERCADOPAGO->value];
+        }
+
+        return [];
     }
 }

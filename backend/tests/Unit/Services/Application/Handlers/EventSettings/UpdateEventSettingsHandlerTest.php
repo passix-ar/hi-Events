@@ -3,11 +3,18 @@
 namespace Tests\Unit\Services\Application\Handlers\EventSettings;
 
 use HiEvents\DomainObjects\Enums\CapacityChangeDirection;
+use HiEvents\DomainObjects\Enums\PaymentProviders;
+use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\EventSettingDomainObject;
+use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Events\CapacityChangedEvent;
+use HiEvents\Exceptions\ResourceConflictException;
+use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
+use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Application\Handlers\EventSettings\DTO\UpdateEventSettingsDTO;
 use HiEvents\Services\Application\Handlers\EventSettings\UpdateEventSettingsHandler;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\Services\Infrastructure\HtmlPurifier\HtmlPurifierService;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Event;
@@ -20,6 +27,8 @@ class UpdateEventSettingsHandlerTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     private EventSettingsRepositoryInterface $eventSettingsRepository;
+    private EventRepositoryInterface $eventRepository;
+    private AccountMercadopagoPlatformRepositoryInterface $platformRepository;
     private HtmlPurifierService $purifier;
     private DatabaseManager $databaseManager;
     private UpdateEventSettingsHandler $handler;
@@ -29,6 +38,8 @@ class UpdateEventSettingsHandlerTest extends TestCase
         parent::setUp();
 
         $this->eventSettingsRepository = Mockery::mock(EventSettingsRepositoryInterface::class);
+        $this->eventRepository = Mockery::mock(EventRepositoryInterface::class);
+        $this->platformRepository = Mockery::mock(AccountMercadopagoPlatformRepositoryInterface::class);
         $this->purifier = Mockery::mock(HtmlPurifierService::class);
         $this->databaseManager = Mockery::mock(DatabaseManager::class);
 
@@ -38,11 +49,26 @@ class UpdateEventSettingsHandlerTest extends TestCase
             ->shouldReceive('transaction')
             ->andReturnUsing(fn($callback) => $callback());
 
+        // Drafts skip the payment validation entirely, which keeps the pre-existing
+        // tests focused on what they were written for.
+        $this->givenEventStatus(EventStatus::DRAFT->name);
+
         $this->handler = new UpdateEventSettingsHandler(
             eventSettingsRepository: $this->eventSettingsRepository,
+            eventRepository: $this->eventRepository,
+            eventPaymentMethodsService: new EventPaymentMethodsService($this->platformRepository),
             purifier: $this->purifier,
             databaseManager: $this->databaseManager,
         );
+    }
+
+    private function givenEventStatus(string $status, int $accountId = 10): void
+    {
+        $event = new EventDomainObject();
+        $event->setStatus($status);
+        $event->setAccountId($accountId);
+
+        $this->eventRepository->shouldReceive('findFirstWhere')->andReturn($event)->byDefault();
     }
 
     public function testDispatchesCapacityEventWhenAutoProcessToggledOn(): void
@@ -118,11 +144,79 @@ class UpdateEventSettingsHandlerTest extends TestCase
         Event::assertNotDispatched(CapacityChangedEvent::class);
     }
 
-    private function createDTO(?bool $waitlist_auto_process = null): UpdateEventSettingsDTO
+    public function testLiveEventCannotBeLeftWithoutPaymentMethods(): void
+    {
+        $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
+
+        $this->eventSettingsRepository->shouldNotReceive('updateWhere');
+
+        $this->expectException(ResourceConflictException::class);
+
+        $this->handler->handle($this->createDTO(paymentProviders: []));
+    }
+
+    public function testLiveEventCannotKeepMercadoPagoAloneWhenDisconnected(): void
+    {
+        $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
+        $this->platformRepository->shouldReceive('isSetupCompleteForAccount')->andReturn(false);
+
+        $this->eventSettingsRepository->shouldNotReceive('updateWhere');
+
+        $this->expectException(ResourceConflictException::class);
+
+        $this->handler->handle($this->createDTO(paymentProviders: [PaymentProviders::MERCADOPAGO->value]));
+    }
+
+    public function testLiveEventCanKeepOfflineOnly(): void
+    {
+        $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::OFFLINE->value]);
+
+        $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
+
+        $this->handler->handle($this->createDTO(paymentProviders: [PaymentProviders::OFFLINE->value]));
+    }
+
+    /**
+     * Events created before this rule carry ["STRIPE"], which is not usable. Blocking
+     * them would freeze every settings screen on events already published.
+     */
+    public function testLiveEventThatAlreadyHadNoUsableMethodStaysEditable(): void
+    {
+        $this->givenEventStatus(EventStatus::LIVE->name);
+        $this->givenExistingProviders([PaymentProviders::STRIPE->value]);
+
+        $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
+
+        $this->handler->handle($this->createDTO(paymentProviders: [PaymentProviders::STRIPE->value]));
+    }
+
+    public function testDraftEventCanBeLeftWithoutPaymentMethods(): void
+    {
+        $this->givenEventStatus(EventStatus::DRAFT->name);
+        $this->givenExistingProviders([]);
+
+        $this->eventSettingsRepository->shouldReceive('updateWhere')->once();
+
+        $this->handler->handle($this->createDTO(paymentProviders: []));
+    }
+
+    private function givenExistingProviders(array $providers): void
+    {
+        $existing = new EventSettingDomainObject();
+        $existing->setPaymentProviders($providers);
+
+        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn($existing);
+    }
+
+    private function createDTO(?bool $waitlist_auto_process = null, array $paymentProviders = []): UpdateEventSettingsDTO
     {
         return UpdateEventSettingsDTO::fromArray([
             'account_id' => 1,
             'event_id' => 1,
+            'payment_providers' => $paymentProviders,
             'post_checkout_message' => null,
             'pre_checkout_message' => null,
             'email_footer_message' => null,
