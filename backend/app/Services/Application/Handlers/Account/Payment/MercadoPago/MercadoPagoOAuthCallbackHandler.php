@@ -4,10 +4,13 @@
 namespace HiEvents\Services\Application\Handlers\Account\Payment\MercadoPago;
 
 use Carbon\Carbon;
+use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\DomainObjects\Generated\AccountMercadopagoPlatformDomainObjectAbstract;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoAccountAlreadyLinkedException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
+use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Services\Domain\Payment\MercadoPago\MercadoPagoOAuthService;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -17,6 +20,8 @@ class MercadoPagoOAuthCallbackHandler
     public function __construct(
         private readonly MercadoPagoOAuthService                      $oauthService,
         private readonly AccountMercadopagoPlatformRepositoryInterface $platformRepository,
+        private readonly EventRepositoryInterface                      $eventRepository,
+        private readonly EventSettingsRepositoryInterface              $eventSettingsRepository,
         private readonly LoggerInterface                               $logger,
     ) {
     }
@@ -97,5 +102,49 @@ class MercadoPagoOAuthCallbackHandler
         } else {
             $this->platformRepository->create($attributes);
         }
+
+        // Only on the account's first connection: a re-auth while already connected
+        // must not re-tick MercadoPago on events where the organizer disabled it.
+        // (Disconnect hard-deletes the row, so disconnect + reconnect counts as first.)
+        if ($existing === null) {
+            try {
+                $this->enableMercadoPagoOnAllEvents($accountId);
+            } catch (Throwable $e) {
+                $this->logger->warning('Failed to auto-enable MercadoPago on events', [
+                    'account_id' => $accountId,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+    }
+
+    private function enableMercadoPagoOnAllEvents(int $accountId): void
+    {
+        $events = $this->eventRepository->findWhere(['account_id' => $accountId]);
+
+        foreach ($events as $event) {
+            $settings = $this->eventSettingsRepository->findFirstWhere([
+                'event_id' => $event->getId(),
+            ]);
+
+            if (!$settings) {
+                continue;
+            }
+
+            $providers = $settings->getPaymentProviders();
+            if (!is_array($providers)) {
+                $providers = [];
+            }
+
+            if (!in_array(PaymentProviders::MERCADOPAGO->value, $providers, true)) {
+                $providers[] = PaymentProviders::MERCADOPAGO->value;
+                $this->eventSettingsRepository->updateWhere(
+                    attributes: ['payment_providers' => $providers],
+                    where: ['event_id' => $event->getId()],
+                );
+            }
+        }
+
+        $this->logger->info('MercadoPago enabled on all events for account', ['account_id' => $accountId]);
     }
 }

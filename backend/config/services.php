@@ -53,6 +53,24 @@ return [
         'app_id' => env('OPEN_EXCHANGE_RATES_APP_ID'),
     ],
 
+    // Added by Passix: Sign in with Google.
+    // The ID token flow needs no client secret — the client ID is public and the token
+    // is verified against Google's published JWKS, so there is nothing secret to leak.
+    'google' => [
+        'enabled' => (bool)env('GOOGLE_AUTH_ENABLED', false),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'jwks_url' => env('GOOGLE_JWKS_URL', 'https://www.googleapis.com/oauth2/v3/certs'),
+        'jwks_cache_ttl_seconds' => (int)env('GOOGLE_JWKS_CACHE_TTL_SECONDS', 3600),
+        // Google signs with either issuer; both are valid per the OpenID discovery document.
+        'issuers' => ['https://accounts.google.com', 'accounts.google.com'],
+        // Tolerance for clock skew between our server and Google when checking exp/iat.
+        'leeway_seconds' => (int)env('GOOGLE_AUTH_LEEWAY_SECONDS', 60),
+        // How long a browser has to complete sign in after we hand it a nonce.
+        'nonce_ttl_seconds' => (int)env('GOOGLE_NONCE_TTL_SECONDS', 600),
+        // How long a half-finished Google signup may sit on the "complete your details" screen.
+        'registration_token_ttl_seconds' => (int)env('GOOGLE_REGISTRATION_TOKEN_TTL_SECONDS', 900),
+    ],
+
     // Added by Passix: Cloudflare Turnstile (anti-bot CAPTCHA on the public checkout)
     'turnstile' => [
         'enabled' => (bool)env('TURNSTILE_ENABLED', false),

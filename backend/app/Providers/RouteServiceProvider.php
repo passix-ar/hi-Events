@@ -1,6 +1,7 @@
 <?php
 
 // Modified by Passix on 2026-05-25: Added rate limiting for auth and public contact endpoints.
+
 namespace HiEvents\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
@@ -8,6 +9,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,54 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(config('app.api_rate_limit_per_minute'))
                 ->by($request->user()?->id ?: $request->ip());
+        });
+
+        // Login: cap brute-force per (account + source), plus a coarser per-IP cap
+        // to blunt password spraying across many accounts from one origin.
+        RateLimiter::for('auth', function (Request $request) {
+            $email = Str::lower(trim((string) $request->input('email')));
+
+            return [
+                Limit::perMinute(5)->by('auth:'.$email.'|'.$request->ip()),
+                Limit::perMinute(20)->by('auth-ip:'.$request->ip()),
+            ];
+        });
+
+        // Registration abuse is driven by origin, not by the (attacker-chosen) email.
+        RateLimiter::for('auth-register', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip());
+        });
+
+        // Social sign in carries no email in the body, and an ID token cannot be guessed,
+        // so this is not about brute force — it caps the signature-verification and
+        // database work one origin can force. Roomier than password login because a
+        // legitimate user may retry across several Google accounts.
+        RateLimiter::for('auth-social', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        // Nonces are issued once per page load, so they get their own budget rather than
+        // eating into the sign-in attempts above. Issuing one is cheap and grants nothing
+        // on its own — it only counts once it returns inside a token Google signed.
+        RateLimiter::for('auth-social-nonce', function (Request $request) {
+            return Limit::perMinute(30)->by($request->ip());
+        });
+
+        // Password reset: protect a single victim from mail bombing (per email/hour)
+        // and cap the overall mail volume from one origin (per IP/minute).
+        RateLimiter::for('auth-forgot', function (Request $request) {
+            $email = Str::lower(trim((string) $request->input('email')));
+
+            return [
+                Limit::perHour(5)->by('forgot-email:'.$email),
+                Limit::perMinute(5)->by('forgot-ip:'.$request->ip()),
+            ];
+        });
+
+        // Token endpoints (confirm-email, reset, invitation): no email in the body,
+        // so key on origin only. Long, high-entropy tokens make this defence-in-depth.
+        RateLimiter::for('auth-token', function (Request $request) {
+            return Limit::perMinute(10)->by($request->ip());
         });
 
         RateLimiter::for('self-service-email', function (Request $request) {

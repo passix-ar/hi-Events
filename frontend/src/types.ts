@@ -27,7 +27,9 @@ export type ConfigKeys =
     | 'VITE_COOKIE_CONSENT_ENABLED'
     | 'VITE_COOKIE_CONSENT_TEXT'
     | 'VITE_TURNSTILE_ENABLED'
-    | 'VITE_TURNSTILE_SITE_KEY';
+    | 'VITE_TURNSTILE_SITE_KEY'
+    | 'VITE_GOOGLE_AUTH_ENABLED'
+    | 'VITE_GOOGLE_CLIENT_ID';
 
 export enum StripePlatform {
     Canada = 'ca',
@@ -96,6 +98,49 @@ export interface LoginResponse {
     expires_in: number;
     user: User;
     accounts: Account[];
+}
+
+export interface GoogleLoginRequest {
+    id_token: string;
+    account_id?: string | number | null;
+}
+
+/**
+ * Returned when the Google account is not linked to any Passix user yet. The signed
+ * registration_token carries the verified identity into the completion step.
+ */
+export interface SocialRegistrationRequiredResponse {
+    registration_required: true;
+    registration_token: string;
+    email: string;
+    first_name: string | null;
+    last_name: string | null;
+}
+
+export type GoogleLoginResponse = LoginResponse | SocialRegistrationRequiredResponse;
+
+export const isRegistrationRequired = (
+    response: GoogleLoginResponse,
+): response is SocialRegistrationRequiredResponse =>
+    (response as SocialRegistrationRequiredResponse).registration_required === true;
+
+export interface CompleteSocialRegistrationRequest {
+    registration_token: string;
+    business_name: string;
+    locale: SupportedLocales;
+    timezone?: string;
+    currency_code?: string;
+    marketing_opt_in?: boolean;
+    utm_source?: string | null;
+    utm_medium?: string | null;
+    utm_campaign?: string | null;
+    utm_term?: string | null;
+    utm_content?: string | null;
+    referrer_url?: string | null;
+    landing_page?: string | null;
+    gclid?: string | null;
+    fbclid?: string | null;
+    utm_raw?: Record<string, string> | null;
 }
 
 export interface User {
@@ -174,6 +219,18 @@ export interface StripeConnectAccountsResponse {
     stripe_connect_accounts: StripeConnectAccount[];
     primary_stripe_account_id: string | null;
     has_completed_setup: boolean;
+}
+
+export interface MercadoPagoAffectedEvent {
+    id: IdParam;
+    title: string;
+}
+
+export interface MercadoPagoDisconnectStatus {
+    can_disconnect: boolean;
+    reason: string | null;
+    blocking_events: MercadoPagoAffectedEvent[];
+    affected_events: MercadoPagoAffectedEvent[];
 }
 
 export interface LoginData {

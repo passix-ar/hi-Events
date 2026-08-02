@@ -20,3 +20,23 @@ datasources:
     editable: false
     jsonData:
       maxLines: 1000
+
+  # DB de producción (Hi.Events) en SOLO LECTURA — usuario grafana_ro (SELECT only).
+  # El password vive en el .env del server (PASSIX_DB_RO_PASSWORD), fuera de git.
+  - name: Passix DB
+    type: postgres
+    uid: passixdb
+    access: proxy
+    url: m7dc5tjv4x4jibg26nwet1zs:5432
+    user: grafana_ro
+    isDefault: false
+    editable: false
+    jsonData:
+      database: postgres
+      sslmode: disable
+      maxOpenConns: 2
+      maxIdleConns: 1
+      connMaxLifetime: 14400
+      postgresVersion: 1700
+    secureJsonData:
+      password: $PASSIX_DB_RO_PASSWORD

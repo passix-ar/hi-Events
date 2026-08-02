@@ -13,6 +13,10 @@
     @include auth.auth-button;
   }
 
+  .divider {
+    @include auth.auth-divider;
+  }
+
   // Forgot password link
   p {
     margin: 1rem 0 0;

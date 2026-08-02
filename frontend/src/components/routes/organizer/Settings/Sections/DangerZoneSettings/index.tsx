@@ -14,6 +14,9 @@ import {OrganizerStatus} from "../../../../../../types.ts";
 import {IconInfoCircle, IconTrash, IconArchive, IconArrowBackUp} from "@tabler/icons-react";
 import {useIsCurrentUserAdmin} from "../../../../../../hooks/useIsCurrentUserAdmin.ts";
 import {BouncingEmoji} from "../../../../../common/BouncingEmoji";
+import {Constants} from "../../../../../../constants.ts";
+
+const confirmationWord = Constants.DELETE_CONFIRMATION_WORD;
 
 export const DangerZoneSettings = () => {
     const {organizerId} = useParams();
@@ -27,7 +30,7 @@ export const DangerZoneSettings = () => {
     const [deleteConfirmation, setDeleteConfirmation] = useState('');
 
     const isArchived = organizer?.status === OrganizerStatus.ARCHIVED;
-    const isDeleteConfirmed = deleteConfirmation.toLowerCase() === 'delete';
+    const isDeleteConfirmed = deleteConfirmation.toLowerCase() === confirmationWord;
 
     const activeOrganizerCount = organizers?.data?.filter(
         org => org.status !== OrganizerStatus.ARCHIVED
@@ -101,10 +104,10 @@ export const DangerZoneSettings = () => {
                         {deletionStatus?.can_delete && (
                             <Stack gap="xs" maw={400}>
                                 <Text size="sm" c="dimmed">
-                                    {t`Type "delete" to confirm`}
+                                    {t`Type "${confirmationWord}" to confirm`}
                                 </Text>
                                 <TextInput
-                                    placeholder={t`delete`}
+                                    placeholder={confirmationWord}
                                     value={deleteConfirmation}
                                     onChange={(e) => setDeleteConfirmation(e.currentTarget.value)}
                                 />

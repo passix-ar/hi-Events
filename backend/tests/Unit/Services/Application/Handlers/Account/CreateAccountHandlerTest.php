@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\Application\Handlers\Account;
 
 use HiEvents\DomainObjects\AccountConfigurationDomainObject;
 use HiEvents\DomainObjects\AccountDomainObject;
+use HiEvents\DomainObjects\AccountUserDomainObject;
 use HiEvents\DomainObjects\UserDomainObject;
 use HiEvents\Repository\Interfaces\AccountAttributionRepositoryInterface;
 use HiEvents\Repository\Interfaces\AccountConfigurationRepositoryInterface;
@@ -45,8 +46,10 @@ class CreateAccountHandlerTest extends TestCase
         $this->databaseManager = Mockery::mock(DatabaseManager::class);
         $this->config = Mockery::mock(Repository::class);
         $this->emailConfirmationService = Mockery::mock(EmailConfirmationService::class);
-        $this->accountUserAssociationService = Mockery::mock(AccountUserAssociationService::class);
         $this->accountUserRepository = Mockery::mock(AccountUserRepositoryInterface::class);
+        // The service is a readonly class, which Mockery cannot subclass, so the real
+        // one runs here against the mocked repository.
+        $this->accountUserAssociationService = new AccountUserAssociationService($this->accountUserRepository);
         $this->accountConfigurationRepository = Mockery::mock(AccountConfigurationRepositoryInterface::class);
         $this->accountAttributionRepository = Mockery::mock(AccountAttributionRepositoryInterface::class);
 
@@ -106,7 +109,13 @@ class CreateAccountHandlerTest extends TestCase
         $this->userRepository->shouldReceive('findFirstWhere')->andReturn(null);
         $this->userRepository->shouldReceive('create')->andReturn($user);
 
-        $this->accountUserAssociationService->shouldReceive('associate')->once();
+        $this->accountUserRepository
+            ->shouldReceive('create')
+            ->withArgs(fn (array $attributes) => $attributes['user_id'] === 20
+                && $attributes['account_id'] === 10
+                && $attributes['is_account_owner'] === true)
+            ->once()
+            ->andReturn(Mockery::mock(AccountUserDomainObject::class));
         $this->emailConfirmationService->shouldReceive('sendConfirmation')->once();
 
         $dto = new CreateAccountDTO(

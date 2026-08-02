@@ -1,10 +1,13 @@
 import {useEffect, useState} from "react";
-import {Button, Group, Text, ThemeIcon, Title} from "@mantine/core";
+import {Alert, Button, Group, List, Text, ThemeIcon, Title} from "@mantine/core";
 import {modals} from "@mantine/modals";
-import {IconCheck, IconCreditCard, IconPlugConnectedX} from "@tabler/icons-react";
-import {t} from "@lingui/macro";
+import {IconAlertTriangle, IconCheck, IconCreditCard, IconPlugConnectedX} from "@tabler/icons-react";
+import {t, Plural} from "@lingui/macro";
 import {useGetAccount} from "../../../../../../../queries/useGetAccount.ts";
 import {useGetMercadoPagoStatus} from "../../../../../../../queries/useGetMercadoPagoStatus.ts";
+import {
+    useGetMercadoPagoDisconnectStatus
+} from "../../../../../../../queries/useGetMercadoPagoDisconnectStatus.ts";
 import {accountClient} from "../../../../../../../api/account.client.ts";
 import {Card} from "../../../../../../common/Card";
 import {showError, showSuccess} from "../../../../../../../utilites/notifications.tsx";
@@ -17,6 +20,11 @@ export const MercadoPagoSettings = () => {
 
     const statusQuery = useGetMercadoPagoStatus(account?.id);
     const status = statusQuery.data;
+
+    const disconnectStatusQuery = useGetMercadoPagoDisconnectStatus(account?.id, !!status?.is_connected);
+    const disconnectStatus = disconnectStatusQuery.data;
+    const canDisconnect = disconnectStatus?.can_disconnect ?? false;
+    const affectedEventCount = disconnectStatus?.affected_events?.length ?? 0;
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -49,9 +57,23 @@ export const MercadoPagoSettings = () => {
         modals.openConfirmModal({
             title: t`Disconnect MercadoPago`,
             children: (
-                <Text size="sm">
-                    {t`Are you sure? You won't be able to receive payments until you reconnect.`}
-                </Text>
+                <>
+                    {affectedEventCount > 0 && (
+                        <Text size="sm" mb="xs">
+                            <Plural
+                                value={affectedEventCount}
+                                one="# published event will stop offering MercadoPago. It can still sell with its other payment methods."
+                                other="# published events will stop offering MercadoPago. They can still sell with their other payment methods."
+                            />
+                        </Text>
+                    )}
+                    <Text size="sm" mb="xs">
+                        {t`You won't be able to receive new MercadoPago payments until you reconnect.`}
+                    </Text>
+                    <Text size="sm" c="dimmed">
+                        {t`Payments already started will still be credited, and past orders are not affected.`}
+                    </Text>
+                </>
             ),
             labels: {confirm: t`Disconnect`, cancel: t`Cancel`},
             confirmProps: {color: 'red'},
@@ -63,6 +85,7 @@ export const MercadoPagoSettings = () => {
                     statusQuery.refetch();
                 } catch (err: any) {
                     showError(err?.response?.data?.message || t`Failed to disconnect MercadoPago.`);
+                    disconnectStatusQuery.refetch();
                 } finally {
                     setIsDisconnecting(false);
                 }
@@ -94,6 +117,24 @@ export const MercadoPagoSettings = () => {
                     <Text size="sm" c="dimmed" mb="lg">
                         {t`Your MercadoPago account is connected and ready to process payments.`}
                     </Text>
+
+                    {!disconnectStatusQuery.isLoading && !canDisconnect && (
+                        <Alert
+                            variant="light"
+                            color="orange"
+                            icon={<IconAlertTriangle size={18}/>}
+                            title={t`MercadoPago can't be disconnected right now`}
+                            mb="lg"
+                        >
+                            <Text size="sm" mb="xs">{disconnectStatus?.reason}</Text>
+                            <List size="sm" withPadding>
+                                {disconnectStatus?.blocking_events?.map((event) => (
+                                    <List.Item key={event.id}>{event.title}</List.Item>
+                                ))}
+                            </List>
+                        </Alert>
+                    )}
+
                     <Group gap="sm">
                         <Button
                             variant="light"
@@ -111,6 +152,7 @@ export const MercadoPagoSettings = () => {
                             leftSection={<IconPlugConnectedX size={16}/>}
                             onClick={handleDisconnect}
                             loading={isDisconnecting}
+                            disabled={disconnectStatusQuery.isLoading || !canDisconnect}
                         >
                             {t`Disconnect`}
                         </Button>

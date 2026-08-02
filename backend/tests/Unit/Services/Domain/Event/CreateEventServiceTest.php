@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\OrganizerDomainObject;
 use HiEvents\DomainObjects\OrganizerSettingDomainObject;
 use HiEvents\Exceptions\OrganizerNotFoundException;
+use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventStatisticRepositoryInterface;
@@ -34,6 +35,7 @@ class CreateEventServiceTest extends TestCase
     private ImageRepositoryInterface $imageRepository;
     private Repository $config;
     private FilesystemManager $filesystemManager;
+    private AccountMercadopagoPlatformRepositoryInterface $mercadopagoPlatformRepository;
 
     protected function setUp(): void
     {
@@ -48,6 +50,12 @@ class CreateEventServiceTest extends TestCase
         $this->imageRepository = Mockery::mock(ImageRepositoryInterface::class);
         $this->config = Mockery::mock(Repository::class);
         $this->filesystemManager = Mockery::mock(FilesystemManager::class);
+        $this->mercadopagoPlatformRepository = Mockery::mock(AccountMercadopagoPlatformRepositoryInterface::class);
+
+        // Default mock: no MercadoPago connected (returns empty payment_providers)
+        $this->mercadopagoPlatformRepository->shouldReceive('isSetupCompleteForAccount')
+            ->byDefault()
+            ->andReturn(false);
 
         $this->createEventService = new CreateEventService(
             $this->eventRepository,
@@ -59,6 +67,7 @@ class CreateEventServiceTest extends TestCase
             $this->imageRepository,
             $this->config,
             $this->filesystemManager,
+            $this->mercadopagoPlatformRepository,
         );
     }
 
@@ -171,7 +180,8 @@ class CreateEventServiceTest extends TestCase
             ->with(Mockery::on(function ($arg) use ($eventData, $organizer) {
                 return $arg['event_id'] === $eventData->getId() &&
                     $arg['homepage_background_type'] === HomepageBackgroundType::COLOR->name &&
-                    $arg['support_email'] === $organizer->getEmail();
+                    $arg['support_email'] === $organizer->getEmail() &&
+                    $arg['payment_providers'] === [];
             }));
 
         $this->eventStatisticsRepository->shouldReceive('create');

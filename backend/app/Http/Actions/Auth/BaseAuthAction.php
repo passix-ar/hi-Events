@@ -2,9 +2,11 @@
 
 namespace HiEvents\Http\Actions\Auth;
 
+use HiEvents\DomainObjects\UserDomainObject;
 use HiEvents\Http\Actions\BaseAction;
 use HiEvents\Resources\Auth\AuthenticatedResponseResource;
 use HiEvents\Services\Application\Handlers\Auth\DTO\AuthenticatedResponseDTO;
+use HiEvents\Services\Domain\Auth\DTO\LoginResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
@@ -38,8 +40,31 @@ abstract class BaseAuthAction extends BaseAction
 
     protected function respondWithToken(?string $token, Collection $accounts): JsonResponse
     {
-        $user = $this->getAuthenticatedUser();
+        return $this->buildAuthenticatedResponse($token, $accounts, $this->getAuthenticatedUser());
+    }
 
+    /**
+     * Builds the response from the login result itself.
+     *
+     * Unlike respondWithToken(), this does not read the authenticated user from the guard,
+     * so it works for sign-in methods that never populate it — such as Google, where no
+     * password is ever presented to the guard.
+     */
+    protected function respondWithLoginResponse(LoginResponse $loginResponse): JsonResponse
+    {
+        return $this->buildAuthenticatedResponse(
+            token: $loginResponse->token,
+            accounts: $loginResponse->accounts,
+            user: $loginResponse->user,
+        );
+    }
+
+    private function buildAuthenticatedResponse(
+        ?string          $token,
+        Collection       $accounts,
+        UserDomainObject $user,
+    ): JsonResponse
+    {
         return $this->addTokenToResponse(
             response: $this->jsonResponse(new AuthenticatedResponseResource(new AuthenticatedResponseDTO(
                 token: $token,

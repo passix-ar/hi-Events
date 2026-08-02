@@ -51,6 +51,7 @@ use HiEvents\Repository\Eloquent\StripePayoutsRepository;
 use HiEvents\Repository\Eloquent\TaxAndFeeRepository;
 use HiEvents\Repository\Eloquent\TicketLookupTokenRepository;
 use HiEvents\Repository\Eloquent\UserRepository;
+use HiEvents\Repository\Eloquent\UserSocialIdentityRepository;
 use HiEvents\Repository\Eloquent\MercadopagoPaymentRepository;
 use HiEvents\Repository\Eloquent\MercadopagoPreferenceRepository;
 use HiEvents\Repository\Eloquent\WaitlistEntryRepository;
@@ -103,6 +104,7 @@ use HiEvents\Repository\Interfaces\StripePayoutsRepositoryInterface;
 use HiEvents\Repository\Interfaces\TaxAndFeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\TicketLookupTokenRepositoryInterface;
 use HiEvents\Repository\Interfaces\UserRepositoryInterface;
+use HiEvents\Repository\Interfaces\UserSocialIdentityRepositoryInterface;
 use HiEvents\Repository\Interfaces\MercadopagoPaymentRepositoryInterface;
 use HiEvents\Repository\Interfaces\MercadopagoPreferenceRepositoryInterface;
 use HiEvents\Repository\Interfaces\WaitlistEntryRepositoryInterface;
@@ -117,6 +119,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     private static array $interfaceToConcreteMap = [
         UserRepositoryInterface::class => UserRepository::class,
+        UserSocialIdentityRepositoryInterface::class => UserSocialIdentityRepository::class,
         AccountRepositoryInterface::class => AccountRepository::class,
         AccountAttributionRepositoryInterface::class => AccountAttributionRepository::class,
         EventRepositoryInterface::class => EventRepository::class,

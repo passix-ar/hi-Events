@@ -1,5 +1,12 @@
 import {api} from "./client.ts";
-import {Account, GenericDataResponse, IdParam, User, StripeConnectAccountsResponse} from "../types.ts";
+import {
+    Account,
+    GenericDataResponse,
+    IdParam,
+    MercadoPagoDisconnectStatus,
+    StripeConnectAccountsResponse,
+    User
+} from "../types.ts";
 
 interface CreateAccountRequest {
     first_name: string;
@@ -44,6 +51,12 @@ export const accountClient = {
             mp_user_id: string | null;
             connected_at: string | null;
         }>(`accounts/${accountId}/mercadopago/status`);
+        return response.data;
+    },
+    getMercadoPagoDisconnectStatus: async (accountId: IdParam) => {
+        const response = await api.get<GenericDataResponse<MercadoPagoDisconnectStatus>>(
+            `accounts/${accountId}/mercadopago/disconnect-status`,
+        );
         return response.data;
     },
     disconnectMercadoPago: async (accountId: IdParam) => {

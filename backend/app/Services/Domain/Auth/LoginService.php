@@ -2,25 +2,17 @@
 
 namespace HiEvents\Services\Domain\Auth;
 
-use HiEvents\DomainObjects\AccountDomainObject;
-use HiEvents\DomainObjects\AccountUserDomainObject;
-use HiEvents\DomainObjects\Enums\Role;
-use HiEvents\DomainObjects\Status\UserStatus;
 use HiEvents\DomainObjects\UserDomainObject;
 use HiEvents\Exceptions\UnauthorizedException;
-use HiEvents\Repository\Eloquent\Value\Relationship;
-use HiEvents\Repository\Interfaces\AccountUserRepositoryInterface;
 use HiEvents\Services\Domain\Auth\DTO\LoginResponse;
-use Illuminate\Support\Collection;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
-use Psr\Log\LoggerInterface;
 
 readonly class LoginService
 {
     public function __construct(
-        private JWTAuth                        $jwtAuth,
-        private LoggerInterface                $logger,
-        private AccountUserRepositoryInterface $accountUserRepository,
+        private JWTAuth                  $jwtAuth,
+        private AuthTokenService         $authTokenService,
+        private UserAccountContextService $accountContextService,
     )
     {
     }
@@ -30,124 +22,29 @@ readonly class LoginService
      */
     public function authenticate(string $email, string $password, ?int $requestedAccountId): LoginResponse
     {
-        // todo - refactor this so we don't have to call the jwtAuth twice
-        $token = $this->jwtAuth->attempt([
+        $isValidPassword = $this->jwtAuth->attempt([
             'email' => strtolower($email),
             'password' => $password,
         ]);
 
-        if (!$token) {
+        if (!$isValidPassword) {
             throw new UnauthorizedException(__('Username or Password are incorrect'));
         }
 
         /** @var UserDomainObject $user */
         $user = UserDomainObject::hydrateFromModel($this->jwtAuth->user());
 
-        $userAccounts = $this->accountUserRepository
-            ->loadRelation(new Relationship(domainObject: AccountDomainObject::class, name: 'account'))
-            ->findWhere([
-                'user_id' => $user->getId(),
-            ]);
-
-        $accounts = $userAccounts->map(fn($accountUser) => $accountUser->getAccount());
-
-        $accountId = $this->getAccountId($accounts, $requestedAccountId);
-
-        if ($accountId) {
-            $this->validateUserStatus($accountId, $userAccounts);
-        }
-
-        $userRole = $this->getUserRole($accountId, $userAccounts);
+        $accountContext = $this->accountContextService->resolve($user->getId(), $requestedAccountId);
 
         return new LoginResponse(
-            accounts: $accounts,
-            token: $this->getToken(
-                accounts: $accounts,
-                email: $email,
-                password: $password,
-                requestedAccountId: $requestedAccountId,
-                userRole: $userRole,
+            accounts: $accountContext->accounts,
+            token: $this->authTokenService->issueForUser(
+                userId: $user->getId(),
+                accountId: $accountContext->accountId,
+                role: $accountContext->role,
             ),
             user: $user,
-            accountId: $accountId,
+            accountId: $accountContext->accountId,
         );
-    }
-
-    private function getAccountId(Collection $accounts, ?int $requestedAccountId): ?int
-    {
-        if ($accounts->count() === 1) {
-            return $accounts->first()->getId();
-        }
-
-        if ($requestedAccountId) {
-            $verifiedAccount = $accounts->firstWhere(fn(AccountDomainObject $account) => $account->getId() === $requestedAccountId);
-
-            if ($verifiedAccount === null) {
-                throw new UnauthorizedException(__('Account not found'));
-            }
-
-            return $verifiedAccount->getId();
-        }
-
-        return null;
-    }
-
-    private function getToken(
-        Collection $accounts,
-        string     $email,
-        string     $password,
-        ?int       $requestedAccountId,
-        ?Role      $userRole,
-    ): ?string
-    {
-        $accountId = $this->getAccountId($accounts, $requestedAccountId);
-
-        // if there's no account, we can't generate a token. The user will be prompted to select an account
-        if ($accountId === null) {
-            return null;
-        }
-
-        $claims = ['account_id' => $accountId];
-
-        if ($userRole !== null) {
-            $claims['role'] = $userRole->value;
-        }
-
-        $token = $this->jwtAuth->claims($claims)->attempt([
-            'email' => strtolower($email),
-            'password' => $password,
-        ]);
-
-        if (!$token) {
-            throw new UnauthorizedException(__('Username or Password are incorrect'));
-        }
-
-        return $token;
-    }
-
-    private function validateUserStatus(int $accountId, Collection $userAccounts): void
-    {
-        /** @var AccountUserDomainObject $currentAccount */
-        $currentAccount = $userAccounts
-            ->first(fn(AccountUserDomainObject $userAccount) => $userAccount->getAccountId() === $accountId);
-
-        if ($currentAccount->getStatus() !== UserStatus::ACTIVE->name) {
-            $this->logger->info(__('Attempt to log in to a non-active account'), $currentAccount->toArray());
-
-            throw new UnauthorizedException(__('User account is not active'));
-        }
-    }
-
-    private function getUserRole(?int $accountId, Collection $userAccounts): ?Role
-    {
-        if ($accountId === null) {
-            return null;
-        }
-
-        /** @var AccountUserDomainObject $currentAccount */
-        $currentAccount = $userAccounts
-            ->first(fn(AccountUserDomainObject $userAccount) => $userAccount->getAccountId() === $accountId);
-
-        return Role::from($currentAccount?->getRole());
     }
 }

@@ -4,7 +4,7 @@
   "tags": ["passix"],
   "timezone": "browser",
   "schemaVersion": 39,
-  "version": 2,
+  "version": 3,
   "editable": true,
   "time": { "from": "now-6h", "to": "now" },
   "refresh": "30s",
@@ -147,6 +147,32 @@
         { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "(1 - (node_filesystem_avail_bytes{mountpoint=\"/\",fstype!=\"tmpfs\"} / node_filesystem_size_bytes{mountpoint=\"/\",fstype!=\"tmpfs\"})) * 100", "legendFormat": "Disco %" }
       ],
       "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100, "custom": { "fillOpacity": 15, "lineWidth": 2 } }, "overrides": [] }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "Swap en uso",
+      "description": "El swap es el colchón cuando se acaba la RAM. Cerca de cero es lo normal y lo esperable. Si se sostiene por encima de la línea de 512MB, no falta swap: falta RAM, y conviene pasar a un server más grande. Sin swap el kernel mata procesos cuando la memoria se agota.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 21 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "prometheus" }, "expr": "node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes", "legendFormat": "Swap usado" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "custom": { "fillOpacity": 15, "lineWidth": 2, "thresholdsStyle": { "mode": "dashed" } },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 536870912 }
+            ]
+          }
+        },
+        "overrides": []
+      }
     }
   ]
 }

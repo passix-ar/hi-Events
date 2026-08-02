@@ -1,0 +1,14 @@
+@use "../auth-common" as auth;
+
+.header {
+  @include auth.auth-header;
+}
+
+.card {
+  @include auth.auth-card;
+
+  form {
+    @include auth.auth-inputs;
+    @include auth.auth-button;
+  }
+}

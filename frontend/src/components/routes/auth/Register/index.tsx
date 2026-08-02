@@ -10,10 +10,15 @@ import {getClientLocale} from "../../../../locales.ts";
 import {useEffect} from "react";
 import {getConfig} from "../../../../utilites/config.ts";
 import {captureUtmData, getStoredUtmData, clearStoredUtmData} from "../../../../utilites/utm.ts";
+import {showError} from "../../../../utilites/notifications.tsx";
+import {GoogleAuthButton} from "../../../common/GoogleAuthButton";
+import {useGoogleAuth} from "../../../../hooks/useGoogleAuth.ts";
+import {isGoogleAuthEnabled} from "../../../../hooks/useGoogleIdentityServices.ts";
 
 export const Register = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const googleAuth = useGoogleAuth();
 
     const form = useForm({
         validateInputOnBlur: true,
@@ -54,6 +59,11 @@ export const Register = () => {
                 navigate(`/welcome${location.search}`);
             },
             onError: (error: any) => {
+                if (error?.response?.status === 429) {
+                    showError(t`Too many attempts. Please wait a moment and try again.`);
+                    return;
+                }
+
                 errorHandler(form, error, error.response?.data?.message);
             },
         });
@@ -85,6 +95,18 @@ export const Register = () => {
             </header>
 
             <div className={classes.registerCard}>
+                <GoogleAuthButton
+                    onCredential={googleAuth.handleCredential}
+                    text="signup_with"
+                    disabled={mutate.isPending || googleAuth.isPending}
+                />
+
+                {isGoogleAuthEnabled() && (
+                    <div className={classes.divider}>
+                        <span>{t`or`}</span>
+                    </div>
+                )}
+
                 <form onSubmit={form.onSubmit((values) => registerUser(values as RegisterAccountRequest))}>
 
                     <SimpleGrid verticalSpacing={{base: "md", sm: 0}} cols={{base: 1, sm: 2}} mb="md">
@@ -114,7 +136,7 @@ export const Register = () => {
                         mb={0}
                         {...form.getInputProps('email')}
                         label={t`Email`}
-                        placeholder={'your@email.com'}
+                        placeholder={t`your@email.com`}
                         required
                     />
 

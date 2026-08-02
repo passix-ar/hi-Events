@@ -198,11 +198,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
         if ($search) {
             $this->model = $this->model->where(function ($q) use ($search) {
-                $q->where(OrderDomainObjectAbstract::EMAIL, 'ilike', '%' . $search . '%')
-                    ->orWhere(OrderDomainObjectAbstract::FIRST_NAME, 'ilike', '%' . $search . '%')
-                    ->orWhere(OrderDomainObjectAbstract::LAST_NAME, 'ilike', '%' . $search . '%')
-                    ->orWhere(OrderDomainObjectAbstract::PUBLIC_ID, 'ilike', '%' . $search . '%')
-                    ->orWhere(OrderDomainObjectAbstract::SHORT_ID, 'ilike', '%' . $search . '%');
+                $q->where('orders.' . OrderDomainObjectAbstract::EMAIL, 'ilike', '%' . $search . '%')
+                    ->orWhere('orders.' . OrderDomainObjectAbstract::FIRST_NAME, 'ilike', '%' . $search . '%')
+                    ->orWhere('orders.' . OrderDomainObjectAbstract::LAST_NAME, 'ilike', '%' . $search . '%')
+                    ->orWhere('orders.' . OrderDomainObjectAbstract::PUBLIC_ID, 'ilike', '%' . $search . '%')
+                    ->orWhere('orders.' . OrderDomainObjectAbstract::SHORT_ID, 'ilike', '%' . $search . '%');
             });
         }
 

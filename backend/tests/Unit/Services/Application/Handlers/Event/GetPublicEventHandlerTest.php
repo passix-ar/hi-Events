@@ -8,7 +8,9 @@ use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\GetPublicEventDTO;
 use HiEvents\Services\Application\Handlers\Event\GetPublicEventHandler;
+use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Services\Domain\Event\EventPageViewIncrementService;
+use HiEvents\Services\Domain\Event\EventPaymentMethodsService;
 use HiEvents\Services\Domain\Product\ProductFilterService;
 use Mockery as m;
 use Tests\TestCase;
@@ -19,6 +21,7 @@ class GetPublicEventHandlerTest extends TestCase
     private PromoCodeRepositoryInterface $promoCodeRepository;
     private ProductFilterService $ticketFilterService;
     private EventPageViewIncrementService $eventPageViewIncrementService;
+    private AccountMercadopagoPlatformRepositoryInterface $platformRepository;
     private GetPublicEventHandler $handler;
 
     protected function setUp(): void
@@ -29,12 +32,16 @@ class GetPublicEventHandlerTest extends TestCase
         $this->promoCodeRepository = m::mock(PromoCodeRepositoryInterface::class);
         $this->ticketFilterService = m::mock(ProductFilterService::class);
         $this->eventPageViewIncrementService = m::mock(EventPageViewIncrementService::class);
+        $this->platformRepository = m::mock(AccountMercadopagoPlatformRepositoryInterface::class);
+
+        $this->platformRepository->shouldReceive('isSetupCompleteForAccount')->andReturn(true)->byDefault();
 
         $this->handler = new GetPublicEventHandler(
             $this->eventRepository,
             $this->promoCodeRepository,
             $this->ticketFilterService,
-            $this->eventPageViewIncrementService
+            $this->eventPageViewIncrementService,
+            new EventPaymentMethodsService($this->platformRepository),
         );
     }
 

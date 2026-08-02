@@ -8,10 +8,13 @@ final class CreateAccountDTO extends BaseDTO
 {
     public function __construct(
         public readonly string  $email,
-        public readonly string  $password,
+        /** Null when the account is created through a social provider and has no password. */
+        public readonly ?string $password,
         public readonly string  $first_name,
         public readonly string  $business_name,
         public readonly string $locale,
+        /** True when a social provider already proved ownership of the email address. */
+        public readonly bool $is_email_verified = false,
         public readonly ?string $last_name = null,
         public readonly ?string $timezone = null,
         public readonly ?string $currency_code = null,
