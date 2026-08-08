@@ -46,7 +46,7 @@ services:
 
   # ── Dashboards ────────────────────────────────────────────────────────────
   grafana:
-    image: grafana/grafana:10.4.2
+    image: grafana/grafana:10.4.19-security-01
     container_name: passix_grafana
     restart: unless-stopped
     volumes:
