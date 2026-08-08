@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
 use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Order\CreateOrderHandler;
 use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
@@ -30,6 +31,7 @@ class CreateOrderHandlerTest extends TestCase
     private EventRepositoryInterface|MockInterface $eventRepository;
     private PromoCodeRepositoryInterface|MockInterface $promoCodeRepository;
     private AffiliateRepositoryInterface|MockInterface $affiliateRepository;
+    private ProductRepositoryInterface|MockInterface $productRepository;
     private OrderManagementService|MockInterface $orderManagementService;
     private OrderItemProcessingService|MockInterface $orderItemProcessingService;
     private AvailableProductQuantitiesFetchService|MockInterface $availabilityService;
@@ -43,6 +45,7 @@ class CreateOrderHandlerTest extends TestCase
         $this->eventRepository = Mockery::mock(EventRepositoryInterface::class);
         $this->promoCodeRepository = Mockery::mock(PromoCodeRepositoryInterface::class);
         $this->affiliateRepository = Mockery::mock(AffiliateRepositoryInterface::class);
+        $this->productRepository = Mockery::mock(ProductRepositoryInterface::class);
         $this->orderManagementService = Mockery::mock(OrderManagementService::class);
         $this->orderItemProcessingService = Mockery::mock(OrderItemProcessingService::class);
         $this->availabilityService = Mockery::mock(AvailableProductQuantitiesFetchService::class);
@@ -55,6 +58,7 @@ class CreateOrderHandlerTest extends TestCase
             $this->eventRepository,
             $this->promoCodeRepository,
             $this->affiliateRepository,
+            $this->productRepository,
             $this->orderManagementService,
             $this->orderItemProcessingService,
             $this->availabilityService,
@@ -168,6 +172,7 @@ class CreateOrderHandlerTest extends TestCase
         $event = Mockery::mock(EventDomainObject::class);
         $event->shouldReceive('getId')->andReturn($eventId);
         $event->shouldReceive('getStatus')->andReturn(EventStatus::LIVE->name);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
         $event->shouldReceive('getEventSettings')->andReturn($eventSettings);
 
         $this->eventRepository->shouldReceive('loadRelation')->andReturnSelf();
