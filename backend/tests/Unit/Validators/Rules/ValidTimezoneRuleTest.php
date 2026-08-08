@@ -8,13 +8,12 @@ use Tests\TestCase;
 class ValidTimezoneRuleTest extends TestCase
 {
     private ValidTimezoneRule $rule;
-
     private array $failedMessages = [];
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->rule = new ValidTimezoneRule;
+        $this->rule = new ValidTimezoneRule();
         $this->failedMessages = [];
     }
 
@@ -28,10 +27,10 @@ class ValidTimezoneRuleTest extends TestCase
             $this->failedMessages[] = $message;
         });
 
-        return ! $failed;
+        return !$failed;
     }
 
-    public function test_accepts_canonical_iana_timezones(): void
+    public function testAcceptsCanonicalIanaTimezones(): void
     {
         $this->assertTrue($this->validate('UTC'));
         $this->assertTrue($this->validate('America/Argentina/Buenos_Aires'));
@@ -39,7 +38,7 @@ class ValidTimezoneRuleTest extends TestCase
         $this->assertTrue($this->validate('Europe/London'));
     }
 
-    public function test_accepts_legacy_backward_compatible_aliases(): void
+    public function testAcceptsLegacyBackwardCompatibleAliases(): void
     {
         // These are excluded from DateTimeZone::listIdentifiers() (which the old
         // `timezone:all` rule relied on) but are still valid, constructible timezones
@@ -48,13 +47,13 @@ class ValidTimezoneRuleTest extends TestCase
         $this->assertTrue($this->validate('America/Buenos_Aires'));
     }
 
-    public function test_rejects_invalid_timezone_strings(): void
+    public function testRejectsInvalidTimezoneStrings(): void
     {
         $this->assertFalse($this->validate('not-a-timezone'));
         $this->assertFalse($this->validate('Argentina/Buenos_Aires'));
     }
 
-    public function test_treats_empty_or_non_string_values_as_no_op(): void
+    public function testTreatsEmptyOrNonStringValuesAsNoOp(): void
     {
         $this->assertTrue($this->validate(''));
         $this->assertTrue($this->validate(null));
