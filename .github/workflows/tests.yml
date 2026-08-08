@@ -11,6 +11,12 @@ on:
       - 'backend/**'
       - '.github/workflows/tests.yml'
 
+# Minimo indispensable: este workflow solo necesita leer el codigo. Sin esto
+# hereda los permisos por defecto del repo, que pueden incluir escritura.
+# El repo es publico, asi que cualquiera puede abrir un PR y disparar esto.
+permissions:
+  contents: read
+
 # Si llegan varios pushes seguidos al mismo PR, cancela la corrida anterior en
 # vez de dejar dos compitiendo por el mismo resultado.
 concurrency:
