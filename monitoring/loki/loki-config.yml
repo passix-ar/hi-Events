@@ -26,9 +26,12 @@ schema_config:
         prefix: index_
         period: 24h
 
-# Retención: 15 días — suficiente para debugging, no explota el disco
+# Retención: 3 días — optimización de memoria (reduce SWAP usage)
+# Cambio: 360h (15 días) → 72h (3 días)
+# Razón: Stack de monitoreo sin límites de memoria causaba crecimiento de SWAP
+# Ver: infra/docs/MEMORY_OPTIMIZATION.md
 limits_config:
-  retention_period: 360h
+  retention_period: 72h
   ingestion_rate_mb: 4
   ingestion_burst_size_mb: 8
 

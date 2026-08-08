@@ -12,7 +12,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention.time=30d'
+      - '--storage.tsdb.retention.time=72h'
       - '--web.enable-lifecycle'
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -46,7 +46,7 @@ services:
 
   # ── Dashboards ────────────────────────────────────────────────────────────
   grafana:
-    image: grafana/grafana:10.4.2
+    image: grafana/grafana:10.4.19-security-01
     container_name: passix_grafana
     restart: unless-stopped
     volumes:

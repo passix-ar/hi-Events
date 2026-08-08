@@ -19,6 +19,7 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <!-- Passix defaults the app to Spanish; upstream tests assert English messages. -->
         <env name="APP_LOCALE" value="en"/>
         <env name="APP_FALLBACK_LOCALE" value="en"/>
         <env name="APP_URL" value="http://localhost"/>

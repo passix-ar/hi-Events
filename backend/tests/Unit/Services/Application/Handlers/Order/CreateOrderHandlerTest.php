@@ -177,6 +177,7 @@ class CreateOrderHandlerTest extends TestCase
         $event = Mockery::mock(EventDomainObject::class);
         $event->shouldReceive('getId')->andReturn($eventId);
         $event->shouldReceive('getStatus')->andReturn(EventStatus::LIVE->name);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
         $event->shouldReceive('getEventSettings')->andReturn($eventSettings);
         $event->shouldReceive('isEventInPast')->andReturn(false);
 
