@@ -32,9 +32,11 @@ class EmailTemplateTokenTest extends TestCase
             ]
         ]);
 
-        // Create user with account
+        // Create user with account. The locale is pinned because UserFactory picks
+        // one at random and SetUserLocaleMiddleware applies it to the request, which
+        // would translate the token descriptions asserted below.
         $password = 'password123';
-        $this->user = User::factory()->password($password)->withAccount()->create();
+        $this->user = User::factory()->password($password)->withAccount()->create(['locale' => 'en']);
         
         // Get the account created by withAccount()
         $this->account = $this->user->accounts()->first();
