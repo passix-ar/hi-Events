@@ -1,0 +1,98 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/tests.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/tests.yml'
+
+# Si llegan varios pushes seguidos al mismo PR, cancela la corrida anterior en
+# vez de dejar dos compitiendo por el mismo resultado.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: PHP 8.4 / PostgreSQL 17
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        # Misma version mayor que produccion.
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: testing
+          POSTGRES_USER: passix
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+        # Sin healthcheck los tests arrancan antes de que Postgres acepte
+        # conexiones y fallan por una carrera, no por un bug real.
+        options: >-
+          --health-cmd "pg_isready -U passix"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    # Laravel da prioridad a las variables de entorno reales por sobre el .env,
+    # asi que estas apuntan la app al Postgres efimero de arriba.
+    env:
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: testing
+      DB_USERNAME: passix
+      DB_PASSWORD: secret
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          # La misma que corre en produccion (backend/Dockerfile:
+          # serversideup/php:8.4-fpm-nginx-alpine).
+          php-version: '8.4'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_pgsql, tokenizer, bcmath
+          coverage: none
+
+      - name: Cachear dependencias de Composer
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('backend/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Instalar dependencias
+        working-directory: backend
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Preparar entorno
+        working-directory: backend
+        # key:generate escribe una APP_KEY descartable en el .env. Sin ella,
+        # todo lo que resuelva el Encrypter revienta con MissingAppKeyException.
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Migrar la base de datos
+        working-directory: backend
+        run: php artisan migrate --force
+
+      - name: Tests unitarios
+        working-directory: backend
+        run: php artisan test --testsuite=Unit
+
+      # Separado del anterior para que se vea de una cual de las dos suites
+      # rompio. Aca vive el end-to-end del camino del dinero (orden -> webhook
+      # de MercadoPago -> entrada -> comision) contra la base real.
+      - name: Tests de integracion
+        working-directory: backend
+        run: php artisan test --testsuite=Feature
