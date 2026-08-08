@@ -19,6 +19,7 @@ class CreateUserRequest extends BaseRequest
             'email' => [
                 'required',
                 'email',
+                'safe_email',
             ],
         ];
     }

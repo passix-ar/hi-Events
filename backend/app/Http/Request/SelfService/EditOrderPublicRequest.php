@@ -11,7 +11,7 @@ class EditOrderPublicRequest extends BaseRequest
         return [
             'first_name' => ['sometimes', 'string', 'max:255'],
             'last_name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'email', 'max:255'],
+            'email' => ['sometimes', 'email', 'safe_email', 'max:255'],
         ];
     }
 

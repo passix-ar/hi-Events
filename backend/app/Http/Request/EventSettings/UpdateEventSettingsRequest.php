@@ -22,7 +22,7 @@ class UpdateEventSettingsRequest extends BaseRequest
             'email_footer_message' => ['string', "nullable"],
 
             'continue_button_text' => ['string', 'nullable', 'max:100'],
-            'support_email' => ['email', 'nullable'],
+            'support_email' => ['email', 'safe_email', 'nullable'],
             'require_attendee_details' => ['boolean'],
             'attendee_details_collection_method' => [Rule::in(AttendeeDetailsCollectionMethod::valuesArray())],
             'order_timeout_in_minutes' => ['numeric', "min:1", "max:120"],
