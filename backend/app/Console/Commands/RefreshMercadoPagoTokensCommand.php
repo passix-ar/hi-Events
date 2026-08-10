@@ -24,6 +24,7 @@ class RefreshMercadoPagoTokensCommand extends Command
 
     protected $signature = 'mercadopago:refresh-tokens
                             {--days=30 : Refresh tokens that expire within this many days}
+                            {--account= : Refresh only this account_id, ignoring the --days window}
                             {--dry-run : List what would be refreshed without calling MercadoPago}';
 
     protected $description = 'Refresh MercadoPago OAuth tokens that are close to expiring';
@@ -47,14 +48,25 @@ class RefreshMercadoPagoTokensCommand extends Command
         $this->platformRepository = $platformRepository;
         $this->oauthService = $oauthService;
         $this->logger = $logger;
-        $threshold = Carbon::now()->addDays((int) $this->option('days'))->toDateTimeString();
+        $account = $this->option('account');
+
+        // Con --account se apunta a una sola cuenta y se ignora la ventana de
+        // --days: sirve para probar la renovacion sin tocar a los demas
+        // organizadores, y para recuperar a mano una cuenta que quedo colgada.
+        $scope = $account !== null
+            ? [[AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID, '=', (int) $account]]
+            : [[
+                AccountMercadopagoPlatformDomainObjectAbstract::TOKEN_EXPIRES_AT,
+                '<',
+                Carbon::now()->addDays((int) $this->option('days'))->toDateTimeString(),
+            ]];
 
         // Fetch only the columns needed to drive the loop: hydrating full rows
         // decrypts the token casts, so one corrupted row would abort the whole
         // batch instead of just its own refresh.
         $expiring = $this->platformRepository->findWhere(
             where: [
-                [AccountMercadopagoPlatformDomainObjectAbstract::TOKEN_EXPIRES_AT, '<', $threshold],
+                ...$scope,
                 [AccountMercadopagoPlatformDomainObjectAbstract::SETUP_COMPLETED_AT, 'not null', null],
             ],
             columns: [

@@ -139,6 +139,41 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
     }
 
+    public function test_account_option_targets_one_account_and_ignores_the_days_window(): void
+    {
+        // Con --account el filtro tiene que ser por account_id y NO por fecha de
+        // vencimiento: si filtrara por fecha, apuntar a una cuenta puntual solo
+        // funcionaria cuando su token ya esta por vencer.
+        $this->platformRepository->shouldReceive('findWhere')
+            ->once()
+            ->with(
+                m::on(function (array $where): bool {
+                    $campos = array_column($where, 0);
+
+                    return in_array('account_id', $campos, true)
+                        && ! in_array('token_expires_at', $campos, true);
+                }),
+                m::any(),
+            )
+            ->andReturn(collect([$this->row()]));
+
+        $this->givenStoredPlatform($this->row(refreshToken: 'old-refresh'));
+
+        $this->oauthService->shouldReceive('refreshAccessToken')
+            ->once()
+            ->andReturn([
+                'access_token' => 'new-access',
+                'refresh_token' => 'new-refresh',
+                'expires_in' => 15552000,
+            ]);
+
+        $this->platformRepository->shouldReceive('updateFromArray')
+            ->once()
+            ->andReturn(new AccountMercadopagoPlatformDomainObject);
+
+        $this->artisan('mercadopago:refresh-tokens', ['--account' => self::ACCOUNT_ID])->assertExitCode(0);
+    }
+
     private function givenExpiringRows(array $rows): void
     {
         $this->platformRepository->shouldReceive('findWhere')
