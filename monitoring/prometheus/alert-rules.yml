@@ -58,10 +58,15 @@ groups:
       # Lo que sí duele es el tráfico: si el kernel está leyendo y escribiendo swap
       # sin parar, hay procesos frenados esperando disco y la máquina se arrastra.
       #
-      # Calibración (medido 2026-08-10 sobre 7 días, incluye un build pesado que dejó
-      # la swap alta durante días): pico real 45 páginas/seg, valor habitual 0. El
-      # umbral de 200 deja ~4x de margen sobre el peor momento medido, así que un
-      # deploy apretado no lo cruza, pero presión de memoria real sí.
+      # Calibración (medido 2026-08-11): valor habitual 0 páginas/seg, pico 45. El
+      # umbral de 200 deja ~4x de margen sobre el peor momento medido.
+      #
+      # OJO con el alcance de esa medición: la retención de este Prometheus es de 72h,
+      # así que la ventana sólo cubre operación tranquila. Un build pesado — que es
+      # justo cuando la swap se mueve en serio — quedó fuera de los datos disponibles.
+      # El umbral está sin validar contra ese escenario. Si el próximo deploy grande
+      # dispara esta alerta sin que la app se haya degradado, subirlo es lo correcto;
+      # el `for: 15m` está puesto para que un pico corto de build no alcance a cruzarlo.
       - alert: SwapThrashing
         expr: >
           rate(node_vmstat_pswpin[5m]) + rate(node_vmstat_pswpout[5m]) > 200
