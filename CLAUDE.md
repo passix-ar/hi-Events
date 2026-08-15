@@ -6,6 +6,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Hi.Events is an open-source event management and ticketing platform with a Laravel backend and React frontend, using Domain-Driven Design (DDD).
 
+This repository is the **Passix fork** (`passix-ar/hi-Events`) of the upstream project (`HiEventsDev/Hi.Events`).
+
+## Pull Requests — Passix Only
+
+**ALL** pull requests, branches and pushes go to the `passix-ar` organisation. **NEVER** open a pull request against `HiEventsDev/Hi.Events` or any other organisation. No exceptions.
+
+This is easy to break by accident: because this repo is a fork, `gh pr create` **defaults its base to the parent repository**. Always pass both flags explicitly:
+
+```bash
+gh pr create --repo passix-ar/hi-Events --base develop --title "..." --body "..."
+```
+
+Never use the short form. When unsure where something points, check first:
+
+```bash
+gh repo view passix-ar/hi-Events --json parent
+```
+
+Two consequences worth remembering:
+
+- **This repo is public.** Don't describe an unpatched vulnerability in a PR while production still lacks the fix.
+- **Issues live in `passix-ar/infra`, not here** — issues are disabled on this repo, and `infra` is private. Link them with the full cross-repo path (`Closes passix-ar/infra#1`); a bare `#1` will not work. One issue, one PR.
+
 ## Key Commands
 
 ### Backend (Laravel)
