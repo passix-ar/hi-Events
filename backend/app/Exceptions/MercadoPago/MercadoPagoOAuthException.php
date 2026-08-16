@@ -3,10 +3,10 @@
 // Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\Exceptions\MercadoPago;
 
-use RuntimeException;
+use HiEvents\Exceptions\BaseException;
 use Throwable;
 
-class MercadoPagoOAuthException extends RuntimeException
+class MercadoPagoOAuthException extends BaseException
 {
     // OAuth error codes from MercadoPago's response body. invalid_grant and
     // unauthorized_client are terminal: the refresh token is dead or the app
