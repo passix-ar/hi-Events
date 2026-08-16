@@ -117,6 +117,9 @@ cd docker/development
 - **DON'T** use `RefreshDatabase` - use `DatabaseTransactions` instead
 - Unit tests extend Laravel's TestCase, not PHPUnit's TestCase
 - Use Mockery for mocking
+- A test that needs the database goes in `backend/tests/Feature/`, not `tests/Unit/`. CI runs both suites as separate jobs, so `--testsuite=Unit` alone will not execute it
+- **DO** prefer factories over building entities by hand. Existing ones live in `backend/database/factories/` (`UserFactory`, `OrderFactory`, `AccountFactory`, …); if the scenario needs one that doesn't exist, write the factory instead of repeating a setup block
+- Chaining ten `Model::create()` calls with every column spelled out makes the test fragile: one new `NOT NULL` column breaks tests unrelated to that change. When that fragility *is* the point — the test exists to catch schema or mass-assignment regressions — say so in the class docblock, as `MercadoPagoPaymentApprovedFlowTest` does
 
 ### Frontend
 
