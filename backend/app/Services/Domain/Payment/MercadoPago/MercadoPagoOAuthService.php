@@ -5,6 +5,7 @@
 namespace HiEvents\Services\Domain\Payment\MercadoPago;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use Illuminate\Config\Repository as Config;
@@ -88,11 +89,30 @@ class MercadoPagoOAuthService
 
             return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (GuzzleException $e) {
+            // Surface MercadoPago's OAuth error code so callers can tell a dead
+            // grant (invalid_grant/unauthorized_client — needs re-authorization)
+            // from a retryable 429. Only the code and status are logged: Guzzle
+            // messages can embed response excerpts and these logs ship to Loki.
+            $status = null;
+            $mpErrorCode = null;
+
+            if ($e instanceof BadResponseException) {
+                $status = $e->getResponse()->getStatusCode();
+                $body = json_decode((string) $e->getResponse()->getBody(), true);
+                $mpErrorCode = is_array($body) && is_string($body['error'] ?? null) ? $body['error'] : null;
+
+                if ($status === 429) {
+                    $mpErrorCode ??= 'local_rate_limited';
+                }
+            }
+
             $this->logger->error('MercadoPago token refresh failed', [
-                'error' => $e->getMessage(),
+                'status' => $status,
+                'mp_error' => $mpErrorCode,
             ]);
             throw new MercadoPagoOAuthException(
                 __('Failed to refresh MercadoPago token.'),
+                mpErrorCode: $mpErrorCode,
                 previous: $e,
             );
         }

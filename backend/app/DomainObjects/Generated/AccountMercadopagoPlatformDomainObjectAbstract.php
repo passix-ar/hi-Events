@@ -18,6 +18,7 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     final public const REFRESH_TOKEN = 'refresh_token';
     final public const PUBLIC_KEY = 'public_key';
     final public const TOKEN_EXPIRES_AT = 'token_expires_at';
+    final public const REVOKED_AT = 'revoked_at';
     final public const SETUP_COMPLETED_AT = 'setup_completed_at';
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
@@ -30,6 +31,7 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     protected ?string $refresh_token = null;
     protected ?string $public_key = null;
     protected ?string $token_expires_at = null;
+    protected ?string $revoked_at = null;
     protected ?string $setup_completed_at = null;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
@@ -45,6 +47,7 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
             'refresh_token'      => $this->refresh_token ?? null,
             'public_key'         => $this->public_key ?? null,
             'token_expires_at'   => $this->token_expires_at ?? null,
+            'revoked_at'         => $this->revoked_at ?? null,
             'setup_completed_at' => $this->setup_completed_at ?? null,
             'created_at'         => $this->created_at ?? null,
             'updated_at'         => $this->updated_at ?? null,
@@ -72,6 +75,9 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
 
     public function setTokenExpiresAt(?string $token_expires_at): self { $this->token_expires_at = $token_expires_at; return $this; }
     public function getTokenExpiresAt(): ?string { return $this->token_expires_at; }
+
+    public function setRevokedAt(?string $revoked_at): self { $this->revoked_at = $revoked_at; return $this; }
+    public function getRevokedAt(): ?string { return $this->revoked_at; }
 
     public function setSetupCompletedAt(?string $setup_completed_at): self { $this->setup_completed_at = $setup_completed_at; return $this; }
     public function getSetupCompletedAt(): ?string { return $this->setup_completed_at; }

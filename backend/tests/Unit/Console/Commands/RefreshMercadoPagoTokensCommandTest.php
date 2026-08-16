@@ -36,7 +36,7 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
     public function test_refreshes_expiring_token_and_persists_the_new_pair(): void
     {
         $this->givenExpiringRows([$this->row()]);
-        $this->givenStoredPlatform($this->row(refreshToken: 'old-refresh', publicKey: 'stored-public-key'));
+        $this->givenLockedPlatform($this->row(refreshToken: 'old-refresh', publicKey: 'stored-public-key'));
 
         $this->oauthService->shouldReceive('refreshAccessToken')
             ->once()
@@ -48,13 +48,17 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
                 'expires_in' => 15552000,
             ]);
 
+        // Ademas del par nuevo, un refresh exitoso limpia la marca de revocada:
+        // es la via de recuperacion manual de una cuenta marcada (--account).
         $this->platformRepository->shouldReceive('updateFromArray')
             ->once()
             ->with(self::PLATFORM_ID, m::on(static function (array $attributes) {
                 return $attributes['access_token'] === 'new-access'
                     && $attributes['refresh_token'] === 'new-refresh'
                     && $attributes['public_key'] === 'new-public-key'
-                    && ! empty($attributes['token_expires_at']);
+                    && ! empty($attributes['token_expires_at'])
+                    && array_key_exists('revoked_at', $attributes)
+                    && $attributes['revoked_at'] === null;
             }))
             ->andReturn(new AccountMercadopagoPlatformDomainObject);
 
@@ -64,7 +68,7 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
     public function test_does_not_persist_when_response_is_incomplete(): void
     {
         $this->givenExpiringRows([$this->row()]);
-        $this->givenStoredPlatform($this->row(refreshToken: 'old-refresh'));
+        $this->givenLockedPlatform($this->row(refreshToken: 'old-refresh'));
 
         $this->oauthService->shouldReceive('refreshAccessToken')
             ->once()
@@ -82,12 +86,8 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
 
         $this->givenExpiringRows([$failing, $healthy]);
 
-        $this->platformRepository->shouldReceive('findFirstWhere')
-            ->with(['id' => self::PLATFORM_ID])
-            ->andReturn($this->row(refreshToken: 'broken-refresh'));
-        $this->platformRepository->shouldReceive('findFirstWhere')
-            ->with(['id' => 20])
-            ->andReturn($this->row(id: 20, accountId: 11, refreshToken: 'healthy-refresh'));
+        $this->givenLockedPlatform($this->row(refreshToken: 'broken-refresh'));
+        $this->givenLockedPlatform($this->row(id: 20, accountId: 11, refreshToken: 'healthy-refresh'));
 
         $this->oauthService->shouldReceive('refreshAccessToken')
             ->with('broken-refresh')
@@ -111,7 +111,7 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
     public function test_fails_when_no_refresh_token_is_stored(): void
     {
         $this->givenExpiringRows([$this->row()]);
-        $this->givenStoredPlatform($this->row(refreshToken: null));
+        $this->givenLockedPlatform($this->row(refreshToken: null));
 
         $this->oauthService->shouldNotReceive('refreshAccessToken');
         $this->platformRepository->shouldNotReceive('updateFromArray');
@@ -124,7 +124,7 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->givenExpiringRows([$this->row()]);
 
         $this->oauthService->shouldNotReceive('refreshAccessToken');
-        $this->platformRepository->shouldNotReceive('findFirstWhere');
+        $this->platformRepository->shouldNotReceive('withLockedRow');
         $this->platformRepository->shouldNotReceive('updateFromArray');
 
         $this->artisan('mercadopago:refresh-tokens', ['--dry-run' => true])->assertExitCode(0);
@@ -139,11 +139,46 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
     }
 
-    public function test_account_option_targets_one_account_and_ignores_the_days_window(): void
+    public function test_window_has_a_floor_and_excludes_revoked_connections(): void
+    {
+        // Sin piso en now() la corrida diaria martillaria para siempre las
+        // cuentas ya vencidas; sin el filtro de revoked_at, las que MercadoPago
+        // rechazo con un error terminal.
+        $this->platformRepository->shouldReceive('findWhere')
+            ->once()
+            ->with(
+                m::on(static function (array $where): bool {
+                    $tokenOps = [];
+                    $revokedNull = false;
+
+                    foreach ($where as $condition) {
+                        [$campo, $operador] = $condition;
+
+                        if ($campo === 'token_expires_at') {
+                            $tokenOps[] = $operador;
+                        }
+
+                        if ($campo === 'revoked_at' && strtolower($operador) === 'null') {
+                            $revokedNull = true;
+                        }
+                    }
+
+                    return in_array('>=', $tokenOps, true)
+                        && in_array('<', $tokenOps, true)
+                        && $revokedNull;
+                }),
+                m::any(),
+            )
+            ->andReturn(collect());
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
+    }
+
+    public function test_account_option_targets_one_account_and_ignores_window_and_revoked_mark(): void
     {
         // Con --account el filtro tiene que ser por account_id y NO por fecha de
-        // vencimiento: si filtrara por fecha, apuntar a una cuenta puntual solo
-        // funcionaria cuando su token ya esta por vencer.
+        // vencimiento ni marca de revocada: es la via de recuperacion manual, y
+        // una cuenta colgada esta vencida o revocada por definicion.
         $this->platformRepository->shouldReceive('findWhere')
             ->once()
             ->with(
@@ -151,13 +186,14 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
                     $campos = array_column($where, 0);
 
                     return in_array('account_id', $campos, true)
-                        && ! in_array('token_expires_at', $campos, true);
+                        && ! in_array('token_expires_at', $campos, true)
+                        && ! in_array('revoked_at', $campos, true);
                 }),
                 m::any(),
             )
-            ->andReturn(collect([$this->row()]));
+            ->andReturn(collect([$this->row(tokenExpiresAt: '2020-01-01 00:00:00')]));
 
-        $this->givenStoredPlatform($this->row(refreshToken: 'old-refresh'));
+        $this->givenLockedPlatform($this->row(refreshToken: 'old-refresh', tokenExpiresAt: '2020-01-01 00:00:00'));
 
         $this->oauthService->shouldReceive('refreshAccessToken')
             ->once()
@@ -174,6 +210,54 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens', ['--account' => self::ACCOUNT_ID])->assertExitCode(0);
     }
 
+    public function test_terminal_error_marks_the_connection_revoked(): void
+    {
+        $this->givenExpiringRows([$this->row()]);
+        $this->givenLockedPlatform($this->row(refreshToken: 'dead-refresh'));
+
+        $this->oauthService->shouldReceive('refreshAccessToken')
+            ->once()
+            ->with('dead-refresh')
+            ->andThrow(new MercadoPagoOAuthException('rejected', mpErrorCode: 'invalid_grant'));
+
+        $this->platformRepository->shouldReceive('updateFromArray')
+            ->once()
+            ->with(self::PLATFORM_ID, m::on(static function (array $attributes) {
+                return ! empty($attributes['revoked_at']) && count($attributes) === 1;
+            }))
+            ->andReturn(new AccountMercadopagoPlatformDomainObject);
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(1);
+    }
+
+    public function test_rate_limited_error_does_not_mark_the_connection_revoked(): void
+    {
+        $this->givenExpiringRows([$this->row()]);
+        $this->givenLockedPlatform($this->row(refreshToken: 'throttled-refresh'));
+
+        $this->oauthService->shouldReceive('refreshAccessToken')
+            ->once()
+            ->andThrow(new MercadoPagoOAuthException('throttled', mpErrorCode: 'local_rate_limited'));
+
+        $this->platformRepository->shouldNotReceive('updateFromArray');
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(1);
+    }
+
+    public function test_skips_without_burning_the_token_when_a_concurrent_run_already_refreshed(): void
+    {
+        // El refresh token es de un solo uso: si otro proceso renovo mientras
+        // esperabamos el lock, el vencimiento guardado ya avanzo y reintentar
+        // mandaria un token quemado.
+        $this->givenExpiringRows([$this->row()]);
+        $this->givenLockedPlatform($this->row(refreshToken: 'fresh-refresh', tokenExpiresAt: '2027-06-01 00:00:00'));
+
+        $this->oauthService->shouldNotReceive('refreshAccessToken');
+        $this->platformRepository->shouldNotReceive('updateFromArray');
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
+    }
+
     private function givenExpiringRows(array $rows): void
     {
         $this->platformRepository->shouldReceive('findWhere')
@@ -181,12 +265,12 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
             ->andReturn(collect($rows));
     }
 
-    private function givenStoredPlatform(AccountMercadopagoPlatformDomainObject $platform): void
+    private function givenLockedPlatform(AccountMercadopagoPlatformDomainObject $platform): void
     {
-        $this->platformRepository->shouldReceive('findFirstWhere')
+        $this->platformRepository->shouldReceive('withLockedRow')
             ->once()
-            ->with(['id' => $platform->getId()])
-            ->andReturn($platform);
+            ->with($platform->getId(), m::type('callable'))
+            ->andReturnUsing(static fn (int $id, callable $operation) => $operation($platform));
     }
 
     private function row(
@@ -194,12 +278,13 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         int $accountId = self::ACCOUNT_ID,
         ?string $refreshToken = null,
         ?string $publicKey = null,
+        string $tokenExpiresAt = '2026-12-21 21:31:00',
     ): AccountMercadopagoPlatformDomainObject {
         return (new AccountMercadopagoPlatformDomainObject)
             ->setId($id)
             ->setAccountId($accountId)
             ->setRefreshToken($refreshToken)
             ->setPublicKey($publicKey)
-            ->setTokenExpiresAt('2026-12-21 21:31:00');
+            ->setTokenExpiresAt($tokenExpiresAt);
     }
 }
