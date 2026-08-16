@@ -27,7 +27,8 @@ gh repo view passix-ar/hi-Events --json parent
 Two consequences worth remembering:
 
 - **This repo is public.** Don't describe an unpatched vulnerability in a PR while production still lacks the fix.
-- **Issues live in `passix-ar/infra`, not here** — issues are disabled on this repo, and `infra` is private. Link them with the full cross-repo path (`Closes passix-ar/infra#1`); a bare `#1` will not work. One issue, one PR.
+- **Issues live in `passix-ar/infra`, not here** — issues are disabled on this repo, and `infra` is private. Link them with the full cross-repo path (`Closes passix-ar/infra#1`); a bare `#1` will not work
+- **An issue whose task is "merge PR X" covers exactly one PR**, never several: merging means reviewing the diff, running the suite and sometimes deploying, so it is one task per PR. This does *not* mean every PR needs an issue — a small change can go straight to a PR. When an issue that is *not* about merging spans several repos, link every PR with `Refs` instead and close it by hand
 
 ## Key Commands
 
