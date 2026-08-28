@@ -10,7 +10,7 @@ class CreateWaitlistEntryRequest extends BaseRequest
     {
         return [
             'product_price_id' => ['required', 'integer', 'exists:product_prices,id'],
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'email', 'safe_email', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
         ];

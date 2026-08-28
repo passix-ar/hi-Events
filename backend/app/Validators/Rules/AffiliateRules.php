@@ -14,7 +14,7 @@ class AffiliateRules
         return [
             'name' => ['required', 'string', 'max:255'],
             'code' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'safe_email', 'max:255'],
             'status' => ['nullable', Rule::in(AffiliateStatus::valuesArray())],
         ];
     }
@@ -23,7 +23,7 @@ class AffiliateRules
     {
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'safe_email', 'max:255'],
             'status' => ['nullable', Rule::in(AffiliateStatus::valuesArray())],
         ];
     }
