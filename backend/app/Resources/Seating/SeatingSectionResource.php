@@ -23,6 +23,8 @@ class SeatingSectionResource extends BaseResource
             'seats_per_row' => $this->getSeatsPerRow(),
             'total_seats' => $this->getTotalSeatCount(),
             'status' => $this->getStatus(),
+            'order' => $this->getOrder(),
+            'aisle_positions' => $this->getAislePositions(),
             $this->mergeWhen(
                 condition: $this->getSeatCounts() !== null,
                 value: fn () => [

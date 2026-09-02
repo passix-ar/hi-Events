@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\SeatingSectionDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\DomainObjects\Status\SeatingSectionStatus;
 use HiEvents\Exceptions\ResourceNotFoundException;
+use HiEvents\Repository\Eloquent\Value\OrderAndDirection;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
@@ -36,10 +37,13 @@ class GetSeatingSectionsPublicHandler
             throw new ResourceNotFoundException;
         }
 
-        $sections = $this->seatingSectionRepository->findWhere([
-            SeatingSectionDomainObjectAbstract::EVENT_ID => $dto->event_id,
-            SeatingSectionDomainObjectAbstract::STATUS => SeatingSectionStatus::ACTIVE->name,
-        ]);
+        $sections = $this->seatingSectionRepository->findWhere(
+            where: [
+                SeatingSectionDomainObjectAbstract::EVENT_ID => $dto->event_id,
+                SeatingSectionDomainObjectAbstract::STATUS => SeatingSectionStatus::ACTIVE->name,
+            ],
+            orderAndDirections: [new OrderAndDirection(SeatingSectionDomainObjectAbstract::ORDER)],
+        );
 
         if ($sections->isEmpty()) {
             return $sections;

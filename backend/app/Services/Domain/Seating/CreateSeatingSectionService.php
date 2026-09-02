@@ -36,12 +36,14 @@ class CreateSeatingSectionService
     public function createSeatingSection(
         SeatingSectionDomainObject $section,
         ?array $disabledSeats = null,
+        ?array $aislePositions = null,
     ): SeatingSectionDomainObject {
         $this->validateLayout($section->getRowCount(), $section->getSeatsPerRow());
         $this->validateProduct($section->getProductId(), $section->getEventId());
         $this->validateDisabledSeats($disabledSeats, $section->getRowCount(), $section->getSeatsPerRow());
+        $aislePositions = $this->normaliseAislePositions($aislePositions, $section->getSeatsPerRow());
 
-        return $this->databaseManager->transaction(function () use ($section, $disabledSeats) {
+        return $this->databaseManager->transaction(function () use ($section, $disabledSeats, $aislePositions) {
             /** @var SeatingSectionDomainObject $created */
             $created = $this->seatingSectionRepository->create([
                 SeatingSectionDomainObjectAbstract::EVENT_ID => $section->getEventId(),
@@ -50,6 +52,8 @@ class CreateSeatingSectionService
                 SeatingSectionDomainObjectAbstract::ROW_COUNT => $section->getRowCount(),
                 SeatingSectionDomainObjectAbstract::SEATS_PER_ROW => $section->getSeatsPerRow(),
                 SeatingSectionDomainObjectAbstract::STATUS => $section->getStatus(),
+                SeatingSectionDomainObjectAbstract::AISLE_POSITIONS => $aislePositions,
+                SeatingSectionDomainObjectAbstract::ORDER => $this->nextOrderForEvent($section->getEventId()),
             ]);
 
             $this->seatRepository->insert(
@@ -117,6 +121,45 @@ class CreateSeatingSectionService
                 __('A section must have at least one available seat.')
             );
         }
+    }
+
+    /**
+     * Aisles are stored as the seat numbers a gap is drawn after, so a gap past the last seat
+     * would render nothing. Sorted and de-duplicated so the chart does not depend on input order.
+     *
+     * @throws InvalidSeatingLayoutException
+     */
+    public function normaliseAislePositions(?array $aislePositions, int $seatsPerRow): ?array
+    {
+        if (empty($aislePositions)) {
+            return null;
+        }
+
+        $positions = array_values(array_unique(array_map('intval', $aislePositions)));
+        sort($positions);
+
+        foreach ($positions as $position) {
+            if ($position < 1 || $position >= $seatsPerRow) {
+                throw new InvalidSeatingLayoutException(
+                    __('Aisles must sit between seat 1 and seat :max.', ['max' => $seatsPerRow - 1])
+                );
+            }
+        }
+
+        return $positions;
+    }
+
+    private function nextOrderForEvent(int $eventId): int
+    {
+        $sections = $this->seatingSectionRepository
+            ->findWhere([SeatingSectionDomainObjectAbstract::EVENT_ID => $eventId]);
+
+        if ($sections->isEmpty()) {
+            return 0;
+        }
+
+        // Counting would reuse a position freed by a deleted section and tie with an existing one.
+        return $sections->max(static fn (SeatingSectionDomainObject $section) => $section->getOrder()) + 1;
     }
 
     /**

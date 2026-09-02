@@ -14,12 +14,12 @@ class SeatingSectionDomainObject extends Generated\SeatingSectionDomainObjectAbs
 
     public static function getDefaultSort(): string
     {
-        return static::CREATED_AT;
+        return static::ORDER;
     }
 
     public static function getDefaultSortDirection(): string
     {
-        return 'desc';
+        return 'asc';
     }
 
     public static function getAllowedSorts(): AllowedSorts

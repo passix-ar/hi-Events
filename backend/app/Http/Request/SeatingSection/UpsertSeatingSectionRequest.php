@@ -19,6 +19,8 @@ class UpsertSeatingSectionRequest extends BaseRequest
             'status' => ['required', Rule::in(SeatingSectionStatus::valuesArray())],
             'disabled_seats' => ['sometimes', 'nullable', 'array'],
             'disabled_seats.*' => ['string', 'max:10'],
+            'aisle_positions' => ['sometimes', 'nullable', 'array'],
+            'aisle_positions.*' => ['integer', 'distinct', 'min:1'],
         ];
     }
 

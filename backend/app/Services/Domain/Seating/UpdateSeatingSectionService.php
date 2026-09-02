@@ -36,6 +36,7 @@ class UpdateSeatingSectionService
     public function updateSeatingSection(
         SeatingSectionDomainObject $section,
         ?array $disabledSeats = null,
+        ?array $aislePositions = null,
     ): SeatingSectionDomainObject {
         /** @var SeatingSectionDomainObject|null $existing */
         $existing = $this->seatingSectionRepository->findFirstWhere([
@@ -55,7 +56,12 @@ class UpdateSeatingSectionService
             $section->getSeatsPerRow(),
         );
 
-        return $this->databaseManager->transaction(function () use ($existing, $section, $disabledSeats) {
+        $aislePositions = $this->createSeatingSectionService->normaliseAislePositions(
+            $aislePositions,
+            $section->getSeatsPerRow(),
+        );
+
+        return $this->databaseManager->transaction(function () use ($existing, $section, $disabledSeats, $aislePositions) {
             $this->databaseManager->statement('SELECT pg_advisory_xact_lock(?)', [$existing->getEventId()]);
 
             $occupiedSeats = $this->getOccupiedSeats($existing);
@@ -79,6 +85,7 @@ class UpdateSeatingSectionService
                 SeatingSectionDomainObjectAbstract::ROW_COUNT => $section->getRowCount(),
                 SeatingSectionDomainObjectAbstract::SEATS_PER_ROW => $section->getSeatsPerRow(),
                 SeatingSectionDomainObjectAbstract::STATUS => $section->getStatus(),
+                SeatingSectionDomainObjectAbstract::AISLE_POSITIONS => $aislePositions,
             ]);
 
             if ($section->getName() !== $existing->getName()) {

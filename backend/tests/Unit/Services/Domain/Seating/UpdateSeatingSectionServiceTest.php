@@ -98,6 +98,7 @@ class UpdateSeatingSectionServiceTest extends TestCase
     {
         $this->createSeatingSectionService->shouldReceive('validateLayout')->once();
         $this->createSeatingSectionService->shouldReceive('validateProduct')->once();
+        $this->createSeatingSectionService->shouldReceive('normaliseAislePositions')->andReturnNull();
         $this->createSeatingSectionService->shouldReceive('validateDisabledSeats')->once();
     }
 

@@ -19,6 +19,7 @@ class SeatingSectionResourcePublic extends BaseResource
             'product_id' => $this->getProductId(),
             'row_count' => $this->getRowCount(),
             'seats_per_row' => $this->getSeatsPerRow(),
+            'aisle_positions' => $this->getAislePositions(),
             $this->mergeWhen(
                 condition: $this->getSeats() !== null,
                 value: fn () => [

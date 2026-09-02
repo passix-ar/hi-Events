@@ -33,6 +33,10 @@ class UpdateSeatingSectionHandler
             ->setSeatsPerRow($data->seats_per_row)
             ->setStatus($data->status);
 
-        return $this->updateSeatingSectionService->updateSeatingSection($section, $data->disabled_seats);
+        return $this->updateSeatingSectionService->updateSeatingSection(
+            $section,
+            $data->disabled_seats,
+            $data->aisle_positions,
+        );
     }
 }

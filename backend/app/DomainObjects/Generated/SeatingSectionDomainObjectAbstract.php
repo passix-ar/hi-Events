@@ -20,6 +20,8 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
     final public const DELETED_AT = 'deleted_at';
+    final public const ORDER = 'order';
+    final public const AISLE_POSITIONS = 'aisle_positions';
 
     protected int $id;
     protected int $event_id;
@@ -31,6 +33,8 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
     protected ?string $deleted_at = null;
+    protected int $order = 0;
+    protected array|string|null $aisle_positions = null;
 
     public function toArray(): array
     {
@@ -45,6 +49,8 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
                     'created_at' => $this->created_at ?? null,
                     'updated_at' => $this->updated_at ?? null,
                     'deleted_at' => $this->deleted_at ?? null,
+                    'order' => $this->order ?? null,
+                    'aisle_positions' => $this->aisle_positions ?? null,
                 ];
     }
 
@@ -156,5 +162,27 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     public function getDeletedAt(): ?string
     {
         return $this->deleted_at;
+    }
+
+    public function setOrder(int $order): self
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    public function setAislePositions(array|string|null $aisle_positions): self
+    {
+        $this->aisle_positions = $aisle_positions;
+        return $this;
+    }
+
+    public function getAislePositions(): array|string|null
+    {
+        return $this->aisle_positions;
     }
 }

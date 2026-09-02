@@ -104,6 +104,24 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->service->validateDisabledSeats($allLabels, 2, 2);
     }
 
+    public function test_aisles_are_sorted_and_deduplicated(): void
+    {
+        $this->assertSame([3, 6], $this->service->normaliseAislePositions([6, 3, 6], 10));
+    }
+
+    public function test_no_aisles_is_stored_as_null(): void
+    {
+        $this->assertNull($this->service->normaliseAislePositions([], 10));
+        $this->assertNull($this->service->normaliseAislePositions(null, 10));
+    }
+
+    public function test_an_aisle_past_the_last_seat_is_rejected(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->normaliseAislePositions([10], 10);
+    }
+
     public function test_marks_blocked_seats_on_create(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')
@@ -121,6 +139,7 @@ class CreateSeatingSectionServiceTest extends TestCase
             ->setRowCount(3)
             ->setSeatsPerRow(4);
 
+        $this->seatingSectionRepository->shouldReceive('findWhere')->once()->andReturn(collect());
         $this->seatingSectionRepository->shouldReceive('create')->once()->andReturn($created);
         $this->seatRepository->shouldReceive('insert')->once()->andReturn(true);
 
@@ -146,6 +165,42 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->assertSame(5, $result->getId());
     }
 
+    public function test_a_new_section_is_placed_after_the_last_one(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
+
+        $this->databaseManager->shouldReceive('transaction')
+            ->once()
+            ->andReturnUsing(static fn ($callback) => $callback());
+
+        // Position 1 was freed by a deleted section: counting would collide with position 2.
+        $this->seatingSectionRepository->shouldReceive('findWhere')
+            ->once()
+            ->andReturn(collect([
+                (new SeatingSectionDomainObject)->setId(1)->setOrder(0),
+                (new SeatingSectionDomainObject)->setId(3)->setOrder(2),
+            ]));
+
+        $this->seatingSectionRepository->shouldReceive('create')
+            ->once()
+            ->withArgs(static fn (array $attributes) => $attributes['order'] === 3)
+            ->andReturn((new SeatingSectionDomainObject)->setId(9)->setEventId(2)->setRowCount(1)->setSeatsPerRow(1));
+
+        $this->seatRepository->shouldReceive('insert')->once();
+
+        $section = (new SeatingSectionDomainObject)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setName('Pullman')
+            ->setRowCount(1)
+            ->setSeatsPerRow(1)
+            ->setStatus(SeatingSectionStatus::ACTIVE->name);
+
+        $this->assertSame(9, $this->service->createSeatingSection($section)->getId());
+    }
+
     public function test_creates_section_and_bulk_inserts_seats(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')
@@ -163,6 +218,7 @@ class CreateSeatingSectionServiceTest extends TestCase
             ->setRowCount(3)
             ->setSeatsPerRow(4);
 
+        $this->seatingSectionRepository->shouldReceive('findWhere')->once()->andReturn(collect());
         $this->seatingSectionRepository->shouldReceive('create')->once()->andReturn($created);
 
         $this->seatRepository->shouldReceive('insert')
