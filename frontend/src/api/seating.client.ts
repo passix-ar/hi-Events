@@ -5,7 +5,6 @@ import {
     GenericPaginatedResponse,
     IdParam,
     QueryFilters,
-    SeatingArrangement,
     SeatingSection,
     SeatingSectionRequest,
 } from "../types";
@@ -28,8 +27,8 @@ export const seatingClient = {
         const response = await api.get<GenericDataResponse<SeatingSection>>(`events/${eventId}/seating-sections/${seatingSectionId}`);
         return response.data;
     },
-    reorder: async (eventId: IdParam, sections: SeatingArrangement[]) => {
-        const response = await api.post<GenericDataResponse<SeatingSection[]>>(`events/${eventId}/seating-sections/reorder`, {sections});
+    reorder: async (eventId: IdParam, sectionIds: IdParam[]) => {
+        const response = await api.post<GenericDataResponse<SeatingSection[]>>(`events/${eventId}/seating-sections/reorder`, {section_ids: sectionIds});
         return response.data;
     },
     delete: async (eventId: IdParam, seatingSectionId: IdParam) => {

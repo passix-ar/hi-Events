@@ -16,10 +16,10 @@ import {SeatingStage} from "../SeatingChart";
 import {showError, showSuccess} from "../../../utilites/notifications.tsx";
 import {confirmationDialog} from "../../../utilites/confirmationDialog.tsx";
 import {useParams} from "react-router";
-import {closestCenter, DndContext, DragEndEvent, PointerSensor, TouchSensor, UniqueIdentifier, useDroppable, useSensor, useSensors} from "@dnd-kit/core";
+import {closestCenter, DndContext, PointerSensor, TouchSensor, UniqueIdentifier, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-
+import {useDragItemsHandler} from "../../../hooks/useDragItemsHandler.ts";
 
 const SortableSectionCard = ({sectionId, children}: { sectionId: IdParam, children: ReactNode }) => {
     const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({
@@ -48,37 +48,6 @@ interface SeatingSectionListProps {
     openCreateModal: () => void;
 }
 
-type Position = 'BEHIND' | 'LEFT' | 'CENTER' | 'RIGHT';
-
-const POSITIONS: Position[] = ['BEHIND', 'LEFT', 'CENTER', 'RIGHT'];
-
-const groupByZone = (sections: SeatingSection[]): Record<Position, number[]> => {
-    const zones = {BEHIND: [], LEFT: [], CENTER: [], RIGHT: []} as Record<Position, number[]>;
-
-    sections.forEach((section) => {
-        zones[(section.layout_position ?? 'CENTER') as Position].push(Number(section.id));
-    });
-
-    return zones;
-};
-
-const Zone = ({position, children}: { position: Position, children: ReactNode }) => {
-    const {setNodeRef, isOver} = useDroppable({id: position});
-
-    return (
-        <div ref={setNodeRef} className={classes.zone} data-over={isOver || undefined}>
-            <div className={classes.zoneLabel}>{positionLabel(position)}</div>
-            {children}
-        </div>
-    );
-};
-
-const positionLabel = (position?: string): string => ({
-    BEHIND: t`Behind the stage`,
-    LEFT: t`Left`,
-    RIGHT: t`Right`,
-}[position ?? ''] ?? t`Centre`);
-
 export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSectionListProps) => {
     // The route's id is what the sections query is cached under. Taking it from a section
     // instead gives a number where the cache holds a string, and nothing ever refetches.
@@ -89,59 +58,23 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
     const reorderMutation = useReorderSeatingSections();
     const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
-    const [zones, setZones] = useState<Record<Position, number[]>>(() => groupByZone(seatingSections));
+    const {items, setItems, handleDragEnd} = useDragItemsHandler({
+        initialItemIds: seatingSections.map((section) => Number(section.id)),
+        onSortEnd: (sectionIds) => {
+            reorderMutation.mutate({eventId, sectionIds}, {
+                onSuccess: () => showSuccess(t`Seating sections reordered`),
+                onError: (error: any) => showError(error?.response?.data?.message || error.message),
+            });
+        },
+    });
 
     useEffect(() => {
-        setZones(groupByZone(seatingSections));
+        setItems(seatingSections.map((section) => Number(section.id)));
     }, [seatingSections]);
 
-    const sectionById = (id: number) => seatingSections.find((section) => Number(section.id) === id);
-
-    const zoneOf = (id: UniqueIdentifier): Position | undefined => {
-        if (POSITIONS.includes(id as Position)) {
-            return id as Position;
-        }
-
-        return POSITIONS.find((position) => zones[position].includes(Number(id)));
-    };
-
-    const save = (next: Record<Position, number[]>) => {
-        const sections = POSITIONS.flatMap((position) => next[position]
-            .map((id) => ({id, layout_position: position})));
-
-        reorderMutation.mutate({eventId, sections}, {
-            onSuccess: () => showSuccess(t`Seating layout saved`),
-            onError: (error: any) => showError(error?.response?.data?.message || error.message),
-        });
-    };
-
-    const handleDragEnd = ({active, over}: DragEndEvent) => {
-        if (!over) {
-            return;
-        }
-
-        const from = zoneOf(active.id);
-        const to = zoneOf(over.id);
-
-        if (!from || !to) {
-            return;
-        }
-
-        const next: Record<Position, number[]> = {...zones};
-        next[from] = next[from].filter((id) => id !== Number(active.id));
-
-        const overIndex = next[to].indexOf(Number(over.id));
-        next[to] = overIndex < 0
-            ? [...next[to], Number(active.id)]
-            : [...next[to].slice(0, overIndex), Number(active.id), ...next[to].slice(overIndex)];
-
-        if (JSON.stringify(next) === JSON.stringify(zones)) {
-            return;
-        }
-
-        setZones(next);
-        save(next);
-    };
+    const orderedSections = items
+        .map((id) => seatingSections.find((section) => Number(section.id) === id))
+        .filter((section): section is SeatingSection => !!section);
 
     const handleDeleteSection = (seatingSectionId: IdParam) => {
         deleteMutation.mutate({seatingSectionId, eventId}, {
@@ -188,40 +121,10 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
     return (
         <>
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <div className={classes.room}>
-                <Zone position={'BEHIND'}>
-                    <SortableContext items={zones.BEHIND as UniqueIdentifier[]} strategy={verticalListSortingStrategy}>
-                        {zones.BEHIND.map((id) => renderCard(id))}
-                    </SortableContext>
-                </Zone>
-
+            <SortableContext items={items as UniqueIdentifier[]} strategy={verticalListSortingStrategy}>
+            <div className={classes.sectionList}>
                 <SeatingStage/>
-
-                <div className={classes.roomFront}>
-                    {(['LEFT', 'CENTER', 'RIGHT'] as Position[]).map((position) => (
-                        <Zone key={position} position={position}>
-                            <SortableContext items={zones[position] as UniqueIdentifier[]} strategy={verticalListSortingStrategy}>
-                                {zones[position].map((id) => renderCard(id))}
-                            </SortableContext>
-                        </Zone>
-                    ))}
-                </div>
-            </div>
-            </DndContext>
-            {(editModalOpen && selectedSeatingSectionId)
-                && <EditSeatingSectionModal onClose={closeEditModal}
-                                            seatingSectionId={selectedSeatingSectionId}/>}
-        </>
-    );
-
-    function renderCard(id: number) {
-        const section = sectionById(id);
-
-        if (!section) {
-            return null;
-        }
-
-        return (
+                {orderedSections.map((section) => (
                     <SortableSectionCard key={section.id} sectionId={section.id as IdParam}>
                         <div className={classes.sectionHeader}>
                             <div className={classes.sectionProduct}>
@@ -229,9 +132,6 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                                 {section.product?.title || t`Unknown product`}
                             </div>
                             <div>
-                                <Badge variant={'outline'} color={'gray'} mr={6}>
-                                    {positionLabel(section.layout_position)}
-                                </Badge>
                                 <Badge variant={'light'} color={section.status === 'ACTIVE' ? 'green' : 'gray'}>
                                     {section.status}
                                 </Badge>
@@ -298,6 +198,13 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                             </div>
                         </div>
                     </SortableSectionCard>
-        );
-    }
+                ))}
+            </div>
+            </SortableContext>
+            </DndContext>
+            {(editModalOpen && selectedSeatingSectionId)
+                && <EditSeatingSectionModal onClose={closeEditModal}
+                                            seatingSectionId={selectedSeatingSectionId}/>}
+        </>
+    );
 };

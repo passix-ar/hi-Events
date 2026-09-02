@@ -77,7 +77,7 @@ msgstr "{0} 標誌"
 msgid "{0} organizers"
 msgstr "{0} 位主辦單位"
 
-#: src/components/common/SeatingSectionList/index.tsx:249
+#: src/components/common/SeatingSectionList/index.tsx:149
 msgid "{0} rows × {1} seats"
 msgstr "{0} 排 × {1} 座"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>簽到列表幫助您按日期、區域或票務類型管理活動入場。您可以將票務連結到特定列表，如VIP區域或第1天通行證，並與工作人員共享安全的簽到連結。無需帳戶。簽到適用於移動裝置、桌面或平板電腦，使用裝置相機或HID USB掃描器。                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:165
+#: src/components/common/SeatingSectionList/index.tsx:98
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>建立座位分區，讓購票者選擇自己的座位。</0><1>每個分區是與某個產品關聯的行列座位網格。例如，一個包含10行、每行20個座位的<2> 樓座</2>分區透過您的<3> 樓座門票</3>產品銷售，而普通入場產品保持不變。</1>"
 
@@ -1036,7 +1036,7 @@ msgstr "您確定要刪除此容量分配嗎？"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "您確定要刪除此簽到列表嗎？"
 
-#: src/components/common/SeatingSectionList/index.tsx:287
+#: src/components/common/SeatingSectionList/index.tsx:187
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "確定要刪除此座位分區嗎？"
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "根據內容自動調整小工具高度。停用時，小工具將填滿容器的高度。"
 
-#: src/components/common/SeatingSectionList/index.tsx:253
+#: src/components/common/SeatingSectionList/index.tsx:153
 msgid "available"
 msgstr "可選"
 
@@ -1355,7 +1355,6 @@ msgstr "基本資料"
 msgid "Before your event can go live, there are a few things you need to do. Complete all the steps below to get started."
 msgstr "在活動上線之前，您需要完成以下幾項步驟。請完成以下所有步驟以開始。"
 
-#: src/components/common/SeatingSectionList/index.tsx:77
 #: src/components/forms/SeatingSectionForm/index.tsx:113
 msgid "Behind the stage"
 msgstr "舞台後方"
@@ -1581,7 +1580,6 @@ msgstr "類別"
 msgid "Category Created Successfully"
 msgstr "類別創建成功"
 
-#: src/components/common/SeatingSectionList/index.tsx:80
 #: src/components/forms/SeatingSectionForm/index.tsx:115
 msgid "Centre"
 msgstr "中間"
@@ -2466,7 +2464,7 @@ msgstr "創建促銷代碼"
 msgid "Create Question"
 msgstr "創建問題"
 
-#: src/components/common/SeatingSectionList/index.tsx:180
+#: src/components/common/SeatingSectionList/index.tsx:113
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:77
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:88
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2702,7 +2700,7 @@ msgstr "每日銷售、税費和費用明細"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:280
+#: src/components/common/SeatingSectionList/index.tsx:180
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "危險區"
@@ -2821,7 +2819,7 @@ msgstr "刪除任務"
 msgid "Delete Organizer"
 msgstr "刪除主辦方"
 
-#: src/components/common/SeatingSectionList/index.tsx:283
+#: src/components/common/SeatingSectionList/index.tsx:183
 msgid "Delete Section"
 msgstr "刪除分區"
 
@@ -3149,7 +3147,7 @@ msgstr "編輯問題"
 msgid "Edit Seating Section"
 msgstr "編輯座位分區"
 
-#: src/components/common/SeatingSectionList/index.tsx:270
+#: src/components/common/SeatingSectionList/index.tsx:170
 msgid "Edit Section"
 msgstr "編輯分區"
 
@@ -4384,7 +4382,7 @@ msgstr "賓客"
 msgid "Have a promo code?"
 msgstr "有促銷代碼嗎？"
 
-#: src/components/common/SeatingSectionList/index.tsx:256
+#: src/components/common/SeatingSectionList/index.tsx:156
 msgid "held"
 msgstr "保留"
 
@@ -5010,7 +5008,6 @@ msgstr "在這些座位號之後留出通道。"
 msgid "Leave blank to use the default word \"Invoice\""
 msgstr "留空以使用默認詞“發票”"
 
-#: src/components/common/SeatingSectionList/index.tsx:78
 #: src/components/forms/SeatingSectionForm/index.tsx:114
 msgid "Left"
 msgstr "左側"
@@ -5162,7 +5159,7 @@ msgstr "讓您的活動上線"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:167
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5749,7 +5746,7 @@ msgstr "沒有搜索結果"
 msgid "No search results."
 msgstr "沒有搜索結果。"
 
-#: src/components/common/SeatingSectionList/index.tsx:160
+#: src/components/common/SeatingSectionList/index.tsx:93
 msgid "No Seating Sections"
 msgstr "暫無座位分區"
 
@@ -7530,7 +7527,6 @@ msgstr "撤銷邀請"
 msgid "Revoke Offer"
 msgstr ""
 
-#: src/components/common/SeatingSectionList/index.tsx:79
 #: src/components/forms/SeatingSectionForm/index.tsx:116
 msgid "Right"
 msgstr "右側"
@@ -7787,21 +7783,17 @@ msgstr "搜索..."
 msgid "Seat"
 msgstr "座位"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
-msgid "Seating layout saved"
-msgstr "座位佈局已儲存"
-
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:45
 msgid "Seating section created successfully"
 msgstr "座位分區建立成功"
 
-#: src/components/common/SeatingSectionList/index.tsx:149
+#: src/components/common/SeatingSectionList/index.tsx:82
 msgid "Seating section deleted successfully"
 msgstr "座位分區刪除成功"
 
 #: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "分區已重新排序"
+msgid "Seating sections reordered"
+msgstr "分區已重新排序"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8275,7 +8267,7 @@ msgstr "社交連結"
 msgid "Social Links & Website"
 msgstr "社交連結與網站"
 
-#: src/components/common/SeatingSectionList/index.tsx:259
+#: src/components/common/SeatingSectionList/index.tsx:159
 msgid "sold"
 msgstr "已售"
 
@@ -9616,7 +9608,7 @@ msgstr "未知"
 msgid "Unknown Attendee"
 msgstr "未知參會者"
 
-#: src/components/common/SeatingSectionList/index.tsx:229
+#: src/components/common/SeatingSectionList/index.tsx:132
 msgid "Unknown product"
 msgstr "未知產品"
 

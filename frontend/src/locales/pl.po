@@ -77,7 +77,7 @@ msgstr "logo {0}"
 msgid "{0} organizers"
 msgstr "{0} organizatorów"
 
-#: src/components/common/SeatingSectionList/index.tsx:249
+#: src/components/common/SeatingSectionList/index.tsx:149
 msgid "{0} rows × {1} seats"
 msgstr "{0} rzędów × {1} miejsc"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Listy odpraw pomagają zarządzać wejściem na wydarzenie według dnia, obszaru lub typu biletu. Możesz łączyć bilety z konkretnymi listami, takimi jak strefy VIP lub bilety na Dzień 1, i udostępniać bezpieczny link do odprawy personelowi. Nie jest wymagane konto. Odprawa działa na urządzeniach mobilnych, desktopowych lub tabletach, używając kamery urządzenia lub skanera HID USB.                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:165
+#: src/components/common/SeatingSectionList/index.tsx:98
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Utwórz sekcje miejsc, aby kupujący mogli wybrać własne numerowane miejsce.</0><1>Każda sekcja to siatka rzędów i miejsc powiązana z produktem. Na przykład sekcja<2> Balkon</2> z 10 rzędami po 20 miejsc sprzedaje się poprzez Twój produkt<3> Bilet na balkon</3>, a produkty wstępu ogólnego pozostają bez zmian.</1>"
 
@@ -1036,7 +1036,7 @@ msgstr "Czy na pewno chcesz usunąć to przypisanie pojemności?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Czy na pewno chcesz usunąć tę listę odpraw?"
 
-#: src/components/common/SeatingSectionList/index.tsx:287
+#: src/components/common/SeatingSectionList/index.tsx:187
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Czy na pewno chcesz usunąć tę sekcję miejsc?"
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Automatycznie dopasuj wysokość widgetu na podstawie zawartości. Gdy wyłączone, widget wypełni wysokość kontenera."
 
-#: src/components/common/SeatingSectionList/index.tsx:253
+#: src/components/common/SeatingSectionList/index.tsx:153
 msgid "available"
 msgstr "dostępne"
 
@@ -1355,7 +1355,6 @@ msgstr "Podstawowe informacje"
 msgid "Before your event can go live, there are a few things you need to do. Complete all the steps below to get started."
 msgstr "Zanim Twoje wydarzenie będzie mogło zostać uruchomione, musisz zrobić kilka rzeczy. Wykonaj wszystkie poniższe kroki, aby rozpocząć."
 
-#: src/components/common/SeatingSectionList/index.tsx:77
 #: src/components/forms/SeatingSectionForm/index.tsx:113
 msgid "Behind the stage"
 msgstr "Za sceną"
@@ -1581,7 +1580,6 @@ msgstr "Kategoria"
 msgid "Category Created Successfully"
 msgstr "Kategoria utworzona pomyślnie"
 
-#: src/components/common/SeatingSectionList/index.tsx:80
 #: src/components/forms/SeatingSectionForm/index.tsx:115
 msgid "Centre"
 msgstr "Środek"
@@ -2466,7 +2464,7 @@ msgstr "Utwórz kod promocyjny"
 msgid "Create Question"
 msgstr "Utwórz pytanie"
 
-#: src/components/common/SeatingSectionList/index.tsx:180
+#: src/components/common/SeatingSectionList/index.tsx:113
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:77
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:88
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2702,7 +2700,7 @@ msgstr "Codzienna sprzedaż, podział podatków i opłat"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:280
+#: src/components/common/SeatingSectionList/index.tsx:180
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Strefa zagrożenia"
@@ -2821,7 +2819,7 @@ msgstr "Usuń zadanie"
 msgid "Delete Organizer"
 msgstr "Usuń organizatora"
 
-#: src/components/common/SeatingSectionList/index.tsx:283
+#: src/components/common/SeatingSectionList/index.tsx:183
 msgid "Delete Section"
 msgstr "Usuń sekcję"
 
@@ -3149,7 +3147,7 @@ msgstr "Edytuj pytanie"
 msgid "Edit Seating Section"
 msgstr "Edytuj sekcję miejsc"
 
-#: src/components/common/SeatingSectionList/index.tsx:270
+#: src/components/common/SeatingSectionList/index.tsx:170
 msgid "Edit Section"
 msgstr "Edytuj sekcję"
 
@@ -4384,7 +4382,7 @@ msgstr "Goście"
 msgid "Have a promo code?"
 msgstr "Masz kod promocyjny?"
 
-#: src/components/common/SeatingSectionList/index.tsx:256
+#: src/components/common/SeatingSectionList/index.tsx:156
 msgid "held"
 msgstr "wstrzymane"
 
@@ -5010,7 +5008,6 @@ msgstr "Zostaw przejście po tych numerach miejsc."
 msgid "Leave blank to use the default word \"Invoice\""
 msgstr "Pozostaw puste, aby użyć domyślnego słowa \"Faktura\""
 
-#: src/components/common/SeatingSectionList/index.tsx:78
 #: src/components/forms/SeatingSectionForm/index.tsx:114
 msgid "Left"
 msgstr "Lewa"
@@ -5162,7 +5159,7 @@ msgstr "Opublikuj swoje wydarzenie"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:167
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5749,7 +5746,7 @@ msgstr "Brak wyników wyszukiwania"
 msgid "No search results."
 msgstr "Brak wyników wyszukiwania."
 
-#: src/components/common/SeatingSectionList/index.tsx:160
+#: src/components/common/SeatingSectionList/index.tsx:93
 msgid "No Seating Sections"
 msgstr "Brak sekcji miejsc"
 
@@ -7530,7 +7527,6 @@ msgstr "Cofnij zaproszenie"
 msgid "Revoke Offer"
 msgstr ""
 
-#: src/components/common/SeatingSectionList/index.tsx:79
 #: src/components/forms/SeatingSectionForm/index.tsx:116
 msgid "Right"
 msgstr "Prawa"
@@ -7787,21 +7783,17 @@ msgstr "Szukaj..."
 msgid "Seat"
 msgstr "Miejsce"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
-msgid "Seating layout saved"
-msgstr "Zapisano układ sali"
-
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:45
 msgid "Seating section created successfully"
 msgstr "Sekcja miejsc została utworzona"
 
-#: src/components/common/SeatingSectionList/index.tsx:149
+#: src/components/common/SeatingSectionList/index.tsx:82
 msgid "Seating section deleted successfully"
 msgstr "Sekcja miejsc została usunięta"
 
 #: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "Zmieniono kolejność sekcji"
+msgid "Seating sections reordered"
+msgstr "Zmieniono kolejność sekcji"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8275,7 +8267,7 @@ msgstr "Linki społeczne"
 msgid "Social Links & Website"
 msgstr "Linki społeczne i strona internetowa"
 
-#: src/components/common/SeatingSectionList/index.tsx:259
+#: src/components/common/SeatingSectionList/index.tsx:159
 msgid "sold"
 msgstr "sprzedane"
 
@@ -9616,7 +9608,7 @@ msgstr "Nieznany"
 msgid "Unknown Attendee"
 msgstr "Nieznany uczestnik"
 
-#: src/components/common/SeatingSectionList/index.tsx:229
+#: src/components/common/SeatingSectionList/index.tsx:132
 msgid "Unknown product"
 msgstr "Nieznany produkt"
 

@@ -23,7 +23,7 @@ class ReorderSeatingSectionsAction extends BaseAction
             resource: SeatingSectionResource::class,
             data: $this->reorderSeatingSectionsHandler->handle(
                 $eventId,
-                $request->validated('sections'),
+                $request->validated('section_ids'),
             ),
         );
     }
