@@ -682,5 +682,14 @@
     "One or more of the selected seats are not available for sale.": "所选座位中有一个或多个不可出售。",
     "A section must have at least one available seat.": "每个分区至少需要一个可用座位。",
     "These blocked seats do not exist in the layout: :labels": "以下被锁定的座位不在座位图中：:labels",
-    "Seat :label cannot be blocked because it is held or sold.": "座位 :label 已被保留或售出，无法锁定。"
+    "Seat :label cannot be blocked because it is held or sold.": "座位 :label 已被保留或售出，无法锁定。",
+    "Aisles must sit between seat 1 and seat :max.": "通道必须位于第 1 个座位和第 :max 个座位之间。",
+    "You haven't selected any products": "你还没有选择任何商品。",
+    "Your seat: :seat": "你的座位：:seat",
+    "The attendee's seat, if the event has assigned seating": "参加者的座位（如果活动为对号入座）",
+    "You're going to": "你要去",
+    "The organizer's name": "主办方名称",
+    "The organizer's email": "主办方邮箱",
+    "The attendee's full name": "参加者的全名",
+    "The attendee's email": "参加者的邮箱"
 }

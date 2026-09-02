@@ -682,5 +682,14 @@
     "One or more of the selected seats are not available for sale.": "A kiválasztott ülőhelyek közül egy vagy több nem vásárolható meg.",
     "A section must have at least one available seat.": "Egy szekciónak legalább egy elérhető ülőhelyet kell tartalmaznia.",
     "These blocked seats do not exist in the layout: :labels": "Ezek a letiltott ülőhelyek nem szerepelnek az elrendezésben: :labels",
-    "Seat :label cannot be blocked because it is held or sold.": "A(z) :label ülőhely nem tiltható le, mert fenntartva vagy eladva van."
+    "Seat :label cannot be blocked because it is held or sold.": "A(z) :label ülőhely nem tiltható le, mert fenntartva vagy eladva van.",
+    "Aisles must sit between seat 1 and seat :max.": "A folyosóknak az 1. és a(z) :max. ülőhely között kell lenniük.",
+    "You haven't selected any products": "Nem választottál ki egyetlen terméket sem.",
+    "Your seat: :seat": "A helyed: :seat",
+    "The attendee's seat, if the event has assigned seating": "A résztvevő ülőhelye, ha az eseményen számozott helyek vannak",
+    "You're going to": "Ott leszel:",
+    "The organizer's name": "A szervező neve",
+    "The organizer's email": "A szervező e-mail-címe",
+    "The attendee's full name": "A résztvevő teljes neve",
+    "The attendee's email": "A résztvevő e-mail-címe"
 }

@@ -697,5 +697,13 @@
     "One or more of the selected seats are not available for sale.": "Seçilen koltuklardan biri veya birkaçı satışa uygun değil.",
     "A section must have at least one available seat.": "Bir bölümde en az bir uygun koltuk bulunmalıdır.",
     "These blocked seats do not exist in the layout: :labels": "Bu engellenen koltuklar yerleşim planında bulunmuyor: :labels",
-    "Seat :label cannot be blocked because it is held or sold.": ":label koltuğu rezerve veya satılmış olduğu için engellenemez."
+    "Seat :label cannot be blocked because it is held or sold.": ":label koltuğu rezerve veya satılmış olduğu için engellenemez.",
+    "Aisles must sit between seat 1 and seat :max.": "Koridorlar 1. koltuk ile :max. koltuk arasında olmalıdır.",
+    "You haven't selected any products": "Hiçbir ürün seçmediniz.",
+    "Your seat: :seat": "Koltuğunuz: :seat",
+    "The attendee's seat, if the event has assigned seating": "Etkinlikte numaralı koltuk varsa katılımcının koltuğu",
+    "The organizer's name": "Organizatörün adı",
+    "The organizer's email": "Organizatörün e-posta adresi",
+    "The attendee's full name": "Katılımcının tam adı",
+    "The attendee's email": "Katılımcının e-posta adresi"
 }

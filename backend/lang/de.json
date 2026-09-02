@@ -682,5 +682,14 @@
     "One or more of the selected seats are not available for sale.": "Einer oder mehrere der ausgewählten Sitzplätze stehen nicht zum Verkauf.",
     "A section must have at least one available seat.": "Ein Bereich muss mindestens einen verfügbaren Sitzplatz haben.",
     "These blocked seats do not exist in the layout: :labels": "Diese gesperrten Sitzplätze existieren im Sitzplan nicht: :labels",
-    "Seat :label cannot be blocked because it is held or sold.": "Sitzplatz :label kann nicht gesperrt werden, weil er reserviert oder verkauft ist."
+    "Seat :label cannot be blocked because it is held or sold.": "Sitzplatz :label kann nicht gesperrt werden, weil er reserviert oder verkauft ist.",
+    "Aisles must sit between seat 1 and seat :max.": "Gänge müssen zwischen Sitzplatz 1 und Sitzplatz :max liegen.",
+    "You haven't selected any products": "Du hast keine Produkte ausgewählt.",
+    "Your seat: :seat": "Dein Platz: :seat",
+    "The attendee's seat, if the event has assigned seating": "Der Platz des Teilnehmers, wenn die Veranstaltung nummerierte Plätze hat",
+    "You're going to": "Du gehst zu",
+    "The organizer's name": "Name des Veranstalters",
+    "The organizer's email": "E-Mail-Adresse des Veranstalters",
+    "The attendee's full name": "Vollständiger Name des Teilnehmers",
+    "The attendee's email": "E-Mail-Adresse des Teilnehmers"
 }

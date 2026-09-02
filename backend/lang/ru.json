@@ -697,5 +697,13 @@
     "One or more of the selected seats are not available for sale.": "Одно или несколько выбранных мест недоступны для продажи.",
     "A section must have at least one available seat.": "В секции должно быть хотя бы одно доступное место.",
     "These blocked seats do not exist in the layout: :labels": "Эти заблокированные места отсутствуют в схеме зала: :labels",
-    "Seat :label cannot be blocked because it is held or sold.": "Место :label нельзя заблокировать, так как оно удерживается или продано."
+    "Seat :label cannot be blocked because it is held or sold.": "Место :label нельзя заблокировать, так как оно удерживается или продано.",
+    "Aisles must sit between seat 1 and seat :max.": "Проходы должны располагаться между местом 1 и местом :max.",
+    "You haven't selected any products": "Вы не выбрали ни одного продукта.",
+    "Your seat: :seat": "Ваше место: :seat",
+    "The attendee's seat, if the event has assigned seating": "Место участника, если на мероприятии нумерованные места",
+    "The organizer's name": "Имя организатора",
+    "The organizer's email": "Электронная почта организатора",
+    "The attendee's full name": "Полное имя участника",
+    "The attendee's email": "Электронная почта участника"
 }
