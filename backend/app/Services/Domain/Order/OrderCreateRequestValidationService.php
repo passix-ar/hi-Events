@@ -451,6 +451,12 @@ class OrderCreateRequestValidationService
             $productPrice = $product->getProductPrices()
                 ?->first(fn(ProductPriceDomainObject $price) => $price->getId() === $productQuantity['price_id']);
 
+            if ($productPrice === null) {
+                throw ValidationException::withMessages([
+                    "products.$productIndex" => __('This product is outdated. Please reload the page.'),
+                ]);
+            }
+
             if ($productQuantity['quantity'] > $numberAvailable) {
                 if ($numberAvailable === 0) {
                     throw ValidationException::withMessages([
