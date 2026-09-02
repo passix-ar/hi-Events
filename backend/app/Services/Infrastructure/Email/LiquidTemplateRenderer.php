@@ -198,6 +198,11 @@ class LiquidTemplateRenderer
                 'example' => 'john@example.com',
             ],
             [
+                'token' => '{{ attendee.seat }}',
+                'description' => __('The attendee\'s seat, if the event has assigned seating'),
+                'example' => 'Balcony - A12',
+            ],
+            [
                 'token' => '{{ ticket.name }}',
                 'description' => __('The ticket type name'),
                 'example' => 'VIP Pass',
