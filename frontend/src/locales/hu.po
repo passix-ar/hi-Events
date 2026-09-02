@@ -77,7 +77,7 @@ msgstr "{0} logó"
 msgid "{0} organizers"
 msgstr "{0} szervező"
 
-#: src/components/common/SeatingSectionList/index.tsx:149
+#: src/components/common/SeatingSectionList/index.tsx:249
 msgid "{0} rows × {1} seats"
 msgstr "{0} sor × {1} ülőhely"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>A bejelentkezési listák segítenek az esemény belépésének kezelésében nap, terület vagy jegytípus szerint. Összekapcsolhatja a jegyeket konkrét listákkal, például VIP zónákkal vagy 1. napi bérletek, és megoszthat egy biztonságos bejelentkezési linket a személyzettel. Nincs szükség fiókra. A bejelentkezés mobil, asztali vagy táblagépen működik, eszköz kamerával vagy HID USB szkennerrel.                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:98
+#: src/components/common/SeatingSectionList/index.tsx:165
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Hozzon létre ülésszekciókat, hogy a jegyvásárlók kiválaszthassák saját számozott ülőhelyüket.</0><1>Minden szekció egy termékhez kapcsolt sor- és ülésrács. Például egy<2> Erkély</2> szekció 10 sorral és soronként 20 üléssel az Ön<3> Erkélyjegy</3> termékén keresztül értékesíthető, míg az általános belépőtermékek változatlanok maradnak.</1>"
 
@@ -1036,7 +1036,7 @@ msgstr "Biztosan törölni szeretné ezt a kapacitás-hozzárendelést?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Biztosan törölni szeretné ezt a bejelentkezési listát?"
 
-#: src/components/common/SeatingSectionList/index.tsx:187
+#: src/components/common/SeatingSectionList/index.tsx:287
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Biztosan törli ezt az ülésszekciót?"
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Automatikusan átméretezi a widget magasságát a tartalom alapján. Ha le van tiltva, a widget kitölti a tároló magasságát."
 
-#: src/components/common/SeatingSectionList/index.tsx:153
+#: src/components/common/SeatingSectionList/index.tsx:253
 msgid "available"
 msgstr "elérhető"
 
@@ -1355,6 +1355,7 @@ msgstr "Alapvető információk"
 msgid "Before your event can go live, there are a few things you need to do. Complete all the steps below to get started."
 msgstr "Mielőtt az esemény élővé válna, néhány dolgot meg kell tennie. Fejezze be az összes alábbi lépést a kezdéshez."
 
+#: src/components/common/SeatingSectionList/index.tsx:77
 #: src/components/forms/SeatingSectionForm/index.tsx:113
 msgid "Behind the stage"
 msgstr "A színpad mögött"
@@ -1580,6 +1581,7 @@ msgstr "Kategória"
 msgid "Category Created Successfully"
 msgstr "Kategória sikeresen létrehozva"
 
+#: src/components/common/SeatingSectionList/index.tsx:80
 #: src/components/forms/SeatingSectionForm/index.tsx:115
 msgid "Centre"
 msgstr "Közép"
@@ -2464,7 +2466,7 @@ msgstr "Promóciós kód létrehozása"
 msgid "Create Question"
 msgstr "Kérdés létrehozása"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:180
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:77
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:88
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2700,7 +2702,7 @@ msgstr "Napi értékesítési, adó- és díj bontás."
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:180
+#: src/components/common/SeatingSectionList/index.tsx:280
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Veszélyzóna"
@@ -2819,7 +2821,7 @@ msgstr "Feladat törlése"
 msgid "Delete Organizer"
 msgstr "Szervező törlése"
 
-#: src/components/common/SeatingSectionList/index.tsx:183
+#: src/components/common/SeatingSectionList/index.tsx:283
 msgid "Delete Section"
 msgstr "Szekció törlése"
 
@@ -3147,7 +3149,7 @@ msgstr "Kérdés szerkesztése"
 msgid "Edit Seating Section"
 msgstr "Ülésszekció szerkesztése"
 
-#: src/components/common/SeatingSectionList/index.tsx:170
+#: src/components/common/SeatingSectionList/index.tsx:270
 msgid "Edit Section"
 msgstr "Szekció szerkesztése"
 
@@ -4382,7 +4384,7 @@ msgstr "Résztvevők"
 msgid "Have a promo code?"
 msgstr "Van promóciós kódja?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
+#: src/components/common/SeatingSectionList/index.tsx:256
 msgid "held"
 msgstr "fenntartva"
 
@@ -5008,6 +5010,7 @@ msgstr "Hagyj folyosót ezen ülőhelyszámok után."
 msgid "Leave blank to use the default word \"Invoice\""
 msgstr "Hagyja üresen az alapértelmezett „Számla” szó használatához"
 
+#: src/components/common/SeatingSectionList/index.tsx:78
 #: src/components/forms/SeatingSectionForm/index.tsx:114
 msgid "Left"
 msgstr "Bal"
@@ -5159,7 +5162,7 @@ msgstr "Tegye élővé eseményét"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:167
+#: src/components/common/SeatingSectionList/index.tsx:267
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5746,7 +5749,7 @@ msgstr "Nincs találat"
 msgid "No search results."
 msgstr "Nincs találat."
 
-#: src/components/common/SeatingSectionList/index.tsx:93
+#: src/components/common/SeatingSectionList/index.tsx:160
 msgid "No Seating Sections"
 msgstr "Nincsenek ülésszekciók"
 
@@ -7527,6 +7530,7 @@ msgstr "Meghívó visszavonása"
 msgid "Revoke Offer"
 msgstr ""
 
+#: src/components/common/SeatingSectionList/index.tsx:79
 #: src/components/forms/SeatingSectionForm/index.tsx:116
 msgid "Right"
 msgstr "Jobb"
@@ -7783,17 +7787,21 @@ msgstr "Keresés..."
 msgid "Seat"
 msgstr "Ülőhely"
 
+#: src/components/common/SeatingSectionList/index.tsx:113
+msgid "Seating layout saved"
+msgstr "A teremterv elmentve"
+
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:45
 msgid "Seating section created successfully"
 msgstr "Ülésszekció sikeresen létrehozva"
 
-#: src/components/common/SeatingSectionList/index.tsx:82
+#: src/components/common/SeatingSectionList/index.tsx:149
 msgid "Seating section deleted successfully"
 msgstr "Ülésszekció sikeresen törölve"
 
 #: src/components/common/SeatingSectionList/index.tsx:65
-msgid "Seating sections reordered"
-msgstr "A szekciók átrendezve"
+#~ msgid "Seating sections reordered"
+#~ msgstr "A szekciók átrendezve"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8267,7 +8275,7 @@ msgstr "Közösségi linkek"
 msgid "Social Links & Website"
 msgstr "Közösségi linkek és weboldal"
 
-#: src/components/common/SeatingSectionList/index.tsx:159
+#: src/components/common/SeatingSectionList/index.tsx:259
 msgid "sold"
 msgstr "eladva"
 
@@ -9608,7 +9616,7 @@ msgstr "Ismeretlen"
 msgid "Unknown Attendee"
 msgstr "Ismeretlen résztvevő"
 
-#: src/components/common/SeatingSectionList/index.tsx:132
+#: src/components/common/SeatingSectionList/index.tsx:229
 msgid "Unknown product"
 msgstr "Ismeretlen termék"
 

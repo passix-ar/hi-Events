@@ -70,3 +70,47 @@
     cursor: grabbing;
   }
 }
+
+.room {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Left, centre and right sit side by side once there is room; on a phone they stack
+   and the labels are what tells you which is which. */
+.roomFront {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .roomFront {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.zone {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 96px;
+  padding: 10px;
+  border: 1px dashed var(--mantine-color-gray-4);
+  border-radius: 8px;
+
+  &[data-over] {
+    border-style: solid;
+    border-color: var(--mantine-color-teal-5);
+    background: var(--mantine-color-teal-0);
+  }
+}
+
+.zoneLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mantine-color-gray-6);
+}

@@ -828,6 +828,11 @@ export interface SeatingSection {
     seats?: Seat[];
 }
 
+export interface SeatingArrangement {
+    id: IdParam;
+    layout_position: 'LEFT' | 'CENTER' | 'RIGHT' | 'BEHIND';
+}
+
 export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'> & {
     disabled_seats?: string[];
     aisle_positions?: number[];

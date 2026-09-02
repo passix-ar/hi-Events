@@ -77,7 +77,7 @@ msgstr "{0} logotyp"
 msgid "{0} organizers"
 msgstr "{0} arrangörer"
 
-#: src/components/common/SeatingSectionList/index.tsx:149
+#: src/components/common/SeatingSectionList/index.tsx:249
 msgid "{0} rows × {1} seats"
 msgstr "{0} rader × {1} platser"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Incheckningslistor hjälper dig att hantera evenemangets entré per dag, område eller biljetttyp. Du kan länka biljetter till specifika listor som VIP-zoner eller Dag 1-pass och dela en säker incheckningslänk med personal. Inget konto krävs. Incheckning fungerar på mobil, dator eller surfplatta med enhetens kamera eller HID USB-skanner.</0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:98
+#: src/components/common/SeatingSectionList/index.tsx:165
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Skapa sittsektioner så att biljettköpare kan välja sin egen numrerade plats.</0><1>Varje sektion är ett rutnät av rader och platser kopplat till en produkt. Till exempel säljs en<2> Balkong</2>-sektion med 10 rader om 20 platser via din<3> Balkongbiljett</3>-produkt, medan produkter med fri placering förblir oförändrade.</1>"
 
@@ -1036,7 +1036,7 @@ msgstr "Är du säker på att du vill ta bort denna kapacitetstilldelning?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Är du säker på att du vill ta bort denna incheckningslista?"
 
-#: src/components/common/SeatingSectionList/index.tsx:187
+#: src/components/common/SeatingSectionList/index.tsx:287
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Är du säker på att du vill ta bort denna sittsektion?"
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Anpassa widgetens höjd automatiskt baserat på innehållet. När funktionen är avstängd fyller widgeten hela behållarens höjd."
 
-#: src/components/common/SeatingSectionList/index.tsx:153
+#: src/components/common/SeatingSectionList/index.tsx:253
 msgid "available"
 msgstr "tillgängliga"
 
@@ -1355,6 +1355,7 @@ msgstr "Grundläggande information"
 msgid "Before your event can go live, there are a few things you need to do. Complete all the steps below to get started."
 msgstr "Innan ditt evenemang kan publiceras finns det några saker du behöver göra. Slutför alla stegen nedan för att komma igång."
 
+#: src/components/common/SeatingSectionList/index.tsx:77
 #: src/components/forms/SeatingSectionForm/index.tsx:113
 msgid "Behind the stage"
 msgstr "Bakom scenen"
@@ -1580,6 +1581,7 @@ msgstr "Kategori"
 msgid "Category Created Successfully"
 msgstr "Kategori skapades"
 
+#: src/components/common/SeatingSectionList/index.tsx:80
 #: src/components/forms/SeatingSectionForm/index.tsx:115
 msgid "Centre"
 msgstr "Mitten"
@@ -2464,7 +2466,7 @@ msgstr "Skapa kampanjkod"
 msgid "Create Question"
 msgstr "Skapa fråga"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:180
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:77
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:88
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2700,7 +2702,7 @@ msgstr "Daglig sammanställning av försäljning, skatt och avgifter"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:180
+#: src/components/common/SeatingSectionList/index.tsx:280
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Riskzon"
@@ -2819,7 +2821,7 @@ msgstr "Ta bort jobb"
 msgid "Delete Organizer"
 msgstr "Ta bort arrangör"
 
-#: src/components/common/SeatingSectionList/index.tsx:183
+#: src/components/common/SeatingSectionList/index.tsx:283
 msgid "Delete Section"
 msgstr "Ta bort sektion"
 
@@ -3147,7 +3149,7 @@ msgstr "Redigera fråga"
 msgid "Edit Seating Section"
 msgstr "Redigera sittsektion"
 
-#: src/components/common/SeatingSectionList/index.tsx:170
+#: src/components/common/SeatingSectionList/index.tsx:270
 msgid "Edit Section"
 msgstr "Redigera sektion"
 
@@ -4382,7 +4384,7 @@ msgstr "Gäster"
 msgid "Have a promo code?"
 msgstr "Har du en kampanjkod?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
+#: src/components/common/SeatingSectionList/index.tsx:256
 msgid "held"
 msgstr "reserverade"
 
@@ -5008,6 +5010,7 @@ msgstr "Lämna en gång efter dessa platsnummer."
 msgid "Leave blank to use the default word \"Invoice\""
 msgstr "Lämna tomt för att använda standardordet \"Faktura\""
 
+#: src/components/common/SeatingSectionList/index.tsx:78
 #: src/components/forms/SeatingSectionForm/index.tsx:114
 msgid "Left"
 msgstr "Vänster"
@@ -5159,7 +5162,7 @@ msgstr "Gör ditt evenemang live"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:167
+#: src/components/common/SeatingSectionList/index.tsx:267
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5746,7 +5749,7 @@ msgstr "Inga sökresultat"
 msgid "No search results."
 msgstr "Inga sökresultat."
 
-#: src/components/common/SeatingSectionList/index.tsx:93
+#: src/components/common/SeatingSectionList/index.tsx:160
 msgid "No Seating Sections"
 msgstr "Inga sittsektioner"
 
@@ -7527,6 +7530,7 @@ msgstr "Återkalla inbjudan"
 msgid "Revoke Offer"
 msgstr ""
 
+#: src/components/common/SeatingSectionList/index.tsx:79
 #: src/components/forms/SeatingSectionForm/index.tsx:116
 msgid "Right"
 msgstr "Höger"
@@ -7783,17 +7787,21 @@ msgstr "Sök..."
 msgid "Seat"
 msgstr "Plats"
 
+#: src/components/common/SeatingSectionList/index.tsx:113
+msgid "Seating layout saved"
+msgstr "Salsplanen sparad"
+
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:45
 msgid "Seating section created successfully"
 msgstr "Sittsektionen har skapats"
 
-#: src/components/common/SeatingSectionList/index.tsx:82
+#: src/components/common/SeatingSectionList/index.tsx:149
 msgid "Seating section deleted successfully"
 msgstr "Sittsektionen har tagits bort"
 
 #: src/components/common/SeatingSectionList/index.tsx:65
-msgid "Seating sections reordered"
-msgstr "Sektionerna omordnade"
+#~ msgid "Seating sections reordered"
+#~ msgstr "Sektionerna omordnade"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8267,7 +8275,7 @@ msgstr "Sociala länkar"
 msgid "Social Links & Website"
 msgstr "Sociala länkar och webbplats"
 
-#: src/components/common/SeatingSectionList/index.tsx:159
+#: src/components/common/SeatingSectionList/index.tsx:259
 msgid "sold"
 msgstr "sålda"
 
@@ -9608,7 +9616,7 @@ msgstr "Okänd"
 msgid "Unknown Attendee"
 msgstr "Okänd deltagare"
 
-#: src/components/common/SeatingSectionList/index.tsx:132
+#: src/components/common/SeatingSectionList/index.tsx:229
 msgid "Unknown product"
 msgstr "Okänd produkt"
 
