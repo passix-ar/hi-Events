@@ -2,6 +2,7 @@
 
 namespace HiEvents\Services\Domain\Seating;
 
+use HiEvents\DomainObjects\Enums\SeatingSectionPosition;
 use HiEvents\DomainObjects\Enums\SeatState;
 use HiEvents\DomainObjects\Generated\SeatDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
@@ -37,6 +38,7 @@ class UpdateSeatingSectionService
         SeatingSectionDomainObject $section,
         ?array $disabledSeats = null,
         ?array $aislePositions = null,
+        ?string $layoutPosition = null,
     ): SeatingSectionDomainObject {
         /** @var SeatingSectionDomainObject|null $existing */
         $existing = $this->seatingSectionRepository->findFirstWhere([
@@ -61,7 +63,7 @@ class UpdateSeatingSectionService
             $section->getSeatsPerRow(),
         );
 
-        return $this->databaseManager->transaction(function () use ($existing, $section, $disabledSeats, $aislePositions) {
+        return $this->databaseManager->transaction(function () use ($existing, $section, $disabledSeats, $aislePositions, $layoutPosition) {
             $this->databaseManager->statement('SELECT pg_advisory_xact_lock(?)', [$existing->getEventId()]);
 
             $occupiedSeats = $this->getOccupiedSeats($existing);
@@ -86,6 +88,7 @@ class UpdateSeatingSectionService
                 SeatingSectionDomainObjectAbstract::SEATS_PER_ROW => $section->getSeatsPerRow(),
                 SeatingSectionDomainObjectAbstract::STATUS => $section->getStatus(),
                 SeatingSectionDomainObjectAbstract::AISLE_POSITIONS => $aislePositions,
+                SeatingSectionDomainObjectAbstract::LAYOUT_POSITION => $layoutPosition ?: SeatingSectionPosition::CENTER->name,
             ]);
 
             if ($section->getName() !== $existing->getName()) {

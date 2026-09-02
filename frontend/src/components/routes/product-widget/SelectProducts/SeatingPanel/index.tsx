@@ -19,10 +19,38 @@ export const SeatingPanel = ({
     const needed = productIds.reduce((total, productId) => total + quantityForProduct(productId), 0);
     const chosen = productIds.reduce((total, productId) => total + selectedSeatIdsForProduct(productId).length, 0);
 
-    // Nothing to choose yet: the map would just be decoration above the total.
     if (needed === 0) {
         return null;
     }
+
+    const at = (position: string) => sections.filter(
+        (section) => (section.layout_position || 'CENTER') === position,
+    );
+
+    const renderSection = (section: SeatingSection) => {
+        const productId = Number(section.product_id);
+        const quantity = quantityForProduct(productId);
+
+        return (
+            <div
+                className={'hi-seating-panel-section'}
+                key={section.id}
+                data-locked={quantity === 0 || undefined}
+            >
+                <h4 className={'hi-seating-panel-section-name'}>{section.name}</h4>
+                <SeatingChart
+                    rowCount={section.row_count}
+                    seatsPerRow={section.seats_per_row}
+                    aislePositions={section.aisle_positions}
+                    seats={section.seats}
+                    selectedSeatIds={selectedSeatIdsForProduct(productId)}
+                    maxSelectable={quantity}
+                    onToggleSeat={(seat) => onToggleSeat(productId, seat)}
+                    showLegend={false}
+                />
+            </div>
+        );
+    };
 
     return (
         <div className={'hi-seating-panel'}>
@@ -35,32 +63,15 @@ export const SeatingPanel = ({
                 </span>
             </div>
 
+            {at('BEHIND').map(renderSection)}
+
             <SeatingStage/>
 
-            {sections.map((section) => {
-                const productId = Number(section.product_id);
-                const quantity = quantityForProduct(productId);
-
-                return (
-                    <div
-                        className={'hi-seating-panel-section'}
-                        key={section.id}
-                        data-locked={quantity === 0 || undefined}
-                    >
-                        <h4 className={'hi-seating-panel-section-name'}>{section.name}</h4>
-                        <SeatingChart
-                            rowCount={section.row_count}
-                            seatsPerRow={section.seats_per_row}
-                            aislePositions={section.aisle_positions}
-                            seats={section.seats}
-                            selectedSeatIds={selectedSeatIdsForProduct(productId)}
-                            maxSelectable={quantity}
-                            onToggleSeat={(seat) => onToggleSeat(productId, seat)}
-                            showLegend={false}
-                        />
-                    </div>
-                );
-            })}
+            <div className={'hi-seating-room'}>
+                <div className={'hi-seating-room-side'}>{at('LEFT').map(renderSection)}</div>
+                <div className={'hi-seating-room-center'}>{at('CENTER').map(renderSection)}</div>
+                <div className={'hi-seating-room-side'}>{at('RIGHT').map(renderSection)}</div>
+            </div>
 
             <SeatingLegend/>
         </div>

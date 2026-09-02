@@ -37,6 +37,7 @@ class UpdateSeatingSectionHandler
             $section,
             $data->disabled_seats,
             $data->aisle_positions,
+            $data->layout_position,
         );
     }
 }

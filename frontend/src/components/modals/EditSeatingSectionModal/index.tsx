@@ -33,6 +33,7 @@ export const EditSeatingSectionModal = ({
             status: 'ACTIVE',
             disabled_seats: [],
             aisle_positions: [],
+            layout_position: 'CENTER',
         }
     });
     const editMutation = useEditSeatingSection();
@@ -66,6 +67,7 @@ export const EditSeatingSectionModal = ({
                     ?.filter((seat) => seat.state === 'DISABLED')
                     .map((seat) => seat.label) ?? [],
                 aisle_positions: seatingSection.aisle_positions ?? [],
+                layout_position: seatingSection.layout_position ?? 'CENTER',
             });
         }
     }, [seatingSection]);

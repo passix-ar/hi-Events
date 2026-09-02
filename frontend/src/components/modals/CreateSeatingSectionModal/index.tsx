@@ -25,6 +25,7 @@ export const CreateSeatingSectionModal = ({onClose}: GenericModalProps) => {
             status: 'ACTIVE',
             disabled_seats: [],
             aisle_positions: [],
+            layout_position: 'CENTER',
         }
     });
     const createMutation = useCreateSeatingSection();

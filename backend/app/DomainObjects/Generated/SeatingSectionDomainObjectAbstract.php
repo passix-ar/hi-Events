@@ -22,6 +22,7 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     final public const DELETED_AT = 'deleted_at';
     final public const ORDER = 'order';
     final public const AISLE_POSITIONS = 'aisle_positions';
+    final public const LAYOUT_POSITION = 'layout_position';
 
     protected int $id;
     protected int $event_id;
@@ -35,6 +36,7 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     protected ?string $deleted_at = null;
     protected int $order = 0;
     protected array|string|null $aisle_positions = null;
+    protected string $layout_position = 'CENTER';
 
     public function toArray(): array
     {
@@ -51,6 +53,7 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
                     'deleted_at' => $this->deleted_at ?? null,
                     'order' => $this->order ?? null,
                     'aisle_positions' => $this->aisle_positions ?? null,
+                    'layout_position' => $this->layout_position ?? null,
                 ];
     }
 
@@ -184,5 +187,16 @@ abstract class SeatingSectionDomainObjectAbstract extends \HiEvents\DomainObject
     public function getAislePositions(): array|string|null
     {
         return $this->aisle_positions;
+    }
+
+    public function setLayoutPosition(string $layout_position): self
+    {
+        $this->layout_position = $layout_position;
+        return $this;
+    }
+
+    public function getLayoutPosition(): string
+    {
+        return $this->layout_position;
     }
 }
