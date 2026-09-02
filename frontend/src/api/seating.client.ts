@@ -5,6 +5,8 @@ import {
     GenericPaginatedResponse,
     IdParam,
     QueryFilters,
+    SeatingLayoutRequest,
+    SeatingPlan,
     SeatingSection,
     SeatingSectionRequest,
 } from "../types";
@@ -27,8 +29,12 @@ export const seatingClient = {
         const response = await api.get<GenericDataResponse<SeatingSection>>(`events/${eventId}/seating-sections/${seatingSectionId}`);
         return response.data;
     },
-    reorder: async (eventId: IdParam, sectionIds: IdParam[]) => {
-        const response = await api.post<GenericDataResponse<SeatingSection[]>>(`events/${eventId}/seating-sections/reorder`, {section_ids: sectionIds});
+    layout: async (eventId: IdParam) => {
+        const response = await api.get<GenericDataResponse<{ stage_x: number, stage_y: number }>>(`events/${eventId}/seating-layout`);
+        return response.data;
+    },
+    saveLayout: async (eventId: IdParam, layout: SeatingLayoutRequest) => {
+        const response = await api.post<GenericDataResponse<{ stage_x: number, stage_y: number }>>(`events/${eventId}/seating-layout`, layout);
         return response.data;
     },
     delete: async (eventId: IdParam, seatingSectionId: IdParam) => {
@@ -39,7 +45,7 @@ export const seatingClient = {
 
 export const seatingClientPublic = {
     sections: async (eventId: IdParam) => {
-        const response = await publicApi.get<GenericDataResponse<SeatingSection[]>>(`events/${eventId}/seating-sections`);
+        const response = await publicApi.get<GenericDataResponse<SeatingPlan>>(`events/${eventId}/seating-sections`);
         return response.data;
     },
 }

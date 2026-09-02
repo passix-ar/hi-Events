@@ -99,7 +99,8 @@ const SelectProducts = (props: SelectProductsProps) => {
     const [collapsedProducts, setCollapsedProducts] = useState<{ [key: number]: boolean }>({});
     const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
 
-    const {data: seatingSections} = useGetSeatingSectionsPublic(eventId);
+    const {data: seatingPlan} = useGetSeatingSectionsPublic(eventId);
+    const seatingSections = seatingPlan?.sections;
     const sectionsByProduct = useMemo(() => {
         const map = new Map<number, SeatingSection[]>();
         seatingSections?.forEach((section) => {
@@ -682,8 +683,9 @@ const SelectProducts = (props: SelectProductsProps) => {
                         })}
                     </div>
 
-                    {!!seatingSections?.length && (
+                    {!!seatingPlan && !!seatingSections?.length && (
                         <SeatingPanel
+                            plan={seatingPlan}
                             sections={seatingSections.filter((section) => products
                                 .some((product) => Number(product.id) === Number(section.product_id)))}
                             selectedSeatIdsForProduct={getProductSeatIds}

@@ -820,11 +820,25 @@ export interface SeatingSection {
     seats_disabled?: number;
     order?: number;
     aisle_positions?: number[] | null;
+    position_x?: number | null;
+    position_y?: number | null;
     product?: {
         id: number;
         title: string;
     };
     seats?: Seat[];
+}
+
+export interface SeatingPlan {
+    stage_x: number;
+    stage_y: number;
+    sections: SeatingSection[];
+}
+
+export interface SeatingLayoutRequest {
+    stage_x: number;
+    stage_y: number;
+    sections: { id: IdParam, position_x: number, position_y: number }[];
 }
 
 export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'> & {

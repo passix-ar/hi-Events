@@ -74,7 +74,8 @@ export const CollectInformation = () => {
     const requireBillingAddress = event?.settings?.require_billing_address;
     const isPerOrderCollection = event?.settings?.attendee_details_collection_method === 'PER_ORDER';
     const [copyOption, setCopyOption] = useState<'none' | 'first' | 'all'>('none');
-    const {data: seatingSections} = useGetSeatingSectionsPublic(eventId);
+    const {data: seatingPlan} = useGetSeatingSectionsPublic(eventId);
+    const seatingSections = seatingPlan?.sections;
 
     // Seats are paired with attendees positionally: the backend assigns the Nth seat of a
     // product (deterministic order, see sortSeats) to that product's Nth attendee.

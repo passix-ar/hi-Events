@@ -43,7 +43,8 @@ use HiEvents\Http\Actions\SeatingSections\CreateSeatingSectionAction;
 use HiEvents\Http\Actions\SeatingSections\DeleteSeatingSectionAction;
 use HiEvents\Http\Actions\SeatingSections\GetSeatingSectionAction;
 use HiEvents\Http\Actions\SeatingSections\GetSeatingSectionsAction;
-use HiEvents\Http\Actions\SeatingSections\ReorderSeatingSectionsAction;
+use HiEvents\Http\Actions\SeatingSections\GetSeatingLayoutAction;
+use HiEvents\Http\Actions\SeatingSections\SaveSeatingLayoutAction;
 use HiEvents\Http\Actions\SeatingSections\Public\GetSeatingSectionsActionPublic;
 use HiEvents\Http\Actions\SeatingSections\UpdateSeatingSectionAction;
 use HiEvents\Http\Actions\CheckInLists\CreateCheckInListAction;
@@ -450,7 +451,8 @@ $router->middleware(['auth:api'])->group(
 
         $router->post('/events/{event_id}/seating-sections', CreateSeatingSectionAction::class);
         $router->get('/events/{event_id}/seating-sections', GetSeatingSectionsAction::class);
-        $router->post('/events/{event_id}/seating-sections/reorder', ReorderSeatingSectionsAction::class);
+        $router->get('/events/{event_id}/seating-layout', GetSeatingLayoutAction::class);
+        $router->post('/events/{event_id}/seating-layout', SaveSeatingLayoutAction::class);
         $router->get('/events/{event_id}/seating-sections/{seating_section_id}', GetSeatingSectionAction::class);
         $router->put('/events/{event_id}/seating-sections/{seating_section_id}', UpdateSeatingSectionAction::class);
         $router->delete('/events/{event_id}/seating-sections/{seating_section_id}', DeleteSeatingSectionAction::class);

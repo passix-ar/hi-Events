@@ -334,8 +334,8 @@
 }
 
 
-/* One map for the whole room, between the tickets and the total. Sections whose ticket
-   has not been added stay visible but out of reach, so the room still reads as a room. */
+/* One plan of the room, between the tickets and the total. On a wide screen the pieces sit
+   where the organizer dropped them; on a phone the same coordinates are read as an order. */
 .hi-seating-panel {
   margin: 20px 0;
   padding: 16px;
@@ -363,21 +363,29 @@
   font-weight: 600;
 }
 
-.hi-seating-panel-hint {
-  margin: 0 0 12px;
-  font-size: 0.82rem;
-  opacity: 0.75;
+.hi-seating-canvas {
+  position: relative;
+  min-height: 320px;
+  overflow: auto;
 }
 
-.hi-seating-panel-section {
-  margin-bottom: 14px;
+.hi-seating-placed {
+  position: absolute;
+}
 
+.hi-seating-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hi-seating-piece {
   &[data-locked] {
     opacity: 0.45;
   }
 }
 
-.hi-seating-panel-section-name {
+.hi-seating-piece-name {
   margin: 0 0 6px;
   font-size: 0.85rem;
 }

@@ -4,7 +4,7 @@ namespace HiEvents\Http\Actions\SeatingSections\Public;
 
 use HiEvents\DomainObjects\Enums\Role;
 use HiEvents\Http\Actions\BaseAction;
-use HiEvents\Resources\Seating\SeatingSectionResourcePublic;
+use HiEvents\Resources\Seating\SeatingPlanResourcePublic;
 use HiEvents\Services\Application\Handlers\SeatingSection\DTO\GetSeatingSectionsPublicDTO;
 use HiEvents\Services\Application\Handlers\SeatingSection\GetSeatingSectionsPublicHandler;
 use Illuminate\Http\JsonResponse;
@@ -20,7 +20,7 @@ class GetSeatingSectionsActionPublic extends BaseAction
         $isAuthenticated = $this->isUserAuthenticated();
 
         return $this->resourceResponse(
-            resource: SeatingSectionResourcePublic::class,
+            resource: SeatingPlanResourcePublic::class,
             data: $this->getSeatingSectionsPublicHandler->handle(
                 GetSeatingSectionsPublicDTO::from([
                     'event_id' => $eventId,

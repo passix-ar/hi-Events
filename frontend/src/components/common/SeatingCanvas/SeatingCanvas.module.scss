@@ -1,0 +1,27 @@
+.hint {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--mantine-color-gray-6);
+}
+
+.canvas {
+  position: relative;
+  min-height: 420px;
+  padding: 20px;
+  border: 1px dashed var(--mantine-color-gray-4);
+  border-radius: 8px;
+  overflow: auto;
+  touch-action: none;
+}
+
+.piece {
+  position: absolute;
+  cursor: grab;
+  touch-action: none;
+
+  &[data-dragging] {
+    cursor: grabbing;
+    z-index: 2;
+    opacity: 0.85;
+  }
+}

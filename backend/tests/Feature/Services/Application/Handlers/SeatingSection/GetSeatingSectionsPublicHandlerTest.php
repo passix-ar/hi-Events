@@ -102,10 +102,18 @@ class GetSeatingSectionsPublicHandlerTest extends TestCase
 
     public function test_a_live_event_is_visible_to_anyone(): void
     {
-        $sections = $this->handler->handle($this->dto());
+        $plan = $this->handler->handle($this->dto());
 
-        $this->assertCount(1, $sections);
-        $this->assertCount(1, $sections->first()->getSeats());
+        $this->assertCount(1, $plan->sections);
+        $this->assertCount(1, $plan->sections->first()->getSeats());
+    }
+
+    public function test_an_event_with_no_saved_layout_still_gets_a_stage(): void
+    {
+        $plan = $this->handler->handle($this->dto());
+
+        $this->assertSame(0, $plan->stage_x);
+        $this->assertSame(-140, $plan->stage_y);
     }
 
     public function test_an_unpublished_event_is_hidden_from_the_public(): void
@@ -121,9 +129,9 @@ class GetSeatingSectionsPublicHandlerTest extends TestCase
     {
         $this->event->update(['status' => 'DRAFT']);
 
-        $sections = $this->handler->handle($this->dto(accountId: $this->accountId));
+        $plan = $this->handler->handle($this->dto(accountId: $this->accountId));
 
-        $this->assertCount(1, $sections);
+        $this->assertCount(1, $plan->sections);
     }
 
     public function test_another_account_cannot_see_the_draft(): void
@@ -139,9 +147,9 @@ class GetSeatingSectionsPublicHandlerTest extends TestCase
     {
         $this->event->update(['status' => 'DRAFT']);
 
-        $sections = $this->handler->handle($this->dto(isSuperAdmin: true));
+        $plan = $this->handler->handle($this->dto(isSuperAdmin: true));
 
-        $this->assertCount(1, $sections);
+        $this->assertCount(1, $plan->sections);
     }
 
     private function dto(?int $accountId = null, bool $isSuperAdmin = false): GetSeatingSectionsPublicDTO

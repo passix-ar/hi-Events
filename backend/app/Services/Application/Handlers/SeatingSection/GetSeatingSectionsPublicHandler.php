@@ -3,6 +3,7 @@
 namespace HiEvents\Services\Application\Handlers\SeatingSection;
 
 use HiEvents\DomainObjects\EventDomainObject;
+use HiEvents\DomainObjects\Generated\SeatingLayoutDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
 use HiEvents\DomainObjects\SeatDomainObject;
 use HiEvents\DomainObjects\SeatingSectionDomainObject;
@@ -11,9 +12,11 @@ use HiEvents\DomainObjects\Status\SeatingSectionStatus;
 use HiEvents\Exceptions\ResourceNotFoundException;
 use HiEvents\Repository\Eloquent\Value\OrderAndDirection;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatingLayoutRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
 use HiEvents\Services\Application\Handlers\SeatingSection\DTO\GetSeatingSectionsPublicDTO;
+use HiEvents\Services\Application\Handlers\SeatingSection\DTO\SeatingPlanDTO;
 use Illuminate\Support\Collection;
 
 class GetSeatingSectionsPublicHandler
@@ -22,14 +25,13 @@ class GetSeatingSectionsPublicHandler
         private readonly SeatingSectionRepositoryInterface $seatingSectionRepository,
         private readonly SeatRepositoryInterface $seatRepository,
         private readonly EventRepositoryInterface $eventRepository,
+        private readonly SeatingLayoutRepositoryInterface $seatingLayoutRepository,
     ) {}
 
     /**
-     * @return Collection<int, SeatingSectionDomainObject>
-     *
      * @throws ResourceNotFoundException
      */
-    public function handle(GetSeatingSectionsPublicDTO $dto): Collection
+    public function handle(GetSeatingSectionsPublicDTO $dto): SeatingPlanDTO
     {
         $event = $this->eventRepository->findById($dto->event_id);
 
@@ -45,8 +47,18 @@ class GetSeatingSectionsPublicHandler
             orderAndDirections: [new OrderAndDirection(SeatingSectionDomainObjectAbstract::ORDER)],
         );
 
+        $layout = $this->seatingLayoutRepository->findFirstWhere([
+            SeatingLayoutDomainObjectAbstract::EVENT_ID => $dto->event_id,
+        ]);
+
+        $plan = static fn (Collection $withSeats) => new SeatingPlanDTO(
+            stage_x: $layout?->getStageX() ?? 0,
+            stage_y: $layout?->getStageY() ?? -140,
+            sections: $withSeats,
+        );
+
         if ($sections->isEmpty()) {
-            return $sections;
+            return $plan($sections);
         }
 
         $seatsBySection = $this->seatRepository
@@ -56,11 +68,11 @@ class GetSeatingSectionsPublicHandler
             )
             ->groupBy(static fn (SeatDomainObject $seat) => $seat->getSeatingSectionId());
 
-        return $sections->map(
+        return $plan($sections->map(
             static fn (SeatingSectionDomainObject $section) => $section->setSeats(
                 $seatsBySection->get($section->getId()) ?? collect()
             )
-        );
+        ));
     }
 
     /**

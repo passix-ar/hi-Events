@@ -43,6 +43,7 @@ use HiEvents\Repository\Eloquent\PromoCodeRepository;
 use HiEvents\Repository\Eloquent\QuestionAndAnswerViewRepository;
 use HiEvents\Repository\Eloquent\QuestionAnswerRepository;
 use HiEvents\Repository\Eloquent\QuestionRepository;
+use HiEvents\Repository\Eloquent\SeatingLayoutRepository;
 use HiEvents\Repository\Eloquent\SeatingSectionRepository;
 use HiEvents\Repository\Eloquent\SeatRepository;
 use HiEvents\Repository\Eloquent\StripeCustomerRepository;
@@ -96,6 +97,7 @@ use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Repository\Interfaces\QuestionAndAnswerViewRepositoryInterface;
 use HiEvents\Repository\Interfaces\QuestionAnswerRepositoryInterface;
 use HiEvents\Repository\Interfaces\QuestionRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatingLayoutRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
 use HiEvents\Repository\Interfaces\StripeCustomerRepositoryInterface;
@@ -144,6 +146,7 @@ class RepositoryServiceProvider extends ServiceProvider
         OrganizerRepositoryInterface::class => OrganizerRepository::class,
         AccountUserRepositoryInterface::class => AccountUserRepository::class,
         CapacityAssignmentRepositoryInterface::class => CapacityAssignmentRepository::class,
+        SeatingLayoutRepositoryInterface::class => SeatingLayoutRepository::class,
         SeatingSectionRepositoryInterface::class => SeatingSectionRepository::class,
         SeatRepositoryInterface::class => SeatRepository::class,
         StripeCustomerRepositoryInterface::class => StripeCustomerRepository::class,
