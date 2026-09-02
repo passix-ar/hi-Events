@@ -1,18 +1,24 @@
+/* The list is where a section is managed; the plan below is only for arranging it. */
 .sectionList {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 900px) {
+  .sectionList {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
 }
 
 .sectionCard {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  position: relative;
 }
 
 .sectionHeader {
-  padding-left: 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,23 +56,4 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-}
-
-.dragHandle {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  cursor: grab;
-  color: var(--mantine-color-gray-5);
-  display: flex;
-  align-items: center;
-  touch-action: none;
-
-  &:hover {
-    color: var(--mantine-color-gray-7);
-  }
-
-  &:active {
-    cursor: grabbing;
-  }
 }

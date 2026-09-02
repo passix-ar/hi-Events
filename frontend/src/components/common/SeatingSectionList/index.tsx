@@ -2,10 +2,10 @@ import {IdParam, SeatingLayoutRequest, SeatingSection} from "../../../types";
 import {Badge, Button} from "@mantine/core";
 import {t, Trans} from "@lingui/macro";
 import {IconArmchair, IconPencil, IconPlus, IconTrash} from "@tabler/icons-react";
-import Truncate from "../Truncate";
 import {NoResultsSplash} from "../NoResultsSplash";
-import classes from './SeatingSectionList.module.scss';
+import Truncate from "../Truncate";
 import {Card} from "../Card";
+import classes from './SeatingSectionList.module.scss';
 import {useState} from "react";
 import {ActionMenu} from "../ActionMenu";
 import {useDisclosure} from "@mantine/hooks";
@@ -88,24 +88,21 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
 
     return (
         <>
-            <SeatingCanvas
-                sections={seatingSections}
-                stage={stage}
-                onChange={handleLayoutChange}
-                renderSection={(section) => (
-                    <Card className={classes.sectionCard}>
+            <div className={classes.sectionList}>
+                {seatingSections.map((section) => (
+                    <Card className={classes.sectionCard} key={section.id}>
                         <div className={classes.sectionHeader}>
                             <div className={classes.sectionProduct}>
                                 <IconArmchair size={16}/>
                                 {section.product?.title || t`Unknown product`}
                             </div>
                             <Badge variant={'light'} color={section.status === 'ACTIVE' ? 'green' : 'gray'}>
-                                {section.status}
+                                {section.status === 'ACTIVE' ? t`Active` : t`Inactive`}
                             </Badge>
                         </div>
 
                         <div className={classes.sectionName}>
-                            <b><Truncate text={section.name} length={24}/></b>
+                            <b><Truncate text={section.name} length={30}/></b>
                         </div>
 
                         <div className={classes.sectionInfo}>
@@ -114,6 +111,9 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                                 <span className={classes.sectionCounts}>
                                     <Badge variant={'light'} color={'teal'} size={'sm'}>
                                         {section.seats_available ?? 0} {t`available`}
+                                    </Badge>
+                                    <Badge variant={'light'} color={'yellow'} size={'sm'}>
+                                        {section.seats_held ?? 0} {t`held`}
                                     </Badge>
                                     <Badge variant={'light'} color={'gray'} size={'sm'}>
                                         {section.seats_sold ?? 0} {t`sold`}
@@ -155,7 +155,13 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                             </div>
                         </div>
                     </Card>
-                )}
+                ))}
+            </div>
+
+            <SeatingCanvas
+                sections={seatingSections}
+                stage={stage}
+                onChange={handleLayoutChange}
             />
 
             {(editModalOpen && selectedSeatingSectionId)

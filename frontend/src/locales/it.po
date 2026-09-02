@@ -77,7 +77,7 @@ msgstr "Logo {0}"
 msgid "{0} organizers"
 msgstr "{0} organizzatori"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} file × {1} posti"
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} di {totalCount} disponibile"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "{chosen} di {needed} posti selezionati"
 
@@ -466,6 +466,7 @@ msgstr "Data di attivazione"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "Tutti i lavori in coda per il nuovo tentativo"
 msgid "All Products"
 msgstr "Tutti i Prodotti"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "Tutti i posti selezionati"
 
@@ -1246,7 +1247,7 @@ msgstr "Offri automaticamente i biglietti alla persona successiva quando si libe
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Ridimensiona automaticamente l'altezza del widget in base al contenuto. Quando disabilitato, il widget riempirà l'altezza del contenitore."
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "disponibili"
 
@@ -1738,7 +1739,7 @@ msgstr "Scegli l'impostazione predefinita per i nuovi eventi. Questa può essere
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "Scegli chi paga la commissione della piattaforma. Questo non influisce sulle commissioni aggiuntive che hai configurato nelle impostazioni del tuo account."
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "Scegli i tuoi posti"
 
@@ -2974,7 +2975,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Trascina il palco e ogni sezione per comporre la tua sala."
 
@@ -4378,9 +4379,9 @@ msgstr "Ospiti"
 msgid "Have a promo code?"
 msgstr "Hai un codice promozionale?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "riservati"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "riservati"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "Importante: Riconnessione Stripe richiesta"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9598,7 +9600,7 @@ msgstr "Sconosciuto"
 msgid "Unknown Attendee"
 msgstr "Partecipante Sconosciuto"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "Prodotto sconosciuto"
 

@@ -77,7 +77,7 @@ msgstr "Logo de {0}"
 msgid "{0} organizers"
 msgstr "{0} organizaciones"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} filas × {1} asientos"
 
@@ -101,7 +101,7 @@ msgstr "{affectedEventCount, plural, one {# evento publicado dejará de ofrecer 
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} de {totalCount} disponibles"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "{chosen} de {needed} butacas seleccionadas"
 
@@ -466,6 +466,7 @@ msgstr "Fecha de activación"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "Todos los trabajos en cola para reintentar"
 msgid "All Products"
 msgstr "Todos los productos"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "Ya elegiste todas tus butacas"
 
@@ -1246,7 +1247,7 @@ msgstr "Ofrecer automáticamente entradas a la siguiente persona cuando haya dis
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Ajustar automáticamente la altura del widget según el contenido. Cuando está deshabilitado, el widget llenará la altura del contenedor."
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "disponibles"
 
@@ -1738,7 +1739,7 @@ msgstr "Elija la configuración predeterminada para nuevos eventos. Esto se pued
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "Elija quién paga la comisión de la plataforma. Esto no afecta las comisiones adicionales que haya configurado en su cuenta."
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "Elige tus asientos"
 
@@ -2974,7 +2975,7 @@ msgstr "Arrastrá y soltá o hacé clic para subir"
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr "Arrastra la imagen y ajusta el zoom para elegir qué se ve en el banner."
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Arrastrá el escenario y cada sección para armar tu sala."
 
@@ -4378,9 +4379,9 @@ msgstr "Huéspedes"
 msgid "Have a promo code?"
 msgstr "¿Tienes un código de promoción?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "reservados"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "reservados"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "Importante: Se requiere reconectar Stripe"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9596,7 +9598,7 @@ msgstr "Desconocido"
 msgid "Unknown Attendee"
 msgstr "Asistente desconocido"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "Producto desconocido"
 

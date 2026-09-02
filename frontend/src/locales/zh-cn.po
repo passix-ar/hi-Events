@@ -77,7 +77,7 @@ msgstr "{0} 标志"
 msgid "{0} organizers"
 msgstr "{0} 位组织者"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} 排 × {1} 座"
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} / {totalCount} 可用"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "已选 {chosen}/{needed} 个座位"
 
@@ -466,6 +466,7 @@ msgstr "激活日期"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "所有任务已排队等待重试"
 msgid "All Products"
 msgstr "所有产品"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "已选好全部座位"
 
@@ -1246,7 +1247,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "根据内容自动调整小部件高度。禁用时，小部件将填充容器的高度。"
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "可选"
 
@@ -1738,7 +1739,7 @@ msgstr "为新活动选择默认设置。这可以针对单个活动进行覆盖
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "选择谁支付平台费用。这不会影响您在账户设置中配置的额外费用。"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "选择您的座位"
 
@@ -2974,7 +2975,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "拖动舞台和各个分区来布置你的场地。"
 
@@ -4378,9 +4379,9 @@ msgstr "宾客"
 msgid "Have a promo code?"
 msgstr "有促销代码吗？"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "保留"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "保留"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "重要：需要重新连接 Stripe"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9596,7 +9598,7 @@ msgstr "未知"
 msgid "Unknown Attendee"
 msgstr "未知参会者"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "未知产品"
 

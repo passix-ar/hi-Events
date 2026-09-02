@@ -77,7 +77,7 @@ msgstr "Logo {0}"
 msgid "{0} organizers"
 msgstr "{0} organizadores"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} fileiras × {1} assentos"
 
@@ -101,7 +101,7 @@ msgstr "{affectedEventCount, plural, one {# evento publicado deixará de oferece
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} de {totalCount} disponíveis"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "{chosen} de {needed} assentos selecionados"
 
@@ -466,6 +466,7 @@ msgstr "Data de ativação"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "Todos os trabalhos na fila para nova tentativa"
 msgid "All Products"
 msgstr "Todos os Produtos"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "Todos os assentos selecionados"
 
@@ -1246,7 +1247,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Redimensionar automaticamente a altura do widget com base no conteúdo. Quando desativado, o widget preencherá a altura do contêiner."
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "disponíveis"
 
@@ -1738,7 +1739,7 @@ msgstr "Escolha a configuração padrão para novos eventos. Isso pode ser subst
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "Escolha quem paga a taxa da plataforma. Isso não afeta as taxas adicionais que você configurou nas configurações da sua conta."
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "Escolha seus assentos"
 
@@ -2974,7 +2975,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Arraste o palco e cada seção para montar sua sala."
 
@@ -4378,9 +4379,9 @@ msgstr "Convidados"
 msgid "Have a promo code?"
 msgstr "Tem um código promocional?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "reservados"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "reservados"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "Importante: Reconexão do Stripe necessária"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9596,7 +9598,7 @@ msgstr "Desconhecido"
 msgid "Unknown Attendee"
 msgstr "Participante desconhecido"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "Produto desconhecido"
 

@@ -2,27 +2,22 @@ import {t} from "@lingui/macro";
 import {ReactNode, useEffect, useState} from "react";
 import {DndContext, DragEndEvent, PointerSensor, TouchSensor, useDraggable, useSensor, useSensors} from "@dnd-kit/core";
 import {IdParam, SeatingSection} from "../../../types.ts";
-import {SeatingStage} from "../SeatingChart";
+import {SeatingRoom} from "../SeatingRoom";
 import classes from './SeatingCanvas.module.scss';
 
 type Spot = { x: number, y: number };
-type Spots = Record<string, Spot>;
 
 const STAGE = 'stage';
 
-const Piece = ({id, spot, children}: { id: string, spot: Spot, children: ReactNode }) => {
+const Handle = ({id, children}: { id: string, children: ReactNode }) => {
     const {attributes, listeners, setNodeRef, transform, isDragging} = useDraggable({id});
 
     return (
         <div
             ref={setNodeRef}
-            className={classes.piece}
+            className={classes.handle}
             data-dragging={isDragging || undefined}
-            style={{
-                left: spot.x,
-                top: spot.y,
-                transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
-            }}
+            style={transform ? {transform: `translate(${transform.x}px, ${transform.y}px)`, zIndex: 2} : undefined}
             {...attributes}
             {...listeners}
         >
@@ -35,11 +30,11 @@ interface SeatingCanvasProps {
     sections: SeatingSection[];
     stage: Spot;
     onChange: (stage: Spot, sections: { id: IdParam, position_x: number, position_y: number }[]) => void;
-    renderSection: (section: SeatingSection) => ReactNode;
+    sectionOverlay?: (section: SeatingSection) => ReactNode;
 }
 
-export const SeatingCanvas = ({sections, stage, onChange, renderSection}: SeatingCanvasProps) => {
-    const [spots, setSpots] = useState<Spots>({});
+export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: SeatingCanvasProps) => {
+    const [spots, setSpots] = useState<Record<string, Spot>>({});
     const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
     useEffect(() => {
@@ -65,20 +60,23 @@ export const SeatingCanvas = ({sections, stage, onChange, renderSection}: Seatin
         setSpots(moved);
         onChange(
             moved[STAGE],
-            sections.map((section) => ({
-                id: section.id as IdParam,
-                position_x: moved[String(section.id)].x,
-                position_y: moved[String(section.id)].y,
-            })),
+            sections
+                .filter((section) => moved[String(section.id)])
+                .map((section) => ({
+                    id: section.id as IdParam,
+                    position_x: moved[String(section.id)].x,
+                    position_y: moved[String(section.id)].y,
+                })),
         );
     };
 
-    // Everything is stored around an origin, so the plan is shifted into view rather than
-    // half of it sitting outside the box.
-    const all = Object.values(spots);
-    const offsetX = all.length ? Math.min(...all.map((s) => s.x)) : 0;
-    const offsetY = all.length ? Math.min(...all.map((s) => s.y)) : 0;
-    const shift = (spot: Spot) => ({x: spot.x - offsetX, y: spot.y - offsetY});
+    // The organizer moves the very plan the buyer will see, so there is nothing to translate
+    // between what is arranged here and what is drawn there.
+    const placed = sections.map((section) => ({
+        ...section,
+        position_x: spots[String(section.id)]?.x ?? section.position_x ?? 0,
+        position_y: spots[String(section.id)]?.y ?? section.position_y ?? 0,
+    }));
 
     return (
         <>
@@ -86,17 +84,12 @@ export const SeatingCanvas = ({sections, stage, onChange, renderSection}: Seatin
 
             <div className={classes.canvas}>
                 <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-                    {spots[STAGE] && (
-                        <Piece id={STAGE} spot={shift(spots[STAGE])}>
-                            <SeatingStage/>
-                        </Piece>
-                    )}
-
-                    {sections.map((section) => spots[String(section.id)] && (
-                        <Piece key={section.id} id={String(section.id)} spot={shift(spots[String(section.id)])}>
-                            {renderSection(section)}
-                        </Piece>
-                    ))}
+                    <SeatingRoom
+                        sections={placed}
+                        stage={spots[STAGE] ?? stage}
+                        sectionOverlay={sectionOverlay}
+                        wrapPiece={(key, node) => <Handle id={key}>{node}</Handle>}
+                    />
                 </DndContext>
             </div>
         </>

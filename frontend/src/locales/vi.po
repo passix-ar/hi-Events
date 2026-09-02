@@ -77,7 +77,7 @@ msgstr "Logo {0}"
 msgid "{0} organizers"
 msgstr "{0} nhà tổ chức"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} hàng × {1} chỗ ngồi"
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} trong số {totalCount} có sẵn"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "Đã chọn {chosen}/{needed} ghế"
 
@@ -466,6 +466,7 @@ msgstr "Ngày kích hoạt"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "Tất cả công việc đã được xếp hàng để thử lại"
 msgid "All Products"
 msgstr "Tất cả các sản phẩm"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "Đã chọn đủ ghế"
 
@@ -1246,7 +1247,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Tự động thay đổi chiều cao widget dựa trên nội dung. Khi tắt, widget sẽ lấp đầy chiều cao của container."
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "còn trống"
 
@@ -1738,7 +1739,7 @@ msgstr "Chọn cài đặt mặc định cho các sự kiện mới. Điều nà
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "Chọn ai trả phí nền tảng. Điều này không ảnh hưởng đến các khoản phí bổ sung mà bạn đã cấu hình trong cài đặt tài khoản."
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "Chọn chỗ ngồi của bạn"
 
@@ -2974,7 +2975,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Kéo sân khấu và từng khu vực để bố trí phòng của bạn."
 
@@ -4378,9 +4379,9 @@ msgstr "Người được mời"
 msgid "Have a promo code?"
 msgstr "Nhập mã khuyến mãi?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "đang giữ"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "đang giữ"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "Quan trọng: Cần kết nối lại Stripe"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9596,7 +9598,7 @@ msgstr "Không rõ"
 msgid "Unknown Attendee"
 msgstr "Người tham dự không xác định"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "Sản phẩm không xác định"
 

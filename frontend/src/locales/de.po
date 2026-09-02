@@ -77,7 +77,7 @@ msgstr "{0} Logo"
 msgid "{0} organizers"
 msgstr "{0} Veranstalter"
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:110
 msgid "{0} rows × {1} seats"
 msgstr "{0} Reihen × {1} Sitzplätze"
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} von {totalCount} verfügbar"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:80
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
 msgstr "{chosen} von {needed} Plätzen ausgewählt"
 
@@ -466,6 +466,7 @@ msgstr "Aktivierungsdatum"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -718,7 +719,7 @@ msgstr "Alle Jobs zur Wiederholung eingereiht"
 msgid "All Products"
 msgstr "Alle Produkte"
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:79
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:35
 msgid "All seats selected"
 msgstr "Alle Plätze ausgewählt"
 
@@ -1246,7 +1247,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Passen Sie die Widget-Höhe automatisch an den Inhalt an. Bei Deaktivierung füllt das Widget die Höhe des Containers aus."
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:113
 msgid "available"
 msgstr "verfügbar"
 
@@ -1738,7 +1739,7 @@ msgstr "Wählen Sie die Standardeinstellung für neue Veranstaltungen. Dies kann
 msgid "Choose who pays the platform fee. This does not affect additional fees you've configured in your account settings."
 msgstr "Wählen Sie, wer die Plattformgebühr zahlt. Dies hat keine Auswirkungen auf zusätzliche Gebühren, die Sie in Ihren Kontoeinstellungen konfiguriert haben."
 
-#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:76
+#: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:32
 msgid "Choose your seats"
 msgstr "Wählen Sie Ihre Sitzplätze"
 
@@ -2974,7 +2975,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:85
+#: src/components/common/SeatingCanvas/index.tsx:83
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Ziehe die Bühne und jeden Bereich, um deinen Saal aufzubauen."
 
@@ -4378,9 +4379,9 @@ msgstr "Gäste"
 msgid "Have a promo code?"
 msgstr "Haben Sie einen Promo-Code?"
 
-#: src/components/common/SeatingSectionList/index.tsx:156
-#~ msgid "held"
-#~ msgstr "reserviert"
+#: src/components/common/SeatingSectionList/index.tsx:116
+msgid "held"
+msgstr "reserviert"
 
 #: src/components/common/SeatingChart/index.tsx:132
 msgid "Held"
@@ -4684,6 +4685,7 @@ msgstr "Wichtig: Stripe-Neuverbindung erforderlich"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/SeatingSectionList/index.tsx:100
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -9596,7 +9598,7 @@ msgstr "Unbekannt"
 msgid "Unknown Attendee"
 msgstr "Unbekannter Teilnehmer"
 
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:97
 msgid "Unknown product"
 msgstr "Unbekanntes Produkt"
 

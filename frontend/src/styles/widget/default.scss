@@ -334,14 +334,13 @@
 }
 
 
-/* One plan of the room, between the tickets and the total. On a wide screen the pieces sit
-   where the organizer dropped them; on a phone the same coordinates are read as an order. */
+/* One plan of the room, between the tickets and the total — the same one the organizer
+   laid out, drawn from the same coordinates. */
 .hi-seating-panel {
   margin: 20px 0;
   padding: 16px;
   border-radius: 8px;
   border: 1px solid rgba(128, 128, 128, 0.22);
-  overflow: hidden;
 }
 
 .hi-seating-panel-header {
@@ -361,31 +360,4 @@
 .hi-seating-panel-count {
   font-size: 0.85rem;
   font-weight: 600;
-}
-
-.hi-seating-canvas {
-  position: relative;
-  min-height: 320px;
-  overflow: auto;
-}
-
-.hi-seating-placed {
-  position: absolute;
-}
-
-.hi-seating-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.hi-seating-piece {
-  &[data-locked] {
-    opacity: 0.45;
-  }
-}
-
-.hi-seating-piece-name {
-  margin: 0 0 6px;
-  font-size: 0.85rem;
 }

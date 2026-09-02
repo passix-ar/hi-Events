@@ -1,0 +1,36 @@
+.scroller {
+  overflow: auto;
+  padding-bottom: 8px;
+}
+
+/* Sized by the plan itself: absolutely positioned children give a container no height,
+   so without this the browser clips the room instead of scrolling it. */
+.plan {
+  position: relative;
+  margin: 0 auto;
+}
+
+.piece {
+  position: absolute;
+}
+
+.section {
+  position: relative;
+
+  &[data-locked] {
+    opacity: 0.45;
+  }
+}
+
+.name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
