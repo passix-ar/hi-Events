@@ -17,8 +17,11 @@
 .section {
   position: relative;
 
+  /* A section whose ticket has not been added reads as neutral rather than faint: dimming
+     alone washed every seat state into the same grey. */
   &[data-locked] {
-    opacity: 0.45;
+    opacity: 0.6;
+    filter: grayscale(0.75);
   }
 }
 

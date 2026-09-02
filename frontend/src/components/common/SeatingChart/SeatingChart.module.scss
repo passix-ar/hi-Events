@@ -69,31 +69,49 @@
   padding: 0;
   cursor: default;
 
+  /* States differ by fill as well as hue: free seats are outlined, taken ones are solid.
+     Four light Mantine tints all read as the same pale square on a dark background, and the
+     difference has to survive a dimmed section and a colour-blind eye. */
   &[data-state='AVAILABLE'] {
     border-color: var(--mantine-color-teal-5);
-    background: var(--mantine-color-teal-0);
-    color: var(--mantine-color-teal-8);
+    background: transparent;
+    color: var(--mantine-color-teal-5);
   }
 
   &[data-state='SELECTED'] {
-    border-color: var(--mantine-color-blue-7);
+    border-color: var(--mantine-color-blue-5);
     background: var(--mantine-color-blue-6);
     color: var(--mantine-color-white);
     font-weight: 700;
   }
 
   &[data-state='HELD'] {
-    border-color: var(--mantine-color-yellow-5);
-    background: var(--mantine-color-yellow-1);
-    color: var(--mantine-color-yellow-8);
+    border-color: var(--mantine-color-yellow-6);
+    background: color-mix(in srgb, var(--mantine-color-yellow-6) 35%, transparent);
+    color: var(--mantine-color-yellow-4);
     cursor: not-allowed;
   }
 
   &[data-state='SOLD'] {
-    border-color: var(--mantine-color-gray-4);
-    background: var(--mantine-color-gray-3);
-    color: var(--mantine-color-gray-5);
+    border-color: transparent;
+    background: var(--mantine-color-gray-6);
+    color: var(--mantine-color-gray-3);
     cursor: not-allowed;
+  }
+
+  [data-mantine-color-scheme='light'] & {
+    &[data-state='AVAILABLE'] {
+      color: var(--mantine-color-teal-8);
+    }
+
+    &[data-state='HELD'] {
+      color: var(--mantine-color-yellow-9);
+    }
+
+    &[data-state='SOLD'] {
+      background: var(--mantine-color-gray-4);
+      color: var(--mantine-color-gray-7);
+    }
   }
 
   &[data-state='PREVIEW'] {
@@ -190,21 +208,21 @@
 
   &[data-state='AVAILABLE'] {
     border-color: var(--mantine-color-teal-5);
-    background: var(--mantine-color-teal-0);
+    background: transparent;
   }
 
   &[data-state='SELECTED'] {
-    border-color: var(--mantine-color-blue-7);
+    border-color: var(--mantine-color-blue-5);
     background: var(--mantine-color-blue-6);
   }
 
   &[data-state='HELD'] {
-    border-color: var(--mantine-color-yellow-5);
-    background: var(--mantine-color-yellow-1);
+    border-color: var(--mantine-color-yellow-6);
+    background: color-mix(in srgb, var(--mantine-color-yellow-6) 35%, transparent);
   }
 
   &[data-state='SOLD'] {
-    border-color: var(--mantine-color-gray-4);
-    background: var(--mantine-color-gray-3);
+    border-color: transparent;
+    background: var(--mantine-color-gray-6);
   }
 }
