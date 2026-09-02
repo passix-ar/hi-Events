@@ -820,7 +820,6 @@ export interface SeatingSection {
     seats_disabled?: number;
     order?: number;
     aisle_positions?: number[] | null;
-    layout_position?: 'LEFT' | 'CENTER' | 'RIGHT' | 'BEHIND';
     product?: {
         id: number;
         title: string;
@@ -831,7 +830,6 @@ export interface SeatingSection {
 export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'> & {
     disabled_seats?: string[];
     aisle_positions?: number[];
-    layout_position?: 'LEFT' | 'CENTER' | 'RIGHT' | 'BEHIND';
 };
 
 export interface CheckInList {

@@ -2,7 +2,6 @@
 
 namespace HiEvents\Http\Request\SeatingSection;
 
-use HiEvents\DomainObjects\Enums\SeatingSectionPosition;
 use HiEvents\DomainObjects\Status\SeatingSectionStatus;
 use HiEvents\Http\Request\BaseRequest;
 use HiEvents\Validators\Rules\RulesHelper;
@@ -22,7 +21,6 @@ class UpsertSeatingSectionRequest extends BaseRequest
             'disabled_seats.*' => ['string', 'max:10'],
             'aisle_positions' => ['sometimes', 'nullable', 'array'],
             'aisle_positions.*' => ['integer', 'min:1'],
-            'layout_position' => ['sometimes', 'nullable', Rule::in(SeatingSectionPosition::valuesArray())],
         ];
     }
 

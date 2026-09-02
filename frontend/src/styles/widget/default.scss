@@ -369,26 +369,6 @@
   opacity: 0.75;
 }
 
-/* Sides flank the centre so a room with lateral stalls reads as one. On a narrow
-   screen they stack, because three columns of seats fit nowhere. */
-.hi-seating-room {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  align-items: start;
-}
-
-@media (min-width: 720px) {
-  .hi-seating-room {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-}
-
-.hi-seating-room-side:empty,
-.hi-seating-room-center:empty {
-  display: none;
-}
-
 .hi-seating-panel-section {
   margin-bottom: 14px;
 

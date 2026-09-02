@@ -1,5 +1,5 @@
 import {InputGroup} from "../../common/InputGroup";
-import {Input, MultiSelect, NumberInput, Select, TextInput} from "@mantine/core";
+import {Input, MultiSelect, NumberInput, TextInput} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {UseFormReturnType} from "@mantine/form";
 import {ProductCategory, Seat, SeatingSectionRequest} from "../../../types.ts";
@@ -104,19 +104,6 @@ export const SeatingSectionForm = ({form, productsCategories, seats}: SeatingSec
                     placeholder={'10'}
                 />
             </InputGroup>
-
-            <Select
-                {...form.getInputProps('layout_position')}
-                label={t`Where in the room`}
-                description={t`Used to draw the section around the stage on the seat map.`}
-                data={[
-                    {value: 'BEHIND', label: t`Behind the stage`},
-                    {value: 'LEFT', label: t`Left`},
-                    {value: 'CENTER', label: t`Centre`},
-                    {value: 'RIGHT', label: t`Right`},
-                ]}
-                allowDeselect={false}
-            />
 
             <CustomSelect
                 label={t`Status`}

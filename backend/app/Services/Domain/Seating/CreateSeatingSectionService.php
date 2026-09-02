@@ -3,7 +3,6 @@
 namespace HiEvents\Services\Domain\Seating;
 
 use HiEvents\DomainObjects\Enums\ProductType;
-use HiEvents\DomainObjects\Enums\SeatingSectionPosition;
 use HiEvents\DomainObjects\Generated\SeatDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
 use HiEvents\DomainObjects\SeatingSectionDomainObject;
@@ -38,14 +37,13 @@ class CreateSeatingSectionService
         SeatingSectionDomainObject $section,
         ?array $disabledSeats = null,
         ?array $aislePositions = null,
-        ?string $layoutPosition = null,
     ): SeatingSectionDomainObject {
         $this->validateLayout($section->getRowCount(), $section->getSeatsPerRow());
         $this->validateProduct($section->getProductId(), $section->getEventId());
         $this->validateDisabledSeats($disabledSeats, $section->getRowCount(), $section->getSeatsPerRow());
         $aislePositions = $this->normaliseAislePositions($aislePositions, $section->getSeatsPerRow());
 
-        return $this->databaseManager->transaction(function () use ($section, $disabledSeats, $aislePositions, $layoutPosition) {
+        return $this->databaseManager->transaction(function () use ($section, $disabledSeats, $aislePositions) {
             /** @var SeatingSectionDomainObject $created */
             $created = $this->seatingSectionRepository->create([
                 SeatingSectionDomainObjectAbstract::EVENT_ID => $section->getEventId(),
@@ -55,7 +53,6 @@ class CreateSeatingSectionService
                 SeatingSectionDomainObjectAbstract::SEATS_PER_ROW => $section->getSeatsPerRow(),
                 SeatingSectionDomainObjectAbstract::STATUS => $section->getStatus(),
                 SeatingSectionDomainObjectAbstract::AISLE_POSITIONS => $aislePositions,
-                SeatingSectionDomainObjectAbstract::LAYOUT_POSITION => $layoutPosition ?: SeatingSectionPosition::CENTER->name,
                 SeatingSectionDomainObjectAbstract::ORDER => $this->nextOrderForEvent($section->getEventId()),
             ]);
 

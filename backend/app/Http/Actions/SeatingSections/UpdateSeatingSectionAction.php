@@ -37,7 +37,6 @@ class UpdateSeatingSectionAction extends BaseAction
                     'status' => $request->validated('status'),
                     'disabled_seats' => $request->validated('disabled_seats'),
                     'aisle_positions' => $request->validated('aisle_positions'),
-                    'layout_position' => $request->validated('layout_position'),
                 ]),
             );
         } catch (ResourceNotFoundException $exception) {
