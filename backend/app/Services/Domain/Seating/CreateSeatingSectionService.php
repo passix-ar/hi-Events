@@ -44,6 +44,8 @@ class CreateSeatingSectionService
         $aislePositions = $this->normaliseAislePositions($aislePositions, $section->getSeatsPerRow());
 
         return $this->databaseManager->transaction(function () use ($section, $disabledSeats, $aislePositions) {
+            $spot = $this->nextSpotForEvent($section->getEventId());
+
             /** @var SeatingSectionDomainObject $created */
             $created = $this->seatingSectionRepository->create([
                 SeatingSectionDomainObjectAbstract::EVENT_ID => $section->getEventId(),
@@ -53,7 +55,9 @@ class CreateSeatingSectionService
                 SeatingSectionDomainObjectAbstract::SEATS_PER_ROW => $section->getSeatsPerRow(),
                 SeatingSectionDomainObjectAbstract::STATUS => $section->getStatus(),
                 SeatingSectionDomainObjectAbstract::AISLE_POSITIONS => $aislePositions,
-                SeatingSectionDomainObjectAbstract::ORDER => $this->nextOrderForEvent($section->getEventId()),
+                SeatingSectionDomainObjectAbstract::ORDER => $spot['order'],
+                SeatingSectionDomainObjectAbstract::POSITION_X => 0,
+                SeatingSectionDomainObjectAbstract::POSITION_Y => $spot['position_y'],
             ]);
 
             $this->seatRepository->insert(
@@ -149,17 +153,26 @@ class CreateSeatingSectionService
         return $positions;
     }
 
-    private function nextOrderForEvent(int $eventId): int
+    /**
+     * Where a new section goes: last in the running order, and below the lowest piece of the
+     * plan rather than at the origin, where it would land on top of whatever is already there.
+     *
+     * @return array{order: int, position_y: int}
+     */
+    private function nextSpotForEvent(int $eventId): array
     {
         $sections = $this->seatingSectionRepository
             ->findWhere([SeatingSectionDomainObjectAbstract::EVENT_ID => $eventId]);
 
         if ($sections->isEmpty()) {
-            return 0;
+            return ['order' => 0, 'position_y' => 0];
         }
 
-        // Counting would reuse a position freed by a deleted section and tie with an existing one.
-        return $sections->max(static fn (SeatingSectionDomainObject $section) => $section->getOrder()) + 1;
+        return [
+            // Counting would reuse a position freed by a deleted section and tie with an existing one.
+            'order' => $sections->max(static fn (SeatingSectionDomainObject $section) => $section->getOrder()) + 1,
+            'position_y' => $sections->max(static fn (SeatingSectionDomainObject $section) => $section->getPositionY() ?? 0) + 240,
+        ];
     }
 
     /**

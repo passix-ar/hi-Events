@@ -1,5 +1,14 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
 .hint {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 0.85rem;
   color: var(--mantine-color-gray-6);
 }

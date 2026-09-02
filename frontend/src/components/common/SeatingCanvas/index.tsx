@@ -1,9 +1,12 @@
 import {t} from "@lingui/macro";
+import {Button} from "@mantine/core";
+import {IconLayoutGrid} from "@tabler/icons-react";
 import {ReactNode, useEffect, useState} from "react";
 import {DndContext, DragEndEvent, PointerSensor, TouchSensor, useDraggable, useSensor, useSensors} from "@dnd-kit/core";
 import {IdParam, SeatingSection} from "../../../types.ts";
 import {SeatingRoom} from "../SeatingRoom";
-import {PLAN_MARGIN} from "../../../utilites/seatingPlan.ts";
+import {collides, PLAN_MARGIN, sectionSize, snapToGrid, STAGE_SIZE, tidyPlan} from "../../../utilites/seatingPlan.ts";
+import {showError} from "../../../utilites/notifications.tsx";
 import classes from './SeatingCanvas.module.scss';
 
 type Spot = { x: number, y: number };
@@ -56,9 +59,25 @@ export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: Seati
             return;
         }
 
-        // Kept inside the drawn margin, so a piece cannot be dragged off the plan.
-        const clamp = (value: number) => Math.min(Math.max(Math.round(value), -PLAN_MARGIN), 3000);
-        const moved = {...spots, [id]: {x: clamp(current.x + delta.x), y: clamp(current.y + delta.y)}};
+        // Kept inside the drawn margin and on the grid, so a piece cannot be dragged off the
+        // plan or land a few pixels out of line with the rest.
+        const clamp = (value: number) => Math.min(Math.max(snapToGrid(value), -PLAN_MARGIN), 3000);
+        const target = {x: clamp(current.x + delta.x), y: clamp(current.y + delta.y)};
+
+        const sizeOf = (key: string) => key === STAGE
+            ? STAGE_SIZE
+            : sectionSize(sections.find((section) => String(section.id) === key)!);
+
+        const others = Object.entries(spots)
+            .filter(([key]) => key !== id && (key === STAGE || sections.some((section) => String(section.id) === key)))
+            .map(([key, spot]) => ({...spot, ...sizeOf(key)}));
+
+        if (collides({...target, ...sizeOf(id)}, others)) {
+            showError(t`That spot is taken — leave room between the pieces.`);
+            return;
+        }
+
+        const moved = {...spots, [id]: target};
 
         setSpots(moved);
         onChange(
@@ -83,7 +102,24 @@ export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: Seati
 
     return (
         <>
-            <p className={classes.hint}>{t`Drag the stage and each section to lay out your room.`}</p>
+            <div className={classes.toolbar}>
+                <p className={classes.hint}>{t`Drag the stage and each section to lay out your room.`}</p>
+                <Button
+                    size={'compact-xs'}
+                    variant={'subtle'}
+                    leftSection={<IconLayoutGrid size={14}/>}
+                    onClick={() => {
+                        const tidy = tidyPlan(sections);
+                        setSpots({
+                            [STAGE]: tidy.stage,
+                            ...Object.fromEntries(tidy.sections.map((s) => [String(s.id), {x: s.position_x, y: s.position_y}])),
+                        });
+                        onChange(tidy.stage, tidy.sections.map((s) => ({...s, id: s.id as IdParam})));
+                    }}
+                >
+                    {t`Tidy up`}
+                </Button>
+            </div>
 
             <div className={classes.canvas}>
                 <DndContext sensors={sensors} onDragEnd={handleDragEnd}>

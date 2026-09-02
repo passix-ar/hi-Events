@@ -2988,7 +2988,7 @@ msgstr "Drag & drop or click to upload"
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr "Drag the image and adjust the zoom to choose what's visible in the banner."
 
-#: src/components/common/SeatingCanvas/index.tsx:83
+#: src/components/common/SeatingCanvas/index.tsx:106
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Drag the stage and each section to lay out your room."
 
@@ -8825,6 +8825,10 @@ msgstr "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgid "That promo code is invalid"
 msgstr "That promo code is invalid"
 
+#: src/components/common/SeatingCanvas/index.tsx:76
+msgid "That spot is taken — leave room between the pieces."
+msgstr "That spot is taken — leave room between the pieces."
+
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "The background color of the page. When using cover image, this is applied as an overlay."
@@ -9342,6 +9346,10 @@ msgstr "Tickets for"
 #: src/components/routes/admin/Dashboard/index.tsx:98
 msgid "Tickets Sold"
 msgstr "Tickets Sold"
+
+#: src/components/common/SeatingCanvas/index.tsx:120
+msgid "Tidy up"
+msgstr "Tidy up"
 
 #: src/components/forms/ProductForm/index.tsx:93
 msgid "Tier {0}"

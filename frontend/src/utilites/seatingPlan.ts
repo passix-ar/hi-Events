@@ -22,6 +22,25 @@ export const STAGE_SIZE = {width: 220, height: 34};
  */
 export const PLAN_MARGIN = 200;
 
+/** Free placement still needs a shape: pieces land on a grid and never sit on each other. */
+export const PLAN_GRID = 20;
+
+/** Breathing room between two pieces, so a plan never reads as one blurred block. */
+const GUTTER = 24;
+
+export const snapToGrid = (value: number) => Math.round(value / PLAN_GRID) * PLAN_GRID;
+
+interface Rect { x: number; y: number; width: number; height: number }
+
+const intersects = (a: Rect, b: Rect) =>
+    a.x < b.x + b.width + GUTTER
+    && a.x + a.width + GUTTER > b.x
+    && a.y < b.y + b.height + GUTTER
+    && a.y + a.height + GUTTER > b.y;
+
+/** True when the piece would land on top of any of the others. */
+export const collides = (moving: Rect, others: Rect[]) => others.some((other) => intersects(moving, other));
+
 export const sectionSize = (section: SeatingSection) => {
     const seats = section.seats_per_row;
     const aisles = section.aisle_positions?.length ?? 0;
@@ -67,5 +86,41 @@ export const buildPlan = (
         pieces: placed,
         width: Math.max(...placed.map((piece) => piece.x + piece.width)) + PLAN_MARGIN,
         height: Math.max(...placed.map((piece) => piece.y + piece.height)) + PLAN_MARGIN,
+    };
+};
+
+/**
+ * Lays every section out in rows that fit the widest one, with the stage above them. Used to
+ * rescue a plan whose pieces already sit on top of each other, which no amount of dragging
+ * one piece at a time can undo comfortably.
+ */
+export const tidyPlan = (sections: SeatingSection[]) => {
+    const GAP = 40;
+    const widest = Math.max(...sections.map((section) => sectionSize(section).width), STAGE_SIZE.width);
+    const perRow = Math.max(1, Math.floor(1200 / (widest + GAP)));
+
+    let y = 0;
+    let rowHeight = 0;
+
+    const placed = sections.map((section, index) => {
+        const column = index % perRow;
+
+        if (column === 0 && index > 0) {
+            y += rowHeight + GAP;
+            rowHeight = 0;
+        }
+
+        rowHeight = Math.max(rowHeight, sectionSize(section).height);
+
+        return {
+            id: section.id,
+            position_x: column * (widest + GAP),
+            position_y: y,
+        };
+    });
+
+    return {
+        stage: {x: 0, y: -(STAGE_SIZE.height + GAP)},
+        sections: placed,
     };
 };

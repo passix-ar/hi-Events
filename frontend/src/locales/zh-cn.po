@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:83
+#: src/components/common/SeatingCanvas/index.tsx:106
 msgid "Drag the stage and each section to lay out your room."
 msgstr "拖动舞台和各个分区来布置你的场地。"
 
@@ -8821,6 +8821,10 @@ msgstr "感谢您的支持，我们将继续发展和改进 Hi.Events！"
 msgid "That promo code is invalid"
 msgstr "促销代码无效"
 
+#: src/components/common/SeatingCanvas/index.tsx:76
+msgid "That spot is taken — leave room between the pieces."
+msgstr "该位置已被占用，请在各部分之间留出间隔。"
+
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "页面的背景颜色。使用封面图片时,此颜色将作为叠加层应用。"
@@ -9338,6 +9342,10 @@ msgstr "门票"
 #: src/components/routes/admin/Dashboard/index.tsx:98
 msgid "Tickets Sold"
 msgstr "已售票数"
+
+#: src/components/common/SeatingCanvas/index.tsx:120
+msgid "Tidy up"
+msgstr "整理"
 
 #: src/components/forms/ProductForm/index.tsx:93
 msgid "Tier {0}"

@@ -165,7 +165,7 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->assertSame(5, $result->getId());
     }
 
-    public function test_a_new_section_is_placed_after_the_last_one(): void
+    public function test_a_new_section_lands_after_and_below_the_others(): void
     {
         $this->productRepository->shouldReceive('findFirstWhere')
             ->once()
@@ -179,13 +179,14 @@ class CreateSeatingSectionServiceTest extends TestCase
         $this->seatingSectionRepository->shouldReceive('findWhere')
             ->once()
             ->andReturn(collect([
-                (new SeatingSectionDomainObject)->setId(1)->setOrder(0),
-                (new SeatingSectionDomainObject)->setId(3)->setOrder(2),
+                (new SeatingSectionDomainObject)->setId(1)->setOrder(0)->setPositionY(0),
+                (new SeatingSectionDomainObject)->setId(3)->setOrder(2)->setPositionY(240),
             ]));
 
         $this->seatingSectionRepository->shouldReceive('create')
             ->once()
-            ->withArgs(static fn (array $attributes) => $attributes['order'] === 3)
+            ->withArgs(static fn (array $attributes) => $attributes['order'] === 3
+                && $attributes['position_y'] === 480)
             ->andReturn((new SeatingSectionDomainObject)->setId(9)->setEventId(2)->setRowCount(1)->setSeatsPerRow(1));
 
         $this->seatRepository->shouldReceive('insert')->once();

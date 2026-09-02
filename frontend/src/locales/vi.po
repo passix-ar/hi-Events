@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:83
+#: src/components/common/SeatingCanvas/index.tsx:106
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Kéo sân khấu và từng khu vực để bố trí phòng của bạn."
 
@@ -8821,6 +8821,10 @@ msgstr "Cảm ơn sự hỗ trợ của bạn khi chúng tôi tiếp tục phát
 msgid "That promo code is invalid"
 msgstr "Mã khuyến mãi không hợp lệ"
 
+#: src/components/common/SeatingCanvas/index.tsx:76
+msgid "That spot is taken — leave room between the pieces."
+msgstr "Vị trí đó đã có — hãy chừa khoảng cách giữa các phần."
+
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Màu nền của trang. Khi sử dụng ảnh bìa, màu này được áp dụng dưới dạng lớp phủ."
@@ -9338,6 +9342,10 @@ msgstr "Vé cho"
 #: src/components/routes/admin/Dashboard/index.tsx:98
 msgid "Tickets Sold"
 msgstr "Vé Đã Bán"
+
+#: src/components/common/SeatingCanvas/index.tsx:120
+msgid "Tidy up"
+msgstr "Sắp xếp lại"
 
 #: src/components/forms/ProductForm/index.tsx:93
 msgid "Tier {0}"
