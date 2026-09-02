@@ -424,6 +424,23 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $this->service->validateRequestData($eventId, $data);
     }
 
+    public function test_duplicate_seat_ids_are_rejected(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $this->service->validateRequestData(1, [
+            'products' => [
+                [
+                    'product_id' => 10,
+                    'quantities' => [
+                        ['quantity' => 1, 'price_id' => 101],
+                    ],
+                    'seat_ids' => [5, 5],
+                ],
+            ],
+        ]);
+    }
+
     private function setupMocks(
         int $eventId,
         int $productId,

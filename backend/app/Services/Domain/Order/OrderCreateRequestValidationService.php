@@ -102,7 +102,7 @@ class OrderCreateRequestValidationService
             'products.*.quantities.*.price_id' => 'required|integer',
             'products.*.quantities.*.price' => 'numeric|min:0',
             'products.*.seat_ids' => 'sometimes|nullable|array',
-            'products.*.seat_ids.*' => 'integer',
+            'products.*.seat_ids.*' => 'integer|distinct',
         ]);
 
         if ($validator->fails()) {

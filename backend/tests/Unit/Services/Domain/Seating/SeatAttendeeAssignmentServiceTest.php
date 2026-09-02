@@ -136,6 +136,38 @@ class SeatAttendeeAssignmentServiceTest extends TestCase
         $this->service->assignSeatsForOrder($this->makeOrder());
     }
 
+    public function test_throws_when_attendees_outnumber_seats(): void
+    {
+        $section = (new SeatingSectionDomainObject)
+            ->setId(5)
+            ->setProductId(10)
+            ->setName('Balcony');
+
+        $seatA1 = $this->makeSeat(100, 5, 'A1');
+
+        $this->seatRepository->shouldReceive('findByOrderId')
+            ->once()
+            ->andReturn(collect([$seatA1]));
+
+        $this->seatingSectionRepository->shouldReceive('findWhereIn')
+            ->once()
+            ->andReturn(collect([$section]));
+
+        $seated = $this->makeAttendee(2, 10);
+        $seatless = $this->makeAttendee(3, 10);
+
+        $this->attendeeRepository->shouldReceive('findWhere')
+            ->once()
+            ->andReturn(collect([$seated, $seatless]));
+
+        $this->attendeeRepository->shouldReceive('updateFromArray')->once()->andReturn($seated);
+        $this->seatRepository->shouldReceive('updateFromArray')->once()->andReturn($seatA1);
+
+        $this->expectException(ResourceConflictException::class);
+
+        $this->service->assignSeatsForOrder($this->makeOrder());
+    }
+
     private function makeOrder(): OrderDomainObject
     {
         return (new OrderDomainObject)->setId(1)->setEventId(2);
