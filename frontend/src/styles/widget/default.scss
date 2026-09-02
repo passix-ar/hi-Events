@@ -333,3 +333,51 @@
   }
 }
 
+
+/* One map for the whole room, between the tickets and the total. Sections whose ticket
+   has not been added stay visible but out of reach, so the room still reads as a room. */
+.hi-seating-panel {
+  margin: 20px 0;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.22);
+  overflow: hidden;
+}
+
+.hi-seating-panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.hi-seating-panel-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.hi-seating-panel-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.hi-seating-panel-hint {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.hi-seating-panel-section {
+  margin-bottom: 14px;
+
+  &[data-locked] {
+    opacity: 0.45;
+  }
+}
+
+.hi-seating-panel-section-name {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+}

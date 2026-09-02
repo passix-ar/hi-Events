@@ -1,6 +1,7 @@
 import {t} from "@lingui/macro";
 import {Seat} from "../../../types.ts";
 import {rowLabelForIndex} from "../../../utilites/seats.ts";
+import {Fragment} from "react";
 import classes from "./SeatingChart.module.scss";
 
 interface SeatingChartProps {
@@ -12,6 +13,7 @@ interface SeatingChartProps {
     onToggleSeat?: (seat: Seat) => void;
     showLegend?: boolean;
     editMode?: boolean;
+    aislePositions?: number[] | null;
     blockedSeatLabels?: string[];
     onToggleBlocked?: (label: string) => void;
 }
@@ -25,6 +27,7 @@ export const SeatingChart = ({
                                  onToggleSeat,
                                  showLegend = true,
                                  editMode = false,
+                                 aislePositions,
                                  blockedSeatLabels = [],
                                  onToggleBlocked,
                              }: SeatingChartProps) => {
@@ -90,8 +93,8 @@ export const SeatingChart = ({
                                             && (state === 'SELECTED' || (state === 'AVAILABLE' && selectedSeatIds.length < maxSelectable)));
 
                                     return (
+                                        <Fragment key={seatNumber}>
                                         <button
-                                            key={seatNumber}
                                             type={'button'}
                                             className={classes.seat}
                                             data-state={state}
@@ -103,6 +106,8 @@ export const SeatingChart = ({
                                         >
                                             {seatNumber}
                                         </button>
+                                        {aislePositions?.includes(seatNumber) && <span className={classes.aisle}/>}
+                                        </Fragment>
                                     );
                                 })}
                                 <div className={classes.rowLabel}>{rowLabel}</div>
@@ -115,6 +120,10 @@ export const SeatingChart = ({
         </div>
     );
 };
+
+export const SeatingStage = () => (
+    <div className={classes.stage}>{t`Stage`}</div>
+);
 
 export const SeatingLegend = () => (
     <div className={classes.legend}>

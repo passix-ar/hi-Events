@@ -1,5 +1,5 @@
 import {InputGroup} from "../../common/InputGroup";
-import {Input, NumberInput, TextInput} from "@mantine/core";
+import {Input, MultiSelect, NumberInput, TextInput} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {UseFormReturnType} from "@mantine/form";
 import {ProductCategory, Seat, SeatingSectionRequest} from "../../../types.ts";
@@ -40,6 +40,7 @@ export const SeatingSectionForm = ({form, productsCategories, seats}: SeatingSec
     const rowCount = Number(form.values.row_count) || 0;
     const seatsPerRow = Number(form.values.seats_per_row) || 0;
     const disabledSeats = form.values.disabled_seats ?? [];
+    const aislePositions = form.values.aisle_positions ?? [];
 
     useEffect(() => {
         if (rowCount < 1 || seatsPerRow < 1 || disabledSeats.length === 0) {
@@ -112,6 +113,17 @@ export const SeatingSectionForm = ({form, productsCategories, seats}: SeatingSec
                 optionList={statusOptions}
             />
 
+            {seatsPerRow > 1 && (
+                <MultiSelect
+                    label={t`Aisles`}
+                    description={t`Leave a walkway after these seat numbers.`}
+                    data={Array.from({length: seatsPerRow - 1}, (_, index) => String(index + 1))}
+                    value={aislePositions.map(String)}
+                    onChange={(values) => form.setFieldValue('aisle_positions', values.map(Number).sort((a, b) => a - b))}
+                    clearable
+                />
+            )}
+
             {rowCount > 0 && seatsPerRow > 0 && rowCount * seatsPerRow <= 2000 && (
                 <Input.Wrapper
                     label={t`Venue shape`}
@@ -123,6 +135,7 @@ export const SeatingSectionForm = ({form, productsCategories, seats}: SeatingSec
                         seats={seats}
                         showLegend={false}
                         editMode
+                        aislePositions={aislePositions}
                         blockedSeatLabels={disabledSeats}
                         onToggleBlocked={handleToggleBlocked}
                     />

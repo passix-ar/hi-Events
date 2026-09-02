@@ -1,18 +1,47 @@
 import {IdParam, SeatingSection} from "../../../types";
 import {Badge, Button} from "@mantine/core";
 import {t, Trans} from "@lingui/macro";
-import {IconArmchair, IconPencil, IconPlus, IconTrash} from "@tabler/icons-react";
+import {IconArmchair, IconGripVertical, IconPencil, IconPlus, IconTrash} from "@tabler/icons-react";
 import Truncate from "../Truncate";
 import {NoResultsSplash} from "../NoResultsSplash";
 import classes from './SeatingSectionList.module.scss';
 import {Card} from "../Card";
-import {useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {ActionMenu} from "../ActionMenu";
 import {useDisclosure} from "@mantine/hooks";
 import {EditSeatingSectionModal} from "../../modals/EditSeatingSectionModal";
 import {useDeleteSeatingSection} from "../../../mutations/useDeleteSeatingSection";
+import {useReorderSeatingSections} from "../../../mutations/useReorderSeatingSections";
+import {SeatingStage} from "../SeatingChart";
 import {showError, showSuccess} from "../../../utilites/notifications.tsx";
 import {confirmationDialog} from "../../../utilites/confirmationDialog.tsx";
+import {useParams} from "react-router";
+import {closestCenter, DndContext, PointerSensor, TouchSensor, UniqueIdentifier, useSensor, useSensors} from "@dnd-kit/core";
+import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import {CSS} from "@dnd-kit/utilities";
+import {useDragItemsHandler} from "../../../hooks/useDragItemsHandler.ts";
+
+const SortableSectionCard = ({sectionId, children}: { sectionId: IdParam, children: ReactNode }) => {
+    const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({
+        id: sectionId as UniqueIdentifier,
+    });
+
+    // React 18 does not forward `ref` as a prop to function components, so it goes on a
+    // plain element rather than on Card, or dnd-kit never gets the node.
+    return (
+        <div
+            ref={setNodeRef}
+            style={{transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.6 : undefined}}
+        >
+            <Card className={classes.sectionCard}>
+                <div {...attributes} {...listeners} className={classes.dragHandle} aria-label={t`Reorder`}>
+                    <IconGripVertical size={16} stroke={1.5}/>
+                </div>
+                {children}
+            </Card>
+        </div>
+    );
+};
 
 interface SeatingSectionListProps {
     seatingSections: SeatingSection[];
@@ -20,11 +49,34 @@ interface SeatingSectionListProps {
 }
 
 export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSectionListProps) => {
+    // The route's id is what the sections query is cached under. Taking it from a section
+    // instead gives a number where the cache holds a string, and nothing ever refetches.
+    const {eventId} = useParams();
     const [editModalOpen, {open: openEditModal, close: closeEditModal}] = useDisclosure(false);
     const [selectedSeatingSectionId, setSelectedSeatingSectionId] = useState<IdParam>();
     const deleteMutation = useDeleteSeatingSection();
+    const reorderMutation = useReorderSeatingSections();
+    const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
-    const handleDeleteSection = (seatingSectionId: IdParam, eventId: IdParam) => {
+    const {items, setItems, handleDragEnd} = useDragItemsHandler({
+        initialItemIds: seatingSections.map((section) => Number(section.id)),
+        onSortEnd: (sectionIds) => {
+            reorderMutation.mutate({eventId, sectionIds}, {
+                onSuccess: () => showSuccess(t`Seating sections reordered`),
+                onError: (error: any) => showError(error?.response?.data?.message || error.message),
+            });
+        },
+    });
+
+    useEffect(() => {
+        setItems(seatingSections.map((section) => Number(section.id)));
+    }, [seatingSections]);
+
+    const orderedSections = items
+        .map((id) => seatingSections.find((section) => Number(section.id) === id))
+        .filter((section): section is SeatingSection => !!section);
+
+    const handleDeleteSection = (seatingSectionId: IdParam) => {
         deleteMutation.mutate({seatingSectionId, eventId}, {
             onSuccess: () => {
                 showSuccess(t`Seating section deleted successfully`);
@@ -68,9 +120,12 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
 
     return (
         <>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={items as UniqueIdentifier[]} strategy={verticalListSortingStrategy}>
             <div className={classes.sectionList}>
-                {seatingSections.map((section) => (
-                    <Card className={classes.sectionCard} key={section.id}>
+                <SeatingStage/>
+                {orderedSections.map((section) => (
+                    <SortableSectionCard key={section.id} sectionId={section.id as IdParam}>
                         <div className={classes.sectionHeader}>
                             <div className={classes.sectionProduct}>
                                 <IconArmchair size={16}/>
@@ -131,10 +186,7 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                                                         confirmationDialog(
                                                             t`Are you sure you would like to delete this Seating Section?`,
                                                             () => {
-                                                                handleDeleteSection(
-                                                                    section.id as IdParam,
-                                                                    section.event_id as IdParam,
-                                                                );
+                                                                handleDeleteSection(section.id as IdParam);
                                                             })
                                                     },
                                                     color: 'red',
@@ -145,9 +197,11 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                                 />
                             </div>
                         </div>
-                    </Card>
+                    </SortableSectionCard>
                 ))}
             </div>
+            </SortableContext>
+            </DndContext>
             {(editModalOpen && selectedSeatingSectionId)
                 && <EditSeatingSectionModal onClose={closeEditModal}
                                             seatingSectionId={selectedSeatingSectionId}/>}

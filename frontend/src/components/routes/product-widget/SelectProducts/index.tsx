@@ -31,15 +31,15 @@ import classNames from 'classnames';
 import '../../../../styles/widget/default.scss';
 import {ProductAvailabilityMessage} from "../../../common/ProductPriceAvailability";
 import {PoweredByFooter} from "../../../common/PoweredByFooter";
-import {Event, Product, SeatingSection} from "../../../../types.ts";
+import {Event, Product, Seat, SeatingSection} from "../../../../types.ts";
 import {eventsClientPublic} from "../../../../api/event.client.ts";
 import {promoCodeClientPublic} from "../../../../api/promo-code.client.ts";
-import {IconArmchair, IconChevronRight, IconX} from "@tabler/icons-react"
+import {IconChevronRight, IconX} from "@tabler/icons-react"
 import {
     GET_EVENT_SEATING_SECTIONS_PUBLIC_QUERY_KEY,
     useGetSeatingSectionsPublic
 } from "../../../../queries/useGetSeatingSectionsPublic.ts";
-import {SeatPickerModal} from "./SeatPickerModal";
+import {SeatingPanel} from "./SeatingPanel";
 import {getSessionIdentifier} from "../../../../utilites/sessionIdentifier.ts";
 import {Constants} from "../../../../constants.ts";
 import {clearWaitlistJoinedForEvent} from "../../../../hooks/useWaitlistJoined.ts";
@@ -98,7 +98,6 @@ const SelectProducts = (props: SelectProductsProps) => {
     const [resizeRef, resizeObserverRect] = useResizeObserver();
     const [collapsedProducts, setCollapsedProducts] = useState<{ [key: number]: boolean }>({});
     const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
-    const [seatPickerProductId, setSeatPickerProductId] = useState<number | null>(null);
 
     const {data: seatingSections} = useGetSeatingSectionsPublic(eventId);
     const sectionsByProduct = useMemo(() => {
@@ -280,6 +279,21 @@ const SelectProducts = (props: SelectProductsProps) => {
             }
         });
     }, [form.values.products]);
+
+    const handleSeatToggle = (productId: number, seat: Seat) => {
+        const seatIds = getProductSeatIds(productId);
+
+        if (seatIds.includes(seat.id)) {
+            setProductSeatIds(productId, seatIds.filter((id) => id !== seat.id));
+            return;
+        }
+
+        if (seatIds.length >= getProductQuantity(productId)) {
+            return;
+        }
+
+        setProductSeatIds(productId, [...seatIds, seat.id]);
+    };
 
     const seatSelectionsComplete = useMemo(() => {
         if (!form.values.products || sectionsByProduct.size === 0) {
@@ -631,23 +645,7 @@ const SelectProducts = (props: SelectProductsProps) => {
                                                             />
                                                         </div>
 
-                                                        {sectionsByProduct.has(Number(product.id)) && getProductQuantity(Number(product.id)) > 0 && (
-                                                            <div className={'hi-choose-seats-row'} style={{marginTop: 10}}>
-                                                                <Button
-                                                                    variant={getProductSeatIds(Number(product.id)).length === getProductQuantity(Number(product.id)) ? 'light' : 'filled'}
-                                                                    size={'sm'}
-                                                                    leftSection={<IconArmchair size={18}/>}
-                                                                    onClick={() => setSeatPickerProductId(Number(product.id))}
-                                                                >
-                                                                    {getProductSeatIds(Number(product.id)).length === getProductQuantity(Number(product.id))
-                                                                        ? t`Change seats`
-                                                                        : t`Choose your seats`}
-                                                                </Button>
-                                                                <span style={{marginLeft: 10, fontSize: '0.85rem'}}>
-                                                                    <Trans>{getProductSeatIds(Number(product.id)).length} of {getProductQuantity(Number(product.id))} seats selected</Trans>
-                                                                </span>
-                                                            </div>
-                                                        )}
+
 
                                                         {product.max_per_order && form.values.products && isObjectEmpty(form.errors) && (form.values.products[currentProductIndex]?.quantities.reduce((acc, {quantity}) => acc + Number(quantity), 0) > product.max_per_order) && (
                                                             <div className={'hi-product-quantity-error'}>
@@ -683,6 +681,16 @@ const SelectProducts = (props: SelectProductsProps) => {
                             )
                         })}
                     </div>
+
+                    {!!seatingSections?.length && (
+                        <SeatingPanel
+                            sections={seatingSections.filter((section) => products
+                                .some((product) => Number(product.id) === Number(section.product_id)))}
+                            selectedSeatIdsForProduct={getProductSeatIds}
+                            quantityForProduct={getProductQuantity}
+                            onToggleSeat={handleSeatToggle}
+                        />
+                    )}
 
                     <div className={'hi-footer-row'}>
                         {event?.settings?.product_page_message && (
@@ -844,17 +852,6 @@ const SelectProducts = (props: SelectProductsProps) => {
                 <PoweredByFooter style={{
                     'color': props.colors?.primaryText || '#000',
                 }}/>
-            )}
-            {seatPickerProductId !== null && (
-                <SeatPickerModal
-                    opened
-                    onClose={() => setSeatPickerProductId(null)}
-                    productTitle={products.find((p) => Number(p.id) === seatPickerProductId)?.title || ''}
-                    sections={sectionsByProduct.get(seatPickerProductId) || []}
-                    selectedSeatIds={getProductSeatIds(seatPickerProductId)}
-                    maxSelectable={getProductQuantity(seatPickerProductId)}
-                    onChange={(seatIds) => setProductSeatIds(seatPickerProductId, seatIds)}
-                />
             )}
         </div>
     );
