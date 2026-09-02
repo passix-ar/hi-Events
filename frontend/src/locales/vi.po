@@ -77,7 +77,7 @@ msgstr "Logo {0}"
 msgid "{0} organizers"
 msgstr "{0} nhà tổ chức"
 
-#: src/components/common/SeatingSectionList/index.tsx:110
+#: src/components/common/SeatingSectionList/index.tsx:180
 msgid "{0} rows × {1} seats"
 msgstr "{0} hàng × {1} chỗ ngồi"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Danh sách check-in giúp bạn quản lý lối vào sự kiện theo ngày, khu vực hoặc loại vé. Bạn có thể liên kết vé với các danh sách cụ thể như khu vực VIP hoặc vé Ngày 1 và chia sẻ liên kết check-in an toàn với nhân viên. Không cần tài khoản. Check-in hoạt động trên điện thoại di động, máy tính để bàn hoặc máy tính bảng, sử dụng camera thiết bị hoặc máy quét USB HID.                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:66
+#: src/components/common/SeatingSectionList/index.tsx:106
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Tạo các khu vực chỗ ngồi để người mua vé chọn chỗ ngồi được đánh số của riêng họ.</0><1>Mỗi khu vực là một lưới các hàng và ghế liên kết với một sản phẩm. Ví dụ, khu vực<2> Ban công</2> với 10 hàng, mỗi hàng 20 ghế được bán qua sản phẩm<3> Vé Ban công</3> của bạn, trong khi các sản phẩm vé thường không thay đổi.</1>"
 
@@ -299,6 +299,10 @@ msgstr "Mã khuyến mãi không có giảm giá có thể được sử dụng 
 #: src/components/forms/QuestionForm/index.tsx:120
 msgid "A Radio option has multiple options but only one can be selected."
 msgstr "Tùy chọn radio có nhiều tùy chọn nhưng chỉ có thể chọn một tùy chọn."
+
+#: src/components/common/SeatingSectionList/index.tsx:147
+msgid "A reference point for buyers, not a section that sells seats."
+msgstr "Điểm tham chiếu cho người mua, không phải khu vực bán ghế."
 
 #: src/components/modals/CreateProductModal/index.tsx:25
 #: src/components/modals/EditProductModal/index.tsx:26
@@ -455,6 +459,7 @@ msgid "Actions"
 msgstr "Hành động"
 
 #: src/components/common/AttendeeTable/index.tsx:380
+#: src/components/common/SeatingSectionList/index.tsx:200
 msgid "Activate"
 msgstr "Kích hoạt"
 
@@ -466,7 +471,7 @@ msgstr "Ngày kích hoạt"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -494,6 +499,10 @@ msgstr "Thêm bất kỳ ghi chú nào về đơn hàng. Những ghi chú này s
 #: src/components/modals/ManageOrderModal/index.tsx:169
 msgid "Add any notes about the order..."
 msgstr "Thêm bất kỳ ghi chú nào về đơn hàng ..."
+
+#: src/components/common/SeatingSectionList/index.tsx:156
+msgid "Add back"
+msgstr "Đặt lại"
 
 #: src/components/common/QuestionsTable/index.tsx:433
 msgid "Add custom questions to collect additional information during checkout"
@@ -1037,7 +1046,7 @@ msgstr "Bạn có chắc chắn muốn xóa phân bổ sức chứa này không?
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Bạn có chắc là bạn muốn xóa danh sách tham dự này không?"
 
-#: src/components/common/SeatingSectionList/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:223
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Bạn có chắc chắn muốn xóa khu vực chỗ ngồi này không?"
 
@@ -1247,7 +1256,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Tự động thay đổi chiều cao widget dựa trên nội dung. Khi tắt, widget sẽ lấp đầy chiều cao của container."
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:183
 msgid "available"
 msgstr "còn trống"
 
@@ -2457,7 +2466,7 @@ msgstr "Tạo mã khuyến mãi"
 msgid "Create Question"
 msgstr "Tạo câu hỏi"
 
-#: src/components/common/SeatingSectionList/index.tsx:81
+#: src/components/common/SeatingSectionList/index.tsx:121
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:76
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:87
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2693,7 +2702,7 @@ msgstr "Chi tiết doanh số hàng ngày, thuế và phí"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:140
+#: src/components/common/SeatingSectionList/index.tsx:217
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Vùng nguy hiểm"
@@ -2740,6 +2749,10 @@ msgstr "Ngày đặt đơn hàng"
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:38
 msgid "Day one capacity"
 msgstr "Sức chứa ngày đầu tiên"
+
+#: src/components/common/SeatingSectionList/index.tsx:200
+msgid "Deactivate"
+msgstr "Tắt"
 
 #: src/components/common/CookieConsentBanner/index.tsx:62
 msgid "Decline"
@@ -2812,7 +2825,7 @@ msgstr "Xóa công việc"
 msgid "Delete Organizer"
 msgstr "Xóa ban tổ chức"
 
-#: src/components/common/SeatingSectionList/index.tsx:143
+#: src/components/common/SeatingSectionList/index.tsx:220
 msgid "Delete Section"
 msgstr "Xóa khu vực"
 
@@ -3144,7 +3157,7 @@ msgstr "Chỉnh sửa câu hỏi"
 msgid "Edit Seating Section"
 msgstr "Chỉnh sửa khu vực chỗ ngồi"
 
-#: src/components/common/SeatingSectionList/index.tsx:130
+#: src/components/common/SeatingSectionList/index.tsx:207
 msgid "Edit Section"
 msgstr "Chỉnh sửa khu vực"
 
@@ -4379,7 +4392,7 @@ msgstr "Người được mời"
 msgid "Have a promo code?"
 msgstr "Nhập mã khuyến mãi?"
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:186
 msgid "held"
 msgstr "đang giữ"
 
@@ -4685,7 +4698,7 @@ msgstr "Quan trọng: Cần kết nối lại Stripe"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -5153,7 +5166,7 @@ msgstr "Làm cho sự kiện của bạn hoạt động"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:127
+#: src/components/common/SeatingSectionList/index.tsx:197
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5740,7 +5753,7 @@ msgstr "Không có kết quả tìm kiếm"
 msgid "No search results."
 msgstr "Không có kết quả tìm kiếm."
 
-#: src/components/common/SeatingSectionList/index.tsx:61
+#: src/components/common/SeatingSectionList/index.tsx:101
 msgid "No Seating Sections"
 msgstr "Chưa có khu vực chỗ ngồi"
 
@@ -5920,6 +5933,10 @@ msgstr "Đang Bán"
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:99
 msgid "On sale {0}"
 msgstr "Đang giảm giá {0}"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "On the plan"
+msgstr "Trên sơ đồ"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:553
 msgid "Once you complete the upgrade, your old account will only be used for refunds."
@@ -6416,6 +6433,10 @@ msgstr "Tài khoản trả phí"
 #: src/components/forms/ProductForm/index.tsx:181
 msgid "Paid Product"
 msgstr "Sản phẩm trả phí"
+
+#: src/components/common/SeatingSectionList/index.tsx:136
+msgid "Part of the plan"
+msgstr "Một phần của sơ đồ"
 
 #: src/components/modals/RefundOrderModal/index.tsx:109
 msgid "Partial refund"
@@ -7336,11 +7357,16 @@ msgid "remove"
 msgstr "Loại bỏ"
 
 #: src/components/common/Editor/Controls/InsertImageControl/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:156
 #: src/components/common/WaitlistTable/index.tsx:78
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/routes/product-widget/SelectProducts/index.tsx:800
 msgid "Remove"
 msgstr "Hủy bỏ"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "Removed"
+msgstr "Đã gỡ"
 
 #: src/components/common/SeatingSectionList/index.tsx:37
 #~ msgid "Reorder"
@@ -7777,7 +7803,7 @@ msgstr "Chỗ ngồi"
 msgid "Seating section created successfully"
 msgstr "Đã tạo khu vực chỗ ngồi thành công"
 
-#: src/components/common/SeatingSectionList/index.tsx:50
+#: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Đã xóa khu vực chỗ ngồi thành công"
 
@@ -7800,6 +7826,14 @@ msgstr "Màu phụ"
 #: src/components/common/WidgetEditor/index.tsx:214
 msgid "Secondary Text Color"
 msgstr "Màu chữ phụ"
+
+#: src/components/common/SeatingSectionList/index.tsx:78
+msgid "Section hidden from ticket buyers"
+msgstr "Đã ẩn khu vực khỏi người mua"
+
+#: src/components/common/SeatingSectionList/index.tsx:79
+msgid "Section is now on sale"
+msgstr "Khu vực đã được mở bán"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Section name"
@@ -8257,7 +8291,7 @@ msgstr "Liên kết mạng xã hội"
 msgid "Social Links & Website"
 msgstr "Liên kết mạng xã hội & Trang web"
 
-#: src/components/common/SeatingSectionList/index.tsx:119
+#: src/components/common/SeatingSectionList/index.tsx:189
 msgid "sold"
 msgstr "đã bán"
 
@@ -8339,6 +8373,7 @@ msgid "Sports"
 msgstr "Thể thao"
 
 #: src/components/common/SeatingChart/index.tsx:125
+#: src/components/common/SeatingSectionList/index.tsx:143
 msgid "Stage"
 msgstr "Sân khấu"
 
@@ -9598,7 +9633,7 @@ msgstr "Không rõ"
 msgid "Unknown Attendee"
 msgstr "Người tham dự không xác định"
 
-#: src/components/common/SeatingSectionList/index.tsx:97
+#: src/components/common/SeatingSectionList/index.tsx:167
 msgid "Unknown product"
 msgstr "Sản phẩm không xác định"
 

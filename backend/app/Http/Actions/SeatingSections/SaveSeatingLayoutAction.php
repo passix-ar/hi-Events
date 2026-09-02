@@ -25,6 +25,7 @@ class SaveSeatingLayoutAction extends BaseAction
                 $eventId,
                 (int) $request->validated('stage_x'),
                 (int) $request->validated('stage_y'),
+                (bool) $request->validated('stage_visible'),
                 $request->validated('sections'),
             ),
         );

@@ -23,7 +23,7 @@ class SaveSeatingLayoutHandler
      *
      * @param  array<int, array{id: int, position_x: int, position_y: int}>  $sections
      */
-    public function handle(int $eventId, int $stageX, int $stageY, array $sections): SeatingLayoutDomainObject
+    public function handle(int $eventId, int $stageX, int $stageY, bool $stageVisible, array $sections): SeatingLayoutDomainObject
     {
         $ownIds = $this->seatingSectionRepository
             ->findWhere([SeatingSectionDomainObjectAbstract::EVENT_ID => $eventId])
@@ -48,6 +48,7 @@ class SaveSeatingLayoutHandler
         $attributes = [
             SeatingLayoutDomainObjectAbstract::STAGE_X => $stageX,
             SeatingLayoutDomainObjectAbstract::STAGE_Y => $stageY,
+            SeatingLayoutDomainObjectAbstract::STAGE_VISIBLE => $stageVisible,
         ];
 
         return $existing

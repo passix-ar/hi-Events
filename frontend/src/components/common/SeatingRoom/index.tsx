@@ -7,7 +7,7 @@ import classes from './SeatingRoom.module.scss';
 
 interface SeatingRoomProps {
     sections: SeatingSection[];
-    stage: { x: number, y: number };
+    stage: { x: number, y: number, visible?: boolean };
     selectedSeatIds?: (section: SeatingSection) => number[];
     maxSelectable?: (section: SeatingSection) => number;
     onToggleSeat?: (section: SeatingSection, seat: Seat) => void;

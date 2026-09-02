@@ -1,7 +1,7 @@
 import {IdParam, SeatingLayoutRequest, SeatingSection} from "../../../types";
 import {Badge, Button} from "@mantine/core";
 import {t, Trans} from "@lingui/macro";
-import {IconArmchair, IconPencil, IconPlus, IconTrash} from "@tabler/icons-react";
+import {IconArmchair, IconEye, IconEyeOff, IconPencil, IconPlus, IconTrash} from "@tabler/icons-react";
 import {NoResultsSplash} from "../NoResultsSplash";
 import Truncate from "../Truncate";
 import {Card} from "../Card";
@@ -12,6 +12,7 @@ import {useDisclosure} from "@mantine/hooks";
 import {EditSeatingSectionModal} from "../../modals/EditSeatingSectionModal";
 import {useDeleteSeatingSection} from "../../../mutations/useDeleteSeatingSection";
 import {useSaveSeatingLayout} from "../../../mutations/useSaveSeatingLayout";
+import {useEditSeatingSection} from "../../../mutations/useEditSeatingSection";
 import {useGetSeatingLayout} from "../../../queries/useGetSeatingLayout.ts";
 
 import {showError, showSuccess} from "../../../utilites/notifications.tsx";
@@ -32,17 +33,56 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
     const [selectedSeatingSectionId, setSelectedSeatingSectionId] = useState<IdParam>();
     const deleteMutation = useDeleteSeatingSection();
     const saveLayoutMutation = useSaveSeatingLayout();
+    const editMutation = useEditSeatingSection();
     const {data: layout} = useGetSeatingLayout(eventId);
-    const stage = {x: layout?.stage_x ?? 0, y: layout?.stage_y ?? -140};
+    const stage = {
+        x: layout?.stage_x ?? 0,
+        y: layout?.stage_y ?? -140,
+        visible: layout?.stage_visible ?? true,
+    };
 
-    const handleLayoutChange = (stage: { x: number, y: number }, sections: SeatingLayoutRequest['sections']) => {
+    const saveLayout = (next: Partial<{ x: number, y: number, visible: boolean }>, sections?: SeatingLayoutRequest['sections']) => {
         saveLayoutMutation.mutate({
             eventId,
-            layout: {stage_x: stage.x, stage_y: stage.y, sections},
+            layout: {
+                stage_x: next.x ?? stage.x,
+                stage_y: next.y ?? stage.y,
+                stage_visible: next.visible ?? stage.visible,
+                sections: sections ?? seatingSections.map((section) => ({
+                    id: section.id as IdParam,
+                    position_x: section.position_x ?? 0,
+                    position_y: section.position_y ?? 0,
+                })),
+            },
         }, {
             onError: (error: any) => showError(error?.response?.data?.message || error.message),
         });
     };
+
+    // Status rides on the section update, so its current values go back untouched — sending
+    // no aisles would clear them.
+    const toggleStatus = (section: SeatingSection) => {
+        editMutation.mutate({
+            eventId,
+            seatingSectionId: section.id as IdParam,
+            seatingSectionData: {
+                name: section.name,
+                product_id: section.product_id,
+                row_count: section.row_count,
+                seats_per_row: section.seats_per_row,
+                status: section.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE',
+                aisle_positions: section.aisle_positions ?? [],
+            },
+        }, {
+            onSuccess: () => showSuccess(section.status === 'ACTIVE'
+                ? t`Section hidden from ticket buyers`
+                : t`Section is now on sale`),
+            onError: (error: any) => showError(error?.response?.data?.message || error.message),
+        });
+    };
+
+    const handleLayoutChange = (moved: { x: number, y: number }, sections: SeatingLayoutRequest['sections']) =>
+        saveLayout({x: moved.x, y: moved.y}, sections);
 
     const handleDeleteSection = (seatingSectionId: IdParam) => {
         deleteMutation.mutate({seatingSectionId, eventId}, {
@@ -89,6 +129,36 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
     return (
         <>
             <div className={classes.sectionList}>
+                <Card className={classes.sectionCard}>
+                    <div className={classes.sectionHeader}>
+                        <div className={classes.sectionProduct}>
+                            <IconArmchair size={16}/>
+                            {t`Part of the plan`}
+                        </div>
+                        <Badge variant={'light'} color={stage.visible ? 'green' : 'gray'}>
+                            {stage.visible ? t`On the plan` : t`Removed`}
+                        </Badge>
+                    </div>
+
+                    <div className={classes.sectionName}><b>{t`Stage`}</b></div>
+
+                    <div className={classes.sectionInfo}>
+                        <div className={classes.sectionStats}>
+                            <span>{t`A reference point for buyers, not a section that sells seats.`}</span>
+                        </div>
+                        <div className={classes.sectionActions}>
+                            <Button
+                                size={'compact-xs'}
+                                variant={'subtle'}
+                                color={stage.visible ? 'red' : 'green'}
+                                onClick={() => saveLayout({visible: !stage.visible})}
+                            >
+                                {stage.visible ? t`Remove` : t`Add back`}
+                            </Button>
+                        </div>
+                    </div>
+                </Card>
+
                 {seatingSections.map((section) => (
                     <Card className={classes.sectionCard} key={section.id}>
                         <div className={classes.sectionHeader}>
@@ -126,6 +196,13 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
                                         {
                                             label: t`Manage`,
                                             items: [
+                                                {
+                                                    label: section.status === 'ACTIVE' ? t`Deactivate` : t`Activate`,
+                                                    icon: section.status === 'ACTIVE'
+                                                        ? <IconEyeOff size={14}/>
+                                                        : <IconEye size={14}/>,
+                                                    onClick: () => toggleStatus(section),
+                                                },
                                                 {
                                                     label: t`Edit Section`,
                                                     icon: <IconPencil size={14}/>,

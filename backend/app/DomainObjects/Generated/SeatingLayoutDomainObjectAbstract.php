@@ -16,6 +16,7 @@ abstract class SeatingLayoutDomainObjectAbstract extends \HiEvents\DomainObjects
     final public const STAGE_Y = 'stage_y';
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
+    final public const STAGE_VISIBLE = 'stage_visible';
 
     protected int $id;
     protected int $event_id;
@@ -23,6 +24,7 @@ abstract class SeatingLayoutDomainObjectAbstract extends \HiEvents\DomainObjects
     protected int $stage_y = -140;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
+    protected bool $stage_visible = true;
 
     public function toArray(): array
     {
@@ -33,6 +35,7 @@ abstract class SeatingLayoutDomainObjectAbstract extends \HiEvents\DomainObjects
                     'stage_y' => $this->stage_y ?? null,
                     'created_at' => $this->created_at ?? null,
                     'updated_at' => $this->updated_at ?? null,
+                    'stage_visible' => $this->stage_visible ?? null,
                 ];
     }
 
@@ -100,5 +103,16 @@ abstract class SeatingLayoutDomainObjectAbstract extends \HiEvents\DomainObjects
     public function getUpdatedAt(): ?string
     {
         return $this->updated_at;
+    }
+
+    public function setStageVisible(bool $stage_visible): self
+    {
+        $this->stage_visible = $stage_visible;
+        return $this;
+    }
+
+    public function getStageVisible(): bool
+    {
+        return $this->stage_visible;
     }
 }

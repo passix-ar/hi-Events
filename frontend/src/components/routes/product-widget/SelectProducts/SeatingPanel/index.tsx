@@ -39,7 +39,7 @@ export const SeatingPanel = ({
 
             <SeatingRoom
                 sections={sections}
-                stage={{x: plan.stage_x, y: plan.stage_y}}
+                stage={{x: plan.stage_x, y: plan.stage_y, visible: plan.stage_visible}}
                 selectedSeatIds={(section) => selectedSeatIdsForProduct(Number(section.product_id))}
                 maxSelectable={(section) => quantityForProduct(Number(section.product_id))}
                 onToggleSeat={(section, seat) => onToggleSeat(Number(section.product_id), seat)}

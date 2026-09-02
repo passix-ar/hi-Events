@@ -54,6 +54,7 @@ class GetSeatingSectionsPublicHandler
         $plan = static fn (Collection $withSeats) => new SeatingPlanDTO(
             stage_x: $layout?->getStageX() ?? 0,
             stage_y: $layout?->getStageY() ?? -140,
+            stage_visible: $layout?->getStageVisible() ?? true,
             sections: $withSeats,
         );
 

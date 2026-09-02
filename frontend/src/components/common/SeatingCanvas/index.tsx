@@ -3,6 +3,7 @@ import {ReactNode, useEffect, useState} from "react";
 import {DndContext, DragEndEvent, PointerSensor, TouchSensor, useDraggable, useSensor, useSensors} from "@dnd-kit/core";
 import {IdParam, SeatingSection} from "../../../types.ts";
 import {SeatingRoom} from "../SeatingRoom";
+import {PLAN_MARGIN} from "../../../utilites/seatingPlan.ts";
 import classes from './SeatingCanvas.module.scss';
 
 type Spot = { x: number, y: number };
@@ -55,7 +56,9 @@ export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: Seati
             return;
         }
 
-        const moved = {...spots, [id]: {x: Math.round(current.x + delta.x), y: Math.round(current.y + delta.y)}};
+        // Kept inside the drawn margin, so a piece cannot be dragged off the plan.
+        const clamp = (value: number) => Math.min(Math.max(Math.round(value), -PLAN_MARGIN), 3000);
+        const moved = {...spots, [id]: {x: clamp(current.x + delta.x), y: clamp(current.y + delta.y)}};
 
         setSpots(moved);
         onChange(

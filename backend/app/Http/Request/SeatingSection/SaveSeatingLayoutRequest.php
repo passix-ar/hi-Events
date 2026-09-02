@@ -11,6 +11,7 @@ class SaveSeatingLayoutRequest extends BaseRequest
         return [
             'stage_x' => ['required', 'integer', 'between:-10000,10000'],
             'stage_y' => ['required', 'integer', 'between:-10000,10000'],
+            'stage_visible' => ['required', 'boolean'],
             'sections' => ['present', 'array'],
             'sections.*.id' => ['required', 'integer', 'distinct'],
             'sections.*.position_x' => ['required', 'integer', 'between:-10000,10000'],

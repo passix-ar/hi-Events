@@ -16,6 +16,7 @@ class SeatingLayoutResource extends BaseResource
         return [
             'stage_x' => $this->getStageX(),
             'stage_y' => $this->getStageY(),
+            'stage_visible' => $this->getStageVisible(),
         ];
     }
 }

@@ -27,7 +27,7 @@ class GetSeatingLayoutAction extends BaseAction
         return $this->resourceResponse(
             resource: SeatingLayoutResource::class,
             // An event that has never been laid out still needs a stage to drag.
-            data: $layout ?? (new SeatingLayoutDomainObject)->setStageX(0)->setStageY(-140),
+            data: $layout ?? (new SeatingLayoutDomainObject)->setStageX(0)->setStageY(-140)->setStageVisible(true),
         );
     }
 }

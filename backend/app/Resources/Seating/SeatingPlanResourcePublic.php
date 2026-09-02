@@ -16,6 +16,7 @@ class SeatingPlanResourcePublic extends BaseResource
         return [
             'stage_x' => $this->stage_x,
             'stage_y' => $this->stage_y,
+            'stage_visible' => $this->stage_visible,
             'sections' => SeatingSectionResourcePublic::collection($this->sections),
         ];
     }

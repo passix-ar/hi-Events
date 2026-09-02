@@ -77,7 +77,7 @@ msgstr "logo {0}"
 msgid "{0} organizers"
 msgstr "{0} organizatorów"
 
-#: src/components/common/SeatingSectionList/index.tsx:110
+#: src/components/common/SeatingSectionList/index.tsx:180
 msgid "{0} rows × {1} seats"
 msgstr "{0} rzędów × {1} miejsc"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Listy odpraw pomagają zarządzać wejściem na wydarzenie według dnia, obszaru lub typu biletu. Możesz łączyć bilety z konkretnymi listami, takimi jak strefy VIP lub bilety na Dzień 1, i udostępniać bezpieczny link do odprawy personelowi. Nie jest wymagane konto. Odprawa działa na urządzeniach mobilnych, desktopowych lub tabletach, używając kamery urządzenia lub skanera HID USB.                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:66
+#: src/components/common/SeatingSectionList/index.tsx:106
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Utwórz sekcje miejsc, aby kupujący mogli wybrać własne numerowane miejsce.</0><1>Każda sekcja to siatka rzędów i miejsc powiązana z produktem. Na przykład sekcja<2> Balkon</2> z 10 rzędami po 20 miejsc sprzedaje się poprzez Twój produkt<3> Bilet na balkon</3>, a produkty wstępu ogólnego pozostają bez zmian.</1>"
 
@@ -299,6 +299,10 @@ msgstr "Kod promocyjny bez rabatu może być użyty do ujawnienia ukrytych produ
 #: src/components/forms/QuestionForm/index.tsx:120
 msgid "A Radio option has multiple options but only one can be selected."
 msgstr "Opcja Radio ma wiele opcji, ale tylko jedna może być wybrana."
+
+#: src/components/common/SeatingSectionList/index.tsx:147
+msgid "A reference point for buyers, not a section that sells seats."
+msgstr "Punkt odniesienia dla kupujących, nie sekcja sprzedająca miejsca."
 
 #: src/components/modals/CreateProductModal/index.tsx:25
 #: src/components/modals/EditProductModal/index.tsx:26
@@ -455,6 +459,7 @@ msgid "Actions"
 msgstr "Akcje"
 
 #: src/components/common/AttendeeTable/index.tsx:380
+#: src/components/common/SeatingSectionList/index.tsx:200
 msgid "Activate"
 msgstr "Aktywuj"
 
@@ -466,7 +471,7 @@ msgstr "Data aktywacji"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -494,6 +499,10 @@ msgstr "Dodaj wszelkie notatki o zamówieniu. Nie będą widoczne dla klienta."
 #: src/components/modals/ManageOrderModal/index.tsx:169
 msgid "Add any notes about the order..."
 msgstr "Dodaj wszelkie notatki o zamówieniu..."
+
+#: src/components/common/SeatingSectionList/index.tsx:156
+msgid "Add back"
+msgstr "Przywróć"
 
 #: src/components/common/QuestionsTable/index.tsx:433
 msgid "Add custom questions to collect additional information during checkout"
@@ -1037,7 +1046,7 @@ msgstr "Czy na pewno chcesz usunąć to przypisanie pojemności?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Czy na pewno chcesz usunąć tę listę odpraw?"
 
-#: src/components/common/SeatingSectionList/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:223
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Czy na pewno chcesz usunąć tę sekcję miejsc?"
 
@@ -1247,7 +1256,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Automatycznie dopasuj wysokość widgetu na podstawie zawartości. Gdy wyłączone, widget wypełni wysokość kontenera."
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:183
 msgid "available"
 msgstr "dostępne"
 
@@ -2457,7 +2466,7 @@ msgstr "Utwórz kod promocyjny"
 msgid "Create Question"
 msgstr "Utwórz pytanie"
 
-#: src/components/common/SeatingSectionList/index.tsx:81
+#: src/components/common/SeatingSectionList/index.tsx:121
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:76
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:87
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2693,7 +2702,7 @@ msgstr "Codzienna sprzedaż, podział podatków i opłat"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:140
+#: src/components/common/SeatingSectionList/index.tsx:217
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Strefa zagrożenia"
@@ -2740,6 +2749,10 @@ msgstr "Data złożenia zamówienia"
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:38
 msgid "Day one capacity"
 msgstr "Pojemność pierwszego dnia"
+
+#: src/components/common/SeatingSectionList/index.tsx:200
+msgid "Deactivate"
+msgstr "Wyłącz"
 
 #: src/components/common/CookieConsentBanner/index.tsx:62
 msgid "Decline"
@@ -2812,7 +2825,7 @@ msgstr "Usuń zadanie"
 msgid "Delete Organizer"
 msgstr "Usuń organizatora"
 
-#: src/components/common/SeatingSectionList/index.tsx:143
+#: src/components/common/SeatingSectionList/index.tsx:220
 msgid "Delete Section"
 msgstr "Usuń sekcję"
 
@@ -3144,7 +3157,7 @@ msgstr "Edytuj pytanie"
 msgid "Edit Seating Section"
 msgstr "Edytuj sekcję miejsc"
 
-#: src/components/common/SeatingSectionList/index.tsx:130
+#: src/components/common/SeatingSectionList/index.tsx:207
 msgid "Edit Section"
 msgstr "Edytuj sekcję"
 
@@ -4379,7 +4392,7 @@ msgstr "Goście"
 msgid "Have a promo code?"
 msgstr "Masz kod promocyjny?"
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:186
 msgid "held"
 msgstr "wstrzymane"
 
@@ -4685,7 +4698,7 @@ msgstr "Ważne: Wymagane ponowne połączenie z Stripe"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -5153,7 +5166,7 @@ msgstr "Opublikuj swoje wydarzenie"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:127
+#: src/components/common/SeatingSectionList/index.tsx:197
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5740,7 +5753,7 @@ msgstr "Brak wyników wyszukiwania"
 msgid "No search results."
 msgstr "Brak wyników wyszukiwania."
 
-#: src/components/common/SeatingSectionList/index.tsx:61
+#: src/components/common/SeatingSectionList/index.tsx:101
 msgid "No Seating Sections"
 msgstr "Brak sekcji miejsc"
 
@@ -5920,6 +5933,10 @@ msgstr "W sprzedaży"
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:99
 msgid "On sale {0}"
 msgstr "W sprzedaży {0}"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "On the plan"
+msgstr "Na planie"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:553
 msgid "Once you complete the upgrade, your old account will only be used for refunds."
@@ -6416,6 +6433,10 @@ msgstr "Opłacone konta"
 #: src/components/forms/ProductForm/index.tsx:181
 msgid "Paid Product"
 msgstr "Opłacony produkt"
+
+#: src/components/common/SeatingSectionList/index.tsx:136
+msgid "Part of the plan"
+msgstr "Element planu"
 
 #: src/components/modals/RefundOrderModal/index.tsx:109
 msgid "Partial refund"
@@ -7336,11 +7357,16 @@ msgid "remove"
 msgstr "usuń"
 
 #: src/components/common/Editor/Controls/InsertImageControl/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:156
 #: src/components/common/WaitlistTable/index.tsx:78
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/routes/product-widget/SelectProducts/index.tsx:800
 msgid "Remove"
 msgstr "Usuń"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "Removed"
+msgstr "Usunięta"
 
 #: src/components/common/SeatingSectionList/index.tsx:37
 #~ msgid "Reorder"
@@ -7777,7 +7803,7 @@ msgstr "Miejsce"
 msgid "Seating section created successfully"
 msgstr "Sekcja miejsc została utworzona"
 
-#: src/components/common/SeatingSectionList/index.tsx:50
+#: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Sekcja miejsc została usunięta"
 
@@ -7800,6 +7826,14 @@ msgstr "Kolor wtórny"
 #: src/components/common/WidgetEditor/index.tsx:214
 msgid "Secondary Text Color"
 msgstr "Kolor tekstu wtórnego"
+
+#: src/components/common/SeatingSectionList/index.tsx:78
+msgid "Section hidden from ticket buyers"
+msgstr "Sekcja ukryta przed kupującymi"
+
+#: src/components/common/SeatingSectionList/index.tsx:79
+msgid "Section is now on sale"
+msgstr "Sekcja jest już w sprzedaży"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Section name"
@@ -8257,7 +8291,7 @@ msgstr "Linki społeczne"
 msgid "Social Links & Website"
 msgstr "Linki społeczne i strona internetowa"
 
-#: src/components/common/SeatingSectionList/index.tsx:119
+#: src/components/common/SeatingSectionList/index.tsx:189
 msgid "sold"
 msgstr "sprzedane"
 
@@ -8339,6 +8373,7 @@ msgid "Sports"
 msgstr "Sport"
 
 #: src/components/common/SeatingChart/index.tsx:125
+#: src/components/common/SeatingSectionList/index.tsx:143
 msgid "Stage"
 msgstr "Scena"
 
@@ -9598,7 +9633,7 @@ msgstr "Nieznany"
 msgid "Unknown Attendee"
 msgstr "Nieznany uczestnik"
 
-#: src/components/common/SeatingSectionList/index.tsx:97
+#: src/components/common/SeatingSectionList/index.tsx:167
 msgid "Unknown product"
 msgstr "Nieznany produkt"
 

@@ -832,12 +832,14 @@ export interface SeatingSection {
 export interface SeatingPlan {
     stage_x: number;
     stage_y: number;
+    stage_visible: boolean;
     sections: SeatingSection[];
 }
 
 export interface SeatingLayoutRequest {
     stage_x: number;
     stage_y: number;
+    stage_visible: boolean;
     sections: { id: IdParam, position_x: number, position_y: number }[];
 }
 

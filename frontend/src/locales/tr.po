@@ -77,7 +77,7 @@ msgstr "{0} logosu"
 msgid "{0} organizers"
 msgstr "{0} organizatör"
 
-#: src/components/common/SeatingSectionList/index.tsx:110
+#: src/components/common/SeatingSectionList/index.tsx:180
 msgid "{0} rows × {1} seats"
 msgstr "{0} sıra × {1} koltuk"
 
@@ -147,7 +147,7 @@ msgstr "+1 234 567 890"
 msgid "<0>Check-in lists help you manage event entry by day, area, or ticket type. You can link tickets to specific lists such as VIP zones or Day 1 passes and share a secure check-in link with staff. No account is required. Check-in works on mobile, desktop, or tablet, using a device camera or HID USB scanner.                                </0>"
 msgstr "<0>Giriş listeleri, etkinlik girişini güne, alana veya bilet türüne göre yönetmenize yardımcı olur. Biletleri VIP alanları veya 1. Gün geçişleri gibi belirli listelere bağlayabilir ve personelle güvenli bir giriş bağlantısı paylaşabilirsiniz. Hesap gerekmez. Giriş, cihaz kamerası veya HID USB tarayıcı kullanarak mobil, masaüstü veya tablette çalışır.                                </0>"
 
-#: src/components/common/SeatingSectionList/index.tsx:66
+#: src/components/common/SeatingSectionList/index.tsx:106
 msgid "<0>Create seating sections so ticket buyers can choose their own numbered seat.</0><1>Each section is a grid of rows and seats linked to a product. For example, a<2> Balcony</2> section with 10 rows of 20 seats sells through your<3> Balcony Ticket</3> product, while general admission products remain unchanged.</1>"
 msgstr "<0>Bilet alıcılarının kendi numaralı koltuklarını seçebilmesi için koltuk bölümleri oluşturun.</0><1>Her bölüm, bir ürüne bağlı sıra ve koltuk ızgarasıdır. Örneğin, 10 sıra ve her sırada 20 koltuk bulunan bir<2> Balkon</2> bölümü,<3> Balkon Bileti</3> ürününüz üzerinden satılırken genel giriş ürünleri değişmeden kalır.</1>"
 
@@ -299,6 +299,10 @@ msgstr "İndirim olmayan promosyon kodu gizli ürünleri göstermek için kullan
 #: src/components/forms/QuestionForm/index.tsx:120
 msgid "A Radio option has multiple options but only one can be selected."
 msgstr "Radyo seçeneği birden fazla seçenek sunar ancak sadece biri seçilebilir."
+
+#: src/components/common/SeatingSectionList/index.tsx:147
+msgid "A reference point for buyers, not a section that sells seats."
+msgstr "Alıcılar için bir referans noktası, koltuk satan bir bölüm değil."
 
 #: src/components/modals/CreateProductModal/index.tsx:25
 #: src/components/modals/EditProductModal/index.tsx:26
@@ -455,6 +459,7 @@ msgid "Actions"
 msgstr "İşlemler"
 
 #: src/components/common/AttendeeTable/index.tsx:380
+#: src/components/common/SeatingSectionList/index.tsx:200
 msgid "Activate"
 msgstr "Etkinleştir"
 
@@ -466,7 +471,7 @@ msgstr "Etkinleştirme tarihi"
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
 #: src/components/forms/SeatingSectionForm/index.tsx:23
@@ -494,6 +499,10 @@ msgstr "Sipariş hakkında not ekleyin. Bunlar müşteri tarafından görülmeye
 #: src/components/modals/ManageOrderModal/index.tsx:169
 msgid "Add any notes about the order..."
 msgstr "Sipariş hakkında not ekleyin..."
+
+#: src/components/common/SeatingSectionList/index.tsx:156
+msgid "Add back"
+msgstr "Geri ekle"
 
 #: src/components/common/QuestionsTable/index.tsx:433
 msgid "Add custom questions to collect additional information during checkout"
@@ -1037,7 +1046,7 @@ msgstr "Bu Kapasite Atamasını silmek istediğinizden emin misiniz?"
 msgid "Are you sure you would like to delete this Check-In List?"
 msgstr "Bu Check-In Listesini silmek istediğinizden emin misiniz?"
 
-#: src/components/common/SeatingSectionList/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:223
 msgid "Are you sure you would like to delete this Seating Section?"
 msgstr "Bu koltuk bölümünü silmek istediğinizden emin misiniz?"
 
@@ -1247,7 +1256,7 @@ msgstr ""
 msgid "Automatically resize the widget height based on the content. When disabled, the widget will fill the height of the container."
 msgstr "Widget yüksekliğini içeriğe göre otomatik olarak boyutlandırır. Devre dışı bırakıldığında, widget kapsayıcının yüksekliğini dolduracaktır."
 
-#: src/components/common/SeatingSectionList/index.tsx:113
+#: src/components/common/SeatingSectionList/index.tsx:183
 msgid "available"
 msgstr "müsait"
 
@@ -2457,7 +2466,7 @@ msgstr "Promosyon Kodu Oluştur"
 msgid "Create Question"
 msgstr "Soru Oluştur"
 
-#: src/components/common/SeatingSectionList/index.tsx:81
+#: src/components/common/SeatingSectionList/index.tsx:121
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:76
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:87
 #: src/components/routes/event/Seating/index.tsx:48
@@ -2693,7 +2702,7 @@ msgstr "Günlük satış, vergi ve ücret dökümü"
 #: src/components/common/OrganizerWebhookTable/index.tsx:116
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:501
 #: src/components/common/PromoCodeTable/index.tsx:181
-#: src/components/common/SeatingSectionList/index.tsx:140
+#: src/components/common/SeatingSectionList/index.tsx:217
 #: src/components/common/WebhookTable/index.tsx:116
 msgid "Danger zone"
 msgstr "Tehlike bölgesi"
@@ -2740,6 +2749,10 @@ msgstr "Siparişin verildiği tarih"
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:38
 msgid "Day one capacity"
 msgstr "Birinci gün kapasitesi"
+
+#: src/components/common/SeatingSectionList/index.tsx:200
+msgid "Deactivate"
+msgstr "Devre dışı bırak"
 
 #: src/components/common/CookieConsentBanner/index.tsx:62
 msgid "Decline"
@@ -2812,7 +2825,7 @@ msgstr "İşi sil"
 msgid "Delete Organizer"
 msgstr "Organizatörü Sil"
 
-#: src/components/common/SeatingSectionList/index.tsx:143
+#: src/components/common/SeatingSectionList/index.tsx:220
 msgid "Delete Section"
 msgstr "Bölümü sil"
 
@@ -3144,7 +3157,7 @@ msgstr "Soruyu Düzenle"
 msgid "Edit Seating Section"
 msgstr "Koltuk bölümünü düzenle"
 
-#: src/components/common/SeatingSectionList/index.tsx:130
+#: src/components/common/SeatingSectionList/index.tsx:207
 msgid "Edit Section"
 msgstr "Bölümü düzenle"
 
@@ -4379,7 +4392,7 @@ msgstr "Misafirler"
 msgid "Have a promo code?"
 msgstr "Promosyon kodunuz var mı?"
 
-#: src/components/common/SeatingSectionList/index.tsx:116
+#: src/components/common/SeatingSectionList/index.tsx:186
 msgid "held"
 msgstr "rezerve"
 
@@ -4685,7 +4698,7 @@ msgstr "Önemli: Stripe yeniden bağlantısı gerekli"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
-#: src/components/common/SeatingSectionList/index.tsx:100
+#: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
 #: src/components/forms/SeatingSectionForm/index.tsx:29
@@ -5153,7 +5166,7 @@ msgstr "Etkinliğinizi canlı yapın"
 #: src/components/common/OrganizerWebhookTable/index.tsx:96
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:470
 #: src/components/common/PromoCodeTable/index.tsx:167
-#: src/components/common/SeatingSectionList/index.tsx:127
+#: src/components/common/SeatingSectionList/index.tsx:197
 #: src/components/common/WebhookTable/index.tsx:96
 #: src/components/layouts/OrganizerLayout/index.tsx:86
 msgid "Manage"
@@ -5740,7 +5753,7 @@ msgstr "Arama Sonucu Yok"
 msgid "No search results."
 msgstr "Arama sonucu yok."
 
-#: src/components/common/SeatingSectionList/index.tsx:61
+#: src/components/common/SeatingSectionList/index.tsx:101
 msgid "No Seating Sections"
 msgstr "Koltuk bölümü yok"
 
@@ -5920,6 +5933,10 @@ msgstr "Satışta"
 #: src/components/common/ProductsTable/SortableProduct/index.tsx:99
 msgid "On sale {0}"
 msgstr "{0} satışta"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "On the plan"
+msgstr "Planda"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:553
 msgid "Once you complete the upgrade, your old account will only be used for refunds."
@@ -6416,6 +6433,10 @@ msgstr "Ücretli Hesaplar"
 #: src/components/forms/ProductForm/index.tsx:181
 msgid "Paid Product"
 msgstr "Ücretli Ürün"
+
+#: src/components/common/SeatingSectionList/index.tsx:136
+msgid "Part of the plan"
+msgstr "Planın parçası"
 
 #: src/components/modals/RefundOrderModal/index.tsx:109
 msgid "Partial refund"
@@ -7336,11 +7357,16 @@ msgid "remove"
 msgstr "kaldır"
 
 #: src/components/common/Editor/Controls/InsertImageControl/index.tsx:146
+#: src/components/common/SeatingSectionList/index.tsx:156
 #: src/components/common/WaitlistTable/index.tsx:78
 #: src/components/common/WaitlistTable/index.tsx:111
 #: src/components/routes/product-widget/SelectProducts/index.tsx:800
 msgid "Remove"
 msgstr "Kaldır"
+
+#: src/components/common/SeatingSectionList/index.tsx:139
+msgid "Removed"
+msgstr "Kaldırıldı"
 
 #: src/components/common/SeatingSectionList/index.tsx:37
 #~ msgid "Reorder"
@@ -7777,7 +7803,7 @@ msgstr "Koltuk"
 msgid "Seating section created successfully"
 msgstr "Koltuk bölümü başarıyla oluşturuldu"
 
-#: src/components/common/SeatingSectionList/index.tsx:50
+#: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Koltuk bölümü başarıyla silindi"
 
@@ -7800,6 +7826,14 @@ msgstr "İkincil Renk"
 #: src/components/common/WidgetEditor/index.tsx:214
 msgid "Secondary Text Color"
 msgstr "İkincil Metin Rengi"
+
+#: src/components/common/SeatingSectionList/index.tsx:78
+msgid "Section hidden from ticket buyers"
+msgstr "Bölüm alıcılardan gizlendi"
+
+#: src/components/common/SeatingSectionList/index.tsx:79
+msgid "Section is now on sale"
+msgstr "Bölüm artık satışta"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:76
 msgid "Section name"
@@ -8257,7 +8291,7 @@ msgstr "Sosyal Bağlantılar"
 msgid "Social Links & Website"
 msgstr "Sosyal Bağlantılar ve Web Sitesi"
 
-#: src/components/common/SeatingSectionList/index.tsx:119
+#: src/components/common/SeatingSectionList/index.tsx:189
 msgid "sold"
 msgstr "satıldı"
 
@@ -8339,6 +8373,7 @@ msgid "Sports"
 msgstr "Spor"
 
 #: src/components/common/SeatingChart/index.tsx:125
+#: src/components/common/SeatingSectionList/index.tsx:143
 msgid "Stage"
 msgstr "Sahne"
 
@@ -9598,7 +9633,7 @@ msgstr "Bilinmeyen"
 msgid "Unknown Attendee"
 msgstr "Bilinmeyen Katılımcı"
 
-#: src/components/common/SeatingSectionList/index.tsx:97
+#: src/components/common/SeatingSectionList/index.tsx:167
 msgid "Unknown product"
 msgstr "Bilinmeyen ürün"
 

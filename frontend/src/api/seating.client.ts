@@ -30,11 +30,11 @@ export const seatingClient = {
         return response.data;
     },
     layout: async (eventId: IdParam) => {
-        const response = await api.get<GenericDataResponse<{ stage_x: number, stage_y: number }>>(`events/${eventId}/seating-layout`);
+        const response = await api.get<GenericDataResponse<{ stage_x: number, stage_y: number, stage_visible: boolean }>>(`events/${eventId}/seating-layout`);
         return response.data;
     },
     saveLayout: async (eventId: IdParam, layout: SeatingLayoutRequest) => {
-        const response = await api.post<GenericDataResponse<{ stage_x: number, stage_y: number }>>(`events/${eventId}/seating-layout`, layout);
+        const response = await api.post<GenericDataResponse<{ stage_x: number, stage_y: number, stage_visible: boolean }>>(`events/${eventId}/seating-layout`, layout);
         return response.data;
     },
     delete: async (eventId: IdParam, seatingSectionId: IdParam) => {

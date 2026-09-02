@@ -14,6 +14,14 @@ const NAME_LINE = 26;
 
 export const STAGE_SIZE = {width: 220, height: 34};
 
+/**
+ * Coordinates are stored around an origin and are routinely negative — sitting above or left
+ * of the stage is normal. The plan is drawn inside a fixed margin rather than shifted to its
+ * own minimum: normalising on every render moved every other piece whenever one was dragged
+ * past the current edge, so the whole room jumped while you moved one section.
+ */
+export const PLAN_MARGIN = 200;
+
 export const sectionSize = (section: SeatingSection) => {
     const seats = section.seats_per_row;
     const aisles = section.aisle_positions?.length ?? 0;
@@ -33,13 +41,13 @@ export interface PlanPiece {
     section?: SeatingSection;
 }
 
-/**
- * Lays the stage and every section out from a common origin, shifted so the top-left of the
- * plan sits at 0,0 — coordinates are stored around an origin and are routinely negative.
- */
-export const buildPlan = (sections: SeatingSection[], stage: { x: number, y: number }) => {
+/** Lays the stage and every section out inside the fixed margin. */
+export const buildPlan = (
+    sections: SeatingSection[],
+    stage: { x: number, y: number, visible?: boolean },
+) => {
     const pieces: PlanPiece[] = [
-        {key: 'stage', x: stage.x, y: stage.y, ...STAGE_SIZE},
+        ...(stage.visible === false ? [] : [{key: 'stage', x: stage.x, y: stage.y, ...STAGE_SIZE}]),
         ...sections.map((section) => ({
             key: String(section.id),
             x: section.position_x ?? 0,
@@ -49,16 +57,15 @@ export const buildPlan = (sections: SeatingSection[], stage: { x: number, y: num
         })),
     ];
 
-    const offsetX = Math.min(...pieces.map((piece) => piece.x));
-    const offsetY = Math.min(...pieces.map((piece) => piece.y));
+    if (pieces.length === 0) {
+        return {pieces, width: 0, height: 0, offsetX: 0, offsetY: 0};
+    }
 
-    const placed = pieces.map((piece) => ({...piece, x: piece.x - offsetX, y: piece.y - offsetY}));
+    const placed = pieces.map((piece) => ({...piece, x: piece.x + PLAN_MARGIN, y: piece.y + PLAN_MARGIN}));
 
     return {
         pieces: placed,
-        width: Math.max(...placed.map((piece) => piece.x + piece.width)),
-        height: Math.max(...placed.map((piece) => piece.y + piece.height)),
-        offsetX,
-        offsetY,
+        width: Math.max(...placed.map((piece) => piece.x + piece.width)) + PLAN_MARGIN,
+        height: Math.max(...placed.map((piece) => piece.y + piece.height)) + PLAN_MARGIN,
     };
 };
