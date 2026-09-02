@@ -43,14 +43,14 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
                 seats.label,
                 CASE
                     WHEN seats.is_disabled THEN 'DISABLED'
-                    WHEN seats.attendee_id IS NOT NULL THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL
                          AND orders.status IN (?, ?) THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL
                          AND orders.status = ?
-                         AND orders.reserved_until > NOW() THEN 'HELD'
+                         AND (orders.reserved_until IS NULL OR orders.reserved_until > NOW()) THEN 'HELD'
+                    WHEN seats.order_id IS NULL AND seats.attendee_id IS NOT NULL THEN 'SOLD'
                     ELSE 'AVAILABLE'
                 END AS state
             FROM seats
@@ -80,14 +80,13 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
 
         return $this->db->update(<<<SQL
             UPDATE seats
-            SET order_id = ?, updated_at = NOW()
+            SET order_id = ?, attendee_id = NULL, updated_at = NOW()
             WHERE seats.id IN ($seatPlaceholders)
               AND seats.event_id = ?
               AND seats.seating_section_id IN ($sectionPlaceholders)
               AND seats.is_disabled = FALSE
-              AND seats.attendee_id IS NULL
               AND (
-                  seats.order_id IS NULL
+                  (seats.order_id IS NULL AND seats.attendee_id IS NULL)
                   OR EXISTS (
                       SELECT 1 FROM orders
                       WHERE orders.id = seats.order_id
@@ -130,14 +129,14 @@ class SeatRepository extends BaseRepository implements SeatRepositoryInterface
                 seats.seating_section_id,
                 CASE
                     WHEN seats.is_disabled THEN 'DISABLED'
-                    WHEN seats.attendee_id IS NOT NULL THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL
                          AND orders.status IN (?, ?) THEN 'SOLD'
                     WHEN orders.id IS NOT NULL
                          AND orders.deleted_at IS NULL
                          AND orders.status = ?
-                         AND orders.reserved_until > NOW() THEN 'HELD'
+                         AND (orders.reserved_until IS NULL OR orders.reserved_until > NOW()) THEN 'HELD'
+                    WHEN seats.order_id IS NULL AND seats.attendee_id IS NOT NULL THEN 'SOLD'
                     ELSE 'AVAILABLE'
                 END AS state,
                 COUNT(*) AS seat_count
