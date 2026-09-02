@@ -20,7 +20,7 @@ class UpsertSeatingSectionRequest extends BaseRequest
             'disabled_seats' => ['sometimes', 'nullable', 'array'],
             'disabled_seats.*' => ['string', 'max:10'],
             'aisle_positions' => ['sometimes', 'nullable', 'array'],
-            'aisle_positions.*' => ['integer', 'distinct', 'min:1'],
+            'aisle_positions.*' => ['integer', 'min:1'],
         ];
     }
 
