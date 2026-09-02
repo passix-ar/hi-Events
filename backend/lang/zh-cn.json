@@ -678,5 +678,9 @@
     "The same seat cannot be selected more than once.": "同一座位不能重复选择。",
     "The number of selected seats does not match the number of attendees.": "所选座位数与参加者人数不符。",
     "Please select a product.": "请选择产品。",
-    "Seat": "座位"
+    "Seat": "座位",
+    "One or more of the selected seats are not available for sale.": "所选座位中有一个或多个不可出售。",
+    "A section must have at least one available seat.": "每个分区至少需要一个可用座位。",
+    "These blocked seats do not exist in the layout: :labels": "以下被锁定的座位不在座位图中：:labels",
+    "Seat :label cannot be blocked because it is held or sold.": "座位 :label 已被保留或售出，无法锁定。"
 }

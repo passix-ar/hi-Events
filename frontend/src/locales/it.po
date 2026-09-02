@@ -87,7 +87,7 @@ msgstr "{0} organizzatori"
 
 #: src/components/common/SeatingSectionList/index.tsx:94
 msgid "{0} rows × {1} seats"
-msgstr ""
+msgstr "{0} file × {1} posti"
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:617
 msgid "{0} tickets"

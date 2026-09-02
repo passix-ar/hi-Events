@@ -686,5 +686,9 @@
     "MercadoPago is not available for this event. Please choose another payment method.": "O MercadoPago não está disponível para este evento. Escolhe outro método de pagamento.",
     "MercadoPago is not connected for this organizer. Please contact the event organizer.": "O organizador não tem o MercadoPago ligado. Contacta o organizador do evento.",
     "Sorry, this order has expired or is not in a valid state.": "Este pedido expirou ou não está num estado válido.",
-    "Event not found for this order.": "Não encontrámos o evento deste pedido."
+    "Event not found for this order.": "Não encontrámos o evento deste pedido.",
+    "One or more of the selected seats are not available for sale.": "Um ou mais dos lugares selecionados não estão disponíveis para venda.",
+    "A section must have at least one available seat.": "Uma secção deve ter pelo menos um lugar disponível.",
+    "These blocked seats do not exist in the layout: :labels": "Estes lugares bloqueados não existem na planta: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "O lugar :label não pode ser bloqueado porque está reservado ou vendido."
 }

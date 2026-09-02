@@ -678,5 +678,9 @@
     "The same seat cannot be selected more than once.": "Dezelfde stoel kan niet meer dan één keer worden geselecteerd.",
     "The number of selected seats does not match the number of attendees.": "Het aantal geselecteerde stoelen komt niet overeen met het aantal deelnemers.",
     "Please select a product.": "Selecteer een product.",
-    "Seat": "Stoel"
+    "Seat": "Stoel",
+    "One or more of the selected seats are not available for sale.": "Een of meer van de geselecteerde stoelen zijn niet te koop.",
+    "A section must have at least one available seat.": "Een sectie moet ten minste één beschikbare stoel hebben.",
+    "These blocked seats do not exist in the layout: :labels": "Deze geblokkeerde stoelen bestaan niet in de plattegrond: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "Stoel :label kan niet worden geblokkeerd omdat deze gereserveerd of verkocht is."
 }

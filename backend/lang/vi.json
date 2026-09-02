@@ -642,5 +642,9 @@
     "The same seat cannot be selected more than once.": "Không thể chọn cùng một chỗ ngồi nhiều lần.",
     "The number of selected seats does not match the number of attendees.": "Số chỗ ngồi đã chọn không khớp với số người tham dự.",
     "Please select a product.": "Vui lòng chọn một sản phẩm.",
-    "Seat": "Chỗ ngồi"
+    "Seat": "Chỗ ngồi",
+    "One or more of the selected seats are not available for sale.": "Một hoặc nhiều chỗ ngồi đã chọn không còn được bán.",
+    "A section must have at least one available seat.": "Mỗi khu vực phải có ít nhất một chỗ ngồi khả dụng.",
+    "These blocked seats do not exist in the layout: :labels": "Những chỗ ngồi bị khóa này không có trong sơ đồ: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "Không thể khóa chỗ ngồi :label vì chỗ này đang được giữ hoặc đã bán."
 }

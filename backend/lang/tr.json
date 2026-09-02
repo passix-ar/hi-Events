@@ -693,5 +693,9 @@
     "The same seat cannot be selected more than once.": "Aynı koltuk birden fazla kez seçilemez.",
     "The number of selected seats does not match the number of attendees.": "Seçilen koltuk sayısı katılımcı sayısıyla eşleşmiyor.",
     "Please select a product.": "Lütfen bir ürün seçin.",
-    "Seat": "Koltuk"
+    "Seat": "Koltuk",
+    "One or more of the selected seats are not available for sale.": "Seçilen koltuklardan biri veya birkaçı satışa uygun değil.",
+    "A section must have at least one available seat.": "Bir bölümde en az bir uygun koltuk bulunmalıdır.",
+    "These blocked seats do not exist in the layout: :labels": "Bu engellenen koltuklar yerleşim planında bulunmuyor: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": ":label koltuğu rezerve veya satılmış olduğu için engellenemez."
 }

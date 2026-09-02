@@ -678,5 +678,9 @@
     "The same seat cannot be selected more than once.": "Ugyanaz az ülőhely nem választható ki többször.",
     "The number of selected seats does not match the number of attendees.": "A kiválasztott ülőhelyek száma nem egyezik a résztvevők számával.",
     "Please select a product.": "Kérjük, válasszon egy terméket.",
-    "Seat": "Ülőhely"
+    "Seat": "Ülőhely",
+    "One or more of the selected seats are not available for sale.": "A kiválasztott ülőhelyek közül egy vagy több nem vásárolható meg.",
+    "A section must have at least one available seat.": "Egy szekciónak legalább egy elérhető ülőhelyet kell tartalmaznia.",
+    "These blocked seats do not exist in the layout: :labels": "Ezek a letiltott ülőhelyek nem szerepelnek az elrendezésben: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "A(z) :label ülőhely nem tiltható le, mert fenntartva vagy eladva van."
 }

@@ -678,5 +678,9 @@
     "The same seat cannot be selected more than once.": "Derselbe Sitzplatz kann nicht mehrmals ausgewählt werden.",
     "The number of selected seats does not match the number of attendees.": "Die Anzahl der ausgewählten Sitzplätze stimmt nicht mit der Anzahl der Teilnehmer überein.",
     "Please select a product.": "Bitte wählen Sie ein Produkt.",
-    "Seat": "Sitzplatz"
+    "Seat": "Sitzplatz",
+    "One or more of the selected seats are not available for sale.": "Einer oder mehrere der ausgewählten Sitzplätze stehen nicht zum Verkauf.",
+    "A section must have at least one available seat.": "Ein Bereich muss mindestens einen verfügbaren Sitzplatz haben.",
+    "These blocked seats do not exist in the layout: :labels": "Diese gesperrten Sitzplätze existieren im Sitzplan nicht: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "Sitzplatz :label kann nicht gesperrt werden, weil er reserviert oder verkauft ist."
 }

@@ -87,7 +87,7 @@ msgstr "{0} arrangörer"
 
 #: src/components/common/SeatingSectionList/index.tsx:94
 msgid "{0} rows × {1} seats"
-msgstr ""
+msgstr "{0} rader × {1} platser"
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:617
 msgid "{0} tickets"

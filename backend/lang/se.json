@@ -506,5 +506,9 @@
     "The same seat cannot be selected more than once.": "Samma plats kan inte väljas mer än en gång.",
     "The number of selected seats does not match the number of attendees.": "Antalet valda platser stämmer inte överens med antalet deltagare.",
     "Please select a product.": "Välj en produkt.",
-    "Seat": "Plats"
+    "Seat": "Plats",
+    "One or more of the selected seats are not available for sale.": "En eller flera av de valda platserna är inte tillgängliga för försäljning.",
+    "A section must have at least one available seat.": "En sektion måste ha minst en tillgänglig plats.",
+    "These blocked seats do not exist in the layout: :labels": "Dessa blockerade platser finns inte i planlösningen: :labels",
+    "Seat :label cannot be blocked because it is held or sold.": "Plats :label kan inte blockeras eftersom den är reserverad eller såld."
 }

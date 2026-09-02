@@ -87,7 +87,7 @@ msgstr "{0} 位组织者"
 
 #: src/components/common/SeatingSectionList/index.tsx:94
 msgid "{0} rows × {1} seats"
-msgstr ""
+msgstr "{0} 排 × {1} 座"
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:617
 msgid "{0} tickets"
