@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Húzd a színpadot és a szekciókat a terem összeállításához."
 
@@ -7368,10 +7368,6 @@ msgstr "Eltávolítás"
 msgid "Removed"
 msgstr "Eltávolítva"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "Átrendezés"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr ""
@@ -7806,10 +7802,6 @@ msgstr "Ülésszekció sikeresen létrehozva"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Ülésszekció sikeresen törölve"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "A szekciók átrendezve"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8821,10 +8813,6 @@ msgstr "Köszönjük támogatását, miközben tovább fejlődünk és fejlesztj
 msgid "That promo code is invalid"
 msgstr "Ez a promóciós kód érvénytelen."
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "Ez a hely foglalt – hagyj helyet az elemek között."
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Az oldal háttérszíne. Borítókép használatakor ez átfedésként kerül alkalmazásra."
@@ -9343,7 +9331,7 @@ msgstr "Jegyek ehhez:"
 msgid "Tickets Sold"
 msgstr "Eladott jegyek"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "Rendezés"
 

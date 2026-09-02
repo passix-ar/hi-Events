@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Przeciągnij scenę i sekcje, aby ułożyć salę."
 
@@ -7368,10 +7368,6 @@ msgstr "Usuń"
 msgid "Removed"
 msgstr "Usunięta"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "Zmień kolejność"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr ""
@@ -7806,10 +7802,6 @@ msgstr "Sekcja miejsc została utworzona"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Sekcja miejsc została usunięta"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "Zmieniono kolejność sekcji"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8821,10 +8813,6 @@ msgstr "Dziękujemy za Twoje wsparcie, gdy nadal rozwijamy i ulepszamy Hi.Events
 msgid "That promo code is invalid"
 msgstr "Ten kod promocyjny jest nieprawidłowy"
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "To miejsce jest zajęte — zostaw odstęp między elementami."
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Kolor tła strony. W przypadku używania obrazu okładki jest on stosowany jako nakładka."
@@ -9343,7 +9331,7 @@ msgstr "Bilety dla"
 msgid "Tickets Sold"
 msgstr "Sprzedane bilety"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "Uporządkuj"
 

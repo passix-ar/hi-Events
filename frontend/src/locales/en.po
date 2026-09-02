@@ -2988,7 +2988,7 @@ msgstr "Drag & drop or click to upload"
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr "Drag the image and adjust the zoom to choose what's visible in the banner."
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Drag the stage and each section to lay out your room."
 
@@ -7372,10 +7372,6 @@ msgstr "Remove"
 msgid "Removed"
 msgstr "Removed"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "Reorder"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr "Replace Image"
@@ -7810,10 +7806,6 @@ msgstr "Seating section created successfully"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Seating section deleted successfully"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "Seating sections reordered"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8825,10 +8817,6 @@ msgstr "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgid "That promo code is invalid"
 msgstr "That promo code is invalid"
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "That spot is taken — leave room between the pieces."
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "The background color of the page. When using cover image, this is applied as an overlay."
@@ -9347,7 +9335,7 @@ msgstr "Tickets for"
 msgid "Tickets Sold"
 msgstr "Tickets Sold"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "Tidy up"
 

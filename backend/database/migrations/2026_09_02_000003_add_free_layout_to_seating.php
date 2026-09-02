@@ -19,7 +19,7 @@ return new class extends Migration
         DB::statement(<<<'SQL'
             UPDATE seating_sections
             SET position_x = 0,
-                position_y = ranked.position * 240
+                position_y = 80 + ranked.position * 240
             FROM (
                 SELECT id, ROW_NUMBER() OVER (PARTITION BY event_id ORDER BY "order", id) - 1 AS position
                 FROM seating_sections
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_id')->unique()->constrained('events')->onDelete('cascade');
             $table->integer('stage_x')->default(0);
-            $table->integer('stage_y')->default(-140);
+            $table->integer('stage_y')->default(0);
             $table->timestamps();
         });
     }

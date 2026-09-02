@@ -12,6 +12,11 @@ const ROW_LABEL = 20;
 const AISLE = 14;
 const NAME_LINE = 26;
 
+/** The title is drawn on one line above the grid and can be wider than it — "Platea
+ *  izquierda" over three seats is nearly twice the grid. Left out of the box, a neighbour
+ *  parks its seats under the text. Rough is fine: the gutter absorbs the error. */
+const NAME_CHAR = 7.2;
+
 export const STAGE_SIZE = {width: 220, height: 34};
 
 /**
@@ -20,13 +25,14 @@ export const STAGE_SIZE = {width: 220, height: 34};
  * own minimum: normalising on every render moved every other piece whenever one was dragged
  * past the current edge, so the whole room jumped while you moved one section.
  */
-export const PLAN_MARGIN = 200;
+export const PLAN_MARGIN = 24;
 
 /** Free placement still needs a shape: pieces land on a grid and never sit on each other. */
 export const PLAN_GRID = 20;
 
-/** Breathing room between two pieces, so a plan never reads as one blurred block. */
-const GUTTER = 24;
+/** Just enough that two pieces do not touch. Kept small on purpose: the plan is meant to be
+ *  arranged freely, not to fight the organizer over a few pixels. */
+const GUTTER = 12;
 
 export const snapToGrid = (value: number) => Math.round(value / PLAN_GRID) * PLAN_GRID;
 
@@ -38,15 +44,43 @@ const intersects = (a: Rect, b: Rect) =>
     && a.y < b.y + b.height + GUTTER
     && a.y + a.height + GUTTER > b.y;
 
-/** True when the piece would land on top of any of the others. */
-export const collides = (moving: Rect, others: Rect[]) => others.some((other) => intersects(moving, other));
+const collides = (moving: Rect, others: Rect[]) => others.some((other) => intersects(moving, other));
+
+/**
+ * Where a dragged piece actually lands. Refusing an overlapping drop looked reasonable until
+ * a plan that already overlapped could not be untangled: every small move still collided, so
+ * nothing could be dragged anywhere. A piece is always dropped, and pushed to the nearest
+ * free spot when the one under the cursor is taken.
+ */
+export const freeSpotNear = (target: Rect, others: Rect[]) => {
+    if (!collides(target, others)) {
+        return {x: target.x, y: target.y};
+    }
+
+    for (let ring = 1; ring <= 40; ring++) {
+        const step = ring * PLAN_GRID;
+
+        for (const [dx, dy] of [[0, step], [step, 0], [0, -step], [-step, 0],
+            [step, step], [-step, step], [step, -step], [-step, -step]]) {
+            const candidate = {...target, x: Math.max(0, target.x + dx), y: Math.max(0, target.y + dy)};
+
+            if (!collides(candidate, others)) {
+                return {x: candidate.x, y: candidate.y};
+            }
+        }
+    }
+
+    return {x: target.x, y: target.y};
+};
 
 export const sectionSize = (section: SeatingSection) => {
     const seats = section.seats_per_row;
     const aisles = section.aisle_positions?.length ?? 0;
 
+    const grid = ROW_LABEL * 2 + seats * SEAT + (seats - 1) * SEAT_GAP + aisles * AISLE;
+
     return {
-        width: ROW_LABEL * 2 + seats * SEAT + (seats - 1) * SEAT_GAP + aisles * AISLE,
+        width: Math.max(grid, Math.ceil(section.name.length * NAME_CHAR)),
         height: NAME_LINE + section.row_count * SEAT + (section.row_count - 1) * ROW_GAP,
     };
 };
@@ -66,11 +100,11 @@ export const buildPlan = (
     stage: { x: number, y: number, visible?: boolean },
 ) => {
     const pieces: PlanPiece[] = [
-        ...(stage.visible === false ? [] : [{key: 'stage', x: stage.x, y: stage.y, ...STAGE_SIZE}]),
+        ...(stage.visible === false ? [] : [{key: 'stage', x: Math.max(0, stage.x), y: Math.max(0, stage.y), ...STAGE_SIZE}]),
         ...sections.map((section) => ({
             key: String(section.id),
-            x: section.position_x ?? 0,
-            y: section.position_y ?? 0,
+            x: Math.max(0, section.position_x ?? 0),
+            y: Math.max(0, section.position_y ?? 0),
             section,
             ...sectionSize(section),
         })),
@@ -99,7 +133,8 @@ export const tidyPlan = (sections: SeatingSection[]) => {
     const widest = Math.max(...sections.map((section) => sectionSize(section).width), STAGE_SIZE.width);
     const perRow = Math.max(1, Math.floor(1200 / (widest + GAP)));
 
-    let y = 0;
+    // The stage sits on top of the plan, and the sections start below it.
+    let y = STAGE_SIZE.height + GAP;
     let rowHeight = 0;
 
     const placed = sections.map((section, index) => {
@@ -120,7 +155,7 @@ export const tidyPlan = (sections: SeatingSection[]) => {
     });
 
     return {
-        stage: {x: 0, y: -(STAGE_SIZE.height + GAP)},
+        stage: {x: 0, y: 0},
         sections: placed,
     };
 };

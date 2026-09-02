@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Salonunuzu düzenlemek için sahneyi ve bölümleri sürükleyin."
 
@@ -7368,10 +7368,6 @@ msgstr "Kaldır"
 msgid "Removed"
 msgstr "Kaldırıldı"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "Yeniden sırala"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr ""
@@ -7806,10 +7802,6 @@ msgstr "Koltuk bölümü başarıyla oluşturuldu"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Koltuk bölümü başarıyla silindi"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "Bölümler yeniden sıralandı"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8821,10 +8813,6 @@ msgstr "Hi.Events'i büyütmeye ve geliştirmeye devam ederken desteğiniz için
 msgid "That promo code is invalid"
 msgstr "Bu promosyon kodu geçersiz"
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "Orası dolu — parçalar arasında boşluk bırakın."
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Sayfanın arka plan rengi. Kapak resmi kullanıldığında, bu bir kaplama olarak uygulanır."
@@ -9343,7 +9331,7 @@ msgstr "Biletler"
 msgid "Tickets Sold"
 msgstr "Satılan Biletler"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "Düzenle"
 

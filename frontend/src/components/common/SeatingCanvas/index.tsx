@@ -5,8 +5,7 @@ import {ReactNode, useEffect, useState} from "react";
 import {DndContext, DragEndEvent, PointerSensor, TouchSensor, useDraggable, useSensor, useSensors} from "@dnd-kit/core";
 import {IdParam, SeatingSection} from "../../../types.ts";
 import {SeatingRoom} from "../SeatingRoom";
-import {collides, PLAN_MARGIN, sectionSize, snapToGrid, STAGE_SIZE, tidyPlan} from "../../../utilites/seatingPlan.ts";
-import {showError} from "../../../utilites/notifications.tsx";
+import {freeSpotNear, sectionSize, snapToGrid, STAGE_SIZE, tidyPlan} from "../../../utilites/seatingPlan.ts";
 import classes from './SeatingCanvas.module.scss';
 
 type Spot = { x: number, y: number };
@@ -59,10 +58,9 @@ export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: Seati
             return;
         }
 
-        // Kept inside the drawn margin and on the grid, so a piece cannot be dragged off the
-        // plan or land a few pixels out of line with the rest.
-        const clamp = (value: number) => Math.min(Math.max(snapToGrid(value), -PLAN_MARGIN), 3000);
-        const target = {x: clamp(current.x + delta.x), y: clamp(current.y + delta.y)};
+        // The plan lives in positive coordinates and on the grid, so nothing is dragged off
+        // the canvas or left a few pixels out of line with the rest.
+        const clamp = (value: number) => Math.min(Math.max(snapToGrid(value), 0), 4000);
 
         const sizeOf = (key: string) => key === STAGE
             ? STAGE_SIZE
@@ -70,14 +68,15 @@ export const SeatingCanvas = ({sections, stage, onChange, sectionOverlay}: Seati
 
         const others = Object.entries(spots)
             .filter(([key]) => key !== id && (key === STAGE || sections.some((section) => String(section.id) === key)))
-            .map(([key, spot]) => ({...spot, ...sizeOf(key)}));
+            .map(([key, spot]) => ({x: Math.max(0, spot.x), y: Math.max(0, spot.y), ...sizeOf(key)}));
 
-        if (collides({...target, ...sizeOf(id)}, others)) {
-            showError(t`That spot is taken — leave room between the pieces.`);
-            return;
-        }
+        const target = {
+            x: clamp(current.x + delta.x),
+            y: clamp(current.y + delta.y),
+            ...sizeOf(id),
+        };
 
-        const moved = {...spots, [id]: target};
+        const moved = {...spots, [id]: freeSpotNear(target, others)};
 
         setSpots(moved);
         onChange(

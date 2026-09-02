@@ -2988,7 +2988,7 @@ msgstr ""
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr ""
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "拖動舞台和各個分區來佈置你的場地。"
 
@@ -7368,10 +7368,6 @@ msgstr "移除"
 msgid "Removed"
 msgstr "已移除"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "重新排序"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr ""
@@ -7806,10 +7802,6 @@ msgstr "座位分區建立成功"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "座位分區刪除成功"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "分區已重新排序"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8821,10 +8813,6 @@ msgstr "感謝您的支持，我們將繼續發展和改進 Hi.Events！"
 msgid "That promo code is invalid"
 msgstr "促銷代碼無效"
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "該位置已被佔用，請在各部分之間留出間隔。"
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "頁面的背景顏色。使用封面圖片時，這會作為覆蓋層應用。"
@@ -9343,7 +9331,7 @@ msgstr "門票"
 msgid "Tickets Sold"
 msgstr "已售票數"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "整理"
 

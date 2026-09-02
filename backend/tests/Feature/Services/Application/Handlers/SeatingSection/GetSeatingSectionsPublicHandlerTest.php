@@ -113,7 +113,8 @@ class GetSeatingSectionsPublicHandlerTest extends TestCase
         $plan = $this->handler->handle($this->dto());
 
         $this->assertSame(0, $plan->stage_x);
-        $this->assertSame(-140, $plan->stage_y);
+        $this->assertSame(0, $plan->stage_y);
+        $this->assertTrue($plan->stage_visible);
     }
 
     public function test_an_unpublished_event_is_hidden_from_the_public(): void

@@ -2988,7 +2988,7 @@ msgstr "Arrastrá y soltá o hacé clic para subir"
 msgid "Drag the image and adjust the zoom to choose what's visible in the banner."
 msgstr "Arrastra la imagen y ajusta el zoom para elegir qué se ve en el banner."
 
-#: src/components/common/SeatingCanvas/index.tsx:106
+#: src/components/common/SeatingCanvas/index.tsx:105
 msgid "Drag the stage and each section to lay out your room."
 msgstr "Arrastrá el escenario y cada sección para armar tu sala."
 
@@ -7368,10 +7368,6 @@ msgstr "Eliminar"
 msgid "Removed"
 msgstr "Quitado"
 
-#: src/components/common/SeatingSectionList/index.tsx:37
-#~ msgid "Reorder"
-#~ msgstr "Reordenar"
-
 #: src/components/common/ImageUploadDropzone/index.tsx:166
 msgid "Replace Image"
 msgstr "Reemplazar imagen"
@@ -7806,10 +7802,6 @@ msgstr "Sección de asientos creada correctamente"
 #: src/components/common/SeatingSectionList/index.tsx:90
 msgid "Seating section deleted successfully"
 msgstr "Sección de asientos eliminada correctamente"
-
-#: src/components/common/SeatingSectionList/index.tsx:65
-#~ msgid "Seating sections reordered"
-#~ msgstr "Secciones reordenadas"
 
 #: src/components/forms/SeatingSectionForm/index.tsx:25
 msgid "Seats in this section can be selected by ticket buyers"
@@ -8821,10 +8813,6 @@ msgstr "¡Gracias por su apoyo mientras continuamos creciendo y mejorando Hi.Eve
 msgid "That promo code is invalid"
 msgstr "Ese código de promoción no es válido."
 
-#: src/components/common/SeatingCanvas/index.tsx:76
-msgid "That spot is taken — leave room between the pieces."
-msgstr "Ese lugar está ocupado: dejá espacio entre las piezas."
-
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "El color de fondo de la página. Al usar imagen de portada, se aplica como una superposición."
@@ -9343,7 +9331,7 @@ msgstr "Entradas para"
 msgid "Tickets Sold"
 msgstr "Entradas Vendidas"
 
-#: src/components/common/SeatingCanvas/index.tsx:120
+#: src/components/common/SeatingCanvas/index.tsx:119
 msgid "Tidy up"
 msgstr "Ordenar"
 

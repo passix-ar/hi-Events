@@ -37,7 +37,7 @@ export const SeatingSectionList = ({seatingSections, openCreateModal}: SeatingSe
     const {data: layout} = useGetSeatingLayout(eventId);
     const stage = {
         x: layout?.stage_x ?? 0,
-        y: layout?.stage_y ?? -140,
+        y: layout?.stage_y ?? 0,
         visible: layout?.stage_visible ?? true,
     };
 
