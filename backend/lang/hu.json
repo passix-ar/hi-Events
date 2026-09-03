@@ -691,5 +691,6 @@
     "The organizer's name": "A szervező neve",
     "The organizer's email": "A szervező e-mail-címe",
     "The attendee's full name": "A résztvevő teljes neve",
-    "The attendee's email": "A résztvevő e-mail-címe"
+    "The attendee's email": "A résztvevő e-mail-címe",
+    "Each product can only be listed once in an order.": "Minden termék csak egyszer szerepelhet egy rendelésben."
 }

@@ -655,5 +655,6 @@
     "The organizer's name": "Tên ban tổ chức",
     "The organizer's email": "Email của ban tổ chức",
     "The attendee's full name": "Họ tên đầy đủ của người tham dự",
-    "The attendee's email": "Email của người tham dự"
+    "The attendee's email": "Email của người tham dự",
+    "Each product can only be listed once in an order.": "Mỗi sản phẩm chỉ có thể được liệt kê một lần trong một đơn hàng."
 }

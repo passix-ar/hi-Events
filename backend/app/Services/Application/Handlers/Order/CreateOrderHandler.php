@@ -15,6 +15,7 @@ use HiEvents\DomainObjects\Enums\ProductType;
 use HiEvents\DomainObjects\Generated\ProductDomainObjectAbstract;
 use HiEvents\DomainObjects\Status\AffiliateStatus;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\Exceptions\UnauthorizedException;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -25,7 +26,6 @@ use HiEvents\Services\Domain\Order\OrderManagementService;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Seating\SeatClaimService;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 

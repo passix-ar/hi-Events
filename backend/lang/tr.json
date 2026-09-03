@@ -705,5 +705,6 @@
     "The organizer's name": "Organizatörün adı",
     "The organizer's email": "Organizatörün e-posta adresi",
     "The attendee's full name": "Katılımcının tam adı",
-    "The attendee's email": "Katılımcının e-posta adresi"
+    "The attendee's email": "Katılımcının e-posta adresi",
+    "Each product can only be listed once in an order.": "Her ürün bir siparişte yalnızca bir kez listelenebilir."
 }

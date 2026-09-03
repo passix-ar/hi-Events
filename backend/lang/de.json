@@ -691,5 +691,6 @@
     "The organizer's name": "Name des Veranstalters",
     "The organizer's email": "E-Mail-Adresse des Veranstalters",
     "The attendee's full name": "Vollständiger Name des Teilnehmers",
-    "The attendee's email": "E-Mail-Adresse des Teilnehmers"
+    "The attendee's email": "E-Mail-Adresse des Teilnehmers",
+    "Each product can only be listed once in an order.": "Jedes Produkt kann in einer Bestellung nur einmal aufgeführt werden."
 }

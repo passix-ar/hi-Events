@@ -705,5 +705,6 @@
     "The organizer's name": "Имя организатора",
     "The organizer's email": "Электронная почта организатора",
     "The attendee's full name": "Полное имя участника",
-    "The attendee's email": "Электронная почта участника"
+    "The attendee's email": "Электронная почта участника",
+    "Each product can only be listed once in an order.": "Каждый товар может быть указан в заказе только один раз."
 }
