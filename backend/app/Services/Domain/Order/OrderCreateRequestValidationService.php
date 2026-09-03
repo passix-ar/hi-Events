@@ -96,13 +96,15 @@ class OrderCreateRequestValidationService
     {
         $validator = Validator::make($data, [
             'products' => 'required|array',
-            'products.*.product_id' => 'required|integer',
+            'products.*.product_id' => 'required|integer|distinct',
             'products.*.quantities' => 'required|array',
             'products.*.quantities.*.quantity' => 'required|integer|min:0',
             'products.*.quantities.*.price_id' => 'required|integer',
             'products.*.quantities.*.price' => 'numeric|min:0',
             'products.*.seat_ids' => 'sometimes|nullable|array',
             'products.*.seat_ids.*' => 'integer|distinct',
+        ], [
+            'products.*.product_id.distinct' => __('Each product can only be listed once in an order.'),
         ]);
 
         if ($validator->fails()) {

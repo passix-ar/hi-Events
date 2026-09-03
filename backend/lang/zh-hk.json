@@ -691,5 +691,6 @@
     "The organizer's name": "主辦方名稱",
     "The organizer's email": "主辦方電郵",
     "The attendee's full name": "參加者的全名",
-    "The attendee's email": "參加者的電郵"
+    "The attendee's email": "參加者的電郵",
+    "Each product can only be listed once in an order.": "每個產品在一張訂單中只能列出一次。"
 }

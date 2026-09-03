@@ -441,6 +441,59 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         ]);
     }
 
+    public function test_duplicate_product_ids_are_rejected(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $this->service->validateRequestData(1, [
+            'products' => [
+                [
+                    'product_id' => 10,
+                    'quantities' => [
+                        ['quantity' => 4, 'price_id' => 101],
+                    ],
+                ],
+                [
+                    'product_id' => 10,
+                    'quantities' => [
+                        ['quantity' => 4, 'price_id' => 101],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    public function test_several_tickets_of_the_same_product_in_a_single_entry_are_allowed(): void
+    {
+        $eventId = 1;
+        $productId = 10;
+        $priceId = 101;
+
+        $this->setupMocks(
+            eventId: $eventId,
+            productId: $productId,
+            priceIds: [$priceId],
+            priceLabels: ['General'],
+            availabilities: [
+                ['price_id' => $priceId, 'quantity_available' => 5, 'quantity_reserved' => 0],
+            ],
+        );
+
+        $data = [
+            'products' => [
+                [
+                    'product_id' => $productId,
+                    'quantities' => [
+                        ['price_id' => $priceId, 'quantity' => 2],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->service->validateRequestData($eventId, $data);
+        $this->assertTrue(true);
+    }
+
     public function test_a_price_that_does_not_belong_to_the_product_is_rejected(): void
     {
         $eventId = 1;

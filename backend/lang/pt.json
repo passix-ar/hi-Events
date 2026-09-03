@@ -693,5 +693,6 @@
     "Seat :label cannot be blocked because it is held or sold.": "O lugar :label não pode ser bloqueado porque está reservado ou vendido.",
     "Aisles must sit between seat 1 and seat :max.": "Os corredores devem ficar entre o lugar 1 e o lugar :max.",
     "Your seat: :seat": "O teu lugar: :seat",
-    "The attendee's seat, if the event has assigned seating": "O lugar do participante, se o evento tiver lugares numerados"
+    "The attendee's seat, if the event has assigned seating": "O lugar do participante, se o evento tiver lugares numerados",
+    "Each product can only be listed once in an order.": "Cada produto só pode ser listado uma vez numa encomenda."
 }

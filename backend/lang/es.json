@@ -714,5 +714,6 @@
     "Seat :label cannot be blocked because it is held or sold.": "El asiento :label no se puede bloquear porque está reservado o vendido.",
     "Aisles must sit between seat 1 and seat :max.": "Los pasillos deben estar entre el asiento 1 y el asiento :max.",
     "Your seat: :seat": "Tu butaca: :seat",
-    "The attendee's seat, if the event has assigned seating": "La butaca del asistente, si el evento tiene butacas numeradas"
+    "The attendee's seat, if the event has assigned seating": "La butaca del asistente, si el evento tiene butacas numeradas",
+    "Each product can only be listed once in an order.": "Cada producto solo puede aparecer una vez en un pedido."
 }
