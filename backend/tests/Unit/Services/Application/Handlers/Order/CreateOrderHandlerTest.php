@@ -7,6 +7,7 @@ use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\OrderDomainObject;
 use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\Exceptions\UnauthorizedException;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -149,10 +150,36 @@ class CreateOrderHandlerTest extends TestCase
         $this->assertInstanceOf(OrderDomainObject::class, $result);
     }
 
-    private function createOrderDTO(int $productId = 10, int $priceId = 100, int $quantity = 1): CreateOrderPublicDTO
+    public function testAnonymousBuyerIsForbiddenOnANonLiveEvent(): void
+    {
+        $event = Mockery::mock(EventDomainObject::class);
+        $event->shouldReceive('getStatus')->andReturn(EventStatus::DRAFT->name);
+
+        $this->expectException(UnauthorizedException::class);
+
+        $this->handler->validateEventStatus($event, $this->createOrderDTO());
+    }
+
+    public function testOwnerPreviewIsAllowedOnANonLiveEvent(): void
+    {
+        $event = Mockery::mock(EventDomainObject::class);
+        $event->shouldReceive('getStatus')->andReturn(EventStatus::DRAFT->name);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
+
+        $this->handler->validateEventStatus($event, $this->createOrderDTO(isAuthenticated: true));
+
+        $this->assertTrue(true);
+    }
+
+    private function createOrderDTO(
+        int $productId = 10,
+        int $priceId = 100,
+        int $quantity = 1,
+        bool $isAuthenticated = false,
+    ): CreateOrderPublicDTO
     {
         return CreateOrderPublicDTO::fromArray([
-            'is_user_authenticated' => false,
+            'is_user_authenticated' => $isAuthenticated,
             'session_identifier' => 'test-session',
             'order_locale' => 'en',
             'products' => collect([
