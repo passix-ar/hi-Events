@@ -1,0 +1,39 @@
+.scroller {
+  overflow: auto;
+  padding-bottom: 8px;
+}
+
+/* Sized by the plan itself: absolutely positioned children give a container no height,
+   so without this the browser clips the room instead of scrolling it. */
+.plan {
+  position: relative;
+  margin: 0 auto;
+}
+
+.piece {
+  position: absolute;
+}
+
+.section {
+  position: relative;
+
+  /* A section whose ticket has not been added reads as neutral rather than faint: dimming
+     alone washed every seat state into the same grey. */
+  &[data-locked] {
+    opacity: 0.6;
+    filter: grayscale(0.75);
+  }
+}
+
+.name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

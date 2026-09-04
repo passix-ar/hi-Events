@@ -16,6 +16,7 @@ use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
 use HiEvents\Services\Infrastructure\DomainEvents\Events\OrderEvent;
@@ -35,6 +36,7 @@ class OrderCancelService
         private readonly ProductQuantityUpdateService        $productQuantityService,
         private readonly DomainEventDispatcherService        $domainEventDispatcherService,
         private readonly EventStatisticsCancellationService  $eventStatisticsCancellationService,
+        private readonly SeatClaimService                    $seatClaimService,
     )
     {
     }
@@ -51,6 +53,7 @@ class OrderCancelService
             $this->adjustProductQuantities($order);
             $this->cancelAttendees($order);
             $this->updateOrderStatus($order);
+            $this->releaseSeats($order);
 
             $event = $this->eventRepository
                 ->loadRelation(new Relationship(OrganizerDomainObject::class, name: 'organizer'))
@@ -83,6 +86,20 @@ class OrderCancelService
         $this->attendeeRepository->updateWhere(
             attributes: [
                 'status' => AttendeeStatus::CANCELLED->name,
+            ],
+            where: [
+                'order_id' => $order->getId(),
+            ]
+        );
+    }
+
+    private function releaseSeats(OrderDomainObject $order): void
+    {
+        $this->seatClaimService->releaseSeatsForOrder($order->getId());
+
+        $this->attendeeRepository->updateWhere(
+            attributes: [
+                'seat_label' => null,
             ],
             where: [
                 'order_id' => $order->getId(),

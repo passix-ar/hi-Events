@@ -51,4 +51,9 @@ class Product extends BaseModel
     {
         return $this->belongsTo(ProductCategory::class);
     }
+
+    public function seating_sections(): HasMany
+    {
+        return $this->hasMany(SeatingSection::class);
+    }
 }

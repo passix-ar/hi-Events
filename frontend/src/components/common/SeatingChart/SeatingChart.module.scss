@@ -1,0 +1,228 @@
+.seatingChart {
+  width: 100%;
+}
+
+.scrollWrapper {
+  overflow-x: auto;
+  padding-bottom: 8px;
+  // Fades at the edges so a row that runs off screen reads as scrollable, not cut off.
+  mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: max-content;
+  min-width: 100%;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.rowLabel {
+  width: 20px;
+  min-width: 20px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--mantine-color-gray-6);
+}
+
+.aisle {
+  width: 14px;
+  min-width: 14px;
+  align-self: stretch;
+}
+
+.stage {
+  width: 55%;
+  min-width: 150px;
+  margin: 0 auto 10px;
+  padding: 6px 0;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mantine-color-gray-0);
+  background: var(--mantine-color-gray-7);
+  border-radius: 3px 3px 10px 10px;
+}
+
+.seat {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 6px 6px 3px 3px;
+  border: 1px solid var(--mantine-color-gray-4);
+  background: var(--mantine-color-white);
+  font-size: 0.65rem;
+  color: var(--mantine-color-gray-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: default;
+
+  /* States differ by fill as well as hue: free seats are outlined, taken ones are solid.
+     Four light Mantine tints all read as the same pale square on a dark background, and the
+     difference has to survive a dimmed section and a colour-blind eye. */
+  &[data-state='AVAILABLE'] {
+    border-color: var(--mantine-color-teal-5);
+    background: transparent;
+    color: var(--mantine-color-teal-5);
+  }
+
+  &[data-state='SELECTED'] {
+    border-color: var(--mantine-color-blue-5);
+    background: var(--mantine-color-blue-6);
+    color: var(--mantine-color-white);
+    font-weight: 700;
+  }
+
+  &[data-state='HELD'] {
+    border-color: var(--mantine-color-yellow-6);
+    background: color-mix(in srgb, var(--mantine-color-yellow-6) 35%, transparent);
+    color: var(--mantine-color-yellow-4);
+    cursor: not-allowed;
+  }
+
+  &[data-state='SOLD'] {
+    border-color: transparent;
+    background: var(--mantine-color-gray-6);
+    color: var(--mantine-color-gray-3);
+    cursor: not-allowed;
+  }
+
+  [data-mantine-color-scheme='light'] & {
+    &[data-state='AVAILABLE'] {
+      color: var(--mantine-color-teal-8);
+    }
+
+    &[data-state='HELD'] {
+      color: var(--mantine-color-yellow-9);
+    }
+
+    &[data-state='SOLD'] {
+      background: var(--mantine-color-gray-4);
+      color: var(--mantine-color-gray-7);
+    }
+  }
+
+  &[data-state='PREVIEW'] {
+    border-color: var(--mantine-color-gray-4);
+    background: var(--mantine-color-gray-0);
+  }
+
+  &[data-state='DISABLED'] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &[data-state='BLOCKED'] {
+    border: 1px dashed var(--mantine-color-gray-5);
+    background: transparent;
+    color: var(--mantine-color-gray-5);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  &[data-clickable] {
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.12);
+      transition: transform 0.1s ease-in-out;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.9;
+  }
+
+  @media (pointer: coarse) {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.65rem;
+  }
+
+  // A row of twelve at 34px does not fit a phone. 26px still clears the 24px
+  // minimum for a tap target and lets a normal row fit without panning.
+  @media (max-width: 600px) {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .row {
+    gap: 3px;
+  }
+
+  .rowLabel {
+    width: 18px;
+    min-width: 18px;
+    font-size: 0.65rem;
+  }
+
+  .aisle {
+    width: 12px;
+    min-width: 12px;
+  }
+
+  .legend {
+    gap: 10px;
+    font-size: 0.72rem;
+  }
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--mantine-color-gray-7);
+  flex-wrap: wrap;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid var(--mantine-color-gray-4);
+  display: inline-block;
+
+  &[data-state='AVAILABLE'] {
+    border-color: var(--mantine-color-teal-5);
+    background: transparent;
+  }
+
+  &[data-state='SELECTED'] {
+    border-color: var(--mantine-color-blue-5);
+    background: var(--mantine-color-blue-6);
+  }
+
+  &[data-state='HELD'] {
+    border-color: var(--mantine-color-yellow-6);
+    background: color-mix(in srgb, var(--mantine-color-yellow-6) 35%, transparent);
+  }
+
+  &[data-state='SOLD'] {
+    border-color: transparent;
+    background: var(--mantine-color-gray-6);
+  }
+}

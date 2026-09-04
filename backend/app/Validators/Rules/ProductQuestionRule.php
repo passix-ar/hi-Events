@@ -52,7 +52,10 @@ class ProductQuestionRule extends BaseQuestionRule
         $validationMessages = [];
 
         foreach ($products as $productIndex => $productRequestData) {
-            $productDomainObject = $this->getProductDomainObject($productRequestData['product_id']);
+            $productId = $productRequestData['product_id'] ?? null;
+            $productDomainObject = $productId === null
+                ? null
+                : $this->getProductDomainObject((int) $productId);
 
             if (!$productDomainObject) {
                 $validationMessages['products.' . $productIndex][] = __('This product is outdated. Please reload the page.');

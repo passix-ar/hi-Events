@@ -15,6 +15,7 @@ use HiEvents\DomainObjects\Enums\ProductType;
 use HiEvents\DomainObjects\Generated\ProductDomainObjectAbstract;
 use HiEvents\DomainObjects\Status\AffiliateStatus;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\Exceptions\UnauthorizedException;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -23,8 +24,8 @@ use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
 use HiEvents\Services\Domain\Order\OrderItemProcessingService;
 use HiEvents\Services\Domain\Order\OrderManagementService;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -38,6 +39,7 @@ class CreateOrderHandler
         private readonly OrderManagementService                 $orderManagementService,
         private readonly OrderItemProcessingService             $orderItemProcessingService,
         private readonly AvailableProductQuantitiesFetchService $availableProductQuantitiesFetchService,
+        private readonly SeatClaimService                       $seatClaimService,
         private readonly DatabaseManager                        $databaseManager,
     )
     {
@@ -79,6 +81,8 @@ class CreateOrderHandler
                 affiliate: $affiliate,
                 sessionId: $createOrderPublicDTO->session_identifier,
             );
+
+            $this->seatClaimService->claimSeatsForOrder($order, $createOrderPublicDTO->products);
 
             $orderItems = $this->orderItemProcessingService->process(
                 order: $order,

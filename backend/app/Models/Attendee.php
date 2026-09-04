@@ -32,4 +32,9 @@ class Attendee extends BaseModel
     {
         return $this->hasMany(AttendeeCheckIn::class);
     }
+
+    public function seat(): HasOne
+    {
+        return $this->hasOne(Seat::class);
+    }
 }

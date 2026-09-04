@@ -1,0 +1,59 @@
+/* The list is where a section is managed; the plan below is only for arranging it. */
+.sectionList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 900px) {
+  .sectionList {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+.sectionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionProduct {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--mantine-color-gray-7);
+}
+
+.sectionName {
+  font-size: 1.05rem;
+}
+
+.sectionInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.sectionStats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--mantine-color-gray-7);
+}
+
+.sectionCounts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}

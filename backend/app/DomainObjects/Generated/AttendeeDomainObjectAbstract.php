@@ -29,6 +29,7 @@ abstract class AttendeeDomainObjectAbstract extends \HiEvents\DomainObjects\Abst
     final public const DELETED_AT = 'deleted_at';
     final public const LOCALE = 'locale';
     final public const NOTES = 'notes';
+    final public const SEAT_LABEL = 'seat_label';
 
     protected int $id;
     protected int $order_id;
@@ -47,8 +48,9 @@ abstract class AttendeeDomainObjectAbstract extends \HiEvents\DomainObjects\Abst
     protected string $created_at;
     protected string $updated_at;
     protected ?string $deleted_at = null;
-    protected string $locale = 'en';
+    protected string $locale = 'es';
     protected ?string $notes = null;
+    protected ?string $seat_label = null;
 
     public function toArray(): array
     {
@@ -72,6 +74,7 @@ abstract class AttendeeDomainObjectAbstract extends \HiEvents\DomainObjects\Abst
                     'deleted_at' => $this->deleted_at ?? null,
                     'locale' => $this->locale ?? null,
                     'notes' => $this->notes ?? null,
+                    'seat_label' => $this->seat_label ?? null,
                 ];
     }
 
@@ -282,5 +285,16 @@ abstract class AttendeeDomainObjectAbstract extends \HiEvents\DomainObjects\Abst
     public function getNotes(): ?string
     {
         return $this->notes;
+    }
+
+    public function setSeatLabel(?string $seat_label): self
+    {
+        $this->seat_label = $seat_label;
+        return $this;
+    }
+
+    public function getSeatLabel(): ?string
+    {
+        return $this->seat_label;
     }
 }

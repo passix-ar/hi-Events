@@ -1,0 +1,248 @@
+<?php
+
+namespace Tests\Unit\Services\Domain\Seating;
+
+use HiEvents\DomainObjects\Enums\ProductType;
+use HiEvents\DomainObjects\ProductDomainObject;
+use HiEvents\DomainObjects\SeatingSectionDomainObject;
+use HiEvents\DomainObjects\Status\SeatingSectionStatus;
+use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
+use HiEvents\Repository\Interfaces\SeatRepositoryInterface;
+use HiEvents\Services\Domain\Product\Exception\UnrecognizedProductIdException;
+use HiEvents\Services\Domain\Seating\CreateSeatingSectionService;
+use HiEvents\Services\Domain\Seating\Exception\InvalidSeatingLayoutException;
+use HiEvents\Services\Domain\Seating\SeatGenerationService;
+use Illuminate\Database\DatabaseManager;
+use Mockery;
+use Mockery\MockInterface;
+use Tests\TestCase;
+
+class CreateSeatingSectionServiceTest extends TestCase
+{
+    private DatabaseManager|MockInterface $databaseManager;
+
+    private SeatingSectionRepositoryInterface|MockInterface $seatingSectionRepository;
+
+    private SeatRepositoryInterface|MockInterface $seatRepository;
+
+    private ProductRepositoryInterface|MockInterface $productRepository;
+
+    private CreateSeatingSectionService $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->databaseManager = Mockery::mock(DatabaseManager::class);
+        $this->seatingSectionRepository = Mockery::mock(SeatingSectionRepositoryInterface::class);
+        $this->seatRepository = Mockery::mock(SeatRepositoryInterface::class);
+        $this->productRepository = Mockery::mock(ProductRepositoryInterface::class);
+
+        $this->service = new CreateSeatingSectionService(
+            $this->databaseManager,
+            $this->seatingSectionRepository,
+            $this->seatRepository,
+            $this->productRepository,
+            new SeatGenerationService,
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
+        parent::tearDown();
+    }
+
+    public function test_rejects_layouts_exceeding_the_seat_cap(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateLayout(50, 50);
+    }
+
+    public function test_rejects_zero_or_oversized_dimensions(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateLayout(0, 10);
+    }
+
+    public function test_rejects_products_from_another_event(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')->once()->andReturnNull();
+
+        $this->expectException(UnrecognizedProductIdException::class);
+
+        $this->service->validateProduct(10, 2);
+    }
+
+    public function test_rejects_non_ticket_products(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::GENERAL->name));
+
+        $this->expectException(UnrecognizedProductIdException::class);
+
+        $this->service->validateProduct(10, 2);
+    }
+
+    public function test_rejects_blocked_seats_outside_the_grid(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateDisabledSeats(['A1', 'Z99'], 3, 4);
+    }
+
+    public function test_rejects_blocking_every_seat(): void
+    {
+        $allLabels = ['A1', 'A2', 'B1', 'B2'];
+
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->validateDisabledSeats($allLabels, 2, 2);
+    }
+
+    public function test_aisles_are_sorted_and_deduplicated(): void
+    {
+        $this->assertSame([3, 6], $this->service->normaliseAislePositions([6, 3, 6], 10));
+    }
+
+    public function test_no_aisles_is_stored_as_null(): void
+    {
+        $this->assertNull($this->service->normaliseAislePositions([], 10));
+        $this->assertNull($this->service->normaliseAislePositions(null, 10));
+    }
+
+    public function test_an_aisle_past_the_last_seat_is_rejected(): void
+    {
+        $this->expectException(InvalidSeatingLayoutException::class);
+
+        $this->service->normaliseAislePositions([10], 10);
+    }
+
+    public function test_marks_blocked_seats_on_create(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
+
+        $this->databaseManager->shouldReceive('transaction')
+            ->once()
+            ->andReturnUsing(fn ($callback) => $callback());
+
+        $created = (new SeatingSectionDomainObject)
+            ->setId(5)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setRowCount(3)
+            ->setSeatsPerRow(4);
+
+        $this->seatingSectionRepository->shouldReceive('findWhere')->once()->andReturn(collect());
+        $this->seatingSectionRepository->shouldReceive('create')->once()->andReturn($created);
+        $this->seatRepository->shouldReceive('insert')->once()->andReturn(true);
+
+        $this->seatRepository->shouldReceive('updateWhere')
+            ->once()
+            ->withArgs(function (array $attributes, array $where) {
+                return $attributes === ['is_disabled' => true]
+                    && $where['seating_section_id'] === 5
+                    && $where[0] === ['label', 'in', ['A2', 'B3']];
+            })
+            ->andReturn(2);
+
+        $section = (new SeatingSectionDomainObject)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setName('Balcony')
+            ->setRowCount(3)
+            ->setSeatsPerRow(4)
+            ->setStatus(SeatingSectionStatus::ACTIVE->name);
+
+        $result = $this->service->createSeatingSection($section, ['A2', 'B3']);
+
+        $this->assertSame(5, $result->getId());
+    }
+
+    public function test_a_new_section_lands_after_and_below_the_others(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
+
+        $this->databaseManager->shouldReceive('transaction')
+            ->once()
+            ->andReturnUsing(static fn ($callback) => $callback());
+
+        // Position 1 was freed by a deleted section: counting would collide with position 2.
+        $this->seatingSectionRepository->shouldReceive('findWhere')
+            ->once()
+            ->andReturn(collect([
+                (new SeatingSectionDomainObject)->setId(1)->setOrder(0)->setPositionY(0),
+                (new SeatingSectionDomainObject)->setId(3)->setOrder(2)->setPositionY(240),
+            ]));
+
+        $this->seatingSectionRepository->shouldReceive('create')
+            ->once()
+            ->withArgs(static fn (array $attributes) => $attributes['order'] === 3
+                && $attributes['position_y'] === 480)
+            ->andReturn((new SeatingSectionDomainObject)->setId(9)->setEventId(2)->setRowCount(1)->setSeatsPerRow(1));
+
+        $this->seatRepository->shouldReceive('insert')->once();
+
+        $section = (new SeatingSectionDomainObject)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setName('Pullman')
+            ->setRowCount(1)
+            ->setSeatsPerRow(1)
+            ->setStatus(SeatingSectionStatus::ACTIVE->name);
+
+        $this->assertSame(9, $this->service->createSeatingSection($section)->getId());
+    }
+
+    public function test_creates_section_and_bulk_inserts_seats(): void
+    {
+        $this->productRepository->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn((new ProductDomainObject)->setProductType(ProductType::TICKET->name));
+
+        $this->databaseManager->shouldReceive('transaction')
+            ->once()
+            ->andReturnUsing(fn ($callback) => $callback());
+
+        $created = (new SeatingSectionDomainObject)
+            ->setId(5)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setRowCount(3)
+            ->setSeatsPerRow(4);
+
+        $this->seatingSectionRepository->shouldReceive('findWhere')->once()->andReturn(collect());
+        $this->seatingSectionRepository->shouldReceive('create')->once()->andReturn($created);
+
+        $this->seatRepository->shouldReceive('insert')
+            ->once()
+            ->withArgs(function (array $inserts) {
+                return count($inserts) === 12
+                    && $inserts[0]['row_label'] === 'A'
+                    && $inserts[0]['seating_section_id'] === 5
+                    && $inserts[0]['event_id'] === 2
+                    && $inserts[11]['label'] === 'C4';
+            })
+            ->andReturn(true);
+
+        $section = (new SeatingSectionDomainObject)
+            ->setEventId(2)
+            ->setProductId(10)
+            ->setName('Balcony')
+            ->setRowCount(3)
+            ->setSeatsPerRow(4)
+            ->setStatus(SeatingSectionStatus::ACTIVE->name);
+
+        $result = $this->service->createSeatingSection($section);
+
+        $this->assertSame(5, $result->getId());
+    }
+}

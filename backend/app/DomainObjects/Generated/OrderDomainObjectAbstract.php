@@ -74,7 +74,7 @@ abstract class OrderDomainObjectAbstract extends \HiEvents\DomainObjects\Abstrac
     protected array|string|null $taxes_and_fees_rollup = null;
     protected float $total_tax = 0.0;
     protected float $total_fee = 0.0;
-    protected string $locale = 'en';
+    protected string $locale = 'es';
     protected ?string $payment_provider = null;
     protected ?string $notes = null;
     protected ?string $statistics_decremented_at = null;

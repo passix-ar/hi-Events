@@ -99,7 +99,10 @@ const GuestListItem = ({
                 </div>
                 <div className={classes.guestDetails}>
                     <span className={classes.guestEmail}>{attendee.email}</span>
-                    <span className={classes.guestProduct}>{productTitle}</span>
+                    <span className={classes.guestProduct}>
+                        {productTitle}
+                        {attendee.seat_label && <> · {attendee.seat_label}</>}
+                    </span>
                 </div>
             </div>
             <div className={classes.guestActions}>

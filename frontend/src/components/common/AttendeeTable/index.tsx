@@ -270,6 +270,16 @@ export const AttendeeTable = ({attendees, openCreateModal}: AttendeeTableProps) 
                     },
                 },
                 {
+                    id: 'seat',
+                    header: t`Seat`,
+                    enableHiding: true,
+                    cell: (info: CellContext<Attendee, unknown>) => (
+                        info.row.original.seat_label
+                            ? <Truncate text={info.row.original.seat_label} length={30}/>
+                            : <span>-</span>
+                    ),
+                },
+                {
                     id: 'status',
                     header: t`Status`,
                     enableHiding: true,

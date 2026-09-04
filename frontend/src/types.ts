@@ -658,6 +658,7 @@ export interface Attendee {
     checked_in_by?: number;
     question_answers?: QuestionAnswer[];
     locale?: SupportedLocales;
+    seat_label?: string | null;
     check_in?: AttendeeCheckIn; // Use in contexts where a single check is expected, like dealing with a check-in list
     check_ins?: AttendeeCheckIn[];
 }
@@ -733,6 +734,7 @@ export interface Order {
     event?: Event;
     latest_invoice?: Invoice;
     session_identifier?: string;
+    seats?: Seat[];
 }
 
 export interface Invoice {
@@ -790,6 +792,60 @@ export interface CapacityAssignment {
 
 export type CapacityAssignmentRequest = Omit<CapacityAssignment, 'id' | 'event_id' | 'used_capacity' | 'products'> & {
     product_ids: IdParam[];
+};
+
+export type SeatState = 'AVAILABLE' | 'HELD' | 'SOLD' | 'DISABLED';
+
+export interface Seat {
+    id: number;
+    seating_section_id: number;
+    row_label: string;
+    seat_number: number;
+    label: string;
+    state: SeatState;
+}
+
+export interface SeatingSection {
+    id?: number;
+    event_id?: number;
+    name: string;
+    product_id: number;
+    row_count: number;
+    seats_per_row: number;
+    total_seats?: number;
+    status: 'ACTIVE' | 'INACTIVE';
+    seats_available?: number;
+    seats_held?: number;
+    seats_sold?: number;
+    seats_disabled?: number;
+    order?: number;
+    aisle_positions?: number[] | null;
+    position_x?: number | null;
+    position_y?: number | null;
+    product?: {
+        id: number;
+        title: string;
+    };
+    seats?: Seat[];
+}
+
+export interface SeatingPlan {
+    stage_x: number;
+    stage_y: number;
+    stage_visible: boolean;
+    sections: SeatingSection[];
+}
+
+export interface SeatingLayoutRequest {
+    stage_x: number;
+    stage_y: number;
+    stage_visible: boolean;
+    sections: { id: IdParam, position_x: number, position_y: number }[];
+}
+
+export type SeatingSectionRequest = Pick<SeatingSection, 'name' | 'product_id' | 'row_count' | 'seats_per_row' | 'status'> & {
+    disabled_seats?: string[];
+    aisle_positions?: number[];
 };
 
 export interface CheckInList {

@@ -7,6 +7,7 @@ use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\OrderDomainObject;
 use HiEvents\DomainObjects\OrderItemDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\Exceptions\UnauthorizedException;
 use HiEvents\Repository\Interfaces\AffiliateRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -20,6 +21,7 @@ use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesDTO;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesResponseDTO;
 use HiEvents\Services\Domain\Product\DTO\OrderProductPriceDTO;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Validation\ValidationException;
 use Mockery;
@@ -35,6 +37,7 @@ class CreateOrderHandlerTest extends TestCase
     private OrderManagementService|MockInterface $orderManagementService;
     private OrderItemProcessingService|MockInterface $orderItemProcessingService;
     private AvailableProductQuantitiesFetchService|MockInterface $availabilityService;
+    private SeatClaimService|MockInterface $seatClaimService;
     private DatabaseManager|MockInterface $databaseManager;
     private CreateOrderHandler $handler;
 
@@ -49,6 +52,8 @@ class CreateOrderHandlerTest extends TestCase
         $this->orderManagementService = Mockery::mock(OrderManagementService::class);
         $this->orderItemProcessingService = Mockery::mock(OrderItemProcessingService::class);
         $this->availabilityService = Mockery::mock(AvailableProductQuantitiesFetchService::class);
+        $this->seatClaimService = Mockery::mock(SeatClaimService::class);
+        $this->seatClaimService->shouldReceive('claimSeatsForOrder')->byDefault();
         $this->databaseManager = Mockery::mock(DatabaseManager::class);
 
         $this->databaseManager->shouldReceive('transaction')
@@ -62,6 +67,7 @@ class CreateOrderHandlerTest extends TestCase
             $this->orderManagementService,
             $this->orderItemProcessingService,
             $this->availabilityService,
+            $this->seatClaimService,
             $this->databaseManager,
         );
     }
@@ -144,10 +150,36 @@ class CreateOrderHandlerTest extends TestCase
         $this->assertInstanceOf(OrderDomainObject::class, $result);
     }
 
-    private function createOrderDTO(int $productId = 10, int $priceId = 100, int $quantity = 1): CreateOrderPublicDTO
+    public function testAnonymousBuyerIsForbiddenOnANonLiveEvent(): void
+    {
+        $event = Mockery::mock(EventDomainObject::class);
+        $event->shouldReceive('getStatus')->andReturn(EventStatus::DRAFT->name);
+
+        $this->expectException(UnauthorizedException::class);
+
+        $this->handler->validateEventStatus($event, $this->createOrderDTO());
+    }
+
+    public function testOwnerPreviewIsAllowedOnANonLiveEvent(): void
+    {
+        $event = Mockery::mock(EventDomainObject::class);
+        $event->shouldReceive('getStatus')->andReturn(EventStatus::DRAFT->name);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
+
+        $this->handler->validateEventStatus($event, $this->createOrderDTO(isAuthenticated: true));
+
+        $this->assertTrue(true);
+    }
+
+    private function createOrderDTO(
+        int $productId = 10,
+        int $priceId = 100,
+        int $quantity = 1,
+        bool $isAuthenticated = false,
+    ): CreateOrderPublicDTO
     {
         return CreateOrderPublicDTO::fromArray([
-            'is_user_authenticated' => false,
+            'is_user_authenticated' => $isAuthenticated,
             'session_identifier' => 'test-session',
             'order_locale' => 'en',
             'products' => collect([
@@ -174,6 +206,7 @@ class CreateOrderHandlerTest extends TestCase
         $event->shouldReceive('getStatus')->andReturn(EventStatus::LIVE->name);
         $event->shouldReceive('isEventInPast')->andReturn(false);
         $event->shouldReceive('getEventSettings')->andReturn($eventSettings);
+        $event->shouldReceive('isEventInPast')->andReturn(false);
 
         $this->eventRepository->shouldReceive('loadRelation')->andReturnSelf();
         $this->eventRepository->shouldReceive('findById')->with($eventId)->andReturn($event);

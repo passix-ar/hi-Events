@@ -481,6 +481,13 @@ export const router: RouteObject[] = [
                 }
             },
             {
+                path: "seating",
+                async lazy() {
+                    const Seating = await import("./components/routes/event/Seating");
+                    return { Component: Seating.default };
+                }
+            },
+            {
                 path: "webhooks",
                 async lazy() {
                     const Webhooks = await import("./components/routes/event/Webhooks");
