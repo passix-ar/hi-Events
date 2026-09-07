@@ -8,7 +8,6 @@ import {IconLayoutSidebar} from "@tabler/icons-react";
 import {UnstyledButton, VisuallyHidden} from "@mantine/core";
 import {t} from "@lingui/macro";
 import ImpersonationBanner from "../../common/ImpersonationBanner";
-import {Constants} from "../../../constants.ts";
 
 interface AppLayoutProps {
     navItems: NavItem[];
@@ -51,7 +50,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
                                              }) => {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(() => {
         if (typeof window === 'undefined') return true; // SSR default
-        return window.innerWidth >= Constants.APP_SHELL_BREAKPOINT; // Desktop open, mobile closed
+        return window.innerWidth >= 768; // Desktop open, mobile closed
     });
     const [topBarShadow, setTopBarShadow] = useState<boolean>(false);
 
@@ -67,16 +66,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({
     }, []);
 
     useEffect(() => {
-        let wasExpanded = window.innerWidth >= Constants.APP_SHELL_BREAKPOINT;
-
         const handleResize = () => {
-            const isExpanded = window.innerWidth >= Constants.APP_SHELL_BREAKPOINT;
-
-            // Solo al cruzar el umbral. Antes se corria en cada resize, asi que
-            // si cerrabas el sidebar en desktop se te volvia a abrir solo.
-            if (isExpanded !== wasExpanded) {
-                wasExpanded = isExpanded;
-                setSidebarOpen(isExpanded);
+            if (window.innerWidth >= 768) {
+                setSidebarOpen(true);
+            } else {
+                setSidebarOpen(false);
             }
         };
 

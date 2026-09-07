@@ -20,9 +20,7 @@
   .viewHomepageButtonTextDesktop {
     display: inline;
 
-    // "Ver pagina principal del organizador" son ~280px. Solo entra cuando el
-    // shell ya esta expandido; abajo de eso queda el icono con su title.
-    @include mixins.respond-below(lg) {
+    @include mixins.respond-below(md) {
       display: none;
     }
   }
@@ -73,16 +71,8 @@
   margin-left: 0px;
   margin-right: auto;
 
-  // Igual que en el layout de evento: si no entra, que la pildora se recorte
-  // antes de empujar el layout. Sin esto en 360px se va 25px a la derecha.
-  min-width: 0;
-
   @include mixins.respond-below(md) {
     margin-left: 16px;
-  }
-
-  @include mixins.respond-below(sm) {
-    margin-left: 8px;
   }
 
   .statusAction {
@@ -91,8 +81,7 @@
     font-size: 0.85em;
     opacity: 0.9;
 
-    // Igual que en el layout de evento: los ~160px del texto solo sobran en xl.
-    @include mixins.respond-below(xl) {
+    @include mixins.respond-below(md) {
       display: none;
     }
   }

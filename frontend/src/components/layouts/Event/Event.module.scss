@@ -6,8 +6,6 @@
   position: relative;
   margin-left: 0px;
   margin-right: auto;
-  // Si aun asi no entrara, que el boton se recorte antes de empujar el layout.
-  min-width: 0;
 
   @include mixins.respond-below(md) {
     margin-left: 16px;
@@ -19,8 +17,7 @@
     font-size: 0.85em;
     opacity: 0.9;
 
-    // "- Haz clic para despublicar" son ~160px que solo sobran a partir de xl.
-    @include mixins.respond-below(xl) {
+    @include mixins.respond-below(md) {
       display: none;
     }
   }
@@ -53,9 +50,8 @@
       }
     }
 
-    // "Vista previa de la pagina del evento" mide el doble que el original en
-    // ingles: recien entra comodo a partir de xl.
-    @include mixins.respond-above(xl) {
+    // Switch to desktop text at md and up
+    @include mixins.respond-above(md) {
       .mobile {
         display: none;
       }

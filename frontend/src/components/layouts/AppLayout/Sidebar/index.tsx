@@ -8,7 +8,6 @@ import {NavLink} from "react-router";
 import classNames from "classnames";
 import {useMediaQuery} from "@mantine/hooks";
 import {getConfig} from "../../../../utilites/config.ts";
-import {Constants} from "../../../../constants.ts";
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -23,7 +22,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                     navItems,
                                                     sidebarFooter,
                                                 }) => {
-    const isMobile = useMediaQuery(`(max-width: ${Constants.APP_SHELL_BREAKPOINT - 1}px)`);
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     const renderLinks = () => {
         return navItems.map((item) => {

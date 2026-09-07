@@ -11,17 +11,11 @@
   flex-direction: row;
   margin: calc(var(--hi-spacing-lg) * -1);
 
-  // El margen negativo cancela el padding de .main, que con el shell plegado
-  // es de 16px y no de 20px. Sin esto se va 4px a la derecha.
-  @include mixins.app-shell-collapsed {
-    margin: -16px;
-  }
-
   h2 {
     margin-bottom: 0;
   }
 
-  @include mixins.panel-bleed-below(810px) { // sidebar 380 + preview 400, mas holgura
+  @include mixins.respond-below(sm) {
     flex-direction: column;
   }
 
@@ -36,7 +30,7 @@
     top: 0;
     border-right: 1px solid var(--hi-color-gray-2);
 
-    @include mixins.panel-bleed-below(810px) { // sidebar 380 + preview 400, mas holgura
+    @include mixins.respond-below(sm) {
       width: 100%;
       min-width: unset;
       max-width: unset;
@@ -116,7 +110,7 @@
     background: var(--hi-color-gray-2);
     min-width: 400px;
 
-    @include mixins.panel-bleed-below(810px) { // sidebar 380 + preview 400, mas holgura
+    @include mixins.respond-below(sm) {
       padding: var(--hi-spacing-md);
       min-width: unset;
     }
@@ -125,7 +119,7 @@
       display: none;
       margin-bottom: var(--hi-spacing-md);
 
-      @include mixins.panel-bleed-below(810px) { // sidebar 380 + preview 400, mas holgura
+      @include mixins.respond-below(sm) {
         display: block;
       }
     }
