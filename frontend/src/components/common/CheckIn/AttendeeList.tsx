@@ -94,6 +94,7 @@ export const AttendeeList = ({
                             <div className={classes.product}>
                                 <IconTicket
                                     size={15}/> {products.find(product => product.id === attendee.product_id)?.title}
+                                {attendee.seat_label && <> · {attendee.seat_label}</>}
                             </div>
                         </div>
                         <div className={classes.actions}>

@@ -14,7 +14,7 @@ class UpsertOrganizerRequest extends BaseRequest
 
         return [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['email', 'required'],
+            'email' => ['email', 'safe_email', 'required'],
             'phone' => ['string', "nullable", 'max:25'],
             'website' => ['url', 'nullable', 'max:255'],
             'description' => ['string', 'nullable', 'max:1200'],

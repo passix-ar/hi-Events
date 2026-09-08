@@ -1,6 +1,5 @@
 <?php
 
-// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\DomainObjects\Generated;
 
 /**
@@ -18,11 +17,11 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     final public const REFRESH_TOKEN = 'refresh_token';
     final public const PUBLIC_KEY = 'public_key';
     final public const TOKEN_EXPIRES_AT = 'token_expires_at';
-    final public const REVOKED_AT = 'revoked_at';
     final public const SETUP_COMPLETED_AT = 'setup_completed_at';
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
     final public const DELETED_AT = 'deleted_at';
+    final public const REVOKED_AT = 'revoked_at';
 
     protected int $id;
     protected int $account_id;
@@ -31,63 +30,159 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     protected ?string $refresh_token = null;
     protected ?string $public_key = null;
     protected ?string $token_expires_at = null;
-    protected ?string $revoked_at = null;
     protected ?string $setup_completed_at = null;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
     protected ?string $deleted_at = null;
+    protected ?string $revoked_at = null;
 
     public function toArray(): array
     {
         return [
-            'id'                 => $this->id ?? null,
-            'account_id'         => $this->account_id ?? null,
-            'mp_user_id'         => $this->mp_user_id ?? null,
-            'access_token'       => $this->access_token ?? null,
-            'refresh_token'      => $this->refresh_token ?? null,
-            'public_key'         => $this->public_key ?? null,
-            'token_expires_at'   => $this->token_expires_at ?? null,
-            'revoked_at'         => $this->revoked_at ?? null,
-            'setup_completed_at' => $this->setup_completed_at ?? null,
-            'created_at'         => $this->created_at ?? null,
-            'updated_at'         => $this->updated_at ?? null,
-            'deleted_at'         => $this->deleted_at ?? null,
-        ];
+                    'id' => $this->id ?? null,
+                    'account_id' => $this->account_id ?? null,
+                    'mp_user_id' => $this->mp_user_id ?? null,
+                    'access_token' => $this->access_token ?? null,
+                    'refresh_token' => $this->refresh_token ?? null,
+                    'public_key' => $this->public_key ?? null,
+                    'token_expires_at' => $this->token_expires_at ?? null,
+                    'setup_completed_at' => $this->setup_completed_at ?? null,
+                    'created_at' => $this->created_at ?? null,
+                    'updated_at' => $this->updated_at ?? null,
+                    'deleted_at' => $this->deleted_at ?? null,
+                    'revoked_at' => $this->revoked_at ?? null,
+                ];
     }
 
-    public function setId(int $id): self { $this->id = $id; return $this; }
-    public function getId(): int { return $this->id; }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-    public function setAccountId(int $account_id): self { $this->account_id = $account_id; return $this; }
-    public function getAccountId(): int { return $this->account_id; }
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-    public function setMpUserId(?string $mp_user_id): self { $this->mp_user_id = $mp_user_id; return $this; }
-    public function getMpUserId(): ?string { return $this->mp_user_id; }
+    public function setAccountId(int $account_id): self
+    {
+        $this->account_id = $account_id;
+        return $this;
+    }
 
-    public function setAccessToken(?string $access_token): self { $this->access_token = $access_token; return $this; }
-    public function getAccessToken(): ?string { return $this->access_token; }
+    public function getAccountId(): int
+    {
+        return $this->account_id;
+    }
 
-    public function setRefreshToken(?string $refresh_token): self { $this->refresh_token = $refresh_token; return $this; }
-    public function getRefreshToken(): ?string { return $this->refresh_token; }
+    public function setMpUserId(?string $mp_user_id): self
+    {
+        $this->mp_user_id = $mp_user_id;
+        return $this;
+    }
 
-    public function setPublicKey(?string $public_key): self { $this->public_key = $public_key; return $this; }
-    public function getPublicKey(): ?string { return $this->public_key; }
+    public function getMpUserId(): ?string
+    {
+        return $this->mp_user_id;
+    }
 
-    public function setTokenExpiresAt(?string $token_expires_at): self { $this->token_expires_at = $token_expires_at; return $this; }
-    public function getTokenExpiresAt(): ?string { return $this->token_expires_at; }
+    public function setAccessToken(?string $access_token): self
+    {
+        $this->access_token = $access_token;
+        return $this;
+    }
 
-    public function setRevokedAt(?string $revoked_at): self { $this->revoked_at = $revoked_at; return $this; }
-    public function getRevokedAt(): ?string { return $this->revoked_at; }
+    public function getAccessToken(): ?string
+    {
+        return $this->access_token;
+    }
 
-    public function setSetupCompletedAt(?string $setup_completed_at): self { $this->setup_completed_at = $setup_completed_at; return $this; }
-    public function getSetupCompletedAt(): ?string { return $this->setup_completed_at; }
+    public function setRefreshToken(?string $refresh_token): self
+    {
+        $this->refresh_token = $refresh_token;
+        return $this;
+    }
 
-    public function setCreatedAt(?string $created_at): self { $this->created_at = $created_at; return $this; }
-    public function getCreatedAt(): ?string { return $this->created_at; }
+    public function getRefreshToken(): ?string
+    {
+        return $this->refresh_token;
+    }
 
-    public function setUpdatedAt(?string $updated_at): self { $this->updated_at = $updated_at; return $this; }
-    public function getUpdatedAt(): ?string { return $this->updated_at; }
+    public function setPublicKey(?string $public_key): self
+    {
+        $this->public_key = $public_key;
+        return $this;
+    }
 
-    public function setDeletedAt(?string $deleted_at): self { $this->deleted_at = $deleted_at; return $this; }
-    public function getDeletedAt(): ?string { return $this->deleted_at; }
+    public function getPublicKey(): ?string
+    {
+        return $this->public_key;
+    }
+
+    public function setTokenExpiresAt(?string $token_expires_at): self
+    {
+        $this->token_expires_at = $token_expires_at;
+        return $this;
+    }
+
+    public function getTokenExpiresAt(): ?string
+    {
+        return $this->token_expires_at;
+    }
+
+    public function setSetupCompletedAt(?string $setup_completed_at): self
+    {
+        $this->setup_completed_at = $setup_completed_at;
+        return $this;
+    }
+
+    public function getSetupCompletedAt(): ?string
+    {
+        return $this->setup_completed_at;
+    }
+
+    public function setCreatedAt(?string $created_at): self
+    {
+        $this->created_at = $created_at;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?string
+    {
+        return $this->created_at;
+    }
+
+    public function setUpdatedAt(?string $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function setDeletedAt(?string $deleted_at): self
+    {
+        $this->deleted_at = $deleted_at;
+        return $this;
+    }
+
+    public function getDeletedAt(): ?string
+    {
+        return $this->deleted_at;
+    }
+
+    public function setRevokedAt(?string $revoked_at): self
+    {
+        $this->revoked_at = $revoked_at;
+        return $this;
+    }
+
+    public function getRevokedAt(): ?string
+    {
+        return $this->revoked_at;
+    }
 }

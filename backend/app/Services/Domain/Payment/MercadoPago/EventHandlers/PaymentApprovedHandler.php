@@ -24,6 +24,7 @@ use HiEvents\Repository\Interfaces\MercadopagoPreferenceRepositoryInterface;
 use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Domain\Order\OrderApplicationFeeService;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatOrderIntegrityService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
 use HiEvents\Services\Infrastructure\DomainEvents\Events\OrderEvent;
@@ -41,6 +42,7 @@ class PaymentApprovedHandler
         private readonly AttendeeRepositoryInterface           $attendeeRepository,
         private readonly ProductQuantityUpdateService          $quantityUpdateService,
         private readonly OrderApplicationFeeService            $orderApplicationFeeService,
+        private readonly SeatOrderIntegrityService             $seatOrderIntegrityService,
         private readonly EventSettingsRepositoryInterface      $eventSettingsRepository,
         private readonly DomainEventDispatcherService          $domainEventDispatcherService,
         private readonly DatabaseManager                       $databaseManager,
@@ -61,7 +63,7 @@ class PaymentApprovedHandler
             return;
         }
 
-        $this->databaseManager->transaction(function () use ($paymentData, $mpPaymentId) {
+        $fulfilledOrder = $this->databaseManager->transaction(function () use ($paymentData, $mpPaymentId) {
             $externalReference = $paymentData['external_reference'] ?? null;
 
             if (!$externalReference) {
@@ -132,7 +134,45 @@ class PaymentApprovedHandler
 
             $this->storeApplicationFee($updatedOrder, $paymentData);
             $this->markAsHandled($mpPaymentId, $updatedOrder);
+
+            return $updatedOrder;
         });
+
+        if ($fulfilledOrder !== null) {
+            $this->reportSeatsLostWhileAwaitingPayment($fulfilledOrder);
+        }
+    }
+
+    /**
+     * An expired reservation returns its seats to the inventory, so a payment approved long
+     * after the fact can land on seats another buyer already took. Fulfilment is deliberately
+     * not blocked here — refusing a payment is a decision that belongs with the refund path —
+     * but it must not happen silently.
+     *
+     * This runs after the transaction has committed, and swallows its own failures: a
+     * diagnostic must never be able to undo the payment it is observing.
+     */
+    private function reportSeatsLostWhileAwaitingPayment(OrderDomainObject $order): void
+    {
+        try {
+            $lostSeats = $this->seatOrderIntegrityService->findSeatsLostByOrder($order->getId());
+
+            if ($lostSeats === []) {
+                return;
+            }
+
+            $this->logger->error('Seats were resold while the order was awaiting payment', [
+                'order_id' => $order->getId(),
+                'order_short_id' => $order->getShortId(),
+                'event_id' => $order->getEventId(),
+                'seat_labels' => $lostSeats,
+            ]);
+        } catch (Throwable $exception) {
+            $this->logger->warning('Could not verify seat integrity for an approved payment', [
+                'order_id' => $order->getId(),
+                'exception' => $exception->getMessage(),
+            ]);
+        }
     }
 
     /**

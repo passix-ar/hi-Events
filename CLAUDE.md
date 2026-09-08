@@ -6,6 +6,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Hi.Events is an open-source event management and ticketing platform with a Laravel backend and React frontend, using Domain-Driven Design (DDD).
 
+This repository is the **Passix fork** (`passix-ar/hi-Events`) of the upstream project (`HiEventsDev/Hi.Events`).
+
+## Pull Requests — Passix Only
+
+**ALL** pull requests, branches and pushes go to the `passix-ar` organisation. **NEVER** open a pull request against `HiEventsDev/Hi.Events` or any other organisation. No exceptions.
+
+This is easy to break by accident: because this repo is a fork, `gh pr create` **defaults its base to the parent repository**. Always pass both flags explicitly:
+
+```bash
+gh pr create --repo passix-ar/hi-Events --base develop --title "..." --body "..."
+```
+
+Never use the short form. When unsure where something points, check first:
+
+```bash
+gh repo view passix-ar/hi-Events --json parent
+```
+
+Two consequences worth remembering:
+
+- **This repo is public.** Don't describe an unpatched vulnerability in a PR while production still lacks the fix.
+- **Issues live in `passix-ar/infra`, not here** — issues are disabled on this repo, and `infra` is private. Link them with the full cross-repo path (`Closes passix-ar/infra#1`); a bare `#1` will not work
+- **An issue whose task is "merge PR X" covers exactly one PR**, never several: merging means reviewing the diff, running the suite and sometimes deploying, so it is one task per PR. This does *not* mean every PR needs an issue — a small change can go straight to a PR. When an issue that is *not* about merging spans several repos, link every PR with `Refs` instead and close it by hand
+
 ## Key Commands
 
 ### Backend (Laravel)
@@ -93,6 +117,9 @@ cd docker/development
 - **DON'T** use `RefreshDatabase` - use `DatabaseTransactions` instead
 - Unit tests extend Laravel's TestCase, not PHPUnit's TestCase
 - Use Mockery for mocking
+- A test that needs the database goes in `backend/tests/Feature/`, not `tests/Unit/`. CI runs both suites as separate jobs, so `--testsuite=Unit` alone will not execute it
+- **DO** prefer factories over building entities by hand. Existing ones live in `backend/database/factories/` (`UserFactory`, `OrderFactory`, `AccountFactory`, …); if the scenario needs one that doesn't exist, write the factory instead of repeating a setup block
+- Chaining ten `Model::create()` calls with every column spelled out makes the test fragile: one new `NOT NULL` column breaks tests unrelated to that change. When that fragility *is* the point — the test exists to catch schema or mass-assignment regressions — say so in the class docblock, as `MercadoPagoPaymentApprovedFlowTest` does
 
 ### Frontend
 

@@ -14,7 +14,7 @@ class CreateAttendeeRequest extends BaseRequest
         return [
             'product_id' => ['int', 'required'],
             'product_price_id' => ['int', 'nullable', 'required'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'safe_email'],
             'first_name' => ['string', 'required', 'max:40'],
             'last_name' => ['string', 'max:40'],
             'amount_paid' => ['required', ...RulesHelper::MONEY],

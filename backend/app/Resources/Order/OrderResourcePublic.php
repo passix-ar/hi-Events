@@ -9,6 +9,7 @@ use HiEvents\Resources\Attendee\AttendeeResourcePublic;
 use HiEvents\Resources\BaseResource;
 use HiEvents\Resources\Event\EventResourcePublic;
 use HiEvents\Resources\Order\Invoice\InvoiceResourcePublic;
+use HiEvents\Resources\Seating\SeatResourcePublic;
 use Illuminate\Http\Request;
 
 /**
@@ -62,6 +63,10 @@ class OrderResourcePublic extends BaseResource
             'attendees' => $this->when(
                 !is_null($this->getAttendees()),
                 fn() => AttendeeResourcePublic::collection($this->getAttendees())
+            ),
+            'seats' => $this->when(
+                !is_null($this->getSeats()),
+                fn() => SeatResourcePublic::collection($this->getSeats())
             ),
             $this->mergeWhen($this->getSessionIdentifier() !== null, fn() => [
                 'session_identifier' => $this->getSessionIdentifier(),

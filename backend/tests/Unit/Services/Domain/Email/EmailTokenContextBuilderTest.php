@@ -151,6 +151,7 @@ class EmailTokenContextBuilderTest extends TestCase
         
         // Test that expected properties are included
         $this->assertArrayHasKey('name', $context['attendee']);
+        $this->assertSame('Balcony - A12', $context['attendee']['seat']);
         $this->assertArrayHasKey('name', $context['ticket']);
         $this->assertArrayHasKey('title', $context['event']);
     }
@@ -220,6 +221,7 @@ class EmailTokenContextBuilderTest extends TestCase
             'getEmail' => 'jane@example.com',
             'getProductPriceId' => 123,
             'getShortId' => 'ATT123',
+            'getSeatLabel' => 'Balcony - A12',
         ]);
     }
 }

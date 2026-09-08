@@ -1,20 +1,62 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  position: relative;
+@use "../../../../styles/mixins.scss";
 
-  .setting {
-    flex: 1;
+// Layout de la pagina de configuracion: menu de secciones + contenido.
+//
+// La reparticion se decide aca y no en JS a proposito. Antes salia de un
+// useMediaQuery('(min-width: 1200px)', true) que elegia entre dos arboles JSX
+// distintos, y ese initialValue en true hacia que el servidor y el primer render
+// del cliente devolvieran SIEMPRE la version de escritorio: en un telefono se
+// pintaba un menu lateral de 240px al costado, la pagina desbordaba a lo ancho y
+// recien despues de hidratar se reacomodaba, con el salto a la vista. Con una
+// sola estructura en el DOM y el CSS decidiendo, el problema no existe.
+//
+// minmax(0, …) en la columna de contenido: el piso automatico de una pista 1fr
+// es el min-content de lo que contiene, y aca adentro hay formularios que no
+// encogen solos. Es el mismo `min-width: 0` que le faltaba al Box de antes.
+//
+// El umbral va con panel-bleed-below() y no con una media query a secas porque
+// el ancho util no es la ventana sino la columna del panel, o sea la ventana
+// menos los 280px del sidebar cuando el shell esta expandido. La cuenta: 240 del
+// menu + 16 de gap + unos 560 para que un formulario siga siendo comodo = 816 de
+// ancho util. Como esta pagina NO sangra hasta los bordes hay que sumarle los
+// 40px de padding de .main, tal como avisa el comentario del mixin en
+// styles/mixins.scss: 856.
+.layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: var(--mantine-spacing-md);
+  align-items: start;
+
+  @include mixins.panel-bleed-below(856px) {
+    grid-template-columns: minmax(0, 1fr);
   }
+}
 
-  .preview {
-    overflow: hidden;
-    //position: sticky;
+.sideMenu {
+  // Solo acompaña el scroll cuando tiene columna propia. Apilado arriba del
+  // contenido, un sticky se comeria el alto util de una pantalla chica.
+  position: sticky;
+  top: 20px;
+  min-width: 0;
 
-    div:first-child{
-      transform: scale(0.4);
-      overflow: hidden;
-      transform-origin: 0 0;
-    }
+  @include mixins.panel-bleed-below(856px) {
+    position: static;
+  }
+}
+
+.content {
+  min-width: 0;
+
+  // El navegador le da a todo fieldset un min-inline-size: min-content propio, y
+  // el reset de styles/global.scss solo le saca el borde y el padding: no lo
+  // anula. Nueve de las diez secciones envuelven su formulario en un fieldset,
+  // asi que sin esto ninguna puede achicarse por debajo de su contenido mas
+  // ancho y la pagina entera termina con scroll horizontal.
+  //
+  // Va acotado a esta pantalla y no al reset global a proposito: el mismo
+  // fieldset lo usan el checkout publico y los diseñadores, que ya estan
+  // resueltos por otro lado.
+  fieldset {
+    min-width: 0;
   }
 }

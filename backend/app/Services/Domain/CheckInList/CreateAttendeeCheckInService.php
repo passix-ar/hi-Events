@@ -21,6 +21,7 @@ use HiEvents\Services\Domain\CheckInList\DTO\CheckInResultDTO;
 use HiEvents\Services\Domain\CheckInList\DTO\CreateAttendeeCheckInsResponseDTO;
 use HiEvents\Services\Domain\Order\MarkOrderAsPaidService;
 use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Throwable;
 
@@ -194,18 +195,41 @@ class CreateAttendeeCheckInService
             return new CheckInResultDTO(error: $error);
         }
 
-        return $this->db->transaction(function () use ($attendee, $checkInList, $checkInAction, $checkInUserIpAddress) {
-            $checkIn = $this->createCheckIn($attendee, $checkInList, $checkInUserIpAddress);
+        try {
+            return $this->db->transaction(function () use ($attendee, $checkInList, $checkInAction, $checkInUserIpAddress) {
+                $checkIn = $this->createCheckIn($attendee, $checkInList, $checkInUserIpAddress);
 
-            if ($checkInAction->value === AttendeeCheckInActionType::CHECK_IN_AND_MARK_ORDER_AS_PAID->value) {
-                $this->markOrderAsPaidService->markOrderAsPaid(
-                    orderId: $attendee->getOrderId(),
-                    eventId: $attendee->getEventId(),
-                );
+                if ($checkInAction->value === AttendeeCheckInActionType::CHECK_IN_AND_MARK_ORDER_AS_PAID->value) {
+                    $this->markOrderAsPaidService->markOrderAsPaid(
+                        orderId: $attendee->getOrderId(),
+                        eventId: $attendee->getEventId(),
+                    );
+                }
+
+                return new CheckInResultDTO(checkIn: $checkIn);
+            });
+        } catch (QueryException $exception) {
+            // A concurrent request won the race and created the active check-in between our read
+            // and our insert. The partial unique index on (attendee_id, check_in_list_id) rejects
+            // ours (SQLSTATE 23505), and the transaction — including any mark-as-paid — is rolled
+            // back. Report it as already-checked-in, mirroring the pre-checked path. Any other
+            // database error is re-thrown so a real failure is never reported as a check-in.
+            if ($exception->getCode() !== '23505') {
+                throw $exception;
             }
 
-            return new CheckInResultDTO(checkIn: $checkIn);
-        });
+            $existingCheckIn = $this->attendeeCheckInRepository->findFirstWhere([
+                AttendeeCheckInDomainObjectAbstract::ATTENDEE_ID => $attendee->getId(),
+                AttendeeCheckInDomainObjectAbstract::CHECK_IN_LIST_ID => $checkInList->getId(),
+            ]);
+
+            return new CheckInResultDTO(
+                checkIn: $existingCheckIn,
+                error: __('Attendee :attendee_name is already checked in', [
+                    'attendee_name' => $attendee->getFullName(),
+                ])
+            );
+        }
     }
 
     private function getExistingCheckIn(Collection $existingCheckIns, AttendeeDomainObject $attendee): ?object

@@ -32,6 +32,7 @@ class AttendeeResource extends JsonResource
             'short_id' => $this->getShortId(),
             'locale' => $this->getLocale(),
             'notes' => $this->getNotes(),
+            'seat_label' => $this->getSeatLabel(),
             'product' => $this->when(
                 !is_null($this->getProduct()),
                 fn() => new ProductResource($this->getProduct()),

@@ -52,7 +52,10 @@ class ProductQuestionRule extends BaseQuestionRule
         $validationMessages = [];
 
         foreach ($products as $productIndex => $productRequestData) {
-            $productDomainObject = $this->getProductDomainObject($productRequestData['product_id']);
+            $productId = $productRequestData['product_id'] ?? null;
+            $productDomainObject = $productId === null
+                ? null
+                : $this->getProductDomainObject((int) $productId);
 
             if (!$productDomainObject) {
                 $validationMessages['products.' . $productIndex][] = __('This product is outdated. Please reload the page.');
@@ -104,8 +107,8 @@ class ProductQuestionRule extends BaseQuestionRule
         $validator = Validator::make($productRequestData, [
             'first_name' => ['required', 'string', 'min:1', 'max:100'],
             'last_name' => ['required', 'string', 'min:1', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100'],
-            'email_confirmation' => ['required', 'string', 'email', 'max:100', 'same:email'],
+            'email' => ['required', 'string', 'email', 'safe_email', 'max:100'],
+            'email_confirmation' => ['required', 'string', 'email', 'safe_email', 'max:100', 'same:email'],
         ], [
             'email_confirmation.required' => __('Please confirm the email address'),
             'email_confirmation.same' => __('Email addresses do not match'),

@@ -23,6 +23,10 @@
 
 {{ __('Please find your ticket details below.') }}
 
+@if($attendee->getSeatLabel())
+**{{ __('Your seat: :seat', ['seat' => $attendee->getSeatLabel()]) }}**
+@endif
+
 <x-mail::button :url="$ticketUrl">
 {{ __('View Ticket') }}
 </x-mail::button>

@@ -14,6 +14,12 @@
     height: auto;
     min-height: calc(100vh - 55px);
   }
+
+  // .main baja su padding a 16px en cuanto el shell se pliega (<992), no solo
+  // en movil: el margen negativo tiene que acompañarlo o se va 4px a la derecha.
+  @include mixins.app-shell-collapsed {
+    margin: -16px -16px -56px;
+  }
 }
 
 // ── Left panel ──────────────────────────────────────

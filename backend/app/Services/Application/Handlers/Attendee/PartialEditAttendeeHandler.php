@@ -12,6 +12,7 @@ use HiEvents\Services\Application\Handlers\Attendee\DTO\PartialEditAttendeeDTO;
 use HiEvents\Services\Domain\EventStatistics\EventStatisticsCancellationService;
 use HiEvents\Services\Domain\EventStatistics\EventStatisticsReactivationService;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
 use HiEvents\Services\Infrastructure\DomainEvents\Events\AttendeeEvent;
@@ -30,6 +31,7 @@ class PartialEditAttendeeHandler
         private readonly DomainEventDispatcherService       $domainEventDispatcherService,
         private readonly EventStatisticsCancellationService $eventStatisticsCancellationService,
         private readonly EventStatisticsReactivationService $eventStatisticsReactivationService,
+        private readonly SeatClaimService                   $seatClaimService,
         private readonly LoggerInterface                    $logger,
     )
     {
@@ -63,7 +65,11 @@ class PartialEditAttendeeHandler
             $this->adjustEventStatistics($data, $attendee);
         }
 
-        if ($statusIsUpdated && $data->status === AttendeeStatus::CANCELLED->name) {
+        $isCancellation = $statusIsUpdated && $data->status === AttendeeStatus::CANCELLED->name;
+
+        if ($isCancellation) {
+            $this->seatClaimService->releaseSeatForAttendee($attendee->getId());
+
             $this->domainEventDispatcherService->dispatch(
                 new AttendeeEvent(
                     type: DomainEventType::ATTENDEE_CANCELLED,
@@ -81,6 +87,7 @@ class PartialEditAttendeeHandler
                 'first_name' => $data->first_name ?? $attendee->getFirstName(),
                 'last_name' => $data->last_name ?? $attendee->getLastName(),
                 'email' => $data->email ?? $attendee->getEmail(),
+                'seat_label' => $isCancellation ? null : $attendee->getSeatLabel(),
             ],
             where: [
                 'event_id' => $data->event_id,

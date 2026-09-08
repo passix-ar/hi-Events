@@ -12,15 +12,17 @@ use HiEvents\Models\Organizer;
 use HiEvents\Services\Infrastructure\CurrencyConversion\CurrencyConversionClientInterface;
 use HiEvents\Services\Infrastructure\CurrencyConversion\NoOpCurrencyConversionClient;
 use HiEvents\Services\Infrastructure\CurrencyConversion\OpenExchangeRatesCurrencyConversionClient;
+use HiEvents\Services\Infrastructure\Stripe\StripeClientFactory;
+use HiEvents\Services\Infrastructure\Stripe\StripeConfigurationService;
+use HiEvents\Validators\Rules\SafeEmailRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Stripe\StripeClient;
-use HiEvents\Services\Infrastructure\Stripe\StripeConfigurationService;
-use HiEvents\Services\Infrastructure\Stripe\StripeClientFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,17 @@ class AppServiceProvider extends ServiceProvider
         $this->disableLazyLoading();
 
         $this->registerMorphMaps();
+
+        $this->registerValidationRules();
+    }
+
+    private function registerValidationRules(): void
+    {
+        Validator::extend(
+            SafeEmailRule::NAME,
+            static fn (string $attribute, mixed $value): bool => SafeEmailRule::isSafe($value),
+            SafeEmailRule::message(),
+        );
     }
 
     private function bindDoctrineConnection(): void
@@ -54,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AbstractSchemaManager::class,
             function () {
-                $config = new Configuration();
+                $config = new Configuration;
 
                 $connectionParams = [
                     'dbname' => config('database.connections.pgsql.database'),
@@ -73,29 +86,27 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(StripeConfigurationService::class);
         $this->app->singleton(StripeClientFactory::class);
-        
-        if (!config('services.stripe.secret_key')) {
+
+        if (! config('services.stripe.secret_key')) {
             logger()?->debug('Stripe secret key is not set in the configuration file. Payment processing will not work.');
+
             return;
         }
 
         $this->app->bind(
             StripeClient::class,
-            fn() => new StripeClient(config('services.stripe.secret_key'))
+            fn () => new StripeClient(config('services.stripe.secret_key'))
         );
     }
 
-    /**
-     * @return void
-     */
     private function handleQueryLogging(): void
     {
-        if (env('APP_DEBUG') === true && env('APP_LOG_QUERIES') === true && !app()->isProduction()) {
+        if (env('APP_DEBUG') === true && env('APP_LOG_QUERIES') === true && ! app()->isProduction()) {
             DB::listen(
                 static function ($query) {
                     File::append(
                         storage_path('/logs/query.log'),
-                        $query->sql . ' [' . implode(', ', $query->bindings) . ']' . PHP_EOL
+                        $query->sql.' ['.implode(', ', $query->bindings).']'.PHP_EOL
                     );
                 }
             );
@@ -120,7 +131,7 @@ class AppServiceProvider extends ServiceProvider
 
     private function disableLazyLoading(): void
     {
-        Model::preventLazyLoading(!app()->isProduction());
+        Model::preventLazyLoading(! app()->isProduction());
     }
 
     private function bindCurrencyConversionClient(): void

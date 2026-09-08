@@ -208,6 +208,17 @@ $text-tertiary: rgba(255, 255, 255, 0.38);
   }
 }
 
+// Tipo de entrada dentro del aviso de escaneo. Vive en el portal de Mantine, fuera del árbol
+// del check-in, así que toma el color del propio aviso en vez de las variables de esta pantalla.
+.scanProduct {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mantine-color-text);
+  opacity: 0.85;
+  overflow-wrap: anywhere;
+}
+
 .infoModal {
   padding: 20px;
   padding-top: 0;

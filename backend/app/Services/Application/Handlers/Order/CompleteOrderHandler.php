@@ -38,6 +38,7 @@ use HiEvents\Services\Application\Handlers\Order\DTO\CreatedProductDataDTO;
 use HiEvents\Services\Application\Handlers\Order\DTO\OrderQuestionsDTO;
 use HiEvents\Services\Domain\Payment\Stripe\EventHandlers\PaymentIntentSucceededHandler;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatAttendeeAssignmentService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use HiEvents\Services\Infrastructure\Session\CheckoutSessionManagementService;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
@@ -62,6 +63,7 @@ class CompleteOrderHandler
         private readonly DomainEventDispatcherService      $domainEventDispatcherService,
         private readonly EventSettingsRepositoryInterface  $eventSettingsRepository,
         private readonly CheckoutSessionManagementService  $sessionManagementService,
+        private readonly SeatAttendeeAssignmentService     $seatAttendeeAssignmentService,
     )
     {
     }
@@ -84,6 +86,8 @@ class CompleteOrderHandler
             $updatedOrder = $this->updateOrder($order, $orderDTO);
 
             $this->createAttendees($orderData->products, $order, $orderDTO, $eventSettings);
+
+            $this->seatAttendeeAssignmentService->assignSeatsForOrder($order);
 
             if ($orderData->order->questions) {
                 $this->createOrderQuestions($orderDTO->questions, $order);

@@ -1,6 +1,5 @@
 <?php
 
-// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\DomainObjects\Generated;
 
 /**
@@ -44,62 +43,174 @@ abstract class MercadopagoPaymentDomainObjectAbstract extends \HiEvents\DomainOb
     public function toArray(): array
     {
         return [
-            'id'                 => $this->id ?? null,
-            'order_id'           => $this->order_id ?? null,
-            'mp_payment_id'      => $this->mp_payment_id ?? null,
-            'preference_id'      => $this->preference_id ?? null,
-            'status'             => $this->status ?? null,
-            'status_detail'      => $this->status_detail ?? null,
-            'transaction_amount' => $this->transaction_amount ?? null,
-            'currency_id'        => $this->currency_id ?? null,
-            'payment_type_id'    => $this->payment_type_id ?? null,
-            'payment_method_id'  => $this->payment_method_id ?? null,
-            'marketplace_fee'    => $this->marketplace_fee ?? null,
-            'created_at'         => $this->created_at ?? null,
-            'updated_at'         => $this->updated_at ?? null,
-            'deleted_at'         => $this->deleted_at ?? null,
-        ];
+                    'id' => $this->id ?? null,
+                    'order_id' => $this->order_id ?? null,
+                    'mp_payment_id' => $this->mp_payment_id ?? null,
+                    'preference_id' => $this->preference_id ?? null,
+                    'status' => $this->status ?? null,
+                    'status_detail' => $this->status_detail ?? null,
+                    'transaction_amount' => $this->transaction_amount ?? null,
+                    'currency_id' => $this->currency_id ?? null,
+                    'payment_type_id' => $this->payment_type_id ?? null,
+                    'payment_method_id' => $this->payment_method_id ?? null,
+                    'marketplace_fee' => $this->marketplace_fee ?? null,
+                    'created_at' => $this->created_at ?? null,
+                    'updated_at' => $this->updated_at ?? null,
+                    'deleted_at' => $this->deleted_at ?? null,
+                ];
     }
 
-    public function setId(int $id): self { $this->id = $id; return $this; }
-    public function getId(): int { return $this->id; }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-    public function setOrderId(int $order_id): self { $this->order_id = $order_id; return $this; }
-    public function getOrderId(): int { return $this->order_id; }
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-    public function setMpPaymentId(string $mp_payment_id): self { $this->mp_payment_id = $mp_payment_id; return $this; }
-    public function getMpPaymentId(): string { return $this->mp_payment_id; }
+    public function setOrderId(int $order_id): self
+    {
+        $this->order_id = $order_id;
+        return $this;
+    }
 
-    public function setPreferenceId(?string $preference_id): self { $this->preference_id = $preference_id; return $this; }
-    public function getPreferenceId(): ?string { return $this->preference_id; }
+    public function getOrderId(): int
+    {
+        return $this->order_id;
+    }
 
-    public function setStatus(string $status): self { $this->status = $status; return $this; }
-    public function getStatus(): string { return $this->status; }
+    public function setMpPaymentId(string $mp_payment_id): self
+    {
+        $this->mp_payment_id = $mp_payment_id;
+        return $this;
+    }
 
-    public function setStatusDetail(?string $status_detail): self { $this->status_detail = $status_detail; return $this; }
-    public function getStatusDetail(): ?string { return $this->status_detail; }
+    public function getMpPaymentId(): string
+    {
+        return $this->mp_payment_id;
+    }
 
-    public function setTransactionAmount(?float $transaction_amount): self { $this->transaction_amount = $transaction_amount; return $this; }
-    public function getTransactionAmount(): ?float { return $this->transaction_amount; }
+    public function setPreferenceId(?string $preference_id): self
+    {
+        $this->preference_id = $preference_id;
+        return $this;
+    }
 
-    public function setCurrencyId(?string $currency_id): self { $this->currency_id = $currency_id; return $this; }
-    public function getCurrencyId(): ?string { return $this->currency_id; }
+    public function getPreferenceId(): ?string
+    {
+        return $this->preference_id;
+    }
 
-    public function setPaymentTypeId(?string $payment_type_id): self { $this->payment_type_id = $payment_type_id; return $this; }
-    public function getPaymentTypeId(): ?string { return $this->payment_type_id; }
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
 
-    public function setPaymentMethodId(?string $payment_method_id): self { $this->payment_method_id = $payment_method_id; return $this; }
-    public function getPaymentMethodId(): ?string { return $this->payment_method_id; }
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 
-    public function setMarketplaceFee(?float $marketplace_fee): self { $this->marketplace_fee = $marketplace_fee; return $this; }
-    public function getMarketplaceFee(): ?float { return $this->marketplace_fee; }
+    public function setStatusDetail(?string $status_detail): self
+    {
+        $this->status_detail = $status_detail;
+        return $this;
+    }
 
-    public function setCreatedAt(?string $created_at): self { $this->created_at = $created_at; return $this; }
-    public function getCreatedAt(): ?string { return $this->created_at; }
+    public function getStatusDetail(): ?string
+    {
+        return $this->status_detail;
+    }
 
-    public function setUpdatedAt(?string $updated_at): self { $this->updated_at = $updated_at; return $this; }
-    public function getUpdatedAt(): ?string { return $this->updated_at; }
+    public function setTransactionAmount(?float $transaction_amount): self
+    {
+        $this->transaction_amount = $transaction_amount;
+        return $this;
+    }
 
-    public function setDeletedAt(?string $deleted_at): self { $this->deleted_at = $deleted_at; return $this; }
-    public function getDeletedAt(): ?string { return $this->deleted_at; }
+    public function getTransactionAmount(): ?float
+    {
+        return $this->transaction_amount;
+    }
+
+    public function setCurrencyId(?string $currency_id): self
+    {
+        $this->currency_id = $currency_id;
+        return $this;
+    }
+
+    public function getCurrencyId(): ?string
+    {
+        return $this->currency_id;
+    }
+
+    public function setPaymentTypeId(?string $payment_type_id): self
+    {
+        $this->payment_type_id = $payment_type_id;
+        return $this;
+    }
+
+    public function getPaymentTypeId(): ?string
+    {
+        return $this->payment_type_id;
+    }
+
+    public function setPaymentMethodId(?string $payment_method_id): self
+    {
+        $this->payment_method_id = $payment_method_id;
+        return $this;
+    }
+
+    public function getPaymentMethodId(): ?string
+    {
+        return $this->payment_method_id;
+    }
+
+    public function setMarketplaceFee(?float $marketplace_fee): self
+    {
+        $this->marketplace_fee = $marketplace_fee;
+        return $this;
+    }
+
+    public function getMarketplaceFee(): ?float
+    {
+        return $this->marketplace_fee;
+    }
+
+    public function setCreatedAt(?string $created_at): self
+    {
+        $this->created_at = $created_at;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?string
+    {
+        return $this->created_at;
+    }
+
+    public function setUpdatedAt(?string $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function setDeletedAt(?string $deleted_at): self
+    {
+        $this->deleted_at = $deleted_at;
+        return $this;
+    }
+
+    public function getDeletedAt(): ?string
+    {
+        return $this->deleted_at;
+    }
 }

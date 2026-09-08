@@ -15,6 +15,7 @@ use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Domain\Order\OrderCancelService;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatClaimService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use HiEvents\Services\Infrastructure\DomainEvents\Enums\DomainEventType;
 use HiEvents\Services\Infrastructure\DomainEvents\Events\OrderEvent;
@@ -38,6 +39,7 @@ class OrderCancelServiceTest extends TestCase
     private OrderCancelService $service;
     private DomainEventDispatcherService $domainEventDispatcherService;
     private EventStatisticsCancellationService $eventStatisticsCancellationService;
+    private SeatClaimService $seatClaimService;
 
     protected function setUp(): void
     {
@@ -51,6 +53,8 @@ class OrderCancelServiceTest extends TestCase
         $this->productQuantityService = m::mock(ProductQuantityUpdateService::class);
         $this->domainEventDispatcherService = m::mock(DomainEventDispatcherService::class);
         $this->eventStatisticsCancellationService = m::mock(EventStatisticsCancellationService::class);
+        $this->seatClaimService = m::mock(SeatClaimService::class);
+        $this->seatClaimService->shouldReceive('releaseSeatsForOrder')->byDefault();
 
         $this->service = new OrderCancelService(
             mailer: $this->mailer,
@@ -61,6 +65,7 @@ class OrderCancelServiceTest extends TestCase
             productQuantityService: $this->productQuantityService,
             domainEventDispatcherService: $this->domainEventDispatcherService,
             eventStatisticsCancellationService: $this->eventStatisticsCancellationService,
+            seatClaimService: $this->seatClaimService,
         );
     }
 
@@ -94,7 +99,9 @@ class OrderCancelServiceTest extends TestCase
             ])
             ->andReturn($attendees);
 
-        $this->attendeeRepository->shouldReceive('updateWhere')->once();
+        $this->attendeeRepository->shouldReceive('updateWhere')->twice();
+
+        $this->seatClaimService->shouldReceive('releaseSeatsForOrder')->once()->with(1);
 
         $this->productQuantityService->shouldReceive('decreaseQuantitySold')->twice();
 
@@ -185,7 +192,9 @@ class OrderCancelServiceTest extends TestCase
             ])
             ->andReturn($attendees);
 
-        $this->attendeeRepository->shouldReceive('updateWhere')->once();
+        $this->attendeeRepository->shouldReceive('updateWhere')->twice();
+
+        $this->seatClaimService->shouldReceive('releaseSeatsForOrder')->once()->with(1);
 
         $this->productQuantityService->shouldReceive('decreaseQuantitySold')->twice();
 

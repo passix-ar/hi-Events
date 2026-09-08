@@ -97,6 +97,7 @@ class EmailTokenContextBuilder
         $baseContext['attendee'] = [
             'name' => $attendee->getFirstName() . ' ' . $attendee->getLastName(),
             'email' => $attendee->getEmail() ?? '',
+            'seat' => $attendee->getSeatLabel() ?? '',
         ];
 
         $baseContext['ticket'] = [
@@ -162,6 +163,7 @@ class EmailTokenContextBuilder
             $baseContext['attendee'] = [
                 'name' => 'John Smith',
                 'email' => 'john@example.com',
+                'seat' => 'Balcony - A12',
             ];
             $baseContext['ticket'] = [
                 'name' => 'VIP Pass',

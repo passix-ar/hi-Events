@@ -12,6 +12,7 @@ use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Domain\Order\OrderApplicationFeeService;
 use HiEvents\Services\Domain\Payment\MercadoPago\EventHandlers\PaymentApprovedHandler;
 use HiEvents\Services\Domain\Product\ProductQuantityUpdateService;
+use HiEvents\Services\Domain\Seating\SeatOrderIntegrityService;
 use HiEvents\Services\Infrastructure\DomainEvents\DomainEventDispatcherService;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Database\DatabaseManager;
@@ -45,6 +46,7 @@ class PaymentApprovedHandlerTest extends TestCase
             Mockery::mock(AttendeeRepositoryInterface::class),
             Mockery::mock(ProductQuantityUpdateService::class),
             Mockery::mock(OrderApplicationFeeService::class),
+            Mockery::mock(SeatOrderIntegrityService::class),
             Mockery::mock(EventSettingsRepositoryInterface::class),
             Mockery::mock(DomainEventDispatcherService::class),
             $databaseManager,

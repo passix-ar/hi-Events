@@ -51,6 +51,12 @@ class Order extends BaseModel
         return $this->belongsTo(Affiliate::class);
     }
 
+    public function seats(): HasMany
+    {
+        return $this->hasMany(Seat::class)
+            ->orderByRaw('seating_section_id, LENGTH(row_label), row_label, seat_number');
+    }
+
     protected function getCastMap(): array
     {
         return [

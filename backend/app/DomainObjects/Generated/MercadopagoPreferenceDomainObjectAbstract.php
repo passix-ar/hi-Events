@@ -1,6 +1,5 @@
 <?php
 
-// Added by Passix on 2026-05-25: MercadoPago Marketplace integration.
 namespace HiEvents\DomainObjects\Generated;
 
 /**
@@ -34,42 +33,114 @@ abstract class MercadopagoPreferenceDomainObjectAbstract extends \HiEvents\Domai
     public function toArray(): array
     {
         return [
-            'id'                 => $this->id ?? null,
-            'order_id'           => $this->order_id ?? null,
-            'preference_id'      => $this->preference_id ?? null,
-            'init_point'         => $this->init_point ?? null,
-            'sandbox_init_point' => $this->sandbox_init_point ?? null,
-            'status'             => $this->status ?? null,
-            'created_at'         => $this->created_at ?? null,
-            'updated_at'         => $this->updated_at ?? null,
-            'marketplace_fee'    => $this->marketplace_fee ?? null,
-        ];
+                    'id' => $this->id ?? null,
+                    'order_id' => $this->order_id ?? null,
+                    'preference_id' => $this->preference_id ?? null,
+                    'init_point' => $this->init_point ?? null,
+                    'sandbox_init_point' => $this->sandbox_init_point ?? null,
+                    'status' => $this->status ?? null,
+                    'created_at' => $this->created_at ?? null,
+                    'updated_at' => $this->updated_at ?? null,
+                    'marketplace_fee' => $this->marketplace_fee ?? null,
+                ];
     }
 
-    public function setId(int $id): self { $this->id = $id; return $this; }
-    public function getId(): int { return $this->id; }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-    public function setOrderId(int $order_id): self { $this->order_id = $order_id; return $this; }
-    public function getOrderId(): int { return $this->order_id; }
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-    public function setPreferenceId(string $preference_id): self { $this->preference_id = $preference_id; return $this; }
-    public function getPreferenceId(): string { return $this->preference_id; }
+    public function setOrderId(int $order_id): self
+    {
+        $this->order_id = $order_id;
+        return $this;
+    }
 
-    public function setInitPoint(?string $init_point): self { $this->init_point = $init_point; return $this; }
-    public function getInitPoint(): ?string { return $this->init_point; }
+    public function getOrderId(): int
+    {
+        return $this->order_id;
+    }
 
-    public function setSandboxInitPoint(?string $sandbox_init_point): self { $this->sandbox_init_point = $sandbox_init_point; return $this; }
-    public function getSandboxInitPoint(): ?string { return $this->sandbox_init_point; }
+    public function setPreferenceId(string $preference_id): self
+    {
+        $this->preference_id = $preference_id;
+        return $this;
+    }
 
-    public function setStatus(string $status): self { $this->status = $status; return $this; }
-    public function getStatus(): string { return $this->status; }
+    public function getPreferenceId(): string
+    {
+        return $this->preference_id;
+    }
 
-    public function setCreatedAt(?string $created_at): self { $this->created_at = $created_at; return $this; }
-    public function getCreatedAt(): ?string { return $this->created_at; }
+    public function setInitPoint(?string $init_point): self
+    {
+        $this->init_point = $init_point;
+        return $this;
+    }
 
-    public function setUpdatedAt(?string $updated_at): self { $this->updated_at = $updated_at; return $this; }
-    public function getUpdatedAt(): ?string { return $this->updated_at; }
+    public function getInitPoint(): ?string
+    {
+        return $this->init_point;
+    }
 
-    public function setMarketplaceFee(?float $marketplace_fee): self { $this->marketplace_fee = $marketplace_fee; return $this; }
-    public function getMarketplaceFee(): ?float { return $this->marketplace_fee; }
+    public function setSandboxInitPoint(?string $sandbox_init_point): self
+    {
+        $this->sandbox_init_point = $sandbox_init_point;
+        return $this;
+    }
+
+    public function getSandboxInitPoint(): ?string
+    {
+        return $this->sandbox_init_point;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setCreatedAt(?string $created_at): self
+    {
+        $this->created_at = $created_at;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?string
+    {
+        return $this->created_at;
+    }
+
+    public function setUpdatedAt(?string $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return $this->updated_at;
+    }
+
+    public function setMarketplaceFee(?float $marketplace_fee): self
+    {
+        $this->marketplace_fee = $marketplace_fee;
+        return $this;
+    }
+
+    public function getMarketplaceFee(): ?float
+    {
+        return $this->marketplace_fee;
+    }
 }

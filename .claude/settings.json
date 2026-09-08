@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "c=$(jq -r '.tool_input.command // empty'); if printf '%s' \"$c\" | grep -qE '(^|[;&|])[[:space:]]*gh[[:space:]]+pr[[:space:]]+create([[:space:]]|$)'; then case \"$c\" in *--repo*|*\"-R \"*) ;; *) printf '%s' '{\"hookSpecificOutput\": {\"hookEventName\": \"PreToolUse\", \"permissionDecision\": \"deny\", \"permissionDecisionReason\": \"gh pr create sin --repo: dentro de un fork gh resuelve al repo padre (HiEventsDev/Hi.Events), que es publico. Reintenta con --repo passix-ar/hi-Events --base develop, o el repo passix-ar que corresponda.\"}}' ;; esac; fi; exit 0",
+            "timeout": 10,
+            "statusMessage": "Verificando destino del PR"
+          }
+        ]
+      }
+    ]
+  }
+}

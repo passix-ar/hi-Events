@@ -8,7 +8,7 @@ import {QrScannerControls} from './QrScannerControls';
 import {PermissionDeniedMessage} from './PermissionDeniedMessage';
 
 interface QRScannerComponentProps {
-    onAttendeeScanned: (attendeePublicId: string) => void;
+    onAttendeeScanned: (attendeePublicId: string) => Promise<boolean> | boolean;
     onClose: () => void;
     isSoundOn?: boolean;
 }
@@ -29,6 +29,8 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
     const [debouncedAttendeeId] = useDebouncedValue(currentAttendeeId, 1000);
     const [isScanFailed, setIsScanFailed] = useState(false);
     const [isScanSucceeded, setIsScanSucceeded] = useState(false);
+
+    const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const scanSuccessAudioRef = useRef<HTMLAudioElement | null>(null);
     const scanErrorAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -90,12 +92,7 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
 
             if (alreadyScanned) {
                 showError(t`You already scanned this ticket`);
-
-                setIsScanFailed(true);
-                setInterval(() => setIsScanFailed(false), 500);
-                if (isSoundOn && scanErrorAudioRef.current) {
-                    scanErrorAudioRef.current.play();
-                }
+                showScanFeedback(false);
 
                 return;
             }
@@ -106,19 +103,41 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
                     scanInProgressAudioRef.current.play();
                 }
 
-                props.onAttendeeScanned(debouncedAttendeeId);
-                setIsCheckingIn(false);
-                setProcessedAttendeeIds(prevIds => [...prevIds, debouncedAttendeeId]);
-                setCurrentAttendeeId(null);
-
-                setIsScanSucceeded(true);
-                setInterval(() => setIsScanSucceeded(false), 500);
-                if (isSoundOn && scanSuccessAudioRef.current) {
-                    scanSuccessAudioRef.current.play();
-                }
+                // The overlay must reflect what actually happened: a code this scanner cannot
+                // resolve — a QR from another app, an unknown ticket — is a failed scan, and
+                // showing it green would wave the person through.
+                Promise.resolve(props.onAttendeeScanned(debouncedAttendeeId))
+                    .then(checkedIn => showScanFeedback(checkedIn))
+                    .catch(() => showScanFeedback(false))
+                    .finally(() => {
+                        setIsCheckingIn(false);
+                        setProcessedAttendeeIds(prevIds => [...prevIds, debouncedAttendeeId]);
+                        setCurrentAttendeeId(null);
+                    });
             }
         }
     }, [debouncedAttendeeId]);
+
+    const showScanFeedback = (succeeded: boolean) => {
+        setIsScanSucceeded(succeeded);
+        setIsScanFailed(!succeeded);
+
+        const audio = succeeded ? scanSuccessAudioRef.current : scanErrorAudioRef.current;
+        if (isSoundOn && audio) {
+            audio.play().catch(() => {
+                // Ignore audio play errors (e.g. the browser blocked autoplay)
+            });
+        }
+
+        if (feedbackTimeoutRef.current) {
+            clearTimeout(feedbackTimeoutRef.current);
+        }
+
+        feedbackTimeoutRef.current = setTimeout(() => {
+            setIsScanSucceeded(false);
+            setIsScanFailed(false);
+        }, 500);
+    };
 
     const stopScanner = () => {
         if (qrScannerRef.current) {
@@ -172,6 +191,9 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
         });
 
         return () => {
+            if (feedbackTimeoutRef.current) {
+                clearTimeout(feedbackTimeoutRef.current);
+            }
             if (permissionGranted) {
                 stopScanner();
             }

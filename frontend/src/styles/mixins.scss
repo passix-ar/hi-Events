@@ -114,3 +114,58 @@ $breakpoints: (
     @return #ffffff; // Light text for dark backgrounds
   }
 }
+
+// ── Shell del panel de gestion ──────────────────────────────────────────
+//
+// El shell (sidebar fijo + barra superior + contenido) solo entra en una
+// ventana si hay lugar para los 280px del sidebar MAS el ancho minimo de la
+// barra superior, que no puede encogerse porque los botones no cortan texto.
+//
+// Ese minimo depende del idioma. Medido con la fuente real (Hanken Grotesk
+// 14px): 482px en ingles, 648px en español, porque nuestras traducciones son
+// mucho mas largas ("Preview Event page" -> "Vista previa de la pagina del
+// evento"). Upstream calibro el breakpoint en 768px, que alcanza justo para
+// el ingles (280 + 482 = 762) y deja al español desbordando entre 768 y 928px.
+//
+// Por eso el sidebar pasa a overlay por debajo de 'lg' (992px), que deja
+// margen incluso si una traduccion crece.
+$app-shell-breakpoint: map.get($breakpoints, 'lg');
+
+// Sidebar fijo al costado, contenido en la segunda columna.
+@mixin app-shell-expanded() {
+  @media (min-width: $app-shell-breakpoint) {
+    @content;
+  }
+}
+
+// Sidebar como overlay, contenido a todo el ancho.
+@mixin app-shell-collapsed() {
+  @media (max-width: $app-shell-breakpoint - 1px) {
+    @content;
+  }
+}
+
+// "El ancho util es menor que $width", para paginas del panel que sangran hasta
+// los bordes de su columna: las que anulan el padding de .main con un margen
+// negativo (los diseñadores, el editor de widget, mensajes). Para esas el ancho
+// util es la columna entera, y la columna no es la ventana: con el shell
+// expandido hay que descontarle los 280px del sidebar.
+//
+// Una pagina SIN sangrado tiene 40px menos de ancho util que esto; no usar el
+// mixin ahi sin ajustar el $width.
+//
+// Se resuelve con media queries y no con container queries a proposito:
+// container-type convierte al contenedor en bloque contenedor de los
+// descendientes position:fixed, y adentro del panel hay overlays fixed sin
+// portal (CreateEventModal) que quedarian encajados en la columna.
+@mixin panel-bleed-below($width) {
+  // plegado: el sangrado llega a los bordes de la ventana
+  $collapsed-max: $width - 1px;
+  // expandido: la columna es la ventana menos el sidebar
+  $expanded-max: $width + 280px - 1px;
+
+  @media (max-width: $collapsed-max),
+         (min-width: $app-shell-breakpoint) and (max-width: $expanded-max) {
+    @content;
+  }
+}

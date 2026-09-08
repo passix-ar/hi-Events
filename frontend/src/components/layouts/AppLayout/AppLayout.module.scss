@@ -6,22 +6,29 @@
     "topbar"
     "main";
   grid-template-rows: auto 1fr;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   height: 100vh;
+  // dvh descuenta la barra del navegador movil, que con 100vh a secas se come
+  // el fondo de la pantalla. El sidebar ya lo hacia; el shell no.
+  height: 100dvh;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  @media (min-width: 768px) {
+  @include mixins.app-shell-expanded {
     grid-template-areas:
       "sidebar topbar"
       "sidebar main";
     grid-template-rows: auto 1fr;
-    grid-template-columns: 280px 1fr;
+    // minmax(0, …) y no 1fr a secas: el piso automatico de una pista 1fr es el
+    // min-content de lo que contiene, y la barra superior no encoge (los labels
+    // de los botones son nowrap). Sin esto la pista crece mas que la ventana y
+    // empuja TODA la app fuera de pantalla.
+    grid-template-columns: 280px minmax(0, 1fr);
 
     &.closed {
       grid-template-areas:
         "topbar"
         "main";
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -31,10 +38,16 @@
     padding-bottom: calc(var(--hi-spacing-lg) + 40px);
     overflow: auto;
     background-color: #0b0b0e;
+    min-width: 0;
+    // OJO: no poner container-type aca. Convierte a .main en bloque contenedor
+    // de todo descendiente position:fixed, y CreateEventModal es un overlay
+    // fixed sin portal montado desde rutas de adentro: quedaria encajado en
+    // esta columna en vez de cubrir la pantalla. Las paginas que necesitan
+    // medir esta columna usan el mixin panel-bleed-below().
 
     @include mixins.scrollbar;
 
-    @media (max-width: 767px) {
+    @include mixins.app-shell-collapsed {
       padding: 16px 16px 56px;
     }
   }
@@ -61,7 +74,7 @@
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     }
 
-    @media (max-width: 767px) {
+    @include mixins.app-shell-collapsed {
       display: none;
     }
   }
@@ -80,7 +93,7 @@
     z-index: 150;
     display: none;
 
-    @media (max-width: 767px) {
+    @include mixins.app-shell-collapsed {
       &.open {
         display: block;
       }

@@ -333,3 +333,31 @@
   }
 }
 
+
+/* One plan of the room, between the tickets and the total — the same one the organizer
+   laid out, drawn from the same coordinates. */
+.hi-seating-panel {
+  margin: 20px 0;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.22);
+}
+
+.hi-seating-panel-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.hi-seating-panel-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.hi-seating-panel-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+}

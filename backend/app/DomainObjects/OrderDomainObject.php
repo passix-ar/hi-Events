@@ -32,6 +32,9 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
 
     public ?Collection $invoices = null;
 
+    /** @var Collection<SeatDomainObject>|null */
+    public ?Collection $seats = null;
+
     public ?EventDomainObject $event = null;
 
     public ?string $sessionIdentifier = null;
@@ -135,6 +138,20 @@ class OrderDomainObject extends Generated\OrderDomainObjectAbstract implements I
     {
         $this->attendees = $attendees;
         return $this;
+    }
+
+    public function setSeats(?Collection $seats): OrderDomainObject
+    {
+        $this->seats = $seats;
+        return $this;
+    }
+
+    /**
+     * @return Collection<SeatDomainObject>|null
+     */
+    public function getSeats(): ?Collection
+    {
+        return $this->seats;
     }
 
     public function getAttendees(): ?Collection

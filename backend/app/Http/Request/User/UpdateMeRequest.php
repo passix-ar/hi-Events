@@ -18,7 +18,7 @@ class UpdateMeRequest extends BaseRequest
         return [
             'first_name' => 'required_without_all:current_password,password,password_confirmation|min:1',
             'last_name' => 'required_without_all:current_password,password,password_confirmation|min:1',
-            'email' => 'required_without_all:current_password,password,password_confirmation|email',
+            'email' => 'required_without_all:current_password,password,password_confirmation|email|safe_email',
             'timezone' => ['required_without_all:current_password,password,password_confirmation', new ValidTimezoneRule()],
             'locale' => 'required_without_all:current_password,password,password_confirmation|in:' . implode(',', Locale::getSupportedLocales()),
 

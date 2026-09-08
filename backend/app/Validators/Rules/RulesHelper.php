@@ -14,7 +14,7 @@ class RulesHelper
 
     public const HEX_COLOR = ['string', 'max:9', 'min:4', 'regex:/\#(?:[0-9a-fA-F]{3}){1,2}$|^\#(?:[0-9a-fA-F]{4}){1,2}$/'];
 
-    public const REQUIRED_EMAIL = ['email' , 'required', 'max:100'];
+    public const REQUIRED_EMAIL = ['email', SafeEmailRule::NAME, 'required', 'max:100'];
 
     public const OPTIONAL_TEXT_MEDIUM_LENGTH = ['string', 'max:2000', 'nullable'];
 
