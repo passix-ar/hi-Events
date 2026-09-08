@@ -52,6 +52,8 @@ class CompleteOrderHandlerTest extends TestCase
     private EventSettingsRepositoryInterface $eventSettingsRepository;
     private CheckoutSessionManagementService|MockInterface $sessionManagementService;
     private SeatAttendeeAssignmentService|MockInterface $seatAttendeeAssignmentService;
+    /** @var array<int, array{query: string, bindings: array}> */
+    private array $executedStatements = [];
 
     protected function setUp(): void
     {
@@ -60,6 +62,12 @@ class CompleteOrderHandlerTest extends TestCase
         Mail::fake();
         Bus::fake();
         DB::shouldReceive('transaction')->andReturnUsing(fn($callback) => $callback(Mockery::mock(Connection::class)));
+        $this->executedStatements = [];
+        DB::shouldReceive('statement')->andReturnUsing(function (string $query, array $bindings = []) {
+            $this->executedStatements[] = ['query' => $query, 'bindings' => $bindings];
+
+            return true;
+        });
 
         $this->orderRepository = Mockery::mock(OrderRepositoryInterface::class);
         $this->attendeeRepository = Mockery::mock(AttendeeRepositoryInterface::class);
@@ -277,6 +285,67 @@ class CompleteOrderHandlerTest extends TestCase
         $this->attendeeRepository->shouldReceive('findWhere')->andReturn(new Collection());
 
         $this->completeOrderHandler->handle($orderShortId, $orderData);
+    }
+
+    public function testHandleTakesAnAdvisoryLockOnTheOrder(): void
+    {
+        $orderShortId = 'ABC123';
+        $orderData = $this->createMockCompleteOrderDTO();
+        $order = $this->createMockOrder();
+        $updatedOrder = $this->createMockOrder();
+
+        $this->orderRepository->shouldReceive('findByShortId')->with($orderShortId)->andReturn($order);
+        $this->orderRepository->shouldReceive('loadRelation')->andReturnSelf();
+        $this->orderRepository->shouldReceive('updateFromArray')->andReturn($updatedOrder);
+
+        $this->productPriceRepository->shouldReceive('findWhereIn')->andReturn(new Collection([$this->createMockProductPrice()]));
+
+        $this->attendeeRepository->shouldReceive('insert')->andReturn(true);
+        $this->attendeeRepository->shouldReceive('findWhereIn')->andReturn(new Collection([$this->createMockAttendee()]));
+
+        $this->productQuantityUpdateService->shouldReceive('updateQuantitiesFromOrder');
+
+        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn($this->createMockEventSetting());
+
+        $this->completeOrderHandler->handle($orderShortId, $orderData);
+
+        $this->assertSame(
+            [
+                'query' => 'SELECT pg_advisory_xact_lock(hashtext(?))',
+                'bindings' => [$orderShortId],
+            ],
+            $this->executedStatements[0] ?? null,
+            'The order short id must be locked before anything else happens in the transaction.',
+        );
+    }
+
+    /**
+     * The lock only protects against a double completion if it is taken before the order is read.
+     * An order that does not exist still gets locked, which is what proves the ordering.
+     */
+    public function testHandleTakesTheAdvisoryLockBeforeReadingTheOrder(): void
+    {
+        $orderShortId = 'NONEXISTENT';
+        $orderData = $this->createMockCompleteOrderDTO();
+
+        $this->eventSettingsRepository->shouldReceive('findFirstWhere')->andReturn($this->createMockEventSetting());
+        $this->orderRepository->shouldReceive('findByShortId')->with($orderShortId)->andReturnNull();
+        $this->orderRepository->shouldReceive('loadRelation')->andReturnSelf();
+
+        try {
+            $this->completeOrderHandler->handle($orderShortId, $orderData);
+            $this->fail('Expected the handler to reject an order that does not exist.');
+        } catch (ResourceNotFoundException) {
+            // expected
+        }
+
+        $this->assertSame(
+            [
+                'query' => 'SELECT pg_advisory_xact_lock(hashtext(?))',
+                'bindings' => [$orderShortId],
+            ],
+            $this->executedStatements[0] ?? null,
+        );
     }
 
     private function createMockCompleteOrderDTO(): CompleteOrderDTO
