@@ -158,13 +158,19 @@
 }
 
 // Recent items section
+//
+// minmax(0, …) y no 1fr a secas: el piso automatico de una pista 1fr es el
+// min-content de lo que contiene, y adentro de cada fila hay un bloque que no
+// encoge (el importe, ver .eventCompactRight). Sin esto la pista crece mas que
+// la columna del panel y las dos secciones scrollean en horizontal. Es el mismo
+// arreglo que el grid del shell en AppLayout.module.scss.
 .recentItemsGrid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 
   @include mixins.respond-above(lg) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
     align-items: start;
   }
@@ -175,6 +181,9 @@
   flex-direction: column;
   gap: 0.75rem;
   height: 100%;
+  // Item del grid: sin esto su min-content vuelve a ser el piso de la pista y
+  // el minmax(0, …) de arriba no alcanza.
+  min-width: 0;
 }
 
 // Mobile-first ordering

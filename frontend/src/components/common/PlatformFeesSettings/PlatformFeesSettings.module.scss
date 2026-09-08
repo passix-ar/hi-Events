@@ -1,3 +1,5 @@
+@use "../../../styles/mixins.scss";
+
 .breakdown {
     padding: 12px 0;
 }
@@ -45,4 +47,26 @@
 
 .activeCard {
     border: 2px solid var(--mantine-color-teal-5);
+}
+
+// Selector de quien paga la comision.
+//
+// Cada opcion de un SegmentedControl es flex: 1 con min-width auto, o sea que su
+// piso es el min-content del label, y Mantine pinta el label con white-space:
+// nowrap. En ingles los dos textos suman ~315px y entran en cualquier telefono,
+// pero en español ("Pasar comision al comprador" + "Asumir la comision") son mas
+// de 400 y no entran en los ~358px utiles de una pantalla de 390: el control no
+// puede achicarse y empuja la pagina entera.
+//
+// min-width: 0 le devuelve la posibilidad de encoger. Y con el texto envolviendo
+// en pantalla angosta se lee completo en dos lineas, en vez de quedar cortado
+// con puntos suspensivos por el text-overflow que Mantine ya trae.
+.feeOptionControl {
+    min-width: 0;
+}
+
+.feeOptionLabel {
+    @include mixins.respond-below(sm) {
+        white-space: normal;
+    }
 }

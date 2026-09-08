@@ -319,7 +319,7 @@ export const EventDashboard = () => {
                         </div>
                     </div>
                     <AreaChart
-                        h={300}
+                        className={classes.chart}
                         data={eventStats?.daily_stats.map(stat => ({
                             date: formatDateWithLocale(stat.date, 'chartDate', event.timezone),
                             orders_created: stat.orders_created,
@@ -328,8 +328,15 @@ export const EventDashboard = () => {
                         })) || []}
                         dataKey="date"
                         withLegend
-                        legendProps={{verticalAlign: 'bottom', height: 50}}
-
+                        // No fijar `height` aca. Recharts mide el alto real del div de la
+                        // leyenda y recien con ese numero se lo descuenta al area de ploteo.
+                        // Si le pasamos un valor, el div queda clavado en ese alto: las
+                        // etiquetas que wrapean se dibujan por fuera, nadie las recorta (el
+                        // svg queda en overflow visible y la Card no tiene overflow) y
+                        // terminan colgando por debajo del recuadro. En un telefono estas
+                        // tres etiquetas ocupan 3 filas de 28px mas 16 de padding, unos
+                        // 100px: el doble de los 50 que habia fijados.
+                        legendProps={{verticalAlign: 'bottom'}}
                         series={[
                             {name: 'orders_created', color: 'blue.6', label: t`Completed Orders`},
                             {name: 'products_sold', color: 'blue.2', label: t`Products Sold`},
@@ -351,10 +358,15 @@ export const EventDashboard = () => {
                         </div>
                     </div>
 
+                    {/*
+                      Sin pl/pr: los 40px por lado que traia upstream se comian 80 de los 318
+                      que quedan en un telefono, y ademas desalineaban este grafico del de
+                      arriba, con el que comparte el syncId 'events'. Con anchos de ploteo
+                      distintos el cursor sincronizado caia en dos x de pantalla diferentes
+                      para la misma fecha.
+                    */}
                     <AreaChart
-                        h={300}
-                        pl={40}
-                        pr={40}
+                        className={classes.chart}
                         data={eventStats?.daily_stats.map(stat => {
                             return ({
                                 date: formatDateWithLocale(stat.date, 'chartDate', event.timezone),
@@ -367,7 +379,9 @@ export const EventDashboard = () => {
                         dataKey="date"
                         valueFormatter={(value) => formatCurrency(value, event.currency)}
                         withLegend
-                        legendProps={{verticalAlign: 'bottom', height: 50}}
+                        // Ver el comentario del grafico de arriba: un `height` fijo aca saca
+                        // la leyenda fuera de la Card.
+                        legendProps={{verticalAlign: 'bottom'}}
                         series={[
                             {name: 'total_fees', label: t`Total Fees`, color: 'primary.3'},
                             {name: 'total_sales_gross', label: t`Gross Sales`, color: 'grape.5'},

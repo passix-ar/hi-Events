@@ -18,6 +18,10 @@ import {Card} from '../Card';
 import {HeadingWithDescription} from '../Card/CardHeading';
 import {useGetAccount} from '../../../queries/useGetAccount';
 import {StripeConnectButton} from '../StripeConnectButton';
+import classes from './EmailTemplateSettings.module.scss';
+
+// El badge de estado no puede achicarse solo: ver EmailTemplateSettings.module.scss.
+const badgeClassNames = {root: classes.statusBadge, label: classes.statusBadgeLabel};
 
 interface EmailTemplateSettingsBaseProps {
     // Context 
@@ -212,14 +216,14 @@ export const EmailTemplateSettingsBase = ({
                 ? t`Organizer/default template will be used`
                 : t`Default template will be used`;
             return (
-                <Badge size="sm" variant="light">
+                <Badge size="sm" variant="light" classNames={badgeClassNames}>
                     {fallbackText}
                 </Badge>
             );
         }
-        
+
         return (
-            <Badge size="sm" variant="light">
+            <Badge size="sm" variant="light" classNames={badgeClassNames}>
                 {contextType === 'event' ? t`Event custom template` : t`Custom template`}
             </Badge>
         );

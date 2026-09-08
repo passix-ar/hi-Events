@@ -1,18 +1,39 @@
 @use "../../../styles/mixins.scss";
 
+// minmax(0, …) y no 1fr a secas: el piso automatico de una pista 1fr es el
+// min-content de la caja, y el numero no encoge (ver .number). Sin esto la
+// grilla crece mas que la columna del panel y arrastra la pagina entera.
+//
+// Los umbrales van con panel-bleed-below() y no con respond-below(): las media
+// queries miden la ventana, pero el ancho util es la columna, o sea la ventana
+// menos los 280px del sidebar cuando el shell esta expandido. Con respond-below
+// el salto a 3 columnas caia justo en 992px, que es donde aparece el sidebar:
+// el peor ancho posible. Como esta pagina NO sangra hasta los bordes, al umbral
+// hay que sumarle los 40px de padding de .main, tal como avisa el comentario del
+// mixin en styles/mixins.scss.
+//
+// Los numeros salen de medir el caso peor en pesos: un importe de 7-8 digitos
+// ("$ 1.234.567,00", indivisible porque Intl mete un espacio duro despues del
+// simbolo) deja la caja en unos 296px. Tres columnas necesitan 920px de ancho
+// util (+40 = 960) y dos, 608 (+40 = 648).
+//
+// El salto a una sola columna emite una rama de media query que nunca matchea
+// ((min-width: 992px) and (max-width: 927px)). Es correcto: con el shell
+// expandido el ancho util arranca en 672px, asi que dos columnas siempre entran
+// y una sola columna es un caso que solo existe con el shell plegado.
 .statistics {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   color: var(--hi-primary);
   margin: 0.5rem 0;
 
-  @include mixins.respond-below(lg) {
-    grid-template-columns: repeat(2, 1fr);
+  @include mixins.panel-bleed-below(960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @include mixins.respond-below(md) {
-    grid-template-columns: 1fr;
+  @include mixins.panel-bleed-below(648px) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -25,6 +46,10 @@
 
   .leftPanel {
     flex: 1;
+    // Item flex: su min-width auto es el min-content del importe, que no corta.
+    // Sin esto el minmax(0, …) de la grilla no alcanza, porque el piso vuelve a
+    // entrar por aca.
+    min-width: 0;
     display: grid;
     grid-template-rows: auto auto;
     min-height: 65px;
