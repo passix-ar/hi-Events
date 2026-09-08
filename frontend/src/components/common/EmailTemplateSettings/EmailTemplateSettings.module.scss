@@ -1,0 +1,27 @@
+// Badge de estado de la plantilla.
+//
+// El root de un Badge de Mantine es width: fit-content y su label va con
+// white-space: nowrap. Un fit-content sobre contenido que no corta resuelve
+// siempre al ancho completo del texto, sin mirar el espacio disponible: el badge
+// se sale de la tarjeta en vez de achicarse.
+//
+// "Se usará la plantilla del organizador/predeterminada" mide unos 350px y no
+// entra en los ~358px utiles de un telefono, contando el padding del Paper y de
+// la Card. En ingles ("Organizer/default template will be used") entra justo, que
+// es por que el problema solo se ve traducido.
+//
+// max-width: 100% lo ata al contenedor y el texto envuelve en varias lineas, con
+// alto automatico. Se prefiere envolver antes que dejar el text-overflow de
+// Mantine, que cortaria justo la parte que dice de que plantilla se trata.
+.statusBadge {
+  max-width: 100%;
+  height: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.statusBadgeLabel {
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.35;
+}

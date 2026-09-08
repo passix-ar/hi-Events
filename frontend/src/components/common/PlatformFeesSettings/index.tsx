@@ -177,6 +177,10 @@ export const PlatformFeesSettings = ({
                                 {label: t`Pass fee to buyer`, value: 'pass'},
                                 {label: t`Absorb fee`, value: 'absorb'},
                             ]}
+                            classNames={{
+                                control: classes.feeOptionControl,
+                                label: classes.feeOptionLabel,
+                            }}
                             mb="md"
                             fullWidth
                             size="md"

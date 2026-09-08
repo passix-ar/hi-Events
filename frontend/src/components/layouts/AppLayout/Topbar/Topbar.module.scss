@@ -9,15 +9,25 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  // Es un item del grid del shell: sin esto su min-content pasa a ser el ancho
+  // minimo de la pista y empuja toda la app fuera de la pantalla.
+  min-width: 0;
 
   .topBarMain {
     display: flex;
     align-items: center;
+    min-width: 0;
     padding: 0 16px;
     height: 60px;
 
     @include mixins.respond-below(md) {
       padding: 0 12px;
+    }
+
+    // En 390px la suma de hamburguesa + logo + pildora de estado + acciones no
+    // deja margen: cada pixel de padding cuenta.
+    @include mixins.respond-below(sm) {
+      padding: 0 8px;
     }
   }
 
@@ -155,7 +165,9 @@
 
   .burger {
     --burger-color: var(--hi-color-white);
-    @include mixins.respond-above(md) {
+    // Mientras el sidebar sea overlay hace falta la hamburguesa para abrirlo,
+    // no solo en movil.
+    @include mixins.app-shell-expanded {
       display: none;
     }
   }
@@ -180,7 +192,8 @@
       }
     }
 
-    @include mixins.respond-above(md) {
+    // Con el sidebar plegado el logo del sidebar no se ve: hay que mostrarlo aca.
+    @include mixins.app-shell-expanded {
       display: none;
     }
   }
@@ -223,8 +236,9 @@
         }
       }
 
-      // Switch to desktop text at md and up
-      @include mixins.respond-above(md) {
+      // El texto largo recien a partir de xl: entre md y xl la barra tiene que
+      // convivir con los 280px del sidebar y no le sobra el ancho.
+      @include mixins.respond-above(xl) {
         .mobile {
           display: none;
         }

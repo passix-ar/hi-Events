@@ -1,3 +1,5 @@
+@use "../../../../styles/mixins.scss";
+
 .chartCard {
   margin-top: 20px;
 
@@ -18,6 +20,29 @@
 
   h2:first-child {
     margin-top: 0;
+  }
+}
+
+// Alto de los dos graficos del dashboard.
+//
+// Va en CSS y no en la prop `h` de Mantine: `h` es un style prop escalar, o sea
+// que termina como estilo inline sobre el div raiz del grafico, y ninguna media
+// query lo puede pisar. Tampoco sirve useMediaQuery: devuelve undefined en el
+// primer render y esto se sirve por SSR, asi que habria salto de hidratacion.
+//
+// El numero NO es el alto del ploteo: recharts le descuenta el margen (5px
+// arriba y 5 abajo), el XAxis (30px) y el alto real de la leyenda, que recien
+// mide bien ahora que le sacamos el `height` fijo (ver el comentario del TSX).
+//
+// Medido a 390px de ventana: .main deja 16px de padding y la Card otros 20, o
+// sea 318px de grafico. Ahi la leyenda en español wrapea a 3 filas en Ventas y
+// 2 en Ingresos (28px cada fila mas 16 de padding), y con 300px el ploteo caia
+// a 160px, la mitad que en escritorio. 360 le devuelve la proporcion.
+.chart {
+  height: 300px;
+
+  @include mixins.respond-below(md) {
+    height: 360px;
   }
 }
 
