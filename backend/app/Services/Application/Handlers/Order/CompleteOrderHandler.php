@@ -79,6 +79,20 @@ class CompleteOrderHandler
         ]);
 
         $updatedOrder = DB::transaction(function () use ($orderData, $orderShortId, $eventSettings) {
+            /**
+             * Serialise concurrent completions of the same order.
+             *
+             * validateOrder() rejects an order that already carries an email, but that check happens
+             * after the read: two requests arriving together both read a null email and both proceed,
+             * creating two sets of attendees and sending two confirmation emails. A double-clicked
+             * submit or a client retry is enough to trigger it.
+             *
+             * The lock is taken on the order, not the event, so two buyers never wait on each other.
+             * hashtext() because the short id is a string and the lock takes an integer. The _xact_
+             * variant releases on commit or rollback, so there is nothing to unlock by hand.
+             */
+            DB::statement('SELECT pg_advisory_xact_lock(hashtext(?))', [$orderShortId]);
+
             $orderDTO = $orderData->order;
 
             $order = $this->getOrder($orderShortId);
