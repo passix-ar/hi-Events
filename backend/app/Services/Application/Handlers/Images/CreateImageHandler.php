@@ -20,6 +20,7 @@ class CreateImageHandler
         ImageType::ORGANIZER_LOGO,
         ImageType::ORGANIZER_COVER,
         ImageType::EVENT_COVER,
+        ImageType::EVENT_BANNER,
         ImageType::TICKET_LOGO,
     ];
 

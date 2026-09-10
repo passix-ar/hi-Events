@@ -17,6 +17,7 @@ import {eventPreviewPath} from "../../../../utilites/urlHelper.ts";
 import {LoadingMask} from "../../../common/LoadingMask";
 import {ImageUploadDropzone} from "../../../common/ImageUploadDropzone";
 import {CoverImageEditor} from "../../../common/CoverImageEditor";
+import {LandingBannerPreview} from "../../../common/LandingBannerPreview";
 import {queryClient} from "../../../../utilites/queryClient.ts";
 import {GET_EVENT_PUBLIC_QUERY_KEY} from "../../../../queries/useGetEventPublic.ts";
 import {ThemeColorControls} from "../../../common/ThemeColorControls";
@@ -45,9 +46,22 @@ const HomepageDesigner = () => {
     const [iframeSrc, setIframeSrc] = useState<string | null>(null);
     const [iframeLoaded, setIframeLoaded] = useState(false);
     const [lastCoverId, setLastCoverId] = useState<IdParam | null>(null);
-    const [accordionValue, setAccordionValue] = useState<string[]>(['images', 'colors', 'typography', 'button']);
+    // Only the images section starts open: it is what most organisers come here for, it
+    // is where the optional banner lives, and on a phone four open panels bury the preview.
+    const [accordionValue, setAccordionValue] = useState<string[]>(['images']);
 
     const existingCover = eventImagesQuery.data?.find((image) => image.type === 'EVENT_COVER');
+    const existingBanner = eventImagesQuery.data?.find((image) => image.type === 'EVENT_BANNER');
+
+    // Shape is never enforced on upload — an organiser's only artwork is often the wrong
+    // proportion and rejecting it just sends them to Canva to crop it worse. These flag the
+    // cases where the framing will visibly suffer, and leave the decision to them.
+    const ratioOf = (image?: {width?: number | null; height?: number | null}) =>
+        (image?.width && image?.height) ? image.width / image.height : null;
+    const coverRatio = ratioOf(existingCover);
+    const bannerRatio = ratioOf(existingBanner);
+    const coverIsOffShape = coverRatio !== null && (coverRatio > 1.35 || coverRatio < 0.7);
+    const bannerIsOffShape = bannerRatio !== null && bannerRatio < 2;
 
     const form = useForm<FormValues>({
         initialValues: {
@@ -198,9 +212,9 @@ const HomepageDesigner = () => {
                                 <Stack gap="lg">
                                     <div>
                                         <Group justify={'space-between'} mb="xs">
-                                            <Text fw={500} size="sm">{t`Cover Image`}</Text>
+                                            <Text fw={500} size="sm">{t`Event Image`}</Text>
                                             <Tooltip
-                                                label={t`We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB`}>
+                                                label={t`We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted.`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -213,9 +227,14 @@ const HomepageDesigner = () => {
                                                 url: existingCover?.url,
                                                 id: existingCover?.id,
                                             }}
-                                            helpText={t`Cover image will be displayed at the top of your event page`}
+                                            helpText={t`Your square flyer. It heads your event page and represents the event in listings and when the link is shared.`}
                                             displayMode="compact"
                                         />
+                                        {coverIsOffShape && (
+                                            <Text size="xs" c="orange.5" mt={6}>
+                                                {t`This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one.`}
+                                            </Text>
+                                        )}
                                         {existingCover?.url && (
                                             <CoverImageEditor
                                                 imageUrl={existingCover.url}
@@ -228,6 +247,41 @@ const HomepageDesigner = () => {
                                                     ?? DEFAULT_COVER_IMAGE_SCALE}
                                                 onChange={handleCoverAdjust}
                                             />
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Group justify={'space-between'} mb="xs">
+                                            <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
+                                            <Tooltip
+                                                label={t`We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB`}>
+                                                <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
+                                            </Tooltip>
+                                        </Group>
+                                        <ImageUploadDropzone
+                                            imageType="EVENT_BANNER"
+                                            entityId={eventId}
+                                            onUploadSuccess={handleImageChange}
+                                            onDeleteSuccess={handleImageChange}
+                                            existingImageData={{
+                                                url: existingBanner?.url,
+                                                id: existingBanner?.id,
+                                            }}
+                                            helpText={t`A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer.`}
+                                            displayMode="compact"
+                                        />
+                                        {bannerIsOffShape && (
+                                            <Text size="xs" c="orange.5" mt={6}>
+                                                {t`This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly.`}
+                                            </Text>
+                                        )}
+                                        {existingBanner?.url && (
+                                            <>
+                                                <LandingBannerPreview imageUrl={existingBanner.url}/>
+                                                <Text size="xs" c="primary.4" mt={6}>
+                                                    {t`Your event can now appear on the Passix homepage.`}
+                                                </Text>
+                                            </>
                                         )}
                                     </div>
                                 </Stack>

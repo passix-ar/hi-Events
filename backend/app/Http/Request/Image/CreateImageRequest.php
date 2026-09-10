@@ -10,9 +10,7 @@ class CreateImageRequest extends FormRequest
 {
     public function rules(): array
     {
-        $imageType = $this->input('image_type')
-            ? ImageType::fromName($this->input('image_type'))
-            : ImageType::GENERIC;
+        $imageType = ImageType::tryFromName($this->input('image_type')) ?? ImageType::GENERIC;
 
         [$minWidth, $minHeight] = ImageType::getMinimumDimensionsMap($imageType);
 
@@ -34,9 +32,7 @@ class CreateImageRequest extends FormRequest
 
     public function messages(): array
     {
-        $imageType = $this->input('image_type')
-            ? ImageType::fromName($this->input('image_type'))
-            : ImageType::GENERIC;
+        $imageType = ImageType::tryFromName($this->input('image_type')) ?? ImageType::GENERIC;
 
         [$minWidth, $minHeight] = ImageType::getMinimumDimensionsMap($imageType);
 

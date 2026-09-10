@@ -1,0 +1,21 @@
+.preview {
+  margin: 12px 0 0;
+}
+
+// No fixed frame and no object-fit: the banner is shown whole, at whatever proportion it
+// was uploaded in. Anything else would promise a framing the featured slot does not apply.
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--hi-radius-md, 7px);
+  background: #0b0b0e;
+}
+
+.caption {
+  display: block;
+  margin: 6px 0 0;
+  font-size: .72rem;
+  line-height: 1.35;
+  color: var(--mantine-color-dimmed);
+}

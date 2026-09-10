@@ -15,6 +15,7 @@ enum ImageType
 
     // Event images
     case EVENT_COVER;
+    case EVENT_BANNER;
     case TICKET_LOGO;
 
     // Organizer images
@@ -25,6 +26,7 @@ enum ImageType
     {
         return [
             self::EVENT_COVER,
+            self::EVENT_BANNER,
             self::TICKET_LOGO,
         ];
     }
@@ -44,11 +46,30 @@ enum ImageType
         ];
     }
 
+    /**
+     * fromName() throws on an unknown name, which turns user input into a 500. This
+     * resolves the same value but leaves the rejecting to the validator.
+     */
+    public static function tryFromName(?string $name): ?self
+    {
+        foreach (self::cases() as $case) {
+            if ($case->name === $name) {
+                return $case;
+            }
+        }
+
+        return null;
+    }
+
     public static function getMinimumDimensionsMap(ImageType $imageType): array
     {
+        // These only rule out images too small to render, never a shape: the recommended
+        // proportions are guidance in the designer, and a warning if the upload is far off.
+        // Requiring a square here would reject the wide artwork organisers actually have.
         $map = [
             self::GENERIC->name => [50, 50],
-            self::EVENT_COVER->name => [600, 50],
+            self::EVENT_COVER->name => [400, 200],
+            self::EVENT_BANNER->name => [700, 250],
             self::TICKET_LOGO->name => [100, 100],
             self::ORGANIZER_LOGO->name => [100, 100],
             self::ORGANIZER_COVER->name => [600, 50],

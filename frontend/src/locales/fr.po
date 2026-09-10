@@ -39,15 +39,15 @@ msgstr "(vide)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:237
+#: src/components/layouts/CheckIn/index.tsx:260
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} est déjà enregistré"
 
-#: src/components/layouts/CheckIn/index.tsx:133
+#: src/components/layouts/CheckIn/index.tsx:153
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>enregistré</0> avec succès"
 
-#: src/components/layouts/CheckIn/index.tsx:159
+#: src/components/layouts/CheckIn/index.tsx:181
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>sorti</0> avec succès"
 
@@ -68,7 +68,7 @@ msgstr "{0} créé avec succès"
 msgid "{0} left"
 msgstr "{0} restant"
 
-#: src/components/layouts/AppLayout/Sidebar/index.tsx:87
+#: src/components/layouts/AppLayout/Sidebar/index.tsx:88
 #: src/components/layouts/AuthLayout/index.tsx:133
 msgid "{0} logo"
 msgstr "Logo {0}"
@@ -334,6 +334,10 @@ msgstr "Une seule question par produit. Par exemple, Quelle est votre taille de 
 msgid "A standard tax, like VAT or GST"
 msgstr "Une taxe standard, comme la TVA ou la TPS"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:270
+msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
+msgstr ""
+
 #: src/components/common/OrdersTable/index.tsx:436
 msgid "Abandoned"
 msgstr "Abandonné"
@@ -352,7 +356,7 @@ msgstr "À propos de Stripe Connect"
 msgid "Absorb fee"
 msgstr "Absorber les frais"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:215
+#: src/components/common/PlatformFeesSettings/index.tsx:219
 msgid "Absorb Fee"
 msgstr "Absorber les frais"
 
@@ -470,7 +474,7 @@ msgstr "Date d'activation"
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/AttendeeTable/index.tsx:293
 #: src/components/common/CheckInListList/index.tsx:114
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:271
 #: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:21
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:19
@@ -582,7 +586,7 @@ msgstr "Ajouter un webhook"
 msgid "Add your social media handles and website URL. These will be displayed on your public organizer page."
 msgstr "Ajoutez vos réseaux sociaux et l'URL de votre site. Ils seront affichés sur votre page publique d'organisateur."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:243
+#: src/components/common/PlatformFeesSettings/index.tsx:247
 msgid "Additional Fees"
 msgstr "Frais supplémentaires"
 
@@ -959,11 +963,11 @@ msgstr "Êtes-vous sûr de vouloir supprimer cette configuration ? Cela peut aff
 msgid "Are you sure you want to delete this promo code?"
 msgstr "Etes-vous sûr de vouloir supprimer ce code promo ?"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:101
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:105
 msgid "Are you sure you want to delete this template? This action cannot be undone and emails will fall back to the default template."
 msgstr "Êtes-vous sûr de vouloir supprimer ce modèle ? Cette action ne peut pas être annulée et les e-mails reviendront au modèle par défaut."
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:100
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:104
 msgid "Are you sure you want to delete this template? This action cannot be undone and emails will fall back to the organizer or default template."
 msgstr "Êtes-vous sûr de vouloir supprimer ce modèle ? Cette action ne peut pas être annulée et les e-mails reviendront au modèle de l'organisateur ou par défaut."
 
@@ -1158,7 +1162,7 @@ msgstr "Collecte d'informations sur les participants"
 msgid "Attendee Name"
 msgstr "Nom du participant"
 
-#: src/components/layouts/CheckIn/index.tsx:228
+#: src/components/layouts/CheckIn/index.tsx:250
 msgid "Attendee not found"
 msgstr "Participant non trouvé"
 
@@ -1171,7 +1175,7 @@ msgid "Attendee Status"
 msgstr "Statut du Participant"
 
 #: src/components/common/EmailTemplateEditor/EmailTemplateEditor.tsx:95
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:201
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:205
 #: src/components/modals/ManageAttendeeModal/index.tsx:172
 msgid "Attendee Ticket"
 msgstr "Billet de l'invité"
@@ -1208,7 +1212,7 @@ msgstr "Participants exportés"
 msgid "Attendees registered"
 msgstr "Participants inscrits"
 
-#: src/components/routes/event/EventDashboard/index.tsx:336
+#: src/components/routes/event/EventDashboard/index.tsx:343
 msgid "Attendees Registered"
 msgstr "Invités enregistrés"
 
@@ -1342,7 +1346,7 @@ msgstr "Retour aux rapports"
 msgid "Background Color"
 msgstr "Couleur de fond"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:261
+#: src/components/routes/event/HomepageDesigner/index.tsx:315
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Type d'arrière-plan"
@@ -1412,7 +1416,7 @@ msgstr "Nom de l'entreprise"
 msgid "Button Label"
 msgstr "Libellé du bouton"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:298
+#: src/components/routes/event/HomepageDesigner/index.tsx:352
 msgid "Button Text"
 msgstr "Texte du bouton"
 
@@ -1421,7 +1425,7 @@ msgstr "Texte du bouton"
 msgid "Buyer pays"
 msgstr "L'acheteur paie"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:221
+#: src/components/common/PlatformFeesSettings/index.tsx:225
 msgid "Buyers see a clean price. The platform fee is deducted from your payout."
 msgstr "Les acheteurs voient un prix net. Les frais de plateforme sont déduits de votre paiement."
 
@@ -1471,7 +1475,7 @@ msgstr "Campagne"
 #: src/components/common/CheckIn/CheckInOptionsModal.tsx:59
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:57
 #: src/components/common/ContactOrganizerModal/index.tsx:104
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:121
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:125
 #: src/components/common/PromoCodeTable/index.tsx:40
 #: src/components/common/QuestionAndAnswerList/index.tsx:149
 #: src/components/common/WaitlistTable/index.tsx:111
@@ -1648,15 +1652,15 @@ msgstr "Liste d'Enregistrement Créée !"
 msgid "Check-In List deleted successfully"
 msgstr "Liste de pointage supprimée avec succès"
 
-#: src/components/layouts/CheckIn/index.tsx:363
+#: src/components/layouts/CheckIn/index.tsx:388
 msgid "Check-in list has expired"
 msgstr "La liste de pointage a expiré"
 
-#: src/components/layouts/CheckIn/index.tsx:380
+#: src/components/layouts/CheckIn/index.tsx:405
 msgid "Check-in list is not active"
 msgstr "La liste de pointage n'est pas active"
 
-#: src/components/layouts/CheckIn/index.tsx:348
+#: src/components/layouts/CheckIn/index.tsx:373
 msgid "Check-in list not found"
 msgstr "Liste de pointage non trouvée"
 
@@ -1719,7 +1723,7 @@ msgstr "Paiement"
 msgid "Checkout Settings"
 msgstr "Paramètres de paiement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:251
+#: src/components/routes/event/HomepageDesigner/index.tsx:305
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Choisissez une couleur pour votre arrière-plan"
@@ -1797,7 +1801,7 @@ msgstr "Fermer"
 msgid "Close modal"
 msgstr "Fermer la fenêtre"
 
-#: src/components/layouts/AppLayout/Sidebar/index.tsx:104
+#: src/components/layouts/AppLayout/Sidebar/index.tsx:105
 msgid "Close sidebar"
 msgstr "Fermer la barre latérale"
 
@@ -1859,7 +1863,7 @@ msgstr "Collecter les informations par billet"
 msgid "Collected (MercadoPago)"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:249
+#: src/components/routes/event/HomepageDesigner/index.tsx:303
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Couleur"
@@ -1884,7 +1888,7 @@ msgstr "Colonnes"
 msgid "Comedy"
 msgstr "Comédie"
 
-#: src/components/layouts/AppLayout/Sidebar/index.tsx:68
+#: src/components/layouts/AppLayout/Sidebar/index.tsx:69
 msgid "Coming Soon"
 msgstr "À venir"
 
@@ -1955,7 +1959,7 @@ msgstr "Complété"
 msgid "Completed orders"
 msgstr "Commandes terminées"
 
-#: src/components/routes/event/EventDashboard/index.tsx:334
+#: src/components/routes/event/EventDashboard/index.tsx:341
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:49
 msgid "Completed Orders"
 msgstr "Commandes terminées"
@@ -1998,7 +2002,7 @@ msgstr "Configuration mise à jour avec succès"
 msgid "Configurations"
 msgstr "Configurations"
 
-#: src/components/routes/event/Settings/index.tsx:153
+#: src/components/routes/event/Settings/index.tsx:152
 msgid "Configure event details, location, checkout options, and email notifications."
 msgstr "Configurez les détails de l'événement, le lieu, les options de paiement et les notifications par email."
 
@@ -2006,7 +2010,7 @@ msgstr "Configurez les détails de l'événement, le lieu, les options de paieme
 msgid "Configure how attendee details are collected during checkout"
 msgstr "Configurez comment les informations des participants sont collectées lors du paiement"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:250
+#: src/components/common/PlatformFeesSettings/index.tsx:254
 msgid "Configure Taxes & Fees"
 msgstr "Configurer les taxes et frais"
 
@@ -2085,7 +2089,7 @@ msgstr "Félicitations ! Votre événement est maintenant visible par le public.
 msgid "Connect & Upgrade"
 msgstr "Connecter et mettre à niveau"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:349
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:353
 msgid "Connect a payment account to enable email template editing"
 msgstr ""
 
@@ -2178,7 +2182,7 @@ msgid "Continue"
 msgstr "Continuer"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:305
+#: src/components/routes/event/HomepageDesigner/index.tsx:359
 msgid "Continue Button Text"
 msgstr "Texte du bouton Continuer"
 
@@ -2310,14 +2314,13 @@ msgstr "Pays"
 msgid "Cover"
 msgstr "Couverture"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:201
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:192
 msgid "Cover Image"
 msgstr "Image de couverture"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:216
-msgid "Cover image will be displayed at the top of your event page"
-msgstr "L'image de couverture sera affichée en haut de votre page d'événement"
+#~ msgid "Cover image will be displayed at the top of your event page"
+#~ msgstr "L'image de couverture sera affichée en haut de votre page d'événement"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
@@ -2418,11 +2421,11 @@ msgstr "Créer une liste de pointage"
 msgid "Create Configuration"
 msgstr "Créer une configuration"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:311
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:315
 msgid "Create custom email templates for this event that override the organizer defaults"
 msgstr "Créer des modèles d'email personnalisés pour cet événement qui remplacent les paramètres par défaut de l'organisateur"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:301
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:305
 msgid "Create Custom Template"
 msgstr "Créer un modèle personnalisé"
 
@@ -2601,7 +2604,7 @@ msgstr "Questions personnalisées"
 msgid "Custom Range"
 msgstr "Plage personnalisée"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:223
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:227
 msgid "Custom template"
 msgstr "Modèle personnalisé"
 
@@ -2638,7 +2641,7 @@ msgstr "Clients"
 msgid "Customize the email and notification settings for this event"
 msgstr "Personnaliser les paramètres de courrier électronique et de notification pour cet événement"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:313
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:317
 msgid "Customize the emails sent to your customers using Liquid templating. These templates will be used as defaults for all events in your organization."
 msgstr "Personnalisez les e-mails envoyés à vos clients en utilisant des modèles Liquid. Ces modèles seront utilisés comme valeurs par défaut pour tous les événements de votre organisation."
 
@@ -2646,7 +2649,7 @@ msgstr "Personnalisez les e-mails envoyés à vos clients en utilisant des modè
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Personnalisez la page d'accueil de l'événement et la messagerie de paiement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:183
+#: src/components/routes/event/HomepageDesigner/index.tsx:197
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Personnalisez la mise en page, les couleurs et l'image de marque de la page d'accueil de votre événement."
 
@@ -2663,7 +2666,7 @@ msgstr "Personnalisez les questions posées lors du paiement pour recueillir des
 msgid "Customize the SEO settings for this event"
 msgstr "Personnalisez les paramètres SEO pour cet événement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:306
+#: src/components/routes/event/HomepageDesigner/index.tsx:360
 msgid "Customize the text shown on the continue button"
 msgstr "Personnalisez le texte affiché sur le bouton continuer"
 
@@ -2770,7 +2773,7 @@ msgstr "Collecte d'informations par défaut sur les participants"
 msgid "Default Fee Handling"
 msgstr "Gestion des frais par défaut"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:213
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:217
 msgid "Default template will be used"
 msgstr "Le modèle par défaut sera utilisé"
 
@@ -2829,7 +2832,7 @@ msgstr "Supprimer l'organisateur"
 msgid "Delete Section"
 msgstr "Supprimer la section"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:121
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:125
 msgid "Delete Template"
 msgstr "Supprimer le modèle"
 
@@ -3000,7 +3003,7 @@ msgstr ""
 msgid "Dropdown selection"
 msgstr "Sélection déroulante"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:351
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:355
 msgid "Due to the high risk of spam, you must connect a payment account before you can modify email templates. This is to ensure that all event organizers are verified and accountable."
 msgstr ""
 
@@ -3036,7 +3039,7 @@ msgstr "Dupliquer le produit"
 msgid "e.g. 180 (3 hours)"
 msgstr "ex. 180 (3 heures)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:307
+#: src/components/routes/event/HomepageDesigner/index.tsx:361
 msgid "e.g., Get Tickets, Register Now"
 msgstr "ex. : Obtenir des billets, S'inscrire maintenant"
 
@@ -3314,7 +3317,7 @@ msgstr "E-mail non vérifié"
 msgid "Email Preview"
 msgstr "Aperçu de l'e-mail"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:336
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:340
 #: src/components/routes/organizer/Settings/index.tsx:60
 msgid "Email Templates"
 msgstr "Modèles d'e-mail"
@@ -3562,7 +3565,7 @@ msgstr "Image de couverture de l'événement"
 msgid "Event Created"
 msgstr ""
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:223
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:227
 msgid "Event custom template"
 msgstr "Modèle personnalisé d'événement"
 
@@ -3613,6 +3616,10 @@ msgstr "Adresse Complète de l'Événement"
 msgid "Event Homepage"
 msgstr "Page d'accueil de l'événement"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:215
+msgid "Event Image"
+msgstr ""
+
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71
 msgid "Event Location"
 msgstr "Lieu de l'événement"
@@ -3656,7 +3663,7 @@ msgid "Event restored successfully"
 msgstr "Événement restauré avec succès"
 
 #: src/components/layouts/Event/index.tsx:105
-#: src/components/routes/event/Settings/index.tsx:154
+#: src/components/routes/event/Settings/index.tsx:153
 msgid "Event Settings"
 msgstr "Paramètres de l'événement"
 
@@ -3856,8 +3863,8 @@ msgstr "Échec de la création de l'affilié"
 msgid "Failed to create configuration"
 msgstr "Échec de la création de la configuration"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:182
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:185
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:186
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:189
 msgid "Failed to create template"
 msgstr "Échec de la création du modèle"
 
@@ -3885,8 +3892,8 @@ msgstr "Échec de la suppression de l'organisateur"
 msgid "Failed to delete question"
 msgstr "Échec de la suppression de la question"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:116
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:117
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:120
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:121
 msgid "Failed to delete template"
 msgstr "Échec de la suppression du modèle"
 
@@ -3972,10 +3979,10 @@ msgstr "Échec du réessai du travail"
 msgid "Failed to retry jobs"
 msgstr "Échec du réessai des travaux"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:148
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:151
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:154
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:179
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:152
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:155
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:158
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:183
 msgid "Failed to save template"
 msgstr "Échec de la sauvegarde du modèle"
 
@@ -4060,6 +4067,14 @@ msgstr "Échec du téléchargement de l'image. Veuillez réessayer."
 #: src/components/routes/welcome/index.tsx:102
 msgid "Failed to verify email"
 msgstr "Échec de la vérification de l'e-mail"
+
+#: src/components/common/LandingBannerPreview/index.tsx:26
+#~ msgid "Featured"
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:255
+msgid "Featured banner (optional)"
+msgstr ""
 
 #: src/components/common/TaxAndFeeList/index.tsx:55
 #: src/components/forms/TaxAndFeeForm/index.tsx:18
@@ -4227,7 +4242,7 @@ msgstr "Les frais fixes doivent être égaux ou supérieurs à 0"
 msgid "Fixed Fee:"
 msgstr "Frais fixes :"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:138
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
 msgid "Flash is not available on this device"
 msgstr "Flash n'est pas disponible sur cet appareil"
 
@@ -4373,7 +4388,7 @@ msgid "Gross sales"
 msgstr "Ventes brutes"
 
 #: src/components/routes/admin/Dashboard/index.tsx:86
-#: src/components/routes/event/EventDashboard/index.tsx:373
+#: src/components/routes/event/EventDashboard/index.tsx:387
 #: src/components/routes/event/Reports/ProductSalesReport/index.tsx:29
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:172
 #: src/components/routes/organizer/Reports/RevenueSummaryReport/index.tsx:30
@@ -4541,7 +4556,7 @@ msgstr "Les produits mis en avant auront une couleur de fond différente pour se
 msgid "Historical Commissions"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:182
+#: src/components/routes/event/HomepageDesigner/index.tsx:196
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Conception de la page d'accueil"
@@ -4551,7 +4566,7 @@ msgstr "Conception de la page d'accueil"
 msgid "Homepage Designer"
 msgstr "Concepteur de page d'accueil"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:331
+#: src/components/routes/event/HomepageDesigner/index.tsx:385
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Aperçu de la page d'accueil"
@@ -4560,6 +4575,14 @@ msgstr "Aperçu de la page d'accueil"
 #: src/components/modals/ManageOrderModal/index.tsx:145
 msgid "Homer"
 msgstr "Homère"
+
+#: src/components/common/LandingBannerPreview/index.tsx:17
+msgid "How it looks in the featured slot on the Passix homepage."
+msgstr ""
+
+#: src/components/common/LandingBannerPreview/index.tsx:32
+#~ msgid "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
+#~ msgstr ""
 
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:67
 msgid "How long a customer has to complete their purchase after receiving an offer. Leave empty for no timeout."
@@ -4654,7 +4677,7 @@ msgstr "Image téléchargée avec succès"
 msgid "Image URL"
 msgstr "URL de l'image"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:195
+#: src/components/routes/event/HomepageDesigner/index.tsx:209
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Images"
@@ -4697,7 +4720,7 @@ msgstr "Important : Reconnexion Stripe requise"
 
 #: src/components/common/AffiliateTable/index.tsx:131
 #: src/components/common/CheckInListList/index.tsx:114
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:267
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:271
 #: src/components/common/SeatingSectionList/index.tsx:170
 #: src/components/forms/AffiliateForm/index.tsx:27
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:25
@@ -4778,8 +4801,8 @@ msgstr "Format d'e-mail invalide"
 msgid "Invalid file type. Please upload an image."
 msgstr "Type de fichier invalide. Veuillez télécharger une image."
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:144
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:175
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:148
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:179
 msgid "Invalid Liquid syntax. Please correct it and try again."
 msgstr "Syntaxe Liquid invalide. Veuillez la corriger et réessayer."
 
@@ -5997,7 +6020,7 @@ msgstr "Visible uniquement avec un code promo"
 msgid "Open Check-In Page"
 msgstr "Ouvrir la Page d'Enregistrement"
 
-#: src/components/layouts/AppLayout/index.tsx:29
+#: src/components/layouts/AppLayout/index.tsx:30
 msgid "Open sidebar"
 msgstr "Ouvrir la barre latérale"
 
@@ -6076,7 +6099,7 @@ msgid "Order complete"
 msgstr "Commande terminée"
 
 #: src/components/common/EmailTemplateEditor/EmailTemplateEditor.tsx:94
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:200
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:204
 msgid "Order Confirmation"
 msgstr "Confirmation de commande"
 
@@ -6362,7 +6385,7 @@ msgstr "Échec de la mise à jour du statut de l'organisateur. Veuillez réessay
 msgid "Organizer status updated"
 msgstr "Statut de l'organisateur mis à jour"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:212
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:216
 msgid "Organizer/default template will be used"
 msgstr "Le modèle de l'organisateur/par défaut sera utilisé"
 
@@ -6455,7 +6478,7 @@ msgstr "Partiellement remboursé : {0}"
 msgid "Pass fee to buyer"
 msgstr "Répercuter les frais sur l'acheteur"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:192
+#: src/components/common/PlatformFeesSettings/index.tsx:196
 msgid "Pass to Buyer"
 msgstr "Répercuter sur l'acheteur"
 
@@ -7063,7 +7086,7 @@ msgstr "Produits"
 msgid "Products sold"
 msgstr "Produits vendus"
 
-#: src/components/routes/event/EventDashboard/index.tsx:335
+#: src/components/routes/event/EventDashboard/index.tsx:342
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:44
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:178
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:68
@@ -7526,7 +7549,7 @@ msgstr "Retourner à la page de l'événement"
 #: src/components/common/AffiliateTable/index.tsx:157
 #: src/components/common/EventCard/index.tsx:235
 #: src/components/routes/admin/Attribution/index.tsx:137
-#: src/components/routes/event/EventDashboard/index.tsx:346
+#: src/components/routes/event/EventDashboard/index.tsx:353
 msgid "Revenue"
 msgstr "Revenu"
 
@@ -7632,7 +7655,7 @@ msgstr "Lieu Exemple"
 msgid "San Francisco"
 msgstr "San Francisco"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:235
+#: src/components/common/PlatformFeesSettings/index.tsx:239
 #: src/components/common/QuestionAndAnswerList/index.tsx:142
 #: src/components/routes/event/Settings/Sections/EmailSettings/GeneralEmailSettings.tsx:81
 #: src/components/routes/event/Settings/Sections/EventDetailsForm/index.tsx:129
@@ -7655,7 +7678,7 @@ msgstr "Sauvegarder"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:325
+#: src/components/routes/event/HomepageDesigner/index.tsx:379
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Sauvegarder les modifications"
@@ -7689,8 +7712,8 @@ msgstr "Enregistrer le Design du Billet"
 msgid "Save VAT Settings"
 msgstr "Enregistrer les paramètres TVA"
 
-#: src/components/layouts/CheckIn/index.tsx:443
-#: src/components/layouts/CheckIn/index.tsx:453
+#: src/components/layouts/CheckIn/index.tsx:468
+#: src/components/layouts/CheckIn/index.tsx:478
 msgid "Scan"
 msgstr "Scanner"
 
@@ -7746,7 +7769,7 @@ msgstr "Rechercher par nom, e-mail ou compte..."
 msgid "Search by name, email, or order #..."
 msgstr "Recherchez par nom, e-mail ou numéro de commande..."
 
-#: src/components/layouts/CheckIn/index.tsx:439
+#: src/components/layouts/CheckIn/index.tsx:464
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Rechercher par nom, numéro de commande, numéro de participant ou e-mail..."
 
@@ -7985,8 +8008,8 @@ msgstr "Sélectionnez la configuration des frais qui s'applique à ce compte. Le
 msgid "Select..."
 msgstr "Sélectionner..."
 
-#: src/components/common/PlatformFeesSettings/index.tsx:194
-#: src/components/common/PlatformFeesSettings/index.tsx:217
+#: src/components/common/PlatformFeesSettings/index.tsx:198
+#: src/components/common/PlatformFeesSettings/index.tsx:221
 #: src/components/common/SeatingChart/index.tsx:131
 msgid "Selected"
 msgstr "Sélectionné"
@@ -8063,11 +8086,11 @@ msgstr "Envoyé"
 msgid "Sent By"
 msgstr "Envoyé par"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:205
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:209
 msgid "Sent to customers when they place an order"
 msgstr "Envoyé aux clients lorsqu'ils passent une commande"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:206
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:210
 msgid "Sent to each attendee with their ticket details"
 msgstr "Envoyé à chaque participant avec les détails de son billet"
 
@@ -8467,7 +8490,7 @@ msgstr "Le sujet est requis"
 msgid "Subject will appear here"
 msgstr "Le sujet apparaîtra ici"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:255
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:259
 msgid "Subject:"
 msgstr "Sujet :"
 
@@ -8565,7 +8588,7 @@ msgstr "Événement mis à jour avec succès"
 msgid "Successfully Updated Event Defaults"
 msgstr "Paramètres par défaut de l'événement mis à jour avec succès"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:109
+#: src/components/routes/event/HomepageDesigner/index.tsx:123
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Conception de la page d'accueil mise à jour avec succès"
@@ -8780,15 +8803,15 @@ msgstr "Parlez-nous de votre organisation. Ces informations seront affichées su
 msgid "Template Active"
 msgstr "Modèle actif"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:164
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:168
 msgid "Template created successfully"
 msgstr "Modèle créé avec succès"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:112
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:116
 msgid "Template deleted successfully"
 msgstr "Modèle supprimé avec succès"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:133
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:137
 msgid "Template saved successfully"
 msgstr "Modèle sauvegardé avec succès"
 
@@ -8817,7 +8840,7 @@ msgstr "Ce code promotionnel n'est pas valide"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "La couleur de fond de la page. Lors de l'utilisation d'une image de couverture, ceci est appliqué en superposition."
 
-#: src/components/layouts/CheckIn/index.tsx:353
+#: src/components/layouts/CheckIn/index.tsx:378
 msgid "The check-in list you are looking for does not exist."
 msgstr "La liste de pointage que vous recherchez n'existe pas."
 
@@ -8899,7 +8922,7 @@ msgstr "La page que vous recherchez n'existe pas"
 msgid "The platform fee is added to the price and paid by the buyer, so you receive the full amount."
 msgstr ""
 
-#: src/components/common/PlatformFeesSettings/index.tsx:198
+#: src/components/common/PlatformFeesSettings/index.tsx:202
 msgid "The platform fee is added to the ticket price. Buyers pay more, but you receive the full ticket price."
 msgstr "Les frais de plateforme sont ajoutés au prix du billet. Les acheteurs paient plus, mais vous recevez le prix complet du billet."
 
@@ -8927,8 +8950,8 @@ msgstr "L'heure programmée est requise"
 msgid "The scheduled time must be in the future"
 msgstr "L'heure programmée doit être dans le futur"
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:145
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:176
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:149
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:180
 msgid "The template body contains invalid Liquid syntax. Please correct it and try again."
 msgstr "Le corps du modèle contient une syntaxe Liquid invalide. Veuillez la corriger et réessayer."
 
@@ -8945,7 +8968,7 @@ msgstr "Le numéro de TVA n'a pas pu être validé. Veuillez vérifier le numér
 msgid "Theater"
 msgstr "Théâtre"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:239
+#: src/components/routes/event/HomepageDesigner/index.tsx:293
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Thème et couleurs"
@@ -8986,17 +9009,25 @@ msgstr "Ces détails ne seront affichés que si la commande est terminée avec s
 msgid "These settings apply only to copied embed code and won't be stored."
 msgstr "Ces paramètres s'appliquent uniquement au code d'intégration copié et ne seront pas enregistrés."
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:326
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:330
 msgid "These templates will be used as defaults for all events in your organization. Individual events can override these templates with their own custom versions."
 msgstr "Ces modèles seront utilisés comme valeurs par défaut pour tous les événements de votre organisation. Les événements individuels peuvent remplacer ces modèles par leurs propres versions personnalisées."
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:319
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:323
 msgid "These templates will override the organizer defaults for this event only. If no custom template is set here, the organizer template will be used instead."
 msgstr "Ces modèles remplaceront les paramètres par défaut de l'organisateur pour cet événement uniquement. Si aucun modèle personnalisé n'est défini ici, le modèle de l'organisateur sera utilisé à la place."
 
 #: src/components/common/CheckIn/CheckInOptionsModal.tsx:35
 msgid "This attendee has an unpaid order."
 msgstr "Ce participant a une commande impayée."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:275
+msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:278
+#~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
+#~ msgstr ""
 
 #: src/components/common/ProductsTable/ProductsBlankSlate/index.tsx:61
 msgid "This category doesn't have any products yet."
@@ -9010,7 +9041,7 @@ msgstr "Cette catégorie est masquée de la vue publique"
 msgid "This check-in list has expired"
 msgstr "Cette liste de pointage a expiré"
 
-#: src/components/layouts/CheckIn/index.tsx:368
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Cette liste de pointage a expiré et n'est plus disponible pour les enregistrements."
 
@@ -9022,7 +9053,7 @@ msgstr "Cette liste de pointage est active"
 msgid "This check-in list is not active yet"
 msgstr "Cette liste de pointage n'est pas encore active"
 
-#: src/components/layouts/CheckIn/index.tsx:385
+#: src/components/layouts/CheckIn/index.tsx:410
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Cette liste de pointage n'est pas encore active et n'est pas disponible pour les enregistrements."
 
@@ -9049,6 +9080,14 @@ msgstr "Cet événement n'est pas encore publié"
 
 #: src/hooks/useGoogleAuth.ts:80
 msgid "This Google account is already linked to another user. Please contact support."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:238
+#~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:235
+msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr ""
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:154
@@ -9177,7 +9216,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
 
-#: src/components/layouts/CheckIn/index.tsx:205
+#: src/components/layouts/CheckIn/index.tsx:227
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Ce billet vient d'être scanné. Veuillez attendre avant de scanner à nouveau."
 
@@ -9455,7 +9494,7 @@ msgstr "Total des inscriptions"
 msgid "Total Fee"
 msgstr "Frais total"
 
-#: src/components/routes/event/EventDashboard/index.tsx:372
+#: src/components/routes/event/EventDashboard/index.tsx:386
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:202
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:97
 msgid "Total Fees"
@@ -9477,12 +9516,12 @@ msgstr "Commandes totales"
 msgid "Total refunded"
 msgstr "Total remboursé"
 
-#: src/components/routes/event/EventDashboard/index.tsx:375
+#: src/components/routes/event/EventDashboard/index.tsx:389
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:60
 msgid "Total Refunded"
 msgstr "Total remboursé"
 
-#: src/components/routes/event/EventDashboard/index.tsx:374
+#: src/components/routes/event/EventDashboard/index.tsx:388
 #: src/components/routes/event/Reports/DailySalesReport/index.tsx:32
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:196
 #: src/components/routes/organizer/Reports/EventsPerformanceReport/index.tsx:91
@@ -9525,11 +9564,11 @@ msgstr "Vrai si paiement en attente"
 msgid "Try another email"
 msgstr "Essayer un autre e-mail"
 
-#: src/components/layouts/CheckIn/index.tsx:446
+#: src/components/layouts/CheckIn/index.tsx:471
 msgid "Turn sound off"
 msgstr "Désactiver le son"
 
-#: src/components/layouts/CheckIn/index.tsx:446
+#: src/components/layouts/CheckIn/index.tsx:471
 msgid "Turn sound on"
 msgstr "Activer le son"
 
@@ -9554,17 +9593,17 @@ msgstr ""
 msgid "Type of ticket"
 msgstr "Type de billet"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:280
+#: src/components/routes/event/HomepageDesigner/index.tsx:334
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Typographie"
 
-#: src/components/layouts/CheckIn/index.tsx:146
+#: src/components/layouts/CheckIn/index.tsx:167
 msgid "Unable to check in attendee"
 msgstr "Impossible d'enregistrer le participant"
 
-#: src/components/layouts/CheckIn/index.tsx:170
-#: src/components/layouts/CheckIn/index.tsx:172
+#: src/components/layouts/CheckIn/index.tsx:192
+#: src/components/layouts/CheckIn/index.tsx:194
 msgid "Unable to check out attendee"
 msgstr "Impossible de sortir le participant"
 
@@ -9584,7 +9623,7 @@ msgstr "Impossible de créer une question. Veuillez vérifier vos coordonnées"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:221
+#: src/components/layouts/CheckIn/index.tsx:243
 msgid "Unable to fetch attendee"
 msgstr "Impossible de récupérer le participant"
 
@@ -9754,12 +9793,12 @@ msgstr "Scanner USB/HID"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "Utilisez <0>les modèles Liquid</0> pour personnaliser vos e-mails"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:257
+#: src/components/routes/event/HomepageDesigner/index.tsx:311
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Utilisez une version floue de l'image de couverture comme arrière-plan"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:255
+#: src/components/routes/event/HomepageDesigner/index.tsx:309
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Utiliser l'image de couverture"
@@ -10149,11 +10188,26 @@ msgstr ""
 msgid "We hit a snag loading this page. Please try again."
 msgstr "Un problème est survenu lors du chargement de cette page. Veuillez réessayer."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:217
+msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:210
+#~ msgid "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
+#~ msgstr ""
+
 #: src/components/routes/event/TicketDesigner/index.tsx:140
 msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "Nous recommandons un logo carré avec des dimensions minimales de 200x200px"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:203
+#: src/components/routes/event/HomepageDesigner/index.tsx:257
+msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:245
+#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
+#~ msgstr ""
+
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:194
 msgid "We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB"
 msgstr "Nous recommandons des dimensions de 2 160 px sur 1 080 px et une taille de fichier maximale de 5 Mo."
@@ -10497,7 +10551,7 @@ msgstr "Oui, annuler ma commande"
 msgid "Yes, remove them"
 msgstr "Oui, supprime-les"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:92
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
 msgid "You already scanned this ticket"
 msgstr "Vous avez déjà scanné ce billet"
 
@@ -10513,12 +10567,12 @@ msgstr "Vous usurpez l'identité de <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Vous émettez un remboursement partiel. Le client sera remboursé de {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:141
-#: src/components/layouts/CheckIn/index.tsx:165
+#: src/components/layouts/CheckIn/index.tsx:162
+#: src/components/layouts/CheckIn/index.tsx:187
 msgid "You are offline"
 msgstr "Vous êtes hors ligne"
 
-#: src/components/common/PlatformFeesSettings/index.tsx:245
+#: src/components/common/PlatformFeesSettings/index.tsx:249
 msgid "You can configure additional service fees and taxes in your account settings."
 msgstr "Vous pouvez configurer des frais de service supplémentaires et des taxes dans les paramètres de votre compte."
 
@@ -10538,8 +10592,8 @@ msgstr "Vous ne pouvez pas archiver le dernier organisateur actif de votre compt
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Vous ne pouvez pas changer le type de produit car des invités y sont associés."
 
-#: src/components/layouts/CheckIn/index.tsx:188
-#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:210
+#: src/components/layouts/CheckIn/index.tsx:277
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Vous ne pouvez pas enregistrer des participants avec des commandes impayées. Ce paramètre peut être modifié dans les paramètres de l'événement."
 
@@ -10611,7 +10665,7 @@ msgstr "Vous devez avoir au moins un niveau de prix"
 msgid "You must verify your email address before you can update the organizer status."
 msgstr "Vous devez vérifier votre adresse e-mail avant de pouvoir mettre à jour le statut de l'organisateur."
 
-#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:343
+#: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:347
 msgid "You need to verify your account email before you can modify email templates."
 msgstr "Vous devez vérifier l'e-mail de votre compte avant de pouvoir modifier les modèles d'e-mail."
 
@@ -10721,6 +10775,10 @@ msgstr "Votre adresse e-mail a été vérifiée. Vous pouvez maintenant publier 
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Votre demande de modification par e-mail en <0>{0}</0> est en attente. S'il vous plaît vérifier votre e-mail pour confirmer"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:282
+msgid "Your event can now appear on the Passix homepage."
+msgstr ""
+
 #: src/components/modals/EventLiveCelebrationModal/index.tsx:48
 msgid "Your event is live!"
 msgstr "Votre événement est en ligne !"
@@ -10816,6 +10874,10 @@ msgstr "Votre remboursement est en cours de traitement."
 
 #: src/components/routes/auth/CompleteGoogleRegistration/index.tsx:68
 msgid "Your sign up session has expired. Please start again."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:230
+msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:180
