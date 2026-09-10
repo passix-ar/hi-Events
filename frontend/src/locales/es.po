@@ -9022,8 +9022,8 @@ msgid "This attendee has an unpaid order."
 msgstr "Este asistente tiene un pedido sin pagar."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:275
-msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-msgstr "Este banner no es muy apaisado, así que en los destacados va a quedar con espacio alrededor. Una imagen 3:1 llena la franja justo."
+msgid "This banner is not in the recommended proportion, so the featured slot will crop it. A 1920x800 image fits exactly, with nothing cut off."
+msgstr "Este banner no tiene la proporción recomendada, así que en los destacados se le va a recortar. Una imagen de 1920x800 entra justo, sin perder nada."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:278
 #~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
@@ -10201,8 +10201,8 @@ msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "Recomendamos un logo cuadrado con dimensiones mínimas de 200x200px"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:257
-msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-msgstr "Recomendamos 1920px por 640px, una proporción de 3:1, y un tamaño máximo de 5MB"
+msgid "We recommend dimensions of 1920px by 800px, a ratio of 2.4:1, and a maximum file size of 5MB"
+msgstr "Recomendamos 1920px por 800px, una proporción de 2.4:1, y un tamaño máximo de 5MB"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:245
 #~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
