@@ -3,6 +3,7 @@
 namespace HiEvents\Http\Request\Event;
 
 use HiEvents\DomainObjects\Enums\ImageType;
+use HiEvents\Validators\Rules\ImageRatioRangeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -10,16 +11,24 @@ class CreateEventImageRequest extends FormRequest
 {
     public function rules(): array
     {
-        [$minWidth, $minHeight] = ImageType::getMinimumDimensionsMap($this->resolveImageType());
+        $imageType = $this->resolveImageType();
+        [$minWidth, $minHeight] = ImageType::getMinimumDimensionsMap($imageType);
+        $ratioRange = ImageType::getAllowedRatioRange($imageType);
+
+        $rules = [
+            'required',
+            'image',
+            'max:8192', //8mb
+            'dimensions:min_width=' . $minWidth . ',min_height=' . $minHeight . ',max_width=4000,max_height=4000',
+            'mimes:jpeg,png,jpg,webp',
+        ];
+
+        if ($ratioRange !== null) {
+            $rules[] = new ImageRatioRangeRule($ratioRange[0], $ratioRange[1]);
+        }
 
         return [
-            'image' => [
-                'required',
-                'image',
-                'max:8192', //8mb
-                'dimensions:min_width=' . $minWidth . ',min_height=' . $minHeight . ',max_width=4000,max_height=4000',
-                'mimes:jpeg,png,jpg,webp',
-            ],
+            'image' => $rules,
             'type' => Rule::in(ImageType::eventImageTypes()),
         ];
     }
@@ -29,9 +38,11 @@ class CreateEventImageRequest extends FormRequest
         [$minWidth, $minHeight] = ImageType::getMinimumDimensionsMap($this->resolveImageType());
 
         return [
-            'image.dimensions' => __('The image must be at least :minWidth x :minHeight pixels, and no more than 4000 x 4000 pixels.', [
+            'image.dimensions' => __('The image must be between :minWidth x :minHeight and :maxWidth x :maxHeight pixels.', [
                 'minWidth' => $minWidth,
                 'minHeight' => $minHeight,
+                'maxWidth' => 4000,
+                'maxHeight' => 4000,
             ]),
         ];
     }

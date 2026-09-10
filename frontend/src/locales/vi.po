@@ -334,7 +334,7 @@ msgstr "Một câu hỏi duy nhất cho mỗi sản phẩm. Ví dụ: Kích thư
 msgid "A standard tax, like VAT or GST"
 msgstr "Thuế tiêu chuẩn, như VAT hoặc GST"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:270
+#: src/components/routes/event/HomepageDesigner/index.tsx:279
 msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 msgstr ""
 
@@ -1346,7 +1346,7 @@ msgstr "Quay lại Báo cáo"
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:315
+#: src/components/routes/event/HomepageDesigner/index.tsx:326
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Loại nền"
@@ -1416,7 +1416,7 @@ msgstr "Tên doanh nghiệp"
 msgid "Button Label"
 msgstr "Nhãn nút"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:352
+#: src/components/routes/event/HomepageDesigner/index.tsx:363
 msgid "Button Text"
 msgstr "Văn bản nút"
 
@@ -1723,7 +1723,7 @@ msgstr "Thanh toán"
 msgid "Checkout Settings"
 msgstr "Cài đặt thanh toán"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:305
+#: src/components/routes/event/HomepageDesigner/index.tsx:316
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Chọn một màu cho nền của bạn"
@@ -1863,7 +1863,7 @@ msgstr "Thu thập thông tin theo vé"
 msgid "Collected (MercadoPago)"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:303
+#: src/components/routes/event/HomepageDesigner/index.tsx:314
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Màu sắc"
@@ -2182,7 +2182,7 @@ msgid "Continue"
 msgstr "Tiếp tục"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:359
+#: src/components/routes/event/HomepageDesigner/index.tsx:370
 msgid "Continue Button Text"
 msgstr "Văn bản nút Tiếp tục"
 
@@ -2649,7 +2649,7 @@ msgstr "Tùy chỉnh email gửi cho khách hàng bằng mẫu Liquid. Các mẫ
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Tùy chỉnh trang chủ sự kiện và tin nhắn thanh toán"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:197
+#: src/components/routes/event/HomepageDesigner/index.tsx:206
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Tùy chỉnh bố cục, màu sắc và thương hiệu của trang chủ sự kiện."
 
@@ -2666,7 +2666,7 @@ msgstr "Tùy chỉnh các câu hỏi được hỏi trong quá trình thanh toá
 msgid "Customize the SEO settings for this event"
 msgstr "Tùy chỉnh cài đặt SEO cho sự kiện này"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:360
+#: src/components/routes/event/HomepageDesigner/index.tsx:371
 msgid "Customize the text shown on the continue button"
 msgstr "Tùy chỉnh văn bản trên nút tiếp tục"
 
@@ -3039,7 +3039,7 @@ msgstr "Nhân bản sản phẩm"
 msgid "e.g. 180 (3 hours)"
 msgstr "ví dụ 180 (3 giờ)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:361
+#: src/components/routes/event/HomepageDesigner/index.tsx:372
 msgid "e.g., Get Tickets, Register Now"
 msgstr "ví dụ: Mua vé, Đăng ký ngay"
 
@@ -3616,7 +3616,7 @@ msgstr "Địa Chỉ Đầy Đủ Sự Kiện"
 msgid "Event Homepage"
 msgstr "Trang chủ sự kiện"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:215
+#: src/components/routes/event/HomepageDesigner/index.tsx:224
 msgid "Event Image"
 msgstr ""
 
@@ -4072,7 +4072,7 @@ msgstr "Không thể xác thực email"
 #~ msgid "Featured"
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:255
+#: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr ""
 
@@ -4556,7 +4556,7 @@ msgstr "Sản phẩm nổi bật sẽ có màu nền khác để nổi bật tr�
 msgid "Historical Commissions"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:196
+#: src/components/routes/event/HomepageDesigner/index.tsx:205
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Thiết kế trang sự kiện"
@@ -4566,7 +4566,7 @@ msgstr "Thiết kế trang sự kiện"
 msgid "Homepage Designer"
 msgstr "Thiết kế trang chủ"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:385
+#: src/components/routes/event/HomepageDesigner/index.tsx:396
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Xem trước trang chủ"
@@ -4677,7 +4677,7 @@ msgstr "Hình ảnh được tải lên thành công"
 msgid "Image URL"
 msgstr "URL hình ảnh"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:209
+#: src/components/routes/event/HomepageDesigner/index.tsx:218
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Hình ảnh"
@@ -7678,7 +7678,7 @@ msgstr "Lưu"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:379
+#: src/components/routes/event/HomepageDesigner/index.tsx:390
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Lưu thay đổi"
@@ -8588,7 +8588,7 @@ msgstr "Sự kiện cập nhật thành công"
 msgid "Successfully Updated Event Defaults"
 msgstr "Đã cập nhật mặc định sự kiện thành công"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:123
+#: src/components/routes/event/HomepageDesigner/index.tsx:132
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Thiết kế trang sự kiện được cập nhật thành công"
@@ -8880,6 +8880,14 @@ msgstr "Địa điểm sự kiện"
 msgid "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 msgstr "Sự kiện bạn đang tìm kiếm hiện không khả dụng. Nó có thể đã bị xóa, hết hạn hoặc URL không chính xác."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:285
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+msgstr ""
+
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71
 msgid "The full event address"
@@ -8968,7 +8976,7 @@ msgstr "Không thể xác thực số VAT. Vui lòng kiểm tra số và thử l
 msgid "Theater"
 msgstr "Sân khấu"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:293
+#: src/components/routes/event/HomepageDesigner/index.tsx:304
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Chủ đề & Màu sắc"
@@ -9022,8 +9030,8 @@ msgid "This attendee has an unpaid order."
 msgstr "Người tham dự này có đơn hàng chưa thanh toán."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:275
-msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-msgstr ""
+#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
+#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:278
 #~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
@@ -9086,7 +9094,7 @@ msgstr ""
 #~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:235
+#: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr ""
 
@@ -9593,7 +9601,7 @@ msgstr ""
 msgid "Type of ticket"
 msgstr "Loại vé"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:334
+#: src/components/routes/event/HomepageDesigner/index.tsx:345
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Kiểu chữ"
@@ -9793,12 +9801,12 @@ msgstr "Máy quét USB/HID"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "Sử dụng <0>mẫu Liquid</0> để cá nhân hóa email của bạn"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:311
+#: src/components/routes/event/HomepageDesigner/index.tsx:322
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Sử dụng phiên bản làm mờ của ảnh bìa làm nền"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:309
+#: src/components/routes/event/HomepageDesigner/index.tsx:320
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Sử dụng hình ảnh bìa"
@@ -10188,7 +10196,11 @@ msgstr ""
 msgid "We hit a snag loading this page. Please try again."
 msgstr "Đã xảy ra sự cố khi tải trang này. Vui lòng thử lại."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:217
+#: src/components/routes/event/HomepageDesigner/index.tsx:266
+msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:226
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
@@ -10201,8 +10213,8 @@ msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "Chúng tôi khuyến nghị logo hình vuông với kích thước tối thiểu 200x200px"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:257
-msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-msgstr ""
+#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
+#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:245
 #~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
@@ -10775,7 +10787,7 @@ msgstr ""
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Yêu cầu email của bạn thay đổi thành <0>{0}</0> đang chờ xử lý. "
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:282
+#: src/components/routes/event/HomepageDesigner/index.tsx:293
 msgid "Your event can now appear on the Passix homepage."
 msgstr ""
 
@@ -10876,7 +10888,7 @@ msgstr "Hoàn lại tiền của bạn đang xử lý."
 msgid "Your sign up session has expired. Please start again."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:230
+#: src/components/routes/event/HomepageDesigner/index.tsx:239
 msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr ""
 
