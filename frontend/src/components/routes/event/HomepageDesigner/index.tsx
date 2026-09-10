@@ -61,7 +61,12 @@ const HomepageDesigner = () => {
     const coverRatio = ratioOf(existingCover);
     const bannerRatio = ratioOf(existingBanner);
     const coverIsOffShape = coverRatio !== null && (coverRatio > 1.35 || coverRatio < 0.7);
-    const bannerIsOffShape = bannerRatio !== null && bannerRatio < 2;
+    // La franja del destacado es 2.4:1 (1920x800). Se avisa cuando el recorte se
+    // lleva mas del 10% del arte, en cualquiera de los dos sentidos: un banner
+    // mas alto pierde arriba y abajo, uno mas chato pierde los costados.
+    const BANNER_RATIO = 2.4;
+    const bannerIsOffShape = bannerRatio !== null &&
+        (1 - Math.min(bannerRatio, BANNER_RATIO) / Math.max(bannerRatio, BANNER_RATIO)) > 0.1;
 
     const form = useForm<FormValues>({
         initialValues: {
@@ -254,7 +259,7 @@ const HomepageDesigner = () => {
                                         <Group justify={'space-between'} mb="xs">
                                             <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
                                             <Tooltip
-                                                label={t`We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB`}>
+                                                label={t`We recommend dimensions of 1920px by 800px, a ratio of 2.4:1, and a maximum file size of 5MB`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -272,7 +277,7 @@ const HomepageDesigner = () => {
                                         />
                                         {bannerIsOffShape && (
                                             <Text size="xs" c="orange.5" mt={6}>
-                                                {t`This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly.`}
+                                                {t`This banner is not in the recommended proportion, so the featured slot will crop it. A 1920x800 image fits exactly, with nothing cut off.`}
                                             </Text>
                                         )}
                                         {existingBanner?.url && (
