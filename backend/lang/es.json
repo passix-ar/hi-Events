@@ -466,6 +466,7 @@
     "Your email has been successfully verified!": "¡Tu email ha sido verificado exitosamente!",
     "The image must be at least 600 pixels wide and 50 pixels tall, and no more than 4000 pixels wide and 4000 pixels tall.": "La imagen debe tener al menos 600 píxeles de ancho y 50 píxeles de alto, y no más de 4000 píxeles de ancho y 4000 píxeles de alto.",
     "The image must be at least :minWidth x :minHeight pixels.": "La imagen debe tener al menos :minWidth x :minHeight píxeles.",
+    "The banner must be :ratio:1 — for example 1920x800 — and at least :minWidth x :minHeight pixels.": "El banner tiene que ser :ratio:1 —por ejemplo 1920x800— y de al menos :minWidth x :minHeight píxeles.",
     "The entity ID is required when type is provided.": "El ID de entidad es obligatorio cuando se proporciona el tipo.",
     "The type is required when entity ID is provided.": "El tipo es obligatorio cuando se proporciona el ID de entidad.",
     "Your confirmation code for :app_name is :code": "Tu código de confirmación para :app_name es :code",
