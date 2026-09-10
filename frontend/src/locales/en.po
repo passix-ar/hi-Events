@@ -334,7 +334,7 @@ msgstr "A single question per product. E.g, What is your t-shirt size?"
 msgid "A standard tax, like VAT or GST"
 msgstr "A standard tax, like VAT or GST"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:270
+#: src/components/routes/event/HomepageDesigner/index.tsx:279
 msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 msgstr "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 
@@ -1346,7 +1346,7 @@ msgstr "Back to Reports"
 msgid "Background Color"
 msgstr "Background Color"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:315
+#: src/components/routes/event/HomepageDesigner/index.tsx:326
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Background Type"
@@ -1416,7 +1416,7 @@ msgstr "Business Name"
 msgid "Button Label"
 msgstr "Button Label"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:352
+#: src/components/routes/event/HomepageDesigner/index.tsx:363
 msgid "Button Text"
 msgstr "Button Text"
 
@@ -1723,7 +1723,7 @@ msgstr "Checkout"
 msgid "Checkout Settings"
 msgstr "Checkout Settings"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:305
+#: src/components/routes/event/HomepageDesigner/index.tsx:316
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Choose a color for your background"
@@ -1863,7 +1863,7 @@ msgstr "Collect details per ticket"
 msgid "Collected (MercadoPago)"
 msgstr "Collected (MercadoPago)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:303
+#: src/components/routes/event/HomepageDesigner/index.tsx:314
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Color"
@@ -2182,7 +2182,7 @@ msgid "Continue"
 msgstr "Continue"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:359
+#: src/components/routes/event/HomepageDesigner/index.tsx:370
 msgid "Continue Button Text"
 msgstr "Continue Button Text"
 
@@ -2649,7 +2649,7 @@ msgstr "Customize the emails sent to your customers using Liquid templating. The
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Customize the event homepage and checkout messaging"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:197
+#: src/components/routes/event/HomepageDesigner/index.tsx:206
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Customize the layout, colors, and branding of your event homepage."
 
@@ -2666,7 +2666,7 @@ msgstr "Customize the questions asked during checkout to gather important inform
 msgid "Customize the SEO settings for this event"
 msgstr "Customize the SEO settings for this event"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:360
+#: src/components/routes/event/HomepageDesigner/index.tsx:371
 msgid "Customize the text shown on the continue button"
 msgstr "Customize the text shown on the continue button"
 
@@ -3041,7 +3041,7 @@ msgstr "Duplicate Product"
 msgid "e.g. 180 (3 hours)"
 msgstr "e.g. 180 (3 hours)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:361
+#: src/components/routes/event/HomepageDesigner/index.tsx:372
 msgid "e.g., Get Tickets, Register Now"
 msgstr "e.g., Get Tickets, Register Now"
 
@@ -3618,7 +3618,7 @@ msgstr "Event Full Address"
 msgid "Event Homepage"
 msgstr "Event Homepage"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:215
+#: src/components/routes/event/HomepageDesigner/index.tsx:224
 msgid "Event Image"
 msgstr "Event Image"
 
@@ -4074,7 +4074,7 @@ msgstr "Failed to verify email"
 #~ msgid "Featured"
 #~ msgstr "Featured"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:255
+#: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr "Featured banner (optional)"
 
@@ -4558,7 +4558,7 @@ msgstr "Highlighted products will have a different background color to make them
 msgid "Historical Commissions"
 msgstr "Historical Commissions"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:196
+#: src/components/routes/event/HomepageDesigner/index.tsx:205
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Homepage Design"
@@ -4568,7 +4568,7 @@ msgstr "Homepage Design"
 msgid "Homepage Designer"
 msgstr "Homepage Designer"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:385
+#: src/components/routes/event/HomepageDesigner/index.tsx:396
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Homepage Preview"
@@ -4679,7 +4679,7 @@ msgstr "Image uploaded successfully"
 msgid "Image URL"
 msgstr "Image URL"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:209
+#: src/components/routes/event/HomepageDesigner/index.tsx:218
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Images"
@@ -7682,7 +7682,7 @@ msgstr "Save"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:379
+#: src/components/routes/event/HomepageDesigner/index.tsx:390
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Save Changes"
@@ -8592,7 +8592,7 @@ msgstr "Successfully Updated Event"
 msgid "Successfully Updated Event Defaults"
 msgstr "Successfully Updated Event Defaults"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:123
+#: src/components/routes/event/HomepageDesigner/index.tsx:132
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Successfully Updated Homepage Design"
@@ -8884,6 +8884,14 @@ msgstr "The event venue"
 msgid "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 msgstr "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+msgstr "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:285
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+msgstr "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71
 msgid "The full event address"
@@ -8972,7 +8980,7 @@ msgstr "The VAT number could not be validated. Please check the number and try a
 msgid "Theater"
 msgstr "Theater"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:293
+#: src/components/routes/event/HomepageDesigner/index.tsx:304
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Theme & Colors"
@@ -9026,8 +9034,8 @@ msgid "This attendee has an unpaid order."
 msgstr "This attendee has an unpaid order."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:275
-msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-msgstr "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
+#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
+#~ msgstr "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:278
 #~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
@@ -9090,7 +9098,7 @@ msgstr "This Google account is already linked to another user. Please contact su
 #~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 #~ msgstr "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:235
+#: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 
@@ -9597,7 +9605,7 @@ msgstr "Type \"{confirmationWord}\" to confirm"
 msgid "Type of ticket"
 msgstr "Type of ticket"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:334
+#: src/components/routes/event/HomepageDesigner/index.tsx:345
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Typography"
@@ -9797,12 +9805,12 @@ msgstr "USB/HID Scanner"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "Use <0>Liquid templating</0> to personalize your emails"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:311
+#: src/components/routes/event/HomepageDesigner/index.tsx:322
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Use a blurred version of the cover image as the background"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:309
+#: src/components/routes/event/HomepageDesigner/index.tsx:320
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Use cover image"
@@ -10192,7 +10200,11 @@ msgstr "We couldn't verify your Google sign in. Please try again."
 msgid "We hit a snag loading this page. Please try again."
 msgstr "We hit a snag loading this page. Please try again."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:217
+#: src/components/routes/event/HomepageDesigner/index.tsx:266
+msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+msgstr "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:226
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 
@@ -10205,8 +10217,8 @@ msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "We recommend a square logo with minimum dimensions of 200x200px"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:257
-msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-msgstr "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
+#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
+#~ msgstr "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:245
 #~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
@@ -10779,7 +10791,7 @@ msgstr "Your email address has been verified. You can now publish events and sta
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:282
+#: src/components/routes/event/HomepageDesigner/index.tsx:293
 msgid "Your event can now appear on the Passix homepage."
 msgstr "Your event can now appear on the Passix homepage."
 
@@ -10880,7 +10892,7 @@ msgstr "Your refund is processing."
 msgid "Your sign up session has expired. Please start again."
 msgstr "Your sign up session has expired. Please start again."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:230
+#: src/components/routes/event/HomepageDesigner/index.tsx:239
 msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 

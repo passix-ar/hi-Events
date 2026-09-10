@@ -61,12 +61,16 @@ const HomepageDesigner = () => {
     const coverRatio = ratioOf(existingCover);
     const bannerRatio = ratioOf(existingBanner);
     const coverIsOffShape = coverRatio !== null && (coverRatio > 1.35 || coverRatio < 0.7);
-    // La franja del destacado es 2.4:1 (1920x800). Se avisa cuando el recorte se
-    // lleva mas del 10% del arte, en cualquiera de los dos sentidos: un banner
-    // mas alto pierde arriba y abajo, uno mas chato pierde los costados.
+    // La franja del destacado es 2.4:1 (1920x800) y recorta lo que no calza. La subida
+    // solo frena lo cuadrado y lo vertical, asi que el aviso es lo que hace el trabajo
+    // fino: dice el porcentaje real, porque "no esta en la proporcion recomendada" no le
+    // mueve la aguja a nadie y "se recorta el 45%" si.
     const BANNER_RATIO = 2.4;
-    const bannerIsOffShape = bannerRatio !== null &&
-        (1 - Math.min(bannerRatio, BANNER_RATIO) / Math.max(bannerRatio, BANNER_RATIO)) > 0.1;
+    const bannerCropPercent = bannerRatio === null ? null
+        : Math.round((1 - Math.min(bannerRatio, BANNER_RATIO) / Math.max(bannerRatio, BANNER_RATIO)) * 100);
+    const bannerIsOffShape = bannerCropPercent !== null && bannerCropPercent > 10;
+    // Un banner mas alto que la franja pierde arriba y abajo; uno mas chato, los costados.
+    const bannerCropsVertically = bannerRatio !== null && bannerRatio < BANNER_RATIO;
 
     const form = useForm<FormValues>({
         initialValues: {
@@ -259,7 +263,7 @@ const HomepageDesigner = () => {
                                         <Group justify={'space-between'} mb="xs">
                                             <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
                                             <Tooltip
-                                                label={t`We recommend dimensions of 1920px by 800px, a ratio of 2.4:1, and a maximum file size of 5MB`}>
+                                                label={t`We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition.`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -277,7 +281,9 @@ const HomepageDesigner = () => {
                                         />
                                         {bannerIsOffShape && (
                                             <Text size="xs" c="orange.5" mt={6}>
-                                                {t`This banner is not in the recommended proportion, so the featured slot will crop it. A 1920x800 image fits exactly, with nothing cut off.`}
+                                                {bannerCropsVertically
+                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`
+                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`}
                                             </Text>
                                         )}
                                         {existingBanner?.url && (
