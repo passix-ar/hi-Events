@@ -111,11 +111,12 @@ class DuplicateEventService
             }
 
             if ($duplicateEventCoverImage) {
-                $this->cloneEventCoverImage($event, $newEvent->getId());
+                $this->cloneEventImage($event, $newEvent->getId(), ImageType::EVENT_COVER);
+                $this->cloneEventImage($event, $newEvent->getId(), ImageType::EVENT_BANNER);
             }
 
             if ($duplicateTicketLogo) {
-                $this->cloneTicketLogo($event, $newEvent->getId());
+                $this->cloneEventImage($event, $newEvent->getId(), ImageType::TICKET_LOGO);
             }
 
             if ($duplicateWebhooks) {
@@ -318,40 +319,35 @@ class DuplicateEventService
         }
     }
 
-    private function cloneEventCoverImage(EventDomainObject $event, int $newEventId): void
+    /**
+     * The dimensions and the placeholders travel with the copy: the listings size the card
+     * from them, so a duplicate without them lays out differently to the event it came from.
+     */
+    private function cloneEventImage(EventDomainObject $event, int $newEventId, ImageType $imageType): void
     {
-        /** @var ImageDomainObject $coverImage */
-        $coverImage = $event->getImages()?->first(fn(ImageDomainObject $image) => $image->getType() === ImageType::EVENT_COVER->name);
-        if ($coverImage) {
-            $this->imageRepository->create([
-                'entity_id' => $newEventId,
-                'entity_type' => EventDomainObject::class,
-                'type' => ImageType::EVENT_COVER->name,
-                'disk' => $coverImage->getDisk(),
-                'path' => $coverImage->getPath(),
-                'filename' => $coverImage->getFileName(),
-                'size' => $coverImage->getSize(),
-                'mime_type' => $coverImage->getMimeType(),
-            ]);
-        }
-    }
+        /** @var ImageDomainObject $image */
+        $image = $event->getImages()?->first(
+            fn(ImageDomainObject $image) => $image->getType() === $imageType->name
+        );
 
-    private function cloneTicketLogo(EventDomainObject $event, int $newEventId): void
-    {
-        /** @var ImageDomainObject $ticketLogo */
-        $ticketLogo = $event->getImages()?->first(fn(ImageDomainObject $image) => $image->getType() === ImageType::TICKET_LOGO->name);
-        if ($ticketLogo) {
-            $this->imageRepository->create([
-                'entity_id' => $newEventId,
-                'entity_type' => EventDomainObject::class,
-                'type' => ImageType::TICKET_LOGO->name,
-                'disk' => $ticketLogo->getDisk(),
-                'path' => $ticketLogo->getPath(),
-                'filename' => $ticketLogo->getFileName(),
-                'size' => $ticketLogo->getSize(),
-                'mime_type' => $ticketLogo->getMimeType(),
-            ]);
+        if ($image === null) {
+            return;
         }
+
+        $this->imageRepository->create([
+            'entity_id' => $newEventId,
+            'entity_type' => EventDomainObject::class,
+            'type' => $imageType->name,
+            'disk' => $image->getDisk(),
+            'path' => $image->getPath(),
+            'filename' => $image->getFileName(),
+            'size' => $image->getSize(),
+            'mime_type' => $image->getMimeType(),
+            'width' => $image->getWidth(),
+            'height' => $image->getHeight(),
+            'avg_colour' => $image->getAvgColour(),
+            'lqip_base64' => $image->getLqipBase64(),
+        ]);
     }
 
     private function getEventWithRelations(string $eventId, string $accountId): EventDomainObject

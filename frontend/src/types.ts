@@ -251,7 +251,7 @@ export interface Image {
     lqip_base64?: string | null;
 }
 
-export type ImageType = 'EVENT_COVER' | 'EDITOR_IMAGE' | 'ORGANIZER_LOGO' | 'ORGANIZER_COVER' | 'ORGANIZER_IMAGE' | 'TICKET_LOGO';
+export type ImageType = 'EVENT_COVER' | 'EVENT_BANNER' | 'EDITOR_IMAGE' | 'ORGANIZER_LOGO' | 'ORGANIZER_COVER' | 'ORGANIZER_IMAGE' | 'TICKET_LOGO';
 
 export type PaymentProvider = 'STRIPE' | 'MERCADOPAGO' | 'OFFLINE';
 
