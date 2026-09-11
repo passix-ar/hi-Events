@@ -118,16 +118,21 @@ const CheckIn = () => {
         }
     }, [isSoundOn]);
 
-    const productTitleFor = (attendee: Attendee) =>
-        products?.find(product => product.id === attendee.product_id)?.title;
+    // What the door needs to read at a glance: the ticket type, and the seat when the event has one.
+    // An event without assigned seating has no seat_label, so this degrades to the title alone.
+    const ticketInfoFor = (attendee: Attendee) => {
+        const productTitle = products?.find(product => product.id === attendee.product_id)?.title;
+
+        return [productTitle, attendee.seat_label].filter(Boolean).join(' · ');
+    };
 
     const scanFeedback = (attendee: Attendee, message: ReactNode) => {
-        const productTitle = productTitleFor(attendee);
+        const ticketInfo = ticketInfoFor(attendee);
 
         return (
             <>
                 {message}
-                {productTitle && <div className={classes.scanProduct}>{productTitle}</div>}
+                {ticketInfo && <div className={classes.scanProduct}>{ticketInfo}</div>}
             </>
         );
     };

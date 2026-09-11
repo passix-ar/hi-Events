@@ -17,6 +17,7 @@ import {eventPreviewPath} from "../../../../utilites/urlHelper.ts";
 import {LoadingMask} from "../../../common/LoadingMask";
 import {ImageUploadDropzone} from "../../../common/ImageUploadDropzone";
 import {CoverImageEditor} from "../../../common/CoverImageEditor";
+import {LandingBannerPreview} from "../../../common/LandingBannerPreview";
 import {queryClient} from "../../../../utilites/queryClient.ts";
 import {GET_EVENT_PUBLIC_QUERY_KEY} from "../../../../queries/useGetEventPublic.ts";
 import {ThemeColorControls} from "../../../common/ThemeColorControls";
@@ -45,9 +46,31 @@ const HomepageDesigner = () => {
     const [iframeSrc, setIframeSrc] = useState<string | null>(null);
     const [iframeLoaded, setIframeLoaded] = useState(false);
     const [lastCoverId, setLastCoverId] = useState<IdParam | null>(null);
-    const [accordionValue, setAccordionValue] = useState<string[]>(['images', 'colors', 'typography', 'button']);
+    // Only the images section starts open: it is what most organisers come here for, it
+    // is where the optional banner lives, and on a phone four open panels bury the preview.
+    const [accordionValue, setAccordionValue] = useState<string[]>(['images']);
 
     const existingCover = eventImagesQuery.data?.find((image) => image.type === 'EVENT_COVER');
+    const existingBanner = eventImagesQuery.data?.find((image) => image.type === 'EVENT_BANNER');
+
+    // Shape is never enforced on upload — an organiser's only artwork is often the wrong
+    // proportion and rejecting it just sends them to Canva to crop it worse. These flag the
+    // cases where the framing will visibly suffer, and leave the decision to them.
+    const ratioOf = (image?: {width?: number | null; height?: number | null}) =>
+        (image?.width && image?.height) ? image.width / image.height : null;
+    const coverRatio = ratioOf(existingCover);
+    const bannerRatio = ratioOf(existingBanner);
+    const coverIsOffShape = coverRatio !== null && (coverRatio > 1.35 || coverRatio < 0.7);
+    // La franja del destacado es 2.4:1 (1920x800) y recorta lo que no calza. La subida
+    // solo frena lo cuadrado y lo vertical, asi que el aviso es lo que hace el trabajo
+    // fino: dice el porcentaje real, porque "no esta en la proporcion recomendada" no le
+    // mueve la aguja a nadie y "se recorta el 45%" si.
+    const BANNER_RATIO = 2.4;
+    const bannerCropPercent = bannerRatio === null ? null
+        : Math.round((1 - Math.min(bannerRatio, BANNER_RATIO) / Math.max(bannerRatio, BANNER_RATIO)) * 100);
+    const bannerIsOffShape = bannerCropPercent !== null && bannerCropPercent > 10;
+    // Un banner mas alto que la franja pierde arriba y abajo; uno mas chato, los costados.
+    const bannerCropsVertically = bannerRatio !== null && bannerRatio < BANNER_RATIO;
 
     const form = useForm<FormValues>({
         initialValues: {
@@ -198,9 +221,9 @@ const HomepageDesigner = () => {
                                 <Stack gap="lg">
                                     <div>
                                         <Group justify={'space-between'} mb="xs">
-                                            <Text fw={500} size="sm">{t`Cover Image`}</Text>
+                                            <Text fw={500} size="sm">{t`Event Image`}</Text>
                                             <Tooltip
-                                                label={t`We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB`}>
+                                                label={t`We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted.`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -213,9 +236,14 @@ const HomepageDesigner = () => {
                                                 url: existingCover?.url,
                                                 id: existingCover?.id,
                                             }}
-                                            helpText={t`Cover image will be displayed at the top of your event page`}
+                                            helpText={t`Your square flyer. It heads your event page and represents the event in listings and when the link is shared.`}
                                             displayMode="compact"
                                         />
+                                        {coverIsOffShape && (
+                                            <Text size="xs" c="orange.5" mt={6}>
+                                                {t`This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one.`}
+                                            </Text>
+                                        )}
                                         {existingCover?.url && (
                                             <CoverImageEditor
                                                 imageUrl={existingCover.url}
@@ -228,6 +256,43 @@ const HomepageDesigner = () => {
                                                     ?? DEFAULT_COVER_IMAGE_SCALE}
                                                 onChange={handleCoverAdjust}
                                             />
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <Group justify={'space-between'} mb="xs">
+                                            <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
+                                            <Tooltip
+                                                label={t`We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition.`}>
+                                                <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
+                                            </Tooltip>
+                                        </Group>
+                                        <ImageUploadDropzone
+                                            imageType="EVENT_BANNER"
+                                            entityId={eventId}
+                                            onUploadSuccess={handleImageChange}
+                                            onDeleteSuccess={handleImageChange}
+                                            existingImageData={{
+                                                url: existingBanner?.url,
+                                                id: existingBanner?.id,
+                                            }}
+                                            helpText={t`A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer.`}
+                                            displayMode="compact"
+                                        />
+                                        {bannerIsOffShape && (
+                                            <Text size="xs" c="orange.5" mt={6}>
+                                                {bannerCropsVertically
+                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`
+                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`}
+                                            </Text>
+                                        )}
+                                        {existingBanner?.url && (
+                                            <>
+                                                <LandingBannerPreview imageUrl={existingBanner.url}/>
+                                                <Text size="xs" c="primary.4" mt={6}>
+                                                    {t`Your event can now appear on the Passix homepage.`}
+                                                </Text>
+                                            </>
                                         )}
                                     </div>
                                 </Stack>
