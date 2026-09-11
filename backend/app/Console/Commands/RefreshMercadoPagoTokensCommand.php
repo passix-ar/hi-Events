@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\DomainObjects\Generated\AccountMercadopagoPlatformDomainObjectAbstract;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
+use HiEvents\Exceptions\MercadoPago\MercadoPagoPlatformCredentialsRejectedException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Services\Domain\Payment\MercadoPago\MercadoPagoOAuthService;
 use Illuminate\Console\Command;
@@ -18,10 +19,9 @@ use Throwable;
 
 class RefreshMercadoPagoTokensCommand extends Command
 {
-    // MercadoPago's documented token lifetime; only used as a fallback when the
-    // refresh response omits expires_in, so the row never loses its expiry date
-    // and drops out of future refresh runs.
-    private const DEFAULT_TOKEN_TTL_DAYS = 180;
+    // Every run ends with this line, whatever happened: the Loki rule that
+    // detects a scheduler that stopped running the command looks for it.
+    public const RUN_COMPLETED_LOG = 'MercadoPago token refresh run completed';
 
     protected $signature = 'mercadopago:refresh-tokens
                             {--days=30 : Refresh tokens that expire within this many days}
@@ -50,6 +50,14 @@ class RefreshMercadoPagoTokensCommand extends Command
         $this->oauthService = $oauthService;
         $this->logger = $logger;
         $account = $this->option('account');
+
+        // --account es la via de recuperacion manual: un typo no puede leerse
+        // como "no hay nada que renovar".
+        if ($account !== null && ! ctype_digit((string) $account)) {
+            $this->error('--account must be a numeric account id');
+
+            return self::INVALID;
+        }
 
         // Con --account se apunta a una sola cuenta y se ignora la ventana de
         // --days: sirve para probar la renovacion sin tocar a los demas
@@ -87,12 +95,6 @@ class RefreshMercadoPagoTokensCommand extends Command
             ],
         );
 
-        if ($expiring->isEmpty()) {
-            $this->info('No MercadoPago tokens close to expiry.');
-
-            return self::SUCCESS;
-        }
-
         if ($this->option('dry-run')) {
             /** @var AccountMercadopagoPlatformDomainObject $row */
             foreach ($expiring as $row) {
@@ -107,27 +109,52 @@ class RefreshMercadoPagoTokensCommand extends Command
             return self::SUCCESS;
         }
 
-        $failures = 0;
+        $refreshed = 0;
+        $failed = 0;
 
         /** @var AccountMercadopagoPlatformDomainObject $row */
         foreach ($expiring as $row) {
-            if (! $this->refreshPlatform($row->getId(), $row->getAccountId(), $row->getTokenExpiresAt())) {
-                $failures++;
+            try {
+                if ($this->refreshPlatform($row->getId(), $row->getAccountId(), $row->getTokenExpiresAt())) {
+                    $refreshed++;
+                } else {
+                    $failed++;
+                }
+            } catch (MercadoPagoPlatformCredentialsRejectedException) {
+                // Las credenciales son las mismas para todas las cuentas: seguir
+                // solo repetiria el mismo error N veces y quemaria llamadas.
+                $failed = $expiring->count() - $refreshed;
+                break;
             }
         }
 
-        $this->info(sprintf('Refreshed %d of %d token(s).', $expiring->count() - $failures, $expiring->count()));
+        $this->logger->info(self::RUN_COMPLETED_LOG, [
+            'refreshed' => $refreshed,
+            'failed' => $failed,
+            'total' => $expiring->count(),
+        ]);
 
-        return $failures === 0 ? self::SUCCESS : self::FAILURE;
+        if ($expiring->isEmpty()) {
+            $this->info('No MercadoPago tokens close to expiry.');
+        } else {
+            $this->info(sprintf('Refreshed %d of %d token(s).', $refreshed, $expiring->count()));
+        }
+
+        return $failed === 0 ? self::SUCCESS : self::FAILURE;
     }
 
+    /**
+     * @throws MercadoPagoPlatformCredentialsRejectedException
+     */
     private function refreshPlatform(int $id, int $accountId, ?string $expectedExpiresAt): bool
     {
         try {
             // La fila queda lockeada durante releer-renovar-persistir: el refresh
-            // token de MercadoPago es de un solo uso, y una corrida manual con
-            // --account cruzada con la de las 05:00 (withoutOverlapping solo
-            // serializa al scheduler consigo mismo) quemaria la cadena.
+            // token de MercadoPago rota en cada renovacion, y una corrida manual
+            // con --account cruzada con la de las 05:00 (withoutOverlapping solo
+            // serializa al scheduler consigo mismo) quemaria la cadena. El HTTP
+            // corre adentro del lock a proposito; lo que lo acota es el timeout
+            // del cliente (ver MercadoPagoOAuthService).
             return (bool) $this->platformRepository->withLockedRow(
                 $id,
                 function (?AccountMercadopagoPlatformDomainObject $platform) use ($id, $accountId, $expectedExpiresAt): bool {
@@ -190,7 +217,7 @@ class RefreshMercadoPagoTokensCommand extends Command
         }
 
         $expiresAt = Carbon::now()
-            ->addSeconds((int) ($tokenData['expires_in'] ?? self::DEFAULT_TOKEN_TTL_DAYS * 86400))
+            ->addSeconds((int) ($tokenData['expires_in'] ?? MercadoPagoOAuthService::DEFAULT_TOKEN_TTL_DAYS * 86400))
             ->toDateTimeString();
 
         // The old pair died the moment the refresh call succeeded, so persist the
@@ -210,8 +237,21 @@ class RefreshMercadoPagoTokensCommand extends Command
         return true;
     }
 
+    /**
+     * @throws MercadoPagoPlatformCredentialsRejectedException
+     */
     private function handleOAuthFailure(MercadoPagoOAuthException $e, int $accountId): bool
     {
+        if ($e->isPlatformError()) {
+            $this->logger->error('MercadoPago token refresh rejected: platform credentials invalid, check MP_CLIENT_ID / MP_CLIENT_SECRET', [
+                'account_id' => $accountId,
+                'mp_error' => $e->getMpErrorCode(),
+            ]);
+            $this->error("Account {$accountId}: MercadoPago rejected the platform credentials ({$e->getMpErrorCode()}), aborting the run");
+
+            throw new MercadoPagoPlatformCredentialsRejectedException($e->getMessage(), previous: $e);
+        }
+
         if ($e->isTerminal()) {
             // invalid_grant: el grant esta muerto y solo el organizador puede
             // revivirlo reautorizando. La fila no se toca: el piso en now() la

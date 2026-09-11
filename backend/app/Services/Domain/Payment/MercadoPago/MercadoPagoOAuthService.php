@@ -11,11 +11,24 @@ use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter;
+use JsonException;
 use Psr\Log\LoggerInterface;
 
 class MercadoPagoOAuthService
 {
     private const STATE_TTL_SECONDS = 900;
+
+    // MercadoPago's documented token lifetime. Fallback when a token response
+    // omits expires_in: a row without an expiry date would never enter the
+    // refresh window and would die silently.
+    public const DEFAULT_TOKEN_TTL_DAYS = 180;
+
+    // The container builds GuzzleHttp\Client with no binding, so its defaults
+    // apply (no timeout at all). The refresh runs inside a row lock and the
+    // code exchange inside the organizer's request: neither can wait forever.
+    private const HTTP_TIMEOUT_SECONDS = 10;
+
+    private const HTTP_CONNECT_TIMEOUT_SECONDS = 5;
 
     public function __construct(
         private readonly Config $config,
@@ -53,6 +66,8 @@ class MercadoPagoOAuthService
                     'code' => $code,
                     'redirect_uri' => $this->config->get('mercadopago.redirect_uri'),
                 ],
+                'timeout' => self::HTTP_TIMEOUT_SECONDS,
+                'connect_timeout' => self::HTTP_CONNECT_TIMEOUT_SECONDS,
             ]);
 
             return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
@@ -60,6 +75,12 @@ class MercadoPagoOAuthService
             $this->logger->error('MercadoPago OAuth token exchange failed', [
                 'error' => $e->getMessage(),
             ]);
+            throw new MercadoPagoOAuthException(
+                __('Failed to connect MercadoPago account. Please try again.'),
+                previous: $e,
+            );
+        } catch (JsonException $e) {
+            $this->logger->error('MercadoPago OAuth token exchange returned a non-JSON body');
             throw new MercadoPagoOAuthException(
                 __('Failed to connect MercadoPago account. Please try again.'),
                 previous: $e,
@@ -85,9 +106,17 @@ class MercadoPagoOAuthService
                     'grant_type' => 'refresh_token',
                     'refresh_token' => $refreshToken,
                 ],
+                'timeout' => self::HTTP_TIMEOUT_SECONDS,
+                'connect_timeout' => self::HTTP_CONNECT_TIMEOUT_SECONDS,
             ]);
 
             return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            $this->logger->error('MercadoPago token refresh returned a non-JSON body');
+            throw new MercadoPagoOAuthException(
+                __('Failed to refresh MercadoPago token.'),
+                previous: $e,
+            );
         } catch (GuzzleException $e) {
             // Surface MercadoPago's OAuth error code so callers can tell a dead
             // grant (invalid_grant/unauthorized_client — needs re-authorization)

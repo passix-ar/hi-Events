@@ -8,11 +8,21 @@ use Throwable;
 
 class MercadoPagoOAuthException extends BaseException
 {
-    // OAuth error codes from MercadoPago's response body. invalid_grant and
-    // unauthorized_client are terminal: the refresh token is dead or the app
-    // lost its grant, so retrying cannot fix it — the organizer must
-    // re-authorize. local_rate_limited (429) is the only retryable one.
-    private const TERMINAL_ERRORS = ['invalid_grant', 'unauthorized_client'];
+    // OAuth error codes from MercadoPago's response body.
+    //
+    // invalid_grant is terminal for one account: its refresh token is dead
+    // (the organizer unlinked the app, or the chain was burned) and only they
+    // can fix it by re-authorizing.
+    //
+    // unauthorized_client / invalid_client are about the platform's own
+    // credentials (client_id / client_secret), so they hit every account the
+    // same way: nothing per-account can fix them, and retrying the next row
+    // only repeats the failure.
+    //
+    // local_rate_limited (429) is the only retryable one.
+    private const TERMINAL_ERRORS = ['invalid_grant'];
+
+    private const PLATFORM_ERRORS = ['unauthorized_client', 'invalid_client'];
 
     private const RETRYABLE_ERRORS = ['local_rate_limited'];
 
@@ -32,6 +42,11 @@ class MercadoPagoOAuthException extends BaseException
     public function isTerminal(): bool
     {
         return in_array($this->mpErrorCode, self::TERMINAL_ERRORS, true);
+    }
+
+    public function isPlatformError(): bool
+    {
+        return in_array($this->mpErrorCode, self::PLATFORM_ERRORS, true);
     }
 
     public function isRetryable(): bool

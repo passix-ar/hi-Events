@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Console\Commands;
 
+use HiEvents\Console\Commands\RefreshMercadoPagoTokensCommand;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
@@ -240,6 +241,52 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
 
         $this->oauthService->shouldNotReceive('refreshAccessToken');
         $this->platformRepository->shouldNotReceive('updateFromArray');
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
+    }
+
+    public function test_account_option_rejects_non_numeric_values(): void
+    {
+        // (int) 'abc' es 0: sin esta validacion un typo se leia como "no hay
+        // nada que renovar" y salia con exito.
+        $this->platformRepository->shouldNotReceive('findWhere');
+        $this->oauthService->shouldNotReceive('refreshAccessToken');
+
+        $this->artisan('mercadopago:refresh-tokens', ['--account' => 'abc'])->assertExitCode(2);
+    }
+
+    public function test_platform_credentials_error_aborts_the_run(): void
+    {
+        // unauthorized_client depende de client_id/client_secret, iguales para
+        // todas las cuentas: seguir con la segunda solo repetiria el error.
+        $first = $this->row();
+        $second = $this->row(id: 20, accountId: 11);
+
+        $this->givenExpiringRows([$first, $second]);
+        $this->givenLockedPlatform($this->row(refreshToken: 'first-refresh'));
+
+        $this->oauthService->shouldReceive('refreshAccessToken')
+            ->once()
+            ->with('first-refresh')
+            ->andThrow(new MercadoPagoOAuthException('rejected', mpErrorCode: 'unauthorized_client'));
+
+        $this->platformRepository->shouldNotReceive('updateFromArray');
+
+        $this->artisan('mercadopago:refresh-tokens')->assertExitCode(1);
+    }
+
+    public function test_every_run_logs_a_completion_line_even_when_nothing_is_due(): void
+    {
+        // La alerta de "el scheduler dejo de correr esto" busca esta linea:
+        // tiene que salir tambien en las corridas sin nada que renovar, que son
+        // casi todas.
+        $this->givenExpiringRows([]);
+
+        $logger = m::mock(\Psr\Log\LoggerInterface::class);
+        $logger->shouldReceive('info')
+            ->once()
+            ->with(RefreshMercadoPagoTokensCommand::RUN_COMPLETED_LOG, ['refreshed' => 0, 'failed' => 0, 'total' => 0]);
+        $this->app->instance(\Psr\Log\LoggerInterface::class, $logger);
 
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
     }
