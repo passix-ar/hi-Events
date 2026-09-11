@@ -21,7 +21,6 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     final public const CREATED_AT = 'created_at';
     final public const UPDATED_AT = 'updated_at';
     final public const DELETED_AT = 'deleted_at';
-    final public const REVOKED_AT = 'revoked_at';
 
     protected int $id;
     protected int $account_id;
@@ -34,7 +33,6 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
     protected ?string $deleted_at = null;
-    protected ?string $revoked_at = null;
 
     public function toArray(): array
     {
@@ -50,7 +48,6 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
                     'created_at' => $this->created_at ?? null,
                     'updated_at' => $this->updated_at ?? null,
                     'deleted_at' => $this->deleted_at ?? null,
-                    'revoked_at' => $this->revoked_at ?? null,
                 ];
     }
 
@@ -173,16 +170,5 @@ abstract class AccountMercadopagoPlatformDomainObjectAbstract extends \HiEvents\
     public function getDeletedAt(): ?string
     {
         return $this->deleted_at;
-    }
-
-    public function setRevokedAt(?string $revoked_at): self
-    {
-        $this->revoked_at = $revoked_at;
-        return $this;
-    }
-
-    public function getRevokedAt(): ?string
-    {
-        return $this->revoked_at;
     }
 }

@@ -20,7 +20,7 @@ interface AccountMercadopagoPlatformRepositoryInterface extends RepositoryInterf
      * Whether the account holds a MercadoPago connection that can still charge.
      * Queries only the connection columns: hydrating the full row would run the
      * encrypted token casts, so a single corrupted/legacy token would make the
-     * check blow up. An expired or revoked access token counts as not connected.
+     * check blow up. An expired access token counts as not connected.
      */
     public function isSetupCompleteForAccount(int $accountId): bool;
 

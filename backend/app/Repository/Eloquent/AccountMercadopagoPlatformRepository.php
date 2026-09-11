@@ -37,11 +37,9 @@ class AccountMercadopagoPlatformRepository extends BaseRepository implements Acc
         // An expired access token counts as not connected: the scheduled refresh
         // (mercadopago:refresh-tokens) renews tokens before they expire, so an
         // expired one means the refresh chain broke and the organizer must
-        // reconnect. A revoked connection (revoked_at set — MercadoPago rejected
-        // the refresh with a terminal error) also counts as not connected.
+        // reconnect.
         return AccountMercadopagoPlatform::where('account_id', $accountId)
             ->whereNotNull('setup_completed_at')
-            ->whereNull('revoked_at')
             ->where(static fn($query) => $query
                 ->whereNull('token_expires_at')
                 ->orWhere('token_expires_at', '>', now()))

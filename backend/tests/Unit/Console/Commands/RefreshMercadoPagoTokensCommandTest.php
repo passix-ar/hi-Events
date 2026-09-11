@@ -48,17 +48,13 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
                 'expires_in' => 15552000,
             ]);
 
-        // Ademas del par nuevo, un refresh exitoso limpia la marca de revocada:
-        // es la via de recuperacion manual de una cuenta marcada (--account).
         $this->platformRepository->shouldReceive('updateFromArray')
             ->once()
             ->with(self::PLATFORM_ID, m::on(static function (array $attributes) {
                 return $attributes['access_token'] === 'new-access'
                     && $attributes['refresh_token'] === 'new-refresh'
                     && $attributes['public_key'] === 'new-public-key'
-                    && ! empty($attributes['token_expires_at'])
-                    && array_key_exists('revoked_at', $attributes)
-                    && $attributes['revoked_at'] === null;
+                    && ! empty($attributes['token_expires_at']);
             }))
             ->andReturn(new AccountMercadopagoPlatformDomainObject);
 
@@ -139,17 +135,15 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
     }
 
-    public function test_window_has_a_floor_and_excludes_revoked_connections(): void
+    public function test_window_has_a_floor(): void
     {
         // Sin piso en now() la corrida diaria martillaria para siempre las
-        // cuentas ya vencidas; sin el filtro de revoked_at, las que MercadoPago
-        // rechazo con un error terminal.
+        // cuentas ya vencidas.
         $this->platformRepository->shouldReceive('findWhere')
             ->once()
             ->with(
                 m::on(static function (array $where): bool {
                     $tokenOps = [];
-                    $revokedNull = false;
 
                     foreach ($where as $condition) {
                         [$campo, $operador] = $condition;
@@ -157,15 +151,10 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
                         if ($campo === 'token_expires_at') {
                             $tokenOps[] = $operador;
                         }
-
-                        if ($campo === 'revoked_at' && strtolower($operador) === 'null') {
-                            $revokedNull = true;
-                        }
                     }
 
                     return in_array('>=', $tokenOps, true)
-                        && in_array('<', $tokenOps, true)
-                        && $revokedNull;
+                        && in_array('<', $tokenOps, true);
                 }),
                 m::any(),
             )
@@ -174,11 +163,11 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(0);
     }
 
-    public function test_account_option_targets_one_account_and_ignores_window_and_revoked_mark(): void
+    public function test_account_option_targets_one_account_and_ignores_window(): void
     {
         // Con --account el filtro tiene que ser por account_id y NO por fecha de
-        // vencimiento ni marca de revocada: es la via de recuperacion manual, y
-        // una cuenta colgada esta vencida o revocada por definicion.
+        // vencimiento: es la via de recuperacion manual, y una cuenta colgada
+        // esta vencida por definicion.
         $this->platformRepository->shouldReceive('findWhere')
             ->once()
             ->with(
@@ -186,8 +175,7 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
                     $campos = array_column($where, 0);
 
                     return in_array('account_id', $campos, true)
-                        && ! in_array('token_expires_at', $campos, true)
-                        && ! in_array('revoked_at', $campos, true);
+                        && ! in_array('token_expires_at', $campos, true);
                 }),
                 m::any(),
             )
@@ -210,8 +198,11 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
         $this->artisan('mercadopago:refresh-tokens', ['--account' => self::ACCOUNT_ID])->assertExitCode(0);
     }
 
-    public function test_terminal_error_marks_the_connection_revoked(): void
+    public function test_terminal_error_leaves_the_row_untouched_and_fails(): void
     {
+        // Un grant muerto no se persiste: la fila queda como esta, el piso la
+        // saca de la corrida cuando venza y el checkout esconde MercadoPago en
+        // ese momento. Lo unico que queda es el error en el log.
         $this->givenExpiringRows([$this->row()]);
         $this->givenLockedPlatform($this->row(refreshToken: 'dead-refresh'));
 
@@ -220,17 +211,12 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
             ->with('dead-refresh')
             ->andThrow(new MercadoPagoOAuthException('rejected', mpErrorCode: 'invalid_grant'));
 
-        $this->platformRepository->shouldReceive('updateFromArray')
-            ->once()
-            ->with(self::PLATFORM_ID, m::on(static function (array $attributes) {
-                return ! empty($attributes['revoked_at']) && count($attributes) === 1;
-            }))
-            ->andReturn(new AccountMercadopagoPlatformDomainObject);
+        $this->platformRepository->shouldNotReceive('updateFromArray');
 
         $this->artisan('mercadopago:refresh-tokens')->assertExitCode(1);
     }
 
-    public function test_rate_limited_error_does_not_mark_the_connection_revoked(): void
+    public function test_rate_limited_error_leaves_the_row_untouched_and_fails(): void
     {
         $this->givenExpiringRows([$this->row()]);
         $this->givenLockedPlatform($this->row(refreshToken: 'throttled-refresh'));

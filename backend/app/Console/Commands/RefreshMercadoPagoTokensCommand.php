@@ -51,11 +51,9 @@ class RefreshMercadoPagoTokensCommand extends Command
         $this->logger = $logger;
         $account = $this->option('account');
 
-        // Con --account se apunta a una sola cuenta y se ignoran la ventana de
-        // --days y la marca de revocada: sirve para probar la renovacion sin
-        // tocar a los demas organizadores, y para recuperar a mano una cuenta
-        // que quedo colgada o revocada (si el refresh sale bien, la marca se
-        // limpia).
+        // Con --account se apunta a una sola cuenta y se ignora la ventana de
+        // --days: sirve para probar la renovacion sin tocar a los demas
+        // organizadores, y para recuperar a mano una cuenta que quedo colgada.
         $scope = $account !== null
             ? [[AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID, '=', (int) $account]]
             : [
@@ -72,9 +70,6 @@ class RefreshMercadoPagoTokensCommand extends Command
                     '<',
                     Carbon::now()->addDays((int) $this->option('days'))->toDateTimeString(),
                 ],
-                // Una cuenta revocada necesita que el organizador reautorice;
-                // insistir a diario solo quemaria llamadas contra MercadoPago.
-                [AccountMercadopagoPlatformDomainObjectAbstract::REVOKED_AT, 'null', null],
             ];
 
         // Fetch only the columns needed to drive the loop: hydrating full rows
@@ -154,7 +149,7 @@ class RefreshMercadoPagoTokensCommand extends Command
                 },
             );
         } catch (MercadoPagoOAuthException $e) {
-            return $this->handleOAuthFailure($e, $id, $accountId);
+            return $this->handleOAuthFailure($e, $accountId);
         } catch (Throwable $e) {
             $this->logger->error('MercadoPago token refresh failed', [
                 'account_id' => $accountId,
@@ -201,15 +196,12 @@ class RefreshMercadoPagoTokensCommand extends Command
         // The old pair died the moment the refresh call succeeded, so persist the
         // new one before anything else. updateFromArray fills + saves the model,
         // so the `encrypted` casts run (a raw updateWhere would store plaintext —
-        // see MercadoPagoOAuthCallbackHandler). A successful refresh proves the
-        // grant is alive, so any stale revoked mark is cleared (manual recovery
-        // via --account).
+        // see MercadoPagoOAuthCallbackHandler).
         $this->platformRepository->updateFromArray($id, [
             AccountMercadopagoPlatformDomainObjectAbstract::ACCESS_TOKEN => $tokenData['access_token'],
             AccountMercadopagoPlatformDomainObjectAbstract::REFRESH_TOKEN => $tokenData['refresh_token'],
             AccountMercadopagoPlatformDomainObjectAbstract::PUBLIC_KEY => $tokenData['public_key'] ?? $platform->getPublicKey(),
             AccountMercadopagoPlatformDomainObjectAbstract::TOKEN_EXPIRES_AT => $expiresAt,
-            AccountMercadopagoPlatformDomainObjectAbstract::REVOKED_AT => null,
         ]);
 
         $this->logger->info('MercadoPago token refreshed', ['account_id' => $accountId]);
@@ -218,21 +210,18 @@ class RefreshMercadoPagoTokensCommand extends Command
         return true;
     }
 
-    private function handleOAuthFailure(MercadoPagoOAuthException $e, int $id, int $accountId): bool
+    private function handleOAuthFailure(MercadoPagoOAuthException $e, int $accountId): bool
     {
         if ($e->isTerminal()) {
-            // invalid_grant / unauthorized_client: el grant esta muerto y solo el
-            // organizador puede revivirlo reautorizando. Se marca la fila (sin
-            // borrarla — liberaria el mp_user_id unico) para que la corrida
-            // diaria deje de insistir y el checkout esconda MercadoPago.
-            $this->platformRepository->updateFromArray($id, [
-                AccountMercadopagoPlatformDomainObjectAbstract::REVOKED_AT => Carbon::now()->toDateTimeString(),
-            ]);
-            $this->logger->error('MercadoPago token refresh rejected: connection revoked, organizer must re-authorize', [
+            // invalid_grant: el grant esta muerto y solo el organizador puede
+            // revivirlo reautorizando. La fila no se toca: el piso en now() la
+            // saca de la corrida diaria cuando venza, y isSetupCompleteForAccount
+            // esconde MercadoPago del checkout en ese mismo momento.
+            $this->logger->error('MercadoPago token refresh rejected: grant is dead, organizer must re-authorize', [
                 'account_id' => $accountId,
                 'mp_error' => $e->getMpErrorCode(),
             ]);
-            $this->error("Account {$accountId}: connection revoked ({$e->getMpErrorCode()}), the organizer must re-authorize");
+            $this->error("Account {$accountId}: grant is dead ({$e->getMpErrorCode()}), the organizer must re-authorize");
 
             return false;
         }

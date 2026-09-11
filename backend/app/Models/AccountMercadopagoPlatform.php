@@ -18,7 +18,6 @@ class AccountMercadopagoPlatform extends BaseModel
             'access_token'        => 'encrypted',
             'refresh_token'       => 'encrypted',
             'token_expires_at'    => 'datetime',
-            'revoked_at'          => 'datetime',
             'setup_completed_at'  => 'datetime',
         ];
     }
