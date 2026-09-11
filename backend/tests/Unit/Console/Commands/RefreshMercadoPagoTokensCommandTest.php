@@ -277,9 +277,8 @@ class RefreshMercadoPagoTokensCommandTest extends TestCase
 
     public function test_every_run_logs_a_completion_line_even_when_nothing_is_due(): void
     {
-        // La alerta de "el scheduler dejo de correr esto" busca esta linea:
-        // tiene que salir tambien en las corridas sin nada que renovar, que son
-        // casi todas.
+        // Resumen de la corrida, tambien cuando no hay nada que renovar (que
+        // son casi todas): es lo que se ve en Grafana donde info esta habilitado.
         $this->givenExpiringRows([]);
 
         $logger = m::mock(\Psr\Log\LoggerInterface::class);

@@ -19,8 +19,10 @@ use Throwable;
 
 class RefreshMercadoPagoTokensCommand extends Command
 {
-    // Every run ends with this line, whatever happened: the Loki rule that
-    // detects a scheduler that stopped running the command looks for it.
+    // Every run ends with this line, whatever happened. Note the prod scheduler
+    // runs with LOG_LEVEL=error, so this only reaches Loki where info is
+    // enabled: the alerts key off schedule:run's own "Running [...] DONE|FAIL"
+    // line and the error logs instead (see monitoring/loki/rules).
     public const RUN_COMPLETED_LOG = 'MercadoPago token refresh run completed';
 
     protected $signature = 'mercadopago:refresh-tokens
