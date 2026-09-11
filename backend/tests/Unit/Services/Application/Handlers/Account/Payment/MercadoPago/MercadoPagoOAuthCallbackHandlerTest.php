@@ -4,10 +4,10 @@ namespace Tests\Unit\Services\Application\Handlers\Account\Payment\MercadoPago;
 
 use Carbon\Carbon;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
-use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\EventSettingDomainObject;
+use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
