@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new SendScheduledMessagesJob)->everyMinute()->withoutOverlapping();
         $schedule->job(new ProcessExpiredWaitlistOffersJob)->everyMinute()->withoutOverlapping();
-        $schedule->command('mercadopago:refresh-tokens')->dailyAt('05:00')->withoutOverlapping();
+        // 16:00 UTC = 13:00 en Argentina: si la renovacion falla, el aviso llega
+        // en horario laboral, y los fallos de esta tarea los resuelve una persona
+        // (llamar al organizador para que reautorice, corregir una env var).
+        $schedule->command('mercadopago:refresh-tokens')->dailyAt('16:00')->withoutOverlapping();
     }
 
     protected function commands(): void
