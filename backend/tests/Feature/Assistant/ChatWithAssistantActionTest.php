@@ -25,10 +25,6 @@ class ChatWithAssistantActionTest extends TestCase
 
         config()->set('assistant.enabled', true);
 
-        // Passix is es-first (.env.example sets APP_LOCALE=es, and CI copies it),
-        // so pin the locale: these assertions are on the source strings.
-        $this->app->setLocale('en');
-
         $this->mine = AssistantFixture::create('A');
         $this->theirs = AssistantFixture::create('B');
 

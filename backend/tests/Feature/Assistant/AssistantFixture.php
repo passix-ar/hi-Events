@@ -46,7 +46,13 @@ final class AssistantFixture
 
         $fixture = new self();
 
-        $fixture->user = User::factory()->password($fixture->password)->withAccount()->create();
+        // UserFactory picks a random supported locale and SetUserLocaleMiddleware
+        // applies it to every request, so any assertion on a translated API
+        // message is flaky unless the user's locale is pinned.
+        $fixture->user = User::factory()
+            ->password($fixture->password)
+            ->withAccount()
+            ->create(['locale' => 'en']);
         $fixture->account = $fixture->user->accounts()->first();
 
         $fixture->organizer = Organizer::create([
