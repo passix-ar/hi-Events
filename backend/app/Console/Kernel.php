@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         // 16:00 UTC = 13:00 en Argentina: si la renovacion falla, el aviso llega
         // en horario laboral, y los fallos de esta tarea los resuelve una persona
         // (llamar al organizador para que reautorice, corregir una env var).
-        $schedule->command('mercadopago:refresh-tokens')->dailyAt('16:00')->withoutOverlapping();
+        $schedule->command('mercadopago:refresh-tokens')->dailyAt('15:40')->withoutOverlapping();
     }
 
     protected function commands(): void
