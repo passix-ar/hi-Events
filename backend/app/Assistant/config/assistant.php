@@ -9,6 +9,8 @@ return [
     'max_tokens' => (int)env('AI_ASSISTANT_MAX_TOKENS', 2048),
     'request_timeout' => (int)env('AI_ASSISTANT_REQUEST_TIMEOUT', 45),
     'rate_limit_per_minute' => (int)env('AI_ASSISTANT_RATE_LIMIT_PER_MINUTE', 20),
+    // Input + output tokens one account may spend per day. 0 disables the cap.
+    'daily_token_limit' => (int)env('AI_ASSISTANT_DAILY_TOKEN_LIMIT', 300000),
     'help_docs' => [
         'path' => __DIR__ . '/../Resources/help-docs',
         'base_url' => env('AI_ASSISTANT_DOCS_URL', 'https://docs.getpassix.com'),

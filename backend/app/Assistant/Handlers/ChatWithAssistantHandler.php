@@ -6,6 +6,8 @@ namespace HiEvents\Assistant\Handlers;
 
 use HiEvents\Assistant\Domain\AssistantContextFactory;
 use HiEvents\Assistant\Domain\AssistantConversationService;
+use HiEvents\Assistant\Domain\AssistantUsageLimiter;
+use HiEvents\Assistant\Exceptions\AssistantBudgetExceededException;
 use HiEvents\Assistant\Exceptions\AssistantDisabledException;
 use HiEvents\Assistant\Exceptions\AssistantUnavailableException;
 use HiEvents\Assistant\Handlers\DTO\AssistantReplyDTO;
@@ -19,6 +21,7 @@ readonly class ChatWithAssistantHandler
         private Config                       $config,
         private AssistantContextFactory      $contextFactory,
         private AssistantConversationService $conversation,
+        private AssistantUsageLimiter        $usageLimiter,
     )
     {
     }
@@ -26,6 +29,7 @@ readonly class ChatWithAssistantHandler
     /**
      * @throws AssistantDisabledException
      * @throws AssistantUnavailableException
+     * @throws AssistantBudgetExceededException
      * @throws OrganizerNotFoundException
      */
     public function handle(ChatWithAssistantDTO $dto): AssistantReplyDTO
@@ -34,12 +38,18 @@ readonly class ChatWithAssistantHandler
             throw new AssistantDisabledException(__('The assistant is not enabled.'));
         }
 
+        $this->usageLimiter->assertWithinBudget($dto->accountId);
+
         $context = $this->contextFactory->create(
             user: $dto->user,
             accountId: $dto->accountId,
             organizerId: $dto->organizerId,
         );
 
-        return $this->conversation->converse($context, $dto->messages);
+        $reply = $this->conversation->converse($context, $dto->messages);
+
+        $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens);
+
+        return $reply;
     }
 }

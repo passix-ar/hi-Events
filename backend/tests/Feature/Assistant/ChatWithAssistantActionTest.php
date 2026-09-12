@@ -120,7 +120,7 @@ class ChatWithAssistantActionTest extends TestCase
             $request = $requests[0];
 
             $this->assertCount(3, $request->messages());
-            $this->assertCount(5, $request->tools());
+            $this->assertCount(6, $request->tools());
             $this->assertStringContainsString('Org A', $request->systemPrompts()[0]->content);
             $this->assertStringNotContainsString('Org B', $request->systemPrompts()[0]->content);
         });
@@ -138,6 +138,40 @@ class ChatWithAssistantActionTest extends TestCase
         $this->chat($this->mine->organizer->id, $this->userSays('hola de nuevo'), $this->token)
             ->assertStatus(ResponseCodes::HTTP_SERVICE_UNAVAILABLE)
             ->assertJsonPath('message', 'The assistant is temporarily unavailable.');
+    }
+
+    public function test_the_daily_token_budget_stops_the_account(): void
+    {
+        config()->set('assistant.daily_token_limit', 100);
+
+        Prism::fake([
+            TextResponseFake::make()->withText('ok')->withUsage(new Usage(promptTokens: 90, completionTokens: 20)),
+            TextResponseFake::make()->withText('no deberia llegar')->withUsage(new Usage(promptTokens: 10, completionTokens: 10)),
+        ]);
+
+        $this->chat($this->mine->organizer->id, $this->userSays('primera'), $this->token)
+            ->assertStatus(ResponseCodes::HTTP_OK);
+
+        // 110 tokens spent, limit is 100: the next question is refused before the provider is called.
+        $this->chat($this->mine->organizer->id, $this->userSays('segunda'), $this->token)
+            ->assertStatus(ResponseCodes::HTTP_TOO_MANY_REQUESTS)
+            ->assertJsonPath('message', 'You have reached today\'s assistant usage limit. Please try again tomorrow.');
+    }
+
+    public function test_an_exhausted_budget_never_reaches_the_provider(): void
+    {
+        config()->set('assistant.daily_token_limit', 50);
+
+        $fake = Prism::fake([
+            TextResponseFake::make()->withText('ok')->withUsage(new Usage(promptTokens: 60, completionTokens: 0)),
+        ]);
+
+        $this->chat($this->mine->organizer->id, $this->userSays('primera'), $this->token)->assertOk();
+        $this->chat($this->mine->organizer->id, $this->userSays('segunda'), $this->token)
+            ->assertStatus(ResponseCodes::HTTP_TOO_MANY_REQUESTS);
+
+        // The second request is rejected before any token is bought, not after.
+        $fake->assertCallCount(1);
     }
 
     public function test_request_carries_the_expected_model_settings(): void

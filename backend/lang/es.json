@@ -717,5 +717,9 @@
     "Aisles must sit between seat 1 and seat :max.": "Los pasillos deben estar entre el asiento 1 y el asiento :max.",
     "Your seat: :seat": "Tu butaca: :seat",
     "The attendee's seat, if the event has assigned seating": "La butaca del asistente, si el evento tiene butacas numeradas",
-    "Each product can only be listed once in an order.": "Cada producto solo puede aparecer una vez en un pedido."
+    "Each product can only be listed once in an order.": "Cada producto solo puede aparecer una vez en un pedido.",
+    "The assistant is not enabled.": "El asistente no está habilitado.",
+    "The assistant is temporarily unavailable.": "El asistente no está disponible por el momento.",
+    "You have reached today's assistant usage limit. Please try again tomorrow.": "Alcanzaste el límite de uso del asistente por hoy. Probá de nuevo mañana.",
+    "Pass --from with the path to passix-docs/src/content/docs": "Pasá --from con la ruta a passix-docs/src/content/docs"
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant\Http\Actions;
 
+use HiEvents\Assistant\Exceptions\AssistantBudgetExceededException;
 use HiEvents\Assistant\Exceptions\AssistantDisabledException;
 use HiEvents\Assistant\Exceptions\AssistantUnavailableException;
 use HiEvents\Assistant\Handlers\ChatWithAssistantHandler;
@@ -45,6 +46,8 @@ class ChatWithAssistantAction extends BaseAction
             return $this->errorResponse(__('The assistant is not enabled.'), ResponseCodes::HTTP_NOT_FOUND);
         } catch (OrganizerNotFoundException) {
             return $this->errorResponse(__('Organizer not found.'), ResponseCodes::HTTP_NOT_FOUND);
+        } catch (AssistantBudgetExceededException $e) {
+            return $this->errorResponse($e->getMessage(), ResponseCodes::HTTP_TOO_MANY_REQUESTS);
         } catch (AssistantUnavailableException $e) {
             return $this->errorResponse($e->getMessage(), ResponseCodes::HTTP_SERVICE_UNAVAILABLE);
         }
