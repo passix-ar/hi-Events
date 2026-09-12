@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new SendScheduledMessagesJob)->everyMinute()->withoutOverlapping();
         $schedule->job(new ProcessExpiredWaitlistOffersJob)->everyMinute()->withoutOverlapping();
+        $schedule->command('mercadopago:refresh-tokens')->dailyAt('05:00')->withoutOverlapping();
     }
 
     protected function commands(): void

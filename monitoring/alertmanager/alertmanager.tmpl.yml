@@ -11,6 +11,12 @@ route:
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 4h
+  routes:
+    # Un grant muerto de MercadoPago falla todos los días hasta que el organizador
+    # reautorice: con 4h serían seis Telegram diarios por el mismo problema.
+    - match:
+        alertname: MercadoPagoRefreshFallido
+      repeat_interval: 24h
 
 receivers:
   - name: telegram
