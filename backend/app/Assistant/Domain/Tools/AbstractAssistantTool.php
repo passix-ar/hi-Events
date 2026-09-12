@@ -35,7 +35,7 @@ abstract class AbstractAssistantTool extends Tool
         protected readonly AssistantContext         $context,
         private readonly IsAuthorizedService        $isAuthorizedService,
         private readonly EventRepositoryInterface   $eventRepository,
-        private readonly LoggerInterface            $logger,
+        protected readonly LoggerInterface          $logger,
     )
     {
         parent::__construct();

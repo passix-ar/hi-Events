@@ -3,6 +3,8 @@
 // Added by Passix on 2026-09-11: AI assistant for organizers (read-only, tool-calling).
 return [
     'enabled' => (bool)env('AI_ASSISTANT_ENABLED', false),
+    // Tools that create data. Everything they create is a draft, never published.
+    'writes_enabled' => (bool)env('AI_ASSISTANT_WRITES_ENABLED', true),
     'provider' => env('AI_ASSISTANT_PROVIDER', 'anthropic'),
     'model' => env('AI_ASSISTANT_MODEL', 'claude-opus-5'),
     'max_steps' => (int)env('AI_ASSISTANT_MAX_STEPS', 8),

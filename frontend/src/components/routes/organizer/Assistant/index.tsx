@@ -13,6 +13,10 @@ import classes from './Assistant.module.scss';
 
 const MAX_HISTORY_MESSAGES = 20;
 
+// Tools that change data. Their calls are highlighted so the organizer can see at
+// a glance that a turn created something instead of only reading.
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket'];
+
 interface ChatEntry extends AssistantChatMessage {
     toolCalls?: AssistantToolCall[];
 }
@@ -121,7 +125,14 @@ const Assistant = () => {
                                     {!isUser && entry.toolCalls && entry.toolCalls.length > 0 && (
                                         <div className={classes.toolCalls}>
                                             <IconTool size={12}/>
-                                            {entry.toolCalls.map(call => call.name).join(', ')}
+                                            {entry.toolCalls.map((call, callIndex) => (
+                                                <span
+                                                    key={callIndex}
+                                                    className={WRITE_TOOLS.includes(call.name) ? classes.writeCall : undefined}
+                                                >
+                                                    {call.name}
+                                                </span>
+                                            ))}
                                         </div>
                                     )}
                                 </div>

@@ -18,6 +18,8 @@ use HiEvents\Models\Product;
 use HiEvents\Models\ProductCategory;
 use HiEvents\Models\ProductPrice;
 use HiEvents\Models\User;
+use HiEvents\DomainObjects\OrganizerDomainObject;
+use HiEvents\Services\Domain\Organizer\CreateDefaultOrganizerSettingsService;
 use Illuminate\Support\Str;
 
 /**
@@ -62,6 +64,13 @@ final class AssistantFixture
             'currency' => 'ARS',
             'timezone' => 'America/Argentina/Buenos_Aires',
         ]);
+
+        // Every organizer the app creates gets a settings row, and CreateEventService
+        // reads it to theme the event homepage. Going through the same service keeps
+        // the fixture on the real path instead of a half-built organizer.
+        app(CreateDefaultOrganizerSettingsService::class)->createOrganizerSettings(
+            OrganizerDomainObject::hydrateFromModel($fixture->organizer)
+        );
 
         // Event::creating reads auth()->user(); user_id is set explicitly instead.
         $fixture->event = Event::withoutEvents(static fn(): Event => Event::create([

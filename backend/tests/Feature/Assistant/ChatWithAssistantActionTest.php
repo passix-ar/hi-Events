@@ -120,7 +120,7 @@ class ChatWithAssistantActionTest extends TestCase
             $request = $requests[0];
 
             $this->assertCount(3, $request->messages());
-            $this->assertCount(6, $request->tools());
+            $this->assertCount(8, $request->tools(), 'six read tools plus the two write tools');
             $this->assertStringContainsString('Org A', $request->systemPrompts()[0]->content);
             $this->assertStringNotContainsString('Org B', $request->systemPrompts()[0]->content);
         });
