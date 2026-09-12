@@ -10,6 +10,7 @@ import {
     IconEye,
     IconEyeOff,
     IconPaint,
+    IconRobot,
     IconSettings,
     IconShare,
     IconUsersGroup,
@@ -88,6 +89,7 @@ const OrganizerLayout = () => {
         { link: 'settings', label: t`Settings`, icon: IconSettings },
 
         { label: t`Tools` },
+        { link: 'assistant', label: t`Assistant`, icon: IconRobot },
         { link: 'organizer-homepage-designer', label: t`Homepage Designer`, icon: IconPaint },
 
         { label: t`Integrations` },
