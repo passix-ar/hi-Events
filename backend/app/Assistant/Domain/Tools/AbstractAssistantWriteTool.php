@@ -8,8 +8,9 @@ namespace HiEvents\Assistant\Domain\Tools;
  * Marker for the tools that change data. Three rules hold for every one of them
  * and are the reason writes are safe to expose to a model at all:
  *
- *  1. Nothing they create is public. Events are born DRAFT and only a human
- *     publishes them from the panel, so the worst outcome is a draft to delete.
+ *  1. Nothing they create is public. Events are born DRAFT, tickets are refused
+ *     on an event that is no longer a draft, and only a human publishes from the
+ *     panel - so the worst outcome is a draft to delete, never something on sale.
  *  2. They do nothing until `confirm` is true. Without it they return a preview
  *     of exactly what they would create, which is what the organizer gets asked
  *     about before anything happens.

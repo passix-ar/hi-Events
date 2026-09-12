@@ -7,14 +7,17 @@ namespace HiEvents\Assistant\Domain\Tools;
 use HiEvents\Assistant\Domain\AssistantContext;
 use HiEvents\DomainObjects\Enums\ProductPriceType;
 use HiEvents\DomainObjects\Enums\ProductType;
+use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\ProductCategoryDomainObject;
 use HiEvents\DomainObjects\ProductDomainObject;
+use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductCategoryRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Product\CreateProductHandler;
 use HiEvents\Services\Application\Handlers\Product\DTO\UpsertProductDTO;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
+use Illuminate\Support\Carbon;
 use Psr\Log\LoggerInterface;
 
 class CreateTicketTool extends AbstractAssistantWriteTool
@@ -38,8 +41,8 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             ->as('create_ticket')
             ->for('Adds a ticket type to one of this organizer\'s events. A price of 0 creates a free ticket. '
                 . 'Call it first without confirm to get a preview, show that to the organizer, and only call it '
-                . 'again with confirm=true once they agree. It does not publish anything: a draft event stays '
-                . 'a draft. Use find_events to get the event_id.')
+                . 'again with confirm=true once they agree. It only works on events that are still drafts: '
+                . 'once an event is published, tickets are added from the panel. Use find_events for the event_id.')
             ->withNumberParameter('event_id', 'The event the ticket belongs to.')
             ->withStringParameter('title', 'Ticket name, e.g. "General" or "VIP" (max 150 characters).')
             ->withNumberParameter('price', 'Price in the event currency. 0 for a free ticket.')
@@ -79,7 +82,19 @@ class CreateTicketTool extends AbstractAssistantWriteTool
         );
 
         $event = $this->authorizeEvent((int)$args['event_id']);
+
+        // A ticket on a published event is on sale the moment it is written, at a
+        // price the model chose. The chat only touches drafts; the panel is where
+        // an organizer changes what is already selling.
+        if ($event->getStatus() !== EventStatus::DRAFT->name) {
+            return $this->toJson([
+                'error' => 'event_not_draft',
+                'details' => 'This event is already published, so tickets for it are added from the panel, not here.',
+            ]);
+        }
+
         $price = round((float)$args['price'], 2);
+        $saleEndDate = $this->saleEndDate($event);
 
         $payload = [
             'event_id' => $event->getId(),
@@ -89,6 +104,7 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             'currency' => $event->getCurrency(),
             'type' => $price > 0 ? ProductPriceType::PAID->name : ProductPriceType::FREE->name,
             'quantity' => $args['quantity'] === null ? 'unlimited' : (int)$args['quantity'],
+            'on_sale_until' => $saleEndDate,
         ];
 
         $existing = $this->findExisting($event->getId(), $args['title']);
@@ -120,6 +136,7 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             'type' => $price > 0 ? ProductPriceType::PAID->name : ProductPriceType::FREE->name,
             'product_type' => ProductType::TICKET->name,
             'max_per_order' => $args['max_per_order'] ?? 100,
+            'sale_end_date' => $saleEndDate,
             'prices' => [
                 [
                     'price' => $price,
@@ -146,6 +163,23 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             ],
             'next_steps' => 'The ticket is on the event. Publishing the event is done by the organizer from the panel.',
         ]);
+    }
+
+    /**
+     * UpsertProductRequest requires a sale_end_date for tickets, so leaving it
+     * null would put the product in a state the panel cannot produce. Sales close
+     * when the event ends, which is what an organizer picks anyway.
+     *
+     * CreateProductService runs this through DateHelper::convertToUTC with the
+     * event timezone, so it has to be handed over as local wall time.
+     */
+    private function saleEndDate(EventDomainObject $event): string
+    {
+        $storedDate = $event->getEndDate() ?? $event->getStartDate();
+
+        return Carbon::parse($storedDate, 'UTC')
+            ->setTimezone($event->getTimezone() ?? $this->context->timezone)
+            ->format('Y-m-d H:i:s');
     }
 
     private function findExisting(int $eventId, string $title): ?ProductDomainObject

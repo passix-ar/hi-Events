@@ -209,13 +209,74 @@ class AssistantWriteToolsTest extends TestCase
 
     // ── create_ticket ─────────────────────────────────────────────────────
 
+    /**
+     * The fixture event is LIVE, which the tool refuses, so the ticket tests work
+     * against a draft created the same way an organizer would get one.
+     */
+    private function draftEventId(string $title = 'Borrador Para Entradas'): int
+    {
+        $result = $this->runTool(
+            $this->tool(CreateDraftEventTool::class),
+            title: $title,
+            start_date: '2026-12-20 22:00',
+            end_date: '2026-12-21 04:00',
+            confirm: true,
+        );
+
+        return $result['event']['id'];
+    }
+
+    public function test_a_ticket_is_refused_on_an_event_that_is_already_published(): void
+    {
+        $before = Product::where('event_id', $this->mine->event->id)->count();
+
+        $result = $this->runTool(
+            $this->tool(CreateTicketTool::class),
+            event_id: $this->mine->event->id,
+            title: 'Entrada Tardia',
+            price: 5000,
+            confirm: true,
+        );
+
+        $this->assertSame('event_not_draft', $result['error']);
+        $this->assertSame(
+            $before,
+            Product::where('event_id', $this->mine->event->id)->count(),
+            'a published event must not gain a purchasable product from the chat',
+        );
+    }
+
+    public function test_a_created_ticket_stops_selling_when_the_event_ends(): void
+    {
+        $eventId = $this->draftEventId('Borrador Con Cierre');
+
+        $result = $this->runTool(
+            $this->tool(CreateTicketTool::class),
+            event_id: $eventId,
+            title: 'General',
+            price: 1000,
+            confirm: true,
+        );
+
+        $product = Product::find($result['ticket']['id']);
+        $event = Event::find($eventId);
+
+        // UpsertProductRequest requires sale_end_date for tickets; leaving it null
+        // would be a state the panel cannot produce.
+        $this->assertNotNull($product->sale_end_date);
+        $this->assertSame(
+            Carbon::parse($event->end_date)->format('Y-m-d H:i'),
+            Carbon::parse($product->sale_end_date)->format('Y-m-d H:i'),
+        );
+    }
+
     public function test_ticket_preview_creates_nothing(): void
     {
         $before = Product::count();
 
         $result = $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $this->draftEventId(),
             title: 'Platea',
             price: 12000,
         );
@@ -228,9 +289,11 @@ class AssistantWriteToolsTest extends TestCase
 
     public function test_a_confirmed_ticket_is_created_with_its_price_and_stock(): void
     {
+        $eventId = $this->draftEventId();
+
         $result = $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $eventId,
             title: 'Platea',
             price: 12000.5,
             quantity: 80,
@@ -243,7 +306,7 @@ class AssistantWriteToolsTest extends TestCase
         $product = Product::find($result['ticket']['id']);
         $price = ProductPrice::where('product_id', $product->id)->first();
 
-        $this->assertSame($this->mine->event->id, $product->event_id);
+        $this->assertSame($eventId, $product->event_id);
         $this->assertSame('PAID', $product->type);
         $this->assertSame('TICKET', $product->product_type);
         $this->assertEquals(12000.5, (float)$price->price);
@@ -254,7 +317,7 @@ class AssistantWriteToolsTest extends TestCase
     {
         $result = $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $this->draftEventId(),
             title: 'Invitación',
             price: 0,
             confirm: true,
@@ -271,33 +334,35 @@ class AssistantWriteToolsTest extends TestCase
 
     public function test_a_duplicate_ticket_name_is_not_created_twice(): void
     {
+        $eventId = $this->draftEventId('Borrador Sin Duplicados');
+
         $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $eventId,
             title: 'Unica',
             price: 1000,
             confirm: true,
         );
 
-        $count = Product::where('event_id', $this->mine->event->id)->count();
+        $count = Product::where('event_id', $eventId)->count();
 
         $second = $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $eventId,
             title: 'Unica',
             price: 9999,
             confirm: true,
         );
 
         $this->assertSame('already_exists', $second['status']);
-        $this->assertSame($count, Product::where('event_id', $this->mine->event->id)->count());
+        $this->assertSame($count, Product::where('event_id', $eventId)->count());
     }
 
     public function test_a_negative_price_is_rejected(): void
     {
         $result = $this->runTool(
             $this->tool(CreateTicketTool::class),
-            event_id: $this->mine->event->id,
+            event_id: $this->draftEventId(),
             title: 'Precio Negativo',
             price: -500,
             confirm: true,
@@ -320,7 +385,11 @@ class AssistantWriteToolsTest extends TestCase
             confirm: true,
         );
 
-        $this->assertSame(['error' => 'event_not_found'], $result);
+        $this->assertSame(
+            ['error' => 'event_not_found'],
+            $result,
+            'authorization decides before anything else: never leak that the event is live',
+        );
         $this->assertSame($before, Product::where('event_id', $this->theirs->event->id)->count());
     }
 
