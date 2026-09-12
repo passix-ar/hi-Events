@@ -14,7 +14,7 @@ renueva solos, qué se ve cuando algo falla y qué hacer en cada caso.
   hay que revisar que la aplicación en el panel de desarrolladores de MercadoPago tenga el scope
   `offline_access`.
 - Si MercadoPago no manda `expires_in`, se asume 180 días. Ninguna fila queda sin vencimiento.
-- El scheduler corre `mercadopago:refresh-tokens` **todos los días a las 05:00 UTC** (02:00 en
+- El scheduler corre `mercadopago:refresh-tokens` **todos los días a las 16:00 UTC** (13:00 en
   Argentina). Toma las conexiones cuyo token vence en los próximos 30 días y todavía no venció,
   pide el par nuevo a MercadoPago y lo persiste de inmediato (el refresh token rota en cada
   renovación). Cada fila se procesa con la fila lockeada para que dos corridas no se pisen.
@@ -73,4 +73,4 @@ comando no llegan a Loki en producción.
 3. Sobre una cuenta **propia**: `refresh-tokens --account=N` y después `check-token --account=N`.
    Es la primera vez que el endpoint de refresh corre de verdad; si falla, no tocó a nadie más.
 4. Al día siguiente, en Grafana Explore: `{app="scheduler"} |= "mercadopago:refresh-tokens"`
-   tiene que mostrar la línea `Running [...] DONE` de las 05:00 UTC.
+   tiene que mostrar la línea `Running [...] DONE` de las 16:00 UTC.
