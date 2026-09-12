@@ -1,0 +1,54 @@
+---
+title: Bienvenido a Passix
+description: La plataforma para vender entradas online, cobrar con MercadoPago y validar con QR en la puerta.
+template: splash
+hero:
+  tagline: Vendé entradas, cobrá con MercadoPago y validá con QR. Todo en un solo lugar.
+  image:
+    file: ../../assets/passix-mark.png
+  actions:
+    - text: Empezar en 10 minutos
+      link: /empezar/primer-evento/
+      icon: right-arrow
+      variant: primary
+    - text: Ir a getpassix.com
+      link: https://getpassix.com
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## ¿Qué es Passix?
+
+Passix es la plataforma para **organizar eventos, vender entradas online y validarlas con QR** en la puerta. Cobrás directo con MercadoPago, diseñás la página de tu evento, controlás el aforo y seguís tus ventas en tiempo real.
+
+<CardGrid>
+  <Card title="Vendé online" icon="rocket">
+    Publicá tu evento, creá tus entradas y empezá a vender en minutos.
+  </Card>
+  <Card title="Cobrá con MercadoPago" icon="approve-check">
+    Conectá tu cuenta y recibí los pagos directo, con acreditación automática.
+  </Card>
+  <Card title="Validá con QR" icon="magnifier">
+    Escaneá las entradas en la entrada, sin duplicados ni colas.
+  </Card>
+  <Card title="Medí todo" icon="bars">
+    Ventas, ingresos, asistentes y check-ins en tiempo real.
+  </Card>
+</CardGrid>
+
+## Empezá por acá
+
+<CardGrid>
+  <LinkCard title="Creá tu cuenta" href="/empezar/crear-cuenta/" description="Registrate y dejá tu organización lista." />
+  <LinkCard title="Tu primer evento" href="/empezar/primer-evento/" description="Guía rápida de punta a punta." />
+  <LinkCard title="Conectar MercadoPago" href="/pagos/mercadopago/" description="Para recibir los pagos de tus ventas." />
+  <LinkCard title="Escanear entradas" href="/check-in/escanear/" description="Validá los QR el día del evento." />
+  <LinkCard title="Asientos numerados" href="/evento/asientos/" description="Armá el plano de tu sala para que elijan su butaca." />
+  <LinkCard title="Flyer y banner" href="/evento/imagenes/" description="Qué imagen va en cada lugar y con qué medidas." />
+</CardGrid>
+
+## ¿Sos comprador?
+
+Si compraste una entrada y buscás cómo acceder a tu ticket o compartirlo, andá a la sección [Para compradores](/compradores/comprar/).

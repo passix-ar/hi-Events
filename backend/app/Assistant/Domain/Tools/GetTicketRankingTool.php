@@ -10,6 +10,7 @@ use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Reports\DTO\GetReportDTO;
 use HiEvents\Services\Application\Handlers\Reports\GetReportHandler;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Psr\Log\LoggerInterface;
 
@@ -31,8 +32,8 @@ class GetTicketRankingTool extends AbstractAssistantTool
         $this
             ->as('get_ticket_ranking')
             ->for('Ticket types of one event ranked by units sold (completed orders only), with gross revenue per type. '
-                . 'Defaults to the last 30 days; pass start_date/end_date (YYYY-MM-DD, max 370 days apart) for another period, '
-                . 'or a wide range covering the whole sales window for all-time figures.')
+                . 'Covers the whole sales history of the event by default, so call it once with just the event_id. '
+                . 'Only pass start_date/end_date (YYYY-MM-DD, max 370 days apart) when the user asks about a specific period.')
             ->withNumberParameter('event_id', 'The event id.')
             ->withStringParameter('start_date', 'Period start (YYYY-MM-DD).', required: false)
             ->withStringParameter('end_date', 'Period end (YYYY-MM-DD).', required: false);
@@ -51,6 +52,13 @@ class GetTicketRankingTool extends AbstractAssistantTool
 
         $event = $this->authorizeEvent((int)$args['event_id']);
         [$start, $end] = $this->resolveDateRange($args['start_date'] ?? null, $args['end_date'] ?? null);
+
+        // No period asked for: cover the event's whole sales history instead of the
+        // report service's 30-day default, so "which ticket sold most" needs one call.
+        if ($start === null && $end === null) {
+            $start = Carbon::parse($event->getCreatedAt(), $this->context->timezone)->startOfDay();
+            $end = Carbon::now($this->context->timezone)->endOfDay();
+        }
 
         /** @var Collection $rows */
         $rows = $this->reports->handle(new GetReportDTO(

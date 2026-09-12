@@ -60,6 +60,7 @@ trait AssistantTestHelpers
             ->setTitle($title)
             ->setStatus('LIVE')
             ->setCurrency('ARS')
-            ->setTimezone('America/Argentina/Buenos_Aires');
+            ->setTimezone('America/Argentina/Buenos_Aires')
+            ->setCreatedAt('2026-01-01 00:00:00');
     }
 }

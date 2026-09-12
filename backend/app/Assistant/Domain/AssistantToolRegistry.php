@@ -10,6 +10,7 @@ use HiEvents\Assistant\Domain\Tools\GetEventStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetOrganizerStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
 use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
+use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use Illuminate\Contracts\Container\Container;
 
 /**
@@ -26,6 +27,7 @@ readonly class AssistantToolRegistry
         GetOrganizerStatsTool::class,
         GetEventStatsTool::class,
         GetTicketRankingTool::class,
+        SearchHelpDocsTool::class,
     ];
 
     public function __construct(private Container $container)
@@ -48,6 +50,13 @@ readonly class AssistantToolRegistry
      */
     public static function toolNames(): array
     {
-        return ['find_events', 'get_recent_orders', 'get_organizer_stats', 'get_event_stats', 'get_ticket_ranking'];
+        return [
+            'find_events',
+            'get_recent_orders',
+            'get_organizer_stats',
+            'get_event_stats',
+            'get_ticket_ranking',
+            'search_help_docs',
+        ];
     }
 }
