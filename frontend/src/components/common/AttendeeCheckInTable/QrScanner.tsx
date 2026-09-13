@@ -1,11 +1,15 @@
 import {useEffect, useRef, useState} from 'react';
 import QrScanner from 'qr-scanner';
-import {useDebouncedValue} from '@mantine/hooks';
 import classes from './QrScanner.module.scss';
 import {showError} from "../../../utilites/notifications.tsx";
 import {t} from "@lingui/macro";
 import {QrScannerControls} from './QrScannerControls';
 import {PermissionDeniedMessage} from './PermissionDeniedMessage';
+
+// A code stays in front of the camera for a while after it is handled, and the scanner reads it
+// over and over. Reads of the same code within this window (counted from the last time it was
+// seen) are ignored, so it is neither re-submitted nor flagged again while it is still in frame.
+const SAME_CODE_COOLDOWN_MS = 2500;
 
 interface QRScannerComponentProps {
     onAttendeeScanned: (attendeePublicId: string) => Promise<boolean> | boolean;
@@ -16,17 +20,23 @@ interface QRScannerComponentProps {
 export const QRScannerComponent = (props: QRScannerComponentProps) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const qrScannerRef = useRef<QrScanner | null>(null);
-    const [permissionGranted, setPermissionGranted] = useState(false);
+    const isSwitchingCameraRef = useRef(false);
     const [permissionDenied, setPermissionDenied] = useState(false);
     const [isCheckingIn, setIsCheckingIn] = useState(false);
     const [isFlashAvailable, setIsFlashAvailable] = useState(false);
     const [isFlashOn, setIsFlashOn] = useState(false);
     const [cameraList, setCameraList] = useState<QrScanner.Camera[]>();
-    const [processedAttendeeIds, setProcessedAttendeeIds] = useState<string[]>([]);
-    const latestProcessedAttendeeIdsRef = useRef<string[]>([]);
 
-    const [currentAttendeeId, setCurrentAttendeeId] = useState<string | null>(null);
-    const [debouncedAttendeeId] = useDebouncedValue(currentAttendeeId, 1000);
+    // The decode callback is registered once, when the camera starts, so everything it reads
+    // lives in refs. Keeping the gate in state (a debounced value, an isCheckingIn flag read
+    // from a render closure) let a code arrive while the gate was closed and never be looked
+    // at again: the value did not change, so nothing re-ran, and only reopening unstuck it.
+    const isBusyRef = useRef(false);
+    const lastSeenRef = useRef<{ code: string, at: number } | null>(null);
+    const checkedInIdsRef = useRef<Set<string>>(new Set());
+    const onAttendeeScannedRef = useRef(props.onAttendeeScanned);
+    onAttendeeScannedRef.current = props.onAttendeeScanned;
+
     const [isScanFailed, setIsScanFailed] = useState(false);
     const [isScanSucceeded, setIsScanSucceeded] = useState(false);
 
@@ -59,19 +69,75 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
         }
     }, [isSoundOn, props.isSoundOn]);
 
-    useEffect(() => {
-        latestProcessedAttendeeIdsRef.current = processedAttendeeIds;
-    }, [processedAttendeeIds]);
+    const isSoundOnRef = useRef(isSoundOn);
+    isSoundOnRef.current = isSoundOn;
+
+    const playAudio = (audio: HTMLAudioElement | null) => {
+        if (isSoundOnRef.current && audio) {
+            audio.play().catch(() => {
+                // Ignore audio play errors (e.g. the browser blocked autoplay)
+            });
+        }
+    };
+
+    const handleDecoded = (code: string) => {
+        const now = Date.now();
+        const lastSeen = lastSeenRef.current;
+        const isSameCodeStillInFrame = lastSeen !== null
+            && lastSeen.code === code
+            && now - lastSeen.at < SAME_CODE_COOLDOWN_MS;
+
+        if (isBusyRef.current) {
+            if (lastSeen?.code === code) {
+                lastSeenRef.current = {code, at: now};
+            }
+            return;
+        }
+
+        lastSeenRef.current = {code, at: now};
+
+        if (isSameCodeStillInFrame) {
+            return;
+        }
+
+        if (checkedInIdsRef.current.has(code)) {
+            showError(t`You already scanned this ticket`);
+            showScanFeedback(false);
+            return;
+        }
+
+        isBusyRef.current = true;
+        setIsCheckingIn(true);
+        playAudio(scanInProgressAudioRef.current);
+
+        // The overlay must reflect what actually happened: a code this scanner cannot
+        // resolve — a QR from another app, an unknown ticket — is a failed scan, and
+        // showing it green would wave the person through.
+        Promise.resolve(onAttendeeScannedRef.current(code))
+            .then(checkedIn => {
+                // Only a successful check-in blocks the code for the session; a failure (a
+                // dropped connection at the door) must be retryable without reopening.
+                if (checkedIn) {
+                    checkedInIdsRef.current.add(code);
+                }
+                showScanFeedback(checkedIn);
+            })
+            .catch(() => showScanFeedback(false))
+            .finally(() => {
+                isBusyRef.current = false;
+                setIsCheckingIn(false);
+                lastSeenRef.current = {code, at: Date.now()};
+            });
+    };
 
     const startScanner = async () => {
         try {
             await navigator.mediaDevices.getUserMedia({video: true});
-            setPermissionGranted(true);
             if (videoRef.current) {
                 qrScannerRef.current = new QrScanner(videoRef.current, (result) => {
-                    setCurrentAttendeeId(result.data);
+                    handleDecoded(result.data);
                 }, {
-                    maxScansPerSecond: 1,
+                    maxScansPerSecond: 5,
                 });
                 qrScannerRef.current.start();
             }
@@ -81,53 +147,11 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
         }
     };
 
-    useEffect(() => {
-        if (debouncedAttendeeId) {
-            const latestProcessedAttendeeIds = latestProcessedAttendeeIdsRef.current;
-            const alreadyScanned = latestProcessedAttendeeIds.includes(debouncedAttendeeId);
-
-            if (isScanSucceeded || isScanFailed) {
-                return;
-            }
-
-            if (alreadyScanned) {
-                showError(t`You already scanned this ticket`);
-                showScanFeedback(false);
-
-                return;
-            }
-
-            if (!isCheckingIn && !alreadyScanned) {
-                setIsCheckingIn(true);
-                if (isSoundOn && scanInProgressAudioRef.current) {
-                    scanInProgressAudioRef.current.play();
-                }
-
-                // The overlay must reflect what actually happened: a code this scanner cannot
-                // resolve — a QR from another app, an unknown ticket — is a failed scan, and
-                // showing it green would wave the person through.
-                Promise.resolve(props.onAttendeeScanned(debouncedAttendeeId))
-                    .then(checkedIn => showScanFeedback(checkedIn))
-                    .catch(() => showScanFeedback(false))
-                    .finally(() => {
-                        setIsCheckingIn(false);
-                        setProcessedAttendeeIds(prevIds => [...prevIds, debouncedAttendeeId]);
-                        setCurrentAttendeeId(null);
-                    });
-            }
-        }
-    }, [debouncedAttendeeId]);
-
     const showScanFeedback = (succeeded: boolean) => {
         setIsScanSucceeded(succeeded);
         setIsScanFailed(!succeeded);
 
-        const audio = succeeded ? scanSuccessAudioRef.current : scanErrorAudioRef.current;
-        if (isSoundOn && audio) {
-            audio.play().catch(() => {
-                // Ignore audio play errors (e.g. the browser blocked autoplay)
-            });
-        }
+        playAudio(succeeded ? scanSuccessAudioRef.current : scanErrorAudioRef.current);
 
         if (feedbackTimeoutRef.current) {
             clearTimeout(feedbackTimeoutRef.current);
@@ -140,10 +164,11 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
     };
 
     const stopScanner = () => {
-        if (qrScannerRef.current) {
-            qrScannerRef.current.stop();
-            qrScannerRef.current.destroy();
+        const scanner = qrScannerRef.current;
+        if (scanner) {
             qrScannerRef.current = null;
+            scanner.stop();
+            scanner.destroy();
         }
     };
 
@@ -190,19 +215,38 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
                 .then(cameras => setCameraList(cameras));
         });
 
+        // iOS Safari can pause the camera <video> when a sound plays, and qr-scanner stops
+        // reading frames while the video is paused, with nothing to resume it: the preview
+        // freezes and no further code is read until the scanner is closed and reopened.
+        const video = videoRef.current;
+        const resumeVideo = () => {
+            if (qrScannerRef.current && video && !isSwitchingCameraRef.current
+                && document.visibilityState === 'visible') {
+                video.play().catch(() => {
+                    // Ignore: qr-scanner resumes on its own when the page becomes visible
+                });
+            }
+        };
+        video?.addEventListener('pause', resumeVideo);
+
         return () => {
+            video?.removeEventListener('pause', resumeVideo);
             if (feedbackTimeoutRef.current) {
                 clearTimeout(feedbackTimeoutRef.current);
             }
-            if (permissionGranted) {
-                stopScanner();
-            }
+            // permissionGranted was read from the first render's closure here, where it is
+            // always false, so the camera was never released when the scanner closed.
+            stopScanner();
         };
     }, []);
 
     const handleCameraSelection = (camera: QrScanner.Camera) => {
+        isSwitchingCameraRef.current = true;
         return qrScannerRef.current?.setCamera(camera.id)
-            .then(() => updateFlashAvailability().catch(console.error));
+            .then(() => updateFlashAvailability().catch(console.error))
+            .finally(() => {
+                isSwitchingCameraRef.current = false;
+            });
     };
 
     return (
