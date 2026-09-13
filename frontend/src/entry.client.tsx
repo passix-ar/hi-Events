@@ -5,6 +5,7 @@ import {router} from "./router";
 import {App} from "./App";
 import {queryClient} from "./utilites/queryClient";
 import {dynamicActivateLocale, getClientLocale, getSupportedLocale, setLocaleCookie,} from "./locales.ts";
+import {reloadOnStaleChunk} from "./utilites/reloadOnStaleChunk.ts";
 
 declare global {
     interface Window {
@@ -15,6 +16,7 @@ declare global {
 const dehydratedState = window.__REHYDRATED_STATE__;
 
 async function initClientApp() {
+    reloadOnStaleChunk();
     const rawLocale = getClientLocale();
     const locale = getSupportedLocale(rawLocale);
     await dynamicActivateLocale(locale);
