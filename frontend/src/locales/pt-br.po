@@ -39,15 +39,16 @@ msgstr "(vazio)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:157
+#: src/components/layouts/CheckIn/index.tsx:264
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} já fez check-in"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:163
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>registrado</0> com sucesso"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:183
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>desmarcado</0> com sucesso"
 
@@ -704,6 +705,10 @@ msgstr "Todos os participantes"
 msgid "All attendees of this event"
 msgstr "Todos os participantes deste evento"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:63
+msgid "All check-ins synced"
+msgstr "Todos os check-ins sincronizados"
+
 #: src/components/common/OrganizerReportTable/index.tsx:299
 msgid "All Currencies"
 msgstr "Todas as moedas"
@@ -1162,7 +1167,7 @@ msgstr "Coleta de informações do participante"
 msgid "Attendee Name"
 msgstr "Nome do Participante"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:254
 msgid "Attendee not found"
 msgstr "Participante não encontrado"
 
@@ -1652,15 +1657,15 @@ msgstr "Lista de Check-In Criada!"
 msgid "Check-In List deleted successfully"
 msgstr "Lista de registro excluída com sucesso"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:392
 msgid "Check-in list has expired"
 msgstr "A lista de registro expirou"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:409
 msgid "Check-in list is not active"
 msgstr "A lista de registro não está ativa"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:377
 msgid "Check-in list not found"
 msgstr "Lista de check-in não encontrada"
 
@@ -2303,6 +2308,10 @@ msgstr "Copiar URL"
 msgid "Could not initialize MercadoPago payment. Please try again."
 msgstr ""
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:26
+msgid "Could not load the attendee list. Tap to retry."
+msgstr "Não foi possível carregar a lista de participantes. Toque para tentar novamente."
+
 #: src/components/common/CheckoutQuestion/index.tsx:174
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:152
 #: src/components/routes/organizer/Settings/Sections/AddressSettings/index.tsx:110
@@ -2317,10 +2326,6 @@ msgstr "Capa"
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:192
 msgid "Cover Image"
 msgstr "Imagem de capa"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:216
-#~ msgid "Cover image will be displayed at the top of your event page"
-#~ msgstr "A imagem de capa será exibida no topo da sua página de evento"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
@@ -4068,10 +4073,6 @@ msgstr "Falha ao enviar imagem. Por favor, tente novamente."
 msgid "Failed to verify email"
 msgstr "Falha ao verificar email"
 
-#: src/components/common/LandingBannerPreview/index.tsx:26
-#~ msgid "Featured"
-#~ msgstr ""
-
 #: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr ""
@@ -4242,7 +4243,7 @@ msgstr "A taxa fixa deve ser 0 ou maior"
 msgid "Fixed Fee:"
 msgstr "Taxa fixa:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "O Flash não está disponível neste dispositivo"
 
@@ -4579,10 +4580,6 @@ msgstr "Homero"
 #: src/components/common/LandingBannerPreview/index.tsx:17
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr ""
-
-#: src/components/common/LandingBannerPreview/index.tsx:32
-#~ msgid "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
-#~ msgstr ""
 
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:67
 msgid "How long a customer has to complete their purchase after receiving an offer. Leave empty for no timeout."
@@ -5092,6 +5089,10 @@ msgstr "AO VIVO"
 #: src/components/routes/admin/Attribution/index.tsx:134
 msgid "Live Events"
 msgstr "Eventos ao Vivo"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:55
+msgid "Loading attendee list…"
+msgstr "Carregando a lista de participantes…"
 
 #: src/components/routes/event/TicketDesigner/TicketPreview.tsx:34
 msgid "Loading preview..."
@@ -5914,6 +5915,14 @@ msgstr "Nome do escritório ou local"
 #: src/components/routes/product-widget/Payment/index.tsx:154
 msgid "Offline"
 msgstr "Offline"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:36
+msgid "Offline — {pendingCount} check-in(s) will sync when back online"
+msgstr "Offline — {pendingCount} check-in(s) serão sincronizados quando a conexão voltar"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:37
+msgid "Offline — scanning still works"
+msgstr "Offline — a leitura continua funcionando"
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:147
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
@@ -7712,8 +7721,8 @@ msgstr "Salvar Design do Ingresso"
 msgid "Save VAT Settings"
 msgstr "Salvar Configurações de IVA"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:472
+#: src/components/layouts/CheckIn/index.tsx:482
 msgid "Scan"
 msgstr "Escanear"
 
@@ -7769,7 +7778,7 @@ msgstr "Pesquisar por nome, e-mail ou conta..."
 msgid "Search by name, email, or order #..."
 msgstr "Pesquise por nome, e-mail ou número do pedido..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:468
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Pesquise por nome, número do pedido, número do participante ou e-mail..."
 
@@ -8693,6 +8702,10 @@ msgstr "E-mail de suporte"
 msgid "Switch Organizer"
 msgstr "Trocar organizador"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:46
+msgid "Syncing {pendingCount} check-in(s)…"
+msgstr "Sincronizando {pendingCount} check-in(s)…"
+
 #: src/components/routes/admin/Configurations/index.tsx:85
 msgid "System Default"
 msgstr "Padrão do Sistema"
@@ -8840,7 +8853,7 @@ msgstr "Esse código promocional é inválido"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "A cor de fundo da página. Ao usar imagem de capa, isso é aplicado como uma sobreposição."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:382
 msgid "The check-in list you are looking for does not exist."
 msgstr "A lista de check-in que você está procurando não existe."
 
@@ -9029,14 +9042,6 @@ msgstr "Estes modelos substituirão os padrões do organizador apenas para este 
 msgid "This attendee has an unpaid order."
 msgstr "Este participante tem um pedido não pago."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:275
-#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:278
-#~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
-#~ msgstr ""
-
 #: src/components/common/ProductsTable/ProductsBlankSlate/index.tsx:61
 msgid "This category doesn't have any products yet."
 msgstr "Esta categoria ainda não possui produtos."
@@ -9045,11 +9050,15 @@ msgstr "Esta categoria ainda não possui produtos."
 msgid "This category is hidden from public view"
 msgstr "Esta categoria está oculta da visualização pública"
 
+#: src/components/layouts/CheckIn/index.tsx:175
+msgid "This check-in is still syncing. Please try again in a moment."
+msgstr "Este check-in ainda está sincronizando. Tente novamente em instantes."
+
 #: src/components/common/CheckInListList/index.tsx:73
 msgid "This check-in list has expired"
 msgstr "Esta lista de registro expirou"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:397
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Esta lista de registro expirou e não está mais disponível para registros."
 
@@ -9061,7 +9070,7 @@ msgstr "Esta lista de registro está ativa"
 msgid "This check-in list is not active yet"
 msgstr "Esta lista de registro ainda não está ativa"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:414
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Esta lista de registro ainda não está ativa e não está disponível para registros."
 
@@ -9089,10 +9098,6 @@ msgstr "Este evento ainda não foi publicado"
 #: src/hooks/useGoogleAuth.ts:80
 msgid "This Google account is already linked to another user. Please contact support."
 msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:238
-#~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
-#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
@@ -9224,7 +9229,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Este link de redefinição de senha é inválido ou expirou."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:229
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Este ingresso acabou de ser escaneado. Aguarde antes de escanear novamente."
 
@@ -9572,11 +9577,11 @@ msgstr "Verdadeiro se pagamento pendente"
 msgid "Try another email"
 msgstr "Tentar outro e-mail"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:475
 msgid "Turn sound off"
 msgstr "Desativar som"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:475
 msgid "Turn sound on"
 msgstr "Ativar som"
 
@@ -9606,12 +9611,8 @@ msgstr "Tipo de ingresso"
 msgid "Typography"
 msgstr "Tipografia"
 
-#: src/components/layouts/CheckIn/index.tsx:167
-msgid "Unable to check in attendee"
-msgstr "Não foi possível registrar o participante"
-
-#: src/components/layouts/CheckIn/index.tsx:192
 #: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:196
 msgid "Unable to check out attendee"
 msgstr "Não foi possível retirar o participante"
 
@@ -9631,7 +9632,7 @@ msgstr "Não foi possível criar a pergunta. Por favor, verifique seus detalhes"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:247
 msgid "Unable to fetch attendee"
 msgstr "Não foi possível buscar participante"
 
@@ -10204,21 +10205,9 @@ msgstr ""
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:210
-#~ msgid "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
-#~ msgstr ""
-
 #: src/components/routes/event/TicketDesigner/index.tsx:140
 msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "Recomendamos um logo quadrado com dimensões mínimas de 200x200px"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:257
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:245
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
-#~ msgstr ""
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:194
 msgid "We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB"
@@ -10563,7 +10552,7 @@ msgstr "Sim, cancelar meu pedido"
 msgid "Yes, remove them"
 msgstr "Sim, remova-os"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "Você já escaneou este ingresso"
 
@@ -10579,8 +10568,8 @@ msgstr "Você está personificando <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Você está emitindo um reembolso parcial. O cliente será reembolsado em {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:189
+#: src/components/layouts/CheckIn/index.tsx:247
 msgid "You are offline"
 msgstr "Você está offline"
 
@@ -10604,8 +10593,8 @@ msgstr "Você não pode arquivar o último organizador ativo da sua conta."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Você não pode mudar o tipo de produto, pois há participantes associados a este produto."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:212
+#: src/components/layouts/CheckIn/index.tsx:281
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Você não pode registrar participantes com pedidos não pagos. Essa configuração pode ser alterada nas configurações do evento."
 

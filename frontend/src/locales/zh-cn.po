@@ -39,15 +39,16 @@ msgstr "(空)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:157
+#: src/components/layouts/CheckIn/index.tsx:264
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} 已签到"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:163
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>签到</0>成功"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:183
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>签退</0>成功"
 
@@ -704,6 +705,10 @@ msgstr "所有参与者"
 msgid "All attendees of this event"
 msgstr "本次活动的所有与会者"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:63
+msgid "All check-ins synced"
+msgstr "所有签到已同步"
+
 #: src/components/common/OrganizerReportTable/index.tsx:299
 msgid "All Currencies"
 msgstr "所有货币"
@@ -1162,7 +1167,7 @@ msgstr "参与者信息收集"
 msgid "Attendee Name"
 msgstr "参会者姓名"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:254
 msgid "Attendee not found"
 msgstr "未找到参与者"
 
@@ -1652,15 +1657,15 @@ msgstr "签到列表已创建！"
 msgid "Check-In List deleted successfully"
 msgstr "签到列表删除成功"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:392
 msgid "Check-in list has expired"
 msgstr "签到列表已过期"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:409
 msgid "Check-in list is not active"
 msgstr "签到列表未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:377
 msgid "Check-in list not found"
 msgstr "未找到签到列表"
 
@@ -2303,6 +2308,10 @@ msgstr "复制 URL"
 msgid "Could not initialize MercadoPago payment. Please try again."
 msgstr ""
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:26
+msgid "Could not load the attendee list. Tap to retry."
+msgstr "无法加载参与者列表。点击重试。"
+
 #: src/components/common/CheckoutQuestion/index.tsx:174
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:152
 #: src/components/routes/organizer/Settings/Sections/AddressSettings/index.tsx:110
@@ -2317,10 +2326,6 @@ msgstr "封面"
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:192
 msgid "Cover Image"
 msgstr "封面图像"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:216
-#~ msgid "Cover image will be displayed at the top of your event page"
-#~ msgstr "封面图片将显示在活动页面顶部"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
@@ -4068,10 +4073,6 @@ msgstr "上传图片失败。请重试。"
 msgid "Failed to verify email"
 msgstr "验证邮箱失败"
 
-#: src/components/common/LandingBannerPreview/index.tsx:26
-#~ msgid "Featured"
-#~ msgstr ""
-
 #: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr ""
@@ -4242,7 +4243,7 @@ msgstr "固定费用必须为0或更大"
 msgid "Fixed Fee:"
 msgstr "固定费用："
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "该设备不支持闪存"
 
@@ -4579,10 +4580,6 @@ msgstr "荷马"
 #: src/components/common/LandingBannerPreview/index.tsx:17
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr ""
-
-#: src/components/common/LandingBannerPreview/index.tsx:32
-#~ msgid "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
-#~ msgstr ""
 
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:67
 msgid "How long a customer has to complete their purchase after receiving an offer. Leave empty for no timeout."
@@ -5092,6 +5089,10 @@ msgstr "直播"
 #: src/components/routes/admin/Attribution/index.tsx:134
 msgid "Live Events"
 msgstr "直播活动"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:55
+msgid "Loading attendee list…"
+msgstr "正在加载参与者列表…"
 
 #: src/components/routes/event/TicketDesigner/TicketPreview.tsx:34
 msgid "Loading preview..."
@@ -5914,6 +5915,14 @@ msgstr "办公室或场地名称"
 #: src/components/routes/product-widget/Payment/index.tsx:154
 msgid "Offline"
 msgstr "离线"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:36
+msgid "Offline — {pendingCount} check-in(s) will sync when back online"
+msgstr "离线 — {pendingCount} 个签到将在恢复连接后同步"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:37
+msgid "Offline — scanning still works"
+msgstr "离线 — 仍可扫描"
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:147
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
@@ -7712,8 +7721,8 @@ msgstr "保存票券设计"
 msgid "Save VAT Settings"
 msgstr "保存增值税设置"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:472
+#: src/components/layouts/CheckIn/index.tsx:482
 msgid "Scan"
 msgstr "扫描"
 
@@ -7769,7 +7778,7 @@ msgstr "按姓名、电子邮件或账户搜索..."
 msgid "Search by name, email, or order #..."
 msgstr "按姓名、电子邮件或订单号搜索..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:468
 msgid "Search by name, order #, attendee # or email..."
 msgstr "按姓名、订单号、参与者号或电子邮件搜索..."
 
@@ -8693,6 +8702,10 @@ msgstr "支持电子邮件"
 msgid "Switch Organizer"
 msgstr "切换组织者"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:46
+msgid "Syncing {pendingCount} check-in(s)…"
+msgstr "正在同步 {pendingCount} 个签到…"
+
 #: src/components/routes/admin/Configurations/index.tsx:85
 msgid "System Default"
 msgstr "系统默认"
@@ -8840,7 +8853,7 @@ msgstr "促销代码无效"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "页面的背景颜色。使用封面图片时,此颜色将作为叠加层应用。"
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:382
 msgid "The check-in list you are looking for does not exist."
 msgstr "您查找的签到列表不存在。"
 
@@ -9029,14 +9042,6 @@ msgstr "这些模板将仅覆盖此活动的组织者默认设置。如果这里
 msgid "This attendee has an unpaid order."
 msgstr "此参与者有未付款的订单。"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:275
-#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:278
-#~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
-#~ msgstr ""
-
 #: src/components/common/ProductsTable/ProductsBlankSlate/index.tsx:61
 msgid "This category doesn't have any products yet."
 msgstr "此类别尚无任何产品。"
@@ -9045,11 +9050,15 @@ msgstr "此类别尚无任何产品。"
 msgid "This category is hidden from public view"
 msgstr "此类别对公众隐藏"
 
+#: src/components/layouts/CheckIn/index.tsx:175
+msgid "This check-in is still syncing. Please try again in a moment."
+msgstr "此签到仍在同步中，请稍后再试。"
+
 #: src/components/common/CheckInListList/index.tsx:73
 msgid "This check-in list has expired"
 msgstr "此签到列表已过期"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:397
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "此签到列表已过期，不再可用于签到。"
 
@@ -9061,7 +9070,7 @@ msgstr "此签到列表已激活"
 msgid "This check-in list is not active yet"
 msgstr "此签到列表尚未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:414
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "此签到列表尚未激活，不能用于签到。"
 
@@ -9089,10 +9098,6 @@ msgstr "此活动尚未发布"
 #: src/hooks/useGoogleAuth.ts:80
 msgid "This Google account is already linked to another user. Please contact support."
 msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:238
-#~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
-#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
@@ -9224,7 +9229,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "此重置密码链接无效或已过期。"
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:229
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "此门票刚刚被扫描。请等待后再次扫描。"
 
@@ -9572,11 +9577,11 @@ msgstr "如果付款待处理则为真"
 msgid "Try another email"
 msgstr "尝试其他邮箱"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:475
 msgid "Turn sound off"
 msgstr "关闭声音"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:475
 msgid "Turn sound on"
 msgstr "开启声音"
 
@@ -9606,12 +9611,8 @@ msgstr "门票类型"
 msgid "Typography"
 msgstr "排版"
 
-#: src/components/layouts/CheckIn/index.tsx:167
-msgid "Unable to check in attendee"
-msgstr "无法签到参与者"
-
-#: src/components/layouts/CheckIn/index.tsx:192
 #: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:196
 msgid "Unable to check out attendee"
 msgstr "无法签退参与者"
 
@@ -9631,7 +9632,7 @@ msgstr "无法创建问题。请检查您的详细信息"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:247
 msgid "Unable to fetch attendee"
 msgstr "无法获取参与者"
 
@@ -10204,21 +10205,9 @@ msgstr ""
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:210
-#~ msgid "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
-#~ msgstr ""
-
 #: src/components/routes/event/TicketDesigner/index.tsx:140
 msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "我们建议使用最小尺寸为200x200像素的方形标志"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:257
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:245
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
-#~ msgstr ""
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:194
 msgid "We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB"
@@ -10563,7 +10552,7 @@ msgstr "是，取消我的订单"
 msgid "Yes, remove them"
 msgstr "是的，移除它们"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "您已经扫描过此票"
 
@@ -10579,8 +10568,8 @@ msgstr "您正在模拟 <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "您正在发出部分退款。客户将获得 {0} {1} 的退款。"
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:189
+#: src/components/layouts/CheckIn/index.tsx:247
 msgid "You are offline"
 msgstr "您处于离线状态"
 
@@ -10604,8 +10593,8 @@ msgstr "您无法归档账户中最后一个活跃的主办方。"
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "您无法更改产品类型，因为有与该产品关联的参会者。"
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:212
+#: src/components/layouts/CheckIn/index.tsx:281
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "您无法为未支付订单的与会者签到。此设置可在活动设置中更改。"
 
