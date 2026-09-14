@@ -661,19 +661,34 @@ export interface Attendee {
     seat_label?: string | null;
     check_in?: AttendeeCheckIn; // Use in contexts where a single check is expected, like dealing with a check-in list
     check_ins?: AttendeeCheckIn[];
+    other_check_ins?: OtherListCheckIn[]; // Check-ins on other lists of the same event (public check-in endpoints)
 }
 
-export type PublicCheckIn = Pick<AttendeeCheckIn, 'id' | 'order_id' | 'attendee_id' | 'check_in_list_id' | 'product_id' | 'event_id'>;
+export interface OtherListCheckIn {
+    check_in_list_name: string | null;
+    checked_in_at: string;
+}
+
+// What the public check-in endpoints actually return (AttendeeCheckInPublicResource).
+export interface PublicCheckIn {
+    id: IdParam;
+    short_id: IdParam;
+    check_in_list_id: IdParam;
+    attendee_id: IdParam;
+    checked_in_at: string;
+    order_id: IdParam;
+}
 
 export interface AttendeeCheckIn {
     id: IdParam;
     attendee_id: IdParam;
     check_in_list_id: IdParam;
-    product_id: IdParam;
-    event_id: IdParam;
     short_id: IdParam;
-    order_id: IdParam;
-    created_at: string;
+    product_id?: IdParam; // admin only
+    event_id?: IdParam; // admin only
+    order_id?: IdParam; // public only
+    created_at?: string; // admin only
+    checked_in_at?: string; // public only
     check_in_list?: CheckInList;
 }
 

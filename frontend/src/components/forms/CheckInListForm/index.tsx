@@ -1,18 +1,26 @@
 import {Alert, Textarea, TextInput} from "@mantine/core";
 import {t} from "@lingui/macro";
 import {UseFormReturnType} from "@mantine/form";
-import {CheckInListRequest, ProductCategory, ProductType} from "../../../types.ts";
+import {CheckInList, CheckInListRequest, ProductCategory, ProductType} from "../../../types.ts";
 import {InputGroup} from "../../common/InputGroup";
 import {ProductSelector} from "../../common/ProductSelector";
 import {useEffect, useMemo} from "react";
-import {IconInfoCircle} from "@tabler/icons-react";
+import {IconAlertTriangle, IconInfoCircle} from "@tabler/icons-react";
 
 interface CheckInListFormProps {
     form: UseFormReturnType<CheckInListRequest>;
     productCategories: ProductCategory[];
+    existingLists?: CheckInList[];
 }
 
-export const CheckInListForm = ({form, productCategories}: CheckInListFormProps) => {
+export const CheckInListForm = ({form, productCategories, existingLists}: CheckInListFormProps) => {
+    // One door, two lists with the same tickets = the same ticket gets in twice
+    // (each list only knows its own check-ins). Flag it before the list exists.
+    const selectedIds = (form.values.product_ids ?? []).map(String);
+    const overlappingList = existingLists?.find(list =>
+        list.products?.some(product => selectedIds.includes(String(product.id)))
+    );
+
     const tickets = useMemo(() => {
         return productCategories
             .flatMap(category => category.products || [])
@@ -37,6 +45,12 @@ export const CheckInListForm = ({form, productCategories}: CheckInListFormProps)
                 label={t`Name`}
                 placeholder={t`VIP check-in list`}
             />
+
+            {overlappingList && (
+                <Alert mb={20} icon={<IconAlertTriangle size={16}/>} color="orange" variant="light">
+                    {t`"${overlappingList.name}" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice.`}
+                </Alert>
+            )}
 
             <ProductSelector
                 label={t`Which tickets should be associated with this check-in list?`}

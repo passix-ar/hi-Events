@@ -27,6 +27,10 @@ msgstr "- Yayından Kaldırmak için Tıklayın"
 msgid "'There\\'s nothing to show yet'"
 msgstr ""
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "\"{0}\" bu biletlerin bazılarını zaten kapsıyor. İki liste de aynı kapı içinse, her telefonda o listeyi açın: ayrı listeler birbirinin giriş kayıtlarını görmez, aynı bilet iki kez girebilir."
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr ""
@@ -39,15 +43,24 @@ msgstr "(boş)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:287
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} saat {time} itibarıyla <0>{listName}</0> üzerinden zaten girdi"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:272
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} zaten giriş yaptı"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:165
+msgid "{0} {1}'s ticket is cancelled"
+msgstr ""
+
+#: src/components/layouts/CheckIn/index.tsx:171
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>başarıyla check-in yaptı</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:191
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>başarıyla check-out yaptı</0>"
 
@@ -467,7 +480,7 @@ msgstr "İşlemler"
 msgid "Activate"
 msgstr "Etkinleştir"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "Etkinleştirme tarihi"
 
@@ -484,7 +497,7 @@ msgstr "Etkinleştirme tarihi"
 msgid "Active"
 msgstr "Etkin"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "Bu check-in listesi için açıklama ekleyin"
 
@@ -704,6 +717,10 @@ msgstr "Tüm katılımcılar"
 msgid "All attendees of this event"
 msgstr "Bu etkinliğin tüm katılımcıları"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:63
+msgid "All check-ins synced"
+msgstr "Tüm giriş kayıtları eşitlendi"
+
 #: src/components/common/OrganizerReportTable/index.tsx:299
 msgid "All Currencies"
 msgstr "Tüm Para Birimleri"
@@ -841,6 +858,10 @@ msgstr "Beklenmeyen bir hata oluştu."
 #: src/hooks/useFormErrorResponseHandler.tsx:48
 msgid "An unexpected error occurred. Please try again."
 msgstr "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
+
+#: src/components/layouts/CheckIn/index.tsx:284
+msgid "another list"
+msgstr "başka bir liste"
 
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
@@ -1162,7 +1183,7 @@ msgstr "Katılımcı bilgi toplama"
 msgid "Attendee Name"
 msgstr "Katılımcı Adı"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:262
 msgid "Attendee not found"
 msgstr "Katılımcı bulunamadı"
 
@@ -1291,7 +1312,7 @@ msgstr "Çevrimdışı Ödeme Bekleniyor"
 msgid "Awaiting Offline Pmt."
 msgstr "Çevrimdışı Ödeme Bekleniyor"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:88
+#: src/components/common/CheckIn/AttendeeList.tsx:86
 msgid "Awaiting payment"
 msgstr "Ödeme bekleniyor"
 
@@ -1472,7 +1493,7 @@ msgid "Campaign"
 msgstr "Kampanya"
 
 #: src/components/common/AttendeeTable/index.tsx:380
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:59
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:55
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:57
 #: src/components/common/ContactOrganizerModal/index.tsx:104
 #: src/components/common/EmailTemplateSettings/EmailTemplateSettingsBase.tsx:125
@@ -1529,11 +1550,11 @@ msgstr "İptal etmek, bu siparişle ilişkili tüm katılımcıları iptal edece
 msgid "Cancelled"
 msgstr "İptal Edildi"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:30
+#: src/components/common/CheckIn/AttendeeList.tsx:28
 msgid "Cannot Check In"
 msgstr "Check-in Yapılamaz"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:34
+#: src/components/common/CheckIn/AttendeeList.tsx:32
 msgid "Cannot Check In (Cancelled)"
 msgstr "Giriş Yapılamaz (İptal Edildi)"
 
@@ -1602,23 +1623,23 @@ msgstr "Bekleme listesi ayarlarını değiştir"
 msgid "Charity"
 msgstr "Hayır Kurumu"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:41
+#: src/components/common/CheckIn/AttendeeList.tsx:39
 msgid "Check In"
 msgstr "Check-in Yap"
 
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:27
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:25
 msgid "Check in {0} {1}"
 msgstr "{0} {1} check-in yap"
 
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:52
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:48
 msgid "Check in and mark order as paid"
 msgstr "Check-in yap ve siparişi ödenmiş olarak işaretle"
 
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:43
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:40
 msgid "Check in only"
 msgstr "Sadece check-in yap"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:38
+#: src/components/common/CheckIn/AttendeeList.tsx:36
 msgid "Check Out"
 msgstr "Check-out Yap"
 
@@ -1652,15 +1673,15 @@ msgstr "Giriş Listesi Oluşturuldu"
 msgid "Check-In List deleted successfully"
 msgstr "Check-In Listesi başarıyla silindi"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:415
 msgid "Check-in list has expired"
 msgstr "Check-in listesinin süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:432
 msgid "Check-in list is not active"
 msgstr "Check-in listesi aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:400
 msgid "Check-in list not found"
 msgstr "Check-in listesi bulunamadı"
 
@@ -1674,7 +1695,7 @@ msgstr "Giriş Listeleri"
 msgid "Check-In Lists"
 msgstr "Check-In Listeleri"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "Giriş listeleri, günler, alanlar veya bilet türleri arasında girişi kontrol etmenizi sağlar. Personelle güvenli bir giriş bağlantısı paylaşabilirsiniz — hesap gerekmez."
 
@@ -2303,6 +2324,10 @@ msgstr "URL'yi Kopyala"
 msgid "Could not initialize MercadoPago payment. Please try again."
 msgstr ""
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:26
+msgid "Could not load the attendee list. Tap to retry."
+msgstr "Katılımcı listesi yüklenemedi. Yeniden denemek için dokunun."
+
 #: src/components/common/CheckoutQuestion/index.tsx:174
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:152
 #: src/components/routes/organizer/Settings/Sections/AddressSettings/index.tsx:110
@@ -2317,10 +2342,6 @@ msgstr "Kapak"
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:192
 msgid "Cover Image"
 msgstr "Kapak Görseli"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:216
-#~ msgid "Cover image will be displayed at the top of your event page"
-#~ msgstr "Kapak görseli etkinlik sayfanızın üstünde gösterilecektir"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
@@ -2360,7 +2381,7 @@ msgstr "Ürün Oluştur"
 msgid "Create a Promo Code"
 msgstr "Promosyon Kodu Oluştur"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "Bilet Oluştur"
 
@@ -2409,8 +2430,8 @@ msgid "Create Category"
 msgstr "Kategori Oluştur"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "Check-In Listesi Oluştur"
@@ -2854,7 +2875,7 @@ msgstr "Webhook'u sil"
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "Check-in personeli için açıklama"
 
@@ -3757,7 +3778,7 @@ msgstr "Örnekler: \"Tişört bedeni\", \"Yemek tercihi\", \"Meslek unvanı\""
 msgid "Exception"
 msgstr "İstisna"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "Son kullanım tarihi"
 
@@ -4068,10 +4089,6 @@ msgstr "Görsel yüklenemedi. Lütfen tekrar deneyin."
 msgid "Failed to verify email"
 msgstr "E-posta doğrulanamadı"
 
-#: src/components/common/LandingBannerPreview/index.tsx:26
-#~ msgid "Featured"
-#~ msgstr ""
-
 #: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr ""
@@ -4242,7 +4259,7 @@ msgstr "Sabit ücret 0 veya daha büyük olmalıdır"
 msgid "Fixed Fee:"
 msgstr "Sabit Ücret:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "Bu cihazda flaş mevcut değil"
 
@@ -4579,10 +4596,6 @@ msgstr "Homer"
 #: src/components/common/LandingBannerPreview/index.tsx:17
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr ""
-
-#: src/components/common/LandingBannerPreview/index.tsx:32
-#~ msgid "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
-#~ msgstr ""
 
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:67
 msgid "How long a customer has to complete their purchase after receiving an offer. Leave empty for no timeout."
@@ -5093,6 +5106,10 @@ msgstr "CANLI"
 msgid "Live Events"
 msgstr "Canlı Etkinlikler"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:55
+msgid "Loading attendee list…"
+msgstr "Katılımcı listesi yükleniyor…"
+
 #: src/components/routes/event/TicketDesigner/TicketPreview.tsx:34
 msgid "Loading preview..."
 msgstr "Önizleme yükleniyor..."
@@ -5459,7 +5476,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -5576,7 +5593,7 @@ msgstr "Bu siparişe katılımcı eklenmemiş."
 msgid "No Attendees to show"
 msgstr "Gösterilecek Katılımcı yok"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:65
+#: src/components/common/CheckIn/AttendeeList.tsx:63
 msgid "No attendees to show."
 msgstr ""
 
@@ -5914,6 +5931,14 @@ msgstr "Ofis veya mekan adı"
 #: src/components/routes/product-widget/Payment/index.tsx:154
 msgid "Offline"
 msgstr "Çevrimdışı"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:36
+msgid "Offline — {pendingCount} check-in(s) will sync when back online"
+msgstr "Çevrimdışı — {pendingCount} giriş kaydı bağlantı gelince eşitlenecek"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:37
+msgid "Offline — scanning still works"
+msgstr "Çevrimdışı — tarama çalışmaya devam ediyor"
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:147
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
@@ -6806,7 +6831,7 @@ msgstr "Lütfen yeni sekmede devam edin"
 msgid "Please create a product"
 msgstr "Lütfen bir ürün oluşturun"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "Lütfen bir bilet oluşturun"
 
@@ -7712,8 +7737,8 @@ msgstr "Bilet Tasarımını Kaydet"
 msgid "Save VAT Settings"
 msgstr "KDV Ayarlarını Kaydet"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:495
+#: src/components/layouts/CheckIn/index.tsx:505
 msgid "Scan"
 msgstr "Tara"
 
@@ -7769,7 +7794,7 @@ msgstr "Ad, e-posta veya hesaba göre ara..."
 msgid "Search by name, email, or order #..."
 msgstr "Ad, e-posta veya sipariş #'a göre ara..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Ad, sipariş #, katılımcı # veya e-postaya göre ara..."
 
@@ -7977,7 +8002,7 @@ msgstr "Bu hesap için mesajlaşma seviyesini seçin. Bu, mesaj limitlerini ve b
 msgid "Select Ticket"
 msgstr "Bilet Seç"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "Biletleri seç"
@@ -8693,6 +8718,10 @@ msgstr "Destek E-postası"
 msgid "Switch Organizer"
 msgstr "Organizatör Değiştir"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:46
+msgid "Syncing {pendingCount} check-in(s)…"
+msgstr "{pendingCount} giriş kaydı eşitleniyor…"
+
 #: src/components/routes/admin/Configurations/index.tsx:85
 msgid "System Default"
 msgstr "Sistem Varsayılanı"
@@ -8840,7 +8869,7 @@ msgstr "Bu promosyon kodu geçersiz"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Sayfanın arka plan rengi. Kapak resmi kullanıldığında, bu bir kaplama olarak uygulanır."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:405
 msgid "The check-in list you are looking for does not exist."
 msgstr "Aradığınız check-in listesi mevcut değil."
 
@@ -9025,17 +9054,9 @@ msgstr "Bu şablonlar organizasyonunuzdaki tüm etkinlikler için varsayılan ol
 msgid "These templates will override the organizer defaults for this event only. If no custom template is set here, the organizer template will be used instead."
 msgstr "Bu şablonlar yalnızca bu etkinlik için organizatör varsayılanlarını geçersiz kılacaktır. Burada özel bir şablon ayarlanmazsa, organizatör şablonu kullanılacaktır."
 
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:35
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:33
 msgid "This attendee has an unpaid order."
 msgstr "Bu katılımcının ödenmemiş siparişi var."
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:275
-#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:278
-#~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
-#~ msgstr ""
 
 #: src/components/common/ProductsTable/ProductsBlankSlate/index.tsx:61
 msgid "This category doesn't have any products yet."
@@ -9045,11 +9066,15 @@ msgstr "Bu kategoride henüz hiç ürün yok."
 msgid "This category is hidden from public view"
 msgstr "Bu kategori halktan gizli"
 
+#: src/components/layouts/CheckIn/index.tsx:183
+msgid "This check-in is still syncing. Please try again in a moment."
+msgstr "Bu giriş kaydı hâlâ eşitleniyor. Lütfen birazdan tekrar deneyin."
+
 #: src/components/common/CheckInListList/index.tsx:73
 msgid "This check-in list has expired"
 msgstr "Bu check-in listesi süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:420
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Bu check-in listesinin süresi doldu ve artık check-in için kullanılamıyor."
 
@@ -9061,7 +9086,7 @@ msgstr "Bu check-in listesi aktif"
 msgid "This check-in list is not active yet"
 msgstr "Bu check-in listesi henüz aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:437
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Bu check-in listesi henüz aktif değil ve check-in yapılabilir durumda değil."
 
@@ -9089,10 +9114,6 @@ msgstr "Bu etkinlik henüz yayınlanmadı"
 #: src/hooks/useGoogleAuth.ts:80
 msgid "This Google account is already linked to another user. Please contact support."
 msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:238
-#~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
-#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
@@ -9224,7 +9245,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Bu şifre sıfırlama bağlantısı geçersiz veya süresi dolmuş."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:237
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Bu bilet az önce tarandı. Tekrar taramadan önce lütfen bekleyin."
 
@@ -9255,7 +9276,7 @@ msgstr "bilet"
 msgid "Ticket"
 msgstr "Bilet"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:83
+#: src/components/common/CheckIn/AttendeeList.tsx:81
 msgid "Ticket Cancelled"
 msgstr "Bilet İptal Edildi"
 
@@ -9572,11 +9593,11 @@ msgstr "Ödeme beklemedeyse doğru"
 msgid "Try another email"
 msgstr "Başka bir e-posta deneyin"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Turn sound off"
 msgstr "Sesi kapat"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Turn sound on"
 msgstr "Sesi aç"
 
@@ -9606,12 +9627,8 @@ msgstr "Bilet türü"
 msgid "Typography"
 msgstr "Tipografi"
 
-#: src/components/layouts/CheckIn/index.tsx:167
-msgid "Unable to check in attendee"
-msgstr "Katılımcı girişi yapılamadı"
-
-#: src/components/layouts/CheckIn/index.tsx:192
-#: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:202
+#: src/components/layouts/CheckIn/index.tsx:204
 msgid "Unable to check out attendee"
 msgstr "Katılımcı check-out'u yapılamadı"
 
@@ -9631,7 +9648,7 @@ msgstr "Soru oluşturulamadı. Lütfen bilgilerinizi kontrol edin"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Unable to fetch attendee"
 msgstr "Katılımcı getirilemedi"
 
@@ -9699,7 +9716,7 @@ msgstr "Sınırsız mevcut"
 msgid "Unlimited usages allowed"
 msgstr "Sınırsız kullanıma izin verildi"
 
-#: src/components/common/CheckIn/CheckInOptionsModal.tsx:34
+#: src/components/common/CheckIn/CheckInOptionsModal.tsx:32
 msgid "Unpaid Order"
 msgstr "Ödenmemiş Sipariş"
 
@@ -10089,7 +10106,7 @@ msgstr "Kayıtlı katılımcılarınızı görüntüleyin, düzenleyin ve dışa
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP check-in listesi"
 
@@ -10105,7 +10122,7 @@ msgstr "Görünürlük"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "Yalnızca giriş personeline görünür. Giriş sırasında bu listeyi tanımlamaya yardımcı olur."
 
@@ -10204,21 +10221,9 @@ msgstr ""
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:210
-#~ msgid "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
-#~ msgstr ""
-
 #: src/components/routes/event/TicketDesigner/index.tsx:140
 msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "Minimum 200x200px boyutunda kare bir logo öneriyoruz"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:257
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-#~ msgstr ""
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:245
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
-#~ msgstr ""
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:194
 msgid "We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB"
@@ -10448,11 +10453,11 @@ msgstr "Bir sipariş iade edildiğinde"
 msgid "When an order is updated"
 msgstr "Bir sipariş güncellendiğinde"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "Giriş kapandığında"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "Giriş açıldığında"
 
@@ -10484,7 +10489,7 @@ msgstr "Çevrimdışı ödemeler etkinleştirildiğinde, kullanıcılar sipariş
 msgid "Which product does this section sell seats for?"
 msgstr "Bu bölüm hangi ürün için koltuk satıyor?"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "Bu check-in listesiyle hangi biletler ilişkilendirilmeli?"
 
@@ -10563,7 +10568,7 @@ msgstr "Evet, siparişimi iptal et"
 msgid "Yes, remove them"
 msgstr "Evet, kaldır"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "Bu bileti zaten taradınız"
 
@@ -10579,8 +10584,8 @@ msgstr "<0>{0}</0> ({1}) rolünü üstleniyorsunuz"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Kısmi iade yapıyorsunuz. Müşteriye {0} {1} iade edilecek."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:197
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "You are offline"
 msgstr "Çevrimdışısınız"
 
@@ -10604,8 +10609,8 @@ msgstr "Hesabınızdaki son aktif organizatörü arşivleyemezsiniz."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Bu ürünle ilişkili katılımcılar olduğu için ürün türünü değiştiremezsiniz."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:220
+#: src/components/layouts/CheckIn/index.tsx:304
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Ödenmemiş siparişleri olan katılımcıları check-in yaptıramazsınız. Bu ayar etkinlik ayarlarından değiştirilebilir."
 
@@ -10703,7 +10708,7 @@ msgstr "Bir siparişi elle ödenmiş olarak işaretlemeniz gerekecek. Bu, sipari
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr ""
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Giriş listesi oluşturabilmek için önce bir bilete ihtiyacınız var."
 

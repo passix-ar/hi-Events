@@ -6,7 +6,6 @@ import {Attendee} from "../../../types.ts";
 interface CheckInOptionsModalProps {
     isOpen: boolean;
     attendee: Attendee | null;
-    isPending: boolean;
     onClose: () => void;
     onCheckIn: (action: 'check-in' | 'check-in-and-mark-order-as-paid') => void;
 }
@@ -14,7 +13,6 @@ interface CheckInOptionsModalProps {
 export const CheckInOptionsModal = ({
     isOpen,
     attendee,
-    isPending,
     onClose,
     onCheckIn
 }: CheckInOptionsModalProps) => {
@@ -37,7 +35,6 @@ export const CheckInOptionsModal = ({
                 <Button
                     leftSection={<IconUserCheck size={20}/>}
                     onClick={() => onCheckIn('check-in')}
-                    loading={isPending}
                     fullWidth
                 >
                     {t`Check in only`}
@@ -45,7 +42,6 @@ export const CheckInOptionsModal = ({
                 <Button
                     leftSection={<IconCreditCard size={20}/>}
                     onClick={() => onCheckIn('check-in-and-mark-order-as-paid')}
-                    loading={isPending}
                     variant="filled"
                     fullWidth
                 >

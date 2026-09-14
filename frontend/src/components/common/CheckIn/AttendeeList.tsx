@@ -8,7 +8,6 @@ interface AttendeeListProps {
     attendees: Attendee[] | undefined;
     products: { id: number; title: string; }[] | undefined;
     isLoading: boolean;
-    isCheckInPending: boolean;
     isDeletePending: boolean;
     allowOrdersAwaitingOfflinePaymentToCheckIn: boolean;
     onCheckInToggle: (attendee: Attendee) => void;
@@ -19,7 +18,6 @@ export const AttendeeList = ({
                                  attendees,
                                  products,
                                  isLoading,
-                                 isCheckInPending,
                                  isDeletePending,
                                  allowOrdersAwaitingOfflinePaymentToCheckIn,
                                  onCheckInToggle,
@@ -103,8 +101,8 @@ export const AttendeeList = ({
                                     onClickSound?.();
                                     onCheckInToggle(attendee);
                                 }}
-                                disabled={isCheckInPending || isDeletePending || attendee.status === 'CANCELLED'}
-                                loading={isCheckInPending || isDeletePending}
+                                disabled={isDeletePending || attendee.status === 'CANCELLED'}
+                                loading={isDeletePending}
                                 color={getButtonColor(attendee)}
                                 radius="md"
                             >
