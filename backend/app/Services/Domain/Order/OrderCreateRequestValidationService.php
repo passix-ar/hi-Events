@@ -261,6 +261,11 @@ class OrderCreateRequestValidationService
             promoCode: $promoCode
         );
 
+        $this->validateProductSaleWindow(
+            productIndex: $productIndex,
+            product: $product
+        );
+
         $this->validateProductQuantity(
             productIndex: $productIndex,
             productAndQuantities: $productAndQuantities,
@@ -364,6 +369,28 @@ class OrderCreateRequestValidationService
     /**
      * @throws ValidationException
      */
+    private function validateProductSaleWindow(int $productIndex, ProductDomainObject $product): void
+    {
+        if ($product->isBeforeSaleStartDate()) {
+            throw ValidationException::withMessages([
+                "products.$productIndex" => __(':product is not yet on sale', [
+                    'product' => $product->getTitle(),
+                ]),
+            ]);
+        }
+
+        if ($product->isAfterSaleEndDate()) {
+            throw ValidationException::withMessages([
+                "products.$productIndex" => __('Sales for :product have ended', [
+                    'product' => $product->getTitle(),
+                ]),
+            ]);
+        }
+    }
+
+    /**
+     * @throws ValidationException
+     */
     private function validateProductTypeAndPrice(
         EventDomainObject  $event,
         int                $productIndex,
@@ -423,7 +450,7 @@ class OrderCreateRequestValidationService
             }
 
             $selectedPrice = $productPrices?->first(fn(ProductPriceDomainObject $price) => $price->getId() === $priceId);
-            if ((int)$quantity > 0 && $selectedPrice?->getIsHidden()) {
+            if ((int)$quantity > 0 && $this->isPriceUnavailable($selectedPrice)) {
                 $errors["products.$productIndex.quantities.$quantityIndex.price_id"] = __('Invalid price ID');
             }
         }
@@ -431,6 +458,17 @@ class OrderCreateRequestValidationService
         if (!empty($errors)) {
             throw ValidationException::withMessages($errors);
         }
+    }
+
+    private function isPriceUnavailable(?ProductPriceDomainObject $price): bool
+    {
+        if ($price === null) {
+            return true;
+        }
+
+        return $price->getIsHidden()
+            || $price->isBeforeSaleStartDate()
+            || $price->isAfterSaleEndDate();
     }
 
     /**
