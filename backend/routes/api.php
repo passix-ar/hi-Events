@@ -569,7 +569,9 @@ $router->prefix('/public')->group(
             ->middleware('throttle:10,1');
 
         // Promo codes
-        $router->get('/events/{event_id}/promo-codes/{promo_code}', GetPromoCodePublic::class);
+        // Throttled: a public 'is this code valid' endpoint is a brute-force oracle otherwise.
+        $router->get('/events/{event_id}/promo-codes/{promo_code}', GetPromoCodePublic::class)
+            ->middleware('throttle:10,1');
 
         // Stripe payment gateway
         $router->post('/events/{event_id}/order/{order_short_id}/stripe/payment_intent', CreatePaymentIntentActionPublic::class)
