@@ -49,7 +49,7 @@ export const AttendeeDetails = ({attendee}: { attendee: Attendee }) => {
                     <div className={classes.value}>
                         {attendee.check_ins.map((checkIn) => (
                             <div key={checkIn.id}>
-                                <strong>{checkIn.check_in_list?.name}</strong> - {relativeDate(checkIn.created_at)}
+                                <strong>{checkIn.check_in_list?.name}</strong>{checkIn.created_at && ` - ${relativeDate(checkIn.created_at)}`}
                             </div>
                         ))}
                     </div>

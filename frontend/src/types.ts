@@ -669,17 +669,26 @@ export interface OtherListCheckIn {
     checked_in_at: string;
 }
 
-export type PublicCheckIn = Pick<AttendeeCheckIn, 'id' | 'order_id' | 'attendee_id' | 'check_in_list_id' | 'product_id' | 'event_id'>;
+// What the public check-in endpoints actually return (AttendeeCheckInPublicResource).
+export interface PublicCheckIn {
+    id: IdParam;
+    short_id: IdParam;
+    check_in_list_id: IdParam;
+    attendee_id: IdParam;
+    checked_in_at: string;
+    order_id: IdParam;
+}
 
 export interface AttendeeCheckIn {
     id: IdParam;
     attendee_id: IdParam;
     check_in_list_id: IdParam;
-    product_id: IdParam;
-    event_id: IdParam;
     short_id: IdParam;
-    order_id: IdParam;
-    created_at: string;
+    product_id?: IdParam; // admin only
+    event_id?: IdParam; // admin only
+    order_id?: IdParam; // public only
+    created_at?: string; // admin only
+    checked_in_at?: string; // public only
     check_in_list?: CheckInList;
 }
 

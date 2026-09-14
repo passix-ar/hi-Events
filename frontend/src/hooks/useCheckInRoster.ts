@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import {AxiosError} from "axios";
-import {Attendee, AttendeeCheckIn, IdParam} from "../types";
+import {Attendee, AttendeeCheckIn, IdParam, PublicCheckIn} from "../types";
 import {publicCheckInClient} from "../api/check-in.client";
 import {isSsr} from "../utilites/helpers";
 
@@ -67,9 +67,18 @@ const writeJson = (key: string, value: unknown) => {
     }
 };
 
+// The optimistic placeholder has no server record behind it yet, and its id is
+// the marker for that. Anything that needs the real check-in — undoing one, or
+// rolling a refused one back — keys off this instead of guessing from a blank field.
+const PENDING_ID_PREFIX = 'pending-';
+
+export const isPendingCheckIn = (checkIn?: AttendeeCheckIn): boolean =>
+    checkIn !== undefined && String(checkIn.id).startsWith(PENDING_ID_PREFIX);
+
 export type CheckInOutcome =
     | { status: 'queued' }
-    | { status: 'already-checked-in' };
+    | { status: 'already-checked-in' }
+    | { status: 'cancelled' };
 
 export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) => {
     const [state, setState] = useState<RosterState>(() => {
@@ -150,17 +159,23 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
             return {status: 'already-checked-in'};
         }
 
+        // The roster carries cancelled tickets — the server returns them so the
+        // door can see them — and the check-in is optimistic, so the refusal has
+        // to happen here. Otherwise the scanner goes green and the server's
+        // rejection only lands seconds later, with the person already inside.
+        if (attendee.status === 'CANCELLED') {
+            return {status: 'cancelled'};
+        }
+
         // Optimistic: the person is through the door now. The server confirms in
         // the background and replaces this placeholder with the real record.
         const placeholder: AttendeeCheckIn = {
-            id: `pending-${attendee.public_id}`,
+            id: `${PENDING_ID_PREFIX}${attendee.public_id}`,
             attendee_id: attendee.id as IdParam,
             check_in_list_id: '',
-            product_id: attendee.product_id,
-            event_id: '',
             short_id: '',
             order_id: attendee.order_id,
-            created_at: new Date().toISOString(),
+            checked_in_at: new Date().toISOString(),
         };
 
         setState(prev => {
@@ -189,6 +204,12 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         const batch = stateRef.current.pending;
         if (batch.length === 0) return;
 
+        // Only this batch leaves the queue when the round trip ends. Anything
+        // scanned while the request is in flight has to survive it: clearing the
+        // whole queue would drop it unsent, leaving the person marked as through
+        // the door and no record of it anywhere.
+        const batchIds = new Set(batch.map(p => p.publicId));
+
         flushingRef.current = true;
         setState(prev => ({...prev, syncing: true}));
 
@@ -199,9 +220,18 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                 QUEUE_REQUEST_TIMEOUT_MS,
             );
 
-            const confirmed = new Map<string, AttendeeCheckIn>();
-            (response.data ?? []).forEach((checkIn) => confirmed.set(String(checkIn.attendee_id), checkIn as unknown as AttendeeCheckIn));
+            const confirmed = new Map<string, PublicCheckIn>();
+            (response.data ?? []).forEach((checkIn) => confirmed.set(String(checkIn.attendee_id), checkIn));
             const errors = response.errors ?? {};
+
+            // An attendee the server confirmed is not a rejection, even when the
+            // same response also carries "already checked in" for them: that is the
+            // idempotent path after a lost response, and the person did go through.
+            const confirmedPublicIds = new Set(
+                stateRef.current.attendees
+                    .filter(a => a.id !== undefined && confirmed.has(String(a.id)))
+                    .map(a => a.public_id),
+            );
 
             setState(prev => {
                 const attendees = prev.attendees.map(a => {
@@ -214,12 +244,13 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                     }
                     return a;
                 });
+                const pending = prev.pending.filter(p => !batchIds.has(p.publicId));
                 writeJson(rosterKey(checkInListShortId), {savedAt: prev.loadedAt ?? Date.now(), attendees});
-                writeJson(queueKey(checkInListShortId), []);
-                return {...prev, attendees, pending: [], syncing: false};
+                writeJson(queueKey(checkInListShortId), pending);
+                return {...prev, attendees, pending, syncing: false};
             });
 
-            const firstError = Object.entries(errors)[0];
+            const firstError = Object.entries(errors).find(([publicId]) => !confirmedPublicIds.has(publicId));
             if (firstError) {
                 const attendee = stateRef.current.attendees.find(a => a.public_id === firstError[0]);
                 if (attendee) setRejected({attendee, message: firstError[1]});
@@ -236,14 +267,14 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
             if (isDefinitive) {
                 const message = (error as AxiosError<{ message?: string }>).response?.data?.message
                     ?? 'The server refused these check-ins';
-                const queuedIds = new Set(batch.map(p => p.publicId));
                 setState(prev => {
-                    const attendees = prev.attendees.map(a => queuedIds.has(a.public_id) && a.check_in?.short_id === ''
+                    const attendees = prev.attendees.map(a => batchIds.has(a.public_id) && isPendingCheckIn(a.check_in)
                         ? {...a, check_in: undefined}
                         : a);
+                    const pending = prev.pending.filter(p => !batchIds.has(p.publicId));
                     writeJson(rosterKey(checkInListShortId), {savedAt: prev.loadedAt ?? Date.now(), attendees});
-                    writeJson(queueKey(checkInListShortId), []);
-                    return {...prev, attendees, pending: [], syncing: false};
+                    writeJson(queueKey(checkInListShortId), pending);
+                    return {...prev, attendees, pending, syncing: false};
                 });
                 const first = stateRef.current.attendees.find(a => a.public_id === batch[0].publicId);
                 if (first) setRejected({attendee: first, message});
@@ -251,11 +282,13 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                 return;
             }
 
+            // The attempt counts against this batch only: a check-in queued while
+            // it was failing should not inherit an already-stretched backoff.
             const attempts = batch[0].attempts + 1;
             setState(prev => ({
                 ...prev,
                 syncing: false,
-                pending: prev.pending.map(p => ({...p, attempts})),
+                pending: prev.pending.map(p => batchIds.has(p.publicId) ? {...p, attempts} : p),
             }));
             const delay = Math.min(QUEUE_RETRY_MS * 2 ** Math.min(attempts, 4), QUEUE_MAX_RETRY_MS);
             retryTimerRef.current = setTimeout(() => {
@@ -266,13 +299,14 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         }
 
         flushingRef.current = false;
-        if (stateRef.current.pending.length > 0) flush();
     }, [checkInListShortId]);
 
-    // Flush whenever something is queued, and when the connection comes back.
+    // The single trigger for sending: whatever is left in the queue after a pass
+    // re-runs this. Depending on the array's identity rather than its length also
+    // catches the case where a batch leaves and the same number arrives behind it.
     useEffect(() => {
         if (state.pending.length > 0 && !flushingRef.current) flush();
-    }, [state.pending.length, flush]);
+    }, [state.pending, flush]);
 
     useEffect(() => {
         if (isSsr()) return;

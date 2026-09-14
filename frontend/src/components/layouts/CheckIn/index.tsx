@@ -11,7 +11,7 @@ import {ActionIcon, Modal} from "@mantine/core";
 import {SearchBar} from "../../common/SearchBar";
 import {IconInfoCircle, IconQrcode, IconVolume, IconVolumeOff} from "@tabler/icons-react";
 import {QRScannerComponent} from "../../common/AttendeeCheckInTable/QrScanner.tsx";
-import {useCheckInRoster} from "../../../hooks/useCheckInRoster.ts";
+import {isPendingCheckIn, useCheckInRoster} from "../../../hooks/useCheckInRoster.ts";
 import {NoResultsSplash} from "../../common/NoResultsSplash";
 import {Countdown} from "../../common/Countdown";
 import Truncate from "../../common/Truncate";
@@ -160,6 +160,13 @@ const CheckIn = () => {
             return false;
         }
 
+        if (outcome.status === 'cancelled') {
+            showError(scanFeedback(attendee,
+                <Trans>{attendee.first_name} {attendee.last_name}'s ticket is cancelled</Trans>));
+            playErrorSound();
+            return false;
+        }
+
         showSuccess(scanFeedback(attendee,
             <Trans>{attendee.first_name} <b>checked in</b> successfully</Trans>));
         playSuccessSound();
@@ -172,7 +179,7 @@ const CheckIn = () => {
         if (attendee.check_in) {
             // Undoing a check-in needs the server's record, so it waits for a
             // pending one to be confirmed first.
-            if (!attendee.check_in.short_id) {
+            if (isPendingCheckIn(attendee.check_in)) {
                 showError(t`This check-in is still syncing. Please try again in a moment.`);
                 return;
             }
@@ -515,7 +522,6 @@ const CheckIn = () => {
                 attendees={attendees}
                 products={products}
                 isLoading={roster.isLoading && roster.attendees.length === 0}
-                isCheckInPending={false}
                 isDeletePending={isCheckingOut}
                 allowOrdersAwaitingOfflinePaymentToCheckIn={allowOrdersAwaitingOfflinePaymentToCheckIn || false}
                 onCheckInToggle={handleCheckInToggle}
@@ -524,7 +530,6 @@ const CheckIn = () => {
             <CheckInOptionsModal
                 isOpen={checkInModalOpen}
                 attendee={selectedAttendee}
-                isPending={false}
                 onClose={() => {
                     checkInModalHandlers.close();
                     setSelectedAttendee(null);
