@@ -28,6 +28,10 @@ class AttendeeWithCheckInPublicResource extends JsonResource
             $this->mergeWhen($this->getCheckIn() !== null, [
                 'check_in' => new AttendeeCheckInPublicResource($this->getCheckIn()),
             ]),
+            'other_check_ins' => ($this->getOtherCheckIns() ?? collect())->map(fn($checkIn) => [
+                'check_in_list_name' => $checkIn->getCheckInList()?->getName(),
+                'checked_in_at' => $checkIn->getCreatedAt(),
+            ])->values(),
         ];
     }
 }

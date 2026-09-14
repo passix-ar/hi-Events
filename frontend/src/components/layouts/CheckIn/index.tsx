@@ -269,6 +269,21 @@ const CheckIn = () => {
             return false;
         }
 
+        // Lists are independent by design (general vs VIP), so this is not the
+        // server's decision: the scanner rejects and the person at the door can
+        // still let them through from the list, deliberately.
+        const enteredElsewhere = attendee.other_check_ins?.[0];
+        if (enteredElsewhere) {
+            const listName = enteredElsewhere.check_in_list_name ?? t`another list`;
+            const time = new Date(enteredElsewhere.checked_in_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            showError(scanFeedback(attendee,
+                <Trans>{attendee.first_name} {attendee.last_name} already entered at {time} via <b>{listName}</b></Trans>));
+            playErrorSound();
+            processedBarcodesRef.current.add(attendeePublicId);
+            isProcessingRef.current = false;
+            return false;
+        }
+
         const isAttendeeAwaitingPayment = attendee.status === 'AWAITING_PAYMENT';
 
         if (allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {

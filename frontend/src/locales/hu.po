@@ -27,6 +27,10 @@ msgstr "- Kattintson a visszavonáshoz"
 msgid "'There\\'s nothing to show yet'"
 msgstr ""
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "A(z) „{0}” már lefedi ezen jegyek egy részét. Ha mindkét lista ugyanahhoz a bejárathoz tartozik, inkább azt nyisd meg minden telefonon: a külön listák nem látják egymás bejelentkezéseit, így ugyanaz a jegy kétszer is bejuthat."
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr ""
@@ -39,16 +43,20 @@ msgstr "(üres)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:157
-#: src/components/layouts/CheckIn/index.tsx:264
+#: src/components/layouts/CheckIn/index.tsx:280
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} már belépett {time}-kor a(z) <0>{listName}</0> listán"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} már bejelentkezett"
 
-#: src/components/layouts/CheckIn/index.tsx:163
+#: src/components/layouts/CheckIn/index.tsx:164
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>sikeresen bejelentkezett</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:184
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>sikeresen kijelentkezett</0>"
 
@@ -468,7 +476,7 @@ msgstr "Műveletek"
 msgid "Activate"
 msgstr "Aktiválás"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "Aktiválás dátuma"
 
@@ -485,7 +493,7 @@ msgstr "Aktiválás dátuma"
 msgid "Active"
 msgstr "Aktív"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "Adjon leírást ehhez a bejelentkezési listához"
 
@@ -847,6 +855,10 @@ msgstr "Váratlan hiba történt."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Váratlan hiba történt. Kérjük, próbálja újra."
 
+#: src/components/layouts/CheckIn/index.tsx:277
+msgid "another list"
+msgstr "egy másik lista"
+
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
 msgstr "Válasz sikeresen frissítve."
@@ -1167,7 +1179,7 @@ msgstr "Résztvevői információk gyűjtése"
 msgid "Attendee Name"
 msgstr "Résztvevő neve"
 
-#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Résztvevő nem található"
 
@@ -1657,15 +1669,15 @@ msgstr "Bejelentkezési lista létrehozva"
 msgid "Check-In List deleted successfully"
 msgstr "Bejelentkezési lista sikeresen törölve"
 
-#: src/components/layouts/CheckIn/index.tsx:392
+#: src/components/layouts/CheckIn/index.tsx:408
 msgid "Check-in list has expired"
 msgstr "A bejelentkezési lista lejárt"
 
-#: src/components/layouts/CheckIn/index.tsx:409
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list is not active"
 msgstr "A bejelentkezési lista nem aktív"
 
-#: src/components/layouts/CheckIn/index.tsx:377
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list not found"
 msgstr "Bejelentkezési lista nem található"
 
@@ -1679,7 +1691,7 @@ msgstr "Bejelentkezési listák"
 msgid "Check-In Lists"
 msgstr "Bejelentkezési listák"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "A bejelentkezési listák lehetővé teszik a belépés ellenőrzését napokon, területeken vagy jegytípusokon keresztül. Megoszthat egy biztonságos bejelentkezési linket a személyzettel - nincs szükség fiókra."
 
@@ -2365,7 +2377,7 @@ msgstr "Termék létrehozása"
 msgid "Create a Promo Code"
 msgstr "Promóciós kód létrehozása"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "Jegy létrehozása"
 
@@ -2414,8 +2426,8 @@ msgid "Create Category"
 msgstr "Kategória létrehozása"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "Bejelentkezési lista létrehozása"
@@ -2859,7 +2871,7 @@ msgstr "Webhook törlése"
 msgid "Description"
 msgstr "Leírás"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "Leírás a bejelentkezési személyzet számára"
 
@@ -3762,7 +3774,7 @@ msgstr "Példák: \"Póló méret\", \"Étkezési preferencia\", \"Munkakör\""
 msgid "Exception"
 msgstr "Kivétel"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "Lejárati dátum"
 
@@ -5460,7 +5472,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -6815,7 +6827,7 @@ msgstr "Kérjük, folytassa az új lapon."
 msgid "Please create a product"
 msgstr "Kérjük, hozzon létre egy terméket."
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "Kérjük, hozzon létre egy jegyet."
 
@@ -7721,8 +7733,8 @@ msgstr "Jegytervezés mentése"
 msgid "Save VAT Settings"
 msgstr "ÁFA beállítások mentése"
 
-#: src/components/layouts/CheckIn/index.tsx:472
-#: src/components/layouts/CheckIn/index.tsx:482
+#: src/components/layouts/CheckIn/index.tsx:488
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Scan"
 msgstr "Beolvasás"
 
@@ -7778,7 +7790,7 @@ msgstr "Keresés név, e-mail vagy fiók alapján..."
 msgid "Search by name, email, or order #..."
 msgstr "Keresés név, e-mail vagy rendelési szám alapján..."
 
-#: src/components/layouts/CheckIn/index.tsx:468
+#: src/components/layouts/CheckIn/index.tsx:484
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Keresés név, rendelési szám, résztvevő azonosító vagy e-mail alapján..."
 
@@ -7986,7 +7998,7 @@ msgstr "Válassza ki az üzenetküldési szintet ehhez a fiókhoz. Ez szabályoz
 msgid "Select Ticket"
 msgstr "Jegy kiválasztása"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "Jegyek kiválasztása"
@@ -8853,7 +8865,7 @@ msgstr "Ez a promóciós kód érvénytelen."
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Az oldal háttérszíne. Borítókép használatakor ez átfedésként kerül alkalmazásra."
 
-#: src/components/layouts/CheckIn/index.tsx:382
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "The check-in list you are looking for does not exist."
 msgstr "A keresett bejelentkezési lista nem létezik."
 
@@ -9050,7 +9062,7 @@ msgstr "Ez a kategória még nem tartalmaz termékeket."
 msgid "This category is hidden from public view"
 msgstr "Ez a kategória el van rejtve a nyilvánosság elől."
 
-#: src/components/layouts/CheckIn/index.tsx:175
+#: src/components/layouts/CheckIn/index.tsx:176
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Ez a bejelentkezés még szinkronizálódik. Próbáld újra egy pillanat múlva."
 
@@ -9058,7 +9070,7 @@ msgstr "Ez a bejelentkezés még szinkronizálódik. Próbáld újra egy pillana
 msgid "This check-in list has expired"
 msgstr "Ez a bejelentkezési lista lejárt."
 
-#: src/components/layouts/CheckIn/index.tsx:397
+#: src/components/layouts/CheckIn/index.tsx:413
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Ez a bejelentkezési lista lejárt, és már nem használható bejelentkezéshez."
 
@@ -9070,7 +9082,7 @@ msgstr "Ez a bejelentkezési lista aktív."
 msgid "This check-in list is not active yet"
 msgstr "Ez a bejelentkezési lista még nem aktív."
 
-#: src/components/layouts/CheckIn/index.tsx:414
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Ez a bejelentkezési lista még nem aktív, és nem használható bejelentkezéshez."
 
@@ -9229,7 +9241,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Ez a jelszó-visszaállító link érvénytelen vagy lejárt."
 
-#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:230
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Ez a jegy most lett beolvasva. Kérjük, várjon mielőtt újra beolvassa."
 
@@ -9577,11 +9589,11 @@ msgstr "Igaz, ha fizetés folyamatban"
 msgid "Try another email"
 msgstr "Próbáljon másik e-mailt"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound off"
 msgstr "Hang kikapcsolása"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound on"
 msgstr "Hang bekapcsolása"
 
@@ -9611,8 +9623,8 @@ msgstr "Jegy típusa"
 msgid "Typography"
 msgstr "Tipográfia"
 
-#: src/components/layouts/CheckIn/index.tsx:194
-#: src/components/layouts/CheckIn/index.tsx:196
+#: src/components/layouts/CheckIn/index.tsx:195
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "Unable to check out attendee"
 msgstr "Nem sikerült kijelentkezni a résztvevőnek."
 
@@ -9632,7 +9644,7 @@ msgstr "Nem sikerült kérdést létrehozni. Kérjük, ellenőrizze adatait."
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Nem sikerült lekérni a résztvevőt."
 
@@ -10090,7 +10102,7 @@ msgstr "Regisztrált résztvevők megtekintése, szerkesztése és exportálása
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP bejelentkezési lista"
 
@@ -10106,7 +10118,7 @@ msgstr "Láthatóság"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "Csak a bejelentkezési személyzet látja. Segít azonosítani ezt a listát bejelentkezéskor."
 
@@ -10437,11 +10449,11 @@ msgstr "Amikor egy megrendelés visszatérítésre került"
 msgid "When an order is updated"
 msgstr "Amikor egy megrendelés frissül"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "Amikor a bejelentkezés lezárul"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "Amikor a bejelentkezés megnyílik"
 
@@ -10473,7 +10485,7 @@ msgstr "Ha az offline fizetések engedélyezve vannak, a felhasználók befejezh
 msgid "Which product does this section sell seats for?"
 msgstr "Melyik termékhez árul ülőhelyeket ez a szekció?"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "Mely jegyeket kell ehhez a bejelentkezési listához társítani?"
 
@@ -10568,8 +10580,8 @@ msgstr "<0>{0}</0> megszemélyesítése ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Részleges visszatérítést bocsát ki. A vásárló {0} {1} összeget kap vissza."
 
-#: src/components/layouts/CheckIn/index.tsx:189
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:190
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "You are offline"
 msgstr "Offline állapotban van."
 
@@ -10593,8 +10605,8 @@ msgstr "Nem archiválhatja a fiókján lévő utolsó aktív szervezőt."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Nem módosíthatja a terméktípust, mivel ehhez a termékhez résztvevők vannak társítva."
 
-#: src/components/layouts/CheckIn/index.tsx:212
-#: src/components/layouts/CheckIn/index.tsx:281
+#: src/components/layouts/CheckIn/index.tsx:213
+#: src/components/layouts/CheckIn/index.tsx:297
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Nem jelentkezhet be kifizetetlen megrendeléssel rendelkező résztvevőket. Ez a beállítás az eseménybeállításokban módosítható."
 
@@ -10692,7 +10704,7 @@ msgstr "Manuálisan kell fizetettként megjelölnie egy megrendelést. Ez a megr
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr ""
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Szüksége lesz egy jegyre, mielőtt létrehozhat egy bejelentkezési listát."
 

@@ -28,6 +28,10 @@ msgstr "- Klik om te verwijderen"
 msgid "'There\\'s nothing to show yet'"
 msgstr ""
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "\"{0}\" dekt al enkele van deze tickets. Als beide lijsten voor dezelfde deur zijn, open dan die lijst op elke telefoon: aparte lijsten zien elkaars check-ins niet, dus hetzelfde ticket zou twee keer binnen kunnen komen."
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr ""
@@ -40,16 +44,20 @@ msgstr "(leeg)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:157
-#: src/components/layouts/CheckIn/index.tsx:264
+#: src/components/layouts/CheckIn/index.tsx:280
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} is om {time} al binnengekomen via <0>{listName}</0>"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} is al ingecheckt"
 
-#: src/components/layouts/CheckIn/index.tsx:163
+#: src/components/layouts/CheckIn/index.tsx:164
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>ingecheckt</0> succesvol"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:184
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>uitgevinkt</0> succesvol"
 
@@ -469,7 +477,7 @@ msgstr "Acties"
 msgid "Activate"
 msgstr "Activeer"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "Activeringsdatum"
 
@@ -486,7 +494,7 @@ msgstr "Activeringsdatum"
 msgid "Active"
 msgstr "Actief"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "Voeg een beschrijving toe voor deze check-in lijst"
 
@@ -848,6 +856,10 @@ msgstr "Er is een onverwachte fout opgetreden."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
 
+#: src/components/layouts/CheckIn/index.tsx:277
+msgid "another list"
+msgstr "een andere lijst"
+
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
 msgstr "Antwoord succesvol bijgewerkt."
@@ -1168,7 +1180,7 @@ msgstr "Verzameling deelnemersinformatie"
 msgid "Attendee Name"
 msgstr "Deelnemer Naam"
 
-#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Deelnemer niet gevonden"
 
@@ -1658,15 +1670,15 @@ msgstr "Check-In Lijst Aangemaakt!"
 msgid "Check-In List deleted successfully"
 msgstr "Check-in lijst succesvol verwijderd"
 
-#: src/components/layouts/CheckIn/index.tsx:392
+#: src/components/layouts/CheckIn/index.tsx:408
 msgid "Check-in list has expired"
 msgstr "Check-in lijst is verlopen"
 
-#: src/components/layouts/CheckIn/index.tsx:409
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list is not active"
 msgstr "Check-in lijst is niet actief"
 
-#: src/components/layouts/CheckIn/index.tsx:377
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list not found"
 msgstr "Check-in lijst niet gevonden"
 
@@ -1680,7 +1692,7 @@ msgstr "Inchecklijsten"
 msgid "Check-In Lists"
 msgstr "Inchecklijsten"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "Check-in lijsten laten je toegang controleren per dag, gebied of tickettype. Je kunt een beveiligde check-in link delen met personeel — geen account vereist."
 
@@ -2366,7 +2378,7 @@ msgstr "Een product maken"
 msgid "Create a Promo Code"
 msgstr "Maak een Promo Code"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "Een ticket maken"
 
@@ -2415,8 +2427,8 @@ msgid "Create Category"
 msgstr "Categorie maken"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "Check-in lijst maken"
@@ -2860,7 +2872,7 @@ msgstr "Webhook verwijderen"
 msgid "Description"
 msgstr "Beschrijving"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "Beschrijving voor incheckpersoneel"
 
@@ -3763,7 +3775,7 @@ msgstr "Voorbeelden: \"T-shirt maat\", \"Maaltijdvoorkeur\", \"Functietitel\""
 msgid "Exception"
 msgstr "Uitzondering"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "Vervaldatum"
 
@@ -5461,7 +5473,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -6816,7 +6828,7 @@ msgstr "Ga verder in het nieuwe tabblad"
 msgid "Please create a product"
 msgstr "Maak een product"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "Maak een ticket aan"
 
@@ -7722,8 +7734,8 @@ msgstr "Ticketontwerp Opslaan"
 msgid "Save VAT Settings"
 msgstr "BTW-instellingen opslaan"
 
-#: src/components/layouts/CheckIn/index.tsx:472
-#: src/components/layouts/CheckIn/index.tsx:482
+#: src/components/layouts/CheckIn/index.tsx:488
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Scan"
 msgstr "Scannen"
 
@@ -7779,7 +7791,7 @@ msgstr "Zoeken op naam, e-mail of account..."
 msgid "Search by name, email, or order #..."
 msgstr "Zoeken op naam, e-mail of bestelnummer..."
 
-#: src/components/layouts/CheckIn/index.tsx:468
+#: src/components/layouts/CheckIn/index.tsx:484
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Zoek op naam, ordernummer, aanwezigheidsnummer of e-mail..."
 
@@ -7987,7 +7999,7 @@ msgstr "Selecteer het berichtenniveau voor dit account. Dit bepaalt berichtlimie
 msgid "Select Ticket"
 msgstr "Selecteer ticket"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "Kies tickets"
@@ -8854,7 +8866,7 @@ msgstr "Die promotiecode is ongeldig"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "De achtergrondkleur van de pagina. Bij gebruik van een omslagafbeelding wordt dit als overlay toegepast."
 
-#: src/components/layouts/CheckIn/index.tsx:382
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "The check-in list you are looking for does not exist."
 msgstr "De check-in lijst die je zoekt bestaat niet."
 
@@ -9051,7 +9063,7 @@ msgstr "Deze categorie heeft nog geen producten."
 msgid "This category is hidden from public view"
 msgstr "Deze categorie is niet zichtbaar voor het publiek"
 
-#: src/components/layouts/CheckIn/index.tsx:175
+#: src/components/layouts/CheckIn/index.tsx:176
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Deze check-in wordt nog gesynchroniseerd. Probeer het zo opnieuw."
 
@@ -9059,7 +9071,7 @@ msgstr "Deze check-in wordt nog gesynchroniseerd. Probeer het zo opnieuw."
 msgid "This check-in list has expired"
 msgstr "Deze check-in lijst is verlopen"
 
-#: src/components/layouts/CheckIn/index.tsx:397
+#: src/components/layouts/CheckIn/index.tsx:413
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Deze check-ins lijst is verlopen en niet langer beschikbaar voor check-ins."
 
@@ -9071,7 +9083,7 @@ msgstr "Deze check-in lijst is actief"
 msgid "This check-in list is not active yet"
 msgstr "Deze check-in lijst is nog niet actief"
 
-#: src/components/layouts/CheckIn/index.tsx:414
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Deze check-ins lijst is nog niet actief en is niet beschikbaar voor check-ins."
 
@@ -9230,7 +9242,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Deze vraag is alleen zichtbaar voor de organisator van het evenement."
 
-#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:230
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Dit ticket is net gescand. Wacht even voordat u opnieuw scant."
 
@@ -9578,11 +9590,11 @@ msgstr "Waar als betaling in behandeling"
 msgid "Try another email"
 msgstr "Probeer een ander e-mailadres"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound off"
 msgstr "Geluid uitschakelen"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound on"
 msgstr "Geluid inschakelen"
 
@@ -9612,8 +9624,8 @@ msgstr "Type ticket"
 msgid "Typography"
 msgstr "Typografie"
 
-#: src/components/layouts/CheckIn/index.tsx:194
-#: src/components/layouts/CheckIn/index.tsx:196
+#: src/components/layouts/CheckIn/index.tsx:195
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "Unable to check out attendee"
 msgstr "Deelnemer kan niet worden uitgecheckt"
 
@@ -9633,7 +9645,7 @@ msgstr "Kan geen vraag maken. Controleer uw gegevens"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Kan deelnemer niet ophalen"
 
@@ -10091,7 +10103,7 @@ msgstr "Bekijk, bewerk en exporteer je geregistreerde deelnemers."
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP check-in lijst"
 
@@ -10107,7 +10119,7 @@ msgstr "Zichtbaarheid"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "Alleen zichtbaar voor check-in personeel. Helpt deze lijst te identificeren tijdens check-in."
 
@@ -10438,11 +10450,11 @@ msgstr "Wanneer een bestelling wordt terugbetaald"
 msgid "When an order is updated"
 msgstr "Wanneer een bestelling wordt bijgewerkt"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "Wanneer check-in sluit"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "Wanneer check-in opent"
 
@@ -10474,7 +10486,7 @@ msgstr "Als offline betalingen zijn ingeschakeld, kunnen gebruikers hun bestelli
 msgid "Which product does this section sell seats for?"
 msgstr "Voor welk product verkoopt deze sectie stoelen?"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "Welke tickets moeten aan deze inchecklijst worden gekoppeld?"
 
@@ -10569,8 +10581,8 @@ msgstr "U imiteert <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "U geeft een gedeeltelijke terugbetaling uit. De klant krijgt {0} {1} terugbetaald."
 
-#: src/components/layouts/CheckIn/index.tsx:189
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:190
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "You are offline"
 msgstr "Je bent offline"
 
@@ -10594,8 +10606,8 @@ msgstr "U kunt de laatste actieve organisator van uw account niet archiveren."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Je kunt het producttype niet wijzigen omdat er deelnemers aan dit product zijn gekoppeld."
 
-#: src/components/layouts/CheckIn/index.tsx:212
-#: src/components/layouts/CheckIn/index.tsx:281
+#: src/components/layouts/CheckIn/index.tsx:213
+#: src/components/layouts/CheckIn/index.tsx:297
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Je kunt deelnemers met onbetaalde bestellingen niet inchecken. Je kunt deze instelling wijzigen in de evenementinstellingen."
 
@@ -10693,7 +10705,7 @@ msgstr "Je moet een bestelling handmatig als betaald markeren. Dit kun je doen o
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr ""
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Je hebt een ticket nodig voordat je een inchecklijst kunt maken."
 
