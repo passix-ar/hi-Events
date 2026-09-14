@@ -661,12 +661,6 @@ export interface Attendee {
     seat_label?: string | null;
     check_in?: AttendeeCheckIn; // Use in contexts where a single check is expected, like dealing with a check-in list
     check_ins?: AttendeeCheckIn[];
-    other_check_ins?: OtherListCheckIn[]; // Check-ins on other lists of the same event (public check-in endpoints)
-}
-
-export interface OtherListCheckIn {
-    check_in_list_name: string | null;
-    checked_in_at: string;
 }
 
 export type PublicCheckIn = Pick<AttendeeCheckIn, 'id' | 'order_id' | 'attendee_id' | 'check_in_list_id' | 'product_id' | 'event_id'>;

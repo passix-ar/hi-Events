@@ -13,7 +13,6 @@ use HiEvents\Http\DTO\QueryParamsDTO;
 use HiEvents\Repository\Eloquent\Value\Relationship;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
-use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
 use Illuminate\Contracts\Pagination\Paginator;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -22,7 +21,6 @@ class GetCheckInListAttendeesPublicHandler
     public function __construct(
         private readonly AttendeeRepositoryInterface    $attendeeRepository,
         private readonly CheckInListRepositoryInterface $checkInListRepository,
-        private readonly AttendeeOtherListCheckInsService $otherListCheckInsService,
     )
     {
     }
@@ -47,7 +45,11 @@ class GetCheckInListAttendeesPublicHandler
 
         $attendees = $this->attendeeRepository->getAttendeesByCheckInShortId($shortId, $queryParams);
 
-        $this->otherListCheckInsService->attach($attendees->getCollection(), $checkInList);
+        // Set the check-in for each attendee
+        $attendees->getCollection()->transform(function (AttendeeDomainObject $attendee) use ($checkInList) {
+            $attendee->setCheckIn($attendee->getCheckIns()?->first(fn ($checkIn) => $checkIn->getCheckInListId() === $checkInList->getId()));
+            return $attendee;
+        });
 
         return $attendees;
     }

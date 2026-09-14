@@ -23,9 +23,6 @@ class AttendeeDomainObject extends Generated\AttendeeDomainObjectAbstract implem
     /** @var Collection<AttendeeCheckInDomainObject>|null */
     private ?Collection $checkIns = null;
 
-    /** @var Collection<AttendeeCheckInDomainObject>|null Check-ins on other lists of the same event */
-    private ?Collection $otherCheckIns = null;
-
     public static function getDefaultSort(): string
     {
         return self::CREATED_AT;
@@ -140,16 +137,5 @@ class AttendeeDomainObject extends Generated\AttendeeDomainObjectAbstract implem
     public function getCheckIns(): ?Collection
     {
         return $this->checkIns;
-    }
-
-    public function setOtherCheckIns(?Collection $otherCheckIns): AttendeeDomainObject
-    {
-        $this->otherCheckIns = $otherCheckIns;
-        return $this;
-    }
-
-    public function getOtherCheckIns(): ?Collection
-    {
-        return $this->otherCheckIns;
     }
 }

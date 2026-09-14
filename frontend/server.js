@@ -51,13 +51,6 @@ async function main() {
     } else {
         app.use(compression());
         app.use(base, sirv(path.join(__dirname, "./dist/client"), { extensions: [] }));
-
-        // A hashed chunk that no longer exists (the page was open before a deploy)
-        // must be a real 404, not the SPA shell with a 200: the browser would try
-        // to run HTML as a module and the page would break with no recovery.
-        app.use(`${base}assets`, (req, res) => {
-            res.status(404).end();
-        });
     }
 
     const getViteEnvironmentVariables = () => {

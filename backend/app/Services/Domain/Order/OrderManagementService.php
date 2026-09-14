@@ -74,10 +74,7 @@ class OrderManagementService
         return $this->orderRepository->create([
             'event_id' => $eventId,
             'short_id' => IdHelper::shortId(IdHelper::ORDER_PREFIX),
-            // Fixed format, not toString(): that one is translated, and with an
-            // English app locale falling back to Spanish it writes "Sep.", which
-            // Postgres rejects as a timestamp. Same in DateHelper.
-            'reserved_until' => $reservedUntil->toDateTimeString(),
+            'reserved_until' => $reservedUntil->toString(),
             'status' => OrderStatus::RESERVED->name,
             'session_id' => $sessionId,
             'currency' => $event->getCurrency(),

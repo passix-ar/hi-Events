@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\DB;
  */
 class AttendeeRepository extends BaseRepository implements AttendeeRepositoryInterface
 {
-    private const CHECK_IN_ROSTER_MAX_PER_PAGE = 250;
-
     protected function getModel(): string
     {
         return Attendee::class;
@@ -132,26 +130,13 @@ class AttendeeRepository extends BaseRepository implements AttendeeRepositoryInt
             ->join('check_in_lists', 'check_in_lists.id', '=', 'product_check_in_lists.check_in_list_id')
             ->where('check_in_lists.short_id', $shortId)
             ->whereIn('attendees.status',[AttendeeStatus::ACTIVE->name, AttendeeStatus::CANCELLED->name, AttendeeStatus::AWAITING_PAYMENT->name])
-            ->whereIn('orders.status', [OrderStatus::COMPLETED->name, OrderStatus::AWAITING_OFFLINE_PAYMENT->name])
-            // Without a stable order, offset pagination can skip or repeat attendees
-            // between pages, and the check-in scanner downloads every page.
-            ->orderBy('attendees.id');
+            ->whereIn('orders.status', [OrderStatus::COMPLETED->name, OrderStatus::AWAITING_OFFLINE_PAYMENT->name]);
 
         $this->loadRelation(new Relationship(AttendeeCheckInDomainObject::class, name: 'check_ins'));
 
-        // The door scanner downloads the whole list up front, so this endpoint
-        // allows bigger pages than the default cap of 100. The cap is restored
-        // afterwards so it does not leak into other queries on this repository.
-        $defaultMaxPerPage = $this->maxPerPage;
-        $this->setMaxPerPage(self::CHECK_IN_ROSTER_MAX_PER_PAGE);
-
-        try {
-            return $this->simplePaginateWhere(
-                where: $where,
-                limit: min($params->per_page, self::CHECK_IN_ROSTER_MAX_PER_PAGE),
-            );
-        } finally {
-            $this->setMaxPerPage($defaultMaxPerPage);
-        }
+        return $this->simplePaginateWhere(
+            where: $where,
+            limit: min($params->per_page, 250),
+        );
     }
 }
