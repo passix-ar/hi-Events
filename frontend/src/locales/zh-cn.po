@@ -27,6 +27,10 @@ msgstr "- 点击取消发布"
 msgid "'There\\'s nothing to show yet'"
 msgstr ""
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "“{0}”已包含其中部分票种。如果两个名单用于同一入口，请在每部手机上打开那个名单：不同名单互不可见签到记录，同一张票可能重复入场。"
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr ""
@@ -39,16 +43,20 @@ msgstr "(空)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:157
-#: src/components/layouts/CheckIn/index.tsx:264
+#: src/components/layouts/CheckIn/index.tsx:280
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} 已于 {time} 通过<0>{listName}</0>入场"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} 已签到"
 
-#: src/components/layouts/CheckIn/index.tsx:163
+#: src/components/layouts/CheckIn/index.tsx:164
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>签到</0>成功"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:184
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>签退</0>成功"
 
@@ -468,7 +476,7 @@ msgstr "操作"
 msgid "Activate"
 msgstr "激活"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "激活日期"
 
@@ -485,7 +493,7 @@ msgstr "激活日期"
 msgid "Active"
 msgstr "活跃"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "为此签到列表添加描述"
 
@@ -847,6 +855,10 @@ msgstr "出现意外错误。"
 msgid "An unexpected error occurred. Please try again."
 msgstr "出现意外错误。请重试。"
 
+#: src/components/layouts/CheckIn/index.tsx:277
+msgid "another list"
+msgstr "其他名单"
+
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
 msgstr "答案更新成功。"
@@ -1167,7 +1179,7 @@ msgstr "参与者信息收集"
 msgid "Attendee Name"
 msgstr "参会者姓名"
 
-#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "未找到参与者"
 
@@ -1657,15 +1669,15 @@ msgstr "签到列表已创建！"
 msgid "Check-In List deleted successfully"
 msgstr "签到列表删除成功"
 
-#: src/components/layouts/CheckIn/index.tsx:392
+#: src/components/layouts/CheckIn/index.tsx:408
 msgid "Check-in list has expired"
 msgstr "签到列表已过期"
 
-#: src/components/layouts/CheckIn/index.tsx:409
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list is not active"
 msgstr "签到列表未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:377
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list not found"
 msgstr "未找到签到列表"
 
@@ -1679,7 +1691,7 @@ msgstr "签到列表"
 msgid "Check-In Lists"
 msgstr "签到列表"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "签到列表让您可以按天、区域或票种控制入场。您可以与工作人员共享安全的签到链接 — 无需账户。"
 
@@ -2365,7 +2377,7 @@ msgstr "创建一个产品"
 msgid "Create a Promo Code"
 msgstr "创建促销代码"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "创建票单"
 
@@ -2414,8 +2426,8 @@ msgid "Create Category"
 msgstr "创建类别"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "创建签到列表"
@@ -2859,7 +2871,7 @@ msgstr "删除 Webhook"
 msgid "Description"
 msgstr "说明"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "签到工作人员的描述"
 
@@ -3762,7 +3774,7 @@ msgstr "示例：\"T恤尺码\"、\"餐饮偏好\"、\"职位\""
 msgid "Exception"
 msgstr "异常"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "过期日期"
 
@@ -5460,7 +5472,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -6815,7 +6827,7 @@ msgstr "请在新标签页中继续"
 msgid "Please create a product"
 msgstr "请创建一个产品"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "请创建一张票"
 
@@ -7721,8 +7733,8 @@ msgstr "保存票券设计"
 msgid "Save VAT Settings"
 msgstr "保存增值税设置"
 
-#: src/components/layouts/CheckIn/index.tsx:472
-#: src/components/layouts/CheckIn/index.tsx:482
+#: src/components/layouts/CheckIn/index.tsx:488
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Scan"
 msgstr "扫描"
 
@@ -7778,7 +7790,7 @@ msgstr "按姓名、电子邮件或账户搜索..."
 msgid "Search by name, email, or order #..."
 msgstr "按姓名、电子邮件或订单号搜索..."
 
-#: src/components/layouts/CheckIn/index.tsx:468
+#: src/components/layouts/CheckIn/index.tsx:484
 msgid "Search by name, order #, attendee # or email..."
 msgstr "按姓名、订单号、参与者号或电子邮件搜索..."
 
@@ -7986,7 +7998,7 @@ msgstr "为此帐户选择消息级别。这控制消息限制和链接权限。
 msgid "Select Ticket"
 msgstr "选择机票"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "选择票"
@@ -8853,7 +8865,7 @@ msgstr "促销代码无效"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "页面的背景颜色。使用封面图片时,此颜色将作为叠加层应用。"
 
-#: src/components/layouts/CheckIn/index.tsx:382
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "The check-in list you are looking for does not exist."
 msgstr "您查找的签到列表不存在。"
 
@@ -9050,7 +9062,7 @@ msgstr "此类别尚无任何产品。"
 msgid "This category is hidden from public view"
 msgstr "此类别对公众隐藏"
 
-#: src/components/layouts/CheckIn/index.tsx:175
+#: src/components/layouts/CheckIn/index.tsx:176
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "此签到仍在同步中，请稍后再试。"
 
@@ -9058,7 +9070,7 @@ msgstr "此签到仍在同步中，请稍后再试。"
 msgid "This check-in list has expired"
 msgstr "此签到列表已过期"
 
-#: src/components/layouts/CheckIn/index.tsx:397
+#: src/components/layouts/CheckIn/index.tsx:413
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "此签到列表已过期，不再可用于签到。"
 
@@ -9070,7 +9082,7 @@ msgstr "此签到列表已激活"
 msgid "This check-in list is not active yet"
 msgstr "此签到列表尚未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:414
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "此签到列表尚未激活，不能用于签到。"
 
@@ -9229,7 +9241,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "此重置密码链接无效或已过期。"
 
-#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:230
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "此门票刚刚被扫描。请等待后再次扫描。"
 
@@ -9577,11 +9589,11 @@ msgstr "如果付款待处理则为真"
 msgid "Try another email"
 msgstr "尝试其他邮箱"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound off"
 msgstr "关闭声音"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound on"
 msgstr "开启声音"
 
@@ -9611,8 +9623,8 @@ msgstr "门票类型"
 msgid "Typography"
 msgstr "排版"
 
-#: src/components/layouts/CheckIn/index.tsx:194
-#: src/components/layouts/CheckIn/index.tsx:196
+#: src/components/layouts/CheckIn/index.tsx:195
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "Unable to check out attendee"
 msgstr "无法签退参与者"
 
@@ -9632,7 +9644,7 @@ msgstr "无法创建问题。请检查您的详细信息"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "无法获取参与者"
 
@@ -10090,7 +10102,7 @@ msgstr "查看、编辑和导出您的注册参与者。"
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP签到列表"
 
@@ -10106,7 +10118,7 @@ msgstr "可见性"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "仅对签到工作人员可见。有助于在签到期间识别此列表。"
 
@@ -10437,11 +10449,11 @@ msgstr "当订单被退款时"
 msgid "When an order is updated"
 msgstr "当订单被更新时"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "签到何时关闭"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "签到何时开放"
 
@@ -10473,7 +10485,7 @@ msgstr "启用线下支付后，用户可以完成订单并收到门票。他们
 msgid "Which product does this section sell seats for?"
 msgstr "此分区为哪个产品销售座位？"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "哪些票应与此签到列表关联？"
 
@@ -10568,8 +10580,8 @@ msgstr "您正在模拟 <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "您正在发出部分退款。客户将获得 {0} {1} 的退款。"
 
-#: src/components/layouts/CheckIn/index.tsx:189
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:190
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "You are offline"
 msgstr "您处于离线状态"
 
@@ -10593,8 +10605,8 @@ msgstr "您无法归档账户中最后一个活跃的主办方。"
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "您无法更改产品类型，因为有与该产品关联的参会者。"
 
-#: src/components/layouts/CheckIn/index.tsx:212
-#: src/components/layouts/CheckIn/index.tsx:281
+#: src/components/layouts/CheckIn/index.tsx:213
+#: src/components/layouts/CheckIn/index.tsx:297
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "您无法为未支付订单的与会者签到。此设置可在活动设置中更改。"
 
@@ -10692,7 +10704,7 @@ msgstr "您必须手动将订单标记为已支付。这可以在订单管理页
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr ""
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "在创建签到列表之前，您需要先获得票。"
 

@@ -27,6 +27,10 @@ msgstr "- Zum Rückgängigmachen der Veröffentlichung klicken"
 msgid "'There\\'s nothing to show yet'"
 msgstr ""
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "„{0}“ deckt bereits einige dieser Tickets ab. Wenn beide Listen für denselben Eingang sind, öffne stattdessen diese Liste auf jedem Telefon: getrennte Listen sehen die Check-ins der anderen nicht, und dasselbe Ticket könnte zweimal hineinkommen."
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr ""
@@ -39,16 +43,20 @@ msgstr "(leer)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:157
-#: src/components/layouts/CheckIn/index.tsx:264
+#: src/components/layouts/CheckIn/index.tsx:280
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} ist um {time} bereits über <0>{listName}</0> eingetreten"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} ist bereits eingecheckt"
 
-#: src/components/layouts/CheckIn/index.tsx:163
+#: src/components/layouts/CheckIn/index.tsx:164
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>erfolgreich eingecheckt</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:184
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>erfolgreich ausgecheckt</0>"
 
@@ -468,7 +476,7 @@ msgstr "Aktionen"
 msgid "Activate"
 msgstr "Aktivieren"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "Aktivierungsdatum"
 
@@ -485,7 +493,7 @@ msgstr "Aktivierungsdatum"
 msgid "Active"
 msgstr "Aktiv"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "Fügen Sie eine Beschreibung für diese Eincheckliste hinzu"
 
@@ -847,6 +855,10 @@ msgstr "Ein unerwarteter Fehler ist aufgetreten."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
 
+#: src/components/layouts/CheckIn/index.tsx:277
+msgid "another list"
+msgstr "eine andere Liste"
+
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
 msgstr "Antwort erfolgreich aktualisiert."
@@ -1167,7 +1179,7 @@ msgstr "Erfassung von Teilnehmerinformationen"
 msgid "Attendee Name"
 msgstr "Teilnehmername"
 
-#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Teilnehmer nicht gefunden"
 
@@ -1657,15 +1669,15 @@ msgstr "Check-In-Liste erstellt!"
 msgid "Check-In List deleted successfully"
 msgstr "Eincheckliste erfolgreich gelöscht"
 
-#: src/components/layouts/CheckIn/index.tsx:392
+#: src/components/layouts/CheckIn/index.tsx:408
 msgid "Check-in list has expired"
 msgstr "Die Eincheckliste ist abgelaufen"
 
-#: src/components/layouts/CheckIn/index.tsx:409
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list is not active"
 msgstr "Die Eincheckliste ist nicht aktiv"
 
-#: src/components/layouts/CheckIn/index.tsx:377
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list not found"
 msgstr "Eincheckliste nicht gefunden"
 
@@ -1679,7 +1691,7 @@ msgstr "Check-in-Listen"
 msgid "Check-In Lists"
 msgstr "Einchecklisten"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "Check-In-Listen ermöglichen die Kontrolle des Einlasses über Tage, Bereiche oder Tickettypen hinweg. Sie können einen sicheren Check-In-Link mit dem Personal teilen – kein Konto erforderlich."
 
@@ -2365,7 +2377,7 @@ msgstr "Ein Produkt erstellen"
 msgid "Create a Promo Code"
 msgstr "Einen Promo-Code erstellen"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "Ticket erstellen"
 
@@ -2414,8 +2426,8 @@ msgid "Create Category"
 msgstr "Kategorie erstellen"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "Eincheckliste erstellen"
@@ -2859,7 +2871,7 @@ msgstr "Webhook löschen"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "Beschreibung für das Eincheckpersonal"
 
@@ -3762,7 +3774,7 @@ msgstr "Beispiele: \"T-Shirt-Größe\", \"Essenspräferenz\", \"Berufsbezeichnun
 msgid "Exception"
 msgstr "Ausnahme"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "Ablaufdatum"
 
@@ -5460,7 +5472,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -6815,7 +6827,7 @@ msgstr "Bitte fahren Sie im neuen Tab fort"
 msgid "Please create a product"
 msgstr "Bitte erstellen Sie ein Produkt"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "Bitte erstellen Sie ein Ticket"
 
@@ -7721,8 +7733,8 @@ msgstr "Ticketdesign speichern"
 msgid "Save VAT Settings"
 msgstr "Umsatzsteuereinstellungen speichern"
 
-#: src/components/layouts/CheckIn/index.tsx:472
-#: src/components/layouts/CheckIn/index.tsx:482
+#: src/components/layouts/CheckIn/index.tsx:488
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Scan"
 msgstr "Scannen"
 
@@ -7778,7 +7790,7 @@ msgstr "Nach Name, E-Mail oder Konto suchen..."
 msgid "Search by name, email, or order #..."
 msgstr "Suchen Sie nach Namen, E-Mail oder Bestellnummer ..."
 
-#: src/components/layouts/CheckIn/index.tsx:468
+#: src/components/layouts/CheckIn/index.tsx:484
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Suchen nach Name, Bestellnummer, Teilnehmernummer oder E-Mail..."
 
@@ -7986,7 +7998,7 @@ msgstr "Wählen Sie die Messaging-Stufe für dieses Konto. Dies steuert Nachrich
 msgid "Select Ticket"
 msgstr "Ticket auswählen"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "Tickets auswählen"
@@ -8853,7 +8865,7 @@ msgstr "Dieser Aktionscode ist ungültig"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Die Hintergrundfarbe der Seite. Bei Verwendung eines Titelbilds wird dies als Overlay angewendet."
 
-#: src/components/layouts/CheckIn/index.tsx:382
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "The check-in list you are looking for does not exist."
 msgstr "Die gesuchte Eincheckliste existiert nicht."
 
@@ -9050,7 +9062,7 @@ msgstr "Diese Kategorie hat noch keine Produkte."
 msgid "This category is hidden from public view"
 msgstr "Diese Kategorie ist vor der öffentlichen Ansicht verborgen"
 
-#: src/components/layouts/CheckIn/index.tsx:175
+#: src/components/layouts/CheckIn/index.tsx:176
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Dieser Check-in wird noch synchronisiert. Bitte gleich noch einmal versuchen."
 
@@ -9058,7 +9070,7 @@ msgstr "Dieser Check-in wird noch synchronisiert. Bitte gleich noch einmal versu
 msgid "This check-in list has expired"
 msgstr "Diese Eincheckliste ist abgelaufen"
 
-#: src/components/layouts/CheckIn/index.tsx:397
+#: src/components/layouts/CheckIn/index.tsx:413
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Diese Eincheckliste ist abgelaufen und steht nicht mehr für Eincheckungen zur Verfügung."
 
@@ -9070,7 +9082,7 @@ msgstr "Diese Eincheckliste ist aktiv"
 msgid "This check-in list is not active yet"
 msgstr "Diese Eincheckliste ist noch nicht aktiv"
 
-#: src/components/layouts/CheckIn/index.tsx:414
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Diese Eincheckliste ist noch nicht aktiv und steht nicht für Eincheckungen zur Verfügung."
 
@@ -9229,7 +9241,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Dieser Link zum Zurücksetzen des Passworts ist ungültig oder abgelaufen."
 
-#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:230
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Dieses Ticket wurde gerade gescannt. Bitte warten Sie, bevor Sie erneut scannen."
 
@@ -9577,11 +9589,11 @@ msgstr "Wahr bei ausstehender Zahlung"
 msgid "Try another email"
 msgstr "Andere E-Mail versuchen"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound off"
 msgstr "Ton ausschalten"
 
-#: src/components/layouts/CheckIn/index.tsx:475
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound on"
 msgstr "Ton einschalten"
 
@@ -9611,8 +9623,8 @@ msgstr "Art des Tickets"
 msgid "Typography"
 msgstr "Typografie"
 
-#: src/components/layouts/CheckIn/index.tsx:194
-#: src/components/layouts/CheckIn/index.tsx:196
+#: src/components/layouts/CheckIn/index.tsx:195
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "Unable to check out attendee"
 msgstr "Teilnehmer konnte nicht ausgecheckt werden"
 
@@ -9632,7 +9644,7 @@ msgstr "Frage konnte nicht erstellt werden. Bitte überprüfen Sie Ihre Angaben"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Teilnehmer konnte nicht abgerufen werden"
 
@@ -10090,7 +10102,7 @@ msgstr "Sehen, bearbeiten und exportieren Sie Ihre registrierten Teilnehmer."
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP-Eincheckliste"
 
@@ -10106,7 +10118,7 @@ msgstr "Sichtweite"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr ""
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "Nur für Check-In-Personal sichtbar. Hilft, diese Liste beim Check-In zu identifizieren."
 
@@ -10437,11 +10449,11 @@ msgstr "Wenn eine Bestellung erstattet wird"
 msgid "When an order is updated"
 msgstr "Wenn eine Bestellung aktualisiert wird"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "Wann Check-In schließt"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "Wann Check-In öffnet"
 
@@ -10473,7 +10485,7 @@ msgstr "Wenn Offline-Zahlungen aktiviert sind, können Benutzer ihre Bestellunge
 msgid "Which product does this section sell seats for?"
 msgstr "Für welches Produkt verkauft dieser Bereich Sitzplätze?"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "Welche Tickets sollen mit dieser Eincheckliste verknüpft werden?"
 
@@ -10568,8 +10580,8 @@ msgstr "Sie geben sich als <0>{0}</0> ({1}) aus"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Sie geben eine Teilerstattung aus. Dem Kunden werden {0} {1} erstattet."
 
-#: src/components/layouts/CheckIn/index.tsx:189
-#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:190
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "You are offline"
 msgstr "Sie sind offline"
 
@@ -10593,8 +10605,8 @@ msgstr "Sie können den letzten aktiven Veranstalter Ihres Kontos nicht archivie
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Sie können den Produkttyp nicht ändern, da Teilnehmer mit diesem Produkt verknüpft sind."
 
-#: src/components/layouts/CheckIn/index.tsx:212
-#: src/components/layouts/CheckIn/index.tsx:281
+#: src/components/layouts/CheckIn/index.tsx:213
+#: src/components/layouts/CheckIn/index.tsx:297
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Sie können Teilnehmer mit unbezahlten Bestellungen nicht einchecken. Diese Einstellung kann in den Veranstaltungsdetails geändert werden."
 
@@ -10692,7 +10704,7 @@ msgstr "Sie müssen eine Bestellung manuell als bezahlt markieren. Dies kann auf
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr ""
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "Sie benötigen ein Ticket, bevor Sie eine Eincheckliste erstellen können."
 
