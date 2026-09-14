@@ -22,26 +22,6 @@ export const publicCheckInClient = {
         const response = await publicApi.get<GenericDataResponse<Attendee>>(`/check-in-lists/${checkInListShortId}/attendees/${attendeePublicId}`);
         return response.data;
     },
-    getCheckInListAttendeesPage: async (checkInListShortId: IdParam, page: number, perPage: number) => {
-        // Explicit params: the generic query helper falls back to the page URL's own
-        // query string, which must not filter the scanner's full attendee list.
-        const response = await publicApi.get<GenericPaginatedResponse<Attendee>>(
-            `/check-in-lists/${checkInListShortId}/attendees?page=${page}&per_page=${perPage}`
-        );
-        return response.data;
-    },
-    createCheckIns: async (
-        checkInListShortId: IdParam,
-        attendees: { public_id: string, action: 'check-in' | 'check-in-and-mark-order-as-paid' }[],
-        timeoutMs: number,
-    ) => {
-        const response = await publicApi.post<GenericDataResponse<PublicCheckIn[]>>(
-            `/check-in-lists/${checkInListShortId}/check-ins`,
-            {attendees},
-            {timeout: timeoutMs},
-        );
-        return response.data;
-    },
     createCheckIn: async (checkInListShortId: IdParam, attendeePublicId: IdParam, action: 'check-in' | 'check-in-and-mark-order-as-paid') => {
         const response = await publicApi.post<GenericDataResponse<PublicCheckIn[]>>(`/check-in-lists/${checkInListShortId}/check-ins`, {
             "attendees": [

@@ -12,13 +12,11 @@ import {NoResultsSplash} from "../../common/NoResultsSplash";
 import {IconPlus} from "@tabler/icons-react";
 import {CheckInListSuccessModal} from "../CheckInListSuccessModal";
 import {useState} from "react";
-import {useGetEventCheckInLists} from "../../../queries/useGetCheckInLists.ts";
 
 export const CreateCheckInListModal = ({onClose}: GenericModalProps) => {
     const {eventId} = useParams();
     const errorHandler = useFormErrorResponseHandler();
     const {data: event} = useGetEvent(eventId);
-    const {data: existingLists} = useGetEventCheckInLists(eventId);
     const [createdCheckInList, setCreatedCheckInList] = useState<CheckInList | null>(null);
     const form = useForm<CheckInListRequest>({
         initialValues: {
@@ -90,7 +88,6 @@ export const CreateCheckInListModal = ({onClose}: GenericModalProps) => {
                         <CheckInListForm
                             form={form}
                             productCategories={event.product_categories as ProductCategory[]}
-                            existingLists={existingLists?.data}
                         />
                     )}
                     <Button

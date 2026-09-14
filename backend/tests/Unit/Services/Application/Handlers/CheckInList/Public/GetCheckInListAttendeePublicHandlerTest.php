@@ -8,7 +8,6 @@ use HiEvents\Exceptions\CannotCheckInException;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use HiEvents\Services\Application\Handlers\CheckInList\Public\GetCheckInListAttendeePublicHandler;
-use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
 use Mockery as m;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Tests\TestCase;
@@ -17,7 +16,6 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
 {
     private CheckInListRepositoryInterface $checkInListRepository;
     private AttendeeRepositoryInterface $attendeeRepository;
-    private AttendeeOtherListCheckInsService $otherListCheckInsService;
     private GetCheckInListAttendeePublicHandler $handler;
 
     protected function setUp(): void
@@ -27,13 +25,9 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
         $this->checkInListRepository = m::mock(CheckInListRepositoryInterface::class);
         $this->attendeeRepository = m::mock(AttendeeRepositoryInterface::class);
 
-        $this->otherListCheckInsService = m::mock(AttendeeOtherListCheckInsService::class);
-        $this->otherListCheckInsService->shouldReceive('attach')->byDefault();
-
         $this->handler = new GetCheckInListAttendeePublicHandler(
             $this->attendeeRepository,
-            $this->checkInListRepository,
-            $this->otherListCheckInsService,
+            $this->checkInListRepository
         );
     }
 
@@ -115,11 +109,6 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
             ->andReturn($checkInList);
 
         $this->attendeeRepository
-            ->shouldReceive('loadRelation')
-            ->once()
-            ->andReturnSelf();
-
-        $this->attendeeRepository
             ->shouldReceive('findFirstWhere')
             ->once()
             ->with([
@@ -127,14 +116,6 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
                 'event_id' => 123,
             ])
             ->andReturn($attendee);
-
-        // The door needs to know if this ticket already entered through another
-        // list of the event, so the single lookup gets the same treatment as
-        // the full list.
-        $this->otherListCheckInsService
-            ->shouldReceive('attach')
-            ->once()
-            ->with(m::on(fn($attendees) => $attendees->count() === 1 && $attendees->first() === $attendee), $checkInList);
 
         $result = $this->handler->handle('short-id', 'attendee-public-id');
 
