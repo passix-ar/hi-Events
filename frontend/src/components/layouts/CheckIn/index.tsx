@@ -1,8 +1,8 @@
 import {useParams} from "react-router";
 import {useGetCheckInListPublic} from "../../../queries/useGetCheckInListPublic.ts";
 import {ReactNode, useCallback, useEffect, useRef, useState} from "react";
-import {useDebouncedValue, useDisclosure, useNetwork} from "@mantine/hooks";
-import {Attendee, QueryFilters, QueryFilterOperator} from "../../../types.ts";
+import {useDisclosure, useNetwork} from "@mantine/hooks";
+import {Attendee} from "../../../types.ts";
 import {showError, showSuccess} from "../../../utilites/notifications.tsx";
 import {t, Trans} from "@lingui/macro";
 import {AxiosError} from "axios";
@@ -11,14 +11,13 @@ import {ActionIcon, Modal} from "@mantine/core";
 import {SearchBar} from "../../common/SearchBar";
 import {IconInfoCircle, IconQrcode, IconVolume, IconVolumeOff} from "@tabler/icons-react";
 import {QRScannerComponent} from "../../common/AttendeeCheckInTable/QrScanner.tsx";
-import {useGetCheckInListAttendees} from "../../../queries/useGetCheckInListAttendeesPublic.ts";
-import {useCreateCheckInPublic} from "../../../mutations/useCreateCheckInPublic.ts";
-import {useDeleteCheckInPublic} from "../../../mutations/useDeleteCheckInPublic.ts";
+import {useCheckInRoster} from "../../../hooks/useCheckInRoster.ts";
 import {NoResultsSplash} from "../../common/NoResultsSplash";
 import {Countdown} from "../../common/Countdown";
 import Truncate from "../../common/Truncate";
 import {Header} from "../../common/Header";
 import {publicCheckInClient} from "../../../api/check-in.client.ts";
+import {SyncStatus} from "../../common/CheckIn/SyncStatus";
 import {isSsr} from "../../../utilites/helpers.ts";
 import {AttendeeList} from "../../common/CheckIn/AttendeeList";
 import {CheckInOptionsModal} from "../../common/CheckIn/CheckInOptionsModal";
@@ -35,7 +34,6 @@ const CheckIn = () => {
     const event = checkInList?.event;
     const eventSettings = event?.settings;
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchQueryDebounced] = useDebouncedValue(searchQuery, 200);
     const [qrScannerOpen, setQrScannerOpen] = useState(false);
     const [scannerSelectionOpen, setScannerSelectionOpen] = useState(false);
     const [hidScannerMode, setHidScannerMode] = useState(false);
@@ -63,23 +61,33 @@ const CheckIn = () => {
     );
 
     const products = checkInList?.products;
-    const queryFilters: QueryFilters = {
-        pageNumber: 1,
-        query: searchQueryDebounced,
-        perPage: 150,
-        filterFields: {
-            status: {operator: QueryFilterOperator.Equals, value: 'ACTIVE'},
-        },
-    };
-
-    const attendeesQuery = useGetCheckInListAttendees(
+    const roster = useCheckInRoster(
         checkInListShortId,
-        queryFilters,
-        checkInList?.is_active && !checkInList?.is_expired,
+        Boolean(checkInList?.is_active && !checkInList?.is_expired),
     );
-    const attendees = attendeesQuery?.data?.data;
-    const checkInMutation = useCreateCheckInPublic(queryFilters);
-    const deleteCheckInMutation = useDeleteCheckInPublic(queryFilters);
+    const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+    // The list is searched in memory: no request per keystroke, and it works
+    // with the connection down.
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+    const attendees = normalizedSearch === ''
+        ? roster.attendees
+        : roster.attendees.filter(a =>
+            `${a.first_name} ${a.last_name}`.toLowerCase().includes(normalizedSearch)
+            || a.public_id.toLowerCase().includes(normalizedSearch)
+            || String(a.order_id) === normalizedSearch
+            || (a.email ?? '').toLowerCase().includes(normalizedSearch)
+        );
+
+    // A check-in the server refused (cancelled ticket, unpaid order) is reported
+    // when its background sync comes back, not at scan time.
+    useEffect(() => {
+        if (!roster.rejected) return;
+        showError(scanFeedback(roster.rejected.attendee, roster.rejected.message));
+        playErrorSound();
+        roster.clearRejected();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [roster.rejected]);
     const areOfflinePaymentsEnabled = eventSettings?.payment_providers?.includes('OFFLINE');
     const allowOrdersAwaitingOfflinePaymentToCheckIn = areOfflinePaymentsEnabled
         && eventSettings?.allow_orders_awaiting_offline_payment_to_check_in;
@@ -137,56 +145,46 @@ const CheckIn = () => {
         );
     };
 
-    const handleCheckInAction = async (
+    // Resolves locally and returns at once: the check-in is queued and confirmed
+    // with the server in the background (see useCheckInRoster).
+    const handleCheckInAction = (
         attendee: Attendee,
         action: 'check-in' | 'check-in-and-mark-order-as-paid'
-    ): Promise<boolean> => {
-        try {
-            const {errors} = await checkInMutation.mutateAsync({
-                checkInListShortId: checkInListShortId,
-                attendeePublicId: attendee.public_id,
-                action: action,
-            });
+    ): boolean => {
+        const outcome = roster.queueCheckIn(attendee, action);
 
-            if (errors && errors[attendee.public_id]) {
-                showError(scanFeedback(attendee, errors[attendee.public_id]));
-                playErrorSound();
-                return false;
-            }
-
-            showSuccess(scanFeedback(attendee,
-                <Trans>{attendee.first_name} <b>checked in</b> successfully</Trans>));
-            playSuccessSound();
-            checkInModalHandlers.close();
-            setSelectedAttendee(null);
-            return true;
-        } catch (error) {
+        if (outcome.status === 'already-checked-in') {
+            showError(scanFeedback(attendee,
+                <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
             playErrorSound();
-
-            if (!networkStatus.online) {
-                showError(t`You are offline`);
-                return false;
-            }
-
-            if (error instanceof AxiosError) {
-                showError(error?.response?.data?.message || t`Unable to check in attendee`);
-            }
-
             return false;
         }
+
+        showSuccess(scanFeedback(attendee,
+            <Trans>{attendee.first_name} <b>checked in</b> successfully</Trans>));
+        playSuccessSound();
+        checkInModalHandlers.close();
+        setSelectedAttendee(null);
+        return true;
     };
 
     const handleCheckInToggle = (attendee: Attendee) => {
         if (attendee.check_in) {
-            deleteCheckInMutation.mutate({
-                checkInListShortId: checkInListShortId,
-                checkInShortId: attendee.check_in.short_id,
-            }, {
-                onSuccess: () => {
+            // Undoing a check-in needs the server's record, so it waits for a
+            // pending one to be confirmed first.
+            if (!attendee.check_in.short_id) {
+                showError(t`This check-in is still syncing. Please try again in a moment.`);
+                return;
+            }
+
+            setIsCheckingOut(true);
+            publicCheckInClient.deleteCheckIn(checkInListShortId, attendee.check_in.short_id)
+                .then(() => {
+                    roster.patchAttendee(attendee.public_id, {check_in: undefined});
                     showSuccess(<Trans>{attendee.first_name} <b>checked out</b> successfully</Trans>);
                     playSuccessSound();
-                },
-                onError: (error) => {
+                })
+                .catch((error) => {
                     playErrorSound();
                     if (!networkStatus.online) {
                         showError(t`You are offline`);
@@ -198,8 +196,8 @@ const CheckIn = () => {
                     } else {
                         showError(t`Unable to check out attendee`);
                     }
-                }
-            });
+                })
+                .finally(() => setIsCheckingOut(false));
             return;
         }
 
@@ -237,15 +235,17 @@ const CheckIn = () => {
         isProcessingRef.current = true;
         lastScanTimeRef.current = now;
 
-        // Find the attendee in the current list or fetch them
-        let attendee = attendees?.find(a => a.public_id === attendeePublicId);
+        // The roster holds the whole list, so a scan normally resolves here with
+        // no request. The network fallback only covers a ticket sold after the
+        // last refresh.
+        let attendee = roster.findByPublicId(attendeePublicId);
 
         if (!attendee) {
             try {
                 const {data} = await publicCheckInClient.getCheckInListAttendee(checkInListShortId, attendeePublicId);
                 attendee = data;
             } catch (error) {
-                showError(t`Unable to fetch attendee`);
+                showError(networkStatus.online ? t`Unable to fetch attendee` : t`You are offline`);
                 playErrorSound();
                 isProcessingRef.current = false;
                 return false;
@@ -263,6 +263,21 @@ const CheckIn = () => {
         if (attendee.check_in) {
             showError(scanFeedback(attendee,
                 <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
+            playErrorSound();
+            processedBarcodesRef.current.add(attendeePublicId);
+            isProcessingRef.current = false;
+            return false;
+        }
+
+        // Lists are independent by design (general vs VIP), so this is not the
+        // server's decision: the scanner rejects and the person at the door can
+        // still let them through from the list, deliberately.
+        const enteredElsewhere = attendee.other_check_ins?.[0];
+        if (enteredElsewhere) {
+            const listName = enteredElsewhere.check_in_list_name ?? t`another list`;
+            const time = new Date(enteredElsewhere.checked_in_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            showError(scanFeedback(attendee,
+                <Trans>{attendee.first_name} {attendee.last_name} already entered at {time} via <b>{listName}</b></Trans>));
             playErrorSound();
             processedBarcodesRef.current.add(attendeePublicId);
             isProcessingRef.current = false;
@@ -293,11 +308,11 @@ const CheckIn = () => {
             processedBarcodesRef.current.delete(attendeePublicId);
         }, 10000);
 
-        const checkedIn = await handleCheckInAction(attendee, 'check-in');
+        const checkedIn = handleCheckInAction(attendee, 'check-in');
         isProcessingRef.current = false;
 
         return checkedIn;
-    }, [attendees, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, playErrorSound]);
+    }, [roster, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, playErrorSound, networkStatus.online]);
 
 
     // Process completed barcode
@@ -488,12 +503,20 @@ const CheckIn = () => {
                     </div>
                 </div>
             </div>
+            <SyncStatus
+                online={networkStatus.online}
+                pendingCount={roster.pendingCount}
+                loadedAt={roster.loadedAt}
+                isLoading={roster.isLoading}
+                loadError={roster.loadError}
+                onRetry={roster.refresh}
+            />
             <AttendeeList
                 attendees={attendees}
                 products={products}
-                isLoading={attendeesQuery.isFetching}
-                isCheckInPending={checkInMutation.isPending}
-                isDeletePending={deleteCheckInMutation.isPending}
+                isLoading={roster.isLoading && roster.attendees.length === 0}
+                isCheckInPending={false}
+                isDeletePending={isCheckingOut}
                 allowOrdersAwaitingOfflinePaymentToCheckIn={allowOrdersAwaitingOfflinePaymentToCheckIn || false}
                 onCheckInToggle={handleCheckInToggle}
                 onClickSound={playClickSound}
@@ -501,7 +524,7 @@ const CheckIn = () => {
             <CheckInOptionsModal
                 isOpen={checkInModalOpen}
                 attendee={selectedAttendee}
-                isPending={checkInMutation.isPending}
+                isPending={false}
                 onClose={() => {
                     checkInModalHandlers.close();
                     setSelectedAttendee(null);

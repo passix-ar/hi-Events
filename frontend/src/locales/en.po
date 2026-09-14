@@ -27,6 +27,10 @@ msgstr "- Click to Unpublish"
 msgid "'There\\'s nothing to show yet'"
 msgstr "'There\\'s nothing to show yet'"
 
+#: src/components/forms/CheckInListForm/index.tsx:51
+msgid "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+msgstr "\"{0}\" already covers some of these tickets. If both lists are for the same door, open that one on every phone instead: separate lists do not see each other's check-ins, so the same ticket could get in twice."
+
 #: src/components/modals/DuplicateProductModal/index.tsx:60
 msgid "(Copy)"
 msgstr "(Copy)"
@@ -39,15 +43,20 @@ msgstr "(empty)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:280
+msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
+msgstr "{0} {1} already entered at {time} via <0>{listName}</0>"
+
+#: src/components/layouts/CheckIn/index.tsx:158
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} is already checked in"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:164
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>checked in</0> successfully"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:184
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>checked out</0> successfully"
 
@@ -467,7 +476,7 @@ msgstr "Actions"
 msgid "Activate"
 msgstr "Activate"
 
-#: src/components/forms/CheckInListForm/index.tsx:62
+#: src/components/forms/CheckInListForm/index.tsx:76
 msgid "Activation date"
 msgstr "Activation date"
 
@@ -484,7 +493,7 @@ msgstr "Activation date"
 msgid "Active"
 msgstr "Active"
 
-#: src/components/forms/CheckInListForm/index.tsx:53
+#: src/components/forms/CheckInListForm/index.tsx:67
 msgid "Add a description for this check-in list"
 msgstr "Add a description for this check-in list"
 
@@ -704,6 +713,10 @@ msgstr "All attendees"
 msgid "All attendees of this event"
 msgstr "All attendees of this event"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:63
+msgid "All check-ins synced"
+msgstr "All check-ins synced"
+
 #: src/components/common/OrganizerReportTable/index.tsx:299
 msgid "All Currencies"
 msgstr "All Currencies"
@@ -841,6 +854,10 @@ msgstr "An unexpected error occurred."
 #: src/hooks/useFormErrorResponseHandler.tsx:48
 msgid "An unexpected error occurred. Please try again."
 msgstr "An unexpected error occurred. Please try again."
+
+#: src/components/layouts/CheckIn/index.tsx:277
+msgid "another list"
+msgstr "another list"
 
 #: src/components/common/QuestionAndAnswerList/index.tsx:97
 msgid "Answer updated successfully."
@@ -1162,7 +1179,7 @@ msgstr "Attendee information collection"
 msgid "Attendee Name"
 msgstr "Attendee Name"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Attendee not found"
 
@@ -1652,15 +1669,15 @@ msgstr "Check-In List Created"
 msgid "Check-In List deleted successfully"
 msgstr "Check-In List deleted successfully"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:408
 msgid "Check-in list has expired"
 msgstr "Check-in list has expired"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list is not active"
 msgstr "Check-in list is not active"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list not found"
 msgstr "Check-in list not found"
 
@@ -1674,7 +1691,7 @@ msgstr "Check-in Lists"
 msgid "Check-In Lists"
 msgstr "Check-In Lists"
 
-#: src/components/forms/CheckInListForm/index.tsx:31
+#: src/components/forms/CheckInListForm/index.tsx:39
 msgid "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 msgstr "Check-in lists let you control entry across days, areas, or ticket types. You can share a secure check-in link with staff — no account required."
 
@@ -2303,6 +2320,10 @@ msgstr "Copy URL"
 msgid "Could not initialize MercadoPago payment. Please try again."
 msgstr "Could not initialize MercadoPago payment. Please try again."
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:26
+msgid "Could not load the attendee list. Tap to retry."
+msgstr "Could not load the attendee list. Tap to retry."
+
 #: src/components/common/CheckoutQuestion/index.tsx:174
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:152
 #: src/components/routes/organizer/Settings/Sections/AddressSettings/index.tsx:110
@@ -2317,10 +2338,6 @@ msgstr "Cover"
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:192
 msgid "Cover Image"
 msgstr "Cover Image"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:216
-#~ msgid "Cover image will be displayed at the top of your event page"
-#~ msgstr "Cover image will be displayed at the top of your event page"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:207
 msgid "Cover image will be displayed at the top of your organizer page"
@@ -2360,7 +2377,7 @@ msgstr "Create a Product"
 msgid "Create a Promo Code"
 msgstr "Create a Promo Code"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:64
+#: src/components/modals/CreateCheckInListModal/index.tsx:66
 msgid "Create a Ticket"
 msgstr "Create a Ticket"
 
@@ -2409,8 +2426,8 @@ msgid "Create Category"
 msgstr "Create Category"
 
 #: src/components/common/CheckInListList/index.tsx:59
-#: src/components/modals/CreateCheckInListModal/index.tsx:83
-#: src/components/modals/CreateCheckInListModal/index.tsx:99
+#: src/components/modals/CreateCheckInListModal/index.tsx:85
+#: src/components/modals/CreateCheckInListModal/index.tsx:102
 #: src/components/routes/event/CheckInLists/index.tsx:48
 msgid "Create Check-In List"
 msgstr "Create Check-In List"
@@ -2854,7 +2871,7 @@ msgstr "Delete webhook"
 msgid "Description"
 msgstr "Description"
 
-#: src/components/forms/CheckInListForm/index.tsx:52
+#: src/components/forms/CheckInListForm/index.tsx:66
 msgid "Description for check-in staff"
 msgstr "Description for check-in staff"
 
@@ -3759,7 +3776,7 @@ msgstr "Examples: \"T-shirt size\", \"Meal preference\", \"Job title\""
 msgid "Exception"
 msgstr "Exception"
 
-#: src/components/forms/CheckInListForm/index.tsx:68
+#: src/components/forms/CheckInListForm/index.tsx:82
 msgid "Expiration date"
 msgstr "Expiration date"
 
@@ -4070,10 +4087,6 @@ msgstr "Failed to upload image. Please try again."
 msgid "Failed to verify email"
 msgstr "Failed to verify email"
 
-#: src/components/common/LandingBannerPreview/index.tsx:26
-#~ msgid "Featured"
-#~ msgstr "Featured"
-
 #: src/components/routes/event/HomepageDesigner/index.tsx:264
 msgid "Featured banner (optional)"
 msgstr "Featured banner (optional)"
@@ -4244,7 +4257,7 @@ msgstr "Fixed fee must be 0 or greater"
 msgid "Fixed Fee:"
 msgstr "Fixed Fee:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "Flash is not available on this device"
 
@@ -4581,10 +4594,6 @@ msgstr "Homer"
 #: src/components/common/LandingBannerPreview/index.tsx:17
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr "How it looks in the featured slot on the Passix homepage."
-
-#: src/components/common/LandingBannerPreview/index.tsx:32
-#~ msgid "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
-#~ msgstr "How it looks on the Passix homepage. The edges are trimmed on very wide screens, so keep the important artwork centred."
 
 #: src/components/routes/event/Settings/Sections/WaitlistSettings/index.tsx:67
 msgid "How long a customer has to complete their purchase after receiving an offer. Leave empty for no timeout."
@@ -5095,6 +5104,10 @@ msgstr "LIVE"
 msgid "Live Events"
 msgstr "Live Events"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:55
+msgid "Loading attendee list…"
+msgstr "Loading attendee list…"
+
 #: src/components/routes/event/TicketDesigner/TicketPreview.tsx:34
 msgid "Loading preview..."
 msgstr "Loading preview..."
@@ -5461,7 +5474,7 @@ msgstr "Nam placerat elementum..."
 #: src/components/common/OrderDetails/index.tsx:23
 #: src/components/forms/AffiliateForm/index.tsx:81
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:37
-#: src/components/forms/CheckInListForm/index.tsx:37
+#: src/components/forms/CheckInListForm/index.tsx:45
 #: src/components/forms/ProductCategoryForm/index.tsx:15
 #: src/components/forms/ProductCategoryForm/index.tsx:16
 #: src/components/forms/ProductForm/index.tsx:367
@@ -5916,6 +5929,14 @@ msgstr "Office or venue name"
 #: src/components/routes/product-widget/Payment/index.tsx:154
 msgid "Offline"
 msgstr "Offline"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:36
+msgid "Offline — {pendingCount} check-in(s) will sync when back online"
+msgstr "Offline — {pendingCount} check-in(s) will sync when back online"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:37
+msgid "Offline — scanning still works"
+msgstr "Offline — scanning still works"
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:147
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
@@ -6808,7 +6829,7 @@ msgstr "Please continue in the new tab"
 msgid "Please create a product"
 msgstr "Please create a product"
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:52
+#: src/components/modals/CreateCheckInListModal/index.tsx:54
 msgid "Please create a ticket"
 msgstr "Please create a ticket"
 
@@ -7716,8 +7737,8 @@ msgstr "Save Ticket Design"
 msgid "Save VAT Settings"
 msgstr "Save VAT Settings"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:488
+#: src/components/layouts/CheckIn/index.tsx:498
 msgid "Scan"
 msgstr "Scan"
 
@@ -7773,7 +7794,7 @@ msgstr "Search by name, email, or account..."
 msgid "Search by name, email, or order #..."
 msgstr "Search by name, email, or order #..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:484
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Search by name, order #, attendee # or email..."
 
@@ -7981,7 +8002,7 @@ msgstr "Select the messaging tier for this account. This controls message limits
 msgid "Select Ticket"
 msgstr "Select Ticket"
 
-#: src/components/forms/CheckInListForm/index.tsx:43
+#: src/components/forms/CheckInListForm/index.tsx:57
 #: src/components/modals/SendMessageModal/index.tsx:311
 msgid "Select tickets"
 msgstr "Select tickets"
@@ -8697,6 +8718,10 @@ msgstr "Support Email"
 msgid "Switch Organizer"
 msgstr "Switch Organizer"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:46
+msgid "Syncing {pendingCount} check-in(s)…"
+msgstr "Syncing {pendingCount} check-in(s)…"
+
 #: src/components/routes/admin/Configurations/index.tsx:85
 msgid "System Default"
 msgstr "System Default"
@@ -8844,7 +8869,7 @@ msgstr "That promo code is invalid"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "The background color of the page. When using cover image, this is applied as an overlay."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "The check-in list you are looking for does not exist."
 msgstr "The check-in list you are looking for does not exist."
 
@@ -9033,14 +9058,6 @@ msgstr "These templates will override the organizer defaults for this event only
 msgid "This attendee has an unpaid order."
 msgstr "This attendee has an unpaid order."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:275
-#~ msgid "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-#~ msgstr "This banner is not very wide, so it will leave space around it in the featured slot. A 3:1 image fills the strip exactly."
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:278
-#~ msgid "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
-#~ msgstr "This banner is not wide enough, so the featured slot will trim it top and bottom. A 3:1 image fits exactly."
-
 #: src/components/common/ProductsTable/ProductsBlankSlate/index.tsx:61
 msgid "This category doesn't have any products yet."
 msgstr "This category doesn't have any products yet."
@@ -9049,11 +9066,15 @@ msgstr "This category doesn't have any products yet."
 msgid "This category is hidden from public view"
 msgstr "This category is hidden from public view"
 
+#: src/components/layouts/CheckIn/index.tsx:176
+msgid "This check-in is still syncing. Please try again in a moment."
+msgstr "This check-in is still syncing. Please try again in a moment."
+
 #: src/components/common/CheckInListList/index.tsx:73
 msgid "This check-in list has expired"
 msgstr "This check-in list has expired"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:413
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "This check-in list has expired and is no longer available for check-ins."
 
@@ -9065,7 +9086,7 @@ msgstr "This check-in list is active"
 msgid "This check-in list is not active yet"
 msgstr "This check-in list is not active yet"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "This check-in list is not yet active and is not available for check-ins."
 
@@ -9093,10 +9114,6 @@ msgstr "This event is not published yet"
 #: src/hooks/useGoogleAuth.ts:80
 msgid "This Google account is already linked to another user. Please contact support."
 msgstr "This Google account is already linked to another user. Please contact support."
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:238
-#~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
-#~ msgstr "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:244
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
@@ -9228,7 +9245,7 @@ msgstr "This report is for informational purposes only. Always consult with a ta
 msgid "This reset password link is invalid or expired."
 msgstr "This reset password link is invalid or expired."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:230
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "This ticket was just scanned. Please wait before scanning again."
 
@@ -9576,11 +9593,11 @@ msgstr "True if payment pending"
 msgid "Try another email"
 msgstr "Try another email"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound off"
 msgstr "Turn sound off"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:491
 msgid "Turn sound on"
 msgstr "Turn sound on"
 
@@ -9610,12 +9627,8 @@ msgstr "Type of ticket"
 msgid "Typography"
 msgstr "Typography"
 
-#: src/components/layouts/CheckIn/index.tsx:167
-msgid "Unable to check in attendee"
-msgstr "Unable to check in attendee"
-
-#: src/components/layouts/CheckIn/index.tsx:192
-#: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:195
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "Unable to check out attendee"
 msgstr "Unable to check out attendee"
 
@@ -9635,7 +9648,7 @@ msgstr "Unable to create question. Please check the your details"
 msgid "Unable to duplicate product. Please check your details"
 msgstr "Unable to duplicate product. Please check your details"
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Unable to fetch attendee"
 
@@ -10093,7 +10106,7 @@ msgstr "View, edit, and export your registered attendees."
 msgid "Vimeo"
 msgstr "Vimeo"
 
-#: src/components/forms/CheckInListForm/index.tsx:38
+#: src/components/forms/CheckInListForm/index.tsx:46
 msgid "VIP check-in list"
 msgstr "VIP check-in list"
 
@@ -10109,7 +10122,7 @@ msgstr "Visibility"
 msgid "Visibility, Sale Period, Product Highlight & Order Limits"
 msgstr "Visibility, Sale Period, Product Highlight & Order Limits"
 
-#: src/components/forms/CheckInListForm/index.tsx:54
+#: src/components/forms/CheckInListForm/index.tsx:68
 msgid "Visible to check-in staff only. Helps identify this list during check-in."
 msgstr "Visible to check-in staff only. Helps identify this list during check-in."
 
@@ -10208,21 +10221,9 @@ msgstr "We recommend 1920px by 800px, which fills the featured strip exactly. An
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:210
-#~ msgid "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
-#~ msgstr "We recommend a square flyer of 1080px by 1080px, at least 800px by 800px, and a maximum file size of 5MB"
-
 #: src/components/routes/event/TicketDesigner/index.tsx:140
 msgid "We recommend a square logo with minimum dimensions of 200x200px"
 msgstr "We recommend a square logo with minimum dimensions of 200x200px"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:257
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-#~ msgstr "We recommend dimensions of 1920px by 640px, a ratio of 3:1, and a maximum file size of 5MB"
-
-#: src/components/routes/event/HomepageDesigner/index.tsx:245
-#~ msgid "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
-#~ msgstr "We recommend dimensions of 1920px by 640px, a ratio of 3:1, at least 1600px wide, and a maximum file size of 5MB"
 
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:194
 msgid "We recommend dimensions of 1950px by 650px, a ratio of 3:1, and a maximum file size of 5MB"
@@ -10452,11 +10453,11 @@ msgstr "When an order is refunded"
 msgid "When an order is updated"
 msgstr "When an order is updated"
 
-#: src/components/forms/CheckInListForm/index.tsx:69
+#: src/components/forms/CheckInListForm/index.tsx:83
 msgid "When check-in closes"
 msgstr "When check-in closes"
 
-#: src/components/forms/CheckInListForm/index.tsx:63
+#: src/components/forms/CheckInListForm/index.tsx:77
 msgid "When check-in opens"
 msgstr "When check-in opens"
 
@@ -10488,7 +10489,7 @@ msgstr "When offline payments are enabled, users will be able to complete their 
 msgid "Which product does this section sell seats for?"
 msgstr "Which product does this section sell seats for?"
 
-#: src/components/forms/CheckInListForm/index.tsx:42
+#: src/components/forms/CheckInListForm/index.tsx:56
 msgid "Which tickets should be associated with this check-in list?"
 msgstr "Which tickets should be associated with this check-in list?"
 
@@ -10567,7 +10568,7 @@ msgstr "Yes, cancel my order"
 msgid "Yes, remove them"
 msgstr "Yes, remove them"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "You already scanned this ticket"
 
@@ -10583,8 +10584,8 @@ msgstr "You are impersonating <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "You are issuing a partial refund. The customer will be refunded {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:190
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "You are offline"
 msgstr "You are offline"
 
@@ -10608,8 +10609,8 @@ msgstr "You cannot archive the last active organizer on your account."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "You cannot change the product type as there are attendees associated with this product."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:213
+#: src/components/layouts/CheckIn/index.tsx:297
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 
@@ -10707,7 +10708,7 @@ msgstr "You will have to mark an order as paid manually. This can be done on the
 msgid "You won't be able to receive new MercadoPago payments until you reconnect."
 msgstr "You won't be able to receive new MercadoPago payments until you reconnect."
 
-#: src/components/modals/CreateCheckInListModal/index.tsx:56
+#: src/components/modals/CreateCheckInListModal/index.tsx:58
 msgid "You'll need a ticket before you can create a check-in list."
 msgstr "You'll need a ticket before you can create a check-in list."
 

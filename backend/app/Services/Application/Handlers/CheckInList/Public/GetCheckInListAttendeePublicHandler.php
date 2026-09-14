@@ -2,6 +2,7 @@
 
 namespace HiEvents\Services\Application\Handlers\CheckInList\Public;
 
+use HiEvents\DomainObjects\AttendeeCheckInDomainObject;
 use HiEvents\DomainObjects\AttendeeDomainObject;
 use HiEvents\DomainObjects\CheckInListDomainObject;
 use HiEvents\DomainObjects\EventDomainObject;
@@ -12,6 +13,7 @@ use HiEvents\Helper\DateHelper;
 use HiEvents\Repository\Eloquent\Value\Relationship;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
+use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class GetCheckInListAttendeePublicHandler
@@ -19,6 +21,7 @@ class GetCheckInListAttendeePublicHandler
     public function __construct(
         private readonly AttendeeRepositoryInterface    $attendeeRepository,
         private readonly CheckInListRepositoryInterface $checkInListRepository,
+        private readonly AttendeeOtherListCheckInsService $otherListCheckInsService,
     )
     {
     }
@@ -41,10 +44,18 @@ class GetCheckInListAttendeePublicHandler
 
         $this->validateCheckInListIsActive($checkInList);
 
-        return $this->attendeeRepository->findFirstWhere([
-            'public_id' => $attendeePublicId,
-            'event_id' => $checkInList->getEventId(),
-        ]);
+        $attendee = $this->attendeeRepository
+            ->loadRelation(new Relationship(AttendeeCheckInDomainObject::class, name: 'check_ins'))
+            ->findFirstWhere([
+                'public_id' => $attendeePublicId,
+                'event_id' => $checkInList->getEventId(),
+            ]);
+
+        if ($attendee) {
+            $this->otherListCheckInsService->attach(collect([$attendee]), $checkInList);
+        }
+
+        return $attendee;
     }
 
     /**
