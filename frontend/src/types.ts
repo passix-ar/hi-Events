@@ -455,6 +455,16 @@ export interface OrganizerStats {
     all_organizers_currencies: string[];
 }
 
+export interface AssistantToolCall {
+    name: string;
+    arguments: Record<string, unknown>;
+}
+
+export interface AssistantReply {
+    reply: string;
+    tool_calls: AssistantToolCall[];
+}
+
 export interface Organizer {
     id?: IdParam;
     name: string;

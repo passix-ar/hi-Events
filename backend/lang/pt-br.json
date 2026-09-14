@@ -694,5 +694,8 @@
     "Aisles must sit between seat 1 and seat :max.": "Os corredores devem ficar entre o assento 1 e o assento :max.",
     "Your seat: :seat": "Seu assento: :seat",
     "The attendee's seat, if the event has assigned seating": "O assento do participante, se o evento tiver lugares numerados",
-    "Each product can only be listed once in an order.": "Cada produto só pode ser listado uma vez em um pedido."
+    "Each product can only be listed once in an order.": "Cada produto só pode ser listado uma vez em um pedido.",
+    "The assistant is not enabled.": "O assistente não está habilitado.",
+    "The assistant is temporarily unavailable.": "O assistente está temporariamente indisponível.",
+    "You have reached today's assistant usage limit. Please try again tomorrow.": "Você atingiu o limite de uso do assistente hoje. Tente novamente amanhã."
 }

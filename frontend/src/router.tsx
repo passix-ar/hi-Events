@@ -331,6 +331,13 @@ export const router: RouteObject[] = [
                 }
             },
             {
+                path: "assistant",
+                async lazy() {
+                    const Assistant = await import("./components/routes/organizer/Assistant");
+                    return { Component: Assistant.default };
+                }
+            },
+            {
                 path: "report/:reportType",
                 async lazy() {
                     const OrganizerReportLayout = await import("./components/routes/organizer/Reports/ReportLayout");
