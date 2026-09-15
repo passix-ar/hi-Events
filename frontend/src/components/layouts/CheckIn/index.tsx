@@ -26,6 +26,10 @@ import {CheckInInfoModal} from "../../common/CheckIn/CheckInInfoModal";
 import {HidScannerStatus} from "../../common/CheckIn/HidScannerStatus";
 import {Button} from "@mantine/core";
 
+// Past a handful, individual refusals stop being readable at the door and become
+// a wall of toasts: the rest are summarised and the list is where to look.
+const MAX_REFUSAL_TOASTS = 3;
+
 const CheckIn = () => {
     const networkStatus = useNetwork();
     const {checkInListShortId} = useParams();
@@ -80,10 +84,20 @@ const CheckIn = () => {
         );
 
     // A check-in the server refused (cancelled ticket, unpaid order) is reported
-    // when its background sync comes back, not at scan time.
+    // when its background sync comes back, not at scan time. Each one is a person
+    // who did not get through, so none is dropped silently.
     useEffect(() => {
-        if (!roster.rejected) return;
-        showError(scanFeedback(roster.rejected.attendee, roster.rejected.message));
+        if (roster.rejected.length === 0) return;
+
+        roster.rejected
+            .slice(0, MAX_REFUSAL_TOASTS)
+            .forEach(({attendee, message}) => showError(scanFeedback(attendee, message)));
+
+        const remaining = roster.rejected.length - MAX_REFUSAL_TOASTS;
+        if (remaining > 0) {
+            showError(t`And ${remaining} more check-in(s) refused — check the list`);
+        }
+
         playErrorSound();
         roster.clearRejected();
         // eslint-disable-next-line react-hooks/exhaustive-deps

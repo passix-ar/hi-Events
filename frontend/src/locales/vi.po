@@ -43,24 +43,24 @@ msgstr "(trống)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:287
+#: src/components/layouts/CheckIn/index.tsx:301
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} đã vào lúc {time} qua <0>{listName}</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:158
-#: src/components/layouts/CheckIn/index.tsx:272
+#: src/components/layouts/CheckIn/index.tsx:172
+#: src/components/layouts/CheckIn/index.tsx:286
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} đã check-in"
 
-#: src/components/layouts/CheckIn/index.tsx:165
+#: src/components/layouts/CheckIn/index.tsx:179
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:171
+#: src/components/layouts/CheckIn/index.tsx:185
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>checked in</0> thành công"
 
-#: src/components/layouts/CheckIn/index.tsx:191
+#: src/components/layouts/CheckIn/index.tsx:205
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>checked out</0> thành công"
 
@@ -859,7 +859,11 @@ msgstr "Đã xảy ra lỗi không mong muốn."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại."
 
-#: src/components/layouts/CheckIn/index.tsx:284
+#: src/components/layouts/CheckIn/index.tsx:98
+msgid "And {remaining} more check-in(s) refused — check the list"
+msgstr ""
+
+#: src/components/layouts/CheckIn/index.tsx:298
 msgid "another list"
 msgstr "danh sách khác"
 
@@ -1183,7 +1187,7 @@ msgstr "Thu thập thông tin người tham dự"
 msgid "Attendee Name"
 msgstr "Tên người tham dự"
 
-#: src/components/layouts/CheckIn/index.tsx:262
+#: src/components/layouts/CheckIn/index.tsx:276
 msgid "Attendee not found"
 msgstr "Không tìm thấy người tham dự"
 
@@ -1673,15 +1677,15 @@ msgstr "Danh sách Check-In Đã Tạo!"
 msgid "Check-In List deleted successfully"
 msgstr "Danh sách check-in đã bị xóa thành công"
 
-#: src/components/layouts/CheckIn/index.tsx:415
+#: src/components/layouts/CheckIn/index.tsx:429
 msgid "Check-in list has expired"
 msgstr "Danh sách check-in đã hết hạn"
 
-#: src/components/layouts/CheckIn/index.tsx:432
+#: src/components/layouts/CheckIn/index.tsx:446
 msgid "Check-in list is not active"
 msgstr "Danh sách check-in không hoạt động"
 
-#: src/components/layouts/CheckIn/index.tsx:400
+#: src/components/layouts/CheckIn/index.tsx:414
 msgid "Check-in list not found"
 msgstr "Danh sách Check-In không tồn tại"
 
@@ -7737,8 +7741,8 @@ msgstr "Lưu thiết kế vé"
 msgid "Save VAT Settings"
 msgstr "Lưu cài đặt VAT"
 
-#: src/components/layouts/CheckIn/index.tsx:495
-#: src/components/layouts/CheckIn/index.tsx:505
+#: src/components/layouts/CheckIn/index.tsx:509
+#: src/components/layouts/CheckIn/index.tsx:519
 msgid "Scan"
 msgstr "Quét"
 
@@ -7794,7 +7798,7 @@ msgstr "Tìm kiếm theo tên, email hoặc tài khoản..."
 msgid "Search by name, email, or order #..."
 msgstr "Tìm kiếm theo tên, email, hoặc mã đơn hàng #"
 
-#: src/components/layouts/CheckIn/index.tsx:491
+#: src/components/layouts/CheckIn/index.tsx:505
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Tìm kiếm theo tên, mã đơn hàng #, người tham dự, hoặc email..."
 
@@ -8869,7 +8873,7 @@ msgstr "Mã khuyến mãi không hợp lệ"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Màu nền của trang. Khi sử dụng ảnh bìa, màu này được áp dụng dưới dạng lớp phủ."
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:419
 msgid "The check-in list you are looking for does not exist."
 msgstr "Danh sách check-in bạn đang tìm kiếm không tồn tại."
 
@@ -9066,7 +9070,7 @@ msgstr "Danh mục này chưa có bất kỳ sản phẩm nào."
 msgid "This category is hidden from public view"
 msgstr "Danh mục này bị ẩn khỏi chế độ xem công khai"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:197
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Check-in này vẫn đang đồng bộ. Vui lòng thử lại sau giây lát."
 
@@ -9074,7 +9078,7 @@ msgstr "Check-in này vẫn đang đồng bộ. Vui lòng thử lại sau giây 
 msgid "This check-in list has expired"
 msgstr "Danh sách người tham dự này đã hết hạn"
 
-#: src/components/layouts/CheckIn/index.tsx:420
+#: src/components/layouts/CheckIn/index.tsx:434
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Danh sách người tham dự này đã hết hạn và không còn có sẵn để kiểm tra."
 
@@ -9086,7 +9090,7 @@ msgstr "Danh sách người tham dự này đang hoạt động"
 msgid "This check-in list is not active yet"
 msgstr "Danh sách người tham dự này chưa hoạt động"
 
-#: src/components/layouts/CheckIn/index.tsx:437
+#: src/components/layouts/CheckIn/index.tsx:451
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Danh sách người tham dự này chưa hoạt động và không có sẵn để kiểm tra."
 
@@ -9245,7 +9249,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Liên kết mật khẩu đặt lại này không hợp lệ hoặc hết hạn."
 
-#: src/components/layouts/CheckIn/index.tsx:237
+#: src/components/layouts/CheckIn/index.tsx:251
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Vé này vừa được quét. Vui lòng chờ trước khi quét lại."
 
@@ -9593,11 +9597,11 @@ msgstr "Đúng nếu thanh toán đang chờ xử lý"
 msgid "Try another email"
 msgstr "Thử email khác"
 
-#: src/components/layouts/CheckIn/index.tsx:498
+#: src/components/layouts/CheckIn/index.tsx:512
 msgid "Turn sound off"
 msgstr "Tắt âm thanh"
 
-#: src/components/layouts/CheckIn/index.tsx:498
+#: src/components/layouts/CheckIn/index.tsx:512
 msgid "Turn sound on"
 msgstr "Bật âm thanh"
 
@@ -9627,8 +9631,8 @@ msgstr "Loại vé"
 msgid "Typography"
 msgstr "Kiểu chữ"
 
-#: src/components/layouts/CheckIn/index.tsx:202
-#: src/components/layouts/CheckIn/index.tsx:204
+#: src/components/layouts/CheckIn/index.tsx:216
+#: src/components/layouts/CheckIn/index.tsx:218
 msgid "Unable to check out attendee"
 msgstr "Không thể kiểm tra người tham dự"
 
@@ -9648,7 +9652,7 @@ msgstr "Không thể tạo câu hỏi. Vui lòng kiểm tra thông tin của b�
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:255
+#: src/components/layouts/CheckIn/index.tsx:269
 msgid "Unable to fetch attendee"
 msgstr "Không thể lấy thông tin người tham dự"
 
@@ -10584,8 +10588,8 @@ msgstr "Bạn đang mạo danh <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Bạn đang thực hiện hoàn tiền một phần. Khách hàng sẽ được hoàn lại {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:197
-#: src/components/layouts/CheckIn/index.tsx:255
+#: src/components/layouts/CheckIn/index.tsx:211
+#: src/components/layouts/CheckIn/index.tsx:269
 msgid "You are offline"
 msgstr "Bạn đang ngoại tuyến"
 
@@ -10609,8 +10613,8 @@ msgstr "Bạn không thể lưu trữ ban tổ chức đang hoạt động cuố
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Bạn không thể thay đổi loại sản phẩm vì có những người tham dự liên quan đến sản phẩm này."
 
-#: src/components/layouts/CheckIn/index.tsx:220
-#: src/components/layouts/CheckIn/index.tsx:304
+#: src/components/layouts/CheckIn/index.tsx:234
+#: src/components/layouts/CheckIn/index.tsx:318
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Bạn không thể xác nhận người tham dự với các đơn hàng không được thanh toán. Cài đặt này có thể được thay đổi ở phần cài đặt sự kiện."
 

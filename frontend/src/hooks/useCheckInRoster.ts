@@ -23,6 +23,10 @@ const ROSTER_REFRESH_MS = 60_000;
 const QUEUE_RETRY_MS = 2_000;
 const QUEUE_MAX_RETRY_MS = 30_000;
 const QUEUE_REQUEST_TIMEOUT_MS = 8_000;
+// Kept well inside QUEUE_REQUEST_TIMEOUT_MS: the server writes one transaction
+// per attendee, so the slice has to be small enough that the round trip always
+// finishes, even on the venue's connection.
+const QUEUE_BATCH_SIZE = 50;
 
 export type PendingCheckIn = {
     publicId: string;
@@ -79,6 +83,11 @@ export type CheckInOutcome =
     | { status: 'queued' }
     | { status: 'already-checked-in' }
     | { status: 'cancelled' };
+
+export type RejectedCheckIn = {
+    attendee: Attendee;
+    message: string;
+};
 
 export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) => {
     const [state, setState] = useState<RosterState>(() => {
@@ -193,18 +202,25 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         return {status: 'queued'};
     }, [checkInListShortId]);
 
-    const [rejected, setRejected] = useState<{ attendee: Attendee, message: string } | null>(null);
+    // Every refusal is a person who did not get through, so they all have to be
+    // reported: keeping only the first would silently swallow the rest.
+    const [rejected, setRejected] = useState<RejectedCheckIn[]>([]);
 
-    // One flush at a time; each pass sends everything queued in a single request.
+    // One flush at a time; each pass sends a bounded slice of the queue.
     const flushingRef = useRef(false);
     const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const flush = useCallback(async () => {
         if (flushingRef.current) return;
-        const batch = stateRef.current.pending;
+        // A slice, not the whole queue: half an hour without signal leaves
+        // hundreds queued, the server opens a transaction per attendee, and a
+        // request that big never lands inside the timeout — so the client cuts,
+        // retries the same oversized payload and never converges. Bounded slices
+        // always land, and whatever is left triggers the next pass.
+        const batch = stateRef.current.pending.slice(0, QUEUE_BATCH_SIZE);
         if (batch.length === 0) return;
 
-        // Only this batch leaves the queue when the round trip ends. Anything
+        // Only this slice leaves the queue when the round trip ends. Anything
         // scanned while the request is in flight has to survive it: clearing the
         // whole queue would drop it unsent, leaving the person marked as through
         // the door and no record of it anywhere.
@@ -250,10 +266,16 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                 return {...prev, attendees, pending, syncing: false};
             });
 
-            const firstError = Object.entries(errors).find(([publicId]) => !confirmedPublicIds.has(publicId));
-            if (firstError) {
-                const attendee = stateRef.current.attendees.find(a => a.public_id === firstError[0]);
-                if (attendee) setRejected({attendee, message: firstError[1]});
+            const refusals = Object.entries(errors)
+                .filter(([publicId]) => !confirmedPublicIds.has(publicId))
+                .map(([publicId, message]) => {
+                    const attendee = stateRef.current.attendees.find(a => a.public_id === publicId);
+                    return attendee ? {attendee, message} : null;
+                })
+                .filter((refusal): refusal is RejectedCheckIn => refusal !== null);
+
+            if (refusals.length > 0) {
+                setRejected(prev => [...prev, ...refusals]);
             }
         } catch (error) {
             // A definitive refusal (the list expired, was deleted, the request is
@@ -276,8 +298,10 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                     writeJson(queueKey(checkInListShortId), pending);
                     return {...prev, attendees, pending, syncing: false};
                 });
+                // One report, not one per person: this refusal is about the list
+                // (expired, deleted), so it says nothing about any individual.
                 const first = stateRef.current.attendees.find(a => a.public_id === batch[0].publicId);
-                if (first) setRejected({attendee: first, message});
+                if (first) setRejected(prev => [...prev, {attendee: first, message}]);
                 flushingRef.current = false;
                 return;
             }
@@ -335,7 +359,7 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         pendingCount: state.pending.length,
         syncing: state.syncing,
         rejected,
-        clearRejected: () => setRejected(null),
+        clearRejected: () => setRejected([]),
         refresh,
         findByPublicId,
         queueCheckIn,
