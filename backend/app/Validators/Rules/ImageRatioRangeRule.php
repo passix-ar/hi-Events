@@ -17,7 +17,7 @@ use Illuminate\Http\UploadedFile;
  * cropped by hand.
  *
  * A range says the useful thing instead: the homepage strip crops whatever does not
- * match it, so the only shapes worth refusing are the ones the crop would destroy.
+ * match it, so the shapes worth refusing are the ones the crop would visibly damage.
  * Everything in between is allowed through and warned about in the designer.
  */
 class ImageRatioRangeRule implements ValidationRule
@@ -46,7 +46,7 @@ class ImageRatioRangeRule implements ValidationRule
         $ratio = $dimensions[0] / $dimensions[1];
 
         if ($ratio < $this->minRatio || $ratio > $this->maxRatio) {
-            $fail(__('The image must be landscape. A tall or square image would be cropped beyond recognition in the featured strip — we recommend 1920x800.'));
+            $fail(__('The featured banner has to be panoramic: 1920x640 (3:1, the same shape as an X/Twitter header). A Facebook cover or an Instagram flyer will not fit as is — crop it to 1920x640 in Canva or Photopea, or ask an AI to adapt it.'));
         }
     }
 }

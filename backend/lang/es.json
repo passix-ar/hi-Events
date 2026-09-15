@@ -469,7 +469,7 @@
     "The image must be at least 600 pixels wide and 50 pixels tall, and no more than 4000 pixels wide and 4000 pixels tall.": "La imagen debe tener al menos 600 píxeles de ancho y 50 píxeles de alto, y no más de 4000 píxeles de ancho y 4000 píxeles de alto.",
     "The image must be between :minWidth x :minHeight and :maxWidth x :maxHeight pixels.": "La imagen tiene que medir entre :minWidth x :minHeight y :maxWidth x :maxHeight píxeles.",
     "The image must be at least :minWidth x :minHeight pixels.": "La imagen debe tener al menos :minWidth x :minHeight píxeles.",
-    "The image must be landscape. A tall or square image would be cropped beyond recognition in the featured strip — we recommend 1920x800.": "La imagen tiene que ser apaisada. Una vertical o cuadrada quedaría irreconocible al recortarse en la franja de destacados — recomendamos 1920x800.",
+    "The featured banner has to be panoramic: 1920x640 (3:1, the same shape as an X/Twitter header). A Facebook cover or an Instagram flyer will not fit as is — crop it to 1920x640 in Canva or Photopea, or ask an AI to adapt it.": "El banner destacado tiene que ser panorámico: 1920x640 (3:1, la misma forma que la portada de X/Twitter). La portada de Facebook o el flyer de Instagram no sirven tal cual — recortalo a 1920x640 en Canva o Photopea, o pedile a una IA que lo adapte.",
     "The entity ID is required when type is provided.": "El ID de entidad es obligatorio cuando se proporciona el tipo.",
     "The type is required when entity ID is provided.": "El tipo es obligatorio cuando se proporciona el ID de entidad.",
     "Your confirmation code for :app_name is :code": "Tu código de confirmación para :app_name es :code",
