@@ -23,7 +23,7 @@ class ImageTypeTest extends TestCase
     public function test_minimums_do_not_impose_a_shape(): void
     {
         $this->assertSame([400, 200], ImageType::getMinimumDimensionsMap(ImageType::EVENT_COVER));
-        $this->assertSame([1200, 500], ImageType::getMinimumDimensionsMap(ImageType::EVENT_BANNER));
+        $this->assertSame([1500, 500], ImageType::getMinimumDimensionsMap(ImageType::EVENT_BANNER));
 
         // Real uploads that must clear the cover minimums: a square Instagram flyer, a
         // portrait one, a wide festival banner and an ordinary landscape photo.
@@ -40,8 +40,8 @@ class ImageTypeTest extends TestCase
     /**
      * The smallest accepted banner has to be a shape the rule accepts. It used to be
      * 700x250 against an exact-2.4 rule: the very size the error message asked for could
-     * not be uploaded. 1200x500 is 2.4:1, and it also keeps the banner from being
-     * stretched past legibility — below that it visibly softens on a 1920 screen.
+     * not be uploaded. 1500x500 is 3:1 — an X/Twitter header exported at 1x — and it also
+     * keeps the banner from being stretched past legibility on a 1920 screen.
      */
     public function test_the_banner_minimum_is_itself_a_valid_banner(): void
     {
@@ -56,13 +56,13 @@ class ImageTypeTest extends TestCase
 
     /**
      * The banner is the only slot with any shape requirement, and even there it is a range,
-     * not a value: the strip crops what does not match, so the only shapes worth refusing
-     * are the ones the crop would destroy.
+     * not a value: the strip crops what does not match, so the shapes worth refusing are
+     * the ones the crop would visibly damage.
      */
     public function test_only_the_banner_constrains_its_shape(): void
     {
-        $this->assertSame([1.25, 3.2], ImageType::getAllowedRatioRange(ImageType::EVENT_BANNER));
-        $this->assertSame(2.4, ImageType::getRecommendedRatio(ImageType::EVENT_BANNER));
+        $this->assertSame([2.5, 3.5], ImageType::getAllowedRatioRange(ImageType::EVENT_BANNER));
+        $this->assertSame(3.0, ImageType::getRecommendedRatio(ImageType::EVENT_BANNER));
 
         foreach (ImageType::cases() as $case) {
             if ($case === ImageType::EVENT_BANNER) {
@@ -77,22 +77,20 @@ class ImageTypeTest extends TestCase
     }
 
     /**
-     * An exact ratio rejected three of twelve realistic sizes — every one a stock photo
-     * site offers is 16:9, and a hand crop landing on 1920x801 failed a rule whose own
-     * message suggested 1920x800. These are the shapes that have to get through.
+     * The strip is 3:1 and crops everything else by the difference, so the range is drawn
+     * where the crop stays small: 17% top and bottom at the floor, 14% off the sides at
+     * the ceiling. A hand crop one pixel off the recommended size still has to get through.
      */
-    public function test_the_banner_range_accepts_what_organisers_actually_have(): void
+    public function test_the_banner_range_accepts_what_fits_the_strip(): void
     {
         $accepted = [
-            [1920, 800],   // the recommended size
-            [3840, 1600],  // a retina export of it
-            [1440, 600],   // a smaller cut of it
-            [1920, 801],   // a hand crop one pixel off
-            [1920, 1080],  // Full HD, what every stock photo site hands you
-            [4000, 2250],  // the same shape, larger
-            [1920, 640],   // 3:1, the advice we gave before
-            [1600, 800],   // 2:1, already live in production
-            [1204, 908],   // 4:3, also live — loses 45% to the crop and still reads
+            [1920, 640],   // the recommended size
+            [3840, 1280],  // a retina export of it
+            [1500, 500],   // an X/Twitter header, the same shape at 1x
+            [1920, 641],   // a hand crop one pixel off
+            [1920, 720],   // 2.67:1, what All Access asks for — loses 11% and still reads
+            [1920, 768],   // 2.5:1, the floor
+            [2100, 600],   // 3.5:1, the ceiling
         ];
 
         foreach ($accepted as [$width, $height]) {
@@ -102,8 +100,20 @@ class ImageTypeTest extends TestCase
             );
         }
 
-        // What the crop would destroy: a square flyer and anything taller than wide.
-        foreach ([[1080, 1080], [1080, 1350], [900, 1600]] as [$width, $height]) {
+        // What the crop would visibly damage. The first three were live in production and
+        // are why the range tightened: the 1.96:1 lost 35% of its height on the homepage.
+        $rejected = [
+            [1921, 982],   // 1.96:1, half-cut artist photos and no venue logo
+            [1600, 800],   // 2:1, a Facebook event cover — loses 33%
+            [1204, 908],   // 4:3, a photo, not a banner
+            [1920, 800],   // 2.4:1, the size we used to ask for — loses 20%
+            [1920, 1080],  // 16:9, a stock photo
+            [1080, 1080],  // square
+            [1080, 1350],  // portrait
+            [4000, 800],   // 5:1, too flat
+        ];
+
+        foreach ($rejected as [$width, $height]) {
             $this->assertFalse(
                 $this->shapeIsAccepted($width, $height),
                 sprintf('%dx%d must be rejected', $width, $height),

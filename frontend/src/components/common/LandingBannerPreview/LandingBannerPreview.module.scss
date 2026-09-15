@@ -2,12 +2,14 @@
   margin: 12px 0 0;
 }
 
-// No fixed frame and no object-fit: the banner is shown whole, at whatever proportion it
-// was uploaded in. Anything else would promise a framing the featured slot does not apply.
+// The same 3:1 frame and centred cover as the homepage strip, so the preview crops exactly
+// what the strip will. Keep in step with landing/src/components/EventsHero.astro.
 .art {
   display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 3 / 1;
+  object-fit: cover;
+  object-position: center;
   border-radius: var(--hi-radius-md, 7px);
   background: #0b0b0e;
 }

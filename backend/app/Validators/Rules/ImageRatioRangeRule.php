@@ -17,7 +17,7 @@ use Illuminate\Http\UploadedFile;
  * cropped by hand.
  *
  * A range says the useful thing instead: the homepage strip crops whatever does not
- * match it, so the only shapes worth refusing are the ones the crop would destroy.
+ * match it, so the shapes worth refusing are the ones the crop would visibly damage.
  * Everything in between is allowed through and warned about in the designer.
  */
 class ImageRatioRangeRule implements ValidationRule
@@ -46,7 +46,7 @@ class ImageRatioRangeRule implements ValidationRule
         $ratio = $dimensions[0] / $dimensions[1];
 
         if ($ratio < $this->minRatio || $ratio > $this->maxRatio) {
-            $fail(__('The image must be landscape. A tall or square image would be cropped beyond recognition in the featured strip — we recommend 1920x800.'));
+            $fail(__('This image cannot be used as the featured banner. The banner must be panoramic, 1920 × 640 px (3:1 ratio). Images between 2.5:1 and 3.5:1 are accepted; outside that range, the featured strip on the Passix homepage would crop away too much of the artwork. You can resize or crop your image to 1920 × 640 px with tools such as Canva, Photopea or Adobe Express.'));
         }
     }
 }

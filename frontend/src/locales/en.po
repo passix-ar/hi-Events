@@ -39,15 +39,15 @@ msgstr "(empty)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} is already checked in"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:158
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>checked in</0> successfully"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:186
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>checked out</0> successfully"
 
@@ -243,6 +243,10 @@ msgstr "123 Main Street"
 msgid "123 Sample Street"
 msgstr "123 Sample Street"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+#~ msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+#~ msgstr "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+
 #: src/components/common/WidgetEditor/index.tsx:239
 msgid "20"
 msgstr "20"
@@ -334,7 +338,7 @@ msgstr "A single question per product. E.g, What is your t-shirt size?"
 msgid "A standard tax, like VAT or GST"
 msgstr "A standard tax, like VAT or GST"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:279
+#: src/components/routes/event/HomepageDesigner/index.tsx:280
 msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 msgstr "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 
@@ -1162,7 +1166,7 @@ msgstr "Attendee information collection"
 msgid "Attendee Name"
 msgstr "Attendee Name"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Attendee not found"
 
@@ -1346,7 +1350,7 @@ msgstr "Back to Reports"
 msgid "Background Color"
 msgstr "Background Color"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:326
+#: src/components/routes/event/HomepageDesigner/index.tsx:327
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Background Type"
@@ -1416,7 +1420,7 @@ msgstr "Business Name"
 msgid "Button Label"
 msgstr "Button Label"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:363
+#: src/components/routes/event/HomepageDesigner/index.tsx:364
 msgid "Button Text"
 msgstr "Button Text"
 
@@ -1652,15 +1656,15 @@ msgstr "Check-In List Created"
 msgid "Check-In List deleted successfully"
 msgstr "Check-In List deleted successfully"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list has expired"
 msgstr "Check-in list has expired"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:410
 msgid "Check-in list is not active"
 msgstr "Check-in list is not active"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:378
 msgid "Check-in list not found"
 msgstr "Check-in list not found"
 
@@ -1723,7 +1727,7 @@ msgstr "Checkout"
 msgid "Checkout Settings"
 msgstr "Checkout Settings"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:316
+#: src/components/routes/event/HomepageDesigner/index.tsx:317
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Choose a color for your background"
@@ -1863,7 +1867,7 @@ msgstr "Collect details per ticket"
 msgid "Collected (MercadoPago)"
 msgstr "Collected (MercadoPago)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:314
+#: src/components/routes/event/HomepageDesigner/index.tsx:315
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Color"
@@ -2182,7 +2186,7 @@ msgid "Continue"
 msgstr "Continue"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:370
+#: src/components/routes/event/HomepageDesigner/index.tsx:371
 msgid "Continue Button Text"
 msgstr "Continue Button Text"
 
@@ -2649,7 +2653,7 @@ msgstr "Customize the emails sent to your customers using Liquid templating. The
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Customize the event homepage and checkout messaging"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:206
+#: src/components/routes/event/HomepageDesigner/index.tsx:207
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Customize the layout, colors, and branding of your event homepage."
 
@@ -2666,7 +2670,7 @@ msgstr "Customize the questions asked during checkout to gather important inform
 msgid "Customize the SEO settings for this event"
 msgstr "Customize the SEO settings for this event"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:371
+#: src/components/routes/event/HomepageDesigner/index.tsx:372
 msgid "Customize the text shown on the continue button"
 msgstr "Customize the text shown on the continue button"
 
@@ -3041,7 +3045,7 @@ msgstr "Duplicate Product"
 msgid "e.g. 180 (3 hours)"
 msgstr "e.g. 180 (3 hours)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:372
+#: src/components/routes/event/HomepageDesigner/index.tsx:373
 msgid "e.g., Get Tickets, Register Now"
 msgstr "e.g., Get Tickets, Register Now"
 
@@ -3618,7 +3622,7 @@ msgstr "Event Full Address"
 msgid "Event Homepage"
 msgstr "Event Homepage"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:224
+#: src/components/routes/event/HomepageDesigner/index.tsx:225
 msgid "Event Image"
 msgstr "Event Image"
 
@@ -4074,7 +4078,7 @@ msgstr "Failed to verify email"
 #~ msgid "Featured"
 #~ msgstr "Featured"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:264
+#: src/components/routes/event/HomepageDesigner/index.tsx:265
 msgid "Featured banner (optional)"
 msgstr "Featured banner (optional)"
 
@@ -4244,7 +4248,7 @@ msgstr "Fixed fee must be 0 or greater"
 msgid "Fixed Fee:"
 msgstr "Fixed Fee:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "Flash is not available on this device"
 
@@ -4558,7 +4562,7 @@ msgstr "Highlighted products will have a different background color to make them
 msgid "Historical Commissions"
 msgstr "Historical Commissions"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:205
+#: src/components/routes/event/HomepageDesigner/index.tsx:206
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Homepage Design"
@@ -4568,7 +4572,7 @@ msgstr "Homepage Design"
 msgid "Homepage Designer"
 msgstr "Homepage Designer"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:396
+#: src/components/routes/event/HomepageDesigner/index.tsx:397
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Homepage Preview"
@@ -4578,7 +4582,7 @@ msgstr "Homepage Preview"
 msgid "Homer"
 msgstr "Homer"
 
-#: src/components/common/LandingBannerPreview/index.tsx:17
+#: src/components/common/LandingBannerPreview/index.tsx:18
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr "How it looks in the featured slot on the Passix homepage."
 
@@ -4679,7 +4683,7 @@ msgstr "Image uploaded successfully"
 msgid "Image URL"
 msgstr "Image URL"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:218
+#: src/components/routes/event/HomepageDesigner/index.tsx:219
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Images"
@@ -7280,6 +7284,10 @@ msgstr "Recipients"
 msgid "Recipients are available after the message is sent"
 msgstr "Recipients are available after the message is sent"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+msgid "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+msgstr "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr "Reconnect MercadoPago"
@@ -7682,7 +7690,7 @@ msgstr "Save"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:390
+#: src/components/routes/event/HomepageDesigner/index.tsx:391
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Save Changes"
@@ -7716,8 +7724,8 @@ msgstr "Save Ticket Design"
 msgid "Save VAT Settings"
 msgstr "Save VAT Settings"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:473
+#: src/components/layouts/CheckIn/index.tsx:483
 msgid "Scan"
 msgstr "Scan"
 
@@ -7773,7 +7781,7 @@ msgstr "Search by name, email, or account..."
 msgid "Search by name, email, or order #..."
 msgstr "Search by name, email, or order #..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:469
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Search by name, order #, attendee # or email..."
 
@@ -8592,7 +8600,7 @@ msgstr "Successfully Updated Event"
 msgid "Successfully Updated Event Defaults"
 msgstr "Successfully Updated Event Defaults"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:132
+#: src/components/routes/event/HomepageDesigner/index.tsx:133
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Successfully Updated Homepage Design"
@@ -8844,7 +8852,7 @@ msgstr "That promo code is invalid"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "The background color of the page. When using cover image, this is applied as an overlay."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:383
 msgid "The check-in list you are looking for does not exist."
 msgstr "The check-in list you are looking for does not exist."
 
@@ -8884,13 +8892,29 @@ msgstr "The event venue"
 msgid "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 msgstr "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
-msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
-msgstr "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+msgstr "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:285
-msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
-msgstr "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+msgstr "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71
@@ -8980,7 +9004,7 @@ msgstr "The VAT number could not be validated. Please check the number and try a
 msgid "Theater"
 msgstr "Theater"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:304
+#: src/components/routes/event/HomepageDesigner/index.tsx:305
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Theme & Colors"
@@ -9053,7 +9077,7 @@ msgstr "This category is hidden from public view"
 msgid "This check-in list has expired"
 msgstr "This check-in list has expired"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "This check-in list has expired and is no longer available for check-ins."
 
@@ -9065,7 +9089,7 @@ msgstr "This check-in list is active"
 msgid "This check-in list is not active yet"
 msgstr "This check-in list is not active yet"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:415
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "This check-in list is not yet active and is not available for check-ins."
 
@@ -9098,7 +9122,7 @@ msgstr "This Google account is already linked to another user. Please contact su
 #~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 #~ msgstr "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:244
+#: src/components/routes/event/HomepageDesigner/index.tsx:245
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 
@@ -9228,7 +9252,7 @@ msgstr "This report is for informational purposes only. Always consult with a ta
 msgid "This reset password link is invalid or expired."
 msgstr "This reset password link is invalid or expired."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:232
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "This ticket was just scanned. Please wait before scanning again."
 
@@ -9576,11 +9600,11 @@ msgstr "True if payment pending"
 msgid "Try another email"
 msgstr "Try another email"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound off"
 msgstr "Turn sound off"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound on"
 msgstr "Turn sound on"
 
@@ -9605,17 +9629,17 @@ msgstr "Type \"{confirmationWord}\" to confirm"
 msgid "Type of ticket"
 msgstr "Type of ticket"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:345
+#: src/components/routes/event/HomepageDesigner/index.tsx:346
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Typography"
 
-#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:172
 msgid "Unable to check in attendee"
 msgstr "Unable to check in attendee"
 
-#: src/components/layouts/CheckIn/index.tsx:192
-#: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:197
+#: src/components/layouts/CheckIn/index.tsx:199
 msgid "Unable to check out attendee"
 msgstr "Unable to check out attendee"
 
@@ -9635,7 +9659,7 @@ msgstr "Unable to create question. Please check the your details"
 msgid "Unable to duplicate product. Please check your details"
 msgstr "Unable to duplicate product. Please check your details"
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Unable to fetch attendee"
 
@@ -9805,12 +9829,12 @@ msgstr "USB/HID Scanner"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "Use <0>Liquid templating</0> to personalize your emails"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:322
+#: src/components/routes/event/HomepageDesigner/index.tsx:323
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Use a blurred version of the cover image as the background"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:320
+#: src/components/routes/event/HomepageDesigner/index.tsx:321
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Use cover image"
@@ -10201,10 +10225,10 @@ msgid "We hit a snag loading this page. Please try again."
 msgstr "We hit a snag loading this page. Please try again."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:266
-msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
-msgstr "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+#~ msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+#~ msgstr "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:226
+#: src/components/routes/event/HomepageDesigner/index.tsx:227
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 
@@ -10567,7 +10591,7 @@ msgstr "Yes, cancel my order"
 msgid "Yes, remove them"
 msgstr "Yes, remove them"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "You already scanned this ticket"
 
@@ -10583,8 +10607,8 @@ msgstr "You are impersonating <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "You are issuing a partial refund. The customer will be refunded {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:192
 msgid "You are offline"
 msgstr "You are offline"
 
@@ -10608,8 +10632,8 @@ msgstr "You cannot archive the last active organizer on your account."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "You cannot change the product type as there are attendees associated with this product."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:215
+#: src/components/layouts/CheckIn/index.tsx:282
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 
@@ -10791,7 +10815,7 @@ msgstr "Your email address has been verified. You can now publish events and sta
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:293
+#: src/components/routes/event/HomepageDesigner/index.tsx:294
 msgid "Your event can now appear on the Passix homepage."
 msgstr "Your event can now appear on the Passix homepage."
 
@@ -10892,7 +10916,7 @@ msgstr "Your refund is processing."
 msgid "Your sign up session has expired. Please start again."
 msgstr "Your sign up session has expired. Please start again."
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:239
+#: src/components/routes/event/HomepageDesigner/index.tsx:240
 msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 
