@@ -244,8 +244,8 @@ msgid "123 Sample Street"
 msgstr "示例街123號"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:267
-msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
-msgstr ""
+#~ msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+#~ msgstr ""
 
 #: src/components/common/WidgetEditor/index.tsx:239
 msgid "20"
@@ -7280,6 +7280,10 @@ msgstr "收件人"
 msgid "Recipients are available after the message is sent"
 msgstr "收件人在訊息發送後可用"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+msgid "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+msgstr ""
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr ""
@@ -8885,20 +8889,28 @@ msgid "The event you're looking for is not available at the moment. It may have 
 msgstr "您查找的活動目前不可用。它可能已被刪除、過期或 URL 不正確。"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:287
-msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
-msgstr ""
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
 #~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:286
-msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:285
 #~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
 #~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71

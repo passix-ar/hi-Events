@@ -264,7 +264,7 @@ const HomepageDesigner = () => {
                                         <Group justify={'space-between'} mb="xs">
                                             <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
                                             <Tooltip
-                                                label={t`1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off.`}>
+                                                label={t`Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express.`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -283,8 +283,8 @@ const HomepageDesigner = () => {
                                         {bannerIsOffShape && (
                                             <Text size="xs" c="orange.5" mt={6}>
                                                 {bannerCropsVertically
-                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off.`
-                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off.`}
+                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off.`
+                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off.`}
                                             </Text>
                                         )}
                                         {existingBanner?.url && (

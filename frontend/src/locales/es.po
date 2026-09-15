@@ -244,8 +244,8 @@ msgid "123 Sample Street"
 msgstr "Calle Ejemplo 123"
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:267
-msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
-msgstr "1920px por 640px — panorámico 3:1, la misma forma que la portada de X/Twitter. Eso llena la franja de destacados justo en cualquier pantalla. Se aceptan imágenes un poco más altas o más chatas, y se recortan un poco; la portada de Facebook o el flyer de Instagram no, porque la franja les cortaría demasiado."
+#~ msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+#~ msgstr "1920px por 640px — panorámico 3:1, la misma forma que la portada de X/Twitter. Eso llena la franja de destacados justo en cualquier pantalla. Se aceptan imágenes un poco más altas o más chatas, y se recortan un poco; la portada de Facebook o el flyer de Instagram no, porque la franja les cortaría demasiado."
 
 #: src/components/common/WidgetEditor/index.tsx:239
 msgid "20"
@@ -7280,6 +7280,10 @@ msgstr "Destinatarios"
 msgid "Recipients are available after the message is sent"
 msgstr "Los destinatarios estarán disponibles después de enviar el mensaje"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+msgid "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+msgstr "Medida recomendada: 1920 × 640 px (proporción 3:1). Llena exactamente la franja de destacados de la portada de Passix, en cualquier pantalla. Se aceptan imágenes de entre 2.5:1 y 3.5:1, que se recortan levemente en los bordes. Fuera de ese rango —por ejemplo, una portada de Facebook o un flyer cuadrado de Instagram— la imagen no se acepta, porque la franja recortaría demasiado. Podés adaptarla con herramientas como Canva, Photopea o Adobe Express."
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr "Reconectar MercadoPago"
@@ -8885,20 +8889,28 @@ msgid "The event you're looking for is not available at the moment. It may have 
 msgstr "El evento que buscas no está disponible en este momento. Puede que haya sido eliminado, haya caducado o la URL sea incorrecta."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:287
-msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
-msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de los costados a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x640 entra sin que se corte nada."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de los costados a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x640 entra sin que se corte nada."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
 #~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
 #~ msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de los costados a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x800 entra sin que se corte nada."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+msgstr "La franja de destacados va a recortar cerca del {bannerCropPercent}% de los costados de este banner. Asegurate de que ahí no haya nada importante. Una imagen de 1920 × 640 px entra sin que se corte nada."
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
-msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
-msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de arriba y abajo a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x640 entra sin que se corte nada."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de arriba y abajo a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x640 entra sin que se corte nada."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:285
 #~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
 #~ msgstr "La franja de destacados le va a recortar cerca del {bannerCropPercent}% de arriba y abajo a este banner. Fijate que ahí no haya nada importante — una imagen de 1920x800 entra sin que se corte nada."
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
+msgstr "La franja de destacados va a recortar cerca del {bannerCropPercent}% de la parte superior e inferior de este banner. Asegurate de que ahí no haya nada importante. Una imagen de 1920 × 640 px entra sin que se corte nada."
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:71
