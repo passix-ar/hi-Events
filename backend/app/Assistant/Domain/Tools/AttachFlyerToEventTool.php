@@ -75,13 +75,19 @@ class AttachFlyerToEventTool extends AbstractAssistantWriteTool
             return $this->preview($payload);
         }
 
-        $image = $this->createImage->handle(new CreateImageDTO(
-            userId: $this->context->user->getId(),
-            accountId: $this->context->accountId,
-            image: $this->attachments->asUploadedFile($this->context->attachment),
-            imageType: ImageType::EVENT_COVER,
-            entityId: $event->getId(),
-        ));
+        $upload = $this->attachments->asUploadedFile($this->context->attachment);
+
+        try {
+            $image = $this->createImage->handle(new CreateImageDTO(
+                userId: $this->context->user->getId(),
+                accountId: $this->context->accountId,
+                image: $upload,
+                imageType: ImageType::EVENT_COVER,
+                entityId: $event->getId(),
+            ));
+        } finally {
+            @unlink($upload->getRealPath());
+        }
 
         // Consumed: later turns that still carry the id resolve to nothing.
         $this->attachments->delete($this->context->attachment);
