@@ -21,7 +21,7 @@ abstract class SeatingLayoutDomainObjectAbstract extends \HiEvents\DomainObjects
     protected int $id;
     protected int $event_id;
     protected int $stage_x = 0;
-    protected int $stage_y = -140;
+    protected int $stage_y = 0;
     protected ?string $created_at = null;
     protected ?string $updated_at = null;
     protected bool $stage_visible = true;

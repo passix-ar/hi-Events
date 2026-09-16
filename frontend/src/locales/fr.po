@@ -14,12 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/layouts/Event/index.tsx:194
-#: src/components/layouts/OrganizerLayout/index.tsx:219
+#: src/components/layouts/OrganizerLayout/index.tsx:221
 msgid "- Click to Publish"
 msgstr "- Cliquez pour publier"
 
 #: src/components/layouts/Event/index.tsx:196
-#: src/components/layouts/OrganizerLayout/index.tsx:221
+#: src/components/layouts/OrganizerLayout/index.tsx:223
 msgid "- Click to Unpublish"
 msgstr "- Cliquez pour dépublier"
 
@@ -39,15 +39,15 @@ msgstr "(vide)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} est déjà enregistré"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:158
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>enregistré</0> avec succès"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:186
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>sorti</0> avec succès"
 
@@ -243,6 +243,10 @@ msgstr "123, rue Principale"
 msgid "123 Sample Street"
 msgstr "123 Rue Exemple"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+#~ msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+#~ msgstr ""
+
 #: src/components/common/WidgetEditor/index.tsx:239
 msgid "20"
 msgstr "20"
@@ -334,7 +338,7 @@ msgstr "Une seule question par produit. Par exemple, Quelle est votre taille de 
 msgid "A standard tax, like VAT or GST"
 msgstr "Une taxe standard, comme la TVA ou la TPS"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:279
+#: src/components/routes/event/HomepageDesigner/index.tsx:280
 msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 msgstr ""
 
@@ -990,11 +994,11 @@ msgstr "Êtes-vous sûr de vouloir créer un brouillon pour cet événement ? C
 msgid "Are you sure you want to make this event public? This will make the event visible to the public"
 msgstr "Êtes-vous sûr de vouloir rendre cet événement public ? Cela rendra l'événement visible au public"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:129
+#: src/components/layouts/OrganizerLayout/index.tsx:131
 msgid "Are you sure you want to make this organizer draft? This will make the organizer page invisible to the public"
 msgstr "Êtes-vous sûr de vouloir mettre cet organisateur en brouillon ? Cela rendra la page de l'organisateur invisible au public."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:130
+#: src/components/layouts/OrganizerLayout/index.tsx:132
 msgid "Are you sure you want to make this organizer public? This will make the organizer page visible to the public"
 msgstr "Êtes-vous sûr de vouloir rendre cet organisateur public ? Cela rendra la page de l'organisateur visible au public."
 
@@ -1075,6 +1079,10 @@ msgstr "Comme votre entreprise est basée en Irlande, la TVA irlandaise à 23 % 
 msgid "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 msgstr "Comme votre entreprise est basée dans l'UE, nous devons déterminer le traitement TVA approprié pour nos frais de plateforme :"
 
+#: src/components/routes/organizer/Assistant/index.tsx:86
+msgid "Ask about your sales, tickets and events in plain language."
+msgstr ""
+
 #: src/components/common/QuestionsTable/index.tsx:383
 msgid "Ask for name and email for each ticket purchased"
 msgstr "Demander le nom et l'email pour chaque billet acheté"
@@ -1086,6 +1094,10 @@ msgstr "Demander une fois par commande"
 #: src/components/forms/QuestionForm/index.tsx:91
 msgid "Ask once per product"
 msgstr "Demander une fois par produit"
+
+#: src/components/routes/organizer/Assistant/index.tsx:168
+msgid "Ask something about your events…"
+msgstr ""
 
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:201
 msgid "Assigned Configuration"
@@ -1099,6 +1111,11 @@ msgstr "Places numérotées"
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:246
 msgid "Assigned Tier"
 msgstr "Niveau attribué"
+
+#: src/components/layouts/OrganizerLayout/index.tsx:92
+#: src/components/routes/organizer/Assistant/index.tsx:87
+msgid "Assistant"
+msgstr ""
 
 #: src/components/modals/CreateOrganizerWebhookModal/index.tsx:37
 #: src/components/modals/CreateWebhookModal/index.tsx:37
@@ -1162,7 +1179,7 @@ msgstr "Collecte d'informations sur les participants"
 msgid "Attendee Name"
 msgstr "Nom du participant"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Participant non trouvé"
 
@@ -1346,7 +1363,7 @@ msgstr "Retour aux rapports"
 msgid "Background Color"
 msgstr "Couleur de fond"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:326
+#: src/components/routes/event/HomepageDesigner/index.tsx:327
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Type d'arrière-plan"
@@ -1416,7 +1433,7 @@ msgstr "Nom de l'entreprise"
 msgid "Button Label"
 msgstr "Libellé du bouton"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:363
+#: src/components/routes/event/HomepageDesigner/index.tsx:364
 msgid "Button Text"
 msgstr "Texte du bouton"
 
@@ -1652,15 +1669,15 @@ msgstr "Liste d'Enregistrement Créée !"
 msgid "Check-In List deleted successfully"
 msgstr "Liste de pointage supprimée avec succès"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list has expired"
 msgstr "La liste de pointage a expiré"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:410
 msgid "Check-in list is not active"
 msgstr "La liste de pointage n'est pas active"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:378
 msgid "Check-in list not found"
 msgstr "Liste de pointage non trouvée"
 
@@ -1715,6 +1732,10 @@ msgstr "Cases à cocher"
 msgid "Checked In"
 msgstr "Enregistré"
 
+#: src/components/routes/organizer/Assistant/index.tsx:149
+msgid "Checking your data…"
+msgstr ""
+
 #: src/components/routes/event/Settings/index.tsx:50
 msgid "Checkout"
 msgstr "Paiement"
@@ -1723,7 +1744,7 @@ msgstr "Paiement"
 msgid "Checkout Settings"
 msgstr "Paramètres de paiement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:316
+#: src/components/routes/event/HomepageDesigner/index.tsx:317
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Choisissez une couleur pour votre arrière-plan"
@@ -1838,7 +1859,7 @@ msgstr "Le code doit comporter entre 3 et 50 caractères"
 msgid "Code must be no more than 20 characters"
 msgstr "Le code ne doit pas dépasser 20 caractères"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:168
+#: src/components/layouts/OrganizerLayout/index.tsx:170
 msgid "Collaborate with your team to create amazing events together."
 msgstr "Collaborez avec votre équipe pour créer ensemble des événements incroyables."
 
@@ -1863,7 +1884,7 @@ msgstr "Collecter les informations par billet"
 msgid "Collected (MercadoPago)"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:314
+#: src/components/routes/event/HomepageDesigner/index.tsx:315
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Couleur"
@@ -2057,7 +2078,7 @@ msgstr "Confirmez le mot de passe"
 msgid "Confirm your email to access all features."
 msgstr "Confirmez votre e-mail pour accéder à toutes les fonctionnalités."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:315
+#: src/components/layouts/OrganizerLayout/index.tsx:317
 msgid "Confirmation email sent! Please check your inbox."
 msgstr "E-mail de confirmation envoyé ! Veuillez vérifier votre boîte de réception."
 
@@ -2101,8 +2122,8 @@ msgstr ""
 msgid "Connect Documentation"
 msgstr "Documentation de connexion"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:181
-#: src/components/layouts/OrganizerLayout/index.tsx:195
+#: src/components/layouts/OrganizerLayout/index.tsx:183
+#: src/components/layouts/OrganizerLayout/index.tsx:197
 #: src/components/routes/event/EventDashboard/index.tsx:252
 msgid "Connect MercadoPago"
 msgstr ""
@@ -2123,7 +2144,7 @@ msgstr ""
 msgid "Connect with Stripe"
 msgstr "Connectez-vous avec Stripe"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:182
+#: src/components/layouts/OrganizerLayout/index.tsx:184
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr ""
 
@@ -2182,7 +2203,7 @@ msgid "Continue"
 msgstr "Continuer"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:370
+#: src/components/routes/event/HomepageDesigner/index.tsx:371
 msgid "Continue Button Text"
 msgstr "Texte du bouton Continuer"
 
@@ -2434,7 +2455,7 @@ msgid "Create discounts, access codes for hidden tickets, and special offers."
 msgstr "Créez des réductions, des codes d'accès pour les billets cachés et des offres spéciales."
 
 #: src/components/common/NoEventsBlankSlate/index.tsx:27
-#: src/components/layouts/OrganizerLayout/index.tsx:158
+#: src/components/layouts/OrganizerLayout/index.tsx:160
 #: src/components/routes/organizer/Events/index.tsx:62
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:310
 msgid "Create Event"
@@ -2649,7 +2670,7 @@ msgstr "Personnalisez les e-mails envoyés à vos clients en utilisant des modè
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Personnalisez la page d'accueil de l'événement et la messagerie de paiement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:206
+#: src/components/routes/event/HomepageDesigner/index.tsx:207
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Personnalisez la mise en page, les couleurs et l'image de marque de la page d'accueil de votre événement."
 
@@ -2666,7 +2687,7 @@ msgstr "Personnalisez les questions posées lors du paiement pour recueillir des
 msgid "Customize the SEO settings for this event"
 msgstr "Personnalisez les paramètres SEO pour cet événement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:371
+#: src/components/routes/event/HomepageDesigner/index.tsx:372
 msgid "Customize the text shown on the continue button"
 msgstr "Personnalisez le texte affiché sur le bouton continuer"
 
@@ -2978,7 +2999,7 @@ msgstr "Téléchargement de la facture"
 
 #: src/components/common/EventCard/index.tsx:84
 #: src/components/layouts/Event/index.tsx:193
-#: src/components/layouts/OrganizerLayout/index.tsx:218
+#: src/components/layouts/OrganizerLayout/index.tsx:220
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:82
 msgid "Draft"
 msgstr "Brouillon"
@@ -3039,7 +3060,7 @@ msgstr "Dupliquer le produit"
 msgid "e.g. 180 (3 hours)"
 msgstr "ex. 180 (3 heures)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:372
+#: src/components/routes/event/HomepageDesigner/index.tsx:373
 msgid "e.g., Get Tickets, Register Now"
 msgstr "ex. : Obtenir des billets, S'inscrire maintenant"
 
@@ -3290,7 +3311,7 @@ msgid "Email confirmation resent"
 msgstr "E-mail de confirmation renvoyé"
 
 #: src/components/layouts/Event/index.tsx:75
-#: src/components/layouts/OrganizerLayout/index.tsx:102
+#: src/components/layouts/OrganizerLayout/index.tsx:104
 #: src/components/routes/profile/ManageProfile/index.tsx:100
 msgid "Email confirmation resent successfully"
 msgstr "E-mail de confirmation renvoyé avec succès"
@@ -3322,7 +3343,7 @@ msgstr "Aperçu de l'e-mail"
 msgid "Email Templates"
 msgstr "Modèles d'e-mail"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:294
+#: src/components/layouts/OrganizerLayout/index.tsx:296
 msgid "Email Verification Required"
 msgstr "Vérification de l'e-mail requise"
 
@@ -3616,7 +3637,7 @@ msgstr "Adresse Complète de l'Événement"
 msgid "Event Homepage"
 msgstr "Page d'accueil de l'événement"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:224
+#: src/components/routes/event/HomepageDesigner/index.tsx:225
 msgid "Event Image"
 msgstr ""
 
@@ -3725,7 +3746,7 @@ msgstr "Lieu de l'Événement"
 
 #: src/components/common/AdminAccountsTable/index.tsx:112
 #: src/components/layouts/Admin/index.tsx:24
-#: src/components/layouts/OrganizerLayout/index.tsx:87
+#: src/components/layouts/OrganizerLayout/index.tsx:88
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:181
 #: src/components/routes/admin/Attribution/index.tsx:133
 #: src/components/routes/admin/Dashboard/index.tsx:170
@@ -4072,7 +4093,7 @@ msgstr "Échec de la vérification de l'e-mail"
 #~ msgid "Featured"
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:264
+#: src/components/routes/event/HomepageDesigner/index.tsx:265
 msgid "Featured banner (optional)"
 msgstr ""
 
@@ -4242,7 +4263,7 @@ msgstr "Les frais fixes doivent être égaux ou supérieurs à 0"
 msgid "Fixed Fee:"
 msgstr "Frais fixes :"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "Flash n'est pas disponible sur cet appareil"
 
@@ -4556,17 +4577,17 @@ msgstr "Les produits mis en avant auront une couleur de fond différente pour se
 msgid "Historical Commissions"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:205
+#: src/components/routes/event/HomepageDesigner/index.tsx:206
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Conception de la page d'accueil"
 
 #: src/components/layouts/Event/index.tsx:106
-#: src/components/layouts/OrganizerLayout/index.tsx:91
+#: src/components/layouts/OrganizerLayout/index.tsx:93
 msgid "Homepage Designer"
 msgstr "Concepteur de page d'accueil"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:396
+#: src/components/routes/event/HomepageDesigner/index.tsx:397
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Aperçu de la page d'accueil"
@@ -4576,7 +4597,11 @@ msgstr "Aperçu de la page d'accueil"
 msgid "Homer"
 msgstr "Homère"
 
-#: src/components/common/LandingBannerPreview/index.tsx:17
+#: src/components/routes/organizer/Assistant/index.tsx:39
+msgid "How is each of my events doing?"
+msgstr ""
+
+#: src/components/common/LandingBannerPreview/index.tsx:18
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr ""
 
@@ -4595,6 +4620,10 @@ msgstr "De combien de minutes le client dispose pour finaliser sa commande. Nous
 #: src/components/forms/PromoCodeForm/index.tsx:114
 msgid "How many times can this code be used?"
 msgstr "Combien de fois ce code peut-il être utilisé ?"
+
+#: src/components/routes/organizer/Assistant/index.tsx:37
+msgid "How much did I sell this month?"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:49
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:82
@@ -4628,6 +4657,10 @@ msgstr "J'accepte de recevoir des notifications par e-mail liées à cet événe
 #: src/components/routes/auth/AcceptInvitation/index.tsx:149
 msgid "I agree to the <0>terms and conditions</0>"
 msgstr "J'accepte les <0>termes et conditions</0>"
+
+#: src/components/routes/organizer/Assistant/index.tsx:96
+msgid "I can only read your own data, and every figure comes from your account."
+msgstr ""
 
 #: src/components/modals/SendMessageModal/index.tsx:439
 msgid "I confirm this is a transactional message related to this event"
@@ -4677,7 +4710,7 @@ msgstr "Image téléchargée avec succès"
 msgid "Image URL"
 msgstr "URL de l'image"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:218
+#: src/components/routes/event/HomepageDesigner/index.tsx:219
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Images"
@@ -4778,7 +4811,7 @@ msgid "Instagram"
 msgstr "Instagram"
 
 #: src/components/layouts/Event/index.tsx:127
-#: src/components/layouts/OrganizerLayout/index.tsx:93
+#: src/components/layouts/OrganizerLayout/index.tsx:95
 msgid "Integrations"
 msgstr "Intégrations"
 
@@ -4826,7 +4859,7 @@ msgstr "Inviter un membre de l'équipe"
 msgid "Invite Team Member"
 msgstr "Inviter un membre de l'équipe"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:170
+#: src/components/layouts/OrganizerLayout/index.tsx:172
 msgid "Invite Team Members"
 msgstr "Inviter des membres de l'équipe"
 
@@ -4834,7 +4867,7 @@ msgstr "Inviter des membres de l'équipe"
 msgid "Invite User"
 msgstr "Inviter un utilisateur"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:167
+#: src/components/layouts/OrganizerLayout/index.tsx:169
 msgid "Invite Your Team"
 msgstr "Invitez votre équipe"
 
@@ -5080,7 +5113,7 @@ msgstr "Liens autorisés"
 
 #: src/components/common/EventCard/index.tsx:87
 #: src/components/layouts/Event/index.tsx:195
-#: src/components/layouts/OrganizerLayout/index.tsx:220
+#: src/components/layouts/OrganizerLayout/index.tsx:222
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:83
 msgid "Live"
 msgstr "En ligne"
@@ -5191,7 +5224,7 @@ msgstr "Rendre votre événement public"
 #: src/components/common/PromoCodeTable/index.tsx:167
 #: src/components/common/SeatingSectionList/index.tsx:197
 #: src/components/common/WebhookTable/index.tsx:96
-#: src/components/layouts/OrganizerLayout/index.tsx:86
+#: src/components/layouts/OrganizerLayout/index.tsx:87
 msgid "Manage"
 msgstr "Gérer"
 
@@ -6329,7 +6362,7 @@ msgid "Organizer archived successfully"
 msgstr "Organisateur archivé avec succès"
 
 #: src/components/layouts/Event/index.tsx:85
-#: src/components/layouts/OrganizerLayout/index.tsx:78
+#: src/components/layouts/OrganizerLayout/index.tsx:79
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:213
 msgid "Organizer Dashboard"
 msgstr "Tableau de bord de l'organisateur"
@@ -6376,12 +6409,12 @@ msgid "Organizer statistics are not available for the selected currency or an er
 msgstr "Les statistiques de l'organisateur ne sont pas disponibles pour la devise sélectionnée ou une erreur s'est produite."
 
 #: src/components/common/StatusToggle/index.tsx:64
-#: src/components/layouts/OrganizerLayout/index.tsx:141
+#: src/components/layouts/OrganizerLayout/index.tsx:143
 msgid "Organizer status update failed. Please try again later"
 msgstr "Échec de la mise à jour du statut de l'organisateur. Veuillez réessayer plus tard"
 
 #: src/components/common/StatusToggle/index.tsx:56
-#: src/components/layouts/OrganizerLayout/index.tsx:138
+#: src/components/layouts/OrganizerLayout/index.tsx:140
 msgid "Organizer status updated"
 msgstr "Statut de l'organisateur mis à jour"
 
@@ -6409,7 +6442,7 @@ msgid "Outgoing Messages"
 msgstr "Messages sortants"
 
 #: src/components/layouts/Event/index.tsx:88
-#: src/components/layouts/OrganizerLayout/index.tsx:77
+#: src/components/layouts/OrganizerLayout/index.tsx:78
 msgid "Overview"
 msgstr "Aperçu"
 
@@ -7276,6 +7309,10 @@ msgstr "Destinataires"
 msgid "Recipients are available after the message is sent"
 msgstr "Les destinataires sont disponibles après l'envoi du message"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+msgid "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+msgstr ""
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr ""
@@ -7401,7 +7438,7 @@ msgid "Report not found"
 msgstr "Rapport non trouvé"
 
 #: src/components/layouts/Event/index.tsx:98
-#: src/components/layouts/OrganizerLayout/index.tsx:81
+#: src/components/layouts/OrganizerLayout/index.tsx:82
 #: src/components/routes/event/Reports/index.tsx:39
 #: src/components/routes/organizer/Reports/index.tsx:53
 msgid "Reports"
@@ -7427,7 +7464,7 @@ msgstr "Renvoyer le code"
 msgid "Resend Confirmation"
 msgstr "Renvoyer la confirmation"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:311
+#: src/components/layouts/OrganizerLayout/index.tsx:313
 msgid "Resend Confirmation Email"
 msgstr "Renvoyer l'e-mail de confirmation"
 
@@ -7678,7 +7715,7 @@ msgstr "Sauvegarder"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:390
+#: src/components/routes/event/HomepageDesigner/index.tsx:391
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Sauvegarder les modifications"
@@ -7712,8 +7749,8 @@ msgstr "Enregistrer le Design du Billet"
 msgid "Save VAT Settings"
 msgstr "Enregistrer les paramètres TVA"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:473
+#: src/components/layouts/CheckIn/index.tsx:483
 msgid "Scan"
 msgstr "Scanner"
 
@@ -7769,7 +7806,7 @@ msgstr "Rechercher par nom, e-mail ou compte..."
 msgid "Search by name, email, or order #..."
 msgstr "Recherchez par nom, e-mail ou numéro de commande..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:469
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Rechercher par nom, numéro de commande, numéro de participant ou e-mail..."
 
@@ -8020,6 +8057,7 @@ msgstr "Se vend vite 🔥"
 
 #: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
+#: src/components/routes/organizer/Assistant/index.tsx:180
 msgid "Send"
 msgstr "Envoyer"
 
@@ -8176,7 +8214,7 @@ msgstr "Paramètre mis à jour"
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:81
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:82
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:83
-#: src/components/layouts/OrganizerLayout/index.tsx:88
+#: src/components/layouts/OrganizerLayout/index.tsx:89
 #: src/components/modals/DuplicateEventModal/index.tsx:26
 msgid "Settings"
 msgstr "Paramètres"
@@ -8187,7 +8225,7 @@ msgstr "Configuration et design"
 
 #: src/components/common/ShareIcon/index.tsx:30
 #: src/components/layouts/EventHomepage/index.tsx:357
-#: src/components/layouts/OrganizerLayout/index.tsx:240
+#: src/components/layouts/OrganizerLayout/index.tsx:242
 #: src/components/modals/ShareModal/index.tsx:37
 #: src/components/modals/ShareModal/index.tsx:165
 #: src/components/modals/ShareModal/index.tsx:186
@@ -8206,8 +8244,8 @@ msgstr "Partager le lien d'affiliation"
 msgid "Share Event"
 msgstr "Partager l'événement"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:237
-#: src/components/layouts/OrganizerLayout/index.tsx:279
+#: src/components/layouts/OrganizerLayout/index.tsx:239
+#: src/components/layouts/OrganizerLayout/index.tsx:281
 msgid "Share Organizer Page"
 msgstr "Partager la page de l'organisateur"
 
@@ -8234,6 +8272,10 @@ msgstr "Afficher la case d'opt-in marketing"
 #: src/components/routes/organizer/Settings/Sections/EventDefaults/index.tsx:88
 msgid "Show marketing opt-in checkbox by default"
 msgstr "Afficher la case d'opt-in marketing par défaut"
+
+#: src/components/routes/organizer/Assistant/index.tsx:38
+msgid "Show me my latest sales"
+msgstr ""
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:567
 #: src/components/routes/product-widget/SelectProducts/index.tsx:668
@@ -8359,7 +8401,7 @@ msgid "Something went wrong. Please try again later."
 msgstr "Une erreur s'est produite. Veuillez réessayer plus tard."
 
 #: src/components/layouts/Event/index.tsx:79
-#: src/components/layouts/OrganizerLayout/index.tsx:106
+#: src/components/layouts/OrganizerLayout/index.tsx:108
 #: src/components/routes/auth/Login/index.tsx:76
 #: src/components/routes/my-tickets/index.tsx:145
 #: src/components/routes/profile/ManageProfile/index.tsx:90
@@ -8588,7 +8630,7 @@ msgstr "Événement mis à jour avec succès"
 msgid "Successfully Updated Event Defaults"
 msgstr "Paramètres par défaut de l'événement mis à jour avec succès"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:132
+#: src/components/routes/event/HomepageDesigner/index.tsx:133
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Conception de la page d'accueil mise à jour avec succès"
@@ -8688,7 +8730,7 @@ msgstr "Festival de Musique d'Été 2025"
 msgid "Support Email"
 msgstr "E-mail d'assistance"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:71
+#: src/components/layouts/OrganizerLayout/index.tsx:72
 #: src/components/modals/SwitchOrganizerModal/index.tsx:46
 msgid "Switch Organizer"
 msgstr "Changer d'organisateur"
@@ -8836,11 +8878,19 @@ msgstr "Merci pour votre soutien alors que nous continuons à développer et am�
 msgid "That promo code is invalid"
 msgstr "Ce code promotionnel n'est pas valide"
 
+#: src/components/routes/organizer/Assistant/index.tsx:74
+msgid "The assistant is not enabled for this account yet."
+msgstr ""
+
+#: src/components/routes/organizer/Assistant/index.tsx:78
+msgid "The assistant is temporarily unavailable. Please try again."
+msgstr ""
+
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "La couleur de fond de la page. Lors de l'utilisation d'une image de couverture, ceci est appliqué en superposition."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:383
 msgid "The check-in list you are looking for does not exist."
 msgstr "La liste de pointage que vous recherchez n'existe pas."
 
@@ -8880,12 +8930,28 @@ msgstr "Le lieu de l'événement"
 msgid "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 msgstr "L'événement que vous recherchez n'est pas disponible pour le moment. Il a peut-être été supprimé, expiré ou l'URL est incorrecte."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
-msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 msgstr ""
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:285
-msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
@@ -8976,7 +9042,7 @@ msgstr "Le numéro de TVA n'a pas pu être validé. Veuillez vérifier le numér
 msgid "Theater"
 msgstr "Théâtre"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:304
+#: src/components/routes/event/HomepageDesigner/index.tsx:305
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Thème et couleurs"
@@ -9049,7 +9115,7 @@ msgstr "Cette catégorie est masquée de la vue publique"
 msgid "This check-in list has expired"
 msgstr "Cette liste de pointage a expiré"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Cette liste de pointage a expiré et n'est plus disponible pour les enregistrements."
 
@@ -9061,7 +9127,7 @@ msgstr "Cette liste de pointage est active"
 msgid "This check-in list is not active yet"
 msgstr "Cette liste de pointage n'est pas encore active"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:415
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Cette liste de pointage n'est pas encore active et n'est pas disponible pour les enregistrements."
 
@@ -9094,7 +9160,7 @@ msgstr ""
 #~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:244
+#: src/components/routes/event/HomepageDesigner/index.tsx:245
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr ""
 
@@ -9224,7 +9290,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:232
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Ce billet vient d'être scanné. Veuillez attendre avant de scanner à nouveau."
 
@@ -9455,7 +9521,11 @@ msgstr "Basculer les colonnes"
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "Trop de tentatives. Veuillez patienter un instant et réessayer."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:90
+#: src/components/routes/organizer/Assistant/index.tsx:76
+msgid "Too many questions in a row. Please wait a moment and try again."
+msgstr ""
+
+#: src/components/layouts/OrganizerLayout/index.tsx:91
 msgid "Tools"
 msgstr "Outils"
 
@@ -9572,11 +9642,11 @@ msgstr "Vrai si paiement en attente"
 msgid "Try another email"
 msgstr "Essayer un autre e-mail"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound off"
 msgstr "Désactiver le son"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound on"
 msgstr "Activer le son"
 
@@ -9601,17 +9671,17 @@ msgstr ""
 msgid "Type of ticket"
 msgstr "Type de billet"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:345
+#: src/components/routes/event/HomepageDesigner/index.tsx:346
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Typographie"
 
-#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:172
 msgid "Unable to check in attendee"
 msgstr "Impossible d'enregistrer le participant"
 
-#: src/components/layouts/CheckIn/index.tsx:192
-#: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:197
+#: src/components/layouts/CheckIn/index.tsx:199
 msgid "Unable to check out attendee"
 msgstr "Impossible de sortir le participant"
 
@@ -9631,7 +9701,7 @@ msgstr "Impossible de créer une question. Veuillez vérifier vos coordonnées"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Impossible de récupérer le participant"
 
@@ -9801,12 +9871,12 @@ msgstr "Scanner USB/HID"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "Utilisez <0>les modèles Liquid</0> pour personnaliser vos e-mails"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:322
+#: src/components/routes/event/HomepageDesigner/index.tsx:323
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Utilisez une version floue de l'image de couverture comme arrière-plan"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:320
+#: src/components/routes/event/HomepageDesigner/index.tsx:321
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Utiliser l'image de couverture"
@@ -10070,8 +10140,8 @@ msgstr "Voir les détails de la commande"
 msgid "View order details, issue refunds, and resend confirmations."
 msgstr "Consultez les détails des commandes, effectuez des remboursements et renvoyez les confirmations."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:255
-#: src/components/layouts/OrganizerLayout/index.tsx:258
+#: src/components/layouts/OrganizerLayout/index.tsx:257
+#: src/components/layouts/OrganizerLayout/index.tsx:260
 msgid "View Organizer Homepage"
 msgstr "Voir la page d'accueil de l'organisateur"
 
@@ -10197,10 +10267,10 @@ msgid "We hit a snag loading this page. Please try again."
 msgstr "Un problème est survenu lors du chargement de cette page. Veuillez réessayer."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:266
-msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
-msgstr ""
+#~ msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+#~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:226
+#: src/components/routes/event/HomepageDesigner/index.tsx:227
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
@@ -10301,7 +10371,7 @@ msgid "Webhook will send notifications"
 msgstr "Le webhook enverra des notifications"
 
 #: src/components/layouts/Event/index.tsx:129
-#: src/components/layouts/OrganizerLayout/index.tsx:94
+#: src/components/layouts/OrganizerLayout/index.tsx:96
 #: src/components/modals/DuplicateEventModal/index.tsx:32
 #: src/components/routes/event/Webhooks/index.tsx:32
 #: src/components/routes/organizer/Webhooks/index.tsx:30
@@ -10563,7 +10633,7 @@ msgstr "Oui, annuler ma commande"
 msgid "Yes, remove them"
 msgstr "Oui, supprime-les"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "Vous avez déjà scanné ce billet"
 
@@ -10579,8 +10649,8 @@ msgstr "Vous usurpez l'identité de <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Vous émettez un remboursement partiel. Le client sera remboursé de {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:192
 msgid "You are offline"
 msgstr "Vous êtes hors ligne"
 
@@ -10604,8 +10674,8 @@ msgstr "Vous ne pouvez pas archiver le dernier organisateur actif de votre compt
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Vous ne pouvez pas changer le type de produit car des invités y sont associés."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:215
+#: src/components/layouts/CheckIn/index.tsx:282
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Vous ne pouvez pas enregistrer des participants avec des commandes impayées. Ce paramètre peut être modifié dans les paramètres de l'événement."
 
@@ -10673,7 +10743,7 @@ msgstr "Vous devez créer un ticket avant de pouvoir ajouter manuellement un par
 msgid "You must have at least one price tier"
 msgstr "Vous devez avoir au moins un niveau de prix"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:300
+#: src/components/layouts/OrganizerLayout/index.tsx:302
 msgid "You must verify your email address before you can update the organizer status."
 msgstr "Vous devez vérifier votre adresse e-mail avant de pouvoir mettre à jour le statut de l'organisateur."
 
@@ -10787,7 +10857,7 @@ msgstr "Votre adresse e-mail a été vérifiée. Vous pouvez maintenant publier 
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "Votre demande de modification par e-mail en <0>{0}</0> est en attente. S'il vous plaît vérifier votre e-mail pour confirmer"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:293
+#: src/components/routes/event/HomepageDesigner/index.tsx:294
 msgid "Your event can now appear on the Passix homepage."
 msgstr ""
 
@@ -10888,7 +10958,7 @@ msgstr "Votre remboursement est en cours de traitement."
 msgid "Your sign up session has expired. Please start again."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:239
+#: src/components/routes/event/HomepageDesigner/index.tsx:240
 msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr ""
 

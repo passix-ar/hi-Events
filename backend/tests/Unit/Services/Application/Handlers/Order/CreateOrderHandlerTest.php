@@ -17,6 +17,7 @@ use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
 use HiEvents\Services\Application\Handlers\Order\DTO\ProductOrderDetailsDTO;
 use HiEvents\Services\Domain\Order\OrderItemProcessingService;
 use HiEvents\Services\Domain\Order\OrderManagementService;
+use HiEvents\Services\Domain\PromoCode\PromoCodeUsageValidationService;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesDTO;
 use HiEvents\Services\Domain\Product\DTO\AvailableProductQuantitiesResponseDTO;
@@ -30,6 +31,7 @@ use Tests\TestCase;
 
 class CreateOrderHandlerTest extends TestCase
 {
+    private PromoCodeUsageValidationService $promoCodeUsageValidationService;
     private EventRepositoryInterface|MockInterface $eventRepository;
     private PromoCodeRepositoryInterface|MockInterface $promoCodeRepository;
     private AffiliateRepositoryInterface|MockInterface $affiliateRepository;
@@ -59,6 +61,9 @@ class CreateOrderHandlerTest extends TestCase
         $this->databaseManager->shouldReceive('transaction')
             ->andReturnUsing(fn($callback) => $callback());
 
+        $this->promoCodeUsageValidationService = Mockery::mock(PromoCodeUsageValidationService::class);
+        $this->promoCodeUsageValidationService->shouldReceive('isPromoCodeUsable')->andReturnUsing(fn ($code) => (bool) $code?->isValid())->byDefault();
+
         $this->handler = new CreateOrderHandler(
             $this->eventRepository,
             $this->promoCodeRepository,
@@ -69,6 +74,7 @@ class CreateOrderHandlerTest extends TestCase
             $this->availabilityService,
             $this->seatClaimService,
             $this->databaseManager,
+            $this->promoCodeUsageValidationService,
         );
     }
 

@@ -14,12 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/layouts/Event/index.tsx:194
-#: src/components/layouts/OrganizerLayout/index.tsx:219
+#: src/components/layouts/OrganizerLayout/index.tsx:221
 msgid "- Click to Publish"
 msgstr "- Yayınlamak için Tıklayın"
 
 #: src/components/layouts/Event/index.tsx:196
-#: src/components/layouts/OrganizerLayout/index.tsx:221
+#: src/components/layouts/OrganizerLayout/index.tsx:223
 msgid "- Click to Unpublish"
 msgstr "- Yayından Kaldırmak için Tıklayın"
 
@@ -39,15 +39,15 @@ msgstr "(boş)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:260
+#: src/components/layouts/CheckIn/index.tsx:265
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} zaten giriş yaptı"
 
-#: src/components/layouts/CheckIn/index.tsx:153
+#: src/components/layouts/CheckIn/index.tsx:158
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>başarıyla check-in yaptı</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:181
+#: src/components/layouts/CheckIn/index.tsx:186
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>başarıyla check-out yaptı</0>"
 
@@ -243,6 +243,10 @@ msgstr "123 Ana Cadde"
 msgid "123 Sample Street"
 msgstr "123 Örnek Sokak"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+#~ msgid "1920px by 640px — a 3:1 panoramic, the same shape as an X/Twitter header. That fills the featured strip exactly on every screen. Slightly taller or flatter images are accepted and cropped a little; a Facebook cover or an Instagram flyer is not, because the strip would cut too much off."
+#~ msgstr ""
+
 #: src/components/common/WidgetEditor/index.tsx:239
 msgid "20"
 msgstr "20"
@@ -334,7 +338,7 @@ msgstr "Ürün başına tek soru. Örn. Tişört bedeniniz nedir?"
 msgid "A standard tax, like VAT or GST"
 msgstr "KDV veya ÖTV gibi standart vergi"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:279
+#: src/components/routes/event/HomepageDesigner/index.tsx:280
 msgid "A wide banner is required to appear in the featured slot on the Passix homepage. Without one your event is still listed, using your square flyer."
 msgstr ""
 
@@ -990,11 +994,11 @@ msgstr "Bu etkinliği taslak yapmak istediğinizden emin misiniz? Bu işlem etki
 msgid "Are you sure you want to make this event public? This will make the event visible to the public"
 msgstr "Bu etkinliği herkese açık yapmak istediğinizden emin misiniz? Bu işlem etkinliği halka görünür yapacaktır"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:129
+#: src/components/layouts/OrganizerLayout/index.tsx:131
 msgid "Are you sure you want to make this organizer draft? This will make the organizer page invisible to the public"
 msgstr "Bu organizatörü taslak yapmak istediğinizden emin misiniz? Bu, organizatör sayfasını kamuya görünmez yapacaktır"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:130
+#: src/components/layouts/OrganizerLayout/index.tsx:132
 msgid "Are you sure you want to make this organizer public? This will make the organizer page visible to the public"
 msgstr "Bu organizatörü herkese açık yapmak istediğinizden emin misiniz? Bu, organizatör sayfasını kamuya görünür yapacaktır"
 
@@ -1075,6 +1079,10 @@ msgstr "İşletmeniz İrlanda merkezli olduğundan, tüm platform ücretlerine o
 msgid "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 msgstr "İşletmeniz AB merkezli olduğundan, platform ücretlerimiz için doğru KDV uygulamasını belirlememiz gerekiyor:"
 
+#: src/components/routes/organizer/Assistant/index.tsx:86
+msgid "Ask about your sales, tickets and events in plain language."
+msgstr ""
+
 #: src/components/common/QuestionsTable/index.tsx:383
 msgid "Ask for name and email for each ticket purchased"
 msgstr "Satın alınan her bilet için ad ve e-posta isteyin"
@@ -1086,6 +1094,10 @@ msgstr "Sipariş başına bir kez sor"
 #: src/components/forms/QuestionForm/index.tsx:91
 msgid "Ask once per product"
 msgstr "Ürün başına bir kez sor"
+
+#: src/components/routes/organizer/Assistant/index.tsx:168
+msgid "Ask something about your events…"
+msgstr ""
 
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:201
 msgid "Assigned Configuration"
@@ -1099,6 +1111,11 @@ msgstr "Numaralı koltuk"
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:246
 msgid "Assigned Tier"
 msgstr "Atanan Seviye"
+
+#: src/components/layouts/OrganizerLayout/index.tsx:92
+#: src/components/routes/organizer/Assistant/index.tsx:87
+msgid "Assistant"
+msgstr ""
 
 #: src/components/modals/CreateOrganizerWebhookModal/index.tsx:37
 #: src/components/modals/CreateWebhookModal/index.tsx:37
@@ -1162,7 +1179,7 @@ msgstr "Katılımcı bilgi toplama"
 msgid "Attendee Name"
 msgstr "Katılımcı Adı"
 
-#: src/components/layouts/CheckIn/index.tsx:250
+#: src/components/layouts/CheckIn/index.tsx:255
 msgid "Attendee not found"
 msgstr "Katılımcı bulunamadı"
 
@@ -1346,7 +1363,7 @@ msgstr "Raporlara Dön"
 msgid "Background Color"
 msgstr "Arkaplan Rengi"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:326
+#: src/components/routes/event/HomepageDesigner/index.tsx:327
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:261
 msgid "Background Type"
 msgstr "Arkaplan Türü"
@@ -1416,7 +1433,7 @@ msgstr "İşletme Adı"
 msgid "Button Label"
 msgstr "Düğme Etiketi"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:363
+#: src/components/routes/event/HomepageDesigner/index.tsx:364
 msgid "Button Text"
 msgstr "Düğme Metni"
 
@@ -1652,15 +1669,15 @@ msgstr "Giriş Listesi Oluşturuldu"
 msgid "Check-In List deleted successfully"
 msgstr "Check-In Listesi başarıyla silindi"
 
-#: src/components/layouts/CheckIn/index.tsx:388
+#: src/components/layouts/CheckIn/index.tsx:393
 msgid "Check-in list has expired"
 msgstr "Check-in listesinin süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:405
+#: src/components/layouts/CheckIn/index.tsx:410
 msgid "Check-in list is not active"
 msgstr "Check-in listesi aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:373
+#: src/components/layouts/CheckIn/index.tsx:378
 msgid "Check-in list not found"
 msgstr "Check-in listesi bulunamadı"
 
@@ -1715,6 +1732,10 @@ msgstr "Onay Kutuları"
 msgid "Checked In"
 msgstr "Giriş Yapıldı"
 
+#: src/components/routes/organizer/Assistant/index.tsx:149
+msgid "Checking your data…"
+msgstr ""
+
 #: src/components/routes/event/Settings/index.tsx:50
 msgid "Checkout"
 msgstr "Ödeme"
@@ -1723,7 +1744,7 @@ msgstr "Ödeme"
 msgid "Checkout Settings"
 msgstr "Ödeme Ayarları"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:316
+#: src/components/routes/event/HomepageDesigner/index.tsx:317
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:251
 msgid "Choose a color for your background"
 msgstr "Arkaplanınız için bir renk seçin"
@@ -1838,7 +1859,7 @@ msgstr "Kod 3 ile 50 karakter arasında olmalıdır"
 msgid "Code must be no more than 20 characters"
 msgstr "Kod en fazla 20 karakter olmalıdır"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:168
+#: src/components/layouts/OrganizerLayout/index.tsx:170
 msgid "Collaborate with your team to create amazing events together."
 msgstr "Birlikte harika etkinlikler oluşturmak için ekibinizle işbirliği yapın."
 
@@ -1863,7 +1884,7 @@ msgstr "Bilet başına bilgi toplayın"
 msgid "Collected (MercadoPago)"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:314
+#: src/components/routes/event/HomepageDesigner/index.tsx:315
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:249
 msgid "Color"
 msgstr "Renk"
@@ -2057,7 +2078,7 @@ msgstr "Şifreyi Onayla"
 msgid "Confirm your email to access all features."
 msgstr "Tüm özelliklere erişmek için e-postanızı onaylayın."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:315
+#: src/components/layouts/OrganizerLayout/index.tsx:317
 msgid "Confirmation email sent! Please check your inbox."
 msgstr "Onay e-postası gönderildi! Lütfen gelen kutunuzu kontrol edin."
 
@@ -2101,8 +2122,8 @@ msgstr ""
 msgid "Connect Documentation"
 msgstr "Dokümantasyonu Bağla"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:181
-#: src/components/layouts/OrganizerLayout/index.tsx:195
+#: src/components/layouts/OrganizerLayout/index.tsx:183
+#: src/components/layouts/OrganizerLayout/index.tsx:197
 #: src/components/routes/event/EventDashboard/index.tsx:252
 msgid "Connect MercadoPago"
 msgstr ""
@@ -2123,7 +2144,7 @@ msgstr ""
 msgid "Connect with Stripe"
 msgstr "Stripe ile Bağlan"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:182
+#: src/components/layouts/OrganizerLayout/index.tsx:184
 msgid "Connect your MercadoPago account to accept payments for tickets and products."
 msgstr ""
 
@@ -2182,7 +2203,7 @@ msgid "Continue"
 msgstr "Devam Et"
 
 #: src/components/common/WidgetEditor/index.tsx:230
-#: src/components/routes/event/HomepageDesigner/index.tsx:370
+#: src/components/routes/event/HomepageDesigner/index.tsx:371
 msgid "Continue Button Text"
 msgstr "Devam Butonu Metni"
 
@@ -2434,7 +2455,7 @@ msgid "Create discounts, access codes for hidden tickets, and special offers."
 msgstr "İndirimler, gizli biletler için erişim kodları ve özel teklifler oluşturun."
 
 #: src/components/common/NoEventsBlankSlate/index.tsx:27
-#: src/components/layouts/OrganizerLayout/index.tsx:158
+#: src/components/layouts/OrganizerLayout/index.tsx:160
 #: src/components/routes/organizer/Events/index.tsx:62
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:310
 msgid "Create Event"
@@ -2649,7 +2670,7 @@ msgstr "Liquid şablonu kullanarak müşterilerinize gönderilen e-postaları ö
 msgid "Customize the event homepage and checkout messaging"
 msgstr "Etkinlik ana sayfası ve ödeme mesajlarını özelleştirin"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:206
+#: src/components/routes/event/HomepageDesigner/index.tsx:207
 msgid "Customize the layout, colors, and branding of your event homepage."
 msgstr "Etkinlik ana sayfanızın düzenini, renklerini ve markalamasını özelleştirin."
 
@@ -2666,7 +2687,7 @@ msgstr "Katılımcılarınızdan önemli bilgiler toplamak için ödeme sırası
 msgid "Customize the SEO settings for this event"
 msgstr "Bu etkinlik için SEO ayarlarını özelleştirin"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:371
+#: src/components/routes/event/HomepageDesigner/index.tsx:372
 msgid "Customize the text shown on the continue button"
 msgstr "Devam düğmesinde gösterilen metni özelleştirin"
 
@@ -2978,7 +2999,7 @@ msgstr "Fatura İndiriliyor"
 
 #: src/components/common/EventCard/index.tsx:84
 #: src/components/layouts/Event/index.tsx:193
-#: src/components/layouts/OrganizerLayout/index.tsx:218
+#: src/components/layouts/OrganizerLayout/index.tsx:220
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:82
 msgid "Draft"
 msgstr "Taslak"
@@ -3039,7 +3060,7 @@ msgstr "Ürünü Çoğalt"
 msgid "e.g. 180 (3 hours)"
 msgstr "ör. 180 (3 saat)"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:372
+#: src/components/routes/event/HomepageDesigner/index.tsx:373
 msgid "e.g., Get Tickets, Register Now"
 msgstr "örn., Bilet Al, Şimdi Kaydol"
 
@@ -3290,7 +3311,7 @@ msgid "Email confirmation resent"
 msgstr "E-posta onayı yeniden gönderildi"
 
 #: src/components/layouts/Event/index.tsx:75
-#: src/components/layouts/OrganizerLayout/index.tsx:102
+#: src/components/layouts/OrganizerLayout/index.tsx:104
 #: src/components/routes/profile/ManageProfile/index.tsx:100
 msgid "Email confirmation resent successfully"
 msgstr "E-posta onayı başarıyla yeniden gönderildi"
@@ -3322,7 +3343,7 @@ msgstr "E-posta Önizlemesi"
 msgid "Email Templates"
 msgstr "E-posta Şablonları"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:294
+#: src/components/layouts/OrganizerLayout/index.tsx:296
 msgid "Email Verification Required"
 msgstr "E-posta Doğrulaması Gerekli"
 
@@ -3616,7 +3637,7 @@ msgstr "Etkinlik Tam Adresi"
 msgid "Event Homepage"
 msgstr "Etkinlik Ana Sayfası"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:224
+#: src/components/routes/event/HomepageDesigner/index.tsx:225
 msgid "Event Image"
 msgstr ""
 
@@ -3725,7 +3746,7 @@ msgstr "Etkinlik Mekanı"
 
 #: src/components/common/AdminAccountsTable/index.tsx:112
 #: src/components/layouts/Admin/index.tsx:24
-#: src/components/layouts/OrganizerLayout/index.tsx:87
+#: src/components/layouts/OrganizerLayout/index.tsx:88
 #: src/components/routes/admin/Accounts/AccountDetail/index.tsx:181
 #: src/components/routes/admin/Attribution/index.tsx:133
 #: src/components/routes/admin/Dashboard/index.tsx:170
@@ -4072,7 +4093,7 @@ msgstr "E-posta doğrulanamadı"
 #~ msgid "Featured"
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:264
+#: src/components/routes/event/HomepageDesigner/index.tsx:265
 msgid "Featured banner (optional)"
 msgstr ""
 
@@ -4242,7 +4263,7 @@ msgstr "Sabit ücret 0 veya daha büyük olmalıdır"
 msgid "Fixed Fee:"
 msgstr "Sabit Ücret:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:157
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
 msgid "Flash is not available on this device"
 msgstr "Bu cihazda flaş mevcut değil"
 
@@ -4556,17 +4577,17 @@ msgstr "Vurgulanan ürünler, etkinlik sayfasında öne çıkmaları için farkl
 msgid "Historical Commissions"
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:205
+#: src/components/routes/event/HomepageDesigner/index.tsx:206
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:173
 msgid "Homepage Design"
 msgstr "Ana Sayfa Tasarımı"
 
 #: src/components/layouts/Event/index.tsx:106
-#: src/components/layouts/OrganizerLayout/index.tsx:91
+#: src/components/layouts/OrganizerLayout/index.tsx:93
 msgid "Homepage Designer"
 msgstr "Ana Sayfa Tasarımcısı"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:396
+#: src/components/routes/event/HomepageDesigner/index.tsx:397
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:311
 msgid "Homepage Preview"
 msgstr "Ana Sayfa Önizlemesi"
@@ -4576,7 +4597,11 @@ msgstr "Ana Sayfa Önizlemesi"
 msgid "Homer"
 msgstr "Homer"
 
-#: src/components/common/LandingBannerPreview/index.tsx:17
+#: src/components/routes/organizer/Assistant/index.tsx:39
+msgid "How is each of my events doing?"
+msgstr ""
+
+#: src/components/common/LandingBannerPreview/index.tsx:18
 msgid "How it looks in the featured slot on the Passix homepage."
 msgstr ""
 
@@ -4595,6 +4620,10 @@ msgstr "Müşterinin siparişini tamamlamak için kaç dakikası var. En az 15 d
 #: src/components/forms/PromoCodeForm/index.tsx:114
 msgid "How many times can this code be used?"
 msgstr "Bu kod kaç kez kullanılabilir?"
+
+#: src/components/routes/organizer/Assistant/index.tsx:37
+msgid "How much did I sell this month?"
+msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:49
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:82
@@ -4628,6 +4657,10 @@ msgstr "Bu etkinlikle ilgili e-posta bildirimleri almayı kabul ediyorum"
 #: src/components/routes/auth/AcceptInvitation/index.tsx:149
 msgid "I agree to the <0>terms and conditions</0>"
 msgstr "<0>Şartlar ve koşulları</0> kabul ediyorum"
+
+#: src/components/routes/organizer/Assistant/index.tsx:96
+msgid "I can only read your own data, and every figure comes from your account."
+msgstr ""
 
 #: src/components/modals/SendMessageModal/index.tsx:439
 msgid "I confirm this is a transactional message related to this event"
@@ -4677,7 +4710,7 @@ msgstr "Resim başarıyla yüklendi"
 msgid "Image URL"
 msgstr "Resim URL'si"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:218
+#: src/components/routes/event/HomepageDesigner/index.tsx:219
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:186
 msgid "Images"
 msgstr "Görseller"
@@ -4778,7 +4811,7 @@ msgid "Instagram"
 msgstr "Instagram"
 
 #: src/components/layouts/Event/index.tsx:127
-#: src/components/layouts/OrganizerLayout/index.tsx:93
+#: src/components/layouts/OrganizerLayout/index.tsx:95
 msgid "Integrations"
 msgstr "Entegrasyonlar"
 
@@ -4826,7 +4859,7 @@ msgstr "Bir ekip üyesi davet et"
 msgid "Invite Team Member"
 msgstr "Ekip Üyesi Davet Et"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:170
+#: src/components/layouts/OrganizerLayout/index.tsx:172
 msgid "Invite Team Members"
 msgstr "Ekip Üyelerini Davet Et"
 
@@ -4834,7 +4867,7 @@ msgstr "Ekip Üyelerini Davet Et"
 msgid "Invite User"
 msgstr "Kullanıcı Davet Et"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:167
+#: src/components/layouts/OrganizerLayout/index.tsx:169
 msgid "Invite Your Team"
 msgstr "Ekibinizi Davet Edin"
 
@@ -5080,7 +5113,7 @@ msgstr "Bağlantılara İzin Verildi"
 
 #: src/components/common/EventCard/index.tsx:87
 #: src/components/layouts/Event/index.tsx:195
-#: src/components/layouts/OrganizerLayout/index.tsx:220
+#: src/components/layouts/OrganizerLayout/index.tsx:222
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:83
 msgid "Live"
 msgstr "Canlı"
@@ -5191,7 +5224,7 @@ msgstr "Etkinliğinizi canlı yapın"
 #: src/components/common/PromoCodeTable/index.tsx:167
 #: src/components/common/SeatingSectionList/index.tsx:197
 #: src/components/common/WebhookTable/index.tsx:96
-#: src/components/layouts/OrganizerLayout/index.tsx:86
+#: src/components/layouts/OrganizerLayout/index.tsx:87
 msgid "Manage"
 msgstr "Yönet"
 
@@ -6329,7 +6362,7 @@ msgid "Organizer archived successfully"
 msgstr "Organizatör başarıyla arşivlendi"
 
 #: src/components/layouts/Event/index.tsx:85
-#: src/components/layouts/OrganizerLayout/index.tsx:78
+#: src/components/layouts/OrganizerLayout/index.tsx:79
 #: src/components/routes/organizer/OrganizerDashboard/index.tsx:213
 msgid "Organizer Dashboard"
 msgstr "Organizatör Paneli"
@@ -6376,12 +6409,12 @@ msgid "Organizer statistics are not available for the selected currency or an er
 msgstr "Seçilen para birimi için organizatör istatistikleri mevcut değil veya bir hata oluştu."
 
 #: src/components/common/StatusToggle/index.tsx:64
-#: src/components/layouts/OrganizerLayout/index.tsx:141
+#: src/components/layouts/OrganizerLayout/index.tsx:143
 msgid "Organizer status update failed. Please try again later"
 msgstr "Organizatör durum güncellemesi başarısız oldu. Lütfen daha sonra tekrar deneyin"
 
 #: src/components/common/StatusToggle/index.tsx:56
-#: src/components/layouts/OrganizerLayout/index.tsx:138
+#: src/components/layouts/OrganizerLayout/index.tsx:140
 msgid "Organizer status updated"
 msgstr "Organizatör durumu güncellendi"
 
@@ -6409,7 +6442,7 @@ msgid "Outgoing Messages"
 msgstr "Giden mesajlar"
 
 #: src/components/layouts/Event/index.tsx:88
-#: src/components/layouts/OrganizerLayout/index.tsx:77
+#: src/components/layouts/OrganizerLayout/index.tsx:78
 msgid "Overview"
 msgstr "Genel Bakış"
 
@@ -7276,6 +7309,10 @@ msgstr "Alıcılar"
 msgid "Recipients are available after the message is sent"
 msgstr "Alıcılar mesaj gönderildikten sonra görüntülenebilir"
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:267
+msgid "Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express."
+msgstr ""
+
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/MercadoPagoSettings/index.tsx:146
 msgid "Reconnect MercadoPago"
 msgstr ""
@@ -7401,7 +7438,7 @@ msgid "Report not found"
 msgstr "Rapor bulunamadı"
 
 #: src/components/layouts/Event/index.tsx:98
-#: src/components/layouts/OrganizerLayout/index.tsx:81
+#: src/components/layouts/OrganizerLayout/index.tsx:82
 #: src/components/routes/event/Reports/index.tsx:39
 #: src/components/routes/organizer/Reports/index.tsx:53
 msgid "Reports"
@@ -7427,7 +7464,7 @@ msgstr "Kodu yeniden gönder"
 msgid "Resend Confirmation"
 msgstr "Onayı yeniden gönder"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:311
+#: src/components/layouts/OrganizerLayout/index.tsx:313
 msgid "Resend Confirmation Email"
 msgstr "Onay E-postasını Yeniden Gönder"
 
@@ -7678,7 +7715,7 @@ msgstr "Kaydet"
 #: src/components/modals/ManageAttendeeModal/index.tsx:231
 #: src/components/modals/ManageOrderModal/index.tsx:175
 #: src/components/routes/admin/Configurations/index.tsx:268
-#: src/components/routes/event/HomepageDesigner/index.tsx:390
+#: src/components/routes/event/HomepageDesigner/index.tsx:391
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:305
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
@@ -7712,8 +7749,8 @@ msgstr "Bilet Tasarımını Kaydet"
 msgid "Save VAT Settings"
 msgstr "KDV Ayarlarını Kaydet"
 
-#: src/components/layouts/CheckIn/index.tsx:468
-#: src/components/layouts/CheckIn/index.tsx:478
+#: src/components/layouts/CheckIn/index.tsx:473
+#: src/components/layouts/CheckIn/index.tsx:483
 msgid "Scan"
 msgstr "Tara"
 
@@ -7769,7 +7806,7 @@ msgstr "Ad, e-posta veya hesaba göre ara..."
 msgid "Search by name, email, or order #..."
 msgstr "Ad, e-posta veya sipariş #'a göre ara..."
 
-#: src/components/layouts/CheckIn/index.tsx:464
+#: src/components/layouts/CheckIn/index.tsx:469
 msgid "Search by name, order #, attendee # or email..."
 msgstr "Ad, sipariş #, katılımcı # veya e-postaya göre ara..."
 
@@ -8020,6 +8057,7 @@ msgstr "Hızlı satılıyor 🔥"
 
 #: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
+#: src/components/routes/organizer/Assistant/index.tsx:180
 msgid "Send"
 msgstr "Gönder"
 
@@ -8176,7 +8214,7 @@ msgstr "Ayar güncellendi"
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:81
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:82
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:83
-#: src/components/layouts/OrganizerLayout/index.tsx:88
+#: src/components/layouts/OrganizerLayout/index.tsx:89
 #: src/components/modals/DuplicateEventModal/index.tsx:26
 msgid "Settings"
 msgstr "Ayarlar"
@@ -8187,7 +8225,7 @@ msgstr "Kurulum ve Tasarım"
 
 #: src/components/common/ShareIcon/index.tsx:30
 #: src/components/layouts/EventHomepage/index.tsx:357
-#: src/components/layouts/OrganizerLayout/index.tsx:240
+#: src/components/layouts/OrganizerLayout/index.tsx:242
 #: src/components/modals/ShareModal/index.tsx:37
 #: src/components/modals/ShareModal/index.tsx:165
 #: src/components/modals/ShareModal/index.tsx:186
@@ -8206,8 +8244,8 @@ msgstr "Bağlı Kuruluş Bağlantısını Paylaş"
 msgid "Share Event"
 msgstr "Etkinliği Paylaş"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:237
-#: src/components/layouts/OrganizerLayout/index.tsx:279
+#: src/components/layouts/OrganizerLayout/index.tsx:239
+#: src/components/layouts/OrganizerLayout/index.tsx:281
 msgid "Share Organizer Page"
 msgstr "Organizatör Sayfasını Paylaş"
 
@@ -8234,6 +8272,10 @@ msgstr "Pazarlama onay kutusunu göster"
 #: src/components/routes/organizer/Settings/Sections/EventDefaults/index.tsx:88
 msgid "Show marketing opt-in checkbox by default"
 msgstr "Varsayılan olarak pazarlama onay kutusunu göster"
+
+#: src/components/routes/organizer/Assistant/index.tsx:38
+msgid "Show me my latest sales"
+msgstr ""
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:567
 #: src/components/routes/product-widget/SelectProducts/index.tsx:668
@@ -8359,7 +8401,7 @@ msgid "Something went wrong. Please try again later."
 msgstr "Bir şeyler ters gitti. Lütfen daha sonra tekrar deneyin."
 
 #: src/components/layouts/Event/index.tsx:79
-#: src/components/layouts/OrganizerLayout/index.tsx:106
+#: src/components/layouts/OrganizerLayout/index.tsx:108
 #: src/components/routes/auth/Login/index.tsx:76
 #: src/components/routes/my-tickets/index.tsx:145
 #: src/components/routes/profile/ManageProfile/index.tsx:90
@@ -8588,7 +8630,7 @@ msgstr "Etkinlik Başarıyla Güncellendi"
 msgid "Successfully Updated Event Defaults"
 msgstr "Etkinlik Varsayılanları Başarıyla Güncellendi"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:132
+#: src/components/routes/event/HomepageDesigner/index.tsx:133
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:95
 msgid "Successfully Updated Homepage Design"
 msgstr "Ana Sayfa Tasarımı Başarıyla Güncellendi"
@@ -8688,7 +8730,7 @@ msgstr "Yaz Müzik Festivali 2025"
 msgid "Support Email"
 msgstr "Destek E-postası"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:71
+#: src/components/layouts/OrganizerLayout/index.tsx:72
 #: src/components/modals/SwitchOrganizerModal/index.tsx:46
 msgid "Switch Organizer"
 msgstr "Organizatör Değiştir"
@@ -8836,11 +8878,19 @@ msgstr "Hi.Events'i büyütmeye ve geliştirmeye devam ederken desteğiniz için
 msgid "That promo code is invalid"
 msgstr "Bu promosyon kodu geçersiz"
 
+#: src/components/routes/organizer/Assistant/index.tsx:74
+msgid "The assistant is not enabled for this account yet."
+msgstr ""
+
+#: src/components/routes/organizer/Assistant/index.tsx:78
+msgid "The assistant is temporarily unavailable. Please try again."
+msgstr ""
+
 #: src/components/common/ThemeColorControls/index.tsx:62
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Sayfanın arka plan rengi. Kapak resmi kullanıldığında, bu bir kaplama olarak uygulanır."
 
-#: src/components/layouts/CheckIn/index.tsx:378
+#: src/components/layouts/CheckIn/index.tsx:383
 msgid "The check-in list you are looking for does not exist."
 msgstr "Aradığınız check-in listesi mevcut değil."
 
@@ -8880,12 +8930,28 @@ msgstr "Etkinlik mekanı"
 msgid "The event you're looking for is not available at the moment. It may have been removed, expired, or the URL might be incorrect."
 msgstr "Aradığınız etkinlik şu anda mevcut değil. Kaldırılmış, süresi dolmuş veya URL yanlış olabilir."
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:286
-msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:287
+msgid "The featured strip will crop about {bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 msgstr ""
 
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x640 image fits with nothing cut off."
+#~ msgstr ""
+
 #: src/components/routes/event/HomepageDesigner/index.tsx:285
-msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off."
+#~ msgstr ""
+
+#: src/components/routes/event/HomepageDesigner/index.tsx:286
+msgid "The featured strip will crop about {bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off."
 msgstr ""
 
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:37
@@ -8976,7 +9042,7 @@ msgstr "KDV numarası doğrulanamadı. Lütfen numarayı kontrol edin ve tekrar 
 msgid "Theater"
 msgstr "Tiyatro"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:304
+#: src/components/routes/event/HomepageDesigner/index.tsx:305
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:238
 msgid "Theme & Colors"
 msgstr "Tema ve Renkler"
@@ -9049,7 +9115,7 @@ msgstr "Bu kategori halktan gizli"
 msgid "This check-in list has expired"
 msgstr "Bu check-in listesi süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:393
+#: src/components/layouts/CheckIn/index.tsx:398
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Bu check-in listesinin süresi doldu ve artık check-in için kullanılamıyor."
 
@@ -9061,7 +9127,7 @@ msgstr "Bu check-in listesi aktif"
 msgid "This check-in list is not active yet"
 msgstr "Bu check-in listesi henüz aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:410
+#: src/components/layouts/CheckIn/index.tsx:415
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Bu check-in listesi henüz aktif değil ve check-in yapılabilir durumda değil."
 
@@ -9094,7 +9160,7 @@ msgstr ""
 #~ msgid "This image is not square, so listings will show it with bars at the sides or trim it. A square flyer looks better, but you can leave this one."
 #~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:244
+#: src/components/routes/event/HomepageDesigner/index.tsx:245
 msgid "This image is not square, so listings will show it with space around it. A square flyer looks better, but you can leave this one."
 msgstr ""
 
@@ -9224,7 +9290,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Bu şifre sıfırlama bağlantısı geçersiz veya süresi dolmuş."
 
-#: src/components/layouts/CheckIn/index.tsx:227
+#: src/components/layouts/CheckIn/index.tsx:232
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "Bu bilet az önce tarandı. Tekrar taramadan önce lütfen bekleyin."
 
@@ -9455,7 +9521,11 @@ msgstr "Sütunları değiştir"
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "Çok fazla deneme. Lütfen bir an bekleyip tekrar deneyin."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:90
+#: src/components/routes/organizer/Assistant/index.tsx:76
+msgid "Too many questions in a row. Please wait a moment and try again."
+msgstr ""
+
+#: src/components/layouts/OrganizerLayout/index.tsx:91
 msgid "Tools"
 msgstr "Araçlar"
 
@@ -9572,11 +9642,11 @@ msgstr "Ödeme beklemedeyse doğru"
 msgid "Try another email"
 msgstr "Başka bir e-posta deneyin"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound off"
 msgstr "Sesi kapat"
 
-#: src/components/layouts/CheckIn/index.tsx:471
+#: src/components/layouts/CheckIn/index.tsx:476
 msgid "Turn sound on"
 msgstr "Sesi aç"
 
@@ -9601,17 +9671,17 @@ msgstr ""
 msgid "Type of ticket"
 msgstr "Bilet türü"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:345
+#: src/components/routes/event/HomepageDesigner/index.tsx:346
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:280
 msgid "Typography"
 msgstr "Tipografi"
 
-#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:172
 msgid "Unable to check in attendee"
 msgstr "Katılımcı girişi yapılamadı"
 
-#: src/components/layouts/CheckIn/index.tsx:192
-#: src/components/layouts/CheckIn/index.tsx:194
+#: src/components/layouts/CheckIn/index.tsx:197
+#: src/components/layouts/CheckIn/index.tsx:199
 msgid "Unable to check out attendee"
 msgstr "Katılımcı check-out'u yapılamadı"
 
@@ -9631,7 +9701,7 @@ msgstr "Soru oluşturulamadı. Lütfen bilgilerinizi kontrol edin"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:243
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to fetch attendee"
 msgstr "Katılımcı getirilemedi"
 
@@ -9801,12 +9871,12 @@ msgstr "USB/HID Tarayıcı"
 msgid "Use <0>Liquid templating</0> to personalize your emails"
 msgstr "E-postalarınızı kişiselleştirmek için <0>Liquid şablonunu</0> kullanın"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:322
+#: src/components/routes/event/HomepageDesigner/index.tsx:323
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:257
 msgid "Use a blurred version of the cover image as the background"
 msgstr "Kapak resminin bulanıklaştırılmış halini arkaplan olarak kullan"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:320
+#: src/components/routes/event/HomepageDesigner/index.tsx:321
 #: src/components/routes/organizer/OrganizerHomepageDesigner/index.tsx:255
 msgid "Use cover image"
 msgstr "Kapak resmini kullan"
@@ -10070,8 +10140,8 @@ msgstr "Sipariş Detaylarını Görüntüle"
 msgid "View order details, issue refunds, and resend confirmations."
 msgstr "Sipariş detaylarını görüntüleyin, iade yapın ve onayları yeniden gönderin."
 
-#: src/components/layouts/OrganizerLayout/index.tsx:255
-#: src/components/layouts/OrganizerLayout/index.tsx:258
+#: src/components/layouts/OrganizerLayout/index.tsx:257
+#: src/components/layouts/OrganizerLayout/index.tsx:260
 msgid "View Organizer Homepage"
 msgstr "Organizatör Ana Sayfasını Görüntüle"
 
@@ -10197,10 +10267,10 @@ msgid "We hit a snag loading this page. Please try again."
 msgstr "Bu sayfayı yüklerken bir sorunla karşılaştık. Lütfen tekrar deneyin."
 
 #: src/components/routes/event/HomepageDesigner/index.tsx:266
-msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
-msgstr ""
+#~ msgid "We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition."
+#~ msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:226
+#: src/components/routes/event/HomepageDesigner/index.tsx:227
 msgid "We recommend a square flyer of 1080px by 1080px and a maximum file size of 5MB. Any proportion is accepted."
 msgstr ""
 
@@ -10301,7 +10371,7 @@ msgid "Webhook will send notifications"
 msgstr "Webhook bildirim gönderecek"
 
 #: src/components/layouts/Event/index.tsx:129
-#: src/components/layouts/OrganizerLayout/index.tsx:94
+#: src/components/layouts/OrganizerLayout/index.tsx:96
 #: src/components/modals/DuplicateEventModal/index.tsx:32
 #: src/components/routes/event/Webhooks/index.tsx:32
 #: src/components/routes/organizer/Webhooks/index.tsx:30
@@ -10563,7 +10633,7 @@ msgstr "Evet, siparişimi iptal et"
 msgid "Yes, remove them"
 msgstr "Evet, kaldır"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:94
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
 msgid "You already scanned this ticket"
 msgstr "Bu bileti zaten taradınız"
 
@@ -10579,8 +10649,8 @@ msgstr "<0>{0}</0> ({1}) rolünü üstleniyorsunuz"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Kısmi iade yapıyorsunuz. Müşteriye {0} {1} iade edilecek."
 
-#: src/components/layouts/CheckIn/index.tsx:162
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:167
+#: src/components/layouts/CheckIn/index.tsx:192
 msgid "You are offline"
 msgstr "Çevrimdışısınız"
 
@@ -10604,8 +10674,8 @@ msgstr "Hesabınızdaki son aktif organizatörü arşivleyemezsiniz."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Bu ürünle ilişkili katılımcılar olduğu için ürün türünü değiştiremezsiniz."
 
-#: src/components/layouts/CheckIn/index.tsx:210
-#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:215
+#: src/components/layouts/CheckIn/index.tsx:282
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Ödenmemiş siparişleri olan katılımcıları check-in yaptıramazsınız. Bu ayar etkinlik ayarlarından değiştirilebilir."
 
@@ -10673,7 +10743,7 @@ msgstr "Elle katılımcı ekleyebilmek için önce bir bilet oluşturmalısını
 msgid "You must have at least one price tier"
 msgstr "En az bir fiyat seviyeniz olmalı"
 
-#: src/components/layouts/OrganizerLayout/index.tsx:300
+#: src/components/layouts/OrganizerLayout/index.tsx:302
 msgid "You must verify your email address before you can update the organizer status."
 msgstr "Organizatör durumunu güncelleyebilmek için e-posta adresinizi doğrulamanız gerekir."
 
@@ -10787,7 +10857,7 @@ msgstr ""
 msgid "Your email request change to <0>{0}</0> is pending. Please check your email to confirm"
 msgstr "<0>{0}</0> adresine e-posta değişiklik talebiniz beklemede. Onaylamak için lütfen e-postanızı kontrol edin"
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:293
+#: src/components/routes/event/HomepageDesigner/index.tsx:294
 msgid "Your event can now appear on the Passix homepage."
 msgstr ""
 
@@ -10888,7 +10958,7 @@ msgstr "İadeniz işleniyor."
 msgid "Your sign up session has expired. Please start again."
 msgstr ""
 
-#: src/components/routes/event/HomepageDesigner/index.tsx:239
+#: src/components/routes/event/HomepageDesigner/index.tsx:240
 msgid "Your square flyer. It heads your event page and represents the event in listings and when the link is shared."
 msgstr ""
 

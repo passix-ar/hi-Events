@@ -40,6 +40,21 @@ class MercadoPagoOAuthCallbackHandler
             'mp_user_id'  => $tokenData['user_id'] ?? null,
         ]);
 
+        // Without a refresh_token the connection cannot be renewed and dies in
+        // 180 days with nobody watching. Failing here, while the organizer is
+        // looking at the screen, beats a silent expiry — and it points at a
+        // platform-level problem (the MercadoPago app lost offline_access).
+        if (empty($tokenData['access_token']) || empty($tokenData['refresh_token'])) {
+            $this->logger->error('MercadoPago OAuth returned an incomplete token pair — offline_access missing on the app?', [
+                'account_id' => $accountId,
+                'keys' => array_keys($tokenData),
+            ]);
+
+            throw new MercadoPagoOAuthException(
+                __('MercadoPago did not grant automatic renewal for this account. Please try again or contact support.')
+            );
+        }
+
         $mpUserId = (string) ($tokenData['user_id'] ?? '');
 
         // One MercadoPago seller = one Passix account. The DB enforces this with a
@@ -79,15 +94,18 @@ class MercadoPagoOAuthCallbackHandler
                 ],
             );
 
-        $expiresAt = isset($tokenData['expires_in'])
-            ? Carbon::now()->addSeconds($tokenData['expires_in'])->toDateTimeString()
-            : null;
+        // A row without an expiry date never enters the refresh window (the
+        // scheduled command scopes by token_expires_at), so fall back to the
+        // documented lifetime rather than storing null.
+        $expiresAt = Carbon::now()
+            ->addSeconds((int) ($tokenData['expires_in'] ?? MercadoPagoOAuthService::DEFAULT_TOKEN_TTL_DAYS * 86400))
+            ->toDateTimeString();
 
         $attributes = [
             AccountMercadopagoPlatformDomainObjectAbstract::ACCOUNT_ID        => $accountId,
             AccountMercadopagoPlatformDomainObjectAbstract::MP_USER_ID        => $mpUserId,
-            AccountMercadopagoPlatformDomainObjectAbstract::ACCESS_TOKEN      => $tokenData['access_token'] ?? null,
-            AccountMercadopagoPlatformDomainObjectAbstract::REFRESH_TOKEN     => $tokenData['refresh_token'] ?? null,
+            AccountMercadopagoPlatformDomainObjectAbstract::ACCESS_TOKEN      => $tokenData['access_token'],
+            AccountMercadopagoPlatformDomainObjectAbstract::REFRESH_TOKEN     => $tokenData['refresh_token'],
             AccountMercadopagoPlatformDomainObjectAbstract::PUBLIC_KEY        => $tokenData['public_key'] ?? null,
             AccountMercadopagoPlatformDomainObjectAbstract::TOKEN_EXPIRES_AT  => $expiresAt,
             AccountMercadopagoPlatformDomainObjectAbstract::SETUP_COMPLETED_AT => now()->toDateTimeString(),

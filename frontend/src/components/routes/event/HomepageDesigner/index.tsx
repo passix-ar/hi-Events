@@ -53,22 +53,23 @@ const HomepageDesigner = () => {
     const existingCover = eventImagesQuery.data?.find((image) => image.type === 'EVENT_COVER');
     const existingBanner = eventImagesQuery.data?.find((image) => image.type === 'EVENT_BANNER');
 
-    // Shape is never enforced on upload — an organiser's only artwork is often the wrong
-    // proportion and rejecting it just sends them to Canva to crop it worse. These flag the
-    // cases where the framing will visibly suffer, and leave the decision to them.
+    // The cover's shape is never enforced on upload — an organiser's only artwork is often
+    // the wrong proportion and rejecting it just sends them to Canva to crop it worse. This
+    // flags the cases where the framing will visibly suffer, and leaves the decision to them.
     const ratioOf = (image?: {width?: number | null; height?: number | null}) =>
         (image?.width && image?.height) ? image.width / image.height : null;
     const coverRatio = ratioOf(existingCover);
     const bannerRatio = ratioOf(existingBanner);
     const coverIsOffShape = coverRatio !== null && (coverRatio > 1.35 || coverRatio < 0.7);
-    // La franja del destacado es 2.4:1 (1920x800) y recorta lo que no calza. La subida
-    // solo frena lo cuadrado y lo vertical, asi que el aviso es lo que hace el trabajo
-    // fino: dice el porcentaje real, porque "no esta en la proporcion recomendada" no le
-    // mueve la aguja a nadie y "se recorta el 45%" si.
-    const BANNER_RATIO = 2.4;
+    // La franja del destacado es 3:1 (1920x640), a sangre, y recorta centrado lo que no
+    // calza. La subida ya rebota lo que perderia mas de un 17% (ver ImageType en el
+    // backend), asi que lo que llega aca pierde poco; el aviso dice el porcentaje real
+    // igual, porque "no esta en la proporcion recomendada" no le mueve la aguja a nadie y
+    // "se recorta el 12%" si. El umbral tiene que coincidir con el del backend.
+    const BANNER_RATIO = 3;
     const bannerCropPercent = bannerRatio === null ? null
         : Math.round((1 - Math.min(bannerRatio, BANNER_RATIO) / Math.max(bannerRatio, BANNER_RATIO)) * 100);
-    const bannerIsOffShape = bannerCropPercent !== null && bannerCropPercent > 10;
+    const bannerIsOffShape = bannerCropPercent !== null && bannerCropPercent > 5;
     // Un banner mas alto que la franja pierde arriba y abajo; uno mas chato, los costados.
     const bannerCropsVertically = bannerRatio !== null && bannerRatio < BANNER_RATIO;
 
@@ -263,7 +264,7 @@ const HomepageDesigner = () => {
                                         <Group justify={'space-between'} mb="xs">
                                             <Text fw={500} size="sm">{t`Featured banner (optional)`}</Text>
                                             <Tooltip
-                                                label={t`We recommend 1920px by 800px, which fills the featured strip exactly. Any landscape image is accepted — square and portrait ones are not, because the strip would crop them beyond recognition.`}>
+                                                label={t`Recommended size: 1920 × 640 px (3:1 ratio). This fills the featured strip on the Passix homepage exactly, on every screen. Images between 2.5:1 and 3.5:1 are accepted and cropped slightly at the edges. Anything outside that range — such as a Facebook cover or a square Instagram flyer — is not accepted, because the strip would crop away too much of the artwork. You can adapt your image with tools such as Canva, Photopea or Adobe Express.`}>
                                                 <IconHelp size={16} style={{ color: 'var(--mantine-color-gray-6)' }}/>
                                             </Tooltip>
                                         </Group>
@@ -282,8 +283,8 @@ const HomepageDesigner = () => {
                                         {bannerIsOffShape && (
                                             <Text size="xs" c="orange.5" mt={6}>
                                                 {bannerCropsVertically
-                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`
-                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Check nothing important sits there — a 1920x800 image fits with nothing cut off.`}
+                                                    ? t`The featured strip will crop about ${bannerCropPercent}% off the top and bottom of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off.`
+                                                    : t`The featured strip will crop about ${bannerCropPercent}% off the sides of this banner. Make sure nothing important sits there. An image of 1920 × 640 px fits with nothing cut off.`}
                                             </Text>
                                         )}
                                         {existingBanner?.url && (

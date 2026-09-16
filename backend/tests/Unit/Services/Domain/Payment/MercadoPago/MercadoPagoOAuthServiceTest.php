@@ -3,6 +3,8 @@
 namespace Tests\Unit\Services\Domain\Payment\MercadoPago;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Services\Domain\Payment\MercadoPago\MercadoPagoOAuthService;
@@ -147,5 +149,158 @@ class MercadoPagoOAuthServiceTest extends TestCase
 
         $this->assertSame('APP_USR-xxx', $result['access_token']);
         $this->assertSame(123456, $result['user_id']);
+    }
+
+    public function test_refresh_access_token_sends_refresh_grant_and_returns_token_data(): void
+    {
+        $tokenData = [
+            'access_token'  => 'APP_USR-new',
+            'refresh_token' => 'TG-new',
+            'expires_in'    => 15552000,
+        ];
+
+        $this->givenTokenEndpointConfig();
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->with('https://api.mercadopago.com/oauth/token', Mockery::on(static function (array $options): bool {
+                return ($options['form_params']['grant_type'] ?? null) === 'refresh_token'
+                    && ($options['form_params']['refresh_token'] ?? null) === 'TG-old'
+                    // El refresh corre con la fila lockeada: sin timeout, un
+                    // MercadoPago colgado dejaria el lock tomado indefinidamente.
+                    && ($options['timeout'] ?? null) === 10
+                    && ($options['connect_timeout'] ?? null) === 5;
+            }))
+            ->andReturn(new Response(200, [], json_encode($tokenData)));
+
+        $result = $this->service->refreshAccessToken('TG-old');
+
+        $this->assertSame('APP_USR-new', $result['access_token']);
+        $this->assertSame('TG-new', $result['refresh_token']);
+    }
+
+    public function test_exchange_code_for_token_bounds_the_http_call(): void
+    {
+        $this->config->shouldReceive('get')->with('mercadopago.client_id')->andReturn('id');
+        $this->config->shouldReceive('get')->with('mercadopago.client_secret')->andReturn('secret');
+        $this->config->shouldReceive('get')->with('mercadopago.redirect_uri')->andReturn('https://example.com/callback');
+        $this->config->shouldReceive('get')->with('mercadopago.token_url')->andReturn('https://api.mercadopago.com/oauth/token');
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->with(Mockery::any(), Mockery::on(static fn (array $options): bool => ($options['timeout'] ?? null) === 10
+                && ($options['connect_timeout'] ?? null) === 5))
+            ->andReturn(new Response(200, [], json_encode(['access_token' => 'x'])));
+
+        $this->service->exchangeCodeForToken('code');
+    }
+
+    public function test_refresh_access_token_maps_a_non_json_body_to_an_oauth_exception(): void
+    {
+        $this->givenTokenEndpointConfig();
+        $this->logger->shouldReceive('error')->once();
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andReturn(new Response(200, [], '<html>maintenance</html>'));
+
+        try {
+            $this->service->refreshAccessToken('TG-old');
+            $this->fail('Expected MercadoPagoOAuthException');
+        } catch (MercadoPagoOAuthException $e) {
+            $this->assertNull($e->getMpErrorCode());
+            $this->assertFalse($e->isTerminal());
+            $this->assertFalse($e->isRetryable());
+            $this->assertFalse($e->isPlatformError());
+        }
+    }
+
+    public function test_refresh_access_token_maps_unauthorized_client_to_a_platform_error(): void
+    {
+        $this->givenTokenEndpointConfig();
+        $this->givenRefreshFailsWith(400, json_encode(['error' => 'unauthorized_client', 'message' => 'bad credentials']));
+
+        try {
+            $this->service->refreshAccessToken('TG-any');
+            $this->fail('Expected MercadoPagoOAuthException');
+        } catch (MercadoPagoOAuthException $e) {
+            $this->assertSame('unauthorized_client', $e->getMpErrorCode());
+            $this->assertTrue($e->isPlatformError());
+            $this->assertFalse($e->isTerminal());
+            $this->assertFalse($e->isRetryable());
+        }
+    }
+
+    public function test_refresh_access_token_maps_invalid_grant_to_a_terminal_exception(): void
+    {
+        $this->givenTokenEndpointConfig();
+        $this->givenRefreshFailsWith(400, json_encode(['error' => 'invalid_grant', 'message' => 'invalid refresh token']));
+
+        try {
+            $this->service->refreshAccessToken('TG-dead');
+            $this->fail('Expected MercadoPagoOAuthException');
+        } catch (MercadoPagoOAuthException $e) {
+            $this->assertSame('invalid_grant', $e->getMpErrorCode());
+            $this->assertTrue($e->isTerminal());
+            $this->assertFalse($e->isRetryable());
+        }
+    }
+
+    public function test_refresh_access_token_maps_429_to_a_retryable_exception(): void
+    {
+        $this->givenTokenEndpointConfig();
+        // Sin body JSON: el codigo tiene que salir del status 429 igual.
+        $this->givenRefreshFailsWith(429, 'too many requests');
+
+        try {
+            $this->service->refreshAccessToken('TG-throttled');
+            $this->fail('Expected MercadoPagoOAuthException');
+        } catch (MercadoPagoOAuthException $e) {
+            $this->assertSame('local_rate_limited', $e->getMpErrorCode());
+            $this->assertTrue($e->isRetryable());
+            $this->assertFalse($e->isTerminal());
+        }
+    }
+
+    public function test_refresh_access_token_maps_a_connection_failure_to_neither_terminal_nor_retryable(): void
+    {
+        $this->givenTokenEndpointConfig();
+        $this->logger->shouldReceive('error')->once();
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andThrow(new \GuzzleHttp\Exception\ConnectException(
+                'Connection refused',
+                new Request('POST', 'https://api.mercadopago.com/oauth/token'),
+            ));
+
+        try {
+            $this->service->refreshAccessToken('TG-unreachable');
+            $this->fail('Expected MercadoPagoOAuthException');
+        } catch (MercadoPagoOAuthException $e) {
+            $this->assertNull($e->getMpErrorCode());
+            $this->assertFalse($e->isTerminal());
+            $this->assertFalse($e->isRetryable());
+        }
+    }
+
+    private function givenTokenEndpointConfig(): void
+    {
+        $this->config->shouldReceive('get')->with('mercadopago.client_id')->andReturn('id');
+        $this->config->shouldReceive('get')->with('mercadopago.client_secret')->andReturn('secret');
+        $this->config->shouldReceive('get')->with('mercadopago.token_url')->andReturn('https://api.mercadopago.com/oauth/token');
+    }
+
+    private function givenRefreshFailsWith(int $status, string $body): void
+    {
+        $this->logger->shouldReceive('error')->once();
+
+        $this->httpClient->shouldReceive('post')
+            ->once()
+            ->andThrow(new BadResponseException(
+                'Client error',
+                new Request('POST', 'https://api.mercadopago.com/oauth/token'),
+                new Response($status, [], $body),
+            ));
     }
 }

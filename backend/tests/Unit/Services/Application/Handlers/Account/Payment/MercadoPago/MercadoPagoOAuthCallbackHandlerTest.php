@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Services\Application\Handlers\Account\Payment\MercadoPago;
 
+use Carbon\Carbon;
 use HiEvents\DomainObjects\AccountMercadopagoPlatformDomainObject;
 use HiEvents\DomainObjects\Enums\PaymentProviders;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\EventSettingDomainObject;
+use HiEvents\Exceptions\MercadoPago\MercadoPagoOAuthException;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
@@ -39,6 +41,7 @@ class MercadoPagoOAuthCallbackHandlerTest extends TestCase
 
         $logger->shouldReceive('info')->byDefault();
         $logger->shouldReceive('warning')->byDefault();
+        $logger->shouldReceive('error')->byDefault();
 
         $this->oauthService->shouldReceive('decodeState')
             ->with('state')
@@ -61,6 +64,55 @@ class MercadoPagoOAuthCallbackHandlerTest extends TestCase
             $this->eventSettingsRepository,
             $logger,
         );
+    }
+
+    public function testRejectsAConnectionWithoutRefreshToken(): void
+    {
+        // Sin refresh_token la conexion no se puede renovar y muere a los 180
+        // dias sin que nadie mire. Mejor fallar ahora, con el organizador
+        // enfrente, que en silencio despues.
+        $this->oauthService->shouldReceive('exchangeCodeForToken')
+            ->with('code-without-refresh')
+            ->andReturn([
+                'user_id' => '999',
+                'access_token' => 'access',
+                'expires_in' => 3600,
+            ]);
+
+        $this->platformRepository->shouldNotReceive('create');
+        $this->platformRepository->shouldNotReceive('updateFromArray');
+
+        $this->expectException(MercadoPagoOAuthException::class);
+
+        $this->handler->handle('code-without-refresh', 'state');
+    }
+
+    public function testAssumesTheDocumentedLifetimeWhenExpiresInIsMissing(): void
+    {
+        // Una fila sin token_expires_at nunca entra a la ventana del refresh.
+        $this->oauthService->shouldReceive('exchangeCodeForToken')
+            ->with('code-without-expiry')
+            ->andReturn([
+                'user_id' => '999',
+                'access_token' => 'access',
+                'refresh_token' => 'refresh',
+            ]);
+
+        $this->givenNoSellerConflict();
+        $this->givenExistingPlatform(null);
+        $this->givenAccountEvents([]);
+
+        $this->platformRepository->shouldReceive('create')
+            ->once()
+            ->with(m::on(static function (array $attributes): bool {
+                $expiresAt = Carbon::parse($attributes['token_expires_at']);
+
+                return $expiresAt->between(Carbon::now()->addDays(179), Carbon::now()->addDays(181));
+            }));
+
+        $this->handler->handle('code-without-expiry', 'state');
+
+        $this->assertTrue(true);
     }
 
     public function testFirstConnectionEnablesMercadoPagoOnExistingEvents(): void

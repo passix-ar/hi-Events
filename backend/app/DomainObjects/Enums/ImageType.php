@@ -62,17 +62,20 @@ enum ImageType
     }
 
     /**
-     * The strip the banner fills on the Passix homepage is 2.4:1, so that is what we ask
-     * for — but asking is not the same as demanding. This used to be a single 2.4, and
-     * Laravel's `ratio` rule compares to within one pixel: 1920x801 was rejected, and so
-     * was every size a stock photo site offers, which are all 16:9. Three of twelve
-     * realistic sizes got through.
+     * The strip the banner fills on the Passix homepage is 3:1, edge to edge, and its
+     * height is the image's: whatever is not 3:1 gets cropped, centred, by exactly the
+     * difference. So the range is a statement of how much crop still looks like a banner.
      *
-     * The range is what the strip can absorb instead. A 16:9 banner loses 26% of its
-     * height to the crop and still reads; the 4:3 already in production loses 45% and
-     * still reads. A square loses 58% and does not. The floor sits just under 4:3 so a
-     * photo passes and a flyer does not, and the designer warns with the real percentage
-     * from 10% up — the gate only stops what is not a banner at all.
+     * It used to be [1.25, 3.2] around a 2.4:1 strip, on the theory that the gate should
+     * only stop what is not a banner at all and the designer's warning would do the fine
+     * work. Production showed the warning does not: a 1.96:1 flyer went through, lost 35%
+     * of its height, and the homepage showed half-cut artist photos and no venue logo.
+     * A 2:1 Facebook event cover — the shape organisers actually have — loses 33%.
+     *
+     * The bounds are where the loss stays small. At 2.5:1 a banner loses 17% top and
+     * bottom, at 3.5:1 it loses 14% of its sides; the designer flags anything from 5% up
+     * with the real figure. A range rather than a single value because a hand crop that
+     * lands on 1920x641 must not bounce.
      *
      * Every other slot stays shapeless: see getMinimumDimensionsMap().
      *
@@ -81,18 +84,19 @@ enum ImageType
     public static function getAllowedRatioRange(ImageType $imageType): ?array
     {
         return match ($imageType) {
-            self::EVENT_BANNER => [1.25, 3.2],
+            self::EVENT_BANNER => [2.5, 3.5],
             default => null,
         };
     }
 
     /**
      * The shape the designer asks for, and the one that fills the strip without cropping.
+     * 3:1 is also the X/Twitter header shape, so every design tool has it as a preset.
      */
     public static function getRecommendedRatio(ImageType $imageType): ?float
     {
         return match ($imageType) {
-            self::EVENT_BANNER => 2.4,
+            self::EVENT_BANNER => 3.0,
             default => null,
         };
     }
@@ -105,7 +109,7 @@ enum ImageType
         $map = [
             self::GENERIC->name => [50, 50],
             self::EVENT_COVER->name => [400, 200],
-            self::EVENT_BANNER->name => [1200, 500],
+            self::EVENT_BANNER->name => [1500, 500],
             self::TICKET_LOGO->name => [100, 100],
             self::ORGANIZER_LOGO->name => [100, 100],
             self::ORGANIZER_COVER->name => [600, 50],

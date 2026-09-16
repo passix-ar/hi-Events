@@ -7,8 +7,9 @@ interface LandingBannerPreviewProps {
 
 /**
  * The banner never appears on the event homepage, so the live preview iframe cannot show
- * it. This stands in for it, and deliberately renders the artwork whole at its own
- * proportion: the featured slot does not crop the organiser's banner, so neither does this.
+ * it. This stands in for it, and frames the artwork exactly as the featured strip does: a
+ * 3:1 box, edge to edge, with anything outside that shape cropped from the centre. What
+ * the organiser sees here is what the Passix homepage shows — including the crop.
  */
 export const LandingBannerPreview = ({imageUrl}: LandingBannerPreviewProps) => (
     <figure className={classes.preview}>

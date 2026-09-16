@@ -1,5 +1,6 @@
 <?php
 
+use HiEvents\Exports\ValueBinders\FormulaSafeValueBinder;
 use Maatwebsite\Excel\Excel;
 
 return [
@@ -208,7 +209,7 @@ return [
     |
     */
     'value_binder' => [
-        'default' => Maatwebsite\Excel\DefaultValueBinder::class,
+        'default' => FormulaSafeValueBinder::class,
     ],
 
     'cache' => [

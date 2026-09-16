@@ -523,6 +523,135 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         ]);
     }
 
+    public function testProductBeforeSaleStartDateIsRejected(): void
+    {
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101],
+            priceLabels: ['General'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+            isBeforeSaleStartDate: true,
+        );
+
+        $this->expectException(ValidationException::class);
+        $this->service->validateRequestData(1, $this->orderFor(10, 101));
+    }
+
+    public function testProductAfterSaleEndDateIsRejected(): void
+    {
+        // La fecha de cierre la configura el organizador; hasta este fix se
+        // aceptaban compras despues del cierre desde una pestana vieja o una
+        // pagina cacheada (infra#1).
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101],
+            priceLabels: ['General'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+            isAfterSaleEndDate: true,
+        );
+
+        try {
+            $this->service->validateRequestData(1, $this->orderFor(10, 101));
+            $this->fail('Expected ValidationException');
+        } catch (ValidationException $e) {
+            $this->assertArrayHasKey('products.0', $e->errors());
+        }
+    }
+
+    public function testProductInsideSaleWindowIsAccepted(): void
+    {
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101],
+            priceLabels: ['General'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+        );
+
+        $this->service->validateRequestData(1, $this->orderFor(10, 101));
+
+        $this->assertTrue(true);
+    }
+
+    public function testExpiredPriceTierIsRejected(): void
+    {
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101, 102],
+            priceLabels: ['Early bird', 'General'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+                ['price_id' => 102, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+            expiredPriceIds: [101],
+        );
+
+        $this->expectException(ValidationException::class);
+        $this->service->validateRequestData(1, $this->orderFor(10, 101));
+    }
+
+    public function testNotYetOnSalePriceTierIsRejected(): void
+    {
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101, 102],
+            priceLabels: ['General', 'Last call'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+                ['price_id' => 102, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+            notYetOnSalePriceIds: [102],
+        );
+
+        $this->expectException(ValidationException::class);
+        $this->service->validateRequestData(1, $this->orderFor(10, 102));
+    }
+
+    public function testAvailableTierIsAcceptedWhenAnotherTierOfTheSameProductExpired(): void
+    {
+        // Una tanda vencida no tiene que bloquear la compra de otra tanda
+        // vigente del mismo producto.
+        $this->setupMocks(
+            eventId: 1,
+            productId: 10,
+            priceIds: [101, 102],
+            priceLabels: ['Early bird', 'General'],
+            availabilities: [
+                ['price_id' => 101, 'quantity_available' => 50, 'quantity_reserved' => 0],
+                ['price_id' => 102, 'quantity_available' => 50, 'quantity_reserved' => 0],
+            ],
+            expiredPriceIds: [101],
+        );
+
+        $this->service->validateRequestData(1, $this->orderFor(10, 102));
+
+        $this->assertTrue(true);
+    }
+
+    private function orderFor(int $productId, int $priceId, int $quantity = 1): array
+    {
+        return [
+            'products' => [
+                [
+                    'product_id' => $productId,
+                    'quantities' => [
+                        ['price_id' => $priceId, 'quantity' => $quantity],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     private function setupMocks(
         int $eventId,
         int $productId,
@@ -534,6 +663,10 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         bool $isHidden = false,
         bool $isHiddenWithoutPromoCode = false,
         array $hiddenPriceIds = [],
+        bool $isBeforeSaleStartDate = false,
+        bool $isAfterSaleEndDate = false,
+        array $expiredPriceIds = [],
+        array $notYetOnSalePriceIds = [],
     ): void {
         $event = Mockery::mock(EventDomainObject::class);
         $event->shouldReceive('getId')->andReturn($eventId);
@@ -548,6 +681,8 @@ class OrderCreateRequestValidationServiceTest extends TestCase
             $price->shouldReceive('getId')->andReturn($priceId);
             $price->shouldReceive('getLabel')->andReturn($priceLabels[$i] ?? null);
             $price->shouldReceive('getIsHidden')->andReturn(in_array($priceId, $hiddenPriceIds, true));
+            $price->shouldReceive('isBeforeSaleStartDate')->andReturn(in_array($priceId, $notYetOnSalePriceIds, true));
+            $price->shouldReceive('isAfterSaleEndDate')->andReturn(in_array($priceId, $expiredPriceIds, true));
             $productPrices->push($price);
         }
 
@@ -562,6 +697,8 @@ class OrderCreateRequestValidationServiceTest extends TestCase
         $product->shouldReceive('getProductPrices')->andReturn($productPrices);
         $product->shouldReceive('getIsHidden')->andReturn($isHidden);
         $product->shouldReceive('getIsHiddenWithoutPromoCode')->andReturn($isHiddenWithoutPromoCode);
+        $product->shouldReceive('isBeforeSaleStartDate')->andReturn($isBeforeSaleStartDate);
+        $product->shouldReceive('isAfterSaleEndDate')->andReturn($isAfterSaleEndDate);
 
         $this->productRepository->shouldReceive('loadRelation')->andReturnSelf();
         $this->productRepository->shouldReceive('findWhereIn')->andReturn(new Collection([$product]));

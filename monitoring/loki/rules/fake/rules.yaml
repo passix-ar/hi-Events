@@ -23,3 +23,35 @@ groups:
         annotations:
           summary: "🔴 Scheduler sin actividad"
           description: "El scheduler no logueó nada en 10 minutos: está caído o colgado y no despacha tareas."
+
+  # Renovación de tokens OAuth de MercadoPago (mercadopago:refresh-tokens, diario 05:00 UTC).
+  # El scheduler corre con LOG_LEVEL=error: los Log::info() del comando NO llegan a Loki, así
+  # que ninguna regla puede apoyarse en ellos. Lo que sí llega siempre:
+  #   - la línea de schedule:run:  "Running ['artisan' mercadopago:refresh-tokens]  Nms DONE|FAIL"
+  #   - los Log::error() del comando: "production.ERROR: MercadoPago token refresh ..."
+  #   - el reporte de exit≠0:        "Scheduled command [... mercadopago:refresh-tokens] failed ..."
+  # El scheduler solo corre tres cosas, así que "mercadopago" + (ERROR o FAIL) es este comando.
+  - name: passix_mercadopago
+    interval: 10m
+    rules:
+
+      # Falló una renovación (o toda la corrida). Un grant muerto falla todos los días hasta
+      # que el organizador reautorice: la ruta de Alertmanager repite cada 24h, no cada 4h.
+      - alert: MercadoPagoRefreshFallido
+        expr: 'count_over_time({app="scheduler"} |~ "(?i)mercadopago" |~ "\\.ERROR: |FAIL" [24h]) > 0'
+        labels:
+          severity: warning
+        annotations:
+          summary: "🟠 Falló la renovación de un token de MercadoPago"
+          description: "Ver el detalle en Grafana (app=scheduler, 'MercadoPago token refresh'). Si dice 'grant is dead', el organizador tiene que reconectar MercadoPago desde su panel antes de que venza el token. Si dice 'platform credentials', revisar MP_CLIENT_ID / MP_CLIENT_SECRET. Diagnóstico: php artisan mercadopago:check-token --account=N."
+
+      # La corrida diaria no aparece hace más de 26h: el scheduler no la está ejecutando
+      # (contenedor caído, schedule roto, withoutOverlapping trabado). Sin esto, un token
+      # vence en silencio igual que antes de la feature.
+      - alert: MercadoPagoRefreshNoCorrio
+        expr: 'absent_over_time({app="scheduler"} |= "mercadopago:refresh-tokens" [26h])'
+        labels:
+          severity: critical
+        annotations:
+          summary: "🔴 La renovación de tokens de MercadoPago no corrió"
+          description: "No hay rastro de mercadopago:refresh-tokens en los logs del scheduler en 26h. Verificar que el scheduler esté vivo y correr a mano: php artisan mercadopago:refresh-tokens --dry-run."
