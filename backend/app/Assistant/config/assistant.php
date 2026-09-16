@@ -17,6 +17,12 @@ return [
         'path' => __DIR__ . '/../Resources/help-docs',
         'base_url' => env('AI_ASSISTANT_DOCS_URL', 'https://docs.getpassix.com'),
     ],
+    // Proactive emails when a live event is behind on sales. Off by default.
+    'alerts' => [
+        'enabled' => (bool)env('AI_ASSISTANT_ALERTS_ENABLED', false),
+        'days_ahead' => (int)env('AI_ASSISTANT_ALERTS_DAYS_AHEAD', 14),
+        'min_sold_pct' => (int)env('AI_ASSISTANT_ALERTS_MIN_SOLD_PCT', 40),
+    ],
     'max_history_messages' => 20,
     'max_message_length' => 4000,
 ];

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant;
 
+use HiEvents\Assistant\Console\EventAlertsCommand;
 use HiEvents\Assistant\Console\SyncHelpDocsCommand;
 use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
 use HiEvents\Assistant\Domain\HelpDocs\HelpDocsIndex;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -42,8 +44,18 @@ class AssistantServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'assistant');
+
+        // Proactive sales alerts, off unless AI_ASSISTANT_ALERTS_ENABLED. Registered
+        // here rather than in Console/Kernel so the module stays self-contained.
+        $this->callAfterResolving(Schedule::class, static function (Schedule $schedule): void {
+            if (config('assistant.alerts.enabled')) {
+                $schedule->command('assistant:event-alerts')->dailyAt('12:00')->withoutOverlapping();
+            }
+        });
+
         if ($this->app->runningInConsole()) {
-            $this->commands([SyncHelpDocsCommand::class]);
+            $this->commands([SyncHelpDocsCommand::class, EventAlertsCommand::class]);
         }
 
         RateLimiter::for('assistant-chat', static function (Request $request) {

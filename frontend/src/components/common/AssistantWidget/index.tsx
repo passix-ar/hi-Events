@@ -13,7 +13,7 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'create_promo_code'];
 
 interface AssistantWidgetProps {
     organizerId: IdParam;

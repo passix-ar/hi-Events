@@ -9,9 +9,12 @@ use HiEvents\Assistant\Domain\Tools\AbstractAssistantWriteTool;
 use HiEvents\Assistant\Domain\Tools\ApplyFlyerPaletteTool;
 use HiEvents\Assistant\Domain\Tools\AttachFlyerToEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateDraftEventTool;
+use HiEvents\Assistant\Domain\Tools\CreatePromoCodeTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
 use HiEvents\Assistant\Domain\Tools\GetCheckInSummaryTool;
+use HiEvents\Assistant\Domain\Tools\GetEventPromoKitTool;
+use HiEvents\Assistant\Domain\Tools\GetEventSalesCurveTool;
 use HiEvents\Assistant\Domain\Tools\GetEventSetupStatusTool;
 use HiEvents\Assistant\Domain\Tools\GetEventStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetOrganizerStatsTool;
@@ -19,6 +22,7 @@ use HiEvents\Assistant\Domain\Tools\GetPanelRouteTool;
 use HiEvents\Assistant\Domain\Tools\GetPromoCodesPerformanceTool;
 use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
 use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
+use HiEvents\Assistant\Domain\Tools\PublishEventTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use Illuminate\Contracts\Container\Container;
 
@@ -41,10 +45,14 @@ readonly class AssistantToolRegistry
         SearchHelpDocsTool::class,
         GetPanelRouteTool::class,
         GetEventSetupStatusTool::class,
+        GetEventPromoKitTool::class,
+        GetEventSalesCurveTool::class,
         CreateDraftEventTool::class,
         CreateTicketTool::class,
         AttachFlyerToEventTool::class,
         ApplyFlyerPaletteTool::class,
+        PublishEventTool::class,
+        CreatePromoCodeTool::class,
     ];
 
     public function __construct(private Container $container)
@@ -87,10 +95,14 @@ readonly class AssistantToolRegistry
             'search_help_docs',
             'get_panel_route',
             'get_event_setup_status',
+            'get_event_promo_kit',
+            'get_event_sales_curve',
             'create_draft_event',
             'create_ticket',
             'attach_flyer_to_event',
             'apply_flyer_palette',
+            'publish_event',
+            'create_promo_code',
         ];
     }
 }
