@@ -43,6 +43,46 @@ $panel-height: 620px;
   overflow: hidden;
 }
 
+.panelDragging {
+  outline: 2px dashed var(--hi-primary);
+  outline-offset: -6px;
+}
+
+.sentImage {
+  display: block;
+  max-width: 220px;
+  max-height: 260px;
+  border-radius: var(--hi-radius-md);
+  margin-bottom: 6px;
+}
+
+.attachmentChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px;
+  padding: 6px 8px;
+  border-radius: var(--hi-radius-md);
+  background: var(--hi-color-gray-2);
+  font-size: 12px;
+  color: var(--hi-text);
+}
+
+.attachmentThumb {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.attachmentName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .panelMobile {
   right: 0;
   bottom: 0;

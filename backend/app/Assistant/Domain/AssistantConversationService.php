@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant\Domain;
 
+use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
 use HiEvents\Assistant\Exceptions\AssistantUnavailableException;
 use HiEvents\Assistant\Handlers\DTO\AssistantMessageDTO;
 use HiEvents\Assistant\Handlers\DTO\AssistantReplyDTO;
@@ -13,6 +14,7 @@ use Prism\Prism\Exceptions\PrismException;
 use Prism\Prism\Facades\Prism;
 use Prism\Prism\Text\Response;
 use Prism\Prism\Text\Step;
+use Prism\Prism\ValueObjects\Media\Image;
 use Prism\Prism\ValueObjects\Messages\AssistantMessage;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
 use Prism\Prism\ValueObjects\ToolCall;
@@ -30,6 +32,7 @@ readonly class AssistantConversationService
         private AssistantSystemPromptBuilder $promptBuilder,
         private Config                       $config,
         private LoggerInterface              $logger,
+        private AssistantAttachmentStore     $attachments,
     )
     {
     }
@@ -49,7 +52,7 @@ readonly class AssistantConversationService
                     $this->config->get('assistant.model'),
                 )
                 ->withSystemPrompt($this->promptBuilder->build($context))
-                ->withMessages($this->toPrismMessages($history))
+                ->withMessages($this->toPrismMessages($history, $context))
                 ->withTools($this->toolRegistry->forContext($context))
                 ->withMaxSteps((int)$this->config->get('assistant.max_steps'))
                 ->withMaxTokens((int)$this->config->get('assistant.max_tokens'))
@@ -95,16 +98,36 @@ readonly class AssistantConversationService
     }
 
     /**
+     * The attachment rides on the last user message. The frontend keeps sending
+     * its id until a tool consumes it, so the model can re-read the flyer while it
+     * confirms details; once attach_flyer_to_event deletes it, the id resolves to
+     * nothing and no image is embedded.
+     *
      * @param list<AssistantMessageDTO> $history
      * @return list<UserMessage|AssistantMessage>
      */
-    private function toPrismMessages(array $history): array
+    private function toPrismMessages(array $history, AssistantContext $context): array
     {
+        $lastIndex = array_key_last($history);
+
         return array_map(
-            static fn(AssistantMessageDTO $m): UserMessage|AssistantMessage => $m->role === AssistantMessageDTO::ROLE_ASSISTANT
-                ? new AssistantMessage($m->content)
-                : new UserMessage($m->content),
+            function (AssistantMessageDTO $m, int $index) use ($context, $lastIndex): UserMessage|AssistantMessage {
+                if ($m->role === AssistantMessageDTO::ROLE_ASSISTANT) {
+                    return new AssistantMessage($m->content);
+                }
+
+                $media = [];
+                if ($index === $lastIndex && $context->attachment !== null) {
+                    $media[] = Image::fromRawContent(
+                        $this->attachments->contents($context->attachment),
+                        $context->attachment->mimeType,
+                    );
+                }
+
+                return new UserMessage($m->content, $media);
+            },
             $history,
+            array_keys($history),
         );
     }
 

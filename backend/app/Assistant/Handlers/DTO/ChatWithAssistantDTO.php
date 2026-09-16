@@ -21,6 +21,8 @@ class ChatWithAssistantDTO extends BaseDataObject
         public readonly array            $messages,
         /** The event the organizer has open in the panel, if any. A hint, never a grant. */
         public readonly ?int             $focusedEventId = null,
+        /** An image the organizer dropped into the chat, by attachment id. */
+        public readonly ?string          $attachmentId = null,
     )
     {
     }

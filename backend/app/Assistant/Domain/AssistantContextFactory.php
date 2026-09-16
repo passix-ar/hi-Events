@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant\Domain;
 
+use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\OrganizerDomainObject;
 use HiEvents\DomainObjects\UserDomainObject;
@@ -16,6 +17,7 @@ readonly class AssistantContextFactory
     public function __construct(
         private OrganizerRepositoryInterface $organizerRepository,
         private EventRepositoryInterface     $eventRepository,
+        private AssistantAttachmentStore     $attachments,
     )
     {
     }
@@ -28,6 +30,7 @@ readonly class AssistantContextFactory
         int              $accountId,
         int              $organizerId,
         ?int             $focusedEventId = null,
+        ?string          $attachmentId = null,
     ): AssistantContext
     {
         /** @var OrganizerDomainObject|null $organizer */
@@ -48,6 +51,7 @@ readonly class AssistantContextFactory
             currency: $organizer->getCurrency(),
             timezone: $organizer->getTimezone(),
             focusedEvent: $this->focusedEvent($focusedEventId, $accountId, $organizer->getId()),
+            attachment: $attachmentId === null ? null : $this->attachments->find($attachmentId, $accountId),
         );
     }
 

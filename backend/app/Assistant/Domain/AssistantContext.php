@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant\Domain;
 
+use HiEvents\Assistant\Domain\Attachments\AssistantAttachment;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\UserDomainObject;
 
@@ -23,6 +24,8 @@ final readonly class AssistantContext
         public string           $timezone,
         /** The event open in the panel, only if it belongs to this organizer. */
         public ?EventDomainObject $focusedEvent = null,
+        /** The image attached to this turn, resolved within this account only. */
+        public ?AssistantAttachment $attachment = null,
     )
     {
     }

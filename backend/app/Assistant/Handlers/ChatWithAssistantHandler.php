@@ -45,6 +45,7 @@ readonly class ChatWithAssistantHandler
             accountId: $dto->accountId,
             organizerId: $dto->organizerId,
             focusedEventId: $dto->focusedEventId,
+            attachmentId: $dto->attachmentId,
         );
 
         $reply = $this->conversation->converse($context, $dto->messages);

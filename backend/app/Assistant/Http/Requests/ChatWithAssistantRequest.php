@@ -20,6 +20,7 @@ class ChatWithAssistantRequest extends BaseRequest
             'messages.*.content' => ['required', 'string', 'max:' . $maxLength],
             'context' => ['nullable', 'array'],
             'context.event_id' => ['nullable', 'integer', 'min:1'],
+            'context.attachment_id' => ['nullable', 'uuid'],
         ];
     }
 

@@ -6,6 +6,7 @@ namespace HiEvents\Assistant\Domain;
 
 use HiEvents\Assistant\Domain\Tools\AbstractAssistantTool;
 use HiEvents\Assistant\Domain\Tools\AbstractAssistantWriteTool;
+use HiEvents\Assistant\Domain\Tools\AttachFlyerToEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateDraftEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
@@ -37,6 +38,7 @@ readonly class AssistantToolRegistry
         SearchHelpDocsTool::class,
         CreateDraftEventTool::class,
         CreateTicketTool::class,
+        AttachFlyerToEventTool::class,
     ];
 
     public function __construct(private Container $container)
@@ -79,6 +81,7 @@ readonly class AssistantToolRegistry
             'search_help_docs',
             'create_draft_event',
             'create_ticket',
+            'attach_flyer_to_event',
         ];
     }
 }

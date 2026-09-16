@@ -854,6 +854,10 @@ msgstr "答案更新成功。"
 msgid "Any queries from product holders will be sent to this email address. This will also be used as the \"reply-to\" address for all emails sent from this event"
 msgstr "产品持有者的任何查询都将发送到此电子邮件地址。此地址还将用作从此活动发送的所有电子邮件的“回复至”地址"
 
+#: src/components/common/AssistantWidget/index.tsx:315
+msgid "Anything to add about the flyer? (optional)"
+msgstr ""
+
 #: src/components/common/WidgetEditor/index.tsx:225
 msgid "Appearance"
 msgstr "外观"
@@ -1079,7 +1083,7 @@ msgstr "由于您的企业位于爱尔兰,所有平台费用将自动适用23%�
 msgid "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 msgstr "由于您的企业位于欧盟,我们需要确定平台费用的正确增值税处理方式:"
 
-#: src/components/common/AssistantWidget/index.tsx:216
+#: src/components/common/AssistantWidget/index.tsx:316
 msgid "Ask about this event…"
 msgstr ""
 
@@ -1088,7 +1092,11 @@ msgstr ""
 #~ msgstr ""
 
 #: src/components/common/AssistantWidget/index.tsx:147
-msgid "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
+#~ msgid "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
+#~ msgstr ""
+
+#: src/components/common/AssistantWidget/index.tsx:204
+msgid "Ask about your sales, tickets and events, or drop a flyer here and I will set the event up from it. I only read your own data."
 msgstr ""
 
 #: src/components/common/QuestionsTable/index.tsx:383
@@ -1103,7 +1111,7 @@ msgstr "每份订单询问一次"
 msgid "Ask once per product"
 msgstr "每个产品询问一次"
 
-#: src/components/common/AssistantWidget/index.tsx:216
+#: src/components/common/AssistantWidget/index.tsx:316
 msgid "Ask something about your events…"
 msgstr ""
 
@@ -1120,9 +1128,9 @@ msgstr "指定座位"
 msgid "Assigned Tier"
 msgstr "分配的级别"
 
-#: src/components/common/AssistantWidget/index.tsx:106
-#: src/components/common/AssistantWidget/index.tsx:119
-#: src/components/common/AssistantWidget/index.tsx:123
+#: src/components/common/AssistantWidget/index.tsx:145
+#: src/components/common/AssistantWidget/index.tsx:161
+#: src/components/common/AssistantWidget/index.tsx:180
 msgid "Assistant"
 msgstr ""
 
@@ -1130,6 +1138,10 @@ msgstr ""
 #: src/components/modals/CreateWebhookModal/index.tsx:37
 msgid "At least one event type must be selected"
 msgstr "必须选择至少一种事件类型"
+
+#: src/components/common/AssistantWidget/index.tsx:299
+msgid "Attach a flyer"
+msgstr ""
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/VatSettings/VatSettingsForm.tsx:100
 msgid "Attempts"
@@ -1741,7 +1753,7 @@ msgstr "复选框"
 msgid "Checked In"
 msgstr "已签到"
 
-#: src/components/common/AssistantWidget/index.tsx:197
+#: src/components/common/AssistantWidget/index.tsx:264
 msgid "Checking your data…"
 msgstr ""
 
@@ -1794,7 +1806,7 @@ msgstr "选择您的座位"
 msgid "City"
 msgstr "城市"
 
-#: src/components/common/AssistantWidget/index.tsx:132
+#: src/components/common/AssistantWidget/index.tsx:189
 msgid "Clear conversation"
 msgstr ""
 
@@ -1822,7 +1834,7 @@ msgstr "点击查看备注"
 msgid "close"
 msgstr "关闭"
 
-#: src/components/common/AssistantWidget/index.tsx:136
+#: src/components/common/AssistantWidget/index.tsx:193
 #: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:27
 #: src/components/common/CookieConsentBanner/index.tsx:37
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
@@ -2383,8 +2395,8 @@ msgid "Create a custom widget to sell tickets on your site."
 msgstr "创建自定义小部件以在您的网站上销售门票。"
 
 #: src/components/common/AssistantWidget/index.tsx:63
-msgid "Create a new event"
-msgstr ""
+#~ msgid "Create a new event"
+#~ msgstr ""
 
 #: src/components/routes/auth/AcceptInvitation/index.tsx:135
 msgid "Create a password"
@@ -4475,6 +4487,10 @@ msgstr "以下是与您邮箱关联的所有票。"
 msgid "Here is an example of how you can use the component in your application."
 msgstr "这是如何在应用程序中使用该组件的示例。"
 
+#: src/components/common/AssistantWidget/index.tsx:108
+msgid "Here is the flyer, set the event up from it."
+msgstr ""
+
 #: src/components/common/WidgetEditor/index.tsx:299
 msgid "Here is the React component you can use to embed the widget in your application."
 msgstr "这是您可以用来在应用程序中嵌入小部件的 React 组件。"
@@ -4615,7 +4631,7 @@ msgstr "主页预览"
 msgid "Homer"
 msgstr "荷马"
 
-#: src/components/common/AssistantWidget/index.tsx:58
+#: src/components/common/AssistantWidget/index.tsx:63
 msgid "How is check-in going?"
 msgstr ""
 
@@ -4639,7 +4655,7 @@ msgstr "客户收到报价后完成购买的时限。留空表示无时间限制
 msgid "How many minutes the customer has to complete their order. We recommend at least 15 minutes"
 msgstr "客户有多少分钟来完成订单。我们建议至少 15 分钟"
 
-#: src/components/common/AssistantWidget/index.tsx:56
+#: src/components/common/AssistantWidget/index.tsx:61
 msgid "How many tickets are left for this event?"
 msgstr ""
 
@@ -4647,7 +4663,7 @@ msgstr ""
 msgid "How many times can this code be used?"
 msgstr "这个代码可以使用多少次？"
 
-#: src/components/common/AssistantWidget/index.tsx:61
+#: src/components/common/AssistantWidget/index.tsx:66
 msgid "How much did I sell this month?"
 msgstr ""
 
@@ -6089,7 +6105,7 @@ msgstr "打开侧边栏"
 msgid "Open Stripe Dashboard"
 msgstr "打开 Stripe 仪表板"
 
-#: src/components/common/AssistantWidget/index.tsx:110
+#: src/components/common/AssistantWidget/index.tsx:149
 msgid "Open the assistant"
 msgstr ""
 
@@ -7454,6 +7470,10 @@ msgstr "去除"
 msgid "Remove"
 msgstr "移除"
 
+#: src/components/common/AssistantWidget/index.tsx:278
+msgid "Remove image"
+msgstr ""
+
 #: src/components/common/SeatingSectionList/index.tsx:139
 msgid "Removed"
 msgstr "已移除"
@@ -8085,7 +8105,7 @@ msgstr "已选择"
 msgid "Selling fast 🔥"
 msgstr "热卖中 🔥"
 
-#: src/components/common/AssistantWidget/index.tsx:228
+#: src/components/common/AssistantWidget/index.tsx:328
 #: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
 msgid "Send"
@@ -8218,6 +8238,11 @@ msgstr "为此组织者创建的新活动设置默认设置。"
 msgid "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 msgstr "设置发票编号的起始编号。一旦发票生成，就无法更改。"
 
+#: src/components/common/AssistantWidget/index.tsx:68
+#: src/components/common/AssistantWidget/index.tsx:214
+msgid "Set up an event from a flyer"
+msgstr ""
+
 #: src/components/routes/event/CheckInLists/index.tsx:32
 msgid "Set up check-in lists for different entrances, sessions, or days."
 msgstr "为不同的入口、场次或日期设置签到列表。"
@@ -8303,7 +8328,7 @@ msgstr "显示营销订阅复选框"
 msgid "Show marketing opt-in checkbox by default"
 msgstr "默认显示营销订阅复选框"
 
-#: src/components/common/AssistantWidget/index.tsx:62
+#: src/components/common/AssistantWidget/index.tsx:67
 msgid "Show me my latest sales"
 msgstr ""
 
@@ -8903,16 +8928,20 @@ msgstr "感谢您的参与！"
 msgid "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgstr "感谢您的支持，我们将继续发展和改进 Hi.Events！"
 
+#: src/components/common/AssistantWidget/index.tsx:91
+msgid "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
+msgstr ""
+
 #: src/components/routes/product-widget/SelectProducts/index.tsx:220
 #: src/components/routes/product-widget/SelectProducts/index.tsx:373
 msgid "That promo code is invalid"
 msgstr "促销代码无效"
 
-#: src/components/common/AssistantWidget/index.tsx:93
+#: src/components/common/AssistantWidget/index.tsx:132
 msgid "The assistant is not enabled for this account yet."
 msgstr ""
 
-#: src/components/common/AssistantWidget/index.tsx:97
+#: src/components/common/AssistantWidget/index.tsx:136
 msgid "The assistant is temporarily unavailable. Please try again."
 msgstr ""
 
@@ -9551,7 +9580,7 @@ msgstr "切换列"
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "尝试次数过多。请稍候再试。"
 
-#: src/components/common/AssistantWidget/index.tsx:95
+#: src/components/common/AssistantWidget/index.tsx:134
 msgid "Too many questions in a row. Please wait a moment and try again."
 msgstr ""
 
@@ -10584,7 +10613,7 @@ msgstr "启用线下支付后，用户可以完成订单并收到门票。他们
 msgid "Which product does this section sell seats for?"
 msgstr "此分区为哪个产品销售座位？"
 
-#: src/components/common/AssistantWidget/index.tsx:57
+#: src/components/common/AssistantWidget/index.tsx:62
 msgid "Which ticket type sells best here?"
 msgstr ""
 
