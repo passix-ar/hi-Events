@@ -147,7 +147,10 @@ const CheckIn = () => {
     // What the door needs to read at a glance: the ticket type, and the seat when the event has one.
     // An event without assigned seating has no seat_label, so this degrades to the title alone.
     const ticketInfoFor = (attendee: Attendee) => {
-        const productTitle = products?.find(product => product.id === attendee.product_id)?.title;
+        // This list's own products first, so the usual scan stays local. A ticket from another list
+        // of the event is not in there at all, and for those the title travels with the attendee.
+        const productTitle = products?.find(product => product.id === attendee.product_id)?.title
+            ?? attendee.product_title;
 
         return [productTitle, attendee.seat_label].filter(Boolean).join(' · ');
     };

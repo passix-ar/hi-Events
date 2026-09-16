@@ -662,6 +662,7 @@ export interface Attendee {
     check_in?: AttendeeCheckIn; // Use in contexts where a single check is expected, like dealing with a check-in list
     check_ins?: AttendeeCheckIn[];
     other_check_ins?: OtherListCheckIn[]; // Check-ins on other lists of the same event (public check-in endpoints)
+    product_title?: string; // Only on the single-attendee public check-in lookup, for tickets this list does not cover
 }
 
 export interface OtherListCheckIn {

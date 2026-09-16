@@ -44,8 +44,12 @@ class GetCheckInListAttendeePublicHandler
 
         $this->validateCheckInListIsActive($checkInList);
 
+        // The product comes along because this lookup is how a ticket from another list of the
+        // event reaches the scanner, and the door has to be told which one it is to send the person
+        // to the right entrance. Named explicitly: the relation on the model is singular.
         $attendee = $this->attendeeRepository
             ->loadRelation(new Relationship(AttendeeCheckInDomainObject::class, name: 'check_ins'))
+            ->loadRelation(new Relationship(ProductDomainObject::class, name: 'product'))
             ->findFirstWhere([
                 'public_id' => $attendeePublicId,
                 'event_id' => $checkInList->getEventId(),

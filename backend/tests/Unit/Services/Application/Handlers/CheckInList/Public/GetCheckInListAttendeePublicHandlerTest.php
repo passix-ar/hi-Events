@@ -114,10 +114,11 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
             ->once()
             ->andReturn($checkInList);
 
+        // Two relations: the attendee's check-ins, and the product whose title the door shows.
         $this->attendeeRepository
             ->shouldReceive('loadRelation')
-            ->once()
-            ->andReturnSelf();
+            ->andReturnSelf()
+            ->times(2);
 
         $this->attendeeRepository
             ->shouldReceive('findFirstWhere')

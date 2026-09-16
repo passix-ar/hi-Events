@@ -25,6 +25,13 @@ class AttendeeWithCheckInPublicResource extends JsonResource
             'locale' => $this->getLocale(),
             'order_id' => $this->getOrderId(),
             'seat_label' => $this->getSeatLabel(),
+            // Only the single-attendee lookup loads the product: the roster resolves titles against
+            // the check-in list's own products, and 250 of these per page would be weight for
+            // nothing on the request that runs over the venue's connection.
+            'product_title' => $this->when(
+                !is_null($this->getProduct()),
+                fn() => $this->getProduct()->getTitle(),
+            ),
             $this->mergeWhen($this->getCheckIn() !== null, [
                 'check_in' => new AttendeeCheckInPublicResource($this->getCheckIn()),
             ]),
