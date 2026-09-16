@@ -6,13 +6,16 @@ namespace HiEvents\Assistant\Domain;
 
 use HiEvents\Assistant\Domain\Tools\AbstractAssistantTool;
 use HiEvents\Assistant\Domain\Tools\AbstractAssistantWriteTool;
+use HiEvents\Assistant\Domain\Tools\ApplyFlyerPaletteTool;
 use HiEvents\Assistant\Domain\Tools\AttachFlyerToEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateDraftEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
 use HiEvents\Assistant\Domain\Tools\GetCheckInSummaryTool;
+use HiEvents\Assistant\Domain\Tools\GetEventSetupStatusTool;
 use HiEvents\Assistant\Domain\Tools\GetEventStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetOrganizerStatsTool;
+use HiEvents\Assistant\Domain\Tools\GetPanelRouteTool;
 use HiEvents\Assistant\Domain\Tools\GetPromoCodesPerformanceTool;
 use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
 use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
@@ -36,9 +39,12 @@ readonly class AssistantToolRegistry
         GetPromoCodesPerformanceTool::class,
         GetCheckInSummaryTool::class,
         SearchHelpDocsTool::class,
+        GetPanelRouteTool::class,
+        GetEventSetupStatusTool::class,
         CreateDraftEventTool::class,
         CreateTicketTool::class,
         AttachFlyerToEventTool::class,
+        ApplyFlyerPaletteTool::class,
     ];
 
     public function __construct(private Container $container)
@@ -79,9 +85,12 @@ readonly class AssistantToolRegistry
             'get_promo_codes_performance',
             'get_check_in_summary',
             'search_help_docs',
+            'get_panel_route',
+            'get_event_setup_status',
             'create_draft_event',
             'create_ticket',
             'attach_flyer_to_event',
+            'apply_flyer_palette',
         ];
     }
 }

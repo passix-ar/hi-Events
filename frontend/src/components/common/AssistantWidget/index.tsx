@@ -12,7 +12,7 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette'];
 
 interface AssistantWidgetProps {
     organizerId: IdParam;
@@ -21,7 +21,24 @@ interface AssistantWidgetProps {
 }
 
 export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWidgetProps) => {
-    const [open, setOpen] = useState(false);
+    const OPEN_KEY = 'passix.assistant.open';
+    const [open, setOpenState] = useState(() => {
+        try {
+            return typeof window !== 'undefined' && window.sessionStorage.getItem(OPEN_KEY) === '1';
+        } catch {
+            return false;
+        }
+    });
+    // Navigating between the organizer and an event mounts a different layout,
+    // so the open state has to live outside the component to survive the trip.
+    const setOpen = (value: boolean) => {
+        setOpenState(value);
+        try {
+            window.sessionStorage.setItem(OPEN_KEY, value ? '1' : '0');
+        } catch {
+            // best effort
+        }
+    };
     const [draft, setDraft] = useState('');
     const [error, setError] = useState<string | null>(null);
     const {entries, append, clear, historyForApi, pendingAttachmentId, setPendingAttachmentId} = useAssistantConversation(organizerId);
