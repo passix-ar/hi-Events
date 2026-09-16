@@ -129,20 +129,19 @@ class AssistantPublishTest extends TestCase
         $result = $this->runTool($this->tool(PublishEventTool::class), event_id: $eventId, confirm: true, confirmation_phrase: 'PUBLICAR');
 
         $this->assertSame('not_ready', $result['error']);
-        $this->assertStringContainsString('mercadopago', $result['missing'][0]);
+        $this->assertStringContainsString('MercadoPago', $result['missing'][0]);
         $this->assertSame(EventStatus::DRAFT->name, Event::find($eventId)->status);
     }
 
-    public function test_a_free_draft_passes_the_gate_without_mercadopago(): void
+    public function test_a_free_draft_still_needs_a_payment_method_like_the_panel(): void
     {
-        $eventId = $this->draftEventId('Gratis Sin MP');
-        $this->addTicket($eventId, 'Entrada libre', 0);
+        $eventId = $this->draftEventId('Gratis Sin Proveedor');
+        $this->addTicket($eventId, 'Invitación', 0);
 
         $result = $this->runTool($this->tool(PublishEventTool::class), event_id: $eventId);
 
-        $this->assertSame('needs_confirmation', $result['status'], 'a free event does not need MercadoPago to be ready');
-        $this->assertSame($eventId, $result['would_create']['event_id']);
-        $this->assertSame(EventStatus::DRAFT->name, Event::find($eventId)->status, 'the preview must not publish');
+        $this->assertSame('not_ready', $result['error']);
+        $this->assertStringContainsString('payment', $result['missing'][0]);
     }
 
     public function test_confirm_without_the_phrase_does_not_publish(): void

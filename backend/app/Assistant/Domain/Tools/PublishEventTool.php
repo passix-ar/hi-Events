@@ -131,9 +131,7 @@ class PublishEventTool extends AbstractAssistantWriteTool
         }
 
         try {
-            if ($this->hasPaidPrice($this->products->findWhere(['event_id' => $event->getId()])->all())) {
-                $this->enableMercadoPagoIfNeeded($event);
-            }
+            $this->enableMercadoPagoIfNeeded($event);
 
             $published = $this->updateEventStatus->handle(new UpdateEventStatusDTO(
                 status: EventStatus::LIVE->name,
@@ -175,18 +173,17 @@ class PublishEventTool extends AbstractAssistantWriteTool
             return ['tickets: the event has no ticket types yet'];
         }
 
-        if (!$this->hasPaidPrice($products)) {
-            return [];
-        }
-
         // Same rule the panel enforces on publish (EventPaymentMethodsService):
-        // the EVENT must list a usable provider. An event created before the
-        // account connected MercadoPago has none; that case is fixed on publish.
+        // the EVENT must list a usable provider, free tickets included. An event
+        // created before the account connected MercadoPago has none; that case
+        // is fixed on publish.
         if ($this->usableProvidersOf($event) !== [] || $this->canEnableMercadoPago()) {
             return [];
         }
 
-        return ['mercadopago: the event has paid tickets and no usable payment method - connect MercadoPago on the account, or enable offline payments in the event settings'];
+        return [$this->hasPaidPrice($products)
+            ? 'payment: the event has paid tickets and no usable payment method - connect MercadoPago on the account, or enable offline payments in the event settings'
+            : 'payment: the panel requires a payment method even for free tickets - connect MercadoPago on the account, or enable offline payments in the event settings'];
     }
 
     /**
