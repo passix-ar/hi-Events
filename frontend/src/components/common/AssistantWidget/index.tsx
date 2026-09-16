@@ -8,6 +8,7 @@ import {useUploadAssistantAttachment} from "../../../mutations/useUploadAssistan
 import {IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
+import {rememberLastAssistantOrganizer} from "./lastOrganizer.ts";
 import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
@@ -50,6 +51,10 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isMobile = useMediaQuery('(max-width: 600px)');
+
+    useEffect(() => {
+        rememberLastAssistantOrganizer(organizerId);
+    }, [organizerId]);
 
     useEffect(() => {
         if (open) {
