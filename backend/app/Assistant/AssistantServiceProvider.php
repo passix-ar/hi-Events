@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace HiEvents\Assistant;
 
 use HiEvents\Assistant\Console\SyncHelpDocsCommand;
+use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
 use HiEvents\Assistant\Domain\HelpDocs\HelpDocsIndex;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +28,10 @@ class AssistantServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/config/assistant.php', 'assistant');
+
+        $this->app->singleton(AssistantAttachmentStore::class, static fn(): AssistantAttachmentStore => new AssistantAttachmentStore(
+            disk: Storage::disk((string)config('filesystems.private')),
+        ));
 
         $this->app->singleton(HelpDocsIndex::class, static fn($app): HelpDocsIndex => new HelpDocsIndex(
             cache: $app->make(CacheRepository::class),
