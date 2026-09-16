@@ -41,6 +41,7 @@ class ChatWithAssistantAction extends BaseAction
                     ),
                     $request->validated('messages'),
                 ),
+                focusedEventId: $request->validated('context.event_id'),
             ));
         } catch (AssistantDisabledException) {
             return $this->errorResponse(__('The assistant is not enabled.'), ResponseCodes::HTTP_NOT_FOUND);

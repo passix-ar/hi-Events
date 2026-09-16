@@ -19,6 +19,8 @@ class ChatWithAssistantDTO extends BaseDataObject
         public readonly int              $organizerId,
         #[DataCollectionOf(AssistantMessageDTO::class)]
         public readonly array            $messages,
+        /** The event the organizer has open in the panel, if any. A hint, never a grant. */
+        public readonly ?int             $focusedEventId = null,
     )
     {
     }

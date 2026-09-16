@@ -33,6 +33,7 @@ import {useGetEventStats} from "../../../queries/useGetEventStats";
 import Truncate from "../../common/Truncate";
 import {BreadcrumbItem, NavItem} from "../AppLayout/types.ts";
 import AppLayout from "../AppLayout";
+import {AssistantWidget} from "../../common/AssistantWidget";
 import {NavLink, useLocation, useParams} from "react-router";
 import classes from './Event.module.scss';
 import {Button} from "@mantine/core";
@@ -176,6 +177,7 @@ const EventLayout = () => {
     };
 
     return (
+        <>
         <AppLayout
             navItems={navItemsWithLoading}
             breadcrumbItems={breadcrumbItems}
@@ -264,6 +266,14 @@ const EventLayout = () => {
                 ) : null)
             }
         />
+
+            {event?.organizer?.id && (
+                <AssistantWidget
+                    organizerId={event.organizer.id}
+                    focusedEvent={{id: event.id, title: event.title}}
+                />
+            )}
+        </>
     );
 };
 

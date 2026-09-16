@@ -9,8 +9,10 @@ use HiEvents\Assistant\Domain\Tools\AbstractAssistantWriteTool;
 use HiEvents\Assistant\Domain\Tools\CreateDraftEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
+use HiEvents\Assistant\Domain\Tools\GetCheckInSummaryTool;
 use HiEvents\Assistant\Domain\Tools\GetEventStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetOrganizerStatsTool;
+use HiEvents\Assistant\Domain\Tools\GetPromoCodesPerformanceTool;
 use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
 use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
@@ -30,6 +32,8 @@ readonly class AssistantToolRegistry
         GetOrganizerStatsTool::class,
         GetEventStatsTool::class,
         GetTicketRankingTool::class,
+        GetPromoCodesPerformanceTool::class,
+        GetCheckInSummaryTool::class,
         SearchHelpDocsTool::class,
         CreateDraftEventTool::class,
         CreateTicketTool::class,
@@ -70,6 +74,8 @@ readonly class AssistantToolRegistry
             'get_organizer_stats',
             'get_event_stats',
             'get_ticket_ranking',
+            'get_promo_codes_performance',
+            'get_check_in_summary',
             'search_help_docs',
             'create_draft_event',
             'create_ticket',

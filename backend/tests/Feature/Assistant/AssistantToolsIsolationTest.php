@@ -8,6 +8,8 @@ use HiEvents\Assistant\Domain\AssistantContext;
 use HiEvents\Assistant\Domain\AssistantContextFactory;
 use HiEvents\Assistant\Domain\AssistantToolRegistry;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
+use HiEvents\Assistant\Domain\Tools\GetCheckInSummaryTool;
+use HiEvents\Assistant\Domain\Tools\GetPromoCodesPerformanceTool;
 use HiEvents\Assistant\Domain\Tools\GetEventStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetOrganizerStatsTool;
 use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
@@ -104,7 +106,7 @@ class AssistantToolsIsolationTest extends TestCase
         $this->assertStringNotContainsString('PUB-B', $raw);
     }
 
-    public function test_recent_orders_can_filter_by_status_within_an_event(): void
+    public function test_recent_orders_can_filter_by_status(): void
     {
         $eventId = $this->mine->event->id;
         $completed = $this->runTool($this->tool(GetRecentOrdersTool::class), event_id: $eventId, status: 'COMPLETED');
@@ -113,7 +115,7 @@ class AssistantToolsIsolationTest extends TestCase
 
         $this->assertSame(1, $completed['total']);
         $this->assertSame(0, $cancelled['total']);
-        $this->assertSame('invalid_arguments', $organizerWide['error']);
+        $this->assertSame(1, $organizerWide['total'], 'organizer-wide status filter works now that the JOIN columns are qualified');
     }
 
     public function test_recent_orders_for_another_tenants_event_are_not_found(): void
@@ -188,5 +190,32 @@ class AssistantToolsIsolationTest extends TestCase
         $result = $this->runTool($this->tool(GetTicketRankingTool::class), event_id: $this->theirs->event->id);
 
         $this->assertSame(['error' => 'event_not_found'], $result);
+    }
+
+    public function test_check_in_summary_only_lists_my_events(): void
+    {
+        $all = $this->runTool($this->tool(GetCheckInSummaryTool::class));
+
+        $this->assertCount(1, $all['events']);
+        $this->assertSame($this->mine->event->id, $all['events'][0]['event_id']);
+        $this->assertSame('Evento A', $all['events'][0]['title']);
+        $this->assertSame(0, $all['totals']['checked_in']);
+
+        $one = $this->runTool($this->tool(GetCheckInSummaryTool::class), event_id: $this->mine->event->id);
+        $this->assertCount(1, $one['events']);
+
+        $foreign = $this->runTool($this->tool(GetCheckInSummaryTool::class), event_id: $this->theirs->event->id);
+        $this->assertSame(['error' => 'event_not_found'], $foreign);
+    }
+
+    public function test_promo_codes_performance_is_scoped_to_my_event(): void
+    {
+        $mine = $this->runTool($this->tool(GetPromoCodesPerformanceTool::class), event_id: $this->mine->event->id);
+
+        $this->assertSame($this->mine->event->id, $mine['event_id']);
+        $this->assertIsArray($mine['codes']);
+
+        $foreign = $this->runTool($this->tool(GetPromoCodesPerformanceTool::class), event_id: $this->theirs->event->id);
+        $this->assertSame(['error' => 'event_not_found'], $foreign);
     }
 }

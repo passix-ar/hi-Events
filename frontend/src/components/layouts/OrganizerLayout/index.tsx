@@ -10,7 +10,6 @@ import {
     IconEye,
     IconEyeOff,
     IconPaint,
-    IconRobot,
     IconSettings,
     IconShare,
     IconUsersGroup,
@@ -19,6 +18,7 @@ import {
 import { t } from "@lingui/macro";
 import { BreadcrumbItem, NavItem } from "../AppLayout/types.ts";
 import AppLayout from "../AppLayout";
+import {AssistantWidget} from "../../common/AssistantWidget";
 import { NavLink, useLocation, useParams } from "react-router";
 import { Button, Modal, Stack, Text } from "@mantine/core";
 import { useGetOrganizer } from "../../../queries/useGetOrganizer.ts";
@@ -89,7 +89,6 @@ const OrganizerLayout = () => {
         { link: 'settings', label: t`Settings`, icon: IconSettings },
 
         { label: t`Tools` },
-        { link: 'assistant', label: t`Assistant`, icon: IconRobot },
         { link: 'organizer-homepage-designer', label: t`Homepage Designer`, icon: IconPaint },
 
         { label: t`Integrations` },
@@ -263,6 +262,8 @@ const OrganizerLayout = () => {
                 )}
                 sidebarFooter={<SidebarCalloutQueue callouts={callouts} />}
             />
+
+            {organizerId && <AssistantWidget organizerId={organizerId} />}
 
             {createModalOpen && <InviteUserModal onClose={closeCreateModal} />}
             {switchOrganizerModalOpen &&

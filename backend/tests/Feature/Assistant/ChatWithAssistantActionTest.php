@@ -120,9 +120,36 @@ class ChatWithAssistantActionTest extends TestCase
             $request = $requests[0];
 
             $this->assertCount(3, $request->messages());
-            $this->assertCount(8, $request->tools(), 'six read tools plus the two write tools');
+            $this->assertCount(10, $request->tools(), 'eight read tools plus the two write tools');
             $this->assertStringContainsString('Org A', $request->systemPrompts()[0]->content);
             $this->assertStringNotContainsString('Org B', $request->systemPrompts()[0]->content);
+        });
+    }
+
+    public function test_the_focused_event_reaches_the_prompt_only_when_it_is_mine(): void
+    {
+        $fake = Prism::fake([
+            TextResponseFake::make()->withText('ok'),
+            TextResponseFake::make()->withText('ok'),
+        ]);
+
+        $this->postJson("/organizers/{$this->mine->organizer->id}/assistant/chat", [
+            'messages' => [['role' => 'user', 'content' => '¿cómo va este evento?']],
+            'context' => ['event_id' => $this->mine->event->id],
+        ], ['Authorization' => 'Bearer ' . $this->token])->assertOk();
+
+        $this->postJson("/organizers/{$this->mine->organizer->id}/assistant/chat", [
+            'messages' => [['role' => 'user', 'content' => '¿cómo va este evento?']],
+            'context' => ['event_id' => $this->theirs->event->id],
+        ], ['Authorization' => 'Bearer ' . $this->token])->assertOk();
+
+        $fake->assertRequest(function (array $requests): void {
+            $mine = $requests[0]->systemPrompts()[0]->content;
+            $theirs = $requests[1]->systemPrompts()[0]->content;
+
+            $this->assertStringContainsString('Evento abierto en el panel: «Evento A»', $mine);
+            $this->assertStringNotContainsString('Evento abierto', $theirs, 'a foreign event id is dropped, not echoed');
+            $this->assertStringNotContainsString('Evento B', $theirs);
         });
     }
 

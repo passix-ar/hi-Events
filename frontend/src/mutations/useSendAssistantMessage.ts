@@ -1,12 +1,13 @@
 import {useMutation} from "@tanstack/react-query";
 import {IdParam} from "../types.ts";
-import {AssistantChatMessage, assistantClient} from "../api/assistant.client.ts";
+import {AssistantChatContext, AssistantChatMessage, assistantClient} from "../api/assistant.client.ts";
 
 export const useSendAssistantMessage = () => {
     return useMutation({
-        mutationFn: ({organizerId, messages}: {
+        mutationFn: ({organizerId, messages, context}: {
             organizerId: IdParam,
-            messages: AssistantChatMessage[]
-        }) => assistantClient.chat(organizerId, messages),
+            messages: AssistantChatMessage[],
+            context?: AssistantChatContext,
+        }) => assistantClient.chat(organizerId, messages, context),
     });
 }

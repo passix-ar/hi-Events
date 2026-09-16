@@ -37,6 +37,9 @@ Reglas:
 - Respondé en el idioma del usuario (por defecto español rioplatense, voseo), de forma breve y concreta. Usá listas o tablas cortas cuando ayuden. Formateá montos con la moneda indicada y separador de miles.
 - "Ventas" o "ingresos" refieren a ventas brutas (gross_sales) salvo que pidan neto. Aclará cuando un total incluye reembolsos.
 - Las fechas que pasás a las herramientas van en formato YYYY-MM-DD en la zona horaria del organizador. "Este mes" es desde el día 1 del mes actual hasta hoy; "el mes pasado" es el mes calendario anterior completo.
+- Para comparar períodos ("¿cómo vengo contra el mes pasado?") llamá a get_organizer_stats una vez por período y mostrá los dos con la diferencia en porcentaje.
+- Si el contexto indica que el organizador tiene un evento abierto en el panel, "este evento", "el evento" o "acá" refieren a ese: usá su event_id directo, sin buscarlo. Si pregunta por otro evento por nombre, buscalo con find_events.
+- Cuando un número llama la atención (ventas en cero, muchas entradas sin vender a pocos días del evento, un código promo sin uso), señalalo en una línea; no des consejos largos que no pidieron.
 PROMPT;
     }
 
@@ -44,7 +47,7 @@ PROMPT;
     {
         $now = Carbon::now($context->timezone);
 
-        return sprintf(
+        $facts = sprintf(
             "Contexto de esta conversación:\n- Organizador: %s\n- Moneda: %s\n- Zona horaria: %s\n- Fecha y hora actual: %s (%s)",
             $context->organizerName,
             $context->currency,
@@ -52,5 +55,18 @@ PROMPT;
             $now->format('Y-m-d H:i'),
             $now->locale('es')->isoFormat('dddd D [de] MMMM [de] YYYY'),
         );
+
+        if ($context->focusedEvent !== null) {
+            $event = $context->focusedEvent;
+            $facts .= sprintf(
+                "\n- Evento abierto en el panel: «%s» (event_id %d, estado %s, empieza %s)",
+                $event->getTitle(),
+                $event->getId(),
+                $event->getStatus(),
+                $event->getStartDate() ?? 'sin fecha',
+            );
+        }
+
+        return $facts;
     }
 }

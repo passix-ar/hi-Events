@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant\Domain;
 
+use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\UserDomainObject;
 
 /**
@@ -20,6 +21,8 @@ final readonly class AssistantContext
         public string           $organizerName,
         public string           $currency,
         public string           $timezone,
+        /** The event open in the panel, only if it belongs to this organizer. */
+        public ?EventDomainObject $focusedEvent = null,
     )
     {
     }

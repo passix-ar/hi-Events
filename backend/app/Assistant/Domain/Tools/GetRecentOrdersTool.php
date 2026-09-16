@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HiEvents\Assistant\Domain\Tools;
 
 use HiEvents\Assistant\Domain\AssistantContext;
-use HiEvents\Assistant\Exceptions\AssistantToolArgumentException;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Generated\OrderDomainObjectAbstract;
 use HiEvents\DomainObjects\OrderDomainObject;
@@ -43,7 +42,7 @@ class GetRecentOrdersTool extends AbstractAssistantTool
             ->withNumberParameter('event_id', 'Only orders of this event. Omit for all events of the organizer.', required: false)
             ->withEnumParameter(
                 'status',
-                'Only orders with this status (requires event_id). COMPLETED are paid/confirmed sales; AWAITING_OFFLINE_PAYMENT are pending; CANCELLED were cancelled.',
+                'Only orders with this status. COMPLETED are paid/confirmed sales; AWAITING_OFFLINE_PAYMENT are pending; CANCELLED were cancelled.',
                 [OrderStatus::COMPLETED->name, OrderStatus::AWAITING_OFFLINE_PAYMENT->name, OrderStatus::CANCELLED->name],
                 required: false,
             )
@@ -64,13 +63,6 @@ class GetRecentOrdersTool extends AbstractAssistantTool
                 'limit' => 'nullable|integer|min:1|max:' . self::MAX_LIMIT,
             ],
         );
-
-        // OrderRepository::findByOrganizerId joins events and applies filters without a
-        // table prefix, so a status filter there is ambiguous in Postgres. Until that is
-        // fixed in the repository, status narrowing is only offered per event.
-        if (!empty($args['status']) && empty($args['event_id'])) {
-            throw new AssistantToolArgumentException('The status filter requires an event_id. Call find_events first, or omit status.');
-        }
 
         $filterFields = [];
         if (!empty($args['status'])) {

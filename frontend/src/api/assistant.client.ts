@@ -6,11 +6,15 @@ export interface AssistantChatMessage {
     content: string;
 }
 
+export interface AssistantChatContext {
+    event_id?: IdParam;
+}
+
 export const assistantClient = {
-    chat: async (organizerId: IdParam, messages: AssistantChatMessage[]) => {
+    chat: async (organizerId: IdParam, messages: AssistantChatMessage[], context?: AssistantChatContext) => {
         const response = await api.post<GenericDataResponse<AssistantReply>>(
             'organizers/' + organizerId + '/assistant/chat',
-            {messages}
+            {messages, context}
         );
         return response.data;
     },
