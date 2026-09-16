@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Assistant;
 
+use HiEvents\Assistant\Domain\AssistantToolRegistry;
 use HiEvents\Http\ResponseCodes;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Prism\Prism\Facades\Prism;
@@ -120,7 +121,11 @@ class ChatWithAssistantActionTest extends TestCase
             $request = $requests[0];
 
             $this->assertCount(3, $request->messages());
-            $this->assertCount(10, $request->tools(), 'eight read tools plus the two write tools');
+            $this->assertSame(
+                AssistantToolRegistry::toolNames(),
+                array_map(static fn($tool) => $tool->name(), $request->tools()),
+                'every registered tool, reads and writes, is offered to the model',
+            );
             $this->assertStringContainsString('Org A', $request->systemPrompts()[0]->content);
             $this->assertStringNotContainsString('Org B', $request->systemPrompts()[0]->content);
         });
