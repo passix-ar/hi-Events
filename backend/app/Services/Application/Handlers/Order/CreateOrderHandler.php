@@ -23,6 +23,7 @@ use HiEvents\Repository\Interfaces\PromoCodeRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Order\DTO\CreateOrderPublicDTO;
 use HiEvents\Services\Domain\Order\OrderItemProcessingService;
 use HiEvents\Services\Domain\Order\OrderManagementService;
+use HiEvents\Services\Domain\PromoCode\PromoCodeUsageValidationService;
 use HiEvents\Services\Domain\Product\AvailableProductQuantitiesFetchService;
 use HiEvents\Services\Domain\Seating\SeatClaimService;
 use Illuminate\Database\DatabaseManager;
@@ -41,6 +42,7 @@ class CreateOrderHandler
         private readonly AvailableProductQuantitiesFetchService $availableProductQuantitiesFetchService,
         private readonly SeatClaimService                       $seatClaimService,
         private readonly DatabaseManager                        $databaseManager,
+        private readonly PromoCodeUsageValidationService        $promoCodeUsageValidationService,
     )
     {
     }
@@ -63,12 +65,15 @@ class CreateOrderHandler
 
             $this->validateEventStatus($event, $createOrderPublicDTO);
 
-            $promoCode = $this->getPromoCode($createOrderPublicDTO, $eventId);
-            $affiliate = $this->getAffiliate($createOrderPublicDTO, $eventId);
-
+            // The session's stale reservations go first: getPromoCode() counts live
+            // orders against the code's limit, and a buyer who abandoned and retried
+            // must not be blocked by their own previous reservation.
             if ($deleteExistingOrdersForSession) {
                 $this->orderManagementService->deleteExistingOrders($eventId, $createOrderPublicDTO->session_identifier);
             }
+
+            $promoCode = $this->getPromoCode($createOrderPublicDTO, $eventId);
+            $affiliate = $this->getAffiliate($createOrderPublicDTO, $eventId);
 
             $this->validateProductAvailability($eventId, $createOrderPublicDTO);
 
@@ -106,11 +111,11 @@ class CreateOrderHandler
             PromoCodeDomainObjectAbstract::EVENT_ID => $eventId,
         ]);
 
-        if ($promoCode?->isValid()) {
-            return $promoCode;
+        if (!$this->promoCodeUsageValidationService->isPromoCodeUsable($promoCode)) {
+            return null;
         }
 
-        return null;
+        return $promoCode;
     }
 
     private function getAffiliate(CreateOrderPublicDTO $createOrderPublicDTO, int $eventId): ?AffiliateDomainObject

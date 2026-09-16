@@ -68,6 +68,32 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         );
     }
 
+    /**
+     * Live count of orders currently holding the code: completed, awaiting
+     * offline payment, or reserved and not expired (a MercadoPago order sits in
+     * RESERVED until the webhook lands). order_usage_count only moves after
+     * completion, so it cannot enforce a limit under concurrent checkouts.
+     */
+    public function countActivePromoCodeUsage(int $promoCodeId): int
+    {
+        $count = $this->model
+            ->where('promo_code_id', $promoCodeId)
+            ->where(static function (Builder $query) {
+                $query->whereIn('status', [
+                    OrderStatus::COMPLETED->name,
+                    OrderStatus::AWAITING_OFFLINE_PAYMENT->name,
+                ])->orWhere(static function (Builder $reserved) {
+                    $reserved->where('status', OrderStatus::RESERVED->name)
+                        ->where('reserved_until', '>', now());
+                });
+            })
+            ->count();
+
+        $this->resetModel();
+
+        return $count;
+    }
+
     public function findByOrganizerId(int $organizerId, int $accountId, QueryParamsDTO $params): LengthAwarePaginator
     {
         $where = [
