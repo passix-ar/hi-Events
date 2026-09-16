@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import {AxiosError} from "axios";
+import {t} from "@lingui/macro";
 import {Attendee, AttendeeCheckIn, IdParam, PublicCheckIn} from "../types";
 import {publicCheckInClient} from "../api/check-in.client";
 import {isSsr} from "../utilites/helpers";
@@ -82,14 +83,21 @@ export const isPendingCheckIn = (checkIn?: AttendeeCheckIn): boolean =>
 export type CheckInOutcome =
     | { status: 'queued' }
     | { status: 'already-checked-in' }
-    | { status: 'cancelled' };
+    | { status: 'cancelled' }
+    | { status: 'not-on-this-list' };
 
+// A refusal that is about the request rather than about one person — the list expired, it was
+// deleted — has nobody to name, so the attendee is optional.
 export type RejectedCheckIn = {
-    attendee: Attendee;
+    attendee?: Attendee;
     message: string;
 };
 
-export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) => {
+export const useCheckInRoster = (
+    checkInListShortId: IdParam,
+    enabled: boolean,
+    allowedProductIds?: (number | string)[],
+) => {
     const [state, setState] = useState<RosterState>(() => {
         const snapshot = readJson<Snapshot>(rosterKey(checkInListShortId));
         const queue = readJson<PendingCheckIn[]>(queueKey(checkInListShortId)) ?? [];
@@ -176,6 +184,16 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
             return {status: 'cancelled'};
         }
 
+        // The server refuses a ticket this list does not cover, and that refusal used to come back
+        // as a 409 for the whole request, taking the queue — and everyone already through the door
+        // — down with it. It is settled here, where it costs nothing and the door gets a useful
+        // answer. With no list of products yet (the list has not loaded) there is nothing to tell
+        // an outside ticket from a valid one, and refusing everything would be worse.
+        if (allowedProductIds?.length
+            && !allowedProductIds.some(id => String(id) === String(attendee.product_id))) {
+            return {status: 'not-on-this-list'};
+        }
+
         // Optimistic: the person is through the door now. The server confirms in
         // the background and replaces this placeholder with the real record.
         const placeholder: AttendeeCheckIn = {
@@ -188,7 +206,13 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         };
 
         setState(prev => {
-            const attendees = prev.attendees.map(a => a.public_id === attendee.public_id
+            // A ticket sold after the last refresh arrives through the network fallback and is not
+            // in the roster yet. It has to be added, not just mapped over: rejections are resolved
+            // against this array, so anyone missing from it gets their refusal dropped silently —
+            // and they would never show up in the list on screen either.
+            const known = prev.attendees.some(a => a.public_id === attendee.public_id);
+            const roster = known ? prev.attendees : [...prev.attendees, attendee];
+            const attendees = roster.map(a => a.public_id === attendee.public_id
                 ? {...a, check_in: placeholder, status: action === 'check-in-and-mark-order-as-paid' ? 'ACTIVE' : a.status}
                 : a);
             const pending = prev.pending.some(p => p.publicId === attendee.public_id)
@@ -200,7 +224,7 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
         });
 
         return {status: 'queued'};
-    }, [checkInListShortId]);
+    }, [checkInListShortId, allowedProductIds]);
 
     // Every refusal is a person who did not get through, so they all have to be
     // reported: keeping only the first would silently swallow the rest.
@@ -266,13 +290,16 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                 return {...prev, attendees, pending, syncing: false};
             });
 
-            const refusals = Object.entries(errors)
+            const refusals: RejectedCheckIn[] = Object.entries(errors)
                 .filter(([publicId]) => !confirmedPublicIds.has(publicId))
-                .map(([publicId, message]) => {
-                    const attendee = stateRef.current.attendees.find(a => a.public_id === publicId);
-                    return attendee ? {attendee, message} : null;
-                })
-                .filter((refusal): refusal is RejectedCheckIn => refusal !== null);
+                .map(([publicId, message]) => ({
+                    // The attendee is normally in the roster — queueCheckIn puts them there even
+                    // when they came from the network fallback — but a refresh in between can drop
+                    // them again. The refusal is reported either way: dropping it would mean
+                    // someone walked in on a check-in the server never accepted, with no trace.
+                    attendee: stateRef.current.attendees.find(a => a.public_id === publicId),
+                    message,
+                }));
 
             if (refusals.length > 0) {
                 setRejected(prev => [...prev, ...refusals]);
@@ -298,10 +325,13 @@ export const useCheckInRoster = (checkInListShortId: IdParam, enabled: boolean) 
                     writeJson(queueKey(checkInListShortId), pending);
                     return {...prev, attendees, pending, syncing: false};
                 });
-                // One report, not one per person: this refusal is about the list
-                // (expired, deleted), so it says nothing about any individual.
-                const first = stateRef.current.attendees.find(a => a.public_id === batch[0].publicId);
-                if (first) setRejected(prev => [...prev, {attendee: first, message}]);
+                // One report, not one per person: this refusal is about the list (expired,
+                // deleted), so it says nothing about any individual — naming the first of the
+                // batch read as if it did. What the door needs is how many were lost.
+                const lost = batch.length;
+                setRejected(prev => [...prev, {
+                    message: t`${message} — ${lost} check-in(s) could not be saved`,
+                }]);
                 flushingRef.current = false;
                 return;
             }

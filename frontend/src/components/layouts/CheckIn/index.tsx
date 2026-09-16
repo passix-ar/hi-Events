@@ -1,6 +1,6 @@
 import {useParams} from "react-router";
 import {useGetCheckInListPublic} from "../../../queries/useGetCheckInListPublic.ts";
-import {ReactNode, useCallback, useEffect, useRef, useState} from "react";
+import {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useDisclosure, useNetwork} from "@mantine/hooks";
 import {Attendee} from "../../../types.ts";
 import {showError, showSuccess} from "../../../utilites/notifications.tsx";
@@ -65,9 +65,13 @@ const CheckIn = () => {
     );
 
     const products = checkInList?.products;
+    // Memoised because the hook keeps queueCheckIn stable on it: a fresh array every render would
+    // rebuild the scan handler on every render too.
+    const allowedProductIds = useMemo(() => products?.map(product => product.id), [products]);
     const roster = useCheckInRoster(
         checkInListShortId,
         Boolean(checkInList?.is_active && !checkInList?.is_expired),
+        allowedProductIds,
     );
     const [isCheckingOut, setIsCheckingOut] = useState(false);
 
@@ -91,7 +95,7 @@ const CheckIn = () => {
 
         roster.rejected
             .slice(0, MAX_REFUSAL_TOASTS)
-            .forEach(({attendee, message}) => showError(scanFeedback(attendee, message)));
+            .forEach(({attendee, message}) => showError(attendee ? scanFeedback(attendee, message) : message));
 
         const remaining = roster.rejected.length - MAX_REFUSAL_TOASTS;
         if (remaining > 0) {
@@ -177,6 +181,16 @@ const CheckIn = () => {
         if (outcome.status === 'cancelled') {
             showError(scanFeedback(attendee,
                 <Trans>{attendee.first_name} {attendee.last_name}'s ticket is cancelled</Trans>));
+            playErrorSound();
+            return false;
+        }
+
+        // A ticket this list does not cover: the server would refuse it anyway, and until now that
+        // refusal came back as a 409 that wiped the whole pending queue. The door needs to send the
+        // person to the right entrance, so it is said here rather than swallowed.
+        if (outcome.status === 'not-on-this-list') {
+            showError(scanFeedback(attendee,
+                <Trans>{attendee.first_name} {attendee.last_name}'s ticket is not valid for this check-in list</Trans>));
             playErrorSound();
             return false;
         }

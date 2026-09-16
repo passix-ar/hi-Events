@@ -124,7 +124,6 @@ class CreateAttendeeCheckInService
 
     /**
      * @throws Throwable
-     * @throws CannotCheckInException
      */
     private function processAttendeeCheckIns(
         Collection               $attendees,
@@ -156,6 +155,17 @@ class CreateAttendeeCheckInService
             }
         }
 
+        // A code that resolved to no attendee is that one scan's problem, not the batch's: it is
+        // reported against its own public_id so every other check-in in the request still lands.
+        $resolved = $attendees->map(fn(AttendeeDomainObject $attendee) => $attendee->getPublicId())->all();
+        foreach ($attendeesAndActions as $attendeeAndAction) {
+            if (!in_array($attendeeAndAction->public_id, $resolved, true)) {
+                $errors->addError($attendeeAndAction->public_id, __('Invalid attendee code detected: :attendees ', [
+                    'attendees' => $attendeeAndAction->public_id,
+                ]));
+            }
+        }
+
         return new CreateAttendeeCheckInsResponseDTO(
             attendeeCheckIns: $checkIns,
             errors: $errors,
@@ -164,7 +174,6 @@ class CreateAttendeeCheckInService
 
     /**
      * @throws Throwable
-     * @throws CannotCheckInException
      */
     private function processIndividualCheckIn(
         AttendeeDomainObject     $attendee,
@@ -175,7 +184,9 @@ class CreateAttendeeCheckInService
         string                   $checkInUserIpAddress
     ): CheckInResultDTO
     {
-        $this->checkInListDataService->verifyAttendeeBelongsToCheckInList($checkInList, $attendee);
+        if ($error = $this->checkInListDataService->validateAttendeeBelongsToCheckInList($checkInList, $attendee)) {
+            return new CheckInResultDTO(error: $error);
+        }
 
         $attendeeAction = $attendeesAndActions->first(
             fn(AttendeeAndActionDTO $action) => $action->public_id === $attendee->getPublicId()

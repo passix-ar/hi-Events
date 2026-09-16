@@ -23,49 +23,38 @@ class CheckInListDataService
     }
 
     /**
-     * @throws CannotCheckInException
+     * A ticket this list does not cover is a refusal for that attendee alone, so it is returned as
+     * a message instead of thrown: the rest of the batch still has to get through.
      */
-    public function verifyAttendeeBelongsToCheckInList(
+    public function validateAttendeeBelongsToCheckInList(
         CheckInListDomainObject $checkInList,
         AttendeeDomainObject    $attendee,
-    ): void
+    ): ?string
     {
         $allowedProductIds = $checkInList->getProducts()->map(fn($product) => $product->getId())->toArray() ?? [];
 
         if (!in_array($attendee->getProductId(), $allowedProductIds, true)) {
-            throw new CannotCheckInException(
-                __('Attendee :attendee_name is not allowed to check in using this check-in list', [
-                    'attendee_name' => $attendee->getFullName(),
-                ])
-            );
+            return __('Attendee :attendee_name is not allowed to check in using this check-in list', [
+                'attendee_name' => $attendee->getFullName(),
+            ]);
         }
+
+        return null;
     }
 
     /**
+     * Returns whatever resolved. A code that matches no attendee is that scan's problem, not the
+     * batch's: the caller holds the error bag and reports the missing ones there.
+     *
      * @return Collection<AttendeeDomainObject>
      * @throws Exception
-     *
-     * @throws CannotCheckInException
      */
     public function getAttendees(Collection $attendeePublicIds): Collection
     {
-        $attendeePublicIds = array_unique($attendeePublicIds->toArray());
-
-        $attendees = $this->attendeeRepository->findWhereIn(
+        return $this->attendeeRepository->findWhereIn(
             field: AttendeeDomainObjectAbstract::PUBLIC_ID,
-            values: $attendeePublicIds
+            values: array_unique($attendeePublicIds->toArray()),
         );
-
-        if (count($attendees) !== count($attendeePublicIds)) {
-            throw new CannotCheckInException(__('Invalid attendee code detected: :attendees ', [
-                'attendees' => implode(', ', array_diff(
-                        $attendeePublicIds,
-                        $attendees->pluck(AttendeeDomainObjectAbstract::PUBLIC_ID)->toArray())
-                ),
-            ]));
-        }
-
-        return $attendees;
     }
 
     /**

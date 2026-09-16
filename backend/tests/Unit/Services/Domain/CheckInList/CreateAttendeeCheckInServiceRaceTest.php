@@ -128,7 +128,7 @@ class CreateAttendeeCheckInServiceRaceTest extends TestCase
 
         $this->checkInListDataService->shouldReceive('getCheckInList')->once()->andReturn($checkInList);
         $this->checkInListDataService->shouldReceive('getAttendees')->once()->andReturn(collect([$attendee]));
-        $this->checkInListDataService->shouldReceive('verifyAttendeeBelongsToCheckInList')->once();
+        $this->checkInListDataService->shouldReceive('validateAttendeeBelongsToCheckInList')->once()->andReturnNull();
 
         $this->eventSettingsRepository->shouldReceive('findFirstWhere')->once()->andReturn($eventSettings);
 
