@@ -44,7 +44,7 @@ class AssistantServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'assistant');
+        $this->loadViewsFrom(__DIR__ . '/Resources/views', 'assistant');
 
         // Proactive sales alerts, off unless AI_ASSISTANT_ALERTS_ENABLED. Registered
         // here rather than in Console/Kernel so the module stays self-contained.

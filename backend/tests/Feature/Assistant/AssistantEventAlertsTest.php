@@ -33,7 +33,7 @@ class AssistantEventAlertsTest extends TestCase
         Storage::fake((string)config('filesystems.public'));
         Mail::fake();
         // Until the provider registers the namespace (see AssistantServiceProvider), load the views here.
-        View::addNamespace('assistant', app_path('Assistant/resources/views'));
+        View::addNamespace('assistant', app_path('Assistant/Resources/views'));
         config([
             'cache.default' => 'array',
             'assistant.alerts.days_ahead' => 14,
