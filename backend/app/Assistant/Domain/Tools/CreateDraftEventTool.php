@@ -14,6 +14,11 @@ use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\CreateEventHandler;
 use HiEvents\Services\Application\Handlers\Event\DTO\CreateEventDTO;
+use HiEvents\Services\Application\Handlers\EventSettings\DTO\PartialUpdateEventSettingsDTO;
+use HiEvents\Services\Application\Handlers\EventSettings\DTO\UpdateEventSettingsDTO;
+use HiEvents\Services\Application\Handlers\EventSettings\PartialUpdateEventSettingsHandler;
+use HiEvents\DomainObjects\OrganizerDomainObject;
+use HiEvents\Repository\Interfaces\OrganizerRepositoryInterface;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
 use Illuminate\Support\Carbon;
 use Psr\Log\LoggerInterface;
@@ -26,6 +31,8 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
         private readonly EventRepositoryInterface $events,
         LoggerInterface                      $logger,
         private readonly CreateEventHandler  $createEvent,
+        private readonly OrganizerRepositoryInterface $organizers,
+        private readonly PartialUpdateEventSettingsHandler $updateSettings,
     )
     {
         parent::__construct($context, $isAuthorizedService, $events, $logger);
@@ -133,6 +140,8 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
             'location_details' => $this->locationDetails($args),
         ]));
 
+        $this->applyPassixTheme($event);
+
         $this->logWrite('event_created', [
             'event_id' => $event->getId(),
             'title' => $event->getTitle(),
@@ -144,6 +153,33 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
             'next_steps' => 'The event is a draft: add ticket types with create_ticket, then the organizer '
                 . 'publishes it from the panel. Nobody can see or buy it until they do.',
         ]);
+    }
+
+    /**
+     * CreateEventService falls back to the upstream light theme when the organizer
+     * settings carry no mode/accent/background (Passix organizers don't), so a new
+     * event would open in light on a dark platform. The Passix defaults already
+     * live in UpdateEventSettingsDTO::createWithDefaults; this reuses them.
+     */
+    private function applyPassixTheme(EventDomainObject $event): void
+    {
+        /** @var OrganizerDomainObject|null $organizer */
+        $organizer = $this->organizers->findFirstWhere([
+            'id' => $this->context->organizerId,
+            'account_id' => $this->context->accountId,
+        ]);
+
+        if ($organizer === null) {
+            return;
+        }
+
+        $defaults = UpdateEventSettingsDTO::createWithDefaults($this->context->accountId, $event->getId(), $organizer);
+
+        $this->updateSettings->handle(new PartialUpdateEventSettingsDTO(
+            account_id: $this->context->accountId,
+            event_id: $event->getId(),
+            settings: ['homepage_theme_settings' => $defaults->homepage_theme_settings],
+        ));
     }
 
     private function findExisting(string $title, Carbon $startDate): ?EventDomainObject

@@ -121,6 +121,11 @@ class AssistantWriteToolsTest extends TestCase
         $this->assertSame($this->mine->user->id, $event->user_id);
         $this->assertSame('ARS', $event->currency, 'currency comes from the organizer, not the model');
         $this->assertSame('America/Argentina/Buenos_Aires', $event->timezone);
+
+        // A Passix event opens dark, not in the upstream light theme.
+        $theme = \HiEvents\Models\EventSetting::where('event_id', $event->id)->first()->homepage_theme_settings;
+        $this->assertSame('dark', $theme['mode']);
+        $this->assertSame('#0b0b0e', $theme['background']);
         // CreateEventService stores UTC via DateHelper::convertToUTC, so read it
         // back in the organizer timezone to check the hour the organizer asked for.
         $this->assertSame(
