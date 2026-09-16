@@ -7,8 +7,10 @@ namespace HiEvents\Assistant\Domain\Tools;
 use HiEvents\Assistant\Domain\AssistantContext;
 use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
 use HiEvents\DomainObjects\Enums\ImageType;
+use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\ImageRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Images\CreateImageHandler;
 use HiEvents\Services\Application\Handlers\Images\DTO\CreateImageDTO;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
@@ -28,6 +30,7 @@ class AttachFlyerToEventTool extends AbstractAssistantWriteTool
         LoggerInterface                           $logger,
         private readonly AssistantAttachmentStore $attachments,
         private readonly CreateImageHandler       $createImage,
+        private readonly ImageRepositoryInterface  $images,
     )
     {
         parent::__construct($context, $isAuthorizedService, $events, $logger);
@@ -44,18 +47,37 @@ class AttachFlyerToEventTool extends AbstractAssistantWriteTool
             ->withBooleanParameter('confirm', 'Pass true only after the organizer confirmed.', required: false);
     }
 
+    private function hasCover(EventDomainObject $event): bool
+    {
+        return $this->images->findFirstWhere([
+            'entity_id' => $event->getId(),
+            'entity_type' => EventDomainObject::class,
+            'type' => ImageType::EVENT_COVER->name,
+        ]) !== null;
+    }
+
     public function __invoke(int|float $event_id, ?bool $confirm = null): string
     {
         $args = $this->validateArguments(['event_id' => $event_id], ['event_id' => 'required|integer|min:1']);
 
+        $event = $this->authorizeEvent((int)$args['event_id']);
+
         if ($this->context->attachment === null) {
+            // A retry after the flyer was already used is not an error: the cover
+            // is there, and the chain (palette next) must not derail on it.
+            if ($this->hasCover($event)) {
+                return $this->toJson([
+                    'status' => 'already_exists',
+                    'event_id' => $event->getId(),
+                    'hint' => 'The event already has a cover image; nothing changed. Continue with the next step (apply_flyer_palette if the organizer wanted the colours).',
+                ]);
+            }
+
             return $this->toJson([
                 'error' => 'no_attachment',
                 'details' => 'No image was attached to this message. Ask the organizer to attach the flyer and try again.',
             ]);
         }
-
-        $event = $this->authorizeEvent((int)$args['event_id']);
 
         if ($event->getStatus() !== EventStatus::DRAFT->name) {
             return $this->toJson([

@@ -26,14 +26,24 @@ export const AssistantMessage = ({content}: AssistantMessageProps) => {
             components={{
                 // A link into the panel (the paths get_panel_route hands out) becomes
                 // a button that navigates in place; the chat stays open across pages.
-                a: ({href, children}) => isPanelPath(href) ? (
-                    <button type="button" className={classes.panelLink} onClick={() => navigate(href as string)}>
-                        {children}
-                        <IconArrowRight size={14}/>
-                    </button>
-                ) : (
-                    <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
-                ),
+                a: ({href, children}) => {
+                    if (isPanelPath(href)) {
+                        return (
+                            <button type="button" className={classes.panelLink} onClick={() => navigate(href as string)}>
+                                {children}
+                                <IconArrowRight size={14}/>
+                            </button>
+                        );
+                    }
+
+                    // A relative path that is not a panel route is one the model made up
+                    // (only get_panel_route hands out real ones): show the text, not a broken link.
+                    if (href?.startsWith('/')) {
+                        return <span>{children}</span>;
+                    }
+
+                    return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+                },
                 img: () => null,
                 table: ({children}) => (
                     <div className={classes.tableWrap}>

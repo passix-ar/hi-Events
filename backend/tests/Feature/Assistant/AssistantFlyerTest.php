@@ -279,4 +279,17 @@ class AssistantFlyerTest extends TestCase
         $this->assertSame(['error' => 'event_not_found'], $result);
         $this->assertSame(0, Image::where('entity_id', $this->theirs->event->id)->count());
     }
+
+    public function test_a_retry_without_attachment_on_an_event_that_already_has_a_cover_is_not_an_error(): void
+    {
+        $eventId = $this->draftEventId();
+        $id = $this->upload($this->flyer())->json('data.id');
+        $this->runTool($this->toolWithAttachment($id), event_id: $eventId, confirm: true);
+
+        // The model re-runs the chain a turn later, when the attachment is gone.
+        $result = $this->runTool($this->toolWithAttachment(null), event_id: $eventId, confirm: true);
+
+        $this->assertSame('already_exists', $result['status'], 'the chain must continue to the palette instead of derailing');
+        $this->assertSame(1, Image::where('entity_id', $eventId)->where('type', ImageType::EVENT_COVER->name)->count());
+    }
 }
