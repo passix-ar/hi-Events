@@ -5,6 +5,7 @@ import {IconArrowUp, IconMessageChatbot, IconPhotoPlus, IconRobot, IconTool, Ico
 import {t, Trans} from "@lingui/macro";
 import {useSendAssistantMessage} from "../../../mutations/useSendAssistantMessage.ts";
 import {useUploadAssistantAttachment} from "../../../mutations/useUploadAssistantAttachment.ts";
+import {AssistantStreamToolCall, streamAssistantChat} from "./useAssistantStream.ts";
 import {IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
@@ -13,7 +14,7 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'create_promo_code'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'create_promo_code', 'message_buyers'];
 
 interface AssistantWidgetProps {
     organizerId: IdParam;
@@ -46,6 +47,9 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
     const sendMessage = useSendAssistantMessage();
     const uploadAttachment = useUploadAssistantAttachment();
     const [attachment, setAttachment] = useState<{ id: string; name: string; preview: string } | null>(null);
+    // The answer being streamed: text so far and the tools called so far. Null when idle.
+    const [live, setLive] = useState<{ text: string; tools: AssistantStreamToolCall[] } | null>(null);
+    const abortRef = useRef<AbortController | null>(null);
     const [dragging, setDragging] = useState(false);
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -60,7 +64,9 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         if (open) {
             bottomRef.current?.scrollIntoView({behavior: 'smooth'});
         }
-    }, [entries, sendMessage.isPending, open]);
+    }, [entries, sendMessage.isPending, live, open]);
+
+    useEffect(() => () => abortRef.current?.abort(), []);
 
     useEffect(() => {
         if (!open) {
@@ -120,7 +126,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
     const send = (text: string) => {
         const question = text.trim();
 
-        if ((question === '' && !attachment) || sendMessage.isPending || uploadAttachment.isPending) {
+        if ((question === '' && !attachment) || sendMessage.isPending || live !== null || uploadAttachment.isPending) {
             return;
         }
 
@@ -138,33 +144,57 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
             setPendingAttachmentId(sentAttachment.id);
         }
 
-        sendMessage.mutate({
+        const request = {
             organizerId,
             messages: [...historyForApi(), userEntry],
             context: {
                 event_id: focusedEvent?.id,
                 attachment_id: attachmentId,
             },
-        }, {
-            onSuccess: ({data}) => {
-                append({role: 'assistant', content: data.reply, toolCalls: data.tool_calls});
-                if (data.tool_calls.some(call => call.name === 'attach_flyer_to_event')) {
-                    setPendingAttachmentId(null);
-                }
-            },
-            onError: (mutationError: any) => {
-                const status = mutationError?.response?.status;
-                // A 429 is either the per-minute limit or the daily budget; the API says which.
-                const serverMessage = mutationError?.response?.data?.message;
+        };
 
-                if (status === 404) {
-                    setError(t`The assistant is not enabled for this account yet.`);
-                } else if (status === 429) {
-                    setError(serverMessage || t`Too many questions in a row. Please wait a moment and try again.`);
-                } else {
-                    setError(t`The assistant is temporarily unavailable. Please try again.`);
-                }
-            },
+        const finish = (reply: string, toolCalls: AssistantStreamToolCall[]) => {
+            setLive(null);
+            append({role: 'assistant', content: reply, toolCalls});
+            if (toolCalls.some(call => call.name === 'attach_flyer_to_event')) {
+                setPendingAttachmentId(null);
+            }
+        };
+
+        const fail = (status: number | undefined, serverMessage?: string) => {
+            setLive(null);
+            // A 429 is either the per-minute limit or the daily budget; the API says which.
+            if (status === 404) {
+                setError(t`The assistant is not enabled for this account yet.`);
+            } else if (status === 429) {
+                setError(serverMessage || t`Too many questions in a row. Please wait a moment and try again.`);
+            } else {
+                setError(t`The assistant is temporarily unavailable. Please try again.`);
+            }
+        };
+
+        // Streaming shows the answer as it is written and each tool as it is called;
+        // if the browser cannot stream, the plain request gives the same answer at once.
+        if (typeof window !== 'undefined' && 'ReadableStream' in window) {
+            abortRef.current?.abort();
+            const controller = new AbortController();
+            abortRef.current = controller;
+            setLive({text: '', tools: []});
+
+            void streamAssistantChat({
+                ...request,
+                signal: controller.signal,
+                onDelta: (text) => setLive(previous => ({text: (previous?.text ?? '') + text, tools: previous?.tools ?? []})),
+                onTool: (call) => setLive(previous => ({text: previous?.text ?? '', tools: [...(previous?.tools ?? []), call]})),
+                onDone: (done) => finish(done.reply, done.tool_calls),
+                onError: (streamError) => fail(streamError.status, streamError.message),
+            });
+            return;
+        }
+
+        sendMessage.mutate(request, {
+            onSuccess: ({data}) => finish(data.reply, data.tool_calls),
+            onError: (mutationError: any) => fail(mutationError?.response?.status, mutationError?.response?.data?.message),
         });
     };
 
@@ -284,14 +314,31 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             );
                         })}
 
-                        {sendMessage.isPending && (
+                        {(sendMessage.isPending || live !== null) && (
                             <div className={classes.assistantRow}>
                                 <div className={classes.avatar}><IconRobot size={14}/></div>
                                 <div className={classes.bubble}>
-                                    <div className={classes.pending}>
-                                        <Loader size="xs" type="dots"/>
-                                        <span><Trans>Checking your data…</Trans></span>
-                                    </div>
+                                    {live && live.text !== '' && <AssistantMessage content={live.text}/>}
+                                    {live && live.tools.length > 0 && (
+                                        <div className={classes.toolCalls}>
+                                            <IconTool size={11}/>
+                                            {live.tools.map((call, callIndex) => (
+                                                <span key={callIndex} className={WRITE_TOOLS.includes(call.name) ? classes.writeCall : undefined}>
+                                                    {call.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {(!live || live.text === '') && (
+                                        <div className={classes.pending}>
+                                            <Loader size="xs" type="dots"/>
+                                            <span>
+                                                {live && live.tools.length > 0
+                                                    ? <Trans>Consultando {live.tools[live.tools.length - 1].name}…</Trans>
+                                                    : <Trans>Checking your data…</Trans>}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -339,7 +386,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             maxRows={4}
                             value={draft}
                             maxLength={4000}
-                            disabled={sendMessage.isPending}
+                            disabled={sendMessage.isPending || live !== null}
                             placeholder={attachment
                                 ? t`Anything to add about the flyer? (optional)`
                                 : focusedEvent ? t`Ask about this event…` : t`Ask something about your events…`}
@@ -355,7 +402,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                         <ActionIcon
                             size="lg"
                             aria-label={t`Send`}
-                            disabled={(draft.trim() === '' && !attachment) || sendMessage.isPending || uploadAttachment.isPending}
+                            disabled={(draft.trim() === '' && !attachment) || sendMessage.isPending || live !== null || uploadAttachment.isPending}
                             onClick={() => send(draft)}
                         >
                             <IconArrowUp size={18}/>

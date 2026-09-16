@@ -1,10 +1,24 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {useNavigate} from "react-router";
-import {IconArrowRight} from "@tabler/icons-react";
+import {IconArrowRight, IconExternalLink} from "@tabler/icons-react";
 import classes from './AssistantWidget.module.scss';
+import {CopyBlock, hastText} from "./CopyBlock";
 
 const isPanelPath = (href?: string) => !!href && /^\/(manage|account)(\/|$)/.test(href);
+
+const NUMERIC_CELL = /^[\d.,%$ ARS-]+$/;
+
+const hostOf = (href?: string): string | undefined => {
+    if (!href) {
+        return undefined;
+    }
+    try {
+        return new URL(href).host || undefined;
+    } catch {
+        return undefined;
+    }
+};
 
 interface AssistantMessageProps {
     content: string;
@@ -42,14 +56,37 @@ export const AssistantMessage = ({content}: AssistantMessageProps) => {
                         return <span>{children}</span>;
                     }
 
-                    return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+                    return (
+                        <a href={href} target="_blank" rel="noopener noreferrer" title={hostOf(href)} className={classes.externalLink}>
+                            {children}
+                            <IconExternalLink size={12} className={classes.externalIcon} aria-hidden/>
+                        </a>
+                    );
                 },
                 img: () => null,
+                // Fenced code blocks and blockquotes are how the model hands over
+                // copy-worthy text (captions, WhatsApp messages): each gets a Copy button.
+                pre: ({node, children}) => (
+                    <CopyBlock text={hastText(node).replace(/\n$/, '')}>
+                        <pre>{children}</pre>
+                    </CopyBlock>
+                ),
+                blockquote: ({node, children}) => (
+                    <CopyBlock quote text={hastText(node).trim()}>
+                        <blockquote>{children}</blockquote>
+                    </CopyBlock>
+                ),
                 table: ({children}) => (
                     <div className={classes.tableWrap}>
                         <table>{children}</table>
                     </div>
                 ),
+                // Numeric cells (counts, money, percentages) read better right-aligned.
+                td: ({node, children, style}) => {
+                    const text = hastText(node).trim();
+                    const numeric = text !== '' && NUMERIC_CELL.test(text);
+                    return <td style={style} className={numeric ? classes.numericCell : undefined}>{children}</td>;
+                },
             }}
         >
             {content}
