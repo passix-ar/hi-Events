@@ -113,7 +113,7 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             return $this->toJson([
                 'status' => 'already_exists',
                 'ticket' => ['id' => $existing->getId(), 'title' => $this->clip($existing->getTitle())],
-                'hint' => 'This event already has a ticket type with that name; nothing was created.',
+                'hint' => 'This event already has a ticket type with that name - most likely created earlier in this conversation. Nothing was created; treat it as done and continue with the next step.',
             ]);
         }
 
