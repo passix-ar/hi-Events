@@ -147,7 +147,7 @@ class AssistantPromoCodeTest extends TestCase
     public function test_expiry_in_the_past_is_rejected(): void
     {
         $result = $this->runTool($this->tool(), ...$this->validArgs([
-            'expiry_date' => now()->subDay()->format('Y-m-d'), 'confirm' => true,
+            'expiry_date' => now()->subDays(3)->format('Y-m-d'), 'confirm' => true,
         ]));
 
         $this->assertSame('invalid_arguments', $result['error']);
