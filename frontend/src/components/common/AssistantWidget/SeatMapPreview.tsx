@@ -17,6 +17,7 @@ const GAP = 3;        // between seats
 const AISLE = 12;     // extra gap after an aisle position
 const ROW_GAP = 4;
 const SECTION_GAP = 34;
+const COLUMN_GAP = 28;
 const STAGE_HEIGHT = 26;
 const LABEL_HEIGHT = 18;
 
@@ -48,12 +49,29 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
             return {section, seatX, width, height, colour: colourByProduct.get(section.product_id) ?? TICKET_COLOURS[0]};
         });
 
-        const width = Math.max(420, ...blocks.map(b => b.width));
+        // Sections that share a canvas row (same position_y) sit side by side,
+        // left to right by position_x; rows go back from the stage.
+        const rowsByY = new Map<number, typeof blocks>();
+        blocks.forEach(block => {
+            const y = block.section.position_y ?? 0;
+            rowsByY.set(y, [...(rowsByY.get(y) ?? []), block]);
+        });
+        const rows = [...rowsByY.entries()]
+            .sort((a, b) => a[0] - b[0])
+            .map(([, row]) => row.sort((a, b) => (a.section.position_x ?? 0) - (b.section.position_x ?? 0)));
+
+        const rowWidths = rows.map(row => row.reduce((sum, b) => sum + b.width, 0) + COLUMN_GAP * (row.length - 1));
+        const width = Math.max(420, ...rowWidths);
         let y = STAGE_HEIGHT + SECTION_GAP;
-        const placed = blocks.map(block => {
-            const top = y;
-            y += LABEL_HEIGHT + block.height + SECTION_GAP;
-            return {...block, top, left: (width - block.width) / 2};
+        const placed: (typeof blocks[number] & { top: number; left: number })[] = [];
+        rows.forEach((row, rowIndex) => {
+            const rowHeight = Math.max(...row.map(b => b.height));
+            let x = (width - rowWidths[rowIndex]) / 2;
+            row.forEach(block => {
+                placed.push({...block, top: y + (rowHeight - block.height) / 2, left: x});
+                x += block.width + COLUMN_GAP;
+            });
+            y += LABEL_HEIGHT + rowHeight + SECTION_GAP;
         });
 
         return {width, height: Math.max(y, 300), blocks: placed, colourByProduct};

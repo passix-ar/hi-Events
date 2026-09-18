@@ -14,7 +14,7 @@ return [
     // Input + output tokens one account may spend per day. 0 disables the cap.
     // Budgets in token equivalents (cache reads x0.1, cache writes x1.25, output x5);
     // roughly 1M equivalents = US$3 on Sonnet. 0 disables a budget.
-    'daily_token_limit' => (int)env('AI_ASSISTANT_DAILY_TOKEN_LIMIT', 300000),          // per account/day  (~US$0.90)
+    'daily_token_limit' => (int)env('AI_ASSISTANT_DAILY_TOKEN_LIMIT', 500000),          // per account/day  (~US$1.50)
     'monthly_token_limit' => (int)env('AI_ASSISTANT_MONTHLY_TOKEN_LIMIT', 3000000),     // per account/month (~US$9)
     'global_daily_token_limit' => (int)env('AI_ASSISTANT_GLOBAL_DAILY_TOKEN_LIMIT', 5000000), // whole platform/day (~US$15)
     'help_docs' => [

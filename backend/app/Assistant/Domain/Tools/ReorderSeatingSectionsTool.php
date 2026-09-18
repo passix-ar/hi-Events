@@ -11,18 +11,21 @@ use HiEvents\Http\DTO\QueryParamsDTO;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\SeatingSectionRepositoryInterface;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
+use Prism\Prism\Schema\ArraySchema;
 use Prism\Prism\Schema\NumberSchema;
 use Psr\Log\LoggerInterface;
 
 /**
- * "La VIP va adelante de la platea": the order of the sectors from the stage
- * back. Writes the same `order` and stacked position_y the seating designer
+ * "La VIP va adelante", "los laterales a los costados de la platea": where each
+ * sector sits on the plan, as rows from the stage back and, inside a row, left
+ * to right. Writes the same `order` and canvas positions the seating designer
  * uses, so the panel, the public map and the studio preview all agree.
  * Layout only - no seats or sales are touched, so a plain confirmation is enough.
  */
 class ReorderSeatingSectionsTool extends AbstractAssistantWriteTool
 {
-    private const ROW_HEIGHT = 240;
+    public const ROW_HEIGHT = 240;
+    public const COLUMN_WIDTH = 320;
 
     public function __construct(
         AssistantContext                                   $context,
@@ -39,22 +42,29 @@ class ReorderSeatingSectionsTool extends AbstractAssistantWriteTool
     {
         $this
             ->as('reorder_seating_sections')
-            ->for('Sets the order of the seat map sections from the stage backwards ("VIP in front of '
-                . 'Platea"). Pass every section id of the event, front first (get_seating_sections has '
-                . 'the ids). Layout only: no seats change. Preview without confirm; confirm=true applies it.')
+            ->for('Arranges the seat map: `rows` lists the sections from the stage backwards, and each row '
+                . 'lists its section ids from left to right, so [[vip], [lateral_izq, platea, lateral_der]] '
+                . 'puts VIP in front and the two laterals beside Platea. Sections not mentioned go behind. '
+                . 'Ids from get_seating_sections. Layout only, no seats change. Preview without confirm; '
+                . 'confirm=true applies it.')
             ->withNumberParameter('event_id', 'The event.')
-            ->withArrayParameter('section_ids_front_to_back', 'All section ids, closest to the stage first.', new NumberSchema('id', 'section id'))
+            ->withArrayParameter(
+                'rows',
+                'Rows from the stage back; each row is the list of section ids left to right.',
+                new ArraySchema('row', 'section ids left to right', new NumberSchema('id', 'section id')),
+            )
             ->withBooleanParameter('confirm', 'Pass true only after the organizer confirmed.', required: false);
     }
 
-    public function __invoke(int|float $event_id, array $section_ids_front_to_back, ?bool $confirm = null): string
+    public function __invoke(int|float $event_id, array $rows, ?bool $confirm = null): string
     {
         $args = $this->validateArguments(
-            compact('event_id', 'section_ids_front_to_back'),
+            compact('event_id', 'rows'),
             [
                 'event_id' => 'required|integer|min:1',
-                'section_ids_front_to_back' => 'required|array|min:1|max:50',
-                'section_ids_front_to_back.*' => 'integer|min:1',
+                'rows' => 'required|array|min:1|max:30',
+                'rows.*' => 'array|min:1|max:6',
+                'rows.*.*' => 'integer|min:1',
             ],
         );
 
@@ -67,44 +77,65 @@ class ReorderSeatingSectionsTool extends AbstractAssistantWriteTool
             $byId[$section->getId()] = $section;
         }
 
-        $wanted = array_values(array_unique(array_map('intval', $args['section_ids_front_to_back'])));
-        $unknown = array_diff($wanted, array_keys($byId));
-        $missing = array_diff(array_keys($byId), $wanted);
-
-        if ($unknown !== []) {
-            return $this->toJson(['error' => 'section_not_found', 'details' => 'Unknown section ids: ' . implode(', ', $unknown)]);
+        $seen = [];
+        $layout = [];
+        foreach ($args['rows'] as $row) {
+            $ids = [];
+            foreach ($row as $id) {
+                $id = (int)$id;
+                if (!isset($byId[$id])) {
+                    return $this->toJson(['error' => 'section_not_found', 'details' => 'Unknown section id: ' . $id]);
+                }
+                if (!in_array($id, $seen, true)) {
+                    $ids[] = $id;
+                    $seen[] = $id;
+                }
+            }
+            if ($ids !== []) {
+                $layout[] = $ids;
+            }
         }
 
-        // Sections left out keep their relative order behind the ones named.
-        $ordered = [...$wanted, ...array_keys(array_filter($byId, fn(SeatingSectionDomainObject $s): bool => in_array($s->getId(), $missing, true)))];
+        // Sections left out keep going, one per row, behind the ones named.
+        foreach ($byId as $id => $section) {
+            if (!in_array($id, $seen, true)) {
+                $layout[] = [$id];
+            }
+        }
 
-        $plan = array_map(fn(int $id, int $index): array => [
-            'position' => $index + 1,
-            'id' => $id,
-            'name' => $this->clip($byId[$id]->getName()),
-        ], $ordered, array_keys($ordered));
+        $plan = array_map(fn(array $ids, int $rowIndex): array => [
+            'row_from_stage' => $rowIndex + 1,
+            'left_to_right' => array_map(fn(int $id): string => $this->clip($byId[$id]->getName()), $ids),
+        ], $layout, array_keys($layout));
 
         if ($confirm !== true) {
             return $this->toJson([
                 'status' => 'needs_confirmation',
-                'would_apply' => ['order_from_stage' => $plan],
-                'hint' => 'Describe the new order in words ("1. VIP, 2. Platea") and ask for confirmation; call again with confirm=true once they agree.',
+                'would_apply' => ['rows_from_stage' => $plan],
+                'hint' => 'Describe the layout in words (row by row, left to right) and ask for confirmation; call again with confirm=true once they agree.',
             ]);
         }
 
-        foreach ($ordered as $index => $id) {
-            $this->sections->updateFromArray($id, [
-                SeatingSectionDomainObjectAbstract::ORDER => $index,
-                SeatingSectionDomainObjectAbstract::POSITION_Y => $index * self::ROW_HEIGHT,
-            ]);
+        $order = 0;
+        foreach ($layout as $rowIndex => $ids) {
+            $count = count($ids);
+            foreach ($ids as $column => $id) {
+                // Centre each row on the canvas: a lone section sits at x=0 like the designer creates it.
+                $x = (int)round(($column - ($count - 1) / 2) * self::COLUMN_WIDTH);
+                $this->sections->updateFromArray($id, [
+                    SeatingSectionDomainObjectAbstract::ORDER => $order++,
+                    SeatingSectionDomainObjectAbstract::POSITION_X => $x,
+                    SeatingSectionDomainObjectAbstract::POSITION_Y => $rowIndex * self::ROW_HEIGHT,
+                ]);
+            }
         }
 
-        $this->logWrite('seating_sections_reordered', ['event_id' => $event->getId(), 'order' => $ordered]);
+        $this->logWrite('seating_sections_reordered', ['event_id' => $event->getId(), 'rows' => $layout]);
 
         return $this->toJson([
             'status' => 'applied',
-            'order_from_stage' => $plan,
-            'next_steps' => 'The map now shows the sections in this order. Ask if anything else should move.',
+            'rows_from_stage' => $plan,
+            'next_steps' => 'The map now shows this layout. Ask if anything else should move.',
         ]);
     }
 }

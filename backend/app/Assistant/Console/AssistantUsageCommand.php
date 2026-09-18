@@ -14,7 +14,7 @@ use Illuminate\Console\Command;
  */
 class AssistantUsageCommand extends Command
 {
-    protected $signature = 'assistant:usage {account?* : Account ids to show (platform totals are always shown)}';
+    protected $signature = 'assistant:usage {account?* : Account ids to show (platform totals are always shown)} {--reset : Clear the counters of the given accounts (or the platform when none is given)}';
 
     protected $description = 'Show assistant token spend today and this month, against the configured budgets';
 
@@ -22,6 +22,14 @@ class AssistantUsageCommand extends Command
 
     public function handle(AssistantUsageLimiter $limiter): int
     {
+        if ($this->option('reset')) {
+            $targets = (array)$this->argument('account') ?: [AssistantUsageLimiter::GLOBAL_ACCOUNT];
+            foreach ($targets as $accountId) {
+                $limiter->reset((int)$accountId);
+            }
+            $this->info('Counters cleared for: ' . implode(', ', array_map(static fn($id): string => (int)$id === AssistantUsageLimiter::GLOBAL_ACCOUNT ? 'platform' : 'account ' . $id, $targets)));
+        }
+
         $limits = $limiter->limits();
         $rows = [$this->row('platform', AssistantUsageLimiter::GLOBAL_ACCOUNT, $limiter, $limits['global_daily'], 0)];
 

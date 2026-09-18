@@ -95,6 +95,13 @@ readonly class AssistantUsageLimiter
         return (int)$this->cache->get($this->monthKey($accountId), 0);
     }
 
+    /** Clears today's and this month's counters for one account (or the platform with GLOBAL_ACCOUNT). */
+    public function reset(int $accountId): void
+    {
+        $this->cache->forget($this->dayKey($accountId));
+        $this->cache->forget($this->monthKey($accountId));
+    }
+
     /** @return array{daily: int, monthly: int, global_daily: int} */
     public function limits(): array
     {
