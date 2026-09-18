@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\Enums\ProductPriceType;
 use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\DomainObjects\ProductPriceDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
+use HiEvents\DomainObjects\TaxAndFeesDomainObject;
 use HiEvents\Helper\DateHelper;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
@@ -86,8 +87,11 @@ class UpdateTicketTool extends AbstractAssistantWriteTool
         $event = $this->authorizeEvent((int)$args['event_id']);
 
         /** @var ProductDomainObject|null $product */
+        // Taxes and fees ride along: EditProductHandler syncs the list it is given,
+        // so leaving them out would strip the service fee on any edit.
         $product = $this->products
             ->loadRelation(ProductPriceDomainObject::class)
+            ->loadRelation(TaxAndFeesDomainObject::class)
             ->findFirstWhere(['id' => (int)$args['product_id'], 'event_id' => $event->getId()]);
 
         if ($product === null) {
@@ -166,7 +170,7 @@ class UpdateTicketTool extends AbstractAssistantWriteTool
             'is_highlighted' => (bool)$product->getIsHighlighted(),
             'highlight_message' => $product->getHighlightMessage(),
             'waitlist_enabled' => $product->getWaitlistEnabled(),
-            'tax_and_fee_ids' => $product->getTaxAndFees()?->map(fn($t) => $t->getId())->all() ?? [],
+            'tax_and_fee_ids' => $product->getTaxAndFees()->map(static fn(TaxAndFeesDomainObject $t): int => $t->getId())->all(),
             'prices' => [[
                 'id' => $currentPrice->getId(),
                 'price' => $newPrice,

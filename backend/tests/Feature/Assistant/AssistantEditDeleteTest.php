@@ -16,6 +16,7 @@ use HiEvents\DomainObjects\UserDomainObject;
 use HiEvents\Models\Event;
 use HiEvents\Models\Product;
 use HiEvents\Models\ProductPrice;
+use HiEvents\Models\TaxAndFee;
 use HiEvents\Repository\Interfaces\AccountUserRepositoryInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -114,6 +115,33 @@ class AssistantEditDeleteTest extends TestCase
         $done = $this->runTool($this->tool(UpdateTicketTool::class), event_id: $this->mine->event->id, product_id: $productId, price: 9000, confirm: true, confirmation_phrase: 'MODIFICAR');
         $this->assertSame('updated', $done['status']);
         $this->assertEquals(9000, (float)ProductPrice::where('product_id', $productId)->first()->price);
+    }
+
+    public function test_updating_a_ticket_keeps_its_taxes_and_fees(): void
+    {
+        // Found by the security pass: the product was loaded without its taxes,
+        // so every edit synced the tax list to empty and the ticket sold fee-free.
+        [$eventId, $productId] = $this->draftWithTicket('Con Cargo');
+
+        $fee = TaxAndFee::create([
+            'account_id' => $this->mine->account->id,
+            'name' => 'Cargo por servicio',
+            'type' => 'FEE',
+            'calculation_type' => 'PERCENTAGE',
+            'rate' => 10,
+            'is_active' => true,
+            'is_default' => false,
+        ]);
+        Product::find($productId)->tax_and_fees()->sync([$fee->id]);
+
+        $result = $this->runTool($this->tool(UpdateTicketTool::class), event_id: $eventId, product_id: $productId, price: 6000, confirm: true);
+
+        $this->assertSame('updated', $result['status']);
+        $this->assertSame(
+            [$fee->id],
+            Product::find($productId)->tax_and_fees()->pluck('taxes_and_fees.id')->all(),
+            'a price change must not strip the service fee',
+        );
     }
 
     public function test_ticket_of_another_tenant_is_not_found(): void
