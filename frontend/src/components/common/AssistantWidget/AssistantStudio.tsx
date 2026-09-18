@@ -51,6 +51,7 @@ const STEP_LABELS: Record<string, () => string> = {
     set_offline_payment: () => t`Setting up offline payment`,
     create_seating_section: () => t`Adding a seat map section`,
     delete_seating_section: () => t`Removing a seat map section`,
+    reorder_seating_sections: () => t`Reordering the seat map`,
     publish_event: () => t`Publishing`,
     update_event: () => t`Updating the event`,
     update_ticket: () => t`Updating a ticket`,
@@ -67,6 +68,7 @@ const DONE_LABELS: Record<string, () => string> = {
     set_offline_payment: () => t`Offline payment set`,
     create_seating_section: () => t`Seat map section added`,
     delete_seating_section: () => t`Seat map section removed`,
+    reorder_seating_sections: () => t`Seat map reordered`,
     publish_event: () => t`Published`,
     update_event: () => t`Event updated`,
     update_ticket: () => t`Ticket updated`,
@@ -175,7 +177,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const sections = seatingPage?.data ?? [];
     const [view, setView] = useState<'page' | 'seats'>('page');
     const [newSectionId, setNewSectionId] = useState<number | null>(null);
-    const lastSeatStep = [...buildLog].reverse().find(step => step.name === 'create_seating_section' || step.name === 'delete_seating_section');
+    const lastSeatStep = [...buildLog].reverse().find(step => ['create_seating_section', 'delete_seating_section', 'reorder_seating_sections'].includes(step.name));
     const {data: account} = useGetAccount();
     const {data: mpStatus} = useGetMercadoPagoStatus(account?.id);
     const [frameLoaded, setFrameLoaded] = useState(false);

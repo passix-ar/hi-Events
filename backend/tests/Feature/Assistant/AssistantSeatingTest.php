@@ -11,6 +11,7 @@ use HiEvents\Assistant\Domain\Tools\CreateSeatingSectionTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\DeleteSeatingSectionTool;
 use HiEvents\Assistant\Domain\Tools\GetSeatingSectionsTool;
+use HiEvents\Assistant\Domain\Tools\ReorderSeatingSectionsTool;
 use HiEvents\DomainObjects\UserDomainObject;
 use HiEvents\Models\Event;
 use HiEvents\Models\Seat;
@@ -137,6 +138,28 @@ class AssistantSeatingTest extends TestCase
         $deleted = $this->runTool($this->tool(DeleteSeatingSectionTool::class), event_id: $eventId, section_id: $sectionId, confirm: true, confirmation_phrase: 'ELIMINAR');
         $this->assertSame('deleted', $deleted['status']);
         $this->assertSame(0, SeatingSection::where('event_id', $eventId)->whereNull('deleted_at')->count());
+    }
+
+    public function test_sections_can_be_reordered_from_the_stage(): void
+    {
+        [$eventId, $ticketId] = $this->draftWithTicket();
+        $platea = $this->runTool($this->tool(CreateSeatingSectionTool::class), event_id: $eventId, name: 'Platea', ticket_id: $ticketId, rows: 5, seats_per_row: 4, confirm: true)['section']['id'];
+        $vip = $this->runTool($this->tool(CreateSeatingSectionTool::class), event_id: $eventId, name: 'VIP', ticket_id: $ticketId, rows: 8, seats_per_row: 8, confirm: true)['section']['id'];
+
+        $preview = $this->runTool($this->tool(ReorderSeatingSectionsTool::class), event_id: $eventId, section_ids_front_to_back: [$vip, $platea]);
+        $this->assertSame('needs_confirmation', $preview['status']);
+        $this->assertSame('VIP', $preview['would_apply']['order_from_stage'][0]['name']);
+
+        $done = $this->runTool($this->tool(ReorderSeatingSectionsTool::class), event_id: $eventId, section_ids_front_to_back: [$vip], confirm: true);
+        $this->assertSame('applied', $done['status']);
+
+        $map = $this->runTool($this->tool(GetSeatingSectionsTool::class), event_id: $eventId);
+        $this->assertSame(['VIP', 'Platea'], array_column($map['sections'], 'name'), 'sections left out go behind the named ones');
+        $this->assertSame(0, SeatingSection::find($vip)->position_y);
+        $this->assertSame(240, SeatingSection::find($platea)->position_y);
+
+        $bad = $this->runTool($this->tool(ReorderSeatingSectionsTool::class), event_id: $eventId, section_ids_front_to_back: [999999], confirm: true);
+        $this->assertSame('section_not_found', $bad['error']);
     }
 
     public function test_cannot_build_on_another_tenants_event(): void

@@ -22,11 +22,11 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'reorder_seating_sections', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
 
 // Writes that change what the event page looks like: each one finishing reloads
 // the live preview in studio mode.
-const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'reorder_seating_sections', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
 
 export interface BuildStep {
     name: string;
