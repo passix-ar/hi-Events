@@ -158,11 +158,14 @@ class AssistantSeatingTest extends TestCase
 
         $map = $this->runTool($this->tool(GetSeatingSectionsTool::class), event_id: $eventId);
         $this->assertSame(['Lateral Izq', 'Platea', 'Lateral Der', 'VIP'], array_column($map['sections'], 'name'), 'sections left out go behind the named ones');
-        $this->assertSame(0, SeatingSection::find($izq)->position_y);
-        $this->assertSame(-320, SeatingSection::find($izq)->position_x, 'left of centre');
-        $this->assertSame(0, SeatingSection::find($platea)->position_x);
-        $this->assertSame(320, SeatingSection::find($der)->position_x);
-        $this->assertSame(240, SeatingSection::find($vip)->position_y);
+        // Designer pixels: row 1 starts under the stage, laterals flank the platea, nothing negative or overlapping.
+        $rowY = SeatingSection::find($platea)->position_y;
+        $this->assertGreaterThanOrEqual(74, $rowY);
+        $this->assertGreaterThanOrEqual(0, SeatingSection::find($izq)->position_x);
+        $this->assertLessThan(SeatingSection::find($platea)->position_x, SeatingSection::find($izq)->position_x, 'izq left of platea');
+        $this->assertGreaterThan(SeatingSection::find($platea)->position_x, SeatingSection::find($der)->position_x, 'der right of platea');
+        $this->assertGreaterThan($rowY, SeatingSection::find($vip)->position_y, 'VIP was left out, so it goes behind');
+        $this->assertSame(0, \HiEvents\Models\SeatingLayout::where('event_id', $eventId)->first()->stage_y);
 
         $bad = $this->runTool($this->tool(ReorderSeatingSectionsTool::class), event_id: $eventId, rows: [[999999]], confirm: true);
         $this->assertSame('section_not_found', $bad['error']);

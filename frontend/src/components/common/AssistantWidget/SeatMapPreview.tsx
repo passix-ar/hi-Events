@@ -5,6 +5,8 @@ import classes from './SeatMapPreview.module.scss';
 
 interface SeatMapPreviewProps {
     sections: SeatingSection[];
+    /** Where the designer put the stage; undefined while loading. */
+    stage?: { stage_x: number; stage_y: number; stage_visible: boolean } | null;
     /** The section that was just created: it drops in row by row. */
     highlightId?: number | null;
 }
@@ -12,21 +14,26 @@ interface SeatMapPreviewProps {
 // One colour per ticket type, in the order sections appear.
 const TICKET_COLOURS = ['#d6ff3d', '#4dabf7', '#ff6fb5', '#ffd43b', '#2dd4bf', '#a78bfa', '#ff8c42'];
 
-const SEAT = 10;      // seat box
-const GAP = 3;        // between seats
-const AISLE = 12;     // extra gap after an aisle position
+// The designer's pixel geometry (utilites/seatingPlan.ts): drawn 1:1 in the
+// SVG so the plan here is the plan the panel and the public page show.
+const SEAT = 22;
+const SEAT_GAP = 3;
 const ROW_GAP = 4;
-const SECTION_GAP = 34;
-const COLUMN_GAP = 28;
-const STAGE_HEIGHT = 26;
-const LABEL_HEIGHT = 18;
+const ROW_LABEL = 20;
+const AISLE = 14;
+const NAME_LINE = 26;
+const NAME_CHAR = 7.2;
+const STAGE = {width: 220, height: 34};
+const GAP = 40;
+
+const rowLetter = (row: number) => String.fromCharCode(65 + (row % 26));
 
 /**
  * A tilted, isometric-looking plan of the seat map drawn from the real
- * sections: stage on top, one block per section, aisles as gaps, seats
- * coloured by the ticket that sells them. Pure SVG + CSS; nothing to load.
+ * sections at their real canvas positions: stage, one block per section,
+ * aisles as gaps, seats coloured by the ticket that sells them. Pure SVG + CSS.
  */
-export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => {
+export const SeatMapPreview = ({sections, stage, highlightId}: SeatMapPreviewProps) => {
     const layout = useMemo(() => {
         const ordered = [...sections].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
         const colourByProduct = new Map<number, string>();
@@ -36,47 +43,35 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
             }
         });
 
+        // Older sections may all sit at (0,0): stack those like the designer does on creation.
+        let fallbackY = STAGE.height + GAP;
         const blocks = ordered.map(section => {
             const aisles = new Set((section.aisle_positions ?? []).map(Number));
             const seatX: number[] = [];
-            let x = 0;
+            let x = ROW_LABEL;
             for (let seat = 1; seat <= section.seats_per_row; seat++) {
                 seatX.push(x);
-                x += SEAT + GAP + (aisles.has(seat) ? AISLE : 0);
+                x += SEAT + SEAT_GAP + (aisles.has(seat) ? AISLE : 0);
             }
-            const width = x - GAP;
-            const height = section.row_count * (SEAT + ROW_GAP) - ROW_GAP;
-            return {section, seatX, width, height, colour: colourByProduct.get(section.product_id) ?? TICKET_COLOURS[0]};
+            const gridWidth = x - SEAT_GAP + ROW_LABEL;
+            const width = Math.max(gridWidth, Math.ceil(section.name.length * NAME_CHAR));
+            const height = NAME_LINE + section.row_count * SEAT + (section.row_count - 1) * ROW_GAP;
+            const positioned = (section.position_x ?? 0) !== 0 || (section.position_y ?? 0) !== 0;
+            const left = Math.max(0, section.position_x ?? 0);
+            const top = positioned ? Math.max(0, section.position_y ?? 0) : fallbackY;
+            if (!positioned) {
+                fallbackY += height + GAP;
+            }
+            return {section, seatX, width, height, left, top, colour: colourByProduct.get(section.product_id) ?? TICKET_COLOURS[0]};
         });
 
-        // Sections that share a canvas row (same position_y) sit side by side,
-        // left to right by position_x; rows go back from the stage.
-        const rowsByY = new Map<number, typeof blocks>();
-        blocks.forEach(block => {
-            const y = block.section.position_y ?? 0;
-            rowsByY.set(y, [...(rowsByY.get(y) ?? []), block]);
-        });
-        const rows = [...rowsByY.entries()]
-            .sort((a, b) => a[0] - b[0])
-            .map(([, row]) => row.sort((a, b) => (a.section.position_x ?? 0) - (b.section.position_x ?? 0)));
+        const stageX = Math.max(0, stage?.stage_x ?? 0);
+        const stageY = Math.max(0, stage?.stage_y ?? 0);
+        const width = Math.max(STAGE.width + stageX, ...blocks.map(b => b.left + b.width));
+        const height = Math.max(STAGE.height + stageY, ...blocks.map(b => b.top + b.height));
 
-        const rowWidths = rows.map(row => row.reduce((sum, b) => sum + b.width, 0) + COLUMN_GAP * (row.length - 1));
-        const width = Math.max(420, ...rowWidths);
-        let y = STAGE_HEIGHT + SECTION_GAP;
-        const placed: (typeof blocks[number] & { top: number; left: number })[] = [];
-        rows.forEach((row, rowIndex) => {
-            const rowHeight = Math.max(...row.map(b => b.height));
-            let x = (width - rowWidths[rowIndex]) / 2;
-            row.forEach(block => {
-                placed.push({...block, top: y + (rowHeight - block.height) / 2, left: x});
-                x += block.width + COLUMN_GAP;
-            });
-            y += LABEL_HEIGHT + rowHeight + SECTION_GAP;
-        });
-
-        return {width, height: Math.max(y, 300), blocks: placed, colourByProduct};
-    }, [sections]);
-
+        return {width, height, stageX, stageY, blocks, colourByProduct};
+    }, [sections, stage]);
     if (sections.length === 0) {
         return (
             <div className={classes.empty}>
@@ -106,31 +101,34 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
                         </linearGradient>
                     </defs>
 
-                    <g className={classes.stage}>
-                        <rect x={layout.width * 0.15} y={0} width={layout.width * 0.7} height={STAGE_HEIGHT} rx={6} fill="url(#assistant-stage)"/>
-                        <text x={layout.width / 2} y={STAGE_HEIGHT / 2 + 4} textAnchor="middle" className={classes.stageLabel}>
-                            {t`STAGE`}
-                        </text>
-                    </g>
+                    {stage?.stage_visible !== false && (
+                        <g className={classes.stage} transform={`translate(${layout.stageX} ${layout.stageY})`}>
+                            <rect x={0} y={0} width={STAGE.width} height={STAGE.height} rx={6} fill="url(#assistant-stage)"/>
+                            <text x={STAGE.width / 2} y={STAGE.height / 2 + 4} textAnchor="middle" className={classes.stageLabel}>
+                                {t`STAGE`}
+                            </text>
+                        </g>
+                    )}
 
                     {layout.blocks.map(block => {
                         const isNew = block.section.id === highlightId;
                         return (
                             <g key={block.section.id} transform={`translate(${block.left} ${block.top})`} className={isNew ? classes.sectionNew : classes.section}>
-                                <text x={block.width / 2} y={-6} textAnchor="middle" className={classes.sectionLabel}>
-                                    {block.section.name} · {block.section.row_count}×{block.section.seats_per_row}
-                                </text>
                                 <rect
-                                    x={-8} y={LABEL_HEIGHT - 6} width={block.width + 16} height={block.height + 12} rx={8}
+                                    x={-8} y={-6} width={block.width + 16} height={block.height + 12} rx={10}
                                     className={classes.sectionFloor}
                                 />
+                                <text x={0} y={NAME_LINE - 9} className={classes.sectionLabel}>
+                                    {block.section.name} · {block.section.row_count}×{block.section.seats_per_row}
+                                </text>
                                 {Array.from({length: block.section.row_count}).map((_, row) => (
-                                    <g key={row} transform={`translate(0 ${LABEL_HEIGHT + row * (SEAT + ROW_GAP)})`}>
+                                    <g key={row} transform={`translate(0 ${NAME_LINE + row * (SEAT + ROW_GAP)})`}>
                                         <g className={classes.row} style={isNew ? {animationDelay: `${row * 45}ms`} : undefined}>
+                                            <text x={ROW_LABEL / 2} y={SEAT / 2 + 4} textAnchor="middle" className={classes.rowLabel}>{rowLetter(row)}</text>
                                             {block.seatX.map((x, seat) => (
                                                 <rect
                                                     key={seat}
-                                                    x={x} y={0} width={SEAT} height={SEAT} rx={2.5}
+                                                    x={x} y={0} width={SEAT} height={SEAT} rx={5}
                                                     fill={block.colour}
                                                     className={classes.seat}
                                                 />

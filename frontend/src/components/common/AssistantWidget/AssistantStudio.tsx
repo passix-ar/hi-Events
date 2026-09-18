@@ -15,6 +15,7 @@ import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventImages} from "../../../queries/useGetEventImages.ts";
 import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetEventSeatingSections} from "../../../queries/useGetSeatingSections.ts";
+import {useGetSeatingLayout} from "../../../queries/useGetSeatingLayout.ts";
 import {SeatMapPreview} from "./SeatMapPreview.tsx";
 import {SegmentedControl} from "@mantine/core";
 import {useGetAccount} from "../../../queries/useGetAccount.ts";
@@ -175,6 +176,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const {data: eventSettings, refetch: refetchSettings} = useGetEventSettings(eventId);
     const {data: seatingPage, refetch: refetchSeating} = useGetEventSeatingSections(eventId, {perPage: 100, pageNumber: 1});
     const sections = seatingPage?.data ?? [];
+    const {data: seatingLayout, refetch: refetchLayout} = useGetSeatingLayout(eventId);
     const [view, setView] = useState<'page' | 'seats'>('page');
     const [newSectionId, setNewSectionId] = useState<number | null>(null);
     const lastSeatStep = [...buildLog].reverse().find(step => ['create_seating_section', 'delete_seating_section', 'reorder_seating_sections'].includes(step.name));
@@ -190,6 +192,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
         void refetchEvent();
         void refetchImages();
         void refetchSettings();
+        void refetchLayout();
         void refetchSeating().then(result => {
             // A section just built: show the map and let the new block drop in.
             if (lastSeatStep && Date.now() - lastSeatStep.at < 5000) {
@@ -312,7 +315,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
 
             <div className={classes.canvas}>
                 {view === 'seats' ? (
-                    <SeatMapPreview sections={sections} highlightId={newSectionId}/>
+                    <SeatMapPreview sections={sections} stage={seatingLayout} highlightId={newSectionId}/>
                 ) : (
                 <iframe
                     key={`${eventId}-${version}`}

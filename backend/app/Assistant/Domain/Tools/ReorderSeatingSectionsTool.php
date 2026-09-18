@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace HiEvents\Assistant\Domain\Tools;
 
 use HiEvents\Assistant\Domain\AssistantContext;
+use HiEvents\Assistant\Domain\SeatingPlanGeometry;
+use HiEvents\DomainObjects\Generated\SeatingLayoutDomainObjectAbstract;
+use HiEvents\Repository\Interfaces\SeatingLayoutRepositoryInterface;
 use HiEvents\DomainObjects\Generated\SeatingSectionDomainObjectAbstract;
 use HiEvents\DomainObjects\SeatingSectionDomainObject;
 use HiEvents\Http\DTO\QueryParamsDTO;
@@ -24,15 +27,13 @@ use Psr\Log\LoggerInterface;
  */
 class ReorderSeatingSectionsTool extends AbstractAssistantWriteTool
 {
-    public const ROW_HEIGHT = 240;
-    public const COLUMN_WIDTH = 320;
-
     public function __construct(
         AssistantContext                                   $context,
         IsAuthorizedService                                $isAuthorizedService,
         EventRepositoryInterface                           $events,
         LoggerInterface                                    $logger,
         private readonly SeatingSectionRepositoryInterface $sections,
+        private readonly SeatingLayoutRepositoryInterface  $layouts,
     )
     {
         parent::__construct($context, $isAuthorizedService, $events, $logger);
@@ -116,19 +117,33 @@ class ReorderSeatingSectionsTool extends AbstractAssistantWriteTool
             ]);
         }
 
+        // Same pixels the designer's "tidy" would produce, so the panel and the
+        // public page draw exactly this arrangement.
+        $geometry = SeatingPlanGeometry::layoutRows(array_map(
+            static fn(array $ids): array => array_map(static fn(int $id) => $byId[$id], $ids),
+            $layout,
+        ));
+
         $order = 0;
-        foreach ($layout as $rowIndex => $ids) {
-            $count = count($ids);
-            foreach ($ids as $column => $id) {
-                // Centre each row on the canvas: a lone section sits at x=0 like the designer creates it.
-                $x = (int)round(($column - ($count - 1) / 2) * self::COLUMN_WIDTH);
+        foreach ($layout as $ids) {
+            foreach ($ids as $id) {
                 $this->sections->updateFromArray($id, [
                     SeatingSectionDomainObjectAbstract::ORDER => $order++,
-                    SeatingSectionDomainObjectAbstract::POSITION_X => $x,
-                    SeatingSectionDomainObjectAbstract::POSITION_Y => $rowIndex * self::ROW_HEIGHT,
+                    SeatingSectionDomainObjectAbstract::POSITION_X => $geometry['sections'][$id]['x'],
+                    SeatingSectionDomainObjectAbstract::POSITION_Y => $geometry['sections'][$id]['y'],
                 ]);
             }
         }
+
+        $stage = [
+            SeatingLayoutDomainObjectAbstract::STAGE_X => $geometry['stage']['x'],
+            SeatingLayoutDomainObjectAbstract::STAGE_Y => $geometry['stage']['y'],
+            SeatingLayoutDomainObjectAbstract::STAGE_VISIBLE => true,
+        ];
+        $existingLayout = $this->layouts->findFirstWhere([SeatingLayoutDomainObjectAbstract::EVENT_ID => $event->getId()]);
+        $existingLayout
+            ? $this->layouts->updateFromArray($existingLayout->getId(), $stage)
+            : $this->layouts->create($stage + [SeatingLayoutDomainObjectAbstract::EVENT_ID => $event->getId()]);
 
         $this->logWrite('seating_sections_reordered', ['event_id' => $event->getId(), 'rows' => $layout]);
 
