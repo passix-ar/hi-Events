@@ -1,5 +1,11 @@
+import {i18n} from "@lingui/core";
+import {getClientLocale} from "../locales.ts";
+
 export const formatCurrency = (value: number | string, currency = 'USD') => {
-    const locale = typeof window !== 'undefined' ? navigator.language : 'en-US';
+    // The app's active locale, not the browser's. It's activated before rendering on both
+    // the server (entry.server.tsx) and the client (entry.client.tsx), so SSR and hydration
+    // format the amount identically.
+    const locale = i18n.locale || getClientLocale();
     const formatter = new Intl.NumberFormat(locale, {
         style: 'currency',
         currency: currency,

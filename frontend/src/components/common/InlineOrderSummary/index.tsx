@@ -59,7 +59,7 @@ export const InlineOrderSummary = ({
                 <span className={classes.headerTitle}>{t`Order Summary`}</span>
                 <div className={classes.headerRight}>
                     <span className={classes.headerTotal}>
-                        {formatCurrency(totalAmount, order.currency)} {order.currency}
+                        {formatCurrency(totalAmount, order.currency)}
                     </span>
                     <IconChevronDown
                         size={20}
@@ -215,7 +215,6 @@ export const InlineOrderSummary = ({
                             <span className={classes.totalsFinalLabel}>{t`Total`}</span>
                             <span className={classes.totalsFinalValue}>
                                 {formatCurrency(totalAmount, order.currency)}
-                                <span className={classes.totalsCurrency}>{order.currency}</span>
                             </span>
                         </div>
                     </div>
