@@ -231,10 +231,13 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const mpConnected = mpStatus?.is_connected ?? false;
     const offlineEnabled = (eventSettings?.payment_providers ?? []).some(provider => String(provider) === 'OFFLINE');
     const needsMp = hasPaidTickets && !mpConnected && !offlineEnabled;
+    const location = eventSettings?.location_details;
+    const hasAddress = !!eventSettings?.is_online_event || (!!location?.address_line_1 && !!location?.city);
 
     const steps: { key: string; label: string; done: boolean; warn?: boolean; to?: string }[] = [
         {key: 'event', label: t`Event`, done: !!event},
         {key: 'tickets', label: t`Tickets`, done: hasTickets},
+        {key: 'location', label: t`Venue address`, done: hasAddress},
         {key: 'cover', label: t`Flyer`, done: hasCover},
         {key: 'mp', label: offlineEnabled && !mpConnected ? t`Offline payment` : t`Mercado Pago`, done: !hasPaidTickets || mpConnected || offlineEnabled, warn: needsMp, to: '/account/payment'},
         {key: 'live', label: t`Published`, done: isLive},

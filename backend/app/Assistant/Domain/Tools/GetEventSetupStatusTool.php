@@ -74,12 +74,17 @@ class GetEventSetupStatusTool extends AbstractAssistantTool
             default => 'no payment method: connect MercadoPago on the account, or enable offline payment (set_offline_payment)',
         };
         $published = $event->getStatus() === EventStatus::LIVE->name;
+        $location = is_array($settings?->getLocationDetails()) ? array_filter($settings->getLocationDetails()) : [];
+        $hasAddress = ($settings?->getIsOnlineEvent() ?? false) || (!empty($location['address_line_1']) && !empty($location['city']));
+        $hasContact = trim((string)$settings?->getSupportEmail()) !== '';
 
         $checklist = [
             ['step' => 'tickets', 'done' => $ticketCount > 0, 'detail' => $ticketCount . ' ticket type(s)', 'route' => 'event_tickets'],
+            ['step' => 'location', 'done' => $hasAddress, 'detail' => $hasAddress ? (($settings?->getIsOnlineEvent() ?? false) ? 'online event' : 'address set') : 'no street address yet: the page cannot show the map (set_event_location)', 'route' => 'event_settings'],
             ['step' => 'cover_image', 'done' => $hasCover, 'detail' => $hasCover ? 'has a cover' : 'no cover image', 'route' => 'event_settings'],
             ['step' => 'description', 'done' => $hasDescription, 'detail' => $hasDescription ? 'has a description' : 'no description', 'route' => 'event_settings'],
             ['step' => 'payment', 'done' => $paymentOk, 'detail' => $paymentDetail, 'route' => 'connect_mercadopago', 'mercadopago_connected' => $mercadoPagoConnected, 'offline_payment' => $offlineEnabled],
+            ['step' => 'contact', 'done' => $hasContact, 'detail' => $hasContact ? 'support email set' : 'no support email for buyers (set_checkout_settings)', 'route' => 'event_settings'],
             ['step' => 'published', 'done' => $published, 'detail' => $published ? 'live' : 'still a draft', 'route' => 'publish_event'],
         ];
 

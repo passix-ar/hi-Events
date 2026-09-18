@@ -172,6 +172,21 @@ class AssistantEventSetupTest extends TestCase
         $this->assertStringContainsString('zoom.us', (string)$settings->online_event_connection_details);
     }
 
+    public function test_setup_status_tracks_address_and_contact(): void
+    {
+        $eventId = $this->draft();
+        $status = fn(): array => collect($this->runTool($this->tool(\HiEvents\Assistant\Domain\Tools\GetEventSetupStatusTool::class), event_id: $eventId)['checklist'])->keyBy('step')->all();
+
+        $this->assertFalse($status()['location']['done'], 'venue + city alone is not an address');
+        $this->assertTrue($status()['contact']['done'], 'the organizer email is the default support email');
+
+        $this->runTool($this->tool(SetEventLocationTool::class), event_id: $eventId, address_line_1: 'Calle 9 1234', city: 'La Plata', postcode: '1900', confirm: true);
+        $this->runTool($this->tool(SetCheckoutSettingsTool::class), event_id: $eventId, support_email: 'hola@rock.com', confirm: true);
+
+        $this->assertTrue($status()['location']['done']);
+        $this->assertTrue($status()['contact']['done']);
+    }
+
     public function test_cannot_touch_another_tenants_event(): void
     {
         foreach ([

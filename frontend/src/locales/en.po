@@ -1393,8 +1393,8 @@ msgstr "Back to Reports"
 
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:143
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:144
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:281
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:282
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:284
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:285
 msgid "Back to the chat"
 msgstr "Back to the chat"
 
@@ -3068,7 +3068,7 @@ msgstr "Download sales, attendee, and financial reports for all completed orders
 msgid "Downloading Invoice"
 msgstr "Downloading Invoice"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:262
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:265
 #: src/components/common/EventCard/index.tsx:84
 #: src/components/layouts/Event/index.tsx:195
 #: src/components/layouts/OrganizerLayout/index.tsx:219
@@ -3618,7 +3618,7 @@ msgid "EUR"
 msgstr "EUR"
 
 #: src/components/common/AdminOrdersTable/index.tsx:72
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:236
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:238
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:34
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:35
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:36
@@ -3762,7 +3762,7 @@ msgstr "Event organizer name"
 msgid "Event Page"
 msgstr "Event Page"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:329
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:332
 msgid "Event page preview"
 msgstr "Event page preview"
 
@@ -4358,7 +4358,7 @@ msgstr "Fixed Fee:"
 msgid "Flash is not available on this device"
 msgstr "Flash is not available on this device"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:238
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:241
 msgid "Flyer"
 msgstr "Flyer"
 
@@ -5011,7 +5011,7 @@ msgstr "Irish VAT at 23% will be applied to platform fees (domestic supply)."
 msgid "Is this account VAT registered in the EU?"
 msgstr "Is this account VAT registered in the EU?"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:372
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:375
 msgid "It is on sale. Share it:"
 msgstr "It is on sale. Share it:"
 
@@ -5242,7 +5242,7 @@ msgid "Live Events"
 msgstr "Live Events"
 
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:136
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:253
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:256
 msgid "Live page"
 msgstr "Live page"
 
@@ -5433,7 +5433,7 @@ msgstr "Maximum Per Order"
 msgid "Medium"
 msgstr "Medium"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:239
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:242
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
 
@@ -6084,7 +6084,7 @@ msgstr "Offline"
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
 msgstr "Offline orders are not reflected in event statistics until the order is marked as paid."
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:239
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:242
 msgid "Offline payment"
 msgstr "Offline payment"
 
@@ -6119,7 +6119,7 @@ msgstr "Offline Payments Information"
 msgid "Offline Payments Settings"
 msgstr "Offline Payments Settings"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:262
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:265
 msgid "On sale"
 msgstr "On sale"
 
@@ -6197,7 +6197,7 @@ msgstr "Only visible with promo code"
 msgid "Open Check-In Page"
 msgstr "Open Check-In Page"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:278
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:281
 msgid "Open in the panel"
 msgstr "Open in the panel"
 
@@ -6610,7 +6610,7 @@ msgstr "Owner"
 msgid "Padding"
 msgstr "Padding"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:315
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:318
 #: src/components/common/OrganizerReportTable/index.tsx:364
 msgid "Page"
 msgstr "Page"
@@ -7371,7 +7371,7 @@ msgid "Publish Event"
 msgstr "Publish Event"
 
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:79
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:240
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:243
 msgid "Published"
 msgstr "Published"
 
@@ -7453,7 +7453,7 @@ msgid "Re-offer Spot"
 msgstr "Re-offer Spot"
 
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:139
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:256
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:259
 msgid "Reading your flyer…"
 msgstr "Reading your flyer…"
 
@@ -7597,8 +7597,8 @@ msgstr "Register"
 msgid "Registration Questions"
 msgstr "Registration Questions"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:266
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:267
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:269
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:270
 msgid "Reload the page"
 msgstr "Reload the page"
 
@@ -8069,11 +8069,11 @@ msgstr "Search..."
 msgid "Seat"
 msgstr "Seat"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:316
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:319
 msgid "Seat map"
 msgstr "Seat map"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:316
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:319
 msgid "Seat map ({0})"
 msgstr "Seat map ({0})"
 
@@ -8482,7 +8482,7 @@ msgstr "Settings"
 msgid "Setup & Design"
 msgstr "Setup & Design"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:289
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:292
 msgid "Setup progress"
 msgstr "Setup progress"
 
@@ -9704,7 +9704,7 @@ msgstr "Ticketing & Sales"
 msgid "tickets"
 msgstr "tickets"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:237
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:239
 #: src/components/routes/my-tickets/index.tsx:84
 msgid "Tickets"
 msgstr "Tickets"
@@ -10341,6 +10341,10 @@ msgstr "VAT validation service temporarily unavailable"
 msgid "Vendé sin complicarte"
 msgstr "Vendé sin complicarte"
 
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:240
+msgid "Venue address"
+msgstr "Venue address"
+
 #: src/components/routes/event/Settings/Sections/LocationSettings/index.tsx:116
 msgid "Venue Name"
 msgstr "Venue Name"
@@ -10893,7 +10897,7 @@ msgid "Working"
 msgstr "Working"
 
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:128
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:245
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:248
 msgid "Working on it…"
 msgstr "Working on it…"
 
