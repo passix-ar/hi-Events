@@ -18,15 +18,19 @@ export const publicCheckInClient = {
         const response = await publicApi.get<GenericPaginatedResponse<Attendee>>(`/check-in-lists/${checkInListShortId}/attendees` + queryParamsHelper.buildQueryString(pagination));
         return response.data;
     },
-    getCheckInListAttendee: async (checkInListShortId: IdParam, attendeePublicId: IdParam) => {
-        const response = await publicApi.get<GenericDataResponse<Attendee>>(`/check-in-lists/${checkInListShortId}/attendees/${attendeePublicId}`);
+    getCheckInListAttendee: async (checkInListShortId: IdParam, attendeePublicId: IdParam, timeoutMs?: number) => {
+        const response = await publicApi.get<GenericDataResponse<Attendee>>(
+            `/check-in-lists/${checkInListShortId}/attendees/${attendeePublicId}`,
+            {timeout: timeoutMs},
+        );
         return response.data;
     },
-    getCheckInListAttendeesPage: async (checkInListShortId: IdParam, page: number, perPage: number) => {
+    getCheckInListAttendeesPage: async (checkInListShortId: IdParam, page: number, perPage: number, timeoutMs?: number) => {
         // Explicit params: the generic query helper falls back to the page URL's own
         // query string, which must not filter the scanner's full attendee list.
         const response = await publicApi.get<GenericPaginatedResponse<Attendee>>(
-            `/check-in-lists/${checkInListShortId}/attendees?page=${page}&per_page=${perPage}`
+            `/check-in-lists/${checkInListShortId}/attendees?page=${page}&per_page=${perPage}`,
+            {timeout: timeoutMs},
         );
         return response.data;
     },

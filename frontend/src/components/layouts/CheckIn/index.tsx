@@ -30,6 +30,11 @@ import {Button} from "@mantine/core";
 // a wall of toasts: the rest are summarised and the list is where to look.
 const MAX_REFUSAL_TOASTS = 3;
 
+// Shorter than the roster's timeout because someone is standing at the door waiting on this one.
+// It also has to end no matter what: the reentrancy guard is already held when this request goes
+// out, so a request that never settles leaves the scanner refusing every scan until a reload.
+const ATTENDEE_LOOKUP_TIMEOUT_MS = 5_000;
+
 const CheckIn = () => {
     const networkStatus = useNetwork();
     const {checkInListShortId} = useParams();
@@ -280,7 +285,9 @@ const CheckIn = () => {
 
         if (!attendee) {
             try {
-                const {data} = await publicCheckInClient.getCheckInListAttendee(checkInListShortId, attendeePublicId);
+                const {data} = await publicCheckInClient.getCheckInListAttendee(
+                    checkInListShortId, attendeePublicId, ATTENDEE_LOOKUP_TIMEOUT_MS,
+                );
                 attendee = data;
             } catch (error) {
                 showError(networkStatus.online ? t`Unable to fetch attendee` : t`You are offline`);

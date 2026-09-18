@@ -24,6 +24,11 @@ const ROSTER_REFRESH_MS = 60_000;
 const QUEUE_RETRY_MS = 2_000;
 const QUEUE_MAX_RETRY_MS = 30_000;
 const QUEUE_REQUEST_TIMEOUT_MS = 8_000;
+// Roomier than the queue's: a roster page carries 250 attendees, not 50 ids. What matters is that
+// it ends. With no timeout at all, a dead socket leaves isLoading pinned to true, the interval
+// below returns on its guard forever, and the roster silently stops updating for the rest of the
+// night — while the status bar still reads "all check-ins synced".
+const ROSTER_REQUEST_TIMEOUT_MS = 20_000;
 // Kept well inside QUEUE_REQUEST_TIMEOUT_MS: the server writes one transaction
 // per attendee, so the slice has to be small enough that the round trip always
 // finishes, even on the venue's connection.
@@ -134,7 +139,9 @@ export const useCheckInRoster = (
             // Pages are fetched sequentially: the server orders by id, so this is
             // consistent, and a 300-person event is two requests.
             for (; ;) {
-                const response = await publicCheckInClient.getCheckInListAttendeesPage(checkInListShortId, page, ROSTER_PAGE_SIZE);
+                const response = await publicCheckInClient.getCheckInListAttendeesPage(
+                    checkInListShortId, page, ROSTER_PAGE_SIZE, ROSTER_REQUEST_TIMEOUT_MS,
+                );
                 all.push(...response.data);
                 // The server may cap the page size below what was asked for, so
                 // the last page is the one shorter than what the server itself
