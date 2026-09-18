@@ -41,15 +41,19 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             ->as('create_ticket')
             ->for('Adds a ticket type to one of this organizer\'s events. A price of 0 creates a free ticket. '
                 . 'Call it first without confirm to get a preview, show that to the organizer, and only call it '
-                . 'again with confirm=true once they agree. It only works on events that are still drafts: '
-                . 'once an event is published, tickets are added from the panel. Use find_events for the event_id.')
+                . 'again with confirm=true once they agree. On a published event the ticket goes on sale at once, '
+                . 'so the organizer must reply MODIFICAR (pass it as confirmation_phrase). Sales run from '
+                . 'sale_start_date (default: now) to sale_end_date (default: when the event ends).')
             ->withNumberParameter('event_id', 'The event the ticket belongs to.')
             ->withStringParameter('title', 'Ticket name, e.g. "General" or "VIP" (max 150 characters).')
             ->withNumberParameter('price', 'Price in the event currency. 0 for a free ticket.')
             ->withNumberParameter('quantity', 'How many are for sale. Omit for unlimited.', required: false)
             ->withStringParameter('description', 'What this ticket includes.', required: false)
             ->withNumberParameter('max_per_order', 'Maximum per order (default 100).', required: false)
-            ->withBooleanParameter('confirm', 'Pass true only after the organizer confirmed the preview.', required: false);
+            ->withStringParameter('sale_start_date', 'When sales open, "YYYY-MM-DD HH:MM" in the organizer timezone. Omit for now.', required: false)
+            ->withStringParameter('sale_end_date', 'When sales close, "YYYY-MM-DD HH:MM". Omit to close when the event ends.', required: false)
+            ->withBooleanParameter('confirm', 'Pass true only after the organizer confirmed the preview.', required: false)
+            ->withStringParameter('confirmation_phrase', 'The exact word MODIFICAR typed by the organizer, only for published events.', required: false);
     }
 
     public function __invoke(
@@ -59,7 +63,10 @@ class CreateTicketTool extends AbstractAssistantWriteTool
         int|float|null  $quantity = null,
         ?string         $description = null,
         int|float|null  $max_per_order = null,
+        ?string         $sale_start_date = null,
+        ?string         $sale_end_date = null,
         ?bool           $confirm = null,
+        ?string         $confirmation_phrase = null,
     ): string
     {
         $args = $this->validateArguments(
@@ -70,6 +77,8 @@ class CreateTicketTool extends AbstractAssistantWriteTool
                 'quantity' => $quantity,
                 'description' => $description,
                 'max_per_order' => $max_per_order,
+                'sale_start_date' => $sale_start_date,
+                'sale_end_date' => $sale_end_date,
             ],
             [
                 'event_id' => 'required|integer|min:1',
@@ -78,23 +87,27 @@ class CreateTicketTool extends AbstractAssistantWriteTool
                 'quantity' => 'nullable|integer|min:1|max:1000000',
                 'description' => 'nullable|string|max:2000',
                 'max_per_order' => 'nullable|integer|min:1|max:1000',
+                'sale_start_date' => 'nullable|date_format:Y-m-d H:i,Y-m-d H:i:s,Y-m-d',
+                'sale_end_date' => 'nullable|date_format:Y-m-d H:i,Y-m-d H:i:s,Y-m-d',
             ],
         );
 
         $event = $this->authorizeEvent((int)$args['event_id']);
 
-        // A ticket on a published event is on sale the moment it is written, at a
-        // price the model chose. The chat only touches drafts; the panel is where
-        // an organizer changes what is already selling.
-        if ($event->getStatus() !== EventStatus::DRAFT->name) {
-            return $this->toJson([
-                'error' => 'event_not_draft',
-                'details' => 'This event is already published, so tickets for it are added from the panel, not here.',
-            ]);
-        }
+        // A ticket on a published event is on sale the moment it is written, so
+        // that case takes the typed word, like every other change to a live event.
+        $isLive = $event->getStatus() === EventStatus::LIVE->name;
 
         $price = round((float)$args['price'], 2);
-        $saleEndDate = $this->saleEndDate($event);
+        $timezone = $event->getTimezone() ?? $this->context->timezone;
+        $saleEndDate = $args['sale_end_date'] !== null
+            ? $this->wallTime($args['sale_end_date'], $timezone)
+            : $this->saleEndDate($event);
+        $saleStartDate = $args['sale_start_date'] !== null ? $this->wallTime($args['sale_start_date'], $timezone) : null;
+
+        if ($saleStartDate !== null && $saleStartDate >= $saleEndDate) {
+            return $this->toJson(['error' => 'invalid_arguments', 'details' => 'sale_start_date must be before sale_end_date.']);
+        }
 
         $payload = [
             'event_id' => $event->getId(),
@@ -104,7 +117,9 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             'currency' => $event->getCurrency(),
             'type' => $price > 0 ? ProductPriceType::PAID->name : ProductPriceType::FREE->name,
             'quantity' => $args['quantity'] === null ? 'unlimited' : (int)$args['quantity'],
+            'on_sale_from' => $saleStartDate ?? 'now',
             'on_sale_until' => $saleEndDate,
+            'event_status' => $event->getStatus(),
         ];
 
         $existing = $this->findExisting($event->getId(), $args['title']);
@@ -120,7 +135,17 @@ class CreateTicketTool extends AbstractAssistantWriteTool
         }
 
         if ($confirm !== true) {
-            return $this->preview($payload);
+            return $this->toJson([
+                'status' => 'needs_confirmation',
+                'would_create' => $payload,
+                'hint' => $isLive
+                    ? 'This event is published: the ticket goes on sale as soon as it is created. Show the preview and ask the organizer to reply with the exact word MODIFICAR before calling again with confirm=true and confirmation_phrase.'
+                    : 'Show this to the organizer in their own words and ask for confirmation. Call again with confirm=true only after they agree.',
+            ]);
+        }
+
+        if (($refusal = $this->doubleCheck($isLive, $confirm, $confirmation_phrase, 'MODIFICAR')) !== null) {
+            return $refusal;
         }
 
         $category = $this->defaultCategory($event->getId());
@@ -138,6 +163,7 @@ class CreateTicketTool extends AbstractAssistantWriteTool
             'type' => $price > 0 ? ProductPriceType::PAID->name : ProductPriceType::FREE->name,
             'product_type' => ProductType::TICKET->name,
             'max_per_order' => $args['max_per_order'] ?? 100,
+            'sale_start_date' => $saleStartDate,
             'sale_end_date' => $saleEndDate,
             'prices' => [
                 [
@@ -184,6 +210,18 @@ class CreateTicketTool extends AbstractAssistantWriteTool
         return Carbon::parse($storedDate, 'UTC')
             ->setTimezone($event->getTimezone() ?? $this->context->timezone)
             ->format('Y-m-d H:i:s');
+    }
+
+    /** Accepts the three date shapes the model sends; hands back local wall time for the handler. */
+    private function wallTime(string $value, string $timezone): string
+    {
+        foreach (['Y-m-d H:i', 'Y-m-d H:i:s', 'Y-m-d'] as $format) {
+            if (Carbon::canBeCreatedFromFormat($value, $format)) {
+                return Carbon::createFromFormat($format, $value, $timezone)->format('Y-m-d H:i:s');
+            }
+        }
+
+        return $value;
     }
 
     private function findExisting(int $eventId, string $title): ?ProductDomainObject

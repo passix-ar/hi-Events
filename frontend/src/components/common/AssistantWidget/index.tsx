@@ -16,6 +16,7 @@ import {AssistantEntity, IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
 import {rememberLastAssistantOrganizer} from "./lastOrganizer.ts";
+import {parseQuickReplies, stripPartialMarker} from "./quickReplies.ts";
 import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
@@ -410,6 +411,8 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
 
                         {entries.map((entry, index) => {
                             const isUser = entry.role === 'user';
+                            const parsed = isUser ? null : parseQuickReplies(entry.content);
+                            const isLast = index === entries.length - 1;
 
                             return (
                                 <div key={index} className={isUser ? classes.userRow : classes.assistantRow}>
@@ -422,7 +425,24 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                                         )}
                                         {isUser
                                             ? <div className={classes.content}>{entry.content}</div>
-                                            : <AssistantMessage content={entry.content} onNavigate={() => setStudioCollapsed(true)}/>}
+                                            : <AssistantMessage content={parsed?.text ?? entry.content} onNavigate={() => setStudioCollapsed(true)}/>}
+                                        {!isUser && isLast && parsed && parsed.options.length > 0 && live === null && !sendMessage.isPending && (
+                                            <div className={classes.quickReplies}>
+                                                {parsed.options.map(option => (
+                                                    <Button
+                                                        key={option}
+                                                        size="compact-sm"
+                                                        variant="light"
+                                                        className={classes.quickReply}
+                                                        onClick={() => /flyer|imagen|image|foto/i.test(option) && /subir|adjuntar|mandar|upload|attach|enviar/i.test(option)
+                                                            ? fileInputRef.current?.click()
+                                                            : send(option)}
+                                                    >
+                                                        {option}
+                                                    </Button>
+                                                ))}
+                                            </div>
+                                        )}
                                         {!isUser && entry.toolCalls && entry.toolCalls.length > 0 && (
                                             <div className={classes.toolCalls}>
                                                 <IconTool size={11}/>
@@ -445,7 +465,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             <div className={classes.assistantRow}>
                                 <div className={classes.avatar}><IconRobot size={14}/></div>
                                 <div className={classes.bubble}>
-                                    {live && live.text !== '' && <AssistantMessage content={live.text} onNavigate={() => setStudioCollapsed(true)}/>}
+                                    {live && live.text !== '' && <AssistantMessage content={stripPartialMarker(live.text)} onNavigate={() => setStudioCollapsed(true)}/>}
                                     {live && live.tools.length > 0 && (
                                         <div className={classes.toolCalls}>
                                             <IconTool size={11}/>

@@ -243,12 +243,38 @@ class AssistantWriteToolsTest extends TestCase
             confirm: true,
         );
 
-        $this->assertSame('event_not_draft', $result['error']);
+        $this->assertSame('confirmation_phrase_required', $result['error']);
         $this->assertSame(
             $before,
             Product::where('event_id', $this->mine->event->id)->count(),
-            'a published event must not gain a purchasable product from the chat',
+            'a published event must not gain a purchasable product without the typed word',
         );
+    }
+
+    public function test_a_ticket_on_a_published_event_is_created_with_the_word_modificar_and_a_sale_window(): void
+    {
+        $before = Product::where('event_id', $this->mine->event->id)->count();
+
+        $result = $this->runTool(
+            $this->tool(CreateTicketTool::class),
+            event_id: $this->mine->event->id,
+            title: 'Entrada Tardia',
+            price: 5000,
+            sale_start_date: '2026-10-01 10:00',
+            sale_end_date: '2026-10-05 23:59',
+            confirm: true,
+            confirmation_phrase: 'MODIFICAR',
+        );
+
+        $this->assertSame('created', $result['status']);
+        $this->assertSame($before + 1, Product::where('event_id', $this->mine->event->id)->count());
+
+        $product = Product::where('event_id', $this->mine->event->id)->where('title', 'Entrada Tardia')->first();
+        $this->assertNotNull($product->sale_start_date);
+        $this->assertSame('2026-10-05 23:59', Carbon::parse($product->sale_end_date, 'UTC')->setTimezone('America/Argentina/Buenos_Aires')->format('Y-m-d H:i'));
+
+        $bad = $this->runTool($this->tool(CreateTicketTool::class), event_id: $this->mine->event->id, title: 'Al Reves', price: 1, sale_start_date: '2026-10-06', sale_end_date: '2026-10-05');
+        $this->assertSame('invalid_arguments', $bad['error']);
     }
 
     public function test_a_created_ticket_stops_selling_when_the_event_ends(): void

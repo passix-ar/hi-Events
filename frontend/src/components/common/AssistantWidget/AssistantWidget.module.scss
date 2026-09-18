@@ -457,3 +457,21 @@ $panel-height: 620px;
 .input {
   flex: 1;
 }
+
+// Choices the model offers ("¿Mercado Pago o pago offline?"): one tap answers.
+.quickReplies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  animation: chipsIn 0.3s ease;
+}
+
+.quickReply {
+  border: 1px solid var(--hi-primary);
+}
+
+@keyframes chipsIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
