@@ -28,6 +28,7 @@ use HiEvents\Assistant\Domain\Tools\GetRecentOrdersTool;
 use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
 use HiEvents\Assistant\Domain\Tools\MessageBuyersTool;
 use HiEvents\Assistant\Domain\Tools\PublishEventTool;
+use HiEvents\Assistant\Domain\Tools\SetEventThemeTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use HiEvents\Assistant\Domain\Tools\UpdateEventTool;
 use HiEvents\Assistant\Domain\Tools\UpdateTicketTool;
@@ -60,6 +61,7 @@ readonly class AssistantToolRegistry
         CreateTicketTool::class,
         AttachFlyerToEventTool::class,
         ApplyFlyerPaletteTool::class,
+        SetEventThemeTool::class,
         PublishEventTool::class,
         CreatePromoCodeTool::class,
         MessageBuyersTool::class,
@@ -117,6 +119,7 @@ readonly class AssistantToolRegistry
             'create_ticket',
             'attach_flyer_to_event',
             'apply_flyer_palette',
+            'set_event_theme',
             'publish_event',
             'create_promo_code',
             'message_buyers',

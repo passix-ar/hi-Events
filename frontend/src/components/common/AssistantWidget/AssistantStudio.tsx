@@ -19,6 +19,7 @@ import {getProductsFromEvent} from "../../../utilites/helpers.ts";
 import {eventHomepageUrl, eventPreviewPath} from "../../../utilites/urlHelper.ts";
 import {IdParam} from "../../../types.ts";
 import {CopyButton} from "./CopyBlock.tsx";
+import type {BuildStep} from "./index.tsx";
 import classes from './AssistantStudio.module.scss';
 
 interface AssistantStudioProps {
@@ -32,6 +33,8 @@ interface AssistantStudioProps {
     building: boolean;
     /** The tool running right now, for the veil caption. */
     buildingStep?: string | null;
+    /** Every write that finished this session, oldest first. */
+    buildLog?: BuildStep[];
     onClose: () => void;
 }
 
@@ -40,10 +43,52 @@ const STEP_LABELS: Record<string, () => string> = {
     create_ticket: () => t`Adding tickets`,
     attach_flyer_to_event: () => t`Setting the flyer as cover`,
     apply_flyer_palette: () => t`Painting the page with the flyer colours`,
+    set_event_theme: () => t`Changing the page colours`,
     publish_event: () => t`Publishing`,
     update_event: () => t`Updating the event`,
     update_ticket: () => t`Updating a ticket`,
+    delete_ticket: () => t`Removing a ticket`,
     create_promo_code: () => t`Creating the promo code`,
+};
+
+const DONE_LABELS: Record<string, () => string> = {
+    create_draft_event: () => t`Event created`,
+    create_ticket: () => t`Ticket added`,
+    attach_flyer_to_event: () => t`Flyer set as cover`,
+    apply_flyer_palette: () => t`Page painted with the flyer colours`,
+    set_event_theme: () => t`Page colours changed`,
+    publish_event: () => t`Published`,
+    update_event: () => t`Event updated`,
+    update_ticket: () => t`Ticket updated`,
+    delete_ticket: () => t`Ticket removed`,
+    create_promo_code: () => t`Promo code created`,
+};
+
+/** The build steps as a timeline, newest at the bottom, each one sliding in. */
+const BuildTimeline = ({log, running}: { log: BuildStep[]; running?: string | null }) => {
+    if (log.length === 0 && !running) {
+        return null;
+    }
+
+    return (
+        <ol className={classes.timeline} aria-label={t`What the assistant did`}>
+            {log.map(step => (
+                <li key={step.at} className={`${classes.timelineItem} ${step.success ? '' : classes.timelineFailed}`}>
+                    <span className={classes.timelineDot}><IconCheck size={11}/></span>
+                    <span>{(DONE_LABELS[step.name] ?? (() => step.name))()}</span>
+                    <time className={classes.timelineTime}>
+                        {new Date(step.at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})}
+                    </time>
+                </li>
+            ))}
+            {running && (
+                <li className={`${classes.timelineItem} ${classes.timelineRunning}`}>
+                    <span className={classes.timelineDot}><Loader size={9} color="currentColor"/></span>
+                    <span>{(STEP_LABELS[running] ?? (() => running))()}…</span>
+                </li>
+            )}
+        </ol>
+    );
 };
 
 /**
@@ -60,7 +105,7 @@ export const AssistantStudio = (props: AssistantStudioProps) => (
 );
 
 /** Before the event exists: the flyer on stage (or a hint), same chrome. */
-const EmptyStudio = ({flyerPreview, building, buildingStep, onClose}: AssistantStudioProps) => {
+const EmptyStudio = ({flyerPreview, building, buildingStep, buildLog = [], onClose}: AssistantStudioProps) => {
     const caption = buildingStep && STEP_LABELS[buildingStep] ? STEP_LABELS[buildingStep]() : t`Working on it…`;
 
     return (
@@ -83,6 +128,11 @@ const EmptyStudio = ({flyerPreview, building, buildingStep, onClose}: AssistantS
                     </Tooltip>
                 </div>
             </div>
+            {(buildLog.length > 0 || building) && (
+                <div className={classes.checklist}>
+                    <BuildTimeline log={buildLog} running={building && buildingStep && STEP_LABELS[buildingStep] ? buildingStep : null}/>
+                </div>
+            )}
             <div className={classes.canvas}>
                 <div className={classes.flyerStage}>
                     {flyerPreview
@@ -106,7 +156,7 @@ const EmptyStudio = ({flyerPreview, building, buildingStep, onClose}: AssistantS
     );
 };
 
-const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, onClose}: AssistantStudioProps & { eventId: IdParam }) => {
+const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, buildLog = [], onClose}: AssistantStudioProps & { eventId: IdParam }) => {
     const navigate = useNavigate();
     const {data: event, refetch: refetchEvent} = useGetEvent(eventId);
     const {data: images, refetch: refetchImages} = useGetEventImages(eventId);
@@ -184,7 +234,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, on
                         <Button
                             size="compact-sm"
                             variant="light"
-                            onClick={() => navigate(`/manage/event/${event.id}/getting-started`)}
+                            onClick={() => { onClose(); navigate(`/manage/event/${event.id}/getting-started`); }}
                         >
                             <Trans>Open in the panel</Trans>
                         </Button>
@@ -208,11 +258,12 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, on
                                 {step.done ? <IconCheck size={13}/> : <IconCircleDashed size={13}/>}
                             </span>
                             {step.warn && step.to
-                                ? <button type="button" className={classes.stepLink} onClick={() => navigate(step.to as string)}>{step.label}</button>
+                                ? <button type="button" className={classes.stepLink} onClick={() => { onClose(); navigate(step.to as string); }}>{step.label}</button>
                                 : <span>{step.label}</span>}
                         </li>
                     ))}
                 </ol>
+                <BuildTimeline log={buildLog} running={building && buildingStep && STEP_LABELS[buildingStep] ? buildingStep : null}/>
             </div>
 
             <div className={classes.canvas}>

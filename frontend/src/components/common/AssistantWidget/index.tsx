@@ -19,14 +19,22 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
 
 // Writes that change what the event page looks like: each one finishing reloads
 // the live preview in studio mode.
-const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+
+export interface BuildStep {
+    name: string;
+    success: boolean;
+    at: number;
+}
 
 interface StudioState {
     eventId: number | null;
+    /** Folded away (after following a panel link) but ready to reopen. */
+    collapsed?: boolean;
 }
 
 interface AssistantWidgetProps {
@@ -95,8 +103,21 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         }
     };
     const [previewVersion, setPreviewVersion] = useState(0);
+    const reloadTimer = useRef<number | undefined>(undefined);
     const [flyerStage, setFlyerStage] = useState<string | null>(null);
-    const studioOpen = studio !== null && !isMobile;
+    // Following a panel link ("Conectar Mercado Pago") folds the studio away so
+    // the page it leads to is visible; the header button brings it back. The
+    // flag lives in the persisted state because the link often mounts another
+    // layout, and with it a fresh widget.
+    const studioCollapsed = studio?.collapsed === true;
+    const setStudioCollapsed = (collapsed: boolean) => {
+        if (studio) {
+            setStudio({...studio, collapsed});
+        }
+    };
+    const studioOpen = studio !== null && !studioCollapsed && !isMobile;
+    // What the assistant did this session, newest last: the studio shows it as a timeline.
+    const [buildLog, setBuildLog] = useState<BuildStep[]>([]);
 
     // The most recently touched event the conversation knows about.
     const lastKnownEvent = (): number | null => {
@@ -118,10 +139,13 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         if (done.name === 'delete_event') {
             setStudio(null);
         } else if (eventId !== null) {
-            setStudio({eventId});
+            setStudio({eventId, collapsed: false});
             setFlyerStage(null);
         }
-        setPreviewVersion(version => version + 1);
+        setBuildLog(log => [...log, {name: done.name, success: done.success, at: Date.now()}].slice(-12));
+        // Writes land seconds apart; one reload per burst, not one per write.
+        window.clearTimeout(reloadTimer.current);
+        reloadTimer.current = window.setTimeout(() => setPreviewVersion(version => version + 1), 900);
         // Whatever the panel shows for this event is stale now.
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_IMAGES_QUERY_KEY, eventId]});
@@ -138,7 +162,10 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         }
     }, [entries, sendMessage.isPending, live, open]);
 
-    useEffect(() => () => abortRef.current?.abort(), []);
+    useEffect(() => () => {
+        abortRef.current?.abort();
+        window.clearTimeout(reloadTimer.current);
+    }, []);
 
     useEffect(() => {
         if (!open) {
@@ -186,9 +213,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
             uploadAttachment.mutate({organizerId, file}, {
                 onSuccess: ({data}) => {
                     setAttachment({id: data.id, name: data.name, preview});
-                    if (!studio) {
-                        setStudio({eventId: null});
-                    }
+                    setStudio({eventId: studio?.eventId ?? null, collapsed: false});
                     setFlyerStage(preview);
                 },
                 onError: (mutationError: any) => {
@@ -332,17 +357,20 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             {!studioOpen && !isMobile && (
                                 <Tooltip label={t`Studio: watch the event page build itself`}>
                                     <ActionIcon
-                                        variant="subtle"
-                                        color="gray"
+                                        variant={studio && studioCollapsed ? 'light' : 'subtle'}
+                                        color={studio && studioCollapsed ? undefined : 'gray'}
                                         aria-label={t`Open the studio`}
-                                        onClick={() => setStudio({eventId: focusedEvent ? Number(focusedEvent.id) : lastKnownEvent()})}
+                                        onClick={() => setStudio({
+                                            eventId: studio?.eventId ?? (focusedEvent ? Number(focusedEvent.id) : lastKnownEvent()),
+                                            collapsed: false,
+                                        })}
                                     >
                                         <IconLayoutSidebarRightExpand size={18}/>
                                     </ActionIcon>
                                 </Tooltip>
                             )}
                             {entries.length > 0 && (
-                                <ActionIcon variant="subtle" color="gray" aria-label={t`Clear conversation`} onClick={() => { clear(); setStudio(null); setFlyerStage(null); }}>
+                                <ActionIcon variant="subtle" color="gray" aria-label={t`Clear conversation`} onClick={() => { clear(); setStudio(null); setFlyerStage(null); setBuildLog([]); }}>
                                     <IconTrash size={16}/>
                                 </ActionIcon>
                             )}
@@ -392,7 +420,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                                         )}
                                         {isUser
                                             ? <div className={classes.content}>{entry.content}</div>
-                                            : <AssistantMessage content={entry.content}/>}
+                                            : <AssistantMessage content={entry.content} onNavigate={() => setStudioCollapsed(true)}/>}
                                         {!isUser && entry.toolCalls && entry.toolCalls.length > 0 && (
                                             <div className={classes.toolCalls}>
                                                 <IconTool size={11}/>
@@ -415,7 +443,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             <div className={classes.assistantRow}>
                                 <div className={classes.avatar}><IconRobot size={14}/></div>
                                 <div className={classes.bubble}>
-                                    {live && live.text !== '' && <AssistantMessage content={live.text}/>}
+                                    {live && live.text !== '' && <AssistantMessage content={live.text} onNavigate={() => setStudioCollapsed(true)}/>}
                                     {live && live.tools.length > 0 && (
                                         <div className={classes.toolCalls}>
                                             <IconTool size={11}/>
@@ -514,7 +542,8 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             version={previewVersion}
                             building={live !== null || sendMessage.isPending}
                             buildingStep={live && live.tools.length > 0 ? live.tools[live.tools.length - 1].name : null}
-                            onClose={() => setStudio(null)}
+                            buildLog={buildLog}
+                            onClose={() => setStudioCollapsed(true)}
                         />
                     )}
                 </div>

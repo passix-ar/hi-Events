@@ -131,7 +131,7 @@ class ApplyFlyerPaletteTool extends AbstractAssistantWriteTool
      */
     public function paletteFrom(string $hex): array
     {
-        [$h, $s, $l] = $this->hexToHsl($hex);
+        [$h, $s, $l] = ColourMath::hexToHsl($hex);
 
         // An average colour is muddy by nature: push saturation up and put the
         // lightness where a button reads on a dark page. Greys stay lime.
@@ -139,54 +139,9 @@ class ApplyFlyerPaletteTool extends AbstractAssistantWriteTool
             return ['accent' => '#d6ff3d', 'background' => '#0b0b0e'];
         }
 
-        $accent = $this->hslToHex($h, max($s, 0.75), 0.62);
-        $background = $this->hslToHex($h, min($s, 0.45), 0.07);
+        $accent = ColourMath::hslToHex($h, max($s, 0.75), 0.62);
+        $background = ColourMath::hslToHex($h, min($s, 0.45), 0.07);
 
         return ['accent' => $accent, 'background' => $background];
-    }
-
-    /** @return array{0: float, 1: float, 2: float} */
-    private function hexToHsl(string $hex): array
-    {
-        $hex = ltrim($hex, '#');
-        [$r, $g, $b] = array_map(static fn(string $c): float => hexdec($c) / 255, str_split($hex, 2));
-        $max = max($r, $g, $b);
-        $min = min($r, $g, $b);
-        $l = ($max + $min) / 2;
-
-        if ($max === $min) {
-            return [0.0, 0.0, $l];
-        }
-
-        $d = $max - $min;
-        $s = $l > 0.5 ? $d / (2 - $max - $min) : $d / ($max + $min);
-        $h = match ($max) {
-            $r => fmod(($g - $b) / $d + ($g < $b ? 6 : 0), 6),
-            $g => ($b - $r) / $d + 2,
-            default => ($r - $g) / $d + 4,
-        };
-
-        return [$h / 6, $s, $l];
-    }
-
-    private function hslToHex(float $h, float $s, float $l): string
-    {
-        $q = $l < 0.5 ? $l * (1 + $s) : $l + $s - $l * $s;
-        $p = 2 * $l - $q;
-        $channel = static function (float $t) use ($p, $q): float {
-            if ($t < 0) { $t += 1; }
-            if ($t > 1) { $t -= 1; }
-            if ($t < 1 / 6) { return $p + ($q - $p) * 6 * $t; }
-            if ($t < 1 / 2) { return $q; }
-            if ($t < 2 / 3) { return $p + ($q - $p) * (2 / 3 - $t) * 6; }
-            return $p;
-        };
-
-        return sprintf(
-            '#%02x%02x%02x',
-            (int)round($channel($h + 1 / 3) * 255),
-            (int)round($channel($h) * 255),
-            (int)round($channel($h - 1 / 3) * 255),
-        );
     }
 }

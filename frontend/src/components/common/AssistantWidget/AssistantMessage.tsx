@@ -31,6 +31,8 @@ const hostOf = (href?: string): string | undefined => {
 
 interface AssistantMessageProps {
     content: string;
+    /** Called right before a panel link navigates (the studio folds away). */
+    onNavigate?: () => void;
 }
 
 /**
@@ -38,7 +40,7 @@ interface AssistantMessageProps {
  * React elements from the text and never injects raw HTML, so a hostile string
  * that reached the model through a buyer name cannot become markup here.
  */
-export const AssistantMessage = ({content}: AssistantMessageProps) => {
+export const AssistantMessage = ({content, onNavigate}: AssistantMessageProps) => {
     const navigate = useNavigate();
 
     return (
@@ -52,7 +54,7 @@ export const AssistantMessage = ({content}: AssistantMessageProps) => {
                 a: ({href, children}) => {
                     if (isPanelPath(href)) {
                         return (
-                            <button type="button" className={classes.panelLink} onClick={() => navigate(href as string)}>
+                            <button type="button" className={classes.panelLink} onClick={() => { onNavigate?.(); navigate(href as string); }}>
                                 {children}
                                 <IconArrowRight size={14}/>
                             </button>

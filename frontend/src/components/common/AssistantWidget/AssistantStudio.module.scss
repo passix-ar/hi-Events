@@ -313,3 +313,63 @@
   width: 72px;
   height: 28px;
 }
+
+// Build timeline: one line per finished write, sliding in as it happens.
+.timeline {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px dashed var(--hi-color-gray-2);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 96px;
+  overflow-y: auto;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--hi-text);
+  animation: slideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timelineDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hi-primary);
+  color: var(--hi-color-black, #0b0b0e);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.timelineRunning {
+  color: var(--hi-text-light, #a0a0a8);
+
+  .timelineDot {
+    background: transparent;
+    border: 1px solid var(--hi-color-gray-3, #3a3a44);
+    color: var(--hi-primary);
+  }
+}
+
+.timelineFailed .timelineDot {
+  background: #ff6b6b;
+}
+
+.timelineTime {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--hi-text-light, #a0a0a8);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-8px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
