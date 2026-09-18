@@ -17,4 +17,14 @@ module.exports = {
     "lingui/no-trans-inside-trans": 2,
     'react-refresh/only-export-components': 'warn',
   },
+  overrides: [
+    {
+      // Test names and fixtures are never user-facing, so the lingui rules have nothing to say
+      // about them. Leaving them on would mean wrapping every `it(...)` description in `t`.
+      files: ['**/*.test.ts', '**/*.test.tsx'],
+      rules: {
+        'lingui/no-unlocalized-strings': 0,
+      },
+    },
+  ],
 }

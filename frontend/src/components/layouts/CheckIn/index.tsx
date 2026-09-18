@@ -25,6 +25,7 @@ import {ScannerSelectionModal} from "../../common/CheckIn/ScannerSelectionModal"
 import {CheckInInfoModal} from "../../common/CheckIn/CheckInInfoModal";
 import {HidScannerStatus} from "../../common/CheckIn/HidScannerStatus";
 import {Button} from "@mantine/core";
+import {isScannableBarcode} from "./barcode.ts";
 
 // Past a handful, individual refusals stop being readable at the door and become
 // a wall of toasts: the rest are summarised and the list is where to look.
@@ -370,7 +371,7 @@ const CheckIn = () => {
 
     // Process completed barcode
     const processBarcode = useCallback((barcode: string) => {
-        if (barcode.startsWith('A-') && barcode.length > 3) {
+        if (isScannableBarcode(barcode)) {
             handleQrCheckIn(barcode);
         }
     }, [handleQrCheckIn]);
@@ -419,7 +420,7 @@ const CheckIn = () => {
                     // Set timeout to clear barcode if no more input (scanner stopped)
                     barcodeTimeoutRef.current = setTimeout(() => {
                         // Auto-process if it looks like a complete barcode
-                        if (newBarcode.startsWith('A-') && newBarcode.length > 3) {
+                        if (isScannableBarcode(newBarcode)) {
                             processBarcode(newBarcode);
                         }
                         setCurrentBarcode('');

@@ -1,9 +1,28 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import {AxiosError} from "axios";
 import {t} from "@lingui/macro";
-import {Attendee, AttendeeCheckIn, IdParam, PublicCheckIn} from "../types";
+import {Attendee, IdParam} from "../types";
 import {publicCheckInClient} from "../api/check-in.client";
 import {isSsr} from "../utilites/helpers";
+import {
+    applyFlushResponse,
+    backoffDelay,
+    classifyFlushFailure,
+    collectRefusals,
+    decideCheckIn,
+    isPendingCheckIn,
+    mergeRoster,
+    parseSnapshot,
+    pendingPlaceholder,
+    QUEUE_BATCH_SIZE,
+    QUEUE_REQUEST_TIMEOUT_MS,
+    ROSTER_PAGE_SIZE,
+    ROSTER_REFRESH_MS,
+    ROSTER_REQUEST_TIMEOUT_MS,
+    type PendingCheckIn,
+    type RejectedCheckIn,
+    type Snapshot,
+} from "./checkInRoster.logic";
 
 /**
  * The door scanner's local copy of a check-in list.
@@ -17,34 +36,14 @@ import {isSsr} from "../utilites/helpers";
  * The roster is also persisted, so reopening the page (a crashed tab, a redeploy)
  * comes back instantly, and it is refreshed periodically to pick up sales and
  * check-ins made from another phone.
+ *
+ * What this file holds is the wiring — storage, timers, requests, React state. Every decision it
+ * makes lives in `checkInRoster.logic.ts`, where it can be tested without a browser.
  */
 
-const ROSTER_PAGE_SIZE = 250;
-export const ROSTER_REFRESH_MS = 60_000;
-const QUEUE_RETRY_MS = 2_000;
-const QUEUE_MAX_RETRY_MS = 30_000;
-const QUEUE_REQUEST_TIMEOUT_MS = 8_000;
-// Roomier than the queue's: a roster page carries 250 attendees, not 50 ids. What matters is that
-// it ends. With no timeout at all, a dead socket leaves isLoading pinned to true, the interval
-// below returns on its guard forever, and the roster silently stops updating for the rest of the
-// night — while the status bar still reads "all check-ins synced".
-const ROSTER_REQUEST_TIMEOUT_MS = 20_000;
-// Kept well inside QUEUE_REQUEST_TIMEOUT_MS: the server writes one transaction
-// per attendee, so the slice has to be small enough that the round trip always
-// finishes, even on the venue's connection.
-const QUEUE_BATCH_SIZE = 50;
-
-export type PendingCheckIn = {
-    publicId: string;
-    action: 'check-in' | 'check-in-and-mark-order-as-paid';
-    queuedAt: number;
-    attempts: number;
-};
-
-type Snapshot = {
-    savedAt: number;
-    attendees: Attendee[];
-};
+// Re-exported so the scanner keeps importing its vocabulary from one place.
+export {isPendingCheckIn, ROSTER_REFRESH_MS} from "./checkInRoster.logic";
+export type {CheckInOutcome, PendingCheckIn, RejectedCheckIn} from "./checkInRoster.logic";
 
 type RosterState = {
     attendees: Attendee[];
@@ -77,58 +76,12 @@ const writeJson = (key: string, value: unknown) => {
     }
 };
 
-// localStorage is not trusted input: an old format, a half-written value or a hand-edited entry all
-// come back as valid JSON with the wrong shape. A snapshot that cannot be trusted is dropped whole
-// rather than patched — downloading the roster again costs one request, while a `savedAt` that is
-// not a number reaches arithmetic and `new Date()` and takes the screen down in the middle of the
-// door.
-const readSnapshot = (shortId: IdParam): Snapshot | null => {
-    const raw = readJson<Snapshot>(rosterKey(shortId));
-    // Three checks because each one lets something through on its own: `typeof` because
-    // `new Date(null)` is the Unix epoch rather than an error, `isFinite` for NaN and Infinity, and
-    // the Date itself because 1e300 passes `isFinite` and then throws out of `toISOString()` —
-    // which is exactly where this value ends up.
-    const savedAt = raw?.savedAt;
-    const isUsableDate = typeof savedAt === 'number'
-        && Number.isFinite(savedAt)
-        && !Number.isNaN(new Date(savedAt).getTime());
-
-    if (!raw || !Array.isArray(raw.attendees) || !isUsableDate) {
-        return null;
-    }
-
-    // Entries are checked one by one too, or the shape check above is decoration: an attendee
-    // without a `public_id` takes the search box down the first time someone types in it.
-    return {
-        savedAt: raw.savedAt,
-        attendees: raw.attendees.filter(attendee => typeof attendee?.public_id === 'string'),
-    };
-};
+const readSnapshot = (shortId: IdParam): Snapshot | null =>
+    parseSnapshot(readJson<unknown>(rosterKey(shortId)));
 
 const readQueue = (shortId: IdParam): PendingCheckIn[] => {
     const raw = readJson<PendingCheckIn[]>(queueKey(shortId));
     return Array.isArray(raw) ? raw : [];
-};
-
-// The optimistic placeholder has no server record behind it yet, and its id is
-// the marker for that. Anything that needs the real check-in — undoing one, or
-// rolling a refused one back — keys off this instead of guessing from a blank field.
-const PENDING_ID_PREFIX = 'pending-';
-
-export const isPendingCheckIn = (checkIn?: AttendeeCheckIn): boolean =>
-    checkIn !== undefined && String(checkIn.id).startsWith(PENDING_ID_PREFIX);
-
-export type CheckInOutcome =
-    | { status: 'queued' }
-    | { status: 'already-checked-in' }
-    | { status: 'cancelled' }
-    | { status: 'not-on-this-list' };
-
-// A refusal that is about the request rather than about one person — the list expired, it was
-// deleted — has nobody to name, so the attendee is optional.
-export type RejectedCheckIn = {
-    attendee?: Attendee;
-    message: string;
 };
 
 export const useCheckInRoster = (
@@ -202,29 +155,13 @@ export const useCheckInRoster = (
                 // Anything that passed through the queue at any point during the fetch is newer
                 // than the answer we just got. Checking `pending` alone is not enough: the flush
                 // can confirm a check-in while the pages are still in flight, which takes it out of
-                // the queue before we get here, and the server's answer — taken before it existed —
-                // would then erase it. The person shows as not checked in and scanning them again
-                // goes green.
+                // the queue before we get here.
                 const protectedIds = new Set([
                     ...queuedWhenFetchStarted,
                     ...touchedDuringFetchRef.current,
                     ...prev.pending.map(p => p.publicId),
                 ]);
-                const merged = all.map(a => {
-                    if (!protectedIds.has(a.public_id) || a.check_in) return a;
-                    const local = prev.attendees.find(p => p.public_id === a.public_id);
-                    // A refused check-in was already rolled back to undefined, so the server's
-                    // record wins here — this never resurrects one.
-                    return local?.check_in ? {...a, check_in: local.check_in} : a;
-                });
-                // A protected attendee the server did not return at all: the one that arrived
-                // through the network fallback. Dropping them here would take them off the list
-                // while their check-in is still queued.
-                const returnedIds = new Set(all.map(a => a.public_id));
-                const attendees = [
-                    ...merged,
-                    ...prev.attendees.filter(a => !returnedIds.has(a.public_id) && protectedIds.has(a.public_id)),
-                ];
+                const attendees = mergeRoster({server: all, local: prev.attendees, protectedIds});
                 const loadedAt = Date.now();
                 writeJson(rosterKey(checkInListShortId), {savedAt: loadedAt, attendees});
                 return {...prev, attendees, loadedAt, isLoading: false, loadError: false};
@@ -248,39 +185,16 @@ export const useCheckInRoster = (
 
     // ---- Check-in queue --------------------------------------------------
 
-    const queueCheckIn = useCallback((attendee: Attendee, action: PendingCheckIn['action']): CheckInOutcome => {
-        if (attendee.check_in) {
-            return {status: 'already-checked-in'};
-        }
+    const queueCheckIn = useCallback((attendee: Attendee, action: PendingCheckIn['action']) => {
+        const outcome = decideCheckIn(attendee, allowedProductIds);
 
-        // The roster carries cancelled tickets — the server returns them so the
-        // door can see them — and the check-in is optimistic, so the refusal has
-        // to happen here. Otherwise the scanner goes green and the server's
-        // rejection only lands seconds later, with the person already inside.
-        if (attendee.status === 'CANCELLED') {
-            return {status: 'cancelled'};
-        }
-
-        // The server refuses a ticket this list does not cover, and that refusal used to come back
-        // as a 409 for the whole request, taking the queue — and everyone already through the door
-        // — down with it. It is settled here, where it costs nothing and the door gets a useful
-        // answer. With no list of products yet (the list has not loaded) there is nothing to tell
-        // an outside ticket from a valid one, and refusing everything would be worse.
-        if (allowedProductIds?.length
-            && !allowedProductIds.some(id => String(id) === String(attendee.product_id))) {
-            return {status: 'not-on-this-list'};
+        if (outcome.status !== 'queued') {
+            return outcome;
         }
 
         // Optimistic: the person is through the door now. The server confirms in
         // the background and replaces this placeholder with the real record.
-        const placeholder: AttendeeCheckIn = {
-            id: `${PENDING_ID_PREFIX}${attendee.public_id}`,
-            attendee_id: attendee.id as IdParam,
-            check_in_list_id: '',
-            short_id: '',
-            order_id: attendee.order_id,
-            checked_in_at: new Date().toISOString(),
-        };
+        const placeholder = pendingPlaceholder(attendee);
 
         // If a refresh is in flight, its answer predates this scan: flag it so the merge does not
         // overwrite it with a snapshot taken before the person walked in.
@@ -304,7 +218,7 @@ export const useCheckInRoster = (
             return {...prev, attendees, pending};
         });
 
-        return {status: 'queued'};
+        return outcome;
     }, [checkInListShortId, allowedProductIds]);
 
     // Every refusal is a person who did not get through, so they all have to be
@@ -325,10 +239,6 @@ export const useCheckInRoster = (
         const batch = stateRef.current.pending.slice(0, QUEUE_BATCH_SIZE);
         if (batch.length === 0) return;
 
-        // Only this slice leaves the queue when the round trip ends. Anything
-        // scanned while the request is in flight has to survive it: clearing the
-        // whole queue would drop it unsent, leaving the person marked as through
-        // the door and no record of it anywhere.
         const batchIds = new Set(batch.map(p => p.publicId));
 
         flushingRef.current = true;
@@ -341,46 +251,19 @@ export const useCheckInRoster = (
                 QUEUE_REQUEST_TIMEOUT_MS,
             );
 
-            const confirmed = new Map<string, PublicCheckIn>();
-            (response.data ?? []).forEach((checkIn) => confirmed.set(String(checkIn.attendee_id), checkIn));
-            const errors = response.errors ?? {};
-
-            // An attendee the server confirmed is not a rejection, even when the
-            // same response also carries "already checked in" for them: that is the
-            // idempotent path after a lost response, and the person did go through.
-            const confirmedPublicIds = new Set(
-                stateRef.current.attendees
-                    .filter(a => a.id !== undefined && confirmed.has(String(a.id)))
-                    .map(a => a.public_id),
-            );
-
             setState(prev => {
-                const attendees = prev.attendees.map(a => {
-                    const real = a.id !== undefined ? confirmed.get(String(a.id)) : undefined;
-                    if (real) return {...a, check_in: real};
-                    if (errors[a.public_id]) {
-                        // The server refused it (cancelled ticket, unpaid order). Roll
-                        // back the optimistic mark so the list tells the truth.
-                        return {...a, check_in: undefined};
-                    }
-                    return a;
+                const {attendees, pending} = applyFlushResponse({
+                    attendees: prev.attendees,
+                    pending: prev.pending,
+                    batchIds,
+                    response,
                 });
-                const pending = prev.pending.filter(p => !batchIds.has(p.publicId));
                 writeJson(rosterKey(checkInListShortId), {savedAt: prev.loadedAt ?? Date.now(), attendees});
                 writeJson(queueKey(checkInListShortId), pending);
                 return {...prev, attendees, pending, syncing: false};
             });
 
-            const refusals: RejectedCheckIn[] = Object.entries(errors)
-                .filter(([publicId]) => !confirmedPublicIds.has(publicId))
-                .map(([publicId, message]) => ({
-                    // The attendee is normally in the roster — queueCheckIn puts them there even
-                    // when they came from the network fallback — but a refresh in between can drop
-                    // them again. The refusal is reported either way: dropping it would mean
-                    // someone walked in on a check-in the server never accepted, with no trace.
-                    attendee: stateRef.current.attendees.find(a => a.public_id === publicId),
-                    message,
-                }));
+            const refusals = collectRefusals({attendees: stateRef.current.attendees, response});
 
             if (refusals.length > 0) {
                 setRejected(prev => [...prev, ...refusals]);
@@ -392,9 +275,8 @@ export const useCheckInRoster = (
             // timeout, a 5xx, a 429 — keeps the queue and backs off: the person
             // already went through; the record will follow.
             const status = error instanceof AxiosError ? error.response?.status : undefined;
-            const isDefinitive = status !== undefined && status >= 400 && status < 500 && status !== 408 && status !== 429;
 
-            if (isDefinitive) {
+            if (classifyFlushFailure(status) === 'definitive') {
                 const message = (error as AxiosError<{ message?: string }>).response?.data?.message
                     ?? 'The server refused these check-ins';
                 setState(prev => {
@@ -425,11 +307,10 @@ export const useCheckInRoster = (
                 syncing: false,
                 pending: prev.pending.map(p => batchIds.has(p.publicId) ? {...p, attempts} : p),
             }));
-            const delay = Math.min(QUEUE_RETRY_MS * 2 ** Math.min(attempts, 4), QUEUE_MAX_RETRY_MS);
             retryTimerRef.current = setTimeout(() => {
                 flushingRef.current = false;
                 flush();
-            }, delay);
+            }, backoffDelay(attempts));
             return;
         }
 

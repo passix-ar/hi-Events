@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import {defineConfig} from "vite";
 import {lingui} from "@lingui/vite-plugin";
 import react from "@vitejs/plugin-react";
@@ -20,6 +21,13 @@ function getVersion(): string {
 }
 
 export default defineConfig({
+    // The scanner's decisions were pulled out of their hooks and components into plain functions
+    // precisely so they could be tested without a browser: node, no jsdom, no DOM globals. A test
+    // that needs any of those is a sign the logic is still tangled with the UI.
+    test: {
+        environment: "node",
+        include: ["src/**/*.test.ts"],
+    },
     optimizeDeps: {
         include: ["react-router"]
     },
