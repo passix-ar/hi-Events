@@ -27,4 +27,11 @@
     background: var(--mantine-color-red-0);
     cursor: pointer;
   }
+
+  // A warning, not a failure: the scanner still works, the list is just behind.
+  &.stale {
+    color: var(--mantine-color-orange-8);
+    background: var(--mantine-color-orange-0);
+    cursor: pointer;
+  }
 }

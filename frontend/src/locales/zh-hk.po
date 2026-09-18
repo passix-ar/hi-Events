@@ -43,28 +43,28 @@ msgstr "(空)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:315
+#: src/components/layouts/CheckIn/index.tsx:333
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} 已於 {time} 透過<0>{listName}</0>入場"
 
-#: src/components/layouts/CheckIn/index.tsx:176
-#: src/components/layouts/CheckIn/index.tsx:300
+#: src/components/layouts/CheckIn/index.tsx:192
+#: src/components/layouts/CheckIn/index.tsx:318
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} 已簽到"
 
-#: src/components/layouts/CheckIn/index.tsx:183
+#: src/components/layouts/CheckIn/index.tsx:199
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:193
+#: src/components/layouts/CheckIn/index.tsx:209
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "{0} {1} 的票券不適用於此簽到列表"
 
-#: src/components/layouts/CheckIn/index.tsx:199
+#: src/components/layouts/CheckIn/index.tsx:215
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>簽到</0>成功"
 
-#: src/components/layouts/CheckIn/index.tsx:219
+#: src/components/layouts/CheckIn/index.tsx:235
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>簽退</0>成功"
 
@@ -135,7 +135,7 @@ msgstr "{eventCount} 個事件"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} 小時, {minutes} 分鐘, 和 {seconds} 秒"
 
-#: src/hooks/useCheckInRoster.ts:330
+#: src/hooks/useCheckInRoster.ts:397
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} 個簽到未能儲存"
 
@@ -725,7 +725,7 @@ msgstr "所有參與者"
 msgid "All attendees of this event"
 msgstr "本次活動的所有與會者"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:63
+#: src/components/common/CheckIn/SyncStatus/index.tsx:102
 msgid "All check-ins synced"
 msgstr "所有簽到已同步"
 
@@ -867,11 +867,11 @@ msgstr "出現意外錯誤。"
 msgid "An unexpected error occurred. Please try again."
 msgstr "出現意外錯誤。請重試。"
 
-#: src/components/layouts/CheckIn/index.tsx:102
+#: src/components/layouts/CheckIn/index.tsx:107
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:312
+#: src/components/layouts/CheckIn/index.tsx:330
 msgid "another list"
 msgstr "其他名單"
 
@@ -1191,11 +1191,15 @@ msgstr "參與者資訊"
 msgid "Attendee information collection"
 msgstr "參加者資料收集"
 
+#: src/components/common/CheckIn/SyncStatus/index.tsx:94
+msgid "Attendee list last updated {age} — tap to refresh"
+msgstr "參加者列表更新於 {age} — 輕觸重新整理"
+
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:54
 msgid "Attendee Name"
 msgstr "參會者姓名"
 
-#: src/components/layouts/CheckIn/index.tsx:290
+#: src/components/layouts/CheckIn/index.tsx:308
 msgid "Attendee not found"
 msgstr "未找到參與者"
 
@@ -1685,15 +1689,15 @@ msgstr "簽到名單已建立！"
 msgid "Check-In List deleted successfully"
 msgstr "簽到列表刪除成功"
 
-#: src/components/layouts/CheckIn/index.tsx:443
+#: src/components/layouts/CheckIn/index.tsx:461
 msgid "Check-in list has expired"
 msgstr "簽到列表已過期"
 
-#: src/components/layouts/CheckIn/index.tsx:460
+#: src/components/layouts/CheckIn/index.tsx:478
 msgid "Check-in list is not active"
 msgstr "簽到列表未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:428
+#: src/components/layouts/CheckIn/index.tsx:446
 msgid "Check-in list not found"
 msgstr "未找到簽到列表"
 
@@ -2336,7 +2340,7 @@ msgstr "複製 URL"
 msgid "Could not initialize MercadoPago payment. Please try again."
 msgstr ""
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:26
+#: src/components/common/CheckIn/SyncStatus/index.tsx:50
 msgid "Could not load the attendee list. Tap to retry."
 msgstr "無法載入參加者名單。點擊重試。"
 
@@ -5118,7 +5122,7 @@ msgstr "直播"
 msgid "Live Events"
 msgstr "直播活動"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:55
+#: src/components/common/CheckIn/SyncStatus/index.tsx:79
 msgid "Loading attendee list…"
 msgstr "正在載入參加者名單…"
 
@@ -5944,11 +5948,11 @@ msgstr "辦公室或場地名稱"
 msgid "Offline"
 msgstr "離線"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:36
+#: src/components/common/CheckIn/SyncStatus/index.tsx:60
 msgid "Offline — {pendingCount} check-in(s) will sync when back online"
 msgstr "離線 — {pendingCount} 個簽到將在恢復連線後同步"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:37
+#: src/components/common/CheckIn/SyncStatus/index.tsx:61
 msgid "Offline — scanning still works"
 msgstr "離線 — 仍可掃描"
 
@@ -7749,8 +7753,8 @@ msgstr "儲存門票設計"
 msgid "Save VAT Settings"
 msgstr "儲存增值稅設定"
 
-#: src/components/layouts/CheckIn/index.tsx:523
-#: src/components/layouts/CheckIn/index.tsx:533
+#: src/components/layouts/CheckIn/index.tsx:541
+#: src/components/layouts/CheckIn/index.tsx:551
 msgid "Scan"
 msgstr "掃描"
 
@@ -7806,7 +7810,7 @@ msgstr "按姓名、電子郵件或帳戶搜索..."
 msgid "Search by name, email, or order #..."
 msgstr "按姓名、電子郵件或訂單號搜索..."
 
-#: src/components/layouts/CheckIn/index.tsx:519
+#: src/components/layouts/CheckIn/index.tsx:537
 msgid "Search by name, order #, attendee # or email..."
 msgstr "按姓名、訂單號、參與者號或電子郵件搜索..."
 
@@ -8730,7 +8734,7 @@ msgstr "支持電子郵件"
 msgid "Switch Organizer"
 msgstr "切換主辦單位"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:46
+#: src/components/common/CheckIn/SyncStatus/index.tsx:70
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "正在同步 {pendingCount} 個簽到…"
 
@@ -8881,7 +8885,7 @@ msgstr "促銷代碼無效"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "頁面的背景顏色。使用封面圖片時，這會作為覆蓋層應用。"
 
-#: src/components/layouts/CheckIn/index.tsx:433
+#: src/components/layouts/CheckIn/index.tsx:451
 msgid "The check-in list you are looking for does not exist."
 msgstr "您查找的簽到列表不存在。"
 
@@ -9078,7 +9082,7 @@ msgstr "此類別尚無任何產品。"
 msgid "This category is hidden from public view"
 msgstr "此類別對公眾隱藏"
 
-#: src/components/layouts/CheckIn/index.tsx:211
+#: src/components/layouts/CheckIn/index.tsx:227
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "此簽到仍在同步中，請稍後再試。"
 
@@ -9086,7 +9090,7 @@ msgstr "此簽到仍在同步中，請稍後再試。"
 msgid "This check-in list has expired"
 msgstr "此簽到列表已過期"
 
-#: src/components/layouts/CheckIn/index.tsx:448
+#: src/components/layouts/CheckIn/index.tsx:466
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "此簽到列表已過期，不再可用於簽到。"
 
@@ -9098,7 +9102,7 @@ msgstr "此簽到列表已激活"
 msgid "This check-in list is not active yet"
 msgstr "此簽到列表尚未激活"
 
-#: src/components/layouts/CheckIn/index.tsx:465
+#: src/components/layouts/CheckIn/index.tsx:483
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "此簽到列表尚未激活，不能用於簽到。"
 
@@ -9257,7 +9261,7 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "此重置密碼鏈接無效或已過期。"
 
-#: src/components/layouts/CheckIn/index.tsx:265
+#: src/components/layouts/CheckIn/index.tsx:281
 msgid "This ticket was just scanned. Please wait before scanning again."
 msgstr "此門票剛剛被掃描。請等待後再次掃描。"
 
@@ -9605,11 +9609,11 @@ msgstr "如果付款待處理則為真"
 msgid "Try another email"
 msgstr "嘗試其他郵箱"
 
-#: src/components/layouts/CheckIn/index.tsx:526
+#: src/components/layouts/CheckIn/index.tsx:544
 msgid "Turn sound off"
 msgstr "關閉聲音"
 
-#: src/components/layouts/CheckIn/index.tsx:526
+#: src/components/layouts/CheckIn/index.tsx:544
 msgid "Turn sound on"
 msgstr "開啟聲音"
 
@@ -9639,8 +9643,8 @@ msgstr "門票類型"
 msgid "Typography"
 msgstr "排版"
 
-#: src/components/layouts/CheckIn/index.tsx:230
-#: src/components/layouts/CheckIn/index.tsx:232
+#: src/components/layouts/CheckIn/index.tsx:246
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "Unable to check out attendee"
 msgstr "無法簽退參與者"
 
@@ -9660,7 +9664,7 @@ msgstr "無法創建問題。請檢查您的詳細信息"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:283
+#: src/components/layouts/CheckIn/index.tsx:301
 msgid "Unable to fetch attendee"
 msgstr "無法擷取參與者資料"
 
@@ -10596,8 +10600,8 @@ msgstr "您正在模擬 <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "您正在發出部分退款。客戶將獲得 {0} {1} 的退款。"
 
-#: src/components/layouts/CheckIn/index.tsx:225
-#: src/components/layouts/CheckIn/index.tsx:283
+#: src/components/layouts/CheckIn/index.tsx:241
+#: src/components/layouts/CheckIn/index.tsx:301
 msgid "You are offline"
 msgstr "您處於離線狀態"
 
@@ -10621,8 +10625,8 @@ msgstr "您無法封存帳戶中最後一個活躍的主辦方。"
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "您無法更改產品類型，因為有與該產品關聯的參會者。"
 
-#: src/components/layouts/CheckIn/index.tsx:248
-#: src/components/layouts/CheckIn/index.tsx:332
+#: src/components/layouts/CheckIn/index.tsx:264
+#: src/components/layouts/CheckIn/index.tsx:350
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "您無法為未支付訂單的與會者簽到。此設置可在活動設置中更改。"
 

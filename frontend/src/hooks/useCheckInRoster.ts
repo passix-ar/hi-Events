@@ -20,7 +20,7 @@ import {isSsr} from "../utilites/helpers";
  */
 
 const ROSTER_PAGE_SIZE = 250;
-const ROSTER_REFRESH_MS = 60_000;
+export const ROSTER_REFRESH_MS = 60_000;
 const QUEUE_RETRY_MS = 2_000;
 const QUEUE_MAX_RETRY_MS = 30_000;
 const QUEUE_REQUEST_TIMEOUT_MS = 8_000;
@@ -77,6 +77,39 @@ const writeJson = (key: string, value: unknown) => {
     }
 };
 
+// localStorage is not trusted input: an old format, a half-written value or a hand-edited entry all
+// come back as valid JSON with the wrong shape. A snapshot that cannot be trusted is dropped whole
+// rather than patched — downloading the roster again costs one request, while a `savedAt` that is
+// not a number reaches arithmetic and `new Date()` and takes the screen down in the middle of the
+// door.
+const readSnapshot = (shortId: IdParam): Snapshot | null => {
+    const raw = readJson<Snapshot>(rosterKey(shortId));
+    // Three checks because each one lets something through on its own: `typeof` because
+    // `new Date(null)` is the Unix epoch rather than an error, `isFinite` for NaN and Infinity, and
+    // the Date itself because 1e300 passes `isFinite` and then throws out of `toISOString()` —
+    // which is exactly where this value ends up.
+    const savedAt = raw?.savedAt;
+    const isUsableDate = typeof savedAt === 'number'
+        && Number.isFinite(savedAt)
+        && !Number.isNaN(new Date(savedAt).getTime());
+
+    if (!raw || !Array.isArray(raw.attendees) || !isUsableDate) {
+        return null;
+    }
+
+    // Entries are checked one by one too, or the shape check above is decoration: an attendee
+    // without a `public_id` takes the search box down the first time someone types in it.
+    return {
+        savedAt: raw.savedAt,
+        attendees: raw.attendees.filter(attendee => typeof attendee?.public_id === 'string'),
+    };
+};
+
+const readQueue = (shortId: IdParam): PendingCheckIn[] => {
+    const raw = readJson<PendingCheckIn[]>(queueKey(shortId));
+    return Array.isArray(raw) ? raw : [];
+};
+
 // The optimistic placeholder has no server record behind it yet, and its id is
 // the marker for that. Anything that needs the real check-in — undoing one, or
 // rolling a refused one back — keys off this instead of guessing from a blank field.
@@ -104,8 +137,8 @@ export const useCheckInRoster = (
     allowedProductIds?: (number | string)[],
 ) => {
     const [state, setState] = useState<RosterState>(() => {
-        const snapshot = readJson<Snapshot>(rosterKey(checkInListShortId));
-        const queue = readJson<PendingCheckIn[]>(queueKey(checkInListShortId)) ?? [];
+        const snapshot = readSnapshot(checkInListShortId);
+        const queue = readQueue(checkInListShortId);
         return {
             attendees: snapshot?.attendees ?? [],
             loadedAt: snapshot?.savedAt ?? null,
@@ -129,8 +162,22 @@ export const useCheckInRoster = (
 
     // ---- Roster download -------------------------------------------------
 
+    // A ref rather than the state flag: `stateRef` only catches up on the next render, so two calls
+    // landing in the same tick — the interval firing while someone taps retry — would both get
+    // through. That already meant a duplicated fetch; it would also let the second one clear the
+    // protection the first one depends on below.
+    const isRefreshingRef = useRef(false);
+    // Everything that entered the queue while a fetch was in flight. Reset on each refresh, so it
+    // cleans itself up without a map to purge or timestamps to compare.
+    const touchedDuringFetchRef = useRef<Set<string>>(new Set());
+
     const refresh = useCallback(async () => {
-        if (!enabled || stateRef.current.isLoading) return;
+        if (!enabled || isRefreshingRef.current) return;
+        isRefreshingRef.current = true;
+        touchedDuringFetchRef.current = new Set();
+        // Taken before the first page goes out: what the server is about to tell us describes its
+        // state at THIS moment, so anything queued now is newer than that answer.
+        const queuedWhenFetchStarted = new Set(stateRef.current.pending.map(p => p.publicId));
         setState(prev => ({...prev, isLoading: true, loadError: false}));
 
         try {
@@ -152,20 +199,43 @@ export const useCheckInRoster = (
             }
 
             setState(prev => {
-                // Anything still queued locally is newer than what the server just
-                // told us: keep those attendees marked as checked in.
-                const pendingIds = new Set(prev.pending.map(p => p.publicId));
+                // Anything that passed through the queue at any point during the fetch is newer
+                // than the answer we just got. Checking `pending` alone is not enough: the flush
+                // can confirm a check-in while the pages are still in flight, which takes it out of
+                // the queue before we get here, and the server's answer — taken before it existed —
+                // would then erase it. The person shows as not checked in and scanning them again
+                // goes green.
+                const protectedIds = new Set([
+                    ...queuedWhenFetchStarted,
+                    ...touchedDuringFetchRef.current,
+                    ...prev.pending.map(p => p.publicId),
+                ]);
                 const merged = all.map(a => {
-                    if (!pendingIds.has(a.public_id) || a.check_in) return a;
+                    if (!protectedIds.has(a.public_id) || a.check_in) return a;
                     const local = prev.attendees.find(p => p.public_id === a.public_id);
+                    // A refused check-in was already rolled back to undefined, so the server's
+                    // record wins here — this never resurrects one.
                     return local?.check_in ? {...a, check_in: local.check_in} : a;
                 });
+                // A protected attendee the server did not return at all: the one that arrived
+                // through the network fallback. Dropping them here would take them off the list
+                // while their check-in is still queued.
+                const returnedIds = new Set(all.map(a => a.public_id));
+                const attendees = [
+                    ...merged,
+                    ...prev.attendees.filter(a => !returnedIds.has(a.public_id) && protectedIds.has(a.public_id)),
+                ];
                 const loadedAt = Date.now();
-                writeJson(rosterKey(checkInListShortId), {savedAt: loadedAt, attendees: merged});
-                return {...prev, attendees: merged, loadedAt, isLoading: false, loadError: false};
+                writeJson(rosterKey(checkInListShortId), {savedAt: loadedAt, attendees});
+                return {...prev, attendees, loadedAt, isLoading: false, loadError: false};
             });
         } catch {
-            setState(prev => ({...prev, isLoading: false, loadError: prev.attendees.length === 0}));
+            // Flagged even with a roster already loaded. It used to be raised only when there was
+            // nothing to show, so a refresh failing behind a full list was invisible and the status
+            // bar kept saying everything was synced.
+            setState(prev => ({...prev, isLoading: false, loadError: true}));
+        } finally {
+            isRefreshingRef.current = false;
         }
     }, [checkInListShortId, enabled]);
 
@@ -211,6 +281,10 @@ export const useCheckInRoster = (
             order_id: attendee.order_id,
             checked_in_at: new Date().toISOString(),
         };
+
+        // If a refresh is in flight, its answer predates this scan: flag it so the merge does not
+        // overwrite it with a snapshot taken before the person walked in.
+        touchedDuringFetchRef.current.add(attendee.public_id);
 
         setState(prev => {
             // A ticket sold after the last refresh arrives through the network fallback and is not

@@ -149,6 +149,14 @@ const CheckIn = () => {
         }
     }, [isSoundOn]);
 
+    // Retrying the roster alone does nothing in the case where the warning matters most: opening the
+    // scanner with no signal means the check-in list never loaded, and without it the roster refresh
+    // is disabled and returns immediately. Both have to be retried.
+    const retrySync = () => {
+        CheckInListQuery.refetch();
+        roster.refresh();
+    };
+
     // What the door needs to read at a glance: the ticket type, and the seat when the event has one.
     // An event without assigned seating has no seat_label, so this degrades to the title alone.
     const ticketInfoFor = (attendee: Attendee) => {
@@ -554,7 +562,7 @@ const CheckIn = () => {
                 loadedAt={roster.loadedAt}
                 isLoading={roster.isLoading}
                 loadError={roster.loadError}
-                onRetry={roster.refresh}
+                onRetry={retrySync}
             />
             <AttendeeList
                 attendees={attendees}
