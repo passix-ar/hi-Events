@@ -5,7 +5,16 @@ import {IconArrowRight, IconExternalLink} from "@tabler/icons-react";
 import classes from './AssistantWidget.module.scss';
 import {CopyBlock, hastText} from "./CopyBlock";
 
-const isPanelPath = (href?: string) => !!href && /^\/(manage|account)(\/|$)/.test(href);
+// Only routes that exist in router.tsx become navigation buttons. A made-up
+// path under /manage (the model once wrote /tickets for /products) would land on
+// a 404, so anything outside this list is rendered as plain text instead.
+const PANEL_ROUTES = [
+    /^\/manage\/event\/\d+(\/(dashboard|reports|report\/[\w-]+|products|attendees|questions|orders|promo-codes|affiliates|check-in|messages|settings|widget|homepage-designer|ticket-designer|getting-started|sold-out-waitlist|capacity-assignments|seating|webhooks))?\/?$/,
+    /^\/manage\/organizer\/\d+(\/(dashboard|events(\/[\w-]+)?|settings|organizer-homepage-designer|webhooks|reports|report\/[\w-]+))?\/?$/,
+    /^\/manage\/(events(\/[\w-]+)?|account|profile)\/?$/,
+    /^\/account(\/(settings|taxes-and-fees|event-defaults|users|payment))?\/?$/,
+];
+const isPanelPath = (href?: string) => !!href && PANEL_ROUTES.some(route => route.test(href.split(/[?#]/)[0]));
 
 const NUMERIC_CELL = /^[\d.,%$ ARS-]+$/;
 

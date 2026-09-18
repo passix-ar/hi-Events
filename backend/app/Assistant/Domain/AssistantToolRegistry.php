@@ -10,6 +10,8 @@ use HiEvents\Assistant\Domain\Tools\ApplyFlyerPaletteTool;
 use HiEvents\Assistant\Domain\Tools\AttachFlyerToEventTool;
 use HiEvents\Assistant\Domain\Tools\CreateDraftEventTool;
 use HiEvents\Assistant\Domain\Tools\CreatePromoCodeTool;
+use HiEvents\Assistant\Domain\Tools\DeleteEventTool;
+use HiEvents\Assistant\Domain\Tools\DeleteTicketTool;
 use HiEvents\Assistant\Domain\Tools\CreateTicketTool;
 use HiEvents\Assistant\Domain\Tools\FindAttendeeTool;
 use HiEvents\Assistant\Domain\Tools\FindEventsTool;
@@ -27,6 +29,8 @@ use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
 use HiEvents\Assistant\Domain\Tools\MessageBuyersTool;
 use HiEvents\Assistant\Domain\Tools\PublishEventTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
+use HiEvents\Assistant\Domain\Tools\UpdateEventTool;
+use HiEvents\Assistant\Domain\Tools\UpdateTicketTool;
 use Illuminate\Contracts\Container\Container;
 
 /**
@@ -59,6 +63,10 @@ readonly class AssistantToolRegistry
         PublishEventTool::class,
         CreatePromoCodeTool::class,
         MessageBuyersTool::class,
+        UpdateEventTool::class,
+        UpdateTicketTool::class,
+        DeleteTicketTool::class,
+        DeleteEventTool::class,
     ];
 
     public function __construct(private Container $container)
@@ -112,6 +120,10 @@ readonly class AssistantToolRegistry
             'publish_event',
             'create_promo_code',
             'message_buyers',
+            'update_event',
+            'update_ticket',
+            'delete_ticket',
+            'delete_event',
         ];
     }
 }

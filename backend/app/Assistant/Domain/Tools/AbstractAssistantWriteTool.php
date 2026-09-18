@@ -31,6 +31,28 @@ abstract class AbstractAssistantWriteTool extends AbstractAssistantTool
         ]);
     }
 
+    /**
+     * The double check for changes to something that already exists. A draft
+     * takes a plain confirmation; a published event is selling, so the organizer
+     * has to type the exact word. Returns the JSON to send back when the check
+     * fails, null when the write may proceed.
+     */
+    protected function doubleCheck(bool $eventIsLive, ?bool $confirm, ?string $phrase, string $word): ?string
+    {
+        if ($confirm !== true) {
+            return null; // the caller shows the preview
+        }
+
+        if ($eventIsLive && $phrase !== $word) {
+            return $this->toJson([
+                'error' => 'confirmation_phrase_required',
+                'details' => sprintf('This event is published: ask the organizer to reply with the exact word %s.', $word),
+            ]);
+        }
+
+        return null;
+    }
+
     protected function logWrite(string $action, array $context): void
     {
         $this->logger->info('assistant.write.' . $action, array_merge([

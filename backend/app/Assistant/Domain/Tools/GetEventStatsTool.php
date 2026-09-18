@@ -6,7 +6,9 @@ namespace HiEvents\Assistant\Domain\Tools;
 
 use HiEvents\Assistant\Domain\AssistantContext;
 use HiEvents\Constants;
+use HiEvents\DomainObjects\ProductPriceDomainObject;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\ProductPriceRepositoryInterface;
 use HiEvents\Services\Application\Handlers\Event\DTO\EventStatsRequestDTO;
 use HiEvents\Services\Application\Handlers\Event\GetEventStatsHandler;
 use HiEvents\Services\Domain\Event\EventStatsFetchService;
@@ -25,6 +27,7 @@ class GetEventStatsTool extends AbstractAssistantTool
         private readonly GetEventStatsHandler                   $eventStats,
         private readonly EventStatsFetchService                 $eventStatsFetchService,
         private readonly AvailableProductQuantitiesFetchService $availableQuantities,
+        private readonly ProductPriceRepositoryInterface        $prices,
     )
     {
         parent::__construct($context, $isAuthorizedService, $events, $logger);
@@ -54,6 +57,12 @@ class GetEventStatsTool extends AbstractAssistantTool
         $checkIn = $this->eventStatsFetchService->getCheckedInStats($eventId);
         $quantities = $this->availableQuantities->getAvailableProductQuantities($eventId, ignoreCache: true);
 
+        // Current prices, so "change the VIP to 14000" can show what it changes from.
+        $priceById = $this->prices
+            ->findWhereIn('id', $quantities->productQuantities->map(fn(AvailableProductQuantitiesDTO $q): int => $q->price_id)->all())
+            ->mapWithKeys(fn(ProductPriceDomainObject $p): array => [$p->getId() => $this->money($p->getPrice())])
+            ->all();
+
         return $this->toJson([
             'event' => [
                 'id' => $eventId,
@@ -82,6 +91,7 @@ class GetEventStatsTool extends AbstractAssistantTool
                     'product_id' => $q->product_id,
                     'title' => $this->clip($q->product_title),
                     'price_label' => $this->clip($q->price_label, 40),
+                    'price' => $priceById[$q->price_id] ?? null,
                     'available' => $q->quantity_available >= Constants::INFINITE ? 'unlimited' : $q->quantity_available,
                     'reserved_in_checkout' => $q->quantity_reserved,
                     'initial_capacity' => $q->initial_quantity_available,
