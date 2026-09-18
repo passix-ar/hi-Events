@@ -286,6 +286,31 @@ class CreateAttendeeCheckInServiceBatchIsolationTest extends TestCase
     }
 
     /**
+     * The event setting is what authorises paying an order from the door, and it has to stay that
+     * way: the order must not even be read when the event does not allow it. Nothing in the check
+     * added for the stuck-queue fix may become a second way in.
+     */
+    public function testAnEventThatDisallowsOfflinePaymentNeverReachesTheOrder(): void
+    {
+        $checkInList = $this->activeCheckInList();
+        $attendee = $this->attendee('A-ONE', id: 10, productId: 2, orderId: 7, status: AttendeeStatus::AWAITING_PAYMENT->name);
+
+        $this->primeFlow($checkInList, collect([$attendee]), allowOfflinePaymentCheckIn: false);
+        $this->checkInListDataService->shouldReceive('validateAttendeeBelongsToCheckInList')->once()->andReturnNull();
+
+        $this->orderRepository->shouldNotReceive('findFirstWhere');
+        $this->markOrderAsPaidService->shouldNotReceive('markOrderAsPaid');
+        $this->attendeeCheckInRepository->shouldNotReceive('create');
+
+        $response = $this->service->checkInAttendees('cil_test', '127.0.0.1', collect([
+            new AttendeeAndActionDTO('A-ONE', AttendeeCheckInActionType::CHECK_IN_AND_MARK_ORDER_AS_PAID),
+        ]));
+
+        $this->assertCount(0, $response->attendeeCheckIns);
+        $this->assertArrayHasKey('A-ONE', $response->errors->errors);
+    }
+
+    /**
      * This runs behind a public endpoint whose only secret is a shareable short id, so the order has
      * to be scoped to the event and never reachable by id alone.
      */
