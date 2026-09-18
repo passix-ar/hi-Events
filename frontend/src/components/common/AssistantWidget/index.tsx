@@ -1,11 +1,16 @@
 import {useEffect, useRef, useState} from "react";
 import {ActionIcon, Button, Loader, Textarea, Tooltip} from "@mantine/core";
 import {useMediaQuery} from "@mantine/hooks";
-import {IconArrowUp, IconMessageChatbot, IconPhotoPlus, IconRobot, IconTool, IconTrash, IconUser, IconX} from "@tabler/icons-react";
+import {IconArrowUp, IconLayoutSidebarRightExpand, IconMessageChatbot, IconPhotoPlus, IconRobot, IconTool, IconTrash, IconUser, IconX} from "@tabler/icons-react";
+import {useQueryClient} from "@tanstack/react-query";
 import {t, Trans} from "@lingui/macro";
 import {useSendAssistantMessage} from "../../../mutations/useSendAssistantMessage.ts";
 import {useUploadAssistantAttachment} from "../../../mutations/useUploadAssistantAttachment.ts";
-import {AssistantStreamToolCall, streamAssistantChat} from "./useAssistantStream.ts";
+import {AssistantStreamToolCall, AssistantStreamToolDone, streamAssistantChat} from "./useAssistantStream.ts";
+import {AssistantStudio} from "./AssistantStudio.tsx";
+import {GET_EVENT_QUERY_KEY} from "../../../queries/useGetEvent.ts";
+import {GET_EVENT_IMAGES_QUERY_KEY} from "../../../queries/useGetEventImages.ts";
+import {GET_EVENTS_QUERY_KEY} from "../../../queries/useGetEvents.ts";
 import {AssistantEntity, IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
@@ -15,6 +20,14 @@ import classes from './AssistantWidget.module.scss';
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
 const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
+
+// Writes that change what the event page looks like: each one finishing reloads
+// the live preview in studio mode.
+const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+
+interface StudioState {
+    eventId: number | null;
+}
 
 interface AssistantWidgetProps {
     organizerId: IdParam;
@@ -55,6 +68,65 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const isMobile = useMediaQuery('(max-width: 600px)');
+    const queryClient = useQueryClient();
+
+    // Studio mode: the chat on the left, the organizer's real event page on the
+    // right, rebuilding as the tools run. It opens on its own when a flyer comes
+    // in or a write touches an event, and survives navigation like the chat does.
+    const STUDIO_KEY = `passix.assistant.${organizerId}.studio`;
+    const [studio, setStudioState] = useState<StudioState | null>(() => {
+        try {
+            const raw = typeof window !== 'undefined' ? window.sessionStorage.getItem(STUDIO_KEY) : null;
+            return raw ? (JSON.parse(raw) as StudioState) : null;
+        } catch {
+            return null;
+        }
+    });
+    const setStudio = (value: StudioState | null) => {
+        setStudioState(value);
+        try {
+            if (value) {
+                window.sessionStorage.setItem(STUDIO_KEY, JSON.stringify(value));
+            } else {
+                window.sessionStorage.removeItem(STUDIO_KEY);
+            }
+        } catch {
+            // best effort
+        }
+    };
+    const [previewVersion, setPreviewVersion] = useState(0);
+    const [flyerStage, setFlyerStage] = useState<string | null>(null);
+    const studioOpen = studio !== null && !isMobile;
+
+    // The most recently touched event the conversation knows about.
+    const lastKnownEvent = (): number | null => {
+        for (let index = entries.length - 1; index >= 0; index--) {
+            const events = (entries[index].entities ?? []).filter(entity => entity.type === 'event');
+            if (events.length > 0) {
+                return events[events.length - 1].id;
+            }
+        }
+        return null;
+    };
+
+    const onToolDone = (done: AssistantStreamToolDone) => {
+        if (!PAGE_TOOLS.includes(done.name) || !done.success) {
+            return;
+        }
+        const events = done.entities.filter(entity => entity.type === 'event');
+        const eventId = events.length > 0 ? events[events.length - 1].id : null;
+        if (done.name === 'delete_event') {
+            setStudio(null);
+        } else if (eventId !== null) {
+            setStudio({eventId});
+            setFlyerStage(null);
+        }
+        setPreviewVersion(version => version + 1);
+        // Whatever the panel shows for this event is stale now.
+        void queryClient.invalidateQueries({queryKey: [GET_EVENT_QUERY_KEY, eventId]});
+        void queryClient.invalidateQueries({queryKey: [GET_EVENT_IMAGES_QUERY_KEY, eventId]});
+        void queryClient.invalidateQueries({queryKey: [GET_EVENTS_QUERY_KEY]});
+    };
 
     useEffect(() => {
         rememberLastAssistantOrganizer(organizerId);
@@ -112,7 +184,13 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
             const preview = typeof reader.result === 'string' ? reader.result : '';
 
             uploadAttachment.mutate({organizerId, file}, {
-                onSuccess: ({data}) => setAttachment({id: data.id, name: data.name, preview}),
+                onSuccess: ({data}) => {
+                    setAttachment({id: data.id, name: data.name, preview});
+                    if (!studio) {
+                        setStudio({eventId: null});
+                    }
+                    setFlyerStage(preview);
+                },
                 onError: (mutationError: any) => {
                     const message = mutationError?.response?.data?.errors?.image?.[0]
                         ?? mutationError?.response?.data?.message;
@@ -187,13 +265,19 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                 onDelta: (text) => setLive(previous => ({text: (previous?.text ?? '') + text, tools: previous?.tools ?? []})),
                 onTool: (call) => setLive(previous => ({text: previous?.text ?? '', tools: [...(previous?.tools ?? []), call]})),
                 onDone: (done) => finish(done.reply, done.tool_calls, done.entities),
+                onToolDone,
                 onError: (streamError) => fail(streamError.status, streamError.message),
             });
             return;
         }
 
         sendMessage.mutate(request, {
-            onSuccess: ({data}) => finish(data.reply, data.tool_calls, data.entities),
+            onSuccess: ({data}) => {
+                finish(data.reply, data.tool_calls, data.entities);
+                data.tool_calls
+                    .filter(call => PAGE_TOOLS.includes(call.name))
+                    .forEach(call => onToolDone({name: call.name, success: true, entities: data.entities}));
+            },
             onError: (mutationError: any) => fail(mutationError?.response?.status, mutationError?.response?.data?.message),
         });
     };
@@ -215,7 +299,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
 
             {open && (
                 <div
-                    className={`${classes.panel} ${isMobile ? classes.panelMobile : ''} ${dragging ? classes.panelDragging : ''}`}
+                    className={`${classes.panel} ${isMobile ? classes.panelMobile : ''} ${studioOpen ? classes.panelStudio : ''} ${dragging ? classes.panelDragging : ''}`}
                     role="dialog"
                     aria-label={t`Assistant`}
                     onDragOver={(event) => { event.preventDefault(); setDragging(true); }}
@@ -233,6 +317,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                         }
                     }}
                 >
+                    <div className={classes.chatColumn}>
                     <div className={classes.header}>
                         <div className={classes.headerTitle}>
                             <IconRobot size={18}/>
@@ -244,8 +329,20 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             </span>
                         )}
                         <div className={classes.headerActions}>
+                            {!studioOpen && !isMobile && (
+                                <Tooltip label={t`Studio: watch the event page build itself`}>
+                                    <ActionIcon
+                                        variant="subtle"
+                                        color="gray"
+                                        aria-label={t`Open the studio`}
+                                        onClick={() => setStudio({eventId: focusedEvent ? Number(focusedEvent.id) : lastKnownEvent()})}
+                                    >
+                                        <IconLayoutSidebarRightExpand size={18}/>
+                                    </ActionIcon>
+                                </Tooltip>
+                            )}
                             {entries.length > 0 && (
-                                <ActionIcon variant="subtle" color="gray" aria-label={t`Clear conversation`} onClick={clear}>
+                                <ActionIcon variant="subtle" color="gray" aria-label={t`Clear conversation`} onClick={() => { clear(); setStudio(null); setFlyerStage(null); }}>
                                     <IconTrash size={16}/>
                                 </ActionIcon>
                             )}
@@ -408,6 +505,18 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                             <IconArrowUp size={18}/>
                         </ActionIcon>
                     </div>
+                    </div>
+
+                    {studioOpen && (
+                        <AssistantStudio
+                            eventId={studio.eventId}
+                            flyerPreview={flyerStage ?? attachment?.preview ?? null}
+                            version={previewVersion}
+                            building={live !== null || sendMessage.isPending}
+                            buildingStep={live && live.tools.length > 0 ? live.tools[live.tools.length - 1].name : null}
+                            onClose={() => setStudio(null)}
+                        />
+                    )}
                 </div>
             )}
         </>

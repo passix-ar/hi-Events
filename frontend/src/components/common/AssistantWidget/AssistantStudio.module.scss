@@ -1,0 +1,315 @@
+.studio {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--hi-color-black, #0b0b0e);
+  border-left: 1px solid var(--hi-color-gray-2);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: var(--hi-spacing-md);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--hi-color-gray-2);
+}
+
+.titleBlock {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hi-primary);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--hi-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statusDraft {
+  background: var(--hi-color-gray-2);
+  color: var(--hi-text-light, #a0a0a8);
+}
+
+.statusLive {
+  background: var(--hi-primary);
+  color: var(--hi-color-black, #0b0b0e);
+}
+
+.checklist {
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid var(--hi-color-gray-2);
+}
+
+.progressTrack {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--hi-color-gray-2);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--hi-primary);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--hi-text-light, #a0a0a8);
+  transition: color 0.3s ease;
+}
+
+.stepIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hi-color-gray-3, #3a3a44);
+  color: inherit;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.stepDone {
+  color: var(--hi-text);
+
+  .stepIcon {
+    background: var(--hi-primary);
+    border-color: var(--hi-primary);
+    color: var(--hi-color-black, #0b0b0e);
+    animation: pop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.stepWarn {
+  color: #ffd43b;
+
+  .stepIcon {
+    border-color: #ffd43b;
+  }
+}
+
+.stepLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.4); }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--hi-color-gray);
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.frameLoaded {
+  opacity: 1;
+}
+
+.frameLoading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flyerStage {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.flyer {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--hi-radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.015); filter: brightness(1.08); }
+}
+
+.emptyHint {
+  max-width: 320px;
+  text-align: center;
+  color: var(--hi-text-light, #a0a0a8);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 18px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(11, 11, 14, 0.55), rgba(11, 11, 14, 0) 40%);
+}
+
+.veilCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--hi-color-gray);
+  border: 1px solid var(--hi-color-gray-2);
+  color: var(--hi-text);
+  font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: rise 0.3s ease;
+}
+
+@keyframes rise {
+  from { transform: translateY(-8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0.95;
+  animation: fall 3.2s cubic-bezier(0.25, 0.8, 0.6, 1) forwards;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.6; }
+}
+
+.shareBar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--hi-color-gray-2);
+  background: var(--hi-color-gray);
+  animation: rise 0.4s ease;
+}
+
+.qr {
+  flex-shrink: 0;
+  color: var(--hi-text);
+  background: #fff;
+  color: #000;
+  padding: 4px;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.shareText {
+  flex: 1;
+  min-width: 0;
+}
+
+.shareTitle {
+  font-weight: 600;
+  color: var(--hi-text);
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.shareLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--hi-primary);
+  font-size: 12px;
+  text-decoration: none;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// CopyButton is absolutely positioned for the copy blocks; give it a box here.
+.shareCopy {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  height: 28px;
+}

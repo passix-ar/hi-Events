@@ -43,6 +43,39 @@ $panel-height: 620px;
   overflow: hidden;
 }
 
+// Studio mode: the chat keeps its width on the left and the event page takes
+// the rest of the screen. Same panel, just bigger.
+.panelStudio {
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  top: 16px;
+  width: auto;
+  max-width: none;
+  height: auto;
+  max-height: none;
+  flex-direction: row;
+  animation: expand 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+  .chatColumn {
+    flex: 0 0 ($panel-width + 40px);
+    width: $panel-width + 40px;
+  }
+}
+
+@keyframes expand {
+  from { transform: scale(0.96); opacity: 0.6; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.chatColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  min-width: 0;
+}
+
 .panelDragging {
   outline: 2px dashed var(--hi-primary);
   outline-offset: -6px;

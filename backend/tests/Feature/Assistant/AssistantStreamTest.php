@@ -199,6 +199,13 @@ class AssistantStreamTest extends TestCase
         $this->assertCount(1, $tools);
         $this->assertSame(['name' => 'get_ticket_ranking', 'arguments' => ['event_id' => 7]], $tools[0]['data']);
 
+        $finished = $this->eventsOfType($events, 'tool_done');
+        $this->assertCount(1, $finished, 'the client learns when a tool returns, never what it returned');
+        $this->assertSame('get_ticket_ranking', $finished[0]['data']['name']);
+        $this->assertTrue($finished[0]['data']['success']);
+        $this->assertArrayHasKey('entities', $finished[0]['data']);
+        $this->assertArrayNotHasKey('result', $finished[0]['data']);
+
         $done = $this->eventsOfType($events, 'done')[0]['data'];
         $this->assertSame('Tu entrada más vendida es General.', $done['reply']);
         $this->assertSame([['name' => 'get_ticket_ranking', 'arguments' => ['event_id' => 7]]], $done['tool_calls']);

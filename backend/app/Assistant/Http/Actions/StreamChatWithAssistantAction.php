@@ -24,6 +24,7 @@ use Throwable;
  *
  *   event: delta   data: {"text": "..."}
  *   event: tool    data: {"name": "...", "arguments": {...}}
+ *   event: tool_done data: {"name": "...", "success": bool, "entities": [...]}
  *   event: done    data: {"reply": "...", "tool_calls": [...], "entities": [...], "input_tokens": n, "output_tokens": n}
  *   event: error   data: {"message": "...", "status": 404|429|503}
  *

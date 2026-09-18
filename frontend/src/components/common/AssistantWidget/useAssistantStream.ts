@@ -30,6 +30,12 @@ export interface AssistantStreamDone {
     output_tokens: number;
 }
 
+export interface AssistantStreamToolDone {
+    name: string;
+    success: boolean;
+    entities: AssistantEntity[];
+}
+
 export interface AssistantStreamError {
     message: string;
     status: number;
@@ -42,6 +48,7 @@ export interface StreamAssistantChatOptions {
     onDelta?: (text: string) => void;
     onTool?: (call: AssistantStreamToolCall) => void;
     onDone?: (done: AssistantStreamDone) => void;
+    onToolDone?: (done: AssistantStreamToolDone) => void;
     onError?: (error: AssistantStreamError) => void;
     signal?: AbortSignal;
 }
@@ -125,7 +132,8 @@ export const streamAssistantChat = async ({
                                               onDelta,
                                               onTool,
                                               onDone,
-                                              onError,
+    onToolDone,
+    onError,
                                               signal,
                                           }: StreamAssistantChatOptions): Promise<AssistantStreamDone | null> => {
     const url = `${trimSlashes(api.defaults.baseURL ?? '')}/organizers/${organizerId}/assistant/chat/stream`;
@@ -177,6 +185,13 @@ export const streamAssistantChat = async ({
                 const data = parseJson<AssistantStreamToolCall>(sse.data);
                 if (data?.name) {
                     onTool?.({name: data.name, arguments: data.arguments ?? {}});
+                }
+                break;
+            }
+            case 'tool_done': {
+                const data = parseJson<AssistantStreamToolDone>(sse.data);
+                if (data?.name) {
+                    onToolDone?.({name: data.name, success: data.success !== false, entities: data.entities ?? []});
                 }
                 break;
             }

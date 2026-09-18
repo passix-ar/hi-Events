@@ -17,6 +17,7 @@ use Prism\Prism\Streaming\Events\StepFinishEvent;
 use Prism\Prism\Streaming\Events\StreamEndEvent;
 use Prism\Prism\Streaming\Events\TextDeltaEvent;
 use Prism\Prism\Streaming\Events\ToolCallEvent;
+use Prism\Prism\Streaming\Events\ToolResultEvent;
 use Prism\Prism\Text\PendingRequest;
 use Prism\Prism\Text\Response;
 use Prism\Prism\Text\Step;
@@ -96,9 +97,10 @@ readonly class AssistantConversationService
      * Streaming twin of converse(): same request, same log line, same reply DTO,
      * but text and tool calls are handed to $emit as they arrive.
      *
-     * $emit receives ('delta', ['text' => string]) for every text chunk and
+     * $emit receives ('delta', ['text' => string]) for every text chunk,
      * ('tool', ['name' => string, 'arguments' => array]) when the model calls a
-     * tool. Nothing Prism-specific leaks through it.
+     * tool and ('tool_done', ['name', 'success', 'entities']) when it returns.
+     * Nothing Prism-specific leaks through it.
      *
      * @param list<AssistantMessageDTO> $history
      * @param callable(string $event, array<string, mixed> $data): void $emit
@@ -126,6 +128,15 @@ readonly class AssistantConversationService
                     );
                     $toolCalls[] = $call;
                     $emit('tool', ['name' => $call->name, 'arguments' => $call->arguments]);
+                } elseif ($event instanceof ToolResultEvent) {
+                    // The result itself stays server side; the client only learns that
+                    // the tool finished and which ids the conversation knows by now, so
+                    // the live preview can refresh as soon as an event exists.
+                    $emit('tool_done', [
+                        'name' => $event->toolResult->toolName,
+                        'success' => $event->success,
+                        'entities' => $context->entities->all(),
+                    ]);
                 } elseif ($event instanceof StepFinishEvent) {
                     $steps++;
                 } elseif ($event instanceof StreamEndEvent) {
