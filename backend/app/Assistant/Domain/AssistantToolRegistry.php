@@ -30,6 +30,9 @@ use HiEvents\Assistant\Domain\Tools\MessageBuyersTool;
 use HiEvents\Assistant\Domain\Tools\PublishEventTool;
 use HiEvents\Assistant\Domain\Tools\SetEventThemeTool;
 use HiEvents\Assistant\Domain\Tools\SetOfflinePaymentTool;
+use HiEvents\Assistant\Domain\Tools\GetSeatingSectionsTool;
+use HiEvents\Assistant\Domain\Tools\CreateSeatingSectionTool;
+use HiEvents\Assistant\Domain\Tools\DeleteSeatingSectionTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use HiEvents\Assistant\Domain\Tools\UpdateEventTool;
 use HiEvents\Assistant\Domain\Tools\UpdateTicketTool;
@@ -64,6 +67,9 @@ readonly class AssistantToolRegistry
         ApplyFlyerPaletteTool::class,
         SetEventThemeTool::class,
         SetOfflinePaymentTool::class,
+        GetSeatingSectionsTool::class,
+        CreateSeatingSectionTool::class,
+        DeleteSeatingSectionTool::class,
         PublishEventTool::class,
         CreatePromoCodeTool::class,
         MessageBuyersTool::class,
@@ -123,6 +129,9 @@ readonly class AssistantToolRegistry
             'apply_flyer_palette',
             'set_event_theme',
             'set_offline_payment',
+            'get_seating_sections',
+            'create_seating_section',
+            'delete_seating_section',
             'publish_event',
             'create_promo_code',
             'message_buyers',

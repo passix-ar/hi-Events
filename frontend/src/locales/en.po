@@ -590,6 +590,10 @@ msgstr "Add Webhook"
 msgid "Add your social media handles and website URL. These will be displayed on your public organizer page."
 msgstr "Add your social media handles and website URL. These will be displayed on your public organizer page."
 
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:49
+msgid "Adding a seat map section"
+msgstr "Adding a seat map section"
+
 #: src/components/common/AssistantWidget/AssistantStudio.tsx:44
 msgid "Adding tickets"
 msgstr "Adding tickets"
@@ -858,7 +862,7 @@ msgstr "Answer updated successfully."
 msgid "Any queries from product holders will be sent to this email address. This will also be used as the \"reply-to\" address for all emails sent from this event"
 msgstr "Any queries from product holders will be sent to this email address. This will also be used as the \"reply-to\" address for all emails sent from this event"
 
-#: src/components/common/AssistantWidget/index.tsx:518
+#: src/components/common/AssistantWidget/index.tsx:538
 msgid "Anything to add about the flyer? (optional)"
 msgstr "Anything to add about the flyer? (optional)"
 
@@ -1087,7 +1091,7 @@ msgstr "As your business is based in Ireland, Irish VAT at 23% applies automatic
 msgid "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 msgstr "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 
-#: src/components/common/AssistantWidget/index.tsx:519
+#: src/components/common/AssistantWidget/index.tsx:539
 msgid "Ask about this event…"
 msgstr "Ask about this event…"
 
@@ -1099,7 +1103,7 @@ msgstr "Ask about this event…"
 #~ msgid "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
 #~ msgstr "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
 
-#: src/components/common/AssistantWidget/index.tsx:390
+#: src/components/common/AssistantWidget/index.tsx:391
 msgid "Ask about your sales, tickets and events, or drop a flyer here and I will set the event up from it. I only read your own data."
 msgstr "Ask about your sales, tickets and events, or drop a flyer here and I will set the event up from it. I only read your own data."
 
@@ -1115,7 +1119,7 @@ msgstr "Ask once per order"
 msgid "Ask once per product"
 msgstr "Ask once per product"
 
-#: src/components/common/AssistantWidget/index.tsx:519
+#: src/components/common/AssistantWidget/index.tsx:539
 msgid "Ask something about your events…"
 msgstr "Ask something about your events…"
 
@@ -1132,9 +1136,9 @@ msgstr "Assigned Seating"
 msgid "Assigned Tier"
 msgstr "Assigned Tier"
 
-#: src/components/common/AssistantWidget/index.tsx:315
-#: src/components/common/AssistantWidget/index.tsx:331
-#: src/components/common/AssistantWidget/index.tsx:351
+#: src/components/common/AssistantWidget/index.tsx:316
+#: src/components/common/AssistantWidget/index.tsx:332
+#: src/components/common/AssistantWidget/index.tsx:352
 msgid "Assistant"
 msgstr "Assistant"
 
@@ -1143,7 +1147,7 @@ msgstr "Assistant"
 msgid "At least one event type must be selected"
 msgstr "At least one event type must be selected"
 
-#: src/components/common/AssistantWidget/index.tsx:502
+#: src/components/common/AssistantWidget/index.tsx:522
 msgid "Attach a flyer"
 msgstr "Attach a flyer"
 
@@ -1383,10 +1387,10 @@ msgstr "Back to messages"
 msgid "Back to Reports"
 msgstr "Back to Reports"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:127
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:128
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:248
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:249
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:131
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:132
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:252
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:253
 msgid "Back to the chat"
 msgstr "Back to the chat"
 
@@ -1768,7 +1772,7 @@ msgstr "Checkboxes"
 msgid "Checked In"
 msgstr "Checked In"
 
-#: src/components/common/AssistantWidget/index.tsx:465
+#: src/components/common/AssistantWidget/index.tsx:485
 msgid "Checking your data…"
 msgstr "Checking your data…"
 
@@ -1821,7 +1825,7 @@ msgstr "Choose your seats"
 msgid "City"
 msgstr "City"
 
-#: src/components/common/AssistantWidget/index.tsx:375
+#: src/components/common/AssistantWidget/index.tsx:376
 msgid "Clear conversation"
 msgstr "Clear conversation"
 
@@ -1849,7 +1853,7 @@ msgstr "Click to view notes"
 msgid "close"
 msgstr "close"
 
-#: src/components/common/AssistantWidget/index.tsx:379
+#: src/components/common/AssistantWidget/index.tsx:380
 #: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:27
 #: src/components/common/CookieConsentBanner/index.tsx:37
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
@@ -2606,7 +2610,7 @@ msgstr "Creating Organizer..."
 msgid "Creating the event"
 msgstr "Creating the event"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:53
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:55
 msgid "Creating the promo code"
 msgstr "Creating the promo code"
 
@@ -3052,7 +3056,7 @@ msgstr "Download sales, attendee, and financial reports for all completed orders
 msgid "Downloading Invoice"
 msgstr "Downloading Invoice"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:229
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:233
 #: src/components/common/EventCard/index.tsx:84
 #: src/components/layouts/Event/index.tsx:195
 #: src/components/layouts/OrganizerLayout/index.tsx:219
@@ -3076,7 +3080,7 @@ msgstr "Drag the stage and each section to lay out your room."
 msgid "Drag to reposition"
 msgstr "Drag to reposition"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:145
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:149
 msgid "Drop a flyer into the chat, or tell the assistant what you are organizing, and watch the page build itself here."
 msgstr "Drop a flyer into the chat, or tell the assistant what you are organizing, and watch the page build itself here."
 
@@ -3602,7 +3606,7 @@ msgid "EUR"
 msgstr "EUR"
 
 #: src/components/common/AdminOrdersTable/index.tsx:72
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:203
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:207
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:34
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:35
 #: src/components/common/Editor/Controls/InsertLiquidVariableControl.tsx:36
@@ -3645,7 +3649,7 @@ msgstr "Event Category"
 msgid "Event Cover Image"
 msgstr "Event Cover Image"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:57
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:59
 msgid "Event created"
 msgstr "Event created"
 
@@ -3746,7 +3750,7 @@ msgstr "Event organizer name"
 msgid "Event Page"
 msgstr "Event Page"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:279
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:283
 msgid "Event page preview"
 msgstr "Event page preview"
 
@@ -3806,7 +3810,7 @@ msgstr "Event Too New"
 msgid "Event Types"
 msgstr "Event Types"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:64
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:68
 msgid "Event updated"
 msgstr "Event updated"
 
@@ -4342,11 +4346,11 @@ msgstr "Fixed Fee:"
 msgid "Flash is not available on this device"
 msgstr "Flash is not available on this device"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:205
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:209
 msgid "Flyer"
 msgstr "Flyer"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:59
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:61
 msgid "Flyer set as cover"
 msgstr "Flyer set as cover"
 
@@ -4540,7 +4544,7 @@ msgstr "Here are all the tickets associated with your email address."
 msgid "Here is an example of how you can use the component in your application."
 msgstr "Here is an example of how you can use the component in your application."
 
-#: src/components/common/AssistantWidget/index.tsx:241
+#: src/components/common/AssistantWidget/index.tsx:242
 msgid "Here is the flyer, set the event up from it."
 msgstr "Here is the flyer, set the event up from it."
 
@@ -4684,7 +4688,7 @@ msgstr "Homepage Preview"
 msgid "Homer"
 msgstr "Homer"
 
-#: src/components/common/AssistantWidget/index.tsx:192
+#: src/components/common/AssistantWidget/index.tsx:193
 msgid "How is check-in going?"
 msgstr "How is check-in going?"
 
@@ -4708,7 +4712,7 @@ msgstr "How long a customer has to complete their purchase after receiving an of
 msgid "How many minutes the customer has to complete their order. We recommend at least 15 minutes"
 msgstr "How many minutes the customer has to complete their order. We recommend at least 15 minutes"
 
-#: src/components/common/AssistantWidget/index.tsx:190
+#: src/components/common/AssistantWidget/index.tsx:191
 msgid "How many tickets are left for this event?"
 msgstr "How many tickets are left for this event?"
 
@@ -4716,7 +4720,7 @@ msgstr "How many tickets are left for this event?"
 msgid "How many times can this code be used?"
 msgstr "How many times can this code be used?"
 
-#: src/components/common/AssistantWidget/index.tsx:195
+#: src/components/common/AssistantWidget/index.tsx:196
 msgid "How much did I sell this month?"
 msgstr "How much did I sell this month?"
 
@@ -4995,7 +4999,7 @@ msgstr "Irish VAT at 23% will be applied to platform fees (domestic supply)."
 msgid "Is this account VAT registered in the EU?"
 msgstr "Is this account VAT registered in the EU?"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:321
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:325
 msgid "It is on sale. Share it:"
 msgstr "It is on sale. Share it:"
 
@@ -5225,8 +5229,8 @@ msgstr "LIVE"
 msgid "Live Events"
 msgstr "Live Events"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:120
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:220
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:124
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:224
 msgid "Live page"
 msgstr "Live page"
 
@@ -5413,7 +5417,7 @@ msgstr "Maximum Per Order"
 msgid "Medium"
 msgstr "Medium"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:206
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:210
 msgid "Mercado Pago"
 msgstr "Mercado Pago"
 
@@ -6060,7 +6064,7 @@ msgstr "Offline"
 msgid "Offline orders are not reflected in event statistics until the order is marked as paid."
 msgstr "Offline orders are not reflected in event statistics until the order is marked as paid."
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:206
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:210
 msgid "Offline payment"
 msgstr "Offline payment"
 
@@ -6079,7 +6083,7 @@ msgstr "Offline payment failed. Please try again or contact the event organizer.
 msgid "Offline Payment Instructions"
 msgstr "Offline Payment Instructions"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:62
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:64
 msgid "Offline payment set"
 msgstr "Offline payment set"
 
@@ -6095,7 +6099,7 @@ msgstr "Offline Payments Information"
 msgid "Offline Payments Settings"
 msgstr "Offline Payments Settings"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:229
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:233
 msgid "On sale"
 msgstr "On sale"
 
@@ -6173,7 +6177,7 @@ msgstr "Only visible with promo code"
 msgid "Open Check-In Page"
 msgstr "Open Check-In Page"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:245
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:249
 msgid "Open in the panel"
 msgstr "Open in the panel"
 
@@ -6187,11 +6191,11 @@ msgstr "Open sidebar"
 msgid "Open Stripe Dashboard"
 msgstr "Open Stripe Dashboard"
 
-#: src/components/common/AssistantWidget/index.tsx:319
+#: src/components/common/AssistantWidget/index.tsx:320
 msgid "Open the assistant"
 msgstr "Open the assistant"
 
-#: src/components/common/AssistantWidget/index.tsx:364
+#: src/components/common/AssistantWidget/index.tsx:365
 msgid "Open the studio"
 msgstr "Open the studio"
 
@@ -6590,7 +6594,7 @@ msgstr "Padding"
 msgid "Page"
 msgstr "Page"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:61
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:63
 msgid "Page colours changed"
 msgstr "Page colours changed"
 
@@ -6602,7 +6606,7 @@ msgstr "Page no longer available"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:60
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:62
 msgid "Page painted with the flyer colours"
 msgstr "Page painted with the flyer colours"
 
@@ -7294,7 +7298,7 @@ msgstr "Promo code"
 msgid "Promo Code"
 msgstr "Promo Code"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:67
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:71
 msgid "Promo code created"
 msgstr "Promo code created"
 
@@ -7345,12 +7349,12 @@ msgstr "Publish"
 msgid "Publish Event"
 msgstr "Publish Event"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:63
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:207
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:67
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:211
 msgid "Published"
 msgstr "Published"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:49
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:51
 msgid "Publishing"
 msgstr "Publishing"
 
@@ -7427,8 +7431,8 @@ msgstr "Rate limit exceeded. Please try again later."
 msgid "Re-offer Spot"
 msgstr "Re-offer Spot"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:123
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:223
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:127
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:227
 msgid "Reading your flyer…"
 msgstr "Reading your flyer…"
 
@@ -7572,8 +7576,8 @@ msgstr "Register"
 msgid "Registration Questions"
 msgstr "Registration Questions"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:233
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:234
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:237
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:238
 msgid "Reload the page"
 msgstr "Reload the page"
 
@@ -7593,7 +7597,7 @@ msgstr "remove"
 msgid "Remove"
 msgstr "Remove"
 
-#: src/components/common/AssistantWidget/index.tsx:481
+#: src/components/common/AssistantWidget/index.tsx:501
 msgid "Remove image"
 msgstr "Remove image"
 
@@ -7601,7 +7605,11 @@ msgstr "Remove image"
 msgid "Removed"
 msgstr "Removed"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:52
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:50
+msgid "Removing a seat map section"
+msgstr "Removing a seat map section"
+
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:54
 msgid "Removing a ticket"
 msgstr "Removing a ticket"
 
@@ -7786,7 +7794,7 @@ msgstr "Revoke Offer"
 msgid "Role"
 msgstr "Role"
 
-#: src/components/common/AssistantWidget/index.tsx:464
+#: src/components/common/AssistantWidget/index.tsx:484
 msgid "Running {0}…"
 msgstr "Running {0}…"
 
@@ -8036,6 +8044,14 @@ msgstr "Search..."
 msgid "Seat"
 msgstr "Seat"
 
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:65
+msgid "Seat map section added"
+msgstr "Seat map section added"
+
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:66
+msgid "Seat map section removed"
+msgstr "Seat map section removed"
+
 #: src/components/modals/CreateSeatingSectionModal/index.tsx:44
 msgid "Seating section created successfully"
 msgstr "Seating section created successfully"
@@ -8236,7 +8252,7 @@ msgstr "Selected"
 msgid "Selling fast 🔥"
 msgstr "Selling fast 🔥"
 
-#: src/components/common/AssistantWidget/index.tsx:531
+#: src/components/common/AssistantWidget/index.tsx:551
 #: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
 msgid "Send"
@@ -8369,8 +8385,8 @@ msgstr "Set default settings for new events created under this organizer."
 msgid "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 msgstr "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 
-#: src/components/common/AssistantWidget/index.tsx:197
-#: src/components/common/AssistantWidget/index.tsx:400
+#: src/components/common/AssistantWidget/index.tsx:198
+#: src/components/common/AssistantWidget/index.tsx:401
 msgid "Set up an event from a flyer"
 msgstr "Set up an event from a flyer"
 
@@ -8417,7 +8433,7 @@ msgstr "Settings"
 msgid "Setup & Design"
 msgstr "Setup & Design"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:256
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:260
 msgid "Setup progress"
 msgstr "Setup progress"
 
@@ -8471,7 +8487,7 @@ msgstr "Show marketing opt-in checkbox"
 msgid "Show marketing opt-in checkbox by default"
 msgstr "Show marketing opt-in checkbox by default"
 
-#: src/components/common/AssistantWidget/index.tsx:196
+#: src/components/common/AssistantWidget/index.tsx:197
 msgid "Show me my latest sales"
 msgstr "Show me my latest sales"
 
@@ -8715,7 +8731,7 @@ msgstr "Stripe Connect"
 msgid "Stripe setup is already complete."
 msgstr "Stripe setup is already complete."
 
-#: src/components/common/AssistantWidget/index.tsx:360
+#: src/components/common/AssistantWidget/index.tsx:361
 msgid "Studio: watch the event page build itself"
 msgstr "Studio: watch the event page build itself"
 
@@ -9075,7 +9091,7 @@ msgstr "Thank you for attending!"
 msgid "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgstr "Thanks for your support as we continue to grow and improve Hi.Events!"
 
-#: src/components/common/AssistantWidget/index.tsx:224
+#: src/components/common/AssistantWidget/index.tsx:225
 msgid "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 msgstr "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 
@@ -9084,11 +9100,11 @@ msgstr "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 msgid "That promo code is invalid"
 msgstr "That promo code is invalid"
 
-#: src/components/common/AssistantWidget/index.tsx:273
+#: src/components/common/AssistantWidget/index.tsx:274
 msgid "The assistant is not enabled for this account yet."
 msgstr "The assistant is not enabled for this account yet."
 
-#: src/components/common/AssistantWidget/index.tsx:277
+#: src/components/common/AssistantWidget/index.tsx:278
 msgid "The assistant is temporarily unavailable. Please try again."
 msgstr "The assistant is temporarily unavailable. Please try again."
 
@@ -9527,7 +9543,7 @@ msgstr "ticket"
 msgid "Ticket"
 msgstr "Ticket"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:58
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:60
 msgid "Ticket added"
 msgstr "Ticket added"
 
@@ -9604,7 +9620,7 @@ msgstr "Ticket price"
 msgid "Ticket Price"
 msgstr "Ticket Price"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:66
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:70
 msgid "Ticket removed"
 msgstr "Ticket removed"
 
@@ -9617,7 +9633,7 @@ msgstr "Ticket resent successfully"
 msgid "Ticket Type"
 msgstr "Ticket Type"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:65
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:69
 msgid "Ticket updated"
 msgstr "Ticket updated"
 
@@ -9633,7 +9649,7 @@ msgstr "Ticketing & Sales"
 msgid "tickets"
 msgstr "tickets"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:204
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:208
 #: src/components/routes/my-tickets/index.tsx:84
 msgid "Tickets"
 msgstr "Tickets"
@@ -9740,7 +9756,7 @@ msgstr "Toggle columns"
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "Too many attempts. Please wait a moment and try again."
 
-#: src/components/common/AssistantWidget/index.tsx:275
+#: src/components/common/AssistantWidget/index.tsx:276
 msgid "Too many questions in a row. Please wait a moment and try again."
 msgstr "Too many questions in a row. Please wait a moment and try again."
 
@@ -10027,11 +10043,11 @@ msgstr "Update event name, description and dates"
 msgid "Update profile"
 msgstr "Update profile"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:51
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:53
 msgid "Updating a ticket"
 msgstr "Updating a ticket"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:50
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:52
 msgid "Updating the event"
 msgstr "Updating the event"
 
@@ -10657,7 +10673,7 @@ msgstr "What products does this code apply to? (Applies to all by default)"
 msgid "What products should this capacity apply to?"
 msgstr "What products should this capacity apply to?"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:77
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:81
 msgid "What the assistant did"
 msgstr "What the assistant did"
 
@@ -10785,7 +10801,7 @@ msgstr "When offline payments are enabled, users will be able to complete their 
 msgid "Which product does this section sell seats for?"
 msgstr "Which product does this section sell seats for?"
 
-#: src/components/common/AssistantWidget/index.tsx:191
+#: src/components/common/AssistantWidget/index.tsx:192
 msgid "Which ticket type sells best here?"
 msgstr "Which ticket type sells best here?"
 
@@ -10817,8 +10833,8 @@ msgstr "Widget Settings"
 msgid "Working"
 msgstr "Working"
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:112
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:212
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:116
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:216
 msgid "Working on it…"
 msgstr "Working on it…"
 
@@ -11109,7 +11125,7 @@ msgstr "Your event is live!"
 msgid "Your event must be live before you can sell tickets to attendees."
 msgstr "Your event must be live before you can sell tickets to attendees."
 
-#: src/components/common/AssistantWidget/AssistantStudio.tsx:123
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:127
 msgid "Your event will appear here"
 msgstr "Your event will appear here"
 
