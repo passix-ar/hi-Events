@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HiEvents\Assistant;
 
+use HiEvents\Assistant\Console\AssistantUsageCommand;
 use HiEvents\Assistant\Console\EventAlertsCommand;
 use HiEvents\Assistant\Console\SyncHelpDocsCommand;
 use HiEvents\Assistant\Domain\Attachments\AssistantAttachmentStore;
@@ -55,7 +56,7 @@ class AssistantServiceProvider extends ServiceProvider
         });
 
         if ($this->app->runningInConsole()) {
-            $this->commands([SyncHelpDocsCommand::class, EventAlertsCommand::class]);
+            $this->commands([SyncHelpDocsCommand::class, EventAlertsCommand::class, AssistantUsageCommand::class]);
         }
 
         RateLimiter::for('assistant-chat', static function (Request $request) {

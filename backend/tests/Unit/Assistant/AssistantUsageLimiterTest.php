@@ -15,11 +15,11 @@ use Tests\TestCase;
 
 class AssistantUsageLimiterTest extends TestCase
 {
-    private function limiter(int $limit, ?CacheRepository $cache = null): AssistantUsageLimiter
+    private function limiter(int $limit, ?CacheRepository $cache = null, int $monthly = 0, int $global = 0): AssistantUsageLimiter
     {
         return new AssistantUsageLimiter(
             cache: $cache ?? new CacheRepository(new ArrayStore()),
-            config: new Config(['assistant' => ['daily_token_limit' => $limit]]),
+            config: new Config(['assistant' => ['daily_token_limit' => $limit, 'monthly_token_limit' => $monthly, 'global_daily_token_limit' => $global]]),
             logger: new NullLogger(),
         );
     }
@@ -80,7 +80,7 @@ class AssistantUsageLimiterTest extends TestCase
 
         $limiter->assertWithinBudget(1);
 
-        $this->assertSame(0, $limiter->usedToday(1), 'nothing is counted while the cap is off');
+        $this->assertGreaterThan(0, $limiter->usedToday(1), 'spend is still counted (for assistant:usage) while no cap applies');
     }
 
     public function test_repeated_answers_accumulate(): void
@@ -92,6 +92,33 @@ class AssistantUsageLimiterTest extends TestCase
         $limiter->record(1, 100, 50);
 
         $this->assertSame(3 * (100 + 50 * 5), $limiter->usedToday(1), 'output weighs 5x');
+    }
+
+    public function test_the_platform_wide_budget_stops_every_account(): void
+    {
+        $limiter = $this->limiter(0, global: 1000);
+
+        $limiter->record(1, 600, 0);
+        $limiter->record(2, 600, 0);
+
+        $this->assertSame(1200, $limiter->usedToday(AssistantUsageLimiter::GLOBAL_ACCOUNT));
+        $this->expectException(AssistantBudgetExceededException::class);
+        $limiter->assertWithinBudget(3);
+    }
+
+    public function test_the_monthly_budget_outlives_the_day(): void
+    {
+        $limiter = $this->limiter(0, monthly: 1000);
+
+        Carbon::setTestNow('2026-09-10 12:00:00');
+        $limiter->record(1, 600, 0);
+        Carbon::setTestNow('2026-09-11 12:00:00');
+        $limiter->record(1, 600, 0);
+
+        $this->assertSame(600, $limiter->usedToday(1));
+        $this->assertSame(1200, $limiter->usedThisMonth(1));
+        $this->expectException(AssistantBudgetExceededException::class);
+        $limiter->assertWithinBudget(1);
     }
 
     public function test_cached_prefix_weighs_a_tenth_and_cache_writes_a_quarter_more(): void

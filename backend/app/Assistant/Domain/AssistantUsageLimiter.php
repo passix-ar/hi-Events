@@ -12,15 +12,21 @@ use Psr\Log\LoggerInterface;
 
 /**
  * The per-user rate limit caps how fast an account can ask; this caps how much
- * an account can spend in a day. Without it, one logged-in user holding the send
- * button is an open tap on the API bill.
+ * gets spent. Three budgets, all in the same "token equivalents" (see record()):
  *
- * Tokens are counted after each answer, so the budget can be overshot by at most
+ *  - per account per day    (assistant.daily_token_limit)
+ *  - per account per month  (assistant.monthly_token_limit)
+ *  - whole platform per day (assistant.global_daily_token_limit) - the one that
+ *    protects the bill no matter how many accounts there are.
+ *
+ * Tokens are counted after each answer, so a budget can be overshot by at most
  * one conversation - which is the point: never refuse a question because of a
- * token estimate made before the model ran.
+ * token estimate made before the model ran. A limit of 0 disables that budget.
  */
 readonly class AssistantUsageLimiter
 {
+    public const GLOBAL_ACCOUNT = 0;
+
     public function __construct(
         private Cache           $cache,
         private Config          $config,
@@ -34,27 +40,26 @@ readonly class AssistantUsageLimiter
      */
     public function assertWithinBudget(int $accountId): void
     {
-        $limit = $this->dailyTokenLimit();
+        $checks = [
+            ['scope' => 'account_daily', 'limit' => $this->limit('daily_token_limit'), 'used' => $this->usedToday($accountId), 'message' => __('You have reached today\'s assistant usage limit. Please try again tomorrow.')],
+            ['scope' => 'account_monthly', 'limit' => $this->limit('monthly_token_limit'), 'used' => $this->usedThisMonth($accountId), 'message' => __('You have reached this month\'s assistant usage limit.')],
+            ['scope' => 'platform_daily', 'limit' => $this->limit('global_daily_token_limit'), 'used' => $this->usedToday(self::GLOBAL_ACCOUNT), 'message' => __('The assistant is very busy today. Please try again tomorrow.')],
+        ];
 
-        if ($limit <= 0) {
-            return;
+        foreach ($checks as $check) {
+            if ($check['limit'] <= 0 || $check['used'] < $check['limit']) {
+                continue;
+            }
+
+            $this->logger->warning('assistant.budget.exceeded', [
+                'scope' => $check['scope'],
+                'account_id' => $accountId,
+                'tokens_used' => $check['used'],
+                'limit' => $check['limit'],
+            ]);
+
+            throw new AssistantBudgetExceededException($check['message']);
         }
-
-        $used = (int)$this->cache->get($this->key($accountId), 0);
-
-        if ($used < $limit) {
-            return;
-        }
-
-        $this->logger->warning('assistant.budget.exceeded', [
-            'account_id' => $accountId,
-            'tokens_used' => $used,
-            'daily_limit' => $limit,
-        ]);
-
-        throw new AssistantBudgetExceededException(
-            __('You have reached today\'s assistant usage limit. Please try again tomorrow.')
-        );
     }
 
     /**
@@ -65,10 +70,6 @@ readonly class AssistantUsageLimiter
      */
     public function record(int $accountId, int $inputTokens, int $outputTokens, int $cacheReadTokens = 0, int $cacheWriteTokens = 0): void
     {
-        if ($this->dailyTokenLimit() <= 0) {
-            return;
-        }
-
         $tokens = (int)max(
             $inputTokens + $outputTokens * 5 + (int)round($cacheReadTokens * 0.1) + (int)round($cacheWriteTokens * 1.25),
             0,
@@ -78,27 +79,53 @@ readonly class AssistantUsageLimiter
             return;
         }
 
-        $key = $this->key($accountId);
-
-        // add() seeds the counter with the window's TTL; increment() keeps it.
-        if (!$this->cache->add($key, $tokens, $this->secondsUntilTomorrow())) {
-            $this->cache->increment($key, $tokens);
-        }
+        $this->bump($this->dayKey($accountId), $tokens, $this->secondsUntilTomorrow());
+        $this->bump($this->monthKey($accountId), $tokens, $this->secondsUntilNextMonth());
+        $this->bump($this->dayKey(self::GLOBAL_ACCOUNT), $tokens, $this->secondsUntilTomorrow());
+        $this->bump($this->monthKey(self::GLOBAL_ACCOUNT), $tokens, $this->secondsUntilNextMonth());
     }
 
     public function usedToday(int $accountId): int
     {
-        return (int)$this->cache->get($this->key($accountId), 0);
+        return (int)$this->cache->get($this->dayKey($accountId), 0);
     }
 
-    private function dailyTokenLimit(): int
+    public function usedThisMonth(int $accountId): int
     {
-        return (int)$this->config->get('assistant.daily_token_limit', 0);
+        return (int)$this->cache->get($this->monthKey($accountId), 0);
     }
 
-    private function key(int $accountId): string
+    /** @return array{daily: int, monthly: int, global_daily: int} */
+    public function limits(): array
+    {
+        return [
+            'daily' => $this->limit('daily_token_limit'),
+            'monthly' => $this->limit('monthly_token_limit'),
+            'global_daily' => $this->limit('global_daily_token_limit'),
+        ];
+    }
+
+    private function bump(string $key, int $tokens, int $ttl): void
+    {
+        // add() seeds the counter with the window's TTL; increment() keeps it.
+        if (!$this->cache->add($key, $tokens, $ttl)) {
+            $this->cache->increment($key, $tokens);
+        }
+    }
+
+    private function limit(string $name): int
+    {
+        return (int)$this->config->get('assistant.' . $name, 0);
+    }
+
+    private function dayKey(int $accountId): string
     {
         return sprintf('assistant.usage.%d.%s', $accountId, Carbon::now('UTC')->toDateString());
+    }
+
+    private function monthKey(int $accountId): string
+    {
+        return sprintf('assistant.usage.%d.%s', $accountId, Carbon::now('UTC')->format('Y-m'));
     }
 
     private function secondsUntilTomorrow(): int
@@ -106,5 +133,12 @@ readonly class AssistantUsageLimiter
         $now = Carbon::now('UTC');
 
         return max((int)$now->copy()->addDay()->startOfDay()->diffInSeconds($now, absolute: true), 60);
+    }
+
+    private function secondsUntilNextMonth(): int
+    {
+        $now = Carbon::now('UTC');
+
+        return max((int)$now->copy()->addMonthNoOverflow()->startOfMonth()->diffInSeconds($now, absolute: true), 60);
     }
 }
