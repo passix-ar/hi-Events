@@ -91,7 +91,7 @@ class AssistantEntityLedgerTest extends TestCase
             ->assertJsonPath('data.entities.1.id', 7602);
 
         $fake->assertRequest(function (array $requests): void {
-            $prompt = $requests[0]->systemPrompts()[0]->content;
+            $prompt = $requests[0]->messages()[count($requests[0]->messages()) - 1]->content;
             $this->assertStringContainsString('event_id 7917: «Noche Verifica» (DRAFT)', $prompt);
             $this->assertStringContainsString('ticket_id 7602', $prompt);
         });

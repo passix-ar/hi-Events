@@ -17,6 +17,18 @@ class AssistantSystemPromptBuilder
         return $this->stableInstructions() . "\n\n" . $this->requestFacts($context);
     }
 
+    /**
+     * The two halves separately, so the caller can put the cache breakpoint
+     * right after the stable one: everything before it (tool definitions +
+     * these rules) is byte-identical for every organizer and every turn.
+     *
+     * @return array{stable: string, facts: string}
+     */
+    public function parts(AssistantContext $context): array
+    {
+        return ['stable' => $this->stableInstructions(), 'facts' => $this->requestFacts($context)];
+    }
+
     private function stableInstructions(): string
     {
         return <<<'PROMPT'

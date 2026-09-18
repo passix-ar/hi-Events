@@ -150,8 +150,8 @@ class AssistantStreamTest extends TestCase
 
         $fake->assertCallCount(1);
         $fake->assertRequest(function (array $requests): void {
-            $this->assertStringContainsString('Org A', $requests[0]->systemPrompts()[0]->content);
-            $this->assertStringNotContainsString('Org B', $requests[0]->systemPrompts()[0]->content);
+            $this->assertStringContainsString('Org A', $requests[0]->messages()[count($requests[0]->messages()) - 1]->content);
+            $this->assertStringNotContainsString('Org B', $requests[0]->messages()[count($requests[0]->messages()) - 1]->content);
         });
     }
 

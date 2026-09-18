@@ -23,6 +23,7 @@ use Prism\Prism\Text\Response;
 use Prism\Prism\Text\Step;
 use Prism\Prism\ValueObjects\Media\Image;
 use Prism\Prism\ValueObjects\Messages\AssistantMessage;
+use Prism\Prism\ValueObjects\Messages\SystemMessage;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
 use Prism\Prism\ValueObjects\ToolCall;
 use Psr\Log\LoggerInterface;
@@ -213,16 +214,36 @@ readonly class AssistantConversationService
                 $this->config->get('assistant.provider'),
                 $this->config->get('assistant.model'),
             )
-            ->withSystemPrompt($this->promptBuilder->build($context))
+            ->withSystemPrompts($this->systemPrompts($context))
             ->withMessages($this->toPrismMessages($history, $context))
             ->withTools($this->toolRegistry->forContext($context))
             ->withMaxSteps((int)$this->config->get('assistant.max_steps'))
             ->withMaxTokens((int)$this->config->get('assistant.max_tokens'))
-            ->withClientOptions(['timeout' => (int)$this->config->get('assistant.request_timeout')])
-            // Tools + the stable part of the prompt are identical for every
-            // organizer, so one warm cache serves them all; the 1h TTL keeps it
-            // warm between sporadic messages (5 min would rewrite it each turn).
-            ->withProviderOptions(['cache_control' => ['type' => 'ephemeral', 'ttl' => '1h']]);
+            ->withClientOptions(['timeout' => (int)$this->config->get('assistant.request_timeout')]);
+    }
+
+    /**
+     * Two cache breakpoints. Anthropic caches the prefix up to a breakpoint and
+     * charges writes only for what comes after the last hit, so what changes
+     * has to sit at the END of the prompt:
+     *
+     *  1. The system block = tool definitions + rules, byte-identical for every
+     *     organizer and turn: one warm entry (1h) serves the whole platform.
+     *  2. The last user message (5 min): everything before it - the history -
+     *     is unchanged since the previous turn and is read, not rewritten.
+     *
+     * The per-request facts (date, known ids) therefore ride inside the last
+     * user message instead of the system prompt: in the system prompt they
+     * changed every turn and invalidated the whole conversation behind them.
+     *
+     * @return list<SystemMessage>
+     */
+    private function systemPrompts(AssistantContext $context): array
+    {
+        $stable = new SystemMessage($this->promptBuilder->parts($context)['stable']);
+        $stable->withProviderOptions(['cacheType' => 'ephemeral', 'cacheTtl' => '1h']);
+
+        return [$stable];
     }
 
     /**
@@ -258,6 +279,14 @@ readonly class AssistantConversationService
                         $this->attachments->contents($context->attachment),
                         $context->attachment->mimeType,
                     );
+                }
+
+                if ($index === $lastIndex) {
+                    $facts = $this->promptBuilder->parts($context)['facts'];
+                    $message = new UserMessage($facts . "\n\nMensaje del organizador:\n" . $content, $media);
+                    $message->withProviderOptions(['cacheType' => 'ephemeral']);
+
+                    return $message;
                 }
 
                 return new UserMessage($content, $media);

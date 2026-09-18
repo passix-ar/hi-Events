@@ -126,8 +126,8 @@ class ChatWithAssistantActionTest extends TestCase
                 array_map(static fn($tool) => $tool->name(), $request->tools()),
                 'every registered tool, reads and writes, is offered to the model',
             );
-            $this->assertStringContainsString('Org A', $request->systemPrompts()[0]->content);
-            $this->assertStringNotContainsString('Org B', $request->systemPrompts()[0]->content);
+            $this->assertStringContainsString('Org A', $request->messages()[count($request->messages()) - 1]->content);
+            $this->assertStringNotContainsString('Org B', $request->messages()[count($request->messages()) - 1]->content);
         });
     }
 
@@ -149,8 +149,8 @@ class ChatWithAssistantActionTest extends TestCase
         ], ['Authorization' => 'Bearer ' . $this->token])->assertOk();
 
         $fake->assertRequest(function (array $requests): void {
-            $mine = $requests[0]->systemPrompts()[0]->content;
-            $theirs = $requests[1]->systemPrompts()[0]->content;
+            $mine = $requests[0]->messages()[count($requests[0]->messages()) - 1]->content;
+            $theirs = $requests[1]->messages()[count($requests[1]->messages()) - 1]->content;
 
             $this->assertStringContainsString('Evento abierto en el panel: «Evento A»', $mine);
             $this->assertStringNotContainsString('Evento abierto', $theirs, 'a foreign event id is dropped, not echoed');
@@ -224,7 +224,16 @@ class ChatWithAssistantActionTest extends TestCase
             $this->assertSame(6, $request->maxSteps());
             $this->assertSame(2048, $request->maxTokens());
             $this->assertNull($request->temperature(), 'temperature must not be sent: Opus 5 rejects it');
-            $this->assertSame(['type' => 'ephemeral', 'ttl' => '1h'], $request->providerOptions('cache_control'), 'one warm cache shared by every organizer');
+            $this->assertNull($request->providerOptions('cache_control'), 'no request-level cache: that re-caches the whole conversation every turn');
+            $prompts = $request->systemPrompts();
+            $this->assertCount(1, $prompts, 'only the stable block is a system prompt');
+            $this->assertSame(['cacheType' => 'ephemeral', 'cacheTtl' => '1h'], $prompts[0]->providerOptions(), 'shared 1h cache on tools + rules');
+            $this->assertStringContainsString('Reglas:', $prompts[0]->content);
+            $this->assertStringNotContainsString('Contexto de esta conversación', $prompts[0]->content);
+            $last = $request->messages()[count($request->messages()) - 1];
+            $this->assertStringContainsString('Contexto de esta conversación', $last->content, 'facts ride in the last user message');
+            $this->assertStringContainsString('Mensaje del organizador:', $last->content);
+            $this->assertSame('ephemeral', $last->providerOptions('cacheType'), 'second breakpoint on the last message');
         });
     }
 
@@ -245,7 +254,7 @@ class ChatWithAssistantActionTest extends TestCase
         $fake->assertRequest(function (array $requests): void {
             $sent = $requests[0]->messages();
             $this->assertCount(4, $sent);
-            $this->assertSame('última', $sent[3]->content);
+            $this->assertStringEndsWith("Mensaje del organizador:\núltima", $sent[3]->content);
         });
     }
 
@@ -269,7 +278,7 @@ class ChatWithAssistantActionTest extends TestCase
             $this->assertSame(50 + mb_strlen(' […]'), mb_strlen($messages[0]->content), 'old turns are clipped');
             $this->assertSame(50 + mb_strlen(' […]'), mb_strlen($messages[2]->content));
             $this->assertSame(200, mb_strlen($messages[3]->content), 'the last N stay whole');
-            $this->assertSame('última', $messages[4]->content);
+            $this->assertStringEndsWith("Mensaje del organizador:\núltima", $messages[4]->content);
         });
     }
 }
