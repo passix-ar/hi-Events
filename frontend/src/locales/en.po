@@ -866,7 +866,7 @@ msgstr "Answer updated successfully."
 msgid "Any queries from product holders will be sent to this email address. This will also be used as the \"reply-to\" address for all emails sent from this event"
 msgstr "Any queries from product holders will be sent to this email address. This will also be used as the \"reply-to\" address for all emails sent from this event"
 
-#: src/components/common/AssistantWidget/index.tsx:538
+#: src/components/common/AssistantWidget/index.tsx:540
 msgid "Anything to add about the flyer? (optional)"
 msgstr "Anything to add about the flyer? (optional)"
 
@@ -1095,7 +1095,7 @@ msgstr "As your business is based in Ireland, Irish VAT at 23% applies automatic
 msgid "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 msgstr "As your business is based in the EU, we need to determine the correct VAT treatment for our platform fees:"
 
-#: src/components/common/AssistantWidget/index.tsx:539
+#: src/components/common/AssistantWidget/index.tsx:541
 msgid "Ask about this event…"
 msgstr "Ask about this event…"
 
@@ -1107,7 +1107,7 @@ msgstr "Ask about this event…"
 #~ msgid "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
 #~ msgstr "Ask about your sales, tickets and events, or ask me to set up a new one. I only read your own data."
 
-#: src/components/common/AssistantWidget/index.tsx:391
+#: src/components/common/AssistantWidget/index.tsx:393
 msgid "Ask about your sales, tickets and events, or drop a flyer here and I will set the event up from it. I only read your own data."
 msgstr "Ask about your sales, tickets and events, or drop a flyer here and I will set the event up from it. I only read your own data."
 
@@ -1123,7 +1123,7 @@ msgstr "Ask once per order"
 msgid "Ask once per product"
 msgstr "Ask once per product"
 
-#: src/components/common/AssistantWidget/index.tsx:539
+#: src/components/common/AssistantWidget/index.tsx:541
 msgid "Ask something about your events…"
 msgstr "Ask something about your events…"
 
@@ -1140,9 +1140,9 @@ msgstr "Assigned Seating"
 msgid "Assigned Tier"
 msgstr "Assigned Tier"
 
-#: src/components/common/AssistantWidget/index.tsx:316
-#: src/components/common/AssistantWidget/index.tsx:332
-#: src/components/common/AssistantWidget/index.tsx:352
+#: src/components/common/AssistantWidget/index.tsx:318
+#: src/components/common/AssistantWidget/index.tsx:334
+#: src/components/common/AssistantWidget/index.tsx:354
 msgid "Assistant"
 msgstr "Assistant"
 
@@ -1151,7 +1151,7 @@ msgstr "Assistant"
 msgid "At least one event type must be selected"
 msgstr "At least one event type must be selected"
 
-#: src/components/common/AssistantWidget/index.tsx:522
+#: src/components/common/AssistantWidget/index.tsx:524
 msgid "Attach a flyer"
 msgstr "Attach a flyer"
 
@@ -1776,7 +1776,7 @@ msgstr "Checkboxes"
 msgid "Checked In"
 msgstr "Checked In"
 
-#: src/components/common/AssistantWidget/index.tsx:485
+#: src/components/common/AssistantWidget/index.tsx:487
 msgid "Checking your data…"
 msgstr "Checking your data…"
 
@@ -1829,7 +1829,7 @@ msgstr "Choose your seats"
 msgid "City"
 msgstr "City"
 
-#: src/components/common/AssistantWidget/index.tsx:376
+#: src/components/common/AssistantWidget/index.tsx:378
 msgid "Clear conversation"
 msgstr "Clear conversation"
 
@@ -1857,7 +1857,7 @@ msgstr "Click to view notes"
 msgid "close"
 msgstr "close"
 
-#: src/components/common/AssistantWidget/index.tsx:380
+#: src/components/common/AssistantWidget/index.tsx:382
 #: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:27
 #: src/components/common/CookieConsentBanner/index.tsx:37
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
@@ -4548,7 +4548,7 @@ msgstr "Here are all the tickets associated with your email address."
 msgid "Here is an example of how you can use the component in your application."
 msgstr "Here is an example of how you can use the component in your application."
 
-#: src/components/common/AssistantWidget/index.tsx:242
+#: src/components/common/AssistantWidget/index.tsx:244
 msgid "Here is the flyer, set the event up from it."
 msgstr "Here is the flyer, set the event up from it."
 
@@ -4692,7 +4692,7 @@ msgstr "Homepage Preview"
 msgid "Homer"
 msgstr "Homer"
 
-#: src/components/common/AssistantWidget/index.tsx:193
+#: src/components/common/AssistantWidget/index.tsx:195
 msgid "How is check-in going?"
 msgstr "How is check-in going?"
 
@@ -4716,7 +4716,7 @@ msgstr "How long a customer has to complete their purchase after receiving an of
 msgid "How many minutes the customer has to complete their order. We recommend at least 15 minutes"
 msgstr "How many minutes the customer has to complete their order. We recommend at least 15 minutes"
 
-#: src/components/common/AssistantWidget/index.tsx:191
+#: src/components/common/AssistantWidget/index.tsx:193
 msgid "How many tickets are left for this event?"
 msgstr "How many tickets are left for this event?"
 
@@ -4724,7 +4724,7 @@ msgstr "How many tickets are left for this event?"
 msgid "How many times can this code be used?"
 msgstr "How many times can this code be used?"
 
-#: src/components/common/AssistantWidget/index.tsx:196
+#: src/components/common/AssistantWidget/index.tsx:198
 msgid "How much did I sell this month?"
 msgstr "How much did I sell this month?"
 
@@ -6199,11 +6199,11 @@ msgstr "Open sidebar"
 msgid "Open Stripe Dashboard"
 msgstr "Open Stripe Dashboard"
 
-#: src/components/common/AssistantWidget/index.tsx:320
+#: src/components/common/AssistantWidget/index.tsx:322
 msgid "Open the assistant"
 msgstr "Open the assistant"
 
-#: src/components/common/AssistantWidget/index.tsx:365
+#: src/components/common/AssistantWidget/index.tsx:367
 msgid "Open the studio"
 msgstr "Open the studio"
 
@@ -7606,7 +7606,7 @@ msgstr "remove"
 msgid "Remove"
 msgstr "Remove"
 
-#: src/components/common/AssistantWidget/index.tsx:501
+#: src/components/common/AssistantWidget/index.tsx:503
 msgid "Remove image"
 msgstr "Remove image"
 
@@ -7803,7 +7803,7 @@ msgstr "Revoke Offer"
 msgid "Role"
 msgstr "Role"
 
-#: src/components/common/AssistantWidget/index.tsx:484
+#: src/components/common/AssistantWidget/index.tsx:486
 msgid "Running {0}…"
 msgstr "Running {0}…"
 
@@ -8057,6 +8057,10 @@ msgstr "Seat"
 msgid "Seat map"
 msgstr "Seat map"
 
+#: src/components/common/AssistantWidget/AssistantStudio.tsx:305
+msgid "Seat map ({0})"
+msgstr "Seat map ({0})"
+
 #: src/components/common/AssistantWidget/SeatMapPreview.tsx:81
 msgid "Seat map preview"
 msgstr "Seat map preview"
@@ -8269,7 +8273,7 @@ msgstr "Selected"
 msgid "Selling fast 🔥"
 msgstr "Selling fast 🔥"
 
-#: src/components/common/AssistantWidget/index.tsx:551
+#: src/components/common/AssistantWidget/index.tsx:553
 #: src/components/routes/auth/Login/index.tsx:176
 #: src/components/routes/my-tickets/index.tsx:202
 msgid "Send"
@@ -8402,8 +8406,8 @@ msgstr "Set default settings for new events created under this organizer."
 msgid "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 msgstr "Set the starting number for invoice numbering. This cannot be changed once invoices have been generated."
 
-#: src/components/common/AssistantWidget/index.tsx:198
-#: src/components/common/AssistantWidget/index.tsx:401
+#: src/components/common/AssistantWidget/index.tsx:200
+#: src/components/common/AssistantWidget/index.tsx:403
 msgid "Set up an event from a flyer"
 msgstr "Set up an event from a flyer"
 
@@ -8504,7 +8508,7 @@ msgstr "Show marketing opt-in checkbox"
 msgid "Show marketing opt-in checkbox by default"
 msgstr "Show marketing opt-in checkbox by default"
 
-#: src/components/common/AssistantWidget/index.tsx:197
+#: src/components/common/AssistantWidget/index.tsx:199
 msgid "Show me my latest sales"
 msgstr "Show me my latest sales"
 
@@ -8753,7 +8757,7 @@ msgstr "Stripe Connect"
 msgid "Stripe setup is already complete."
 msgstr "Stripe setup is already complete."
 
-#: src/components/common/AssistantWidget/index.tsx:361
+#: src/components/common/AssistantWidget/index.tsx:363
 msgid "Studio: watch the event page build itself"
 msgstr "Studio: watch the event page build itself"
 
@@ -9113,7 +9117,7 @@ msgstr "Thank you for attending!"
 msgid "Thanks for your support as we continue to grow and improve Hi.Events!"
 msgstr "Thanks for your support as we continue to grow and improve Hi.Events!"
 
-#: src/components/common/AssistantWidget/index.tsx:225
+#: src/components/common/AssistantWidget/index.tsx:227
 msgid "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 msgstr "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 
@@ -9122,11 +9126,11 @@ msgstr "That image could not be attached. Use a JPG, PNG or WebP under 5 MB."
 msgid "That promo code is invalid"
 msgstr "That promo code is invalid"
 
-#: src/components/common/AssistantWidget/index.tsx:274
+#: src/components/common/AssistantWidget/index.tsx:276
 msgid "The assistant is not enabled for this account yet."
 msgstr "The assistant is not enabled for this account yet."
 
-#: src/components/common/AssistantWidget/index.tsx:278
+#: src/components/common/AssistantWidget/index.tsx:280
 msgid "The assistant is temporarily unavailable. Please try again."
 msgstr "The assistant is temporarily unavailable. Please try again."
 
@@ -9779,7 +9783,7 @@ msgstr "Toggle columns"
 msgid "Too many attempts. Please wait a moment and try again."
 msgstr "Too many attempts. Please wait a moment and try again."
 
-#: src/components/common/AssistantWidget/index.tsx:276
+#: src/components/common/AssistantWidget/index.tsx:278
 msgid "Too many questions in a row. Please wait a moment and try again."
 msgstr "Too many questions in a row. Please wait a moment and try again."
 
@@ -10824,7 +10828,7 @@ msgstr "When offline payments are enabled, users will be able to complete their 
 msgid "Which product does this section sell seats for?"
 msgstr "Which product does this section sell seats for?"
 
-#: src/components/common/AssistantWidget/index.tsx:192
+#: src/components/common/AssistantWidget/index.tsx:194
 msgid "Which ticket type sells best here?"
 msgstr "Which ticket type sells best here?"
 

@@ -12,6 +12,7 @@ import {GET_EVENT_QUERY_KEY} from "../../../queries/useGetEvent.ts";
 import {GET_EVENT_IMAGES_QUERY_KEY} from "../../../queries/useGetEventImages.ts";
 import {GET_EVENTS_QUERY_KEY} from "../../../queries/useGetEvents.ts";
 import {GET_EVENT_SETTINGS_QUERY_KEY} from "../../../queries/useGetEventSettings.ts";
+import {GET_EVENT_SEATING_SECTIONS_QUERY_KEY} from "../../../queries/useGetSeatingSections.ts";
 import {AssistantEntity, IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
@@ -152,6 +153,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_IMAGES_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_SETTINGS_QUERY_KEY, eventId]});
+        void queryClient.invalidateQueries({queryKey: [GET_EVENT_SEATING_SECTIONS_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENTS_QUERY_KEY]});
     };
 

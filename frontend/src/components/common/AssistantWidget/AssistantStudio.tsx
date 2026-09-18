@@ -294,7 +294,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
                 <BuildTimeline log={buildLog} running={building && buildingStep && STEP_LABELS[buildingStep] ? buildingStep : null}/>
             </div>
 
-            {(sections.length > 0 || view === 'seats') && (
+            {(
                 <div className={classes.viewSwitch}>
                     <SegmentedControl
                         size="xs"
@@ -302,7 +302,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
                         onChange={value => setView(value as 'page' | 'seats')}
                         data={[
                             {value: 'page', label: t`Page`},
-                            {value: 'seats', label: t`Seat map`},
+                            {value: 'seats', label: sections.length > 0 ? t`Seat map (${sections.length})` : t`Seat map`},
                         ]}
                     />
                 </div>
