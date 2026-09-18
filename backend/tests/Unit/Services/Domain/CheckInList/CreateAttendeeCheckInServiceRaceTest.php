@@ -111,8 +111,6 @@ class CreateAttendeeCheckInServiceRaceTest extends TestCase
     private function primeFlow(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->andReturn(null);
-        $checkInList->shouldReceive('getActivatesAt')->andReturn(null);
         $checkInList->shouldReceive('getEventId')->andReturn(123);
         $checkInList->shouldReceive('getId')->andReturn(55);
 
@@ -129,6 +127,7 @@ class CreateAttendeeCheckInServiceRaceTest extends TestCase
         $eventSettings->shouldReceive('getAllowOrdersAwaitingOfflinePaymentToCheckIn')->andReturn(false);
 
         $this->checkInListDataService->shouldReceive('getCheckInList')->once()->andReturn($checkInList);
+        $this->checkInListDataService->shouldReceive('validateCheckInListIsAvailable')->once();
         $this->checkInListDataService->shouldReceive('getAttendees')->once()->andReturn(collect([$attendee]));
         $this->checkInListDataService->shouldReceive('validateAttendeeBelongsToCheckInList')->once()->andReturnNull();
 

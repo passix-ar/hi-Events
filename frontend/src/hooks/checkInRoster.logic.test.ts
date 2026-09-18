@@ -11,6 +11,7 @@ import {
     nextServerErrors,
     parseQueue,
     parseSnapshot,
+    shortIdsToPurge,
     shouldRotate,
     type PendingCheckIn,
 } from './checkInRoster.logic';
@@ -465,5 +466,45 @@ describe('parseSnapshot: localStorage is not trusted input', () => {
 
         expect(parsed?.attendees).toHaveLength(1);
         expect(parsed?.attendees[0].public_id).toBe('A-AAA111');
+    });
+});
+
+/**
+ * The roster is the whole attendance of an event sitting in the storage of a phone that gets
+ * handed around and rarely wiped. What must never be swept away with it is a queued check-in:
+ * until the server confirms it, that record exists nowhere else.
+ */
+describe('clearing rosters off the device', () => {
+    const stored = (shortId: string, pendingCount = 0) => ({shortId, pendingCount});
+
+    it('drops the lists that are not open', () => {
+        const purge = shortIdsToPurge(
+            [stored('cil_open'), stored('cil_last_week'), stored('cil_other_door')],
+            {shortId: 'cil_open', isFinished: false},
+        );
+
+        expect(purge).toEqual(['cil_last_week', 'cil_other_door']);
+    });
+
+    it('keeps the open list while it is still running', () => {
+        const purge = shortIdsToPurge([stored('cil_open')], {shortId: 'cil_open', isFinished: false});
+
+        expect(purge).toEqual([]);
+    });
+
+    it('drops the open list once it is over', () => {
+        const purge = shortIdsToPurge([stored('cil_open')], {shortId: 'cil_open', isFinished: true});
+
+        expect(purge).toEqual(['cil_open']);
+    });
+
+    // The one that matters: these people already walked in, and nothing else has a record of it.
+    it('never drops a list with check-ins still queued', () => {
+        const purge = shortIdsToPurge(
+            [stored('cil_open', 3), stored('cil_last_night', 7), stored('cil_clean')],
+            {shortId: 'cil_open', isFinished: true},
+        );
+
+        expect(purge).toEqual(['cil_clean']);
     });
 });

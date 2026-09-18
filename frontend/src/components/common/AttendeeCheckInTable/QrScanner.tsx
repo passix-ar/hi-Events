@@ -14,7 +14,11 @@ const SAME_CODE_COOLDOWN_MS = 2500;
 interface QRScannerComponentProps {
     onAttendeeScanned: (attendeePublicId: string) => Promise<boolean> | boolean;
     onClose: () => void;
-    isSoundOn?: boolean;
+    // Controlled by the page, which owns the preference and persists it. Held here as well, the
+    // toggle inside the scanner changed a copy: it was lost on close and left the page's own
+    // sound button showing the opposite of what the scanner was doing.
+    isSoundOn: boolean;
+    onSoundToggle: () => void;
 }
 
 export const QRScannerComponent = (props: QRScannerComponentProps) => {
@@ -46,31 +50,9 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
     const scanErrorAudioRef = useRef<HTMLAudioElement | null>(null);
     const scanInProgressAudioRef = useRef<HTMLAudioElement | null>(null);
 
-    const [isSoundOn, setIsSoundOn] = useState(() => {
-        // Use the prop value if provided, otherwise fallback to unified storage
-        if (props.isSoundOn !== undefined) {
-            return props.isSoundOn;
-        }
-        const storedIsSoundOn = localStorage.getItem("scannerSoundOn");
-        return storedIsSoundOn === null ? true : JSON.parse(storedIsSoundOn);
-    });
-
-    // Sync with prop changes
-    useEffect(() => {
-        if (props.isSoundOn !== undefined) {
-            setIsSoundOn(props.isSoundOn);
-        }
-    }, [props.isSoundOn]);
-
-    useEffect(() => {
-        // Only save to localStorage if not controlled by props
-        if (props.isSoundOn === undefined) {
-            localStorage.setItem("scannerSoundOn", JSON.stringify(isSoundOn));
-        }
-    }, [isSoundOn, props.isSoundOn]);
-
-    const isSoundOnRef = useRef(isSoundOn);
-    isSoundOnRef.current = isSoundOn;
+    // The decode callback is registered once and reads this from a ref, not from its closure.
+    const isSoundOnRef = useRef(props.isSoundOn);
+    isSoundOnRef.current = props.isSoundOn;
 
     const playAudio = (audio: HTMLAudioElement | null) => {
         if (isSoundOnRef.current && audio) {
@@ -139,7 +121,10 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
                 }, {
                     maxScansPerSecond: 5,
                 });
-                qrScannerRef.current.start();
+                // Awaited: start() can reject on its own (another app holding the camera, a track
+                // that ends as it opens) and unawaited that rejection escaped the try entirely,
+                // leaving a scanner on screen that never reads anything and says nothing.
+                await qrScannerRef.current.start();
             }
         } catch (error) {
             setPermissionDenied(true);
@@ -190,10 +175,6 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
             }
             setIsFlashOn(!isFlashOn);
         }
-    };
-
-    const handleSoundToggle = () => {
-        setIsSoundOn(!isSoundOn);
     };
 
     const requestPermission = async () => {
@@ -263,10 +244,10 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
             <QrScannerControls
                 isFlashAvailable={isFlashAvailable}
                 isFlashOn={isFlashOn}
-                isSoundOn={isSoundOn}
+                isSoundOn={props.isSoundOn}
                 cameraList={cameraList}
                 onFlashToggle={handleFlashToggle}
-                onSoundToggle={handleSoundToggle}
+                onSoundToggle={props.onSoundToggle}
                 onCameraSelect={handleCameraSelection}
                 onClose={handleClose}
             />

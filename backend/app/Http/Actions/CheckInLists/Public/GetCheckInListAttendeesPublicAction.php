@@ -24,7 +24,7 @@ class GetCheckInListAttendeesPublicAction extends BaseAction
         try {
             $attendees = $this->getCheckInListAttendeesPublicHandler->handle(
                 shortId: $checkInListShortId,
-                queryParams: QueryParamsDTO::fromArray($request->query->all())
+                queryParams: QueryParamsDTO::fromArray($this->paginationParams($request))
             );
         } catch (CannotCheckInException $e) {
             return $this->errorResponse(
@@ -37,5 +37,23 @@ class GetCheckInListAttendeesPublicAction extends BaseAction
             resource: AttendeeWithCheckInPublicResource::class,
             data: $attendees,
         );
+    }
+
+    /**
+     * The scanner walks this endpoint page by page, and both numbers come straight off the URL of a
+     * public route: `QueryParamsDTO` only casts them. A negative per_page survived the repository's
+     * `min()` untouched and reached the query builder, which drops a negative limit instead of
+     * applying it — so `?per_page=-1` answered with the entire roster in one response, joins and
+     * check-ins included, straight past the 250 cap. The upper bound stays with the repository,
+     * which owns that cap; this only establishes the floor.
+     */
+    private function paginationParams(Request $request): array
+    {
+        $query = $request->query->all();
+
+        $query['page'] = max(1, (int)($query['page'] ?? 1));
+        $query['per_page'] = max(1, (int)($query['per_page'] ?? 25));
+
+        return $query;
     }
 }

@@ -8,7 +8,9 @@ interface AttendeeListProps {
     attendees: Attendee[] | undefined;
     products: { id: number; title: string; }[] | undefined;
     isLoading: boolean;
-    isDeletePending: boolean;
+    // The one attendee whose check-out is in flight, if any. Everyone else stays usable: a door
+    // does not stop while one person is being undone.
+    checkingOutPublicId: string | null;
     allowOrdersAwaitingOfflinePaymentToCheckIn: boolean;
     onCheckInToggle: (attendee: Attendee) => void;
     onClickSound?: () => void;
@@ -18,7 +20,7 @@ export const AttendeeList = ({
                                  attendees,
                                  products,
                                  isLoading,
-                                 isDeletePending,
+                                 checkingOutPublicId,
                                  allowOrdersAwaitingOfflinePaymentToCheckIn,
                                  onCheckInToggle,
                                  onClickSound
@@ -69,6 +71,7 @@ export const AttendeeList = ({
         <div className={classes.attendees}>
             {attendees.map(attendee => {
                 const isAttendeeAwaitingPayment = attendee.status === 'AWAITING_PAYMENT';
+                const isCheckingOut = checkingOutPublicId === attendee.public_id;
 
                 return (
                     <div className={classes.attendee} key={attendee.public_id}>
@@ -101,8 +104,8 @@ export const AttendeeList = ({
                                     onClickSound?.();
                                     onCheckInToggle(attendee);
                                 }}
-                                disabled={isDeletePending || attendee.status === 'CANCELLED'}
-                                loading={isDeletePending}
+                                disabled={isCheckingOut || attendee.status === 'CANCELLED'}
+                                loading={isCheckingOut}
                                 color={getButtonColor(attendee)}
                                 radius="md"
                             >

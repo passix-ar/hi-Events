@@ -95,6 +95,45 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
         $this->handler->handle('short-id', 'attendee-public-id');
     }
 
+    /**
+     * A code that matches no attendee of this event is the ordinary outcome of scanning a QR from
+     * another event, or from another app. It has to come back as null for the action to answer 404:
+     * returned through a non-nullable type it was a TypeError, so every stray scan at the door
+     * logged a 500.
+     */
+    public function testHandleReturnsNullWhenTheAttendeeDoesNotExist(): void
+    {
+        $checkInList = m::mock(CheckInListDomainObject::class);
+        $checkInList->shouldReceive('getExpiresAt')->once()->andReturn(null);
+        $checkInList->shouldReceive('getActivatesAt')->once()->andReturn(null);
+        $checkInList->shouldReceive('getEventId')->once()->andReturn(123);
+
+        $this->checkInListRepository
+            ->shouldReceive('loadRelation')
+            ->andReturnSelf()
+            ->times(2);
+
+        $this->checkInListRepository
+            ->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturn($checkInList);
+
+        $this->attendeeRepository
+            ->shouldReceive('loadRelation')
+            ->andReturnSelf()
+            ->times(2);
+
+        $this->attendeeRepository
+            ->shouldReceive('findFirstWhere')
+            ->once()
+            ->andReturnNull();
+
+        // Nothing to attach, and calling it with a null attendee would fault in its own right.
+        $this->otherListCheckInsService->shouldNotReceive('attach');
+
+        $this->assertNull($this->handler->handle('short-id', 'A-NOBODY'));
+    }
+
     public function testHandleReturnsAttendeeSuccessfully(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);

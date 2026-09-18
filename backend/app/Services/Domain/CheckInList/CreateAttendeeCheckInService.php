@@ -15,7 +15,6 @@ use HiEvents\DomainObjects\Status\AttendeeStatus;
 use HiEvents\DomainObjects\Status\OrderStatus;
 use HiEvents\Exceptions\CannotCheckInException;
 use HiEvents\Exceptions\ResourceConflictException;
-use HiEvents\Helper\DateHelper;
 use HiEvents\Helper\IdHelper;
 use HiEvents\Repository\Interfaces\AttendeeCheckInRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
@@ -57,9 +56,9 @@ class CreateAttendeeCheckInService
     ): CreateAttendeeCheckInsResponseDTO
     {
         $checkInList = $this->checkInListDataService->getCheckInList($checkInListUuid);
-        $this->validateCheckInListIsActive($checkInList);
+        $this->checkInListDataService->validateCheckInListIsAvailable($checkInList);
 
-        $attendees = $this->fetchAttendees($attendeesAndActions);
+        $attendees = $this->fetchAttendees($attendeesAndActions, $checkInList->getEventId());
         $eventSettings = $this->fetchEventSettings($checkInList->getEventId());
         $existingCheckIns = $this->fetchExistingCheckIns($attendees, $checkInList);
 
@@ -74,30 +73,16 @@ class CreateAttendeeCheckInService
     }
 
     /**
-     * @throws CannotCheckInException
-     */
-    private function validateCheckInListIsActive(CheckInListDomainObject $checkInList): void
-    {
-        if ($checkInList->getExpiresAt() && DateHelper::utcDateIsPast($checkInList->getExpiresAt())) {
-            throw new CannotCheckInException(__('Check-in list has expired'));
-        }
-
-        if ($checkInList->getActivatesAt() && DateHelper::utcDateIsFuture($checkInList->getActivatesAt())) {
-            throw new CannotCheckInException(__('Check-in list is not active yet'));
-        }
-    }
-
-    /**
      * @param Collection<int, AttendeeAndActionDTO> $attendeesAndActions
      * @return Collection<int, AttendeeDomainObject>
      * @throws CannotCheckInException
      */
-    private function fetchAttendees(Collection $attendeesAndActions): Collection
+    private function fetchAttendees(Collection $attendeesAndActions, int $eventId): Collection
     {
         $publicIds = $attendeesAndActions->map(
             fn(AttendeeAndActionDTO $attendeeAndAction) => $attendeeAndAction->public_id
         );
-        return $this->checkInListDataService->getAttendees($publicIds);
+        return $this->checkInListDataService->getAttendees($publicIds, $eventId);
     }
 
     private function fetchEventSettings(int $eventId): EventSettingDomainObject
@@ -141,6 +126,7 @@ class CreateAttendeeCheckInService
     {
         $errors = new ErrorBagDTO();
         $checkIns = new Collection();
+        $createdCheckIns = new Collection();
 
         foreach ($attendees as $attendee) {
             $result = $this->processIndividualCheckIn(
@@ -154,6 +140,10 @@ class CreateAttendeeCheckInService
 
             if ($result->checkIn) {
                 $checkIns->push($result->checkIn);
+
+                if ($result->wasCreated) {
+                    $createdCheckIns->push($result->checkIn);
+                }
             }
             if ($result->error) {
                 $errors->addError($attendee->getPublicId(), $result->error);
@@ -174,6 +164,7 @@ class CreateAttendeeCheckInService
         return new CreateAttendeeCheckInsResponseDTO(
             attendeeCheckIns: $checkIns,
             errors: $errors,
+            createdCheckIns: $createdCheckIns,
         );
     }
 
@@ -246,7 +237,7 @@ class CreateAttendeeCheckInService
                     );
                 }
 
-                return new CheckInResultDTO(checkIn: $checkIn);
+                return new CheckInResultDTO(checkIn: $checkIn, wasCreated: true);
             });
         } catch (QueryException $exception) {
             // A concurrent request won the race and created the active check-in between our read

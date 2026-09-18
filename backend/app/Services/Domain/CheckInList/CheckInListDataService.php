@@ -46,14 +46,22 @@ class CheckInListDataService
      * Returns whatever resolved. A code that matches no attendee is that scan's problem, not the
      * batch's: the caller holds the error bag and reports the missing ones there.
      *
+     * Scoped to the event, like the single-attendee lookup is. Without it a public_id from another
+     * event resolves here, and although the product check below still refuses the check-in, the
+     * refusal names the attendee — leaking a name out of an unrelated event to anyone holding a
+     * check-in link.
+     *
      * @return Collection<AttendeeDomainObject>
      * @throws Exception
      */
-    public function getAttendees(Collection $attendeePublicIds): Collection
+    public function getAttendees(Collection $attendeePublicIds, int $eventId): Collection
     {
         return $this->attendeeRepository->findWhereIn(
             field: AttendeeDomainObjectAbstract::PUBLIC_ID,
             values: array_unique($attendeePublicIds->toArray()),
+            additionalWhere: [
+                AttendeeDomainObjectAbstract::EVENT_ID => $eventId,
+            ],
         );
     }
 

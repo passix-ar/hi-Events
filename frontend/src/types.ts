@@ -648,6 +648,9 @@ export interface Attendee {
     status: 'ACTIVE' | 'CANCELLED' | 'AWAITING_PAYMENT';
     first_name: string;
     last_name: string;
+    // Absent on the public check-in endpoints: the door scanner runs unauthenticated, so its
+    // resource withholds the email on purpose. Kept required because every authenticated caller
+    // does receive it — do not search or render it on the check-in screens.
     email: string;
     notes?: string;
     order?: Order;

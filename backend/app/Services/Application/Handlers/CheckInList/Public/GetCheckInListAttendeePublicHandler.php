@@ -29,7 +29,7 @@ class GetCheckInListAttendeePublicHandler
     /**
      * @throws CannotCheckInException
      */
-    public function handle(string $shortId, string $attendeePublicId): AttendeeDomainObject
+    public function handle(string $shortId, string $attendeePublicId): ?AttendeeDomainObject
     {
         $checkInList = $this->checkInListRepository
             ->loadRelation(ProductDomainObject::class)
@@ -55,9 +55,14 @@ class GetCheckInListAttendeePublicHandler
                 'event_id' => $checkInList->getEventId(),
             ]);
 
-        if ($attendee) {
-            $this->otherListCheckInsService->attach(collect([$attendee]), $checkInList);
+        // No attendee is an ordinary outcome here, not a fault: this lookup is what a QR code from
+        // another event, or a code from another app entirely, resolves to. The caller turns it into
+        // a 404 — returning it as a non-nullable type made every such scan a 500.
+        if ($attendee === null) {
+            return null;
         }
+
+        $this->otherListCheckInsService->attach(collect([$attendee]), $checkInList);
 
         return $attendee;
     }

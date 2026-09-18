@@ -78,6 +78,29 @@ export const pendingPlaceholder = (attendee: Attendee): AttendeeCheckIn => ({
 
 // ---- The persisted roster --------------------------------------------------
 
+export const ROSTER_KEY_PREFIX = 'checkInRoster:';
+export const QUEUE_KEY_PREFIX = 'checkInQueue:';
+
+/**
+ * Which stored lists can be dropped from the device.
+ *
+ * The roster is the full attendance of an event — names, seats, order numbers — sitting in the
+ * `localStorage` of a phone that is often borrowed and rarely wiped. It is worth keeping only while
+ * the door is actually using it: once a list is done, or another one is opened, it is PII with no
+ * purpose, and re-downloading it costs one request.
+ *
+ * A list with check-ins still queued is never touched, current or not. Those entries exist nowhere
+ * else until the server confirms them, so dropping them would lose people who already walked in.
+ */
+export const shortIdsToPurge = (
+    stored: { shortId: string; pendingCount: number }[],
+    keep: { shortId: string; isFinished: boolean },
+): string[] =>
+    stored
+        .filter(({shortId, pendingCount}) => pendingCount === 0
+            && (shortId !== keep.shortId || keep.isFinished))
+        .map(({shortId}) => shortId);
+
 /**
  * `localStorage` is not trusted input: an old format, a half-written value or a hand-edited entry
  * all come back as valid JSON with the wrong shape. A snapshot that cannot be trusted is dropped

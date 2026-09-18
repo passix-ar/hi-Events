@@ -32,6 +32,13 @@ class GetCheckInListAttendeePublicAction extends BaseAction
             );
         }
 
+        if ($attendee === null) {
+            return $this->errorResponse(
+                message: __('Attendee not found'),
+                statusCode: Response::HTTP_NOT_FOUND,
+            );
+        }
+
         return $this->resourceResponse(
             resource: AttendeeWithCheckInPublicResource::class,
             data: $attendee,

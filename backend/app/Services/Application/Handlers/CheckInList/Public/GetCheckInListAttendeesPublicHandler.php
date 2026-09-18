@@ -2,15 +2,11 @@
 
 namespace HiEvents\Services\Application\Handlers\CheckInList\Public;
 
-use HiEvents\DomainObjects\AttendeeDomainObject;
 use HiEvents\DomainObjects\CheckInListDomainObject;
-use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Generated\CheckInListDomainObjectAbstract;
-use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\Exceptions\CannotCheckInException;
 use HiEvents\Helper\DateHelper;
 use HiEvents\Http\DTO\QueryParamsDTO;
-use HiEvents\Repository\Eloquent\Value\Relationship;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
@@ -32,9 +28,10 @@ class GetCheckInListAttendeesPublicHandler
      */
     public function handle(string $shortId, QueryParamsDTO $queryParams): Paginator
     {
+        // No relations: nothing here reads the list's products or its event, only the event id it
+        // carries as a column. This is the request the scanner repeats for every page of every
+        // refresh, all night, so two eager loads it never touches are worth removing.
         $checkInList = $this->checkInListRepository
-            ->loadRelation(ProductDomainObject::class)
-            ->loadRelation(new Relationship(EventDomainObject::class, name: 'event'))
             ->findFirstWhere([
                 CheckInListDomainObjectAbstract::SHORT_ID => $shortId,
             ]);

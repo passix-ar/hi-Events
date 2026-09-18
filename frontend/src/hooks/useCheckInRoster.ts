@@ -17,8 +17,11 @@ import {
     parseQueue,
     parseSnapshot,
     pendingPlaceholder,
+    QUEUE_KEY_PREFIX,
     QUEUE_REQUEST_TIMEOUT_MS,
+    shortIdsToPurge,
     shouldRotate,
+    ROSTER_KEY_PREFIX,
     ROSTER_PAGE_SIZE,
     ROSTER_REFRESH_MS,
     ROSTER_REQUEST_TIMEOUT_MS,
@@ -57,8 +60,8 @@ type RosterState = {
     syncing: boolean;
 };
 
-const rosterKey = (shortId: IdParam) => `checkInRoster:${shortId}`;
-const queueKey = (shortId: IdParam) => `checkInQueue:${shortId}`;
+const rosterKey = (shortId: IdParam) => `${ROSTER_KEY_PREFIX}${shortId}`;
+const queueKey = (shortId: IdParam) => `${QUEUE_KEY_PREFIX}${shortId}`;
 
 const readJson = <T, >(key: string): T | null => {
     if (isSsr()) return null;
@@ -85,10 +88,42 @@ const readSnapshot = (shortId: IdParam): Snapshot | null =>
 const readQueue = (shortId: IdParam): PendingCheckIn[] =>
     parseQueue(readJson<unknown>(queueKey(shortId)));
 
+/**
+ * Drops the stored rosters this device has no further use for — every list but the one open, and
+ * that one too once it is over. See `shortIdsToPurge`: a list with check-ins still queued survives
+ * regardless, because those exist nowhere else yet.
+ */
+const purgeStoredRosters = (currentShortId: IdParam, isFinished: boolean) => {
+    if (isSsr()) return;
+
+    try {
+        const shortIds = new Set<string>();
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith(ROSTER_KEY_PREFIX)) shortIds.add(key.slice(ROSTER_KEY_PREFIX.length));
+            if (key.startsWith(QUEUE_KEY_PREFIX)) shortIds.add(key.slice(QUEUE_KEY_PREFIX.length));
+        });
+
+        const stored = [...shortIds].map(shortId => ({
+            shortId,
+            pendingCount: readQueue(shortId).length,
+        }));
+
+        shortIdsToPurge(stored, {shortId: String(currentShortId), isFinished}).forEach(shortId => {
+            localStorage.removeItem(`${ROSTER_KEY_PREFIX}${shortId}`);
+            localStorage.removeItem(`${QUEUE_KEY_PREFIX}${shortId}`);
+        });
+    } catch {
+        // Storage blocked or unreadable. Nothing to clean up, and this must never take the door down.
+    }
+};
+
 export const useCheckInRoster = (
     checkInListShortId: IdParam,
     enabled: boolean,
     allowedProductIds?: (number | string)[],
+    // The list is over (expired). Kept apart from `enabled`, which is also false for a list that has
+    // not activated yet — that one is about to be used, so its roster stays.
+    isFinished = false,
 ) => {
     const [state, setState] = useState<RosterState>(() => {
         const snapshot = readSnapshot(checkInListShortId);
@@ -105,6 +140,12 @@ export const useCheckInRoster = (
 
     const stateRef = useRef(state);
     stateRef.current = state;
+
+    // Runs after the initial state has already been read, so opening a finished list still shows
+    // what it had; what this removes is the copy left behind on the device.
+    useEffect(() => {
+        purgeStoredRosters(checkInListShortId, isFinished);
+    }, [checkInListShortId, isFinished]);
 
     const patchAttendee = useCallback((publicId: string, patch: Partial<Attendee>) => {
         setState(prev => {

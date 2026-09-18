@@ -47,12 +47,12 @@ const CheckIn = () => {
     const [qrScannerOpen, setQrScannerOpen] = useState(false);
     const [scannerSelectionOpen, setScannerSelectionOpen] = useState(false);
     const [hidScannerMode, setHidScannerMode] = useState(false);
-    const [currentBarcode, setCurrentBarcode] = useState('');
     const [pageHasFocus, setPageHasFocus] = useState(true);
     const barcodeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isProcessingRef = useRef(false);
-    const processedBarcodesRef = useRef<Set<string>>(new Set());
-    const lastScanTimeRef = useRef<number>(0);
+    // The keys the USB reader has typed so far. A ref rather than state: it changes on every
+    // character and nothing renders it, and as state it rebuilt the listener on each keystroke.
+    const currentBarcodeRef = useRef('');
     const scanSuccessAudioRef = useRef<HTMLAudioElement | null>(null);
     const scanErrorAudioRef = useRef<HTMLAudioElement | null>(null);
     const [isSoundOn, setIsSoundOn] = useState(() => {
@@ -78,20 +78,28 @@ const CheckIn = () => {
         checkInListShortId,
         Boolean(checkInList?.is_active && !checkInList?.is_expired),
         allowedProductIds,
+        Boolean(checkInList?.is_expired),
     );
-    const [isCheckingOut, setIsCheckingOut] = useState(false);
+    // Who is being checked out, not whether someone is: as a single flag it put every button in the
+    // list into a loading state, so undoing one check-in froze the whole door.
+    const [checkingOutPublicId, setCheckingOutPublicId] = useState<string | null>(null);
 
     // The list is searched in memory: no request per keystroke, and it works
     // with the connection down.
+    // Memoised on the roster and the query: without it the whole list is filtered again on every
+    // render, and the list is the length of the event.
+    //
+    // Email is not searchable here and the placeholder no longer offers it: the public check-in
+    // resource deliberately withholds it (see AttendeeWithCheckInPublicResource, and the test that
+    // pins it), so the field never arrives and the filter silently matched nothing.
     const normalizedSearch = searchQuery.trim().toLowerCase();
-    const attendees = normalizedSearch === ''
+    const attendees = useMemo(() => normalizedSearch === ''
         ? roster.attendees
         : roster.attendees.filter(a =>
             `${a.first_name} ${a.last_name}`.toLowerCase().includes(normalizedSearch)
             || a.public_id.toLowerCase().includes(normalizedSearch)
             || String(a.order_id) === normalizedSearch
-            || (a.email ?? '').toLowerCase().includes(normalizedSearch)
-        );
+        ), [roster.attendees, normalizedSearch]);
 
     // A check-in the server refused (cancelled ticket, unpaid order) is reported
     // when its background sync comes back, not at scan time. Each one is a person
@@ -160,16 +168,16 @@ const CheckIn = () => {
 
     // What the door needs to read at a glance: the ticket type, and the seat when the event has one.
     // An event without assigned seating has no seat_label, so this degrades to the title alone.
-    const ticketInfoFor = (attendee: Attendee) => {
+    const ticketInfoFor = useCallback((attendee: Attendee) => {
         // This list's own products first, so the usual scan stays local. A ticket from another list
         // of the event is not in there at all, and for those the title travels with the attendee.
         const productTitle = products?.find(product => product.id === attendee.product_id)?.title
             ?? attendee.product_title;
 
         return [productTitle, attendee.seat_label].filter(Boolean).join(' · ');
-    };
+    }, [products]);
 
-    const scanFeedback = (attendee: Attendee, message: ReactNode) => {
+    const scanFeedback = useCallback((attendee: Attendee, message: ReactNode) => {
         const ticketInfo = ticketInfoFor(attendee);
 
         return (
@@ -178,11 +186,15 @@ const CheckIn = () => {
                 {ticketInfo && <div className={classes.scanProduct}>{ticketInfo}</div>}
             </>
         );
-    };
+    }, [ticketInfoFor]);
 
     // Resolves locally and returns at once: the check-in is queued and confirmed
     // with the server in the background (see useCheckInRoster).
-    const handleCheckInAction = (
+    //
+    // Memoised, with everything below it, because the keyboard listener for the USB scanner is
+    // rebuilt whenever this identity changes: unmemoised it was torn down and re-registered on
+    // every render, which at a door means on every character the reader types.
+    const handleCheckInAction = useCallback((
         attendee: Attendee,
         action: 'check-in' | 'check-in-and-mark-order-as-paid'
     ): boolean => {
@@ -218,7 +230,7 @@ const CheckIn = () => {
         checkInModalHandlers.close();
         setSelectedAttendee(null);
         return true;
-    };
+    }, [roster.queueCheckIn, scanFeedback, playErrorSound, playSuccessSound, checkInModalHandlers]);
 
     const handleCheckInToggle = (attendee: Attendee) => {
         if (attendee.check_in) {
@@ -229,7 +241,7 @@ const CheckIn = () => {
                 return;
             }
 
-            setIsCheckingOut(true);
+            setCheckingOutPublicId(attendee.public_id);
             publicCheckInClient.deleteCheckIn(checkInListShortId, attendee.check_in.short_id)
                 .then(() => {
                     roster.patchAttendee(attendee.public_id, {check_in: undefined});
@@ -249,7 +261,7 @@ const CheckIn = () => {
                         showError(t`Unable to check out attendee`);
                     }
                 })
-                .finally(() => setIsCheckingOut(false));
+                .finally(() => setCheckingOutPublicId(null));
             return;
         }
 
@@ -269,104 +281,92 @@ const CheckIn = () => {
         handleCheckInAction(attendee, 'check-in');
     };
 
-    const handleQrCheckIn = useCallback(async (attendeePublicId: string) => {
-        // Prevent processing if already handling a request
+    const handleQrCheckIn = useCallback(async (attendeePublicId: string): Promise<boolean> => {
+        // Reentrancy only: one scan is resolved at a time. Repeated reads of the same code are
+        // already held off by the scanner itself, and a ticket that went through is refused below
+        // on its check_in. This used to also keep a set of seen codes and a single timestamp — but
+        // the timestamp was global, so "this ticket was just scanned" was decided by whatever was
+        // scanned last, and its cleanup timer outlived the page.
         if (isProcessingRef.current) {
             return false;
         }
 
-        // Check if this barcode was recently processed (within last 3 seconds)
-        const now = Date.now();
-        if (processedBarcodesRef.current.has(attendeePublicId) &&
-            now - lastScanTimeRef.current < 3000) {
-            showError(t`This ticket was just scanned. Please wait before scanning again.`);
-            playErrorSound();
-            return false;
-        }
-
         isProcessingRef.current = true;
-        lastScanTimeRef.current = now;
 
-        // The roster holds the whole list, so a scan normally resolves here with
-        // no request. The network fallback only covers a ticket sold after the
-        // last refresh.
-        let attendee = roster.findByPublicId(attendeePublicId);
-
-        if (!attendee) {
-            try {
-                const {data} = await publicCheckInClient.getCheckInListAttendee(
-                    checkInListShortId, attendeePublicId, ATTENDEE_LOOKUP_TIMEOUT_MS,
-                );
-                attendee = data;
-            } catch (error) {
-                showError(networkStatus.online ? t`Unable to fetch attendee` : t`You are offline`);
-                playErrorSound();
-                isProcessingRef.current = false;
-                return false;
-            }
+        try {
+            // The roster holds the whole list, so a scan normally resolves here with
+            // no request. The network fallback only covers a ticket sold after the
+            // last refresh.
+            let attendee = roster.findByPublicId(attendeePublicId);
 
             if (!attendee) {
-                showError(t`Attendee not found`);
+                try {
+                    const {data} = await publicCheckInClient.getCheckInListAttendee(
+                        checkInListShortId, attendeePublicId, ATTENDEE_LOOKUP_TIMEOUT_MS,
+                    );
+                    attendee = data;
+                } catch (error) {
+                    // A 404 is about the code, not the connection: a QR from another event, or from
+                    // another app entirely. Reporting it as a failed request sends the person at the
+                    // door to check the wifi over a ticket that was never valid here.
+                    const isUnknownCode = error instanceof AxiosError && error.response?.status === 404;
+
+                    showError(isUnknownCode
+                        ? t`Attendee not found`
+                        : networkStatus.online ? t`Unable to fetch attendee` : t`You are offline`);
+                    playErrorSound();
+                    return false;
+                }
+
+                if (!attendee) {
+                    showError(t`Attendee not found`);
+                    playErrorSound();
+                    return false;
+                }
+            }
+
+            // Check if already checked in
+            if (attendee.check_in) {
+                showError(scanFeedback(attendee,
+                    <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
                 playErrorSound();
-                isProcessingRef.current = false;
                 return false;
             }
-        }
 
-        // Check if already checked in
-        if (attendee.check_in) {
-            showError(scanFeedback(attendee,
-                <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
-            playErrorSound();
-            processedBarcodesRef.current.add(attendeePublicId);
+            // Lists are independent by design (general vs VIP), so this is not the
+            // server's decision: the scanner rejects and the person at the door can
+            // still let them through from the list, deliberately.
+            const enteredElsewhere = attendee.other_check_ins?.[0];
+            if (enteredElsewhere) {
+                const listName = enteredElsewhere.check_in_list_name ?? t`another list`;
+                const time = new Date(enteredElsewhere.checked_in_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                showError(scanFeedback(attendee,
+                    <Trans>{attendee.first_name} {attendee.last_name} already entered at {time} via <b>{listName}</b></Trans>));
+                playErrorSound();
+                return false;
+            }
+
+            const isAttendeeAwaitingPayment = attendee.status === 'AWAITING_PAYMENT';
+
+            if (allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {
+                setSelectedAttendee(attendee);
+                checkInModalHandlers.open();
+                return false;
+            }
+
+            if (!allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {
+                showError(t`You cannot check in attendees with unpaid orders. This setting can be changed in the event settings.`);
+                playErrorSound();
+                return false;
+            }
+
+            return handleCheckInAction(attendee, 'check-in');
+        } finally {
+            // In a finally so no path can leave the gate closed: one early return that forgot to
+            // reopen it left the scanner refusing every later scan until the page was reloaded.
             isProcessingRef.current = false;
-            return false;
         }
-
-        // Lists are independent by design (general vs VIP), so this is not the
-        // server's decision: the scanner rejects and the person at the door can
-        // still let them through from the list, deliberately.
-        const enteredElsewhere = attendee.other_check_ins?.[0];
-        if (enteredElsewhere) {
-            const listName = enteredElsewhere.check_in_list_name ?? t`another list`;
-            const time = new Date(enteredElsewhere.checked_in_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-            showError(scanFeedback(attendee,
-                <Trans>{attendee.first_name} {attendee.last_name} already entered at {time} via <b>{listName}</b></Trans>));
-            playErrorSound();
-            processedBarcodesRef.current.add(attendeePublicId);
-            isProcessingRef.current = false;
-            return false;
-        }
-
-        const isAttendeeAwaitingPayment = attendee.status === 'AWAITING_PAYMENT';
-
-        if (allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {
-            setSelectedAttendee(attendee);
-            checkInModalHandlers.open();
-            isProcessingRef.current = false;
-            return false;
-        }
-
-        if (!allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {
-            showError(t`You cannot check in attendees with unpaid orders. This setting can be changed in the event settings.`);
-            playErrorSound();
-            isProcessingRef.current = false;
-            return false;
-        }
-
-        // Add to processed set before making the request
-        processedBarcodesRef.current.add(attendeePublicId);
-
-        // Clear old entries from the set after 10 seconds
-        setTimeout(() => {
-            processedBarcodesRef.current.delete(attendeePublicId);
-        }, 10000);
-
-        const checkedIn = handleCheckInAction(attendee, 'check-in');
-        isProcessingRef.current = false;
-
-        return checkedIn;
-    }, [roster, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, playErrorSound, networkStatus.online]);
+    }, [roster.findByPublicId, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, scanFeedback, playErrorSound, networkStatus.online]);
 
 
     // Process completed barcode
@@ -390,9 +390,12 @@ const CheckIn = () => {
         };
     }, []);
 
-    // Global keyboard listener for HID scanner mode
+    // Global keyboard listener for HID scanner mode.
+    //
+    // Stands down while the camera scanner is open: a USB reader left plugged in goes on typing
+    // into the page behind the modal, and both paths then feed the same code to the same handler.
     useEffect(() => {
-        if (!hidScannerMode) return;
+        if (!hidScannerMode || qrScannerOpen) return;
 
         const handleKeyPress = (e: KeyboardEvent) => {
             // Ignore if user is typing in an input field
@@ -403,31 +406,27 @@ const CheckIn = () => {
 
             if (e.key === 'Enter') {
                 // Process the accumulated barcode on Enter
-                if (currentBarcode.length > 0) {
-                    processBarcode(currentBarcode);
-                    setCurrentBarcode('');
+                if (currentBarcodeRef.current.length > 0) {
+                    processBarcode(currentBarcodeRef.current);
+                    currentBarcodeRef.current = '';
                 }
             } else if (e.key.length === 1) {
-                // Accumulate characters
-                setCurrentBarcode(prev => {
-                    const newBarcode = prev + e.key;
+                currentBarcodeRef.current += e.key;
 
-                    // Clear any existing timeout
-                    if (barcodeTimeoutRef.current) {
-                        clearTimeout(barcodeTimeoutRef.current);
+                if (barcodeTimeoutRef.current) {
+                    clearTimeout(barcodeTimeoutRef.current);
+                }
+
+                // The reader types a whole code in one burst; a gap this long means it stopped,
+                // so what is buffered is either a complete code or someone's stray keystrokes.
+                barcodeTimeoutRef.current = setTimeout(() => {
+                    const barcode = currentBarcodeRef.current;
+                    currentBarcodeRef.current = '';
+
+                    if (isScannableBarcode(barcode)) {
+                        processBarcode(barcode);
                     }
-
-                    // Set timeout to clear barcode if no more input (scanner stopped)
-                    barcodeTimeoutRef.current = setTimeout(() => {
-                        // Auto-process if it looks like a complete barcode
-                        if (isScannableBarcode(newBarcode)) {
-                            processBarcode(newBarcode);
-                        }
-                        setCurrentBarcode('');
-                    }, 100);
-
-                    return newBarcode;
-                });
+                }, 100);
             }
         };
 
@@ -438,8 +437,9 @@ const CheckIn = () => {
             if (barcodeTimeoutRef.current) {
                 clearTimeout(barcodeTimeoutRef.current);
             }
+            currentBarcodeRef.current = '';
         };
-    }, [hidScannerMode, currentBarcode, processBarcode]);
+    }, [hidScannerMode, qrScannerOpen, processBarcode]);
 
     if (CheckInListQuery.error && (CheckInListQuery.error as any).response?.status === 404) {
         return (
@@ -535,7 +535,7 @@ const CheckIn = () => {
                             value={searchQuery}
                             onChange={(event) => setSearchQuery(event.target.value)}
                             onClear={() => setSearchQuery('')}
-                            placeholder={t`Search by name, order #, attendee # or email...`}
+                            placeholder={t`Search by name, order # or attendee #...`}
                         />
                         <Button variant={'light'} size={'md'} className={classes.scanButton}
                                 onClick={() => setScannerSelectionOpen(true)} leftSection={<IconQrcode/>}>
@@ -570,7 +570,7 @@ const CheckIn = () => {
                 attendees={attendees}
                 products={products}
                 isLoading={roster.isLoading && roster.attendees.length === 0}
-                isDeletePending={isCheckingOut}
+                checkingOutPublicId={checkingOutPublicId}
                 allowOrdersAwaitingOfflinePaymentToCheckIn={allowOrdersAwaitingOfflinePaymentToCheckIn || false}
                 onCheckInToggle={handleCheckInToggle}
                 onClickSound={playClickSound}
@@ -614,6 +614,7 @@ const CheckIn = () => {
                             onAttendeeScanned={handleQrCheckIn}
                             onClose={() => setQrScannerOpen(false)}
                             isSoundOn={isSoundOn}
+                            onSoundToggle={() => setIsSoundOn(!isSoundOn)}
                         />
                     </Modal.Content>
                 </Modal.Root>

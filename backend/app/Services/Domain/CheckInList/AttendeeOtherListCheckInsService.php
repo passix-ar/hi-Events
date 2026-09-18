@@ -27,9 +27,19 @@ class AttendeeOtherListCheckInsService
      */
     public function attach(Collection $attendees, CheckInListDomainObject $currentList): void
     {
-        $listsById = $this->checkInListRepository
-            ->findWhere([CheckInListDomainObjectAbstract::EVENT_ID => $currentList->getEventId()])
-            ->keyBy(fn (CheckInListDomainObject $list) => $list->getId());
+        $hasCheckInsElsewhere = $attendees->contains(
+            fn (AttendeeDomainObject $attendee) => ($attendee->getCheckIns() ?? collect())
+                ->contains(fn (AttendeeCheckInDomainObject $checkIn) => $checkIn->getCheckInListId() !== $currentList->getId())
+        );
+
+        // The event's lists are only needed to put a name on an entry made through another door.
+        // On most pages nobody has one, and the scanner calls this once per page of the roster, all
+        // night — so the query is asked for only when there is something to name.
+        $listsById = $hasCheckInsElsewhere
+            ? $this->checkInListRepository
+                ->findWhere([CheckInListDomainObjectAbstract::EVENT_ID => $currentList->getEventId()])
+                ->keyBy(fn (CheckInListDomainObject $list) => $list->getId())
+            : collect();
 
         $attendees->each(function (AttendeeDomainObject $attendee) use ($currentList, $listsById) {
             $checkIns = $attendee->getCheckIns() ?? collect();

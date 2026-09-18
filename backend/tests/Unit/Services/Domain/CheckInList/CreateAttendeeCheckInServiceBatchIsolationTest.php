@@ -135,9 +135,12 @@ class CreateAttendeeCheckInServiceBatchIsolationTest extends TestCase
         // This one really is about the request, not about any attendee: the scanner is meant to
         // stop retrying and say so.
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->andReturn('2020-01-01 00:00:00');
 
         $this->checkInListDataService->shouldReceive('getCheckInList')->once()->andReturn($checkInList);
+        $this->checkInListDataService
+            ->shouldReceive('validateCheckInListIsAvailable')
+            ->once()
+            ->andThrow(new CannotCheckInException(__('Check-in list has expired')));
         $this->checkInListDataService->shouldNotReceive('getAttendees');
 
         $this->expectException(CannotCheckInException::class);
@@ -344,8 +347,6 @@ class CreateAttendeeCheckInServiceBatchIsolationTest extends TestCase
     private function activeCheckInList(): CheckInListDomainObject
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->andReturn(null);
-        $checkInList->shouldReceive('getActivatesAt')->andReturn(null);
         $checkInList->shouldReceive('getEventId')->andReturn(123);
         $checkInList->shouldReceive('getId')->andReturn(55);
 
@@ -394,6 +395,7 @@ class CreateAttendeeCheckInServiceBatchIsolationTest extends TestCase
             ->andReturn($allowOfflinePaymentCheckIn);
 
         $this->checkInListDataService->shouldReceive('getCheckInList')->once()->andReturn($checkInList);
+        $this->checkInListDataService->shouldReceive('validateCheckInListIsAvailable')->once();
         $this->checkInListDataService->shouldReceive('getAttendees')->once()->andReturn($attendees);
 
         $this->eventSettingsRepository->shouldReceive('findFirstWhere')->once()->andReturn($eventSettings);

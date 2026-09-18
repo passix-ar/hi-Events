@@ -43,7 +43,11 @@ export const CheckInInfoModal = ({
                             </h4>
 
                             <Progress
-                                value={checkInList.checked_in_attendees / checkInList.total_attendees * 100}
+                                // A list whose products have sold nothing has no total, and the
+                                // division then hands Progress a NaN.
+                                value={checkInList.total_attendees > 0
+                                    ? checkInList.checked_in_attendees / checkInList.total_attendees * 100
+                                    : 0}
                                 color={'teal'}
                                 size={'xl'}
                                 className={classes.progressBar}

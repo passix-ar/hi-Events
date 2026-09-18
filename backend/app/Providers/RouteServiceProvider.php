@@ -28,6 +28,18 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', function (Request $request) {
+            // The door scanner is exempt and runs on the 'check-in' limiter below instead.
+            // This cap is per bare IP, and every device at a door shares the venue's NAT, so the
+            // whole entrance draws on one budget: at 10k attendees a single phone spends ~65
+            // req/min (the roster re-downloads the full list every 60s in pages of 250, plus one
+            // POST per scan), which puts the third phone over the limit. The 429 that follows is
+            // worse than it looks — a refused POST is retried and the check-in survives, but a
+            // refused roster GET surfaces as "could not load the attendee list", which at the door
+            // reads as bad wifi rather than as a cap. See docs/check-in-rate-limit.md.
+            if (str_starts_with($request->route()?->uri() ?? '', 'public/check-in-lists')) {
+                return Limit::none();
+            }
+
             return Limit::perMinute(config('app.api_rate_limit_per_minute'))
                 ->by($request->user()?->id ?: $request->ip());
         });
@@ -86,6 +98,22 @@ class RouteServiceProvider extends ServiceProvider
 
         RateLimiter::for('self-service-edit', function (Request $request) {
             return Limit::perHour(20)->by($request->route('order_short_id') ?? $request->ip());
+        });
+
+        // Door scanner writes. Keyed by list *and* origin: keyed by IP alone the staff of one
+        // door share a NAT and throttle each other, and keyed by the short id alone anyone
+        // holding the (shareable) link drains the door's own budget.
+        //
+        // Only POST/DELETE carry this. The three GETs are deliberately left on the global limiter:
+        // the roster re-downloads the whole list every 60s in pages of 250, so a legitimate phone
+        // generates ~40 GET/min at 10k attendees — that is the request a cap would strangle first.
+        //
+        // 300/min sizes the write path off scanning speed, not event size: a person scans one
+        // ticket every 2-3s, so ~30 POST/min per device, and the budget covers ~10 devices behind
+        // one NAT scanning flat out. See docs/check-in-rate-limit.md before changing it.
+        RateLimiter::for('check-in', function (Request $request) {
+            return Limit::perMinute(300)
+                ->by('check-in:' . ($request->route('check_in_list_short_id') ?? '') . '|' . $request->ip());
         });
 
         $this->routes(function () {

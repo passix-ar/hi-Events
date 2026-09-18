@@ -35,14 +35,16 @@ class CreateAttendeeCheckInPublicHandler
         );
 
         $this->logger->info('Attendee check-ins created', [
-            'attendee_ids' => $checkIns->attendeeCheckIns
+            'attendee_ids' => $checkIns->createdCheckIns
                 ->map(fn(AttendeeCheckInDomainObject $checkIn) => $checkIn->getAttendeeId())->toArray(),
             'check_in_list_uuid' => $checkInData->checkInListUuid,
             'ip_address' => $checkInData->checkInUserIpAddress,
         ]);
 
+        // Only what this request wrote. The scanner retries a batch until it gets an answer, so
+        // iterating everything returned would fire checkin.created again for each re-send.
         /** @var AttendeeCheckInDomainObject $checkIn */
-        foreach ($checkIns->attendeeCheckIns as $checkIn) {
+        foreach ($checkIns->createdCheckIns as $checkIn) {
             $this->domainEventDispatcherService->dispatch(
                 new CheckinEvent(
                     type: DomainEventType::CHECKIN_CREATED,
