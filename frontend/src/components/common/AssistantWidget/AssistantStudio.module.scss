@@ -373,3 +373,10 @@
   from { transform: translateX(-8px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+.viewSwitch {
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px 0;
+  background: var(--hi-color-gray);
+}

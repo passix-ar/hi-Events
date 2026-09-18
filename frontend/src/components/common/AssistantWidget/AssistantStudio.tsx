@@ -14,6 +14,9 @@ import {useNavigate} from "react-router";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventImages} from "../../../queries/useGetEventImages.ts";
 import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
+import {useGetEventSeatingSections} from "../../../queries/useGetSeatingSections.ts";
+import {SeatMapPreview} from "./SeatMapPreview.tsx";
+import {SegmentedControl} from "@mantine/core";
 import {useGetAccount} from "../../../queries/useGetAccount.ts";
 import {useGetMercadoPagoStatus} from "../../../queries/useGetMercadoPagoStatus.ts";
 import {getProductsFromEvent} from "../../../utilites/helpers.ts";
@@ -168,6 +171,11 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const {data: event, refetch: refetchEvent} = useGetEvent(eventId);
     const {data: images, refetch: refetchImages} = useGetEventImages(eventId);
     const {data: eventSettings, refetch: refetchSettings} = useGetEventSettings(eventId);
+    const {data: seatingPage, refetch: refetchSeating} = useGetEventSeatingSections(eventId, {perPage: 100, pageNumber: 1});
+    const sections = seatingPage?.data ?? [];
+    const [view, setView] = useState<'page' | 'seats'>('page');
+    const [newSectionId, setNewSectionId] = useState<number | null>(null);
+    const lastSeatStep = [...buildLog].reverse().find(step => step.name === 'create_seating_section' || step.name === 'delete_seating_section');
     const {data: account} = useGetAccount();
     const {data: mpStatus} = useGetMercadoPagoStatus(account?.id);
     const [frameLoaded, setFrameLoaded] = useState(false);
@@ -180,6 +188,16 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
         void refetchEvent();
         void refetchImages();
         void refetchSettings();
+        void refetchSeating().then(result => {
+            // A section just built: show the map and let the new block drop in.
+            if (lastSeatStep && Date.now() - lastSeatStep.at < 5000) {
+                setView('seats');
+                const latest = [...(result.data?.data ?? [])].sort((a, b) => (b.id ?? 0) - (a.id ?? 0))[0];
+                setNewSectionId(latest?.id ?? null);
+            } else if (buildLog.length > 0 && Date.now() - buildLog[buildLog.length - 1].at < 5000) {
+                setView('page');
+            }
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [version, eventId]);
 
@@ -276,7 +294,24 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
                 <BuildTimeline log={buildLog} running={building && buildingStep && STEP_LABELS[buildingStep] ? buildingStep : null}/>
             </div>
 
+            {(sections.length > 0 || view === 'seats') && (
+                <div className={classes.viewSwitch}>
+                    <SegmentedControl
+                        size="xs"
+                        value={view}
+                        onChange={value => setView(value as 'page' | 'seats')}
+                        data={[
+                            {value: 'page', label: t`Page`},
+                            {value: 'seats', label: t`Seat map`},
+                        ]}
+                    />
+                </div>
+            )}
+
             <div className={classes.canvas}>
+                {view === 'seats' ? (
+                    <SeatMapPreview sections={sections} highlightId={newSectionId}/>
+                ) : (
                 <iframe
                     key={`${eventId}-${version}`}
                     src={eventPreviewPath(eventId)}
@@ -284,7 +319,8 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
                     className={`${classes.frame} ${frameLoaded ? classes.frameLoaded : ''}`}
                     onLoad={() => setFrameLoaded(true)}
                 />
-                {!frameLoaded && (
+                )}
+                {view === 'page' && !frameLoaded && (
                     <div className={classes.frameLoading}>
                         <Loader size="sm" type="dots"/>
                     </div>
