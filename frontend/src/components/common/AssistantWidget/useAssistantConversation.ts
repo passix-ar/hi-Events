@@ -8,7 +8,8 @@ export interface ChatEntry extends AssistantChatMessage {
     imagePreview?: string;
 }
 
-const MAX_HISTORY_MESSAGES = 20;
+// Mirrors assistant.max_history_messages on the backend (which trims anyway).
+const MAX_HISTORY_MESSAGES = 16;
 
 const storageKey = (organizerId: IdParam) => `passix.assistant.${organizerId}`;
 const attachmentKey = (organizerId: IdParam) => `passix.assistant.${organizerId}.attachment`;

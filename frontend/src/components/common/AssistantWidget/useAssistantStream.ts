@@ -67,7 +67,8 @@ const trimSlashes = (value: string) => value.replace(/\/+$/, '');
 const authHeaders = (): Record<string, string> => {
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        'Accept': 'text/event-stream',
+        // JSON second so Laravel answers validation/auth failures as JSON, never a redirect.
+        'Accept': 'text/event-stream, application/json',
     };
 
     const common = api.defaults.headers.common as Record<string, unknown> | undefined;

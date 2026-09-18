@@ -46,19 +46,23 @@ readonly class StreamChatWithAssistantHandler
 
         $this->usageLimiter->assertWithinBudget($dto->accountId);
 
+        // Only the most recent turns reach the model; the last one is always the user's.
+        $messages = array_slice($dto->messages, -max((int)$this->config->get('assistant.max_history_messages', 16), 1));
+
         $context = $this->contextFactory->create(
             user: $dto->user,
             accountId: $dto->accountId,
             organizerId: $dto->organizerId,
             focusedEventId: $dto->focusedEventId,
             attachmentId: $dto->attachmentId,
+            // Ids come from the whole history, even the turns trimmed away below.
             knownEntities: array_merge([], ...array_map(
                 static fn(AssistantMessageDTO $m): array => $m->entities,
                 $dto->messages,
             )),
         );
 
-        $reply = $this->conversation->stream($context, $dto->messages, $emit);
+        $reply = $this->conversation->stream($context, $messages, $emit);
 
         $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens, $reply->cacheReadTokens, $reply->cacheWriteTokens);
 

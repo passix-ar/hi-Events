@@ -12,11 +12,12 @@ class ChatWithAssistantRequest extends BaseRequest
 {
     public function rules(): array
     {
-        $maxMessages = (int)config('assistant.max_history_messages', 20);
         $maxLength = (int)config('assistant.max_message_length', 4000);
 
         return [
-            'messages' => ['required', 'array', 'min:1', 'max:' . $maxMessages],
+            // The window the model sees is trimmed in the handler (max_history_messages);
+            // this only bounds abuse, so a client one version behind never gets refused.
+            'messages' => ['required', 'array', 'min:1', 'max:100'],
             'messages.*.role' => ['required', 'string', 'in:' . AssistantMessageDTO::ROLE_USER . ',' . AssistantMessageDTO::ROLE_ASSISTANT],
             'messages.*.content' => ['required', 'string', 'max:' . $maxLength],
             'messages.*.entities' => ['nullable', 'array', 'max:' . AssistantEntityLedger::MAX_ENTRIES],

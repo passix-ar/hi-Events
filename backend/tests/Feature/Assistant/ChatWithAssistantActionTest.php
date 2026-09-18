@@ -228,6 +228,27 @@ class ChatWithAssistantActionTest extends TestCase
         });
     }
 
+    public function test_a_long_history_is_trimmed_to_the_window_instead_of_refused(): void
+    {
+        config()->set('assistant.max_history_messages', 4);
+        $fake = Prism::fake([TextResponseFake::make()->withText('ok')]);
+
+        $messages = [];
+        for ($i = 0; $i < 15; $i++) {
+            $messages[] = ['role' => 'user', 'content' => 'u' . $i];
+            $messages[] = ['role' => 'assistant', 'content' => 'a' . $i];
+        }
+        $messages[] = ['role' => 'user', 'content' => 'última'];
+
+        $this->chat($this->mine->organizer->id, ['messages' => $messages], $this->token)->assertOk();
+
+        $fake->assertRequest(function (array $requests): void {
+            $sent = $requests[0]->messages();
+            $this->assertCount(4, $sent);
+            $this->assertSame('última', $sent[3]->content);
+        });
+    }
+
     public function test_old_history_is_clipped_and_recent_turns_stay_whole(): void
     {
         config()->set('assistant.history_recent_intact', 2);
