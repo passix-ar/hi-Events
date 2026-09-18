@@ -11,6 +11,7 @@ const NOW = 1_758_000_000_000;
 const input = (overrides: Partial<SyncStateInput> = {}): SyncStateInput => ({
     online: true,
     pendingCount: 0,
+    stuckCount: 0,
     loadedAt: NOW,
     isLoading: false,
     loadError: false,
@@ -33,6 +34,20 @@ describe('pickSyncState', () => {
     it('reassures that scanning still works when offline with nothing queued', () => {
         expect(pickSyncState(input({online: false})))
             .toEqual({kind: 'offline', pendingCount: 0});
+    });
+
+    // A different problem from a slow connection, and it needs a different answer. Inside "Syncing
+    // N" it reads as the network being slow and the number simply never comes down.
+    it('says so when check-ins could not be saved, ahead of the plain pending count', () => {
+        expect(pickSyncState(input({stuckCount: 2, pendingCount: 40})))
+            .toEqual({kind: 'stuck', stuckCount: 2});
+    });
+
+    // Offline first: with no connection there is nothing to act on, and the count is going nowhere
+    // for a reason the door already knows about.
+    it('still leads with being offline', () => {
+        expect(pickSyncState(input({online: false, stuckCount: 2, pendingCount: 40})).kind)
+            .toBe('offline');
     });
 
     // Pending check-ins already tell the door the network is not keeping up. The age of the list

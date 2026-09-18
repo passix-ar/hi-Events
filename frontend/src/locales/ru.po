@@ -135,7 +135,7 @@ msgstr ""
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr ""
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — не удалось сохранить регистраций: {lost}"
 
@@ -146,6 +146,10 @@ msgstr ""
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr ""
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "Не удалось сохранить регистраций: {stuckCount}"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr ""
 msgid "All attendees of this event"
 msgstr ""
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "Все отметки синхронизированы"
 
@@ -1191,7 +1195,7 @@ msgstr ""
 msgid "Attendee information collection"
 msgstr ""
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Список участников обновлён {age} — нажмите, чтобы обновить"
 
@@ -5122,7 +5126,7 @@ msgstr ""
 msgid "Live Events"
 msgstr ""
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Загрузка списка участников…"
 
@@ -8734,7 +8738,7 @@ msgstr ""
 msgid "Switch Organizer"
 msgstr ""
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "Синхронизация {pendingCount} отметок…"
 

@@ -7,6 +7,7 @@ export const STALE_AFTER_MS = ROSTER_REFRESH_MS * 3;
 export type SyncState =
     | { kind: 'error' }
     | { kind: 'offline'; pendingCount: number }
+    | { kind: 'stuck'; stuckCount: number }
     | { kind: 'syncing'; pendingCount: number }
     | { kind: 'loading' }
     | { kind: 'stale'; loadedAt: number }
@@ -15,6 +16,7 @@ export type SyncState =
 export type SyncStateInput = {
     online: boolean;
     pendingCount: number;
+    stuckCount: number;
     loadedAt: number | null;
     isLoading: boolean;
     loadError: boolean;
@@ -35,7 +37,7 @@ export type SyncStateInput = {
  * apparently fine, and a roster from half an hour ago.
  */
 export const pickSyncState = (
-    {online, pendingCount, loadedAt, isLoading, loadError, mounted, now}: SyncStateInput,
+    {online, pendingCount, stuckCount, loadedAt, isLoading, loadError, mounted, now}: SyncStateInput,
 ): SyncState => {
     if (loadError && loadedAt === null) {
         return {kind: 'error'};
@@ -43,6 +45,13 @@ export const pickSyncState = (
 
     if (!online) {
         return {kind: 'offline', pendingCount};
+    }
+
+    // Ahead of the plain count, because it is a different problem with a different answer. These are
+    // check-ins the server keeps refusing; left inside "Syncing N" they read as a slow connection
+    // and the number simply never comes down.
+    if (stuckCount > 0) {
+        return {kind: 'stuck', stuckCount};
     }
 
     if (pendingCount > 0) {

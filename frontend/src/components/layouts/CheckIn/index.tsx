@@ -560,6 +560,7 @@ const CheckIn = () => {
             <SyncStatus
                 online={networkStatus.online}
                 pendingCount={roster.pendingCount}
+                stuckCount={roster.stuckCount}
                 loadedAt={roster.loadedAt}
                 isLoading={roster.isLoading}
                 loadError={roster.loadError}

@@ -135,7 +135,7 @@ msgstr "{eventCount} etkinlik"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} saat, {minutes} dakika ve {seconds} saniye"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} giriş kaydedilemedi"
 
@@ -146,6 +146,10 @@ msgstr "{minutes} dakika ve {seconds} saniye"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "{organizerName}'ın ilk etkinliği"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "{stuckCount} giriş kaydedilemedi"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "Tüm katılımcılar"
 msgid "All attendees of this event"
 msgstr "Bu etkinliğin tüm katılımcıları"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "Tüm giriş kayıtları eşitlendi"
 
@@ -1191,7 +1195,7 @@ msgstr "Katılımcı Bilgileri"
 msgid "Attendee information collection"
 msgstr "Katılımcı bilgi toplama"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Katılımcı listesi {age} güncellendi — yenilemek için dokunun"
 
@@ -5122,7 +5126,7 @@ msgstr "CANLI"
 msgid "Live Events"
 msgstr "Canlı Etkinlikler"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Katılımcı listesi yükleniyor…"
 
@@ -8734,7 +8738,7 @@ msgstr "Destek E-postası"
 msgid "Switch Organizer"
 msgstr "Organizatör Değiştir"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "{pendingCount} giriş kaydı eşitleniyor…"
 

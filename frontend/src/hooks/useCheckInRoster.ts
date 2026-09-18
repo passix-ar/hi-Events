@@ -7,15 +7,18 @@ import {isSsr} from "../utilites/helpers";
 import {
     applyFlushResponse,
     backoffDelay,
+    batchSizeFor,
     classifyFlushFailure,
     collectRefusals,
     decideCheckIn,
     isPendingCheckIn,
     mergeRoster,
+    nextServerErrors,
+    parseQueue,
     parseSnapshot,
     pendingPlaceholder,
-    QUEUE_BATCH_SIZE,
     QUEUE_REQUEST_TIMEOUT_MS,
+    shouldRotate,
     ROSTER_PAGE_SIZE,
     ROSTER_REFRESH_MS,
     ROSTER_REQUEST_TIMEOUT_MS,
@@ -79,10 +82,8 @@ const writeJson = (key: string, value: unknown) => {
 const readSnapshot = (shortId: IdParam): Snapshot | null =>
     parseSnapshot(readJson<unknown>(rosterKey(shortId)));
 
-const readQueue = (shortId: IdParam): PendingCheckIn[] => {
-    const raw = readJson<PendingCheckIn[]>(queueKey(shortId));
-    return Array.isArray(raw) ? raw : [];
-};
+const readQueue = (shortId: IdParam): PendingCheckIn[] =>
+    parseQueue(readJson<unknown>(queueKey(shortId)));
 
 export const useCheckInRoster = (
     checkInListShortId: IdParam,
@@ -212,7 +213,7 @@ export const useCheckInRoster = (
                 : a);
             const pending = prev.pending.some(p => p.publicId === attendee.public_id)
                 ? prev.pending
-                : [...prev.pending, {publicId: attendee.public_id, action, queuedAt: Date.now(), attempts: 0}];
+                : [...prev.pending, {publicId: attendee.public_id, action, queuedAt: Date.now(), attempts: 0, serverErrors: 0}];
             writeJson(rosterKey(checkInListShortId), {savedAt: prev.loadedAt ?? Date.now(), attendees});
             writeJson(queueKey(checkInListShortId), pending);
             return {...prev, attendees, pending};
@@ -236,7 +237,12 @@ export const useCheckInRoster = (
         // request that big never lands inside the timeout — so the client cuts,
         // retries the same oversized payload and never converges. Bounded slices
         // always land, and whatever is left triggers the next pass.
-        const batch = stateRef.current.pending.slice(0, QUEUE_BATCH_SIZE);
+        //
+        // The slice narrows when the server keeps rejecting this one, until the entry it cannot
+        // stomach is on its own and everyone else can get through.
+        const head = stateRef.current.pending[0];
+        if (!head) return;
+        const batch = stateRef.current.pending.slice(0, batchSizeFor(head.serverErrors));
         if (batch.length === 0) return;
 
         const batchIds = new Set(batch.map(p => p.publicId));
@@ -302,11 +308,25 @@ export const useCheckInRoster = (
             // The attempt counts against this batch only: a check-in queued while
             // it was failing should not inherit an already-stretched backoff.
             const attempts = batch[0].attempts + 1;
-            setState(prev => ({
-                ...prev,
-                syncing: false,
-                pending: prev.pending.map(p => batchIds.has(p.publicId) ? {...p, attempts} : p),
-            }));
+            const serverErrors = nextServerErrors(batch[0].serverErrors, status);
+            const rotate = batch.length === 1 && shouldRotate(serverErrors);
+
+            setState(prev => {
+                const updated = prev.pending.map(p => batchIds.has(p.publicId)
+                    ? {...p, attempts, serverErrors}
+                    : p);
+                // The queue is sent head first, so an entry the server will not take keeps being
+                // picked and everyone behind it keeps waiting. Sending it to the back lets the rest
+                // through; it is not dropped, it goes on being retried from there.
+                const pending = rotate
+                    ? [
+                        ...updated.filter(p => !batchIds.has(p.publicId)),
+                        ...updated.filter(p => batchIds.has(p.publicId)),
+                    ]
+                    : updated;
+                writeJson(queueKey(checkInListShortId), pending);
+                return {...prev, syncing: false, pending};
+            });
             retryTimerRef.current = setTimeout(() => {
                 flushingRef.current = false;
                 flush();
@@ -349,6 +369,10 @@ export const useCheckInRoster = (
         isLoading: state.isLoading,
         loadError: state.loadError,
         pendingCount: state.pending.length,
+        // Queued check-ins the server has refused enough times to be set aside. They are still being
+        // retried from the back of the queue, but the door deserves to be told they exist instead of
+        // reading a count that never goes down as a slow connection.
+        stuckCount: state.pending.filter(p => shouldRotate(p.serverErrors)).length,
         syncing: state.syncing,
         rejected,
         clearRejected: () => setRejected([]),

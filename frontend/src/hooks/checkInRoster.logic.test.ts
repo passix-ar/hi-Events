@@ -3,11 +3,15 @@ import type {Attendee, PublicCheckIn} from '../types';
 import {
     applyFlushResponse,
     backoffDelay,
+    batchSizeFor,
     classifyFlushFailure,
     collectRefusals,
     decideCheckIn,
     mergeRoster,
+    nextServerErrors,
+    parseQueue,
     parseSnapshot,
+    shouldRotate,
     type PendingCheckIn,
 } from './checkInRoster.logic';
 
@@ -55,6 +59,7 @@ const queued = (publicId: string): PendingCheckIn => ({
     action: 'check-in',
     queuedAt: 0,
     attempts: 0,
+    serverErrors: 0,
 });
 
 // ---------------------------------------------------------------------------
@@ -329,6 +334,84 @@ describe('backoffDelay', () => {
     it('stops growing at thirty seconds', () => {
         expect(backoffDelay(4)).toBe(30_000);
         expect(backoffDelay(10)).toBe(30_000);
+    });
+});
+
+describe('batchSizeFor and shouldRotate: one bad entry must not hold up the queue', () => {
+    it('sends full batches until the server has refused a couple of times', () => {
+        expect([0, 1].map(batchSizeFor)).toEqual([50, 50]);
+    });
+
+    it('narrows to ten, then to one, to find the entry the server will not take', () => {
+        expect([2, 3].map(batchSizeFor)).toEqual([10, 10]);
+        expect([4, 10].map(batchSizeFor)).toEqual([1, 1]);
+    });
+
+    it('only sets an entry aside once it has failed on its own several times', () => {
+        expect(shouldRotate(5)).toBe(false);
+        expect(shouldRotate(6)).toBe(true);
+    });
+
+    /**
+     * The test this whole design exists for. `serverErrors` counts answers from the server and
+     * nothing else, so a venue losing signal for minutes — the ordinary case, the one the offline
+     * queue was built for — never moves a good check-in towards being set aside. If this goes green
+     * while transport failures are being counted, the scanner has started pushing valid check-ins to
+     * the back of the queue during a dead spot.
+     */
+    it('does nothing at all through a long stretch with no signal', () => {
+        // Forty failed passes with the venue's connection down: none of them reached a server, so
+        // none of them carries a status.
+        const serverErrors = Array.from({length: 40})
+            .reduce<number>(current => nextServerErrors(current, undefined), 0);
+
+        expect(serverErrors).toBe(0);
+        expect(batchSizeFor(serverErrors)).toBe(50);
+        expect(shouldRotate(serverErrors)).toBe(false);
+    });
+
+    it('counts the failures the server did answer', () => {
+        expect(nextServerErrors(0, 500)).toBe(1);
+        expect(nextServerErrors(3, 503)).toBe(4);
+    });
+});
+
+describe('parseQueue: the queue comes back from localStorage too', () => {
+    const entry = {publicId: 'A-AAA111', action: 'check-in', queuedAt: 5, attempts: 1, serverErrors: 2};
+
+    it('keeps a well formed queue', () => {
+        expect(parseQueue([entry])).toEqual([entry]);
+    });
+
+    // A queue written by the previous version has no serverErrors at all. Left undefined it reaches
+    // arithmetic and turns the count into NaN, which compares false against every threshold.
+    it('fills in a missing serverErrors instead of letting NaN through', () => {
+        const [restored] = parseQueue([{publicId: 'A-AAA111', action: 'check-in', queuedAt: 5, attempts: 1}]);
+
+        expect(restored.serverErrors).toBe(0);
+        expect(Number.isNaN(restored.serverErrors + 1)).toBe(false);
+    });
+
+    it.each([
+        ['it is not an array', 'nope'],
+        ['it is null', null],
+    ])('returns an empty queue when %s', (_label, raw) => {
+        expect(parseQueue(raw)).toEqual([]);
+    });
+
+    it('drops entries with no public id or an action the server would refuse', () => {
+        expect(parseQueue([
+            entry,
+            {action: 'check-in'},
+            {publicId: 'A-BBB222', action: 'delete-everything'},
+        ])).toEqual([entry]);
+    });
+
+    it('replaces counters that are not numbers rather than trusting them', () => {
+        const [restored] = parseQueue([{...entry, attempts: '9', serverErrors: null}]);
+
+        expect(restored.attempts).toBe(0);
+        expect(restored.serverErrors).toBe(0);
     });
 });
 

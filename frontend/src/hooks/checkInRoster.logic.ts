@@ -34,6 +34,11 @@ export type PendingCheckIn = {
     action: 'check-in' | 'check-in-and-mark-order-as-paid';
     queuedAt: number;
     attempts: number;
+    // Counted apart from `attempts` on purpose, and only when the server actually answered with an
+    // error. At a door the normal way to fail is for the request never to leave at all, and those
+    // failures must never move an entry towards being set aside: a five minute dead spot would
+    // start pushing perfectly good check-ins to the back of the queue.
+    serverErrors: number;
 };
 
 export type Snapshot = {
@@ -103,6 +108,28 @@ export const parseSnapshot = (raw: unknown): Snapshot | null => {
         savedAt,
         attendees: candidate.attendees.filter(attendee => typeof attendee?.public_id === 'string'),
     };
+};
+
+/**
+ * The queue gets the same treatment as the roster: it comes back from `localStorage`, so an old
+ * format, a half-written value or a hand-edited entry all arrive as valid JSON with the wrong shape.
+ * Entries are rebuilt field by field rather than trusted — a missing `serverErrors` on a queue
+ * written by the previous version would otherwise reach arithmetic as `undefined` and turn the whole
+ * count into NaN.
+ */
+export const parseQueue = (raw: unknown): PendingCheckIn[] => {
+    if (!Array.isArray(raw)) return [];
+
+    return raw
+        .filter(entry => typeof entry?.publicId === 'string'
+            && (entry.action === 'check-in' || entry.action === 'check-in-and-mark-order-as-paid'))
+        .map(entry => ({
+            publicId: entry.publicId,
+            action: entry.action,
+            queuedAt: Number.isFinite(entry.queuedAt) ? entry.queuedAt : Date.now(),
+            attempts: Number.isFinite(entry.attempts) ? entry.attempts : 0,
+            serverErrors: Number.isFinite(entry.serverErrors) ? entry.serverErrors : 0,
+        }));
 };
 
 /**
@@ -267,3 +294,33 @@ export const classifyFlushFailure = (status?: number): 'definitive' | 'retry' =>
 // queue: a check-in scanned while it was failing should not inherit an already-stretched backoff.
 export const backoffDelay = (attempts: number): number =>
     Math.min(QUEUE_RETRY_MS * 2 ** Math.min(attempts, 4), QUEUE_MAX_RETRY_MS);
+
+/**
+ * Whether this failure counts towards setting an entry aside.
+ *
+ * Only an answer from the server does. A request that never reached anyone carries no status, and at
+ * a door that is the ordinary way to fail — counting it here would push perfectly good check-ins
+ * towards the back of the queue over nothing worse than a dead spot.
+ */
+export const nextServerErrors = (current: number, status?: number): number =>
+    status === undefined ? current : current + 1;
+
+/**
+ * How many to send after repeated errors *from the server*.
+ *
+ * A 500 says nothing about which attendee caused it, so the only way to find the one entry the
+ * server cannot stomach is to keep halving the batch until it is alone. Until that happens, one bad
+ * entry holds up everyone queued behind it — which is how a single unlucky scan used to stop a
+ * door's whole night of check-ins from ever being recorded.
+ */
+export const batchSizeFor = (serverErrors: number): number =>
+    serverErrors >= 4 ? 1 : serverErrors >= 2 ? 10 : QUEUE_BATCH_SIZE;
+
+/**
+ * Whether an entry that has been failing on its own should go to the back of the queue.
+ *
+ * Shrinking finds it but does not get it out of the way: the queue is sent head first, so the same
+ * entry keeps being picked and everyone behind it keeps waiting. Moving it to the end lets the rest
+ * through while it goes on being retried, which is why nothing is ever thrown away here.
+ */
+export const shouldRotate = (serverErrors: number): boolean => serverErrors >= 6;

@@ -135,7 +135,7 @@ msgstr "{eventCount} événements"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} heures, {minutes} minutes, et {seconds} secondes"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} enregistrement(s) n'ont pas pu être enregistrés"
 
@@ -146,6 +146,10 @@ msgstr "{minutes} minutes et {secondes} secondes"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "Premier événement de {organizerName}"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "{stuckCount} enregistrement(s) n'ont pas pu être enregistrés"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "Tous les participants"
 msgid "All attendees of this event"
 msgstr "Tous les participants à cet événement"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "Tous les check-ins sont synchronisés"
 
@@ -1191,7 +1195,7 @@ msgstr "Informations du participant"
 msgid "Attendee information collection"
 msgstr "Collecte d'informations sur les participants"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Liste des participants mise à jour {age} — appuyez pour actualiser"
 
@@ -5122,7 +5126,7 @@ msgstr "EN DIRECT"
 msgid "Live Events"
 msgstr "Événements en Direct"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Chargement de la liste des participants…"
 
@@ -8734,7 +8738,7 @@ msgstr "E-mail d'assistance"
 msgid "Switch Organizer"
 msgstr "Changer d'organisateur"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "Synchronisation de {pendingCount} check-in(s)…"
 

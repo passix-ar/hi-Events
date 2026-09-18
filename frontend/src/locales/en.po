@@ -135,7 +135,7 @@ msgstr "{eventCount} events"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} hours, {minutes} minutes, and {seconds} seconds"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} check-in(s) could not be saved"
 
@@ -146,6 +146,10 @@ msgstr "{minutes} minutes and {seconds} seconds"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "{organizerName}'s first event"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "{stuckCount} check-in(s) could not be saved"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "All attendees"
 msgid "All attendees of this event"
 msgstr "All attendees of this event"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "All check-ins synced"
 
@@ -1191,7 +1195,7 @@ msgstr "Attendee Information"
 msgid "Attendee information collection"
 msgstr "Attendee information collection"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Attendee list last updated {age} — tap to refresh"
 
@@ -5124,7 +5128,7 @@ msgstr "LIVE"
 msgid "Live Events"
 msgstr "Live Events"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Loading attendee list…"
 
@@ -8738,7 +8742,7 @@ msgstr "Support Email"
 msgid "Switch Organizer"
 msgstr "Switch Organizer"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "Syncing {pendingCount} check-in(s)…"
 

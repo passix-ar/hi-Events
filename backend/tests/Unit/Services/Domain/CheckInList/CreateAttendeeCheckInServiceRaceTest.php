@@ -11,6 +11,7 @@ use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\Status\AttendeeStatus;
 use HiEvents\Repository\Interfaces\AttendeeCheckInRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
+use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Application\Handlers\CheckInList\Public\DTO\AttendeeAndActionDTO;
 use HiEvents\Services\Domain\CheckInList\CheckInListDataService;
 use HiEvents\Services\Domain\CheckInList\CreateAttendeeCheckInService;
@@ -48,6 +49,7 @@ class CreateAttendeeCheckInServiceRaceTest extends TestCase
             $this->eventSettingsRepository,
             $this->db,
             $this->markOrderAsPaidService,
+            m::mock(OrderRepositoryInterface::class),
         );
     }
 

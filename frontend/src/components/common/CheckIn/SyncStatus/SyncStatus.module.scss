@@ -28,6 +28,13 @@
     cursor: pointer;
   }
 
+  // The one state that is a real loss: these check-ins are not on the server and retrying has not
+  // helped. Red, like the blocking error, because it needs someone to act rather than wait.
+  &.stuck {
+    color: var(--mantine-color-red-8);
+    background: var(--mantine-color-red-0);
+  }
+
   // A warning, not a failure: the scanner still works, the list is just behind.
   &.stale {
     color: var(--mantine-color-orange-8);

@@ -135,7 +135,7 @@ msgstr "{eventCount} 個事件"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} 小時, {minutes} 分鐘, 和 {seconds} 秒"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} 個簽到未能儲存"
 
@@ -146,6 +146,10 @@ msgstr "{分}分鐘和{秒}秒鐘"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "{組織者名稱}的首次活動"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "{stuckCount} 個簽到未能儲存"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "所有參與者"
 msgid "All attendees of this event"
 msgstr "本次活動的所有與會者"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "所有簽到已同步"
 
@@ -1191,7 +1195,7 @@ msgstr "參與者資訊"
 msgid "Attendee information collection"
 msgstr "參加者資料收集"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "參加者列表更新於 {age} — 輕觸重新整理"
 
@@ -5122,7 +5126,7 @@ msgstr "直播"
 msgid "Live Events"
 msgstr "直播活動"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "正在載入參加者名單…"
 
@@ -8734,7 +8738,7 @@ msgstr "支持電子郵件"
 msgid "Switch Organizer"
 msgstr "切換主辦單位"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "正在同步 {pendingCount} 個簽到…"
 

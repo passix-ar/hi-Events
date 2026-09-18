@@ -10,12 +10,16 @@ use HiEvents\DomainObjects\CheckInListDomainObject;
 use HiEvents\DomainObjects\Enums\AttendeeCheckInActionType;
 use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\DomainObjects\Generated\AttendeeCheckInDomainObjectAbstract;
+use HiEvents\DomainObjects\Generated\OrderDomainObjectAbstract;
 use HiEvents\DomainObjects\Status\AttendeeStatus;
+use HiEvents\DomainObjects\Status\OrderStatus;
 use HiEvents\Exceptions\CannotCheckInException;
+use HiEvents\Exceptions\ResourceConflictException;
 use HiEvents\Helper\DateHelper;
 use HiEvents\Helper\IdHelper;
 use HiEvents\Repository\Interfaces\AttendeeCheckInRepositoryInterface;
 use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
+use HiEvents\Repository\Interfaces\OrderRepositoryInterface;
 use HiEvents\Services\Application\Handlers\CheckInList\Public\DTO\AttendeeAndActionDTO;
 use HiEvents\Services\Domain\CheckInList\DTO\CheckInResultDTO;
 use HiEvents\Services\Domain\CheckInList\DTO\CreateAttendeeCheckInsResponseDTO;
@@ -33,6 +37,7 @@ class CreateAttendeeCheckInService
         private readonly EventSettingsRepositoryInterface   $eventSettingsRepository,
         private readonly ConnectionInterface                $db,
         private readonly MarkOrderAsPaidService             $markOrderAsPaidService,
+        private readonly OrderRepositoryInterface           $orderRepository,
     )
     {
     }
@@ -206,11 +211,35 @@ class CreateAttendeeCheckInService
             return new CheckInResultDTO(error: $error);
         }
 
+        $markOrderAsPaid = $checkInAction->value === AttendeeCheckInActionType::CHECK_IN_AND_MARK_ORDER_AS_PAID->value;
+
+        if ($markOrderAsPaid) {
+            // Every attendee in this request was read before any of them were processed, so their
+            // copy of the order is as old as the request. Another ticket on the same order — one
+            // earlier in this very batch, or one the phone sent before its roster caught up — may
+            // have paid it already, and paying it twice throws. Scoped to the event as well: this
+            // sits behind a public endpoint whose only secret is a shareable short id, so an order
+            // must never be readable from another event.
+            $orderStatus = $this->orderRepository->findFirstWhere([
+                OrderDomainObjectAbstract::ID => $attendee->getOrderId(),
+                OrderDomainObjectAbstract::EVENT_ID => $attendee->getEventId(),
+            ])?->getStatus();
+
+            if ($orderStatus === OrderStatus::COMPLETED->name) {
+                // Paid is all the scan was asking for, so the person walks in and only the redundant
+                // payment step is skipped. Refusing here would show red at the door to someone whose
+                // order is settled.
+                $markOrderAsPaid = false;
+            } elseif ($orderStatus !== OrderStatus::AWAITING_OFFLINE_PAYMENT->name) {
+                return new CheckInResultDTO(error: __('Order is not awaiting offline payment'));
+            }
+        }
+
         try {
-            return $this->db->transaction(function () use ($attendee, $checkInList, $checkInAction, $checkInUserIpAddress) {
+            return $this->db->transaction(function () use ($attendee, $checkInList, $markOrderAsPaid, $checkInUserIpAddress) {
                 $checkIn = $this->createCheckIn($attendee, $checkInList, $checkInUserIpAddress);
 
-                if ($checkInAction->value === AttendeeCheckInActionType::CHECK_IN_AND_MARK_ORDER_AS_PAID->value) {
+                if ($markOrderAsPaid) {
                     $this->markOrderAsPaidService->markOrderAsPaid(
                         orderId: $attendee->getOrderId(),
                         eventId: $attendee->getEventId(),
@@ -240,6 +269,13 @@ class CreateAttendeeCheckInService
                     'attendee_name' => $attendee->getFullName(),
                 ])
             );
+        } catch (ResourceConflictException $exception) {
+            // Two requests got past the status check above and the other one paid the order first.
+            // This has to come back as one person's error: left to escape it renders as a 500 — the
+            // exception carries a 409 code but extends a plain Exception, so nothing maps it — and
+            // the scanner treats 500 as retryable, resending the same batch every thirty seconds
+            // for the rest of the night without a single check-in ever landing.
+            return new CheckInResultDTO(error: $exception->getMessage());
         }
     }
 

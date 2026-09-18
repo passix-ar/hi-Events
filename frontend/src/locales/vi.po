@@ -135,7 +135,7 @@ msgstr "{EventCount} Sự kiện"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{giờ} giờ, {phút} phút và {giây} giây"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — không thể lưu {lost} lượt check-in"
 
@@ -146,6 +146,10 @@ msgstr "{phút} phút và {giây} giây"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "Sự kiện đầu tiên của {organizerName}"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "Không thể lưu {stuckCount} lượt check-in"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "Tất cả người tham dự"
 msgid "All attendees of this event"
 msgstr "Tất cả những người tham dự sự kiện này"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "Đã đồng bộ tất cả check-in"
 
@@ -1191,7 +1195,7 @@ msgstr "Thông tin người tham dự"
 msgid "Attendee information collection"
 msgstr "Thu thập thông tin người tham dự"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Danh sách người tham dự cập nhật {age} — chạm để làm mới"
 
@@ -5122,7 +5126,7 @@ msgstr "TRỰC TIẾP"
 msgid "Live Events"
 msgstr "Sự Kiện Trực Tiếp"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Đang tải danh sách người tham dự…"
 
@@ -8734,7 +8738,7 @@ msgstr "Email hỗ trợ"
 msgid "Switch Organizer"
 msgstr "Chuyển đổi nhà tổ chức"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "Đang đồng bộ {pendingCount} check-in…"
 

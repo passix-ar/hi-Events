@@ -135,7 +135,7 @@ msgstr "{eventCount} wydarzeń"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} godzin, {minutes} minut i {seconds} sekund"
 
-#: src/hooks/useCheckInRoster.ts:296
+#: src/hooks/useCheckInRoster.ts:302
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — nie udało się zapisać odpraw: {lost}"
 
@@ -146,6 +146,10 @@ msgstr "{minutes} minut i {seconds} sekund"
 #: src/components/routes/welcome/index.tsx:269
 msgid "{organizerName}'s first event"
 msgstr "Pierwsze wydarzenie {organizerName}"
+
+#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+msgid "{stuckCount} check-in(s) could not be saved"
+msgstr "Nie udało się zapisać odpraw: {stuckCount}"
 
 #: src/components/common/EventCard/index.tsx:119
 msgid "{totalCount} ticket types"
@@ -725,7 +729,7 @@ msgstr "Wszyscy uczestnicy"
 msgid "All attendees of this event"
 msgstr "Wszyscy uczestnicy tego wydarzenia"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:97
+#: src/components/common/CheckIn/SyncStatus/index.tsx:105
 msgid "All check-ins synced"
 msgstr "Wszystkie zameldowania zsynchronizowane"
 
@@ -1191,7 +1195,7 @@ msgstr "Informacje o uczestniku"
 msgid "Attendee information collection"
 msgstr "Zbieranie informacji o uczestniku"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:88
+#: src/components/common/CheckIn/SyncStatus/index.tsx:96
 msgid "Attendee list last updated {age} — tap to refresh"
 msgstr "Lista uczestników zaktualizowana {age} — dotknij, aby odświeżyć"
 
@@ -5122,7 +5126,7 @@ msgstr "NA ŻYWO"
 msgid "Live Events"
 msgstr "Wydarzenia na żywo"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:76
+#: src/components/common/CheckIn/SyncStatus/index.tsx:84
 msgid "Loading attendee list…"
 msgstr "Wczytywanie listy uczestników…"
 
@@ -8734,7 +8738,7 @@ msgstr "Email wsparcia"
 msgid "Switch Organizer"
 msgstr "Zmień organizatora"
 
-#: src/components/common/CheckIn/SyncStatus/index.tsx:68
+#: src/components/common/CheckIn/SyncStatus/index.tsx:76
 msgid "Syncing {pendingCount} check-in(s)…"
 msgstr "Synchronizowanie {pendingCount} zameldowań…"
 
