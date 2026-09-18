@@ -143,6 +143,7 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
         ]));
 
         $this->applyPassixTheme($event);
+        $this->applyLocation($event, $args);
         $this->context->entities->rememberEvent($event);
 
         $this->logWrite('event_created', [
@@ -182,6 +183,29 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
             account_id: $this->context->accountId,
             event_id: $event->getId(),
             settings: ['homepage_theme_settings' => $defaults->homepage_theme_settings],
+        ));
+    }
+
+    /**
+     * CreateEventService keeps the address on the event row, but the page and
+     * the panel read event_settings.location_details; without this the venue
+     * given in the chat never showed anywhere. The rest of the address comes
+     * later through set_event_location.
+     */
+    private function applyLocation(EventDomainObject $event, array $args): void
+    {
+        if (empty($args['venue_name']) && empty($args['city'])) {
+            return;
+        }
+
+        $this->updateSettings->handle(new PartialUpdateEventSettingsDTO(
+            account_id: $this->context->accountId,
+            event_id: $event->getId(),
+            settings: ['location_details' => [
+                'venue_name' => $args['venue_name'],
+                'city' => $args['city'],
+                'country' => 'AR',
+            ]],
         ));
     }
 

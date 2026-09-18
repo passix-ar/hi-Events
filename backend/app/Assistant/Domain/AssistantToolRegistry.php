@@ -34,6 +34,9 @@ use HiEvents\Assistant\Domain\Tools\GetSeatingSectionsTool;
 use HiEvents\Assistant\Domain\Tools\CreateSeatingSectionTool;
 use HiEvents\Assistant\Domain\Tools\DeleteSeatingSectionTool;
 use HiEvents\Assistant\Domain\Tools\ReorderSeatingSectionsTool;
+use HiEvents\Assistant\Domain\Tools\SetPlatformFeePayerTool;
+use HiEvents\Assistant\Domain\Tools\SetCheckoutSettingsTool;
+use HiEvents\Assistant\Domain\Tools\SetEventLocationTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use HiEvents\Assistant\Domain\Tools\UpdateEventTool;
 use HiEvents\Assistant\Domain\Tools\UpdateTicketTool;
@@ -72,6 +75,9 @@ readonly class AssistantToolRegistry
         CreateSeatingSectionTool::class,
         DeleteSeatingSectionTool::class,
         ReorderSeatingSectionsTool::class,
+        SetPlatformFeePayerTool::class,
+        SetCheckoutSettingsTool::class,
+        SetEventLocationTool::class,
         PublishEventTool::class,
         CreatePromoCodeTool::class,
         MessageBuyersTool::class,
@@ -135,6 +141,9 @@ readonly class AssistantToolRegistry
             'create_seating_section',
             'delete_seating_section',
             'reorder_seating_sections',
+            'set_platform_fee_payer',
+            'set_checkout_settings',
+            'set_event_location',
             'publish_event',
             'create_promo_code',
             'message_buyers',
