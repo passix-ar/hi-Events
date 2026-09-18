@@ -2213,6 +2213,7 @@ msgid "Continue to next step"
 msgstr "Continuar al siguiente paso"
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:748
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:53
 msgid "Continue to Payment"
 msgstr "Continuar al pago"
 
@@ -6565,8 +6566,8 @@ msgid "Pay to unlock"
 msgstr "Pagar para desbloquear"
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:53
-msgid "Pay with MercadoPago"
-msgstr "Pagar con MercadoPago"
+#~ msgid "Pay with MercadoPago"
+#~ msgstr "Pagar con MercadoPago"
 
 #: src/components/modals/OrganizerWebhookLogsModal/index.tsx:107
 #: src/components/routes/admin/FailedJobs/index.tsx:273
@@ -10716,8 +10717,12 @@ msgid "You receive"
 msgstr "Recibís"
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:45
-msgid "You will be redirected to MercadoPago to complete your payment securely."
-msgstr "Serás redirigido a MercadoPago para completar tu pago de forma segura."
+#~ msgid "You will be redirected to MercadoPago to complete your payment securely."
+#~ msgstr "Serás redirigido a MercadoPago para completar tu pago de forma segura."
+
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:45
+msgid "You will continue on MercadoPago to complete your payment securely. There you choose how to pay: credit or debit card, account money and other methods."
+msgstr "Vas a continuar en MercadoPago para completar tu pago de forma segura. Ahí elegís cómo pagar: tarjeta de crédito o débito, dinero en cuenta y otros medios."
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:145
 msgid "You will have to mark an order as paid manually. This can be done on the manage order page."

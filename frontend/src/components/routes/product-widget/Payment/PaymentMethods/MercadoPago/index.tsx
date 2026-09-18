@@ -42,7 +42,7 @@ export const MercadoPagoPaymentMethod = ({onRedirect}: MercadoPagoPaymentMethodP
     return (
         <Stack gap="md" className={classes.container}>
             <Text size="sm" c="dimmed">
-                {t`You will be redirected to MercadoPago to complete your payment securely.`}
+                {t`You will continue on MercadoPago to complete your payment securely. There you choose how to pay: credit or debit card, account money and other methods.`}
             </Text>
             <Button
                 className={classes.mpButton}
@@ -50,7 +50,7 @@ export const MercadoPagoPaymentMethod = ({onRedirect}: MercadoPagoPaymentMethodP
                 disabled={!mpData}
                 fullWidth
             >
-                {t`Pay with MercadoPago`}
+                {t`Continue to Payment`}
             </Button>
         </Stack>
     );

@@ -2214,6 +2214,7 @@ msgid "Continue to next step"
 msgstr "Ga door naar de volgende stap"
 
 #: src/components/routes/product-widget/CollectInformation/index.tsx:748
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:53
 msgid "Continue to Payment"
 msgstr "Doorgaan naar betaling"
 
@@ -6566,8 +6567,8 @@ msgid "Pay to unlock"
 msgstr "Betaal om te ontgrendelen"
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:53
-msgid "Pay with MercadoPago"
-msgstr ""
+#~ msgid "Pay with MercadoPago"
+#~ msgstr ""
 
 #: src/components/modals/OrganizerWebhookLogsModal/index.tsx:107
 #: src/components/routes/admin/FailedJobs/index.tsx:273
@@ -10717,8 +10718,12 @@ msgid "You receive"
 msgstr "U ontvangt"
 
 #: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:45
-msgid "You will be redirected to MercadoPago to complete your payment securely."
-msgstr ""
+#~ msgid "You will be redirected to MercadoPago to complete your payment securely."
+#~ msgstr ""
+
+#: src/components/routes/product-widget/Payment/PaymentMethods/MercadoPago/index.tsx:45
+msgid "You will continue on MercadoPago to complete your payment securely. There you choose how to pay: credit or debit card, account money and other methods."
+msgstr "Je gaat verder op MercadoPago om je betaling veilig af te ronden. Daar kies je hoe je betaalt: creditcard of betaalkaart, accountsaldo en andere betaalmethoden."
 
 #: src/components/routes/event/Settings/Sections/PaymentSettings/index.tsx:145
 msgid "You will have to mark an order as paid manually. This can be done on the manage order page."
