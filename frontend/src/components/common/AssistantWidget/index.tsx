@@ -26,7 +26,7 @@ const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_eve
 
 // Writes that change what the event page looks like: each one finishing reloads
 // the live preview in studio mode.
-const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'reorder_seating_sections', 'set_event_location', 'set_checkout_settings', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'create_seating_section', 'delete_seating_section', 'reorder_seating_sections', 'set_event_location', 'set_checkout_settings', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
 
 export interface BuildStep {
     name: string;
@@ -276,6 +276,8 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                 setError(t`The assistant is not enabled for this account yet.`);
             } else if (status === 429) {
                 setError(serverMessage || t`Too many questions in a row. Please wait a moment and try again.`);
+            } else if (status === 422 && serverMessage) {
+                setError(serverMessage);
             } else {
                 setError(t`The assistant is temporarily unavailable. Please try again.`);
             }

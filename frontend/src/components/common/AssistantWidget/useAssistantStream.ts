@@ -67,8 +67,8 @@ const trimSlashes = (value: string) => value.replace(/\/+$/, '');
 const authHeaders = (): Record<string, string> => {
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        // JSON second so Laravel answers validation/auth failures as JSON, never a redirect.
-        'Accept': 'text/event-stream, application/json',
+        // JSON first: Laravel looks at the first type, so auth/validation failures come back as JSON, never a redirect. The SSE body does not depend on Accept.
+        'Accept': 'application/json, text/event-stream',
     };
 
     const common = api.defaults.headers.common as Record<string, unknown> | undefined;

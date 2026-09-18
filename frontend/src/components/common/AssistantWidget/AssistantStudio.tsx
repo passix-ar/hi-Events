@@ -316,7 +316,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
                         onChange={value => setView(value as 'page' | 'seats')}
                         data={[
                             {value: 'page', label: t`Page`},
-                            {value: 'seats', label: sections.length > 0 ? t`Seat map (${sections.length})` : t`Seat map`},
+                            {value: 'seats', label: sections.length > 0 ? `${t`Seat map`} (${sections.length})` : t`Seat map`},
                         ]}
                     />
                 </div>
