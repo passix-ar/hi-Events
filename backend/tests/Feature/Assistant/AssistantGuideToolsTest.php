@@ -116,7 +116,7 @@ class AssistantGuideToolsTest extends TestCase
         $byStep = array_column($result['checklist'], null, 'step');
         $this->assertFalse($byStep['tickets']['done']);
         $this->assertFalse($byStep['cover_image']['done']);
-        $this->assertFalse($byStep['mercadopago']['done']);
+        $this->assertFalse($byStep['payment']['done']);
         $this->assertFalse($byStep['published']['done']);
         $this->assertFalse($result['ready_to_sell']);
         $this->assertStringContainsString('event_tickets', $result['next_step'], 'the first missing step is tickets');

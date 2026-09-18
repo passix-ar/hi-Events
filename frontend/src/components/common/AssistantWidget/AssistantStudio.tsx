@@ -13,6 +13,7 @@ import QRCode from "react-qr-code";
 import {useNavigate} from "react-router";
 import {useGetEvent} from "../../../queries/useGetEvent.ts";
 import {useGetEventImages} from "../../../queries/useGetEventImages.ts";
+import {useGetEventSettings} from "../../../queries/useGetEventSettings.ts";
 import {useGetAccount} from "../../../queries/useGetAccount.ts";
 import {useGetMercadoPagoStatus} from "../../../queries/useGetMercadoPagoStatus.ts";
 import {getProductsFromEvent} from "../../../utilites/helpers.ts";
@@ -44,6 +45,7 @@ const STEP_LABELS: Record<string, () => string> = {
     attach_flyer_to_event: () => t`Setting the flyer as cover`,
     apply_flyer_palette: () => t`Painting the page with the flyer colours`,
     set_event_theme: () => t`Changing the page colours`,
+    set_offline_payment: () => t`Setting up offline payment`,
     publish_event: () => t`Publishing`,
     update_event: () => t`Updating the event`,
     update_ticket: () => t`Updating a ticket`,
@@ -57,6 +59,7 @@ const DONE_LABELS: Record<string, () => string> = {
     attach_flyer_to_event: () => t`Flyer set as cover`,
     apply_flyer_palette: () => t`Page painted with the flyer colours`,
     set_event_theme: () => t`Page colours changed`,
+    set_offline_payment: () => t`Offline payment set`,
     publish_event: () => t`Published`,
     update_event: () => t`Event updated`,
     update_ticket: () => t`Ticket updated`,
@@ -160,6 +163,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const navigate = useNavigate();
     const {data: event, refetch: refetchEvent} = useGetEvent(eventId);
     const {data: images, refetch: refetchImages} = useGetEventImages(eventId);
+    const {data: eventSettings, refetch: refetchSettings} = useGetEventSettings(eventId);
     const {data: account} = useGetAccount();
     const {data: mpStatus} = useGetMercadoPagoStatus(account?.id);
     const [frameLoaded, setFrameLoaded] = useState(false);
@@ -171,6 +175,7 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
         setFrameLoaded(false);
         void refetchEvent();
         void refetchImages();
+        void refetchSettings();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [version, eventId]);
 
@@ -191,13 +196,14 @@ const EventStudio = ({eventId, flyerPreview, version, building, buildingStep, bu
     const hasCover = (images ?? []).some(image => image.type === 'EVENT_COVER');
     const isLive = event?.status === 'LIVE';
     const mpConnected = mpStatus?.is_connected ?? false;
-    const needsMp = hasPaidTickets && !mpConnected;
+    const offlineEnabled = (eventSettings?.payment_providers ?? []).some(provider => String(provider) === 'OFFLINE');
+    const needsMp = hasPaidTickets && !mpConnected && !offlineEnabled;
 
     const steps: { key: string; label: string; done: boolean; warn?: boolean; to?: string }[] = [
         {key: 'event', label: t`Event`, done: !!event},
         {key: 'tickets', label: t`Tickets`, done: hasTickets},
         {key: 'cover', label: t`Flyer`, done: hasCover},
-        {key: 'mp', label: t`Mercado Pago`, done: !hasPaidTickets || mpConnected, warn: needsMp, to: '/account/payment'},
+        {key: 'mp', label: offlineEnabled && !mpConnected ? t`Offline payment` : t`Mercado Pago`, done: !hasPaidTickets || mpConnected || offlineEnabled, warn: needsMp, to: '/account/payment'},
         {key: 'live', label: t`Published`, done: isLive},
     ];
     const completed = steps.filter(step => step.done).length;

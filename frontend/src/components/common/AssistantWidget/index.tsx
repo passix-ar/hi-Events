@@ -11,6 +11,7 @@ import {AssistantStudio} from "./AssistantStudio.tsx";
 import {GET_EVENT_QUERY_KEY} from "../../../queries/useGetEvent.ts";
 import {GET_EVENT_IMAGES_QUERY_KEY} from "../../../queries/useGetEventImages.ts";
 import {GET_EVENTS_QUERY_KEY} from "../../../queries/useGetEvents.ts";
+import {GET_EVENT_SETTINGS_QUERY_KEY} from "../../../queries/useGetEventSettings.ts";
 import {AssistantEntity, IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
@@ -19,11 +20,11 @@ import classes from './AssistantWidget.module.scss';
 
 // Tools that change data, highlighted so a turn that created something is
 // visibly different from one that only read.
-const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
+const WRITE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'publish_event', 'create_promo_code', 'message_buyers', 'update_event', 'update_ticket', 'delete_ticket', 'delete_event'];
 
 // Writes that change what the event page looks like: each one finishing reloads
 // the live preview in studio mode.
-const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
+const PAGE_TOOLS = ['create_draft_event', 'create_ticket', 'attach_flyer_to_event', 'apply_flyer_palette', 'set_event_theme', 'set_offline_payment', 'publish_event', 'update_event', 'update_ticket', 'delete_ticket'];
 
 export interface BuildStep {
     name: string;
@@ -149,6 +150,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
         // Whatever the panel shows for this event is stale now.
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENT_IMAGES_QUERY_KEY, eventId]});
+        void queryClient.invalidateQueries({queryKey: [GET_EVENT_SETTINGS_QUERY_KEY, eventId]});
         void queryClient.invalidateQueries({queryKey: [GET_EVENTS_QUERY_KEY]});
     };
 

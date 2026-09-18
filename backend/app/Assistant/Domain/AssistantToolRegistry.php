@@ -29,6 +29,7 @@ use HiEvents\Assistant\Domain\Tools\GetTicketRankingTool;
 use HiEvents\Assistant\Domain\Tools\MessageBuyersTool;
 use HiEvents\Assistant\Domain\Tools\PublishEventTool;
 use HiEvents\Assistant\Domain\Tools\SetEventThemeTool;
+use HiEvents\Assistant\Domain\Tools\SetOfflinePaymentTool;
 use HiEvents\Assistant\Domain\Tools\SearchHelpDocsTool;
 use HiEvents\Assistant\Domain\Tools\UpdateEventTool;
 use HiEvents\Assistant\Domain\Tools\UpdateTicketTool;
@@ -62,6 +63,7 @@ readonly class AssistantToolRegistry
         AttachFlyerToEventTool::class,
         ApplyFlyerPaletteTool::class,
         SetEventThemeTool::class,
+        SetOfflinePaymentTool::class,
         PublishEventTool::class,
         CreatePromoCodeTool::class,
         MessageBuyersTool::class,
@@ -120,6 +122,7 @@ readonly class AssistantToolRegistry
             'attach_flyer_to_event',
             'apply_flyer_palette',
             'set_event_theme',
+            'set_offline_payment',
             'publish_event',
             'create_promo_code',
             'message_buyers',

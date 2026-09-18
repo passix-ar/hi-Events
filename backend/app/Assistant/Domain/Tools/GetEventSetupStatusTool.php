@@ -9,7 +9,10 @@ use HiEvents\DomainObjects\Enums\ImageType;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Status\EventStatus;
 use HiEvents\Repository\Interfaces\AccountMercadopagoPlatformRepositoryInterface;
+use HiEvents\DomainObjects\Enums\PaymentProviders;
+use HiEvents\DomainObjects\EventSettingDomainObject;
 use HiEvents\Repository\Interfaces\EventRepositoryInterface;
+use HiEvents\Repository\Interfaces\EventSettingsRepositoryInterface;
 use HiEvents\Repository\Interfaces\ImageRepositoryInterface;
 use HiEvents\Repository\Interfaces\ProductRepositoryInterface;
 use HiEvents\Services\Infrastructure\Authorization\IsAuthorizedService;
@@ -30,6 +33,7 @@ class GetEventSetupStatusTool extends AbstractAssistantTool
         private readonly ProductRepositoryInterface            $products,
         private readonly ImageRepositoryInterface              $images,
         private readonly AccountMercadopagoPlatformRepositoryInterface $mercadoPago,
+        private readonly EventSettingsRepositoryInterface       $eventSettings,
     )
     {
         parent::__construct($context, $isAuthorizedService, $events, $logger);
@@ -59,13 +63,23 @@ class GetEventSetupStatusTool extends AbstractAssistantTool
         ]) !== null;
         $hasDescription = trim(strip_tags((string)$event->getDescription())) !== '';
         $mercadoPagoConnected = $this->mercadoPago->isSetupCompleteForAccount($this->context->accountId);
+        /** @var EventSettingDomainObject|null $settings */
+        $settings = $this->eventSettings->findFirstWhere(['event_id' => $event->getId()]);
+        $offlineEnabled = in_array(PaymentProviders::OFFLINE->value, is_array($settings?->getPaymentProviders()) ? $settings->getPaymentProviders() : [], true);
+        $paymentOk = $mercadoPagoConnected || $offlineEnabled;
+        $paymentDetail = match (true) {
+            $mercadoPagoConnected && $offlineEnabled => 'MercadoPago connected and offline payment enabled',
+            $mercadoPagoConnected => 'MercadoPago connected',
+            $offlineEnabled => 'offline payment (transfer/cash) enabled; MercadoPago not connected',
+            default => 'no payment method: connect MercadoPago on the account, or enable offline payment (set_offline_payment)',
+        };
         $published = $event->getStatus() === EventStatus::LIVE->name;
 
         $checklist = [
             ['step' => 'tickets', 'done' => $ticketCount > 0, 'detail' => $ticketCount . ' ticket type(s)', 'route' => 'event_tickets'],
             ['step' => 'cover_image', 'done' => $hasCover, 'detail' => $hasCover ? 'has a cover' : 'no cover image', 'route' => 'event_settings'],
             ['step' => 'description', 'done' => $hasDescription, 'detail' => $hasDescription ? 'has a description' : 'no description', 'route' => 'event_settings'],
-            ['step' => 'mercadopago', 'done' => $mercadoPagoConnected, 'detail' => $mercadoPagoConnected ? 'MercadoPago connected' : 'MercadoPago not connected: paid tickets cannot be sold', 'route' => 'connect_mercadopago'],
+            ['step' => 'payment', 'done' => $paymentOk, 'detail' => $paymentDetail, 'route' => 'connect_mercadopago', 'mercadopago_connected' => $mercadoPagoConnected, 'offline_payment' => $offlineEnabled],
             ['step' => 'published', 'done' => $published, 'detail' => $published ? 'live' : 'still a draft', 'route' => 'publish_event'],
         ];
 
