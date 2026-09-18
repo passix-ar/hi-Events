@@ -55,7 +55,7 @@ readonly class ChatWithAssistantHandler
 
         $reply = $this->conversation->converse($context, $dto->messages);
 
-        $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens);
+        $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens, $reply->cacheReadTokens, $reply->cacheWriteTokens);
 
         return $reply;
     }

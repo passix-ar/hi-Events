@@ -37,7 +37,7 @@ class AssistantUsageLimiterTest extends TestCase
 
         $limiter->assertWithinBudget(1);
 
-        $this->assertSame(500, $limiter->usedToday(1));
+        $this->assertSame(400 + 100 * 5, $limiter->usedToday(1));
     }
 
     public function test_the_account_is_blocked_once_the_budget_is_spent(): void
@@ -91,6 +91,15 @@ class AssistantUsageLimiterTest extends TestCase
         $limiter->record(1, 100, 50);
         $limiter->record(1, 100, 50);
 
-        $this->assertSame(450, $limiter->usedToday(1));
+        $this->assertSame(3 * (100 + 50 * 5), $limiter->usedToday(1), 'output weighs 5x');
+    }
+
+    public function test_cached_prefix_weighs_a_tenth_and_cache_writes_a_quarter_more(): void
+    {
+        $limiter = $this->limiter(100000);
+
+        $limiter->record(1, 10, 0, cacheReadTokens: 10000, cacheWriteTokens: 1000);
+
+        $this->assertSame(10 + 1000 + 1250, $limiter->usedToday(1));
     }
 }

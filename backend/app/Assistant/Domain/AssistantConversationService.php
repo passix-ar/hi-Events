@@ -80,6 +80,7 @@ readonly class AssistantConversationService
             'input_tokens' => $response->usage->promptTokens,
             'output_tokens' => $response->usage->completionTokens,
             'cache_read_tokens' => $response->usage->cacheReadInputTokens,
+            'cache_write_tokens' => $response->usage->cacheWriteInputTokens,
             'finish_reason' => $response->finishReason->name,
             'duration_ms' => (int)((microtime(true) - $startedAt) * 1000),
         ]);
@@ -89,6 +90,8 @@ readonly class AssistantConversationService
             toolCalls: $toolCalls,
             inputTokens: $response->usage->promptTokens,
             outputTokens: $response->usage->completionTokens,
+            cacheReadTokens: (int)($response->usage->cacheReadInputTokens ?? 0),
+            cacheWriteTokens: (int)($response->usage->cacheWriteInputTokens ?? 0),
             entities: $context->entities->all(),
         );
     }
@@ -183,6 +186,7 @@ readonly class AssistantConversationService
             'input_tokens' => $inputTokens,
             'output_tokens' => $outputTokens,
             'cache_read_tokens' => $usage?->cacheReadInputTokens,
+            'cache_write_tokens' => $usage?->cacheWriteInputTokens,
             'finish_reason' => $finishReason?->name ?? 'Unknown',
             'duration_ms' => (int)((microtime(true) - $startedAt) * 1000),
             'streamed' => true,
@@ -193,6 +197,8 @@ readonly class AssistantConversationService
             toolCalls: $toolCalls,
             inputTokens: $inputTokens,
             outputTokens: $outputTokens,
+            cacheReadTokens: (int)($usage?->cacheReadInputTokens ?? 0),
+            cacheWriteTokens: (int)($usage?->cacheWriteInputTokens ?? 0),
             entities: $context->entities->all(),
         );
     }
@@ -213,7 +219,10 @@ readonly class AssistantConversationService
             ->withMaxSteps((int)$this->config->get('assistant.max_steps'))
             ->withMaxTokens((int)$this->config->get('assistant.max_tokens'))
             ->withClientOptions(['timeout' => (int)$this->config->get('assistant.request_timeout')])
-            ->withProviderOptions(['cache_control' => ['type' => 'ephemeral']]);
+            // Tools + the stable part of the prompt are identical for every
+            // organizer, so one warm cache serves them all; the 1h TTL keeps it
+            // warm between sporadic messages (5 min would rewrite it each turn).
+            ->withProviderOptions(['cache_control' => ['type' => 'ephemeral', 'ttl' => '1h']]);
     }
 
     /**
@@ -228,11 +237,19 @@ readonly class AssistantConversationService
     private function toPrismMessages(array $history, AssistantContext $context): array
     {
         $lastIndex = array_key_last($history);
+        $keepIntact = (int)$this->config->get('assistant.history_recent_intact', 6);
+        $clipTo = (int)$this->config->get('assistant.history_clip_length', 700);
 
         return array_map(
-            function (AssistantMessageDTO $m, int $index) use ($context, $lastIndex): UserMessage|AssistantMessage {
+            function (AssistantMessageDTO $m, int $index) use ($context, $lastIndex, $keepIntact, $clipTo): UserMessage|AssistantMessage {
+                // Older turns matter for continuity, not verbatim: the last few stay
+                // whole, the rest are clipped so long answers stop compounding.
+                $content = $index < $lastIndex + 1 - $keepIntact && mb_strlen($m->content) > $clipTo
+                    ? mb_substr($m->content, 0, $clipTo) . ' […]'
+                    : $m->content;
+
                 if ($m->role === AssistantMessageDTO::ROLE_ASSISTANT) {
-                    return new AssistantMessage($m->content);
+                    return new AssistantMessage($content);
                 }
 
                 $media = [];
@@ -243,7 +260,7 @@ readonly class AssistantConversationService
                     );
                 }
 
-                return new UserMessage($m->content, $media);
+                return new UserMessage($content, $media);
             },
             $history,
             array_keys($history),

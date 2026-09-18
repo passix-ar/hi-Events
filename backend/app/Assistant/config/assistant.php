@@ -23,6 +23,10 @@ return [
         'days_ahead' => (int)env('AI_ASSISTANT_ALERTS_DAYS_AHEAD', 14),
         'min_sold_pct' => (int)env('AI_ASSISTANT_ALERTS_MIN_SOLD_PCT', 40),
     ],
-    'max_history_messages' => 20,
+    'max_history_messages' => (int)env('AI_ASSISTANT_MAX_HISTORY_MESSAGES', 16),
+    // Messages older than the last N are clipped to this many characters before
+    // reaching the model.
+    'history_recent_intact' => 6,
+    'history_clip_length' => 700,
     'max_message_length' => 4000,
 ];

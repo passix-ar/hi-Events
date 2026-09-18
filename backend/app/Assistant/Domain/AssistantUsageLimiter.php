@@ -57,13 +57,22 @@ readonly class AssistantUsageLimiter
         );
     }
 
-    public function record(int $accountId, int $inputTokens, int $outputTokens): void
+    /**
+     * The budget is in "token equivalents" weighted by what Anthropic charges:
+     * a cached read costs a tenth of a fresh input token, a cache write 1.25x,
+     * output about 5x. Counting raw input alone made the budget meaningless,
+     * since almost everything the assistant sends is a cached prefix.
+     */
+    public function record(int $accountId, int $inputTokens, int $outputTokens, int $cacheReadTokens = 0, int $cacheWriteTokens = 0): void
     {
         if ($this->dailyTokenLimit() <= 0) {
             return;
         }
 
-        $tokens = max($inputTokens + $outputTokens, 0);
+        $tokens = (int)max(
+            $inputTokens + $outputTokens * 5 + (int)round($cacheReadTokens * 0.1) + (int)round($cacheWriteTokens * 1.25),
+            0,
+        );
 
         if ($tokens === 0) {
             return;

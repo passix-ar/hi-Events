@@ -60,7 +60,7 @@ readonly class StreamChatWithAssistantHandler
 
         $reply = $this->conversation->stream($context, $dto->messages, $emit);
 
-        $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens);
+        $this->usageLimiter->record($dto->accountId, $reply->inputTokens, $reply->outputTokens, $reply->cacheReadTokens, $reply->cacheWriteTokens);
 
         return $reply;
     }

@@ -224,6 +224,31 @@ class ChatWithAssistantActionTest extends TestCase
             $this->assertSame(6, $request->maxSteps());
             $this->assertSame(2048, $request->maxTokens());
             $this->assertNull($request->temperature(), 'temperature must not be sent: Opus 5 rejects it');
+            $this->assertSame(['type' => 'ephemeral', 'ttl' => '1h'], $request->providerOptions('cache_control'), 'one warm cache shared by every organizer');
+        });
+    }
+
+    public function test_old_history_is_clipped_and_recent_turns_stay_whole(): void
+    {
+        config()->set('assistant.history_recent_intact', 2);
+        config()->set('assistant.history_clip_length', 50);
+        $fake = Prism::fake([TextResponseFake::make()->withText('ok')]);
+        $long = str_repeat('x', 200);
+
+        $this->chat($this->mine->organizer->id, ['messages' => [
+            ['role' => 'user', 'content' => $long],
+            ['role' => 'assistant', 'content' => $long],
+            ['role' => 'user', 'content' => $long],
+            ['role' => 'assistant', 'content' => $long],
+            ['role' => 'user', 'content' => 'última'],
+        ]], $this->token)->assertOk();
+
+        $fake->assertRequest(function (array $requests): void {
+            $messages = $requests[0]->messages();
+            $this->assertSame(50 + mb_strlen(' […]'), mb_strlen($messages[0]->content), 'old turns are clipped');
+            $this->assertSame(50 + mb_strlen(' […]'), mb_strlen($messages[2]->content));
+            $this->assertSame(200, mb_strlen($messages[3]->content), 'the last N stay whole');
+            $this->assertSame('última', $messages[4]->content);
         });
     }
 }
