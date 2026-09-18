@@ -88,6 +88,7 @@ readonly class AssistantConversationService
             toolCalls: $toolCalls,
             inputTokens: $response->usage->promptTokens,
             outputTokens: $response->usage->completionTokens,
+            entities: $context->entities->all(),
         );
     }
 
@@ -181,6 +182,7 @@ readonly class AssistantConversationService
             toolCalls: $toolCalls,
             inputTokens: $inputTokens,
             outputTokens: $outputTokens,
+            entities: $context->entities->all(),
         );
     }
 

@@ -14,6 +14,8 @@ class AssistantMessageDTO extends BaseDataObject
     public function __construct(
         public readonly string $role,
         public readonly string $content,
+        /** @var list<array{type: string, id: int, label: string}> Ids the reply that produced this message resolved. */
+        public readonly array  $entities = [],
     )
     {
     }

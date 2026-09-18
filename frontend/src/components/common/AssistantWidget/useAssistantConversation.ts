@@ -86,6 +86,6 @@ export const useAssistantConversation = (organizerId: IdParam) => {
         clear,
         pendingAttachmentId,
         setPendingAttachmentId,
-        historyForApi: () => entries.map(({role, content}) => ({role, content})),
+        historyForApi: () => entries.map(({role, content, entities}) => (entities?.length ? {role, content, entities} : {role, content})),
     };
 };

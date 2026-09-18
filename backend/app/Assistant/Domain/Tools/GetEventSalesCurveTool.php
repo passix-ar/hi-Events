@@ -106,7 +106,7 @@ class GetEventSalesCurveTool extends AbstractAssistantTool
                 'id' => $eventId,
                 'title' => $this->clip($event->getTitle()),
                 'status' => $event->getStatus(),
-                'start_date' => $event->getStartDate(),
+                'start_date' => $this->localDate($event->getStartDate(), $timezone),
                 'currency' => $event->getCurrency(),
                 'timezone' => $timezone,
             ],
@@ -116,7 +116,7 @@ class GetEventSalesCurveTool extends AbstractAssistantTool
                 'ends_at_event_start' => $eventStart !== null && $rangeEnd->isSameDay($eventStart),
             ],
             'summary' => $summary,
-            'ticket_types' => $this->ticketTypes($eventId),
+            'ticket_types' => $this->ticketTypes($eventId, $timezone),
             // Only the daily totals exist per day; there is no per-ticket-type daily breakdown.
             'per_ticket_timing_unavailable' => true,
             'curve_granularity' => $granularity,
@@ -211,7 +211,7 @@ class GetEventSalesCurveTool extends AbstractAssistantTool
         return [$weeks, 'week'];
     }
 
-    private function ticketTypes(int $eventId): array
+    private function ticketTypes(int $eventId, string $timezone): array
     {
         $quantities = $this->availableQuantities
             ->getAvailableProductQuantities($eventId, ignoreCache: true)
@@ -247,8 +247,8 @@ class GetEventSalesCurveTool extends AbstractAssistantTool
                     'available' => ($available === null || $available >= Constants::INFINITE) ? 'unlimited' : $available,
                     'sold_out' => $soldOut,
                     'sold_out_after_days' => null,
-                    'sale_start_date' => $price->getSaleStartDate() ?? $product->getSaleStartDate(),
-                    'sale_end_date' => $price->getSaleEndDate() ?? $product->getSaleEndDate(),
+                    'sale_start_date' => $this->localDate($price->getSaleStartDate() ?? $product->getSaleStartDate(), $timezone),
+                    'sale_end_date' => $this->localDate($price->getSaleEndDate() ?? $product->getSaleEndDate(), $timezone),
                 ];
             }
         }

@@ -46,7 +46,7 @@ class DeleteEventTool extends AbstractAssistantWriteTool
         if (!$this->deletion->canDeleteEvent($event->getId())) {
             return $this->toJson([
                 'error' => 'cannot_delete',
-                'details' => 'This event has orders, so the platform does not delete it. It can be archived from the panel (get_panel_route event_dashboard / publish_event page).',
+                'details' => 'This event has orders, so the platform does not delete it. It can be archived from the panel: the status control on the event dashboard (get_panel_route publish_event).',
             ]);
         }
 

@@ -120,7 +120,7 @@ class GetDoorStatusTool extends AbstractAssistantTool
                 'id' => $eventId,
                 'title' => $this->clip($event->getTitle()),
                 'status' => $event->getStatus(),
-                'start_date' => $event->getStartDate(),
+                'start_date' => $this->localDate($event->getStartDate(), $event->getTimezone()),
                 'timezone' => $this->context->timezone,
             ],
             'totals' => [

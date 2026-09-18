@@ -1,9 +1,10 @@
 import {api} from "./client";
-import {AssistantReply, GenericDataResponse, IdParam} from "../types";
+import {AssistantEntity, AssistantReply, GenericDataResponse, IdParam} from "../types";
 
 export interface AssistantChatMessage {
     role: 'user' | 'assistant';
     content: string;
+    entities?: AssistantEntity[];
 }
 
 export interface AssistantChatContext {

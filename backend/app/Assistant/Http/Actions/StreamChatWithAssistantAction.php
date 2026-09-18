@@ -24,7 +24,7 @@ use Throwable;
  *
  *   event: delta   data: {"text": "..."}
  *   event: tool    data: {"name": "...", "arguments": {...}}
- *   event: done    data: {"reply": "...", "tool_calls": [...], "input_tokens": n, "output_tokens": n}
+ *   event: done    data: {"reply": "...", "tool_calls": [...], "entities": [...], "input_tokens": n, "output_tokens": n}
  *   event: error   data: {"message": "...", "status": 404|429|503}
  *
  * The HTTP status is always 200 once the stream opens; failures that the JSON
@@ -52,6 +52,7 @@ class StreamChatWithAssistantAction extends BaseAction
                 static fn(array $m): AssistantMessageDTO => new AssistantMessageDTO(
                     role: $m['role'],
                     content: $m['content'],
+                    entities: $m['entities'] ?? [],
                 ),
                 $request->validated('messages'),
             ),
@@ -86,6 +87,7 @@ class StreamChatWithAssistantAction extends BaseAction
                     static fn(AssistantToolCallDTO $call): array => ['name' => $call->name, 'arguments' => $call->arguments],
                     $reply->toolCalls,
                 ),
+                'entities' => $reply->entities,
                 'input_tokens' => $reply->inputTokens,
                 'output_tokens' => $reply->outputTokens,
             ]);

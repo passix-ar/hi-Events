@@ -182,6 +182,7 @@ class UpdateTicketTool extends AbstractAssistantWriteTool
             ]],
         ]));
 
+        $this->context->entities->rememberTicket($product->getId(), $changes['title'] ?? $product->getTitle(), $event->getId());
         $this->logWrite('ticket_updated', ['event_id' => $event->getId(), 'product_id' => $product->getId(), 'changes' => $changes]);
 
         return $this->toJson([

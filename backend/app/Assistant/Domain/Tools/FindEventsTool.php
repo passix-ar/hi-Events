@@ -84,15 +84,18 @@ class FindEventsTool extends AbstractAssistantTool
             ]),
         );
 
+        collect($events->items())->each(fn(EventDomainObject $event) => $this->context->entities->rememberEvent($event));
+
         return $this->toJson([
             'total' => $events->total(),
             'events' => collect($events->items())->map(fn(EventDomainObject $event): array => [
                 'id' => $event->getId(),
                 'title' => $this->clip($event->getTitle()),
                 'status' => $event->getStatus(),
-                'start_date' => $event->getStartDate(),
-                'end_date' => $event->getEndDate(),
+                'start_date' => $this->localDate($event->getStartDate(), $event->getTimezone()),
+                'end_date' => $this->localDate($event->getEndDate(), $event->getTimezone()),
                 'currency' => $event->getCurrency(),
+                'timezone' => $event->getTimezone(),
             ])->values()->all(),
         ]);
     }

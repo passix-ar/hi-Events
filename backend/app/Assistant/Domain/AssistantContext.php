@@ -26,6 +26,8 @@ final readonly class AssistantContext
         public ?EventDomainObject $focusedEvent = null,
         /** The image attached to this turn, resolved within this account only. */
         public ?AssistantAttachment $attachment = null,
+        /** Ids this conversation already resolved; tools add to it as they run. */
+        public AssistantEntityLedger $entities = new AssistantEntityLedger(),
     )
     {
     }

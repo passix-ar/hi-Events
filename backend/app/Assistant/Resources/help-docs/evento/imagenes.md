@@ -10,7 +10,7 @@ Un evento en Passix usa **tres imágenes distintas**, cada una con su función. 
 | Imagen | Dónde se carga | Medida recomendada | ¿Obligatoria? |
 |---|---|---|---|
 | **Imagen del evento** (flyer) | Diseñador de página de inicio → **Imágenes** | **1080 × 1080** (cuadrada) | Muy recomendada |
-| **Banner destacado** | Diseñador de página de inicio → **Imágenes** | **1920 × 800** (proporción 2.4:1) | Opcional |
+| **Banner destacado** | Diseñador de página de inicio → **Imágenes** | **1920 × 640** (proporción 3:1) | Opcional |
 | **Logo del ticket** | [Diseñador de boletos](/evento/diseno-entradas/) | Cuadrado, fondo transparente | Opcional |
 
 Todas se suben desde el panel del evento y pesan como máximo **5 MB**.
@@ -35,9 +35,16 @@ El flyer que ya diseñaste para Instagram sirve tal cual: es el mismo formato cu
 
 Es el banner **apaisado** que se usa en el carrusel de destacados de la portada de Passix. Es opcional, pero es lo único que habilita a tu evento a entrar ahí.
 
-**Tiene que ser 2.4:1** — 1920 × 800 es la medida exacta. A diferencia del flyer, acá la proporción **sí se valida**: si subís una imagen con otra forma, el panel te lo rechaza o te avisa que el destacado la va a recortar. Es a propósito: en un banner los bordes son justamente donde van el logo, la fecha y los sponsors, y un recorte se los come.
+**Medida: 1920 × 640 px (proporción 3:1).** Es la medida exacta de la franja de destacados, y entra entera en cualquier pantalla, de computadora o de celular.
 
-- Mínimo: 1200 × 500.
+A diferencia del flyer, acá la proporción **sí se valida**:
+
+- **Entre 2.5:1 y 3.5:1** la imagen se acepta. Si no es 3:1 exacto, el panel te muestra cómo va a quedar y te indica qué porcentaje se recorta en los bordes.
+- **Fuera de ese rango** la imagen no se acepta. El motivo es que la franja recortaría demasiado: una portada de Facebook (1920 × 1005) perdería más de un tercio de su altura, y un flyer cuadrado de Instagram, más de la mitad. En un banner, los bordes son justamente donde van el logo, la fecha y los sponsors.
+
+Si tu imagen tiene otra proporción, podés adaptarla a 1920 × 640 px con herramientas gratuitas como **Canva** (*Crear un diseño → Tamaño personalizado → 1920 × 640*), **Photopea** o **Adobe Express**. La proporción 3:1 es la misma que la del encabezado de X/Twitter, así que la mayoría de los editores la traen como preset.
+
+- Mínimo: 1500 × 500.
 - Máximo: 4000 × 4000 y 5 MB.
 
 Cuando el banner queda cargado, el panel te lo confirma: *"Tu evento ya puede aparecer en la portada de Passix"*.
@@ -70,7 +77,7 @@ Si [duplicás un evento](/evento/configuracion/), sus imágenes se copian al eve
 | Lo que ves | Por qué |
 |---|---|
 | "Esta imagen no es cuadrada…" | Aviso, no error: el flyer se sube igual, pero en los listados va con espacio alrededor. |
-| El banner no se acepta | No respeta la proporción 2.4:1, o es más chico que 1200 × 500. |
+| El banner no se acepta | Está fuera de la proporción 3:1 (se aceptan entre 2.5:1 y 3.5:1), o es más chico que 1500 × 500. |
 | "Máx. 5MB" | El archivo pesa de más. Exportá en JPG de buena calidad en vez de PNG. |
 | El evento no aparece en los destacados | Le falta el banner, ya pasó su fecha, o hay 5 eventos más próximos con banner ocupando la franja. |
 

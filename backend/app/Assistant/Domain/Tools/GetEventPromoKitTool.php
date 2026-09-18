@@ -101,18 +101,6 @@ class GetEventPromoKitTool extends AbstractAssistantTool
         return $this->toJson($payload);
     }
 
-    /**
-     * Dates are stored in UTC; promo copy needs them in the event's own timezone.
-     */
-    private function localDate(?string $storedDate, string $timezone): ?string
-    {
-        if ($storedDate === null) {
-            return null;
-        }
-
-        return Carbon::parse($storedDate, 'UTC')->setTimezone($timezone)->format('Y-m-d H:i');
-    }
-
     private function location(EventDomainObject $event): ?array
     {
         $details = $event->getLocationDetails();

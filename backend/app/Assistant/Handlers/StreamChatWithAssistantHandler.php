@@ -10,6 +10,7 @@ use HiEvents\Assistant\Domain\AssistantUsageLimiter;
 use HiEvents\Assistant\Exceptions\AssistantBudgetExceededException;
 use HiEvents\Assistant\Exceptions\AssistantDisabledException;
 use HiEvents\Assistant\Exceptions\AssistantUnavailableException;
+use HiEvents\Assistant\Handlers\DTO\AssistantMessageDTO;
 use HiEvents\Assistant\Handlers\DTO\AssistantReplyDTO;
 use HiEvents\Assistant\Handlers\DTO\ChatWithAssistantDTO;
 use HiEvents\Exceptions\OrganizerNotFoundException;
@@ -51,6 +52,10 @@ readonly class StreamChatWithAssistantHandler
             organizerId: $dto->organizerId,
             focusedEventId: $dto->focusedEventId,
             attachmentId: $dto->attachmentId,
+            knownEntities: array_merge([], ...array_map(
+                static fn(AssistantMessageDTO $m): array => $m->entities,
+                $dto->messages,
+            )),
         );
 
         $reply = $this->conversation->stream($context, $dto->messages, $emit);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HiEvents\Assistant\Domain\Tools;
 
 use HiEvents\Assistant\Domain\AssistantContext;
+use HiEvents\Assistant\Domain\AssistantDates;
 use HiEvents\Assistant\Exceptions\AssistantToolArgumentException;
 use HiEvents\Assistant\Exceptions\AssistantToolAuthorizationException;
 use HiEvents\DomainObjects\Enums\Role;
@@ -88,6 +89,8 @@ abstract class AbstractAssistantTool extends Tool
             );
         }
 
+        $this->context->entities->rememberEvent($event);
+
         return $event;
     }
 
@@ -157,6 +160,16 @@ abstract class AbstractAssistantTool extends Tool
     protected function money(float|int|string|null $amount): float
     {
         return round((float)($amount ?? 0), 2);
+    }
+
+    /**
+     * Dates are stored in UTC; the organizer (and the model reasoning about
+     * "the day before the event") thinks in the event's local time, so every
+     * date a tool emits goes through here.
+     */
+    protected function localDate(?string $storedUtc, ?string $timezone = null): ?string
+    {
+        return AssistantDates::local($storedUtc, $timezone ?? $this->context->timezone);
     }
 
     private function mapFailure(Throwable $e, array $arguments): string

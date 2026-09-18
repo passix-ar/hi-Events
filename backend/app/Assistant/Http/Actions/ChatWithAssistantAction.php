@@ -38,6 +38,7 @@ class ChatWithAssistantAction extends BaseAction
                     static fn(array $m): AssistantMessageDTO => new AssistantMessageDTO(
                         role: $m['role'],
                         content: $m['content'],
+                        entities: $m['entities'] ?? [],
                     ),
                     $request->validated('messages'),
                 ),
@@ -61,6 +62,7 @@ class ChatWithAssistantAction extends BaseAction
                     static fn($call): array => ['name' => $call->name, 'arguments' => $call->arguments],
                     $reply->toolCalls,
                 ),
+                'entities' => $reply->entities,
             ],
             wrapInData: true,
         );

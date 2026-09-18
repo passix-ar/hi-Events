@@ -6,8 +6,8 @@ return [
     // Tools that create data. Everything they create is a draft, never published.
     'writes_enabled' => (bool)env('AI_ASSISTANT_WRITES_ENABLED', true),
     'provider' => env('AI_ASSISTANT_PROVIDER', 'anthropic'),
-    'model' => env('AI_ASSISTANT_MODEL', 'claude-opus-5'),
-    'max_steps' => (int)env('AI_ASSISTANT_MAX_STEPS', 8),
+    'model' => env('AI_ASSISTANT_MODEL', 'claude-sonnet-5'),
+    'max_steps' => (int)env('AI_ASSISTANT_MAX_STEPS', 12),
     'max_tokens' => (int)env('AI_ASSISTANT_MAX_TOKENS', 2048),
     'request_timeout' => (int)env('AI_ASSISTANT_REQUEST_TIMEOUT', 45),
     'rate_limit_per_minute' => (int)env('AI_ASSISTANT_RATE_LIMIT_PER_MINUTE', 20),

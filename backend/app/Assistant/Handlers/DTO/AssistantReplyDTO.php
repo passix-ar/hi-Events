@@ -18,6 +18,8 @@ class AssistantReplyDTO extends BaseDataObject
         public readonly array  $toolCalls,
         public readonly int    $inputTokens,
         public readonly int    $outputTokens,
+        /** @var list<array{type: string, id: int, label: string}> Everything the conversation has identified so far. */
+        public readonly array  $entities = [],
     )
     {
     }

@@ -460,9 +460,17 @@ export interface AssistantToolCall {
     arguments: Record<string, unknown>;
 }
 
+/** An event or ticket the conversation has already identified; sent back with the history so the model never guesses ids. */
+export interface AssistantEntity {
+    type: 'event' | 'ticket';
+    id: number;
+    label: string;
+}
+
 export interface AssistantReply {
     reply: string;
     tool_calls: AssistantToolCall[];
+    entities: AssistantEntity[];
 }
 
 export interface Organizer {

@@ -63,13 +63,17 @@ class GetEventStatsTool extends AbstractAssistantTool
             ->mapWithKeys(fn(ProductPriceDomainObject $p): array => [$p->getId() => $this->money($p->getPrice())])
             ->all();
 
+        $quantities->productQuantities->each(
+            fn(AvailableProductQuantitiesDTO $q) => $this->context->entities->rememberTicket((int)$q->product_id, (string)$q->product_title, $eventId)
+        );
+
         return $this->toJson([
             'event' => [
                 'id' => $eventId,
                 'title' => $this->clip($event->getTitle()),
                 'status' => $event->getStatus(),
-                'start_date' => $event->getStartDate(),
-                'end_date' => $event->getEndDate(),
+                'start_date' => $this->localDate($event->getStartDate(), $event->getTimezone()),
+                'end_date' => $this->localDate($event->getEndDate(), $event->getTimezone()),
                 'currency' => $event->getCurrency(),
             ],
             'totals' => [

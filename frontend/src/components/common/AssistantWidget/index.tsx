@@ -6,7 +6,7 @@ import {t, Trans} from "@lingui/macro";
 import {useSendAssistantMessage} from "../../../mutations/useSendAssistantMessage.ts";
 import {useUploadAssistantAttachment} from "../../../mutations/useUploadAssistantAttachment.ts";
 import {AssistantStreamToolCall, streamAssistantChat} from "./useAssistantStream.ts";
-import {IdParam} from "../../../types.ts";
+import {AssistantEntity, IdParam} from "../../../types.ts";
 import {AssistantMessage} from "./AssistantMessage.tsx";
 import {useAssistantConversation} from "./useAssistantConversation.ts";
 import {rememberLastAssistantOrganizer} from "./lastOrganizer.ts";
@@ -153,9 +153,9 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
             },
         };
 
-        const finish = (reply: string, toolCalls: AssistantStreamToolCall[]) => {
+        const finish = (reply: string, toolCalls: AssistantStreamToolCall[], entities: AssistantEntity[] = []) => {
             setLive(null);
-            append({role: 'assistant', content: reply, toolCalls});
+            append({role: 'assistant', content: reply, toolCalls, entities});
             if (toolCalls.some(call => call.name === 'attach_flyer_to_event')) {
                 setPendingAttachmentId(null);
             }
@@ -186,14 +186,14 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                 signal: controller.signal,
                 onDelta: (text) => setLive(previous => ({text: (previous?.text ?? '') + text, tools: previous?.tools ?? []})),
                 onTool: (call) => setLive(previous => ({text: previous?.text ?? '', tools: [...(previous?.tools ?? []), call]})),
-                onDone: (done) => finish(done.reply, done.tool_calls),
+                onDone: (done) => finish(done.reply, done.tool_calls, done.entities),
                 onError: (streamError) => fail(streamError.status, streamError.message),
             });
             return;
         }
 
         sendMessage.mutate(request, {
-            onSuccess: ({data}) => finish(data.reply, data.tool_calls),
+            onSuccess: ({data}) => finish(data.reply, data.tool_calls, data.entities),
             onError: (mutationError: any) => fail(mutationError?.response?.status, mutationError?.response?.data?.message),
         });
     };
@@ -334,7 +334,7 @@ export const AssistantWidget = ({organizerId, focusedEvent = null}: AssistantWid
                                             <Loader size="xs" type="dots"/>
                                             <span>
                                                 {live && live.tools.length > 0
-                                                    ? <Trans>Consultando {live.tools[live.tools.length - 1].name}…</Trans>
+                                                    ? <Trans>Running {live.tools[live.tools.length - 1].name}…</Trans>
                                                     : <Trans>Checking your data…</Trans>}
                                             </span>
                                         </div>

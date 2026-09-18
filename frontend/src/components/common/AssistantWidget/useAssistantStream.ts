@@ -1,6 +1,6 @@
 import {api} from "../../../api/client.ts";
 import {AssistantChatContext, AssistantChatMessage} from "../../../api/assistant.client.ts";
-import {IdParam} from "../../../types.ts";
+import {AssistantEntity, IdParam} from "../../../types.ts";
 
 /**
  * Streaming twin of assistantClient.chat(). Talks to
@@ -8,7 +8,7 @@ import {IdParam} from "../../../types.ts";
  *
  *   event: delta   data: {"text": "..."}
  *   event: tool    data: {"name": "...", "arguments": {...}}
- *   event: done    data: {"reply", "tool_calls", "input_tokens", "output_tokens"}
+ *   event: done    data: {"reply", "tool_calls", "entities", "input_tokens", "output_tokens"}
  *   event: error   data: {"message": "...", "status": 404 | 429 | 503}
  *
  * Auth, validation and authorization failures happen before the stream opens
@@ -25,6 +25,7 @@ export interface AssistantStreamToolCall {
 export interface AssistantStreamDone {
     reply: string;
     tool_calls: AssistantStreamToolCall[];
+    entities?: AssistantEntity[];
     input_tokens: number;
     output_tokens: number;
 }

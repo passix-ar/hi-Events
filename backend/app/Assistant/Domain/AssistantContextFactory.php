@@ -31,6 +31,7 @@ readonly class AssistantContextFactory
         int              $organizerId,
         ?int             $focusedEventId = null,
         ?string          $attachmentId = null,
+        array            $knownEntities = [],
     ): AssistantContext
     {
         /** @var OrganizerDomainObject|null $organizer */
@@ -52,6 +53,7 @@ readonly class AssistantContextFactory
             timezone: $organizer->getTimezone(),
             focusedEvent: $this->focusedEvent($focusedEventId, $accountId, $organizer->getId()),
             attachment: $attachmentId === null ? null : $this->attachments->find($attachmentId, $accountId),
+            entities: new AssistantEntityLedger($knownEntities),
         );
     }
 

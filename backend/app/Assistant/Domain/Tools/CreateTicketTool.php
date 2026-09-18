@@ -110,6 +110,8 @@ class CreateTicketTool extends AbstractAssistantWriteTool
         $existing = $this->findExisting($event->getId(), $args['title']);
 
         if ($existing !== null) {
+            $this->context->entities->rememberTicket($existing->getId(), $existing->getTitle(), $event->getId());
+
             return $this->toJson([
                 'status' => 'already_exists',
                 'ticket' => ['id' => $existing->getId(), 'title' => $this->clip($existing->getTitle())],
@@ -144,6 +146,8 @@ class CreateTicketTool extends AbstractAssistantWriteTool
                 ],
             ],
         ]));
+
+        $this->context->entities->rememberTicket($product->getId(), $product->getTitle(), $event->getId());
 
         $this->logWrite('ticket_created', [
             'event_id' => $event->getId(),

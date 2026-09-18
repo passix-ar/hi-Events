@@ -114,6 +114,8 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
         $existing = $this->findExisting($args['title'], $startDate);
 
         if ($existing !== null) {
+            $this->context->entities->rememberEvent($existing);
+
             return $this->toJson([
                 'status' => 'already_exists',
                 'event' => $this->describe($existing),
@@ -141,6 +143,7 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
         ]));
 
         $this->applyPassixTheme($event);
+        $this->context->entities->rememberEvent($event);
 
         $this->logWrite('event_created', [
             'event_id' => $event->getId(),
@@ -219,8 +222,8 @@ class CreateDraftEventTool extends AbstractAssistantWriteTool
             'id' => $event->getId(),
             'title' => $this->clip($event->getTitle()),
             'status' => $event->getStatus(),
-            'start_date' => $event->getStartDate(),
-            'end_date' => $event->getEndDate(),
+            'start_date' => $this->localDate($event->getStartDate(), $event->getTimezone()),
+            'end_date' => $this->localDate($event->getEndDate(), $event->getTimezone()),
             'currency' => $event->getCurrency(),
         ];
     }
