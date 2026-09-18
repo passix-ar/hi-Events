@@ -48,7 +48,7 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
             return {section, seatX, width, height, colour: colourByProduct.get(section.product_id) ?? TICKET_COLOURS[0]};
         });
 
-        const width = Math.max(240, ...blocks.map(b => b.width));
+        const width = Math.max(420, ...blocks.map(b => b.width));
         let y = STAGE_HEIGHT + SECTION_GAP;
         const placed = blocks.map(block => {
             const top = y;
@@ -56,7 +56,7 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
             return {...block, top, left: (width - block.width) / 2};
         });
 
-        return {width, height: y, blocks: placed, colourByProduct};
+        return {width, height: Math.max(y, 300), blocks: placed, colourByProduct};
     }, [sections]);
 
     if (sections.length === 0) {
@@ -99,28 +99,25 @@ export const SeatMapPreview = ({sections, highlightId}: SeatMapPreviewProps) => 
                         const isNew = block.section.id === highlightId;
                         return (
                             <g key={block.section.id} transform={`translate(${block.left} ${block.top})`} className={isNew ? classes.sectionNew : classes.section}>
-                                <text x={block.width / 2} y={LABEL_HEIGHT - 6} textAnchor="middle" className={classes.sectionLabel}>
+                                <text x={block.width / 2} y={-6} textAnchor="middle" className={classes.sectionLabel}>
                                     {block.section.name} · {block.section.row_count}×{block.section.seats_per_row}
                                 </text>
                                 <rect
-                                    x={-6} y={LABEL_HEIGHT - 4} width={block.width + 12} height={block.height + 10} rx={8}
+                                    x={-8} y={LABEL_HEIGHT - 6} width={block.width + 16} height={block.height + 12} rx={8}
                                     className={classes.sectionFloor}
                                 />
                                 {Array.from({length: block.section.row_count}).map((_, row) => (
-                                    <g
-                                        key={row}
-                                        transform={`translate(0 ${LABEL_HEIGHT + row * (SEAT + ROW_GAP)})`}
-                                        className={classes.row}
-                                        style={isNew ? {animationDelay: `${row * 45}ms`} : undefined}
-                                    >
-                                        {block.seatX.map((x, seat) => (
-                                            <rect
-                                                key={seat}
-                                                x={x} y={0} width={SEAT} height={SEAT} rx={2.5}
-                                                fill={block.colour}
-                                                className={classes.seat}
-                                            />
-                                        ))}
+                                    <g key={row} transform={`translate(0 ${LABEL_HEIGHT + row * (SEAT + ROW_GAP)})`}>
+                                        <g className={classes.row} style={isNew ? {animationDelay: `${row * 45}ms`} : undefined}>
+                                            {block.seatX.map((x, seat) => (
+                                                <rect
+                                                    key={seat}
+                                                    x={x} y={0} width={SEAT} height={SEAT} rx={2.5}
+                                                    fill={block.colour}
+                                                    className={classes.seat}
+                                                />
+                                            ))}
+                                        </g>
                                     </g>
                                 ))}
                             </g>
