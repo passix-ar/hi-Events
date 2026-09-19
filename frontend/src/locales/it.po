@@ -8839,7 +8839,7 @@ msgid "Thank you for attending!"
 msgstr "Grazie per aver partecipato!"
 
 #: src/components/routes/account/ManageAccount/sections/PaymentSettings/index.tsx:92
-msgid "Thanks for your support as we continue to grow and improve Hi.Events!"
+msgid "Thanks for your support as we continue to grow and improve Passix!"
 msgstr "Grazie per il tuo supporto mentre continuiamo a crescere e migliorare Hi.Events!"
 
 #: src/components/routes/product-widget/SelectProducts/index.tsx:220

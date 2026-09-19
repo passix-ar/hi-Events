@@ -89,7 +89,7 @@ const MigrationNotice = ({stripeData}: { stripeData: StripeConnectAccountsRespon
                     </div>
 
                     <Text size="xs" c="dimmed" fs="italic">
-                        {t`Thanks for your support as we continue to grow and improve Hi.Events!`}
+                        {t`Thanks for your support as we continue to grow and improve Passix!`}
                     </Text>
                 </div>
             </Group>

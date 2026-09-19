@@ -87,7 +87,7 @@ class ExportOrganizerReportAction extends BaseAction
                 'Payment Date',
                 'Order Reference',
                 'Amount Paid',
-                'Hi.Events Fee',
+                'Passix Fee',
                 'VAT Rate',
                 'VAT on Fee',
                 'Total Fee',
