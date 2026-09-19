@@ -1,8 +1,6 @@
-import {t} from "@lingui/macro";
 import classes from "./FloatingPoweredBy.module.scss";
 import classNames from "classnames";
 import React from "react";
-import {iHavePurchasedALicence} from "../../../utilites/helpers.ts";
 
 /**
  * (c) Hi.Events Ltd 2025
@@ -16,48 +14,22 @@ import {iHavePurchasedALicence} from "../../../utilites/helpers.ts";
  * In accordance with Section 7(b) of the AGPL, you must retain the "Powered by Hi.Events" notice.
  *
  * If you wish to remove this notice, a commercial license is available at: https://hi.events/licensing
+ *
+ * Passix: licencia comercial adquirida (sept. 2026). El aviso de copyright se conserva; la marca en la UI no.
  */
 export const PoweredByFooter = (
     props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 ) => {
-    if (iHavePurchasedALicence()) {
-        return <></>;
-    }
-
-    const footerContent = (
-        <>
-            <a
-                href="https://getpassix.com"
-                target="_blank"
-                title={"Passix — ticketing para tus eventos"}
-            >
-                Passix
-            </a>
-            {" | "}
-            {t`Powered by`}{" "}
-            <a
-                href="https://hi.events"
-                target="_blank"
-                title={"Hi.Events open source event platform"}
-            >
-                Hi.Events
-            </a>
-            {" ("}
-            <a
-                href="https://github.com/HiEventsDev/hi.events"
-                target="_blank"
-                title={"Source code — AGPL v3"}
-            >
-                {t`source`}
-            </a>
-            {")"}
-        </>
-    );
-
     return (
         <div {...props} className={classNames(classes.poweredBy, props.className)}>
             <div className={classes.poweredByText}>
-                {footerContent}
+                <a
+                    href="https://getpassix.com"
+                    target="_blank"
+                    title={"Passix — ticketing para tus eventos"}
+                >
+                    Passix
+                </a>
             </div>
         </div>
     );

@@ -21,7 +21,11 @@
     {{-- Footer --}}
     <x-slot:footer>
         <x-mail::footer>
-            © {{ date('Y') }} {{ config('app.name') }} | Powered by Hi.Events (https://hi.events) | Source: https://github.com/passix-ar/hi-Events
+            @if($appEmailFooter = config('app.email_footer_text'))
+                {{ $appEmailFooter }}
+            @else
+                © {{ date('Y') }} {{ config('app.name') }}
+            @endif
         </x-mail::footer>
     </x-slot:footer>
 </x-mail::layout>

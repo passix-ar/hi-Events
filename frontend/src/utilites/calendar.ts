@@ -31,7 +31,7 @@ export const createICSContent = (event: Event): string => {
     return [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Hi.Events//NONSGML Event Calendar//EN',
+        'PRODID:-//Passix//NONSGML Event Calendar//EN',
         'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
         `DTSTART:${formatICSDate(event.start_date)}`,
@@ -40,7 +40,7 @@ export const createICSContent = (event: Event): string => {
         `DESCRIPTION:${stripHtml(event.description_preview || '').replace(/\n/g, '\\n')}`,
         `LOCATION:${getEventLocation(event)}`,
         `DTSTAMP:${formatICSDate(new Date().toISOString())}`,
-        `UID:${crypto.randomUUID()}@hi.events`,
+        `UID:${crypto.randomUUID()}@getpassix.com`,
         'END:VEVENT',
         'END:VCALENDAR'
     ].join('\r\n');
