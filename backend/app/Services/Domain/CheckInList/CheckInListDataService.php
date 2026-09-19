@@ -9,6 +9,7 @@ use HiEvents\DomainObjects\Generated\AttendeeDomainObjectAbstract;
 use HiEvents\DomainObjects\Generated\CheckInListDomainObjectAbstract;
 use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\Exceptions\CannotCheckInException;
+use HiEvents\Helper\DateHelper;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use Illuminate\Support\Collection;
@@ -20,6 +21,23 @@ class CheckInListDataService
         private readonly AttendeeRepositoryInterface    $attendeeRepository,
     )
     {
+    }
+
+    /**
+     * A list outside its activation window takes no check-ins and gives none back. Unlike the
+     * per-attendee refusals below this one is about the request as a whole, so it throws.
+     *
+     * @throws CannotCheckInException
+     */
+    public function validateCheckInListIsAvailable(CheckInListDomainObject $checkInList): void
+    {
+        if ($checkInList->getExpiresAt() && DateHelper::utcDateIsPast($checkInList->getExpiresAt())) {
+            throw new CannotCheckInException(__('Check-in list has expired'));
+        }
+
+        if ($checkInList->getActivatesAt() && DateHelper::utcDateIsFuture($checkInList->getActivatesAt())) {
+            throw new CannotCheckInException(__('Check-in list is not active yet'));
+        }
     }
 
     /**
