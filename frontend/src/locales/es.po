@@ -43,28 +43,28 @@ msgstr "(vacío)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:314
+#: src/components/layouts/CheckIn/index.tsx:322
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} ya ingresó a las {time} por <0>{listName}</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:170
-#: src/components/layouts/CheckIn/index.tsx:301
+#: src/components/layouts/CheckIn/index.tsx:178
+#: src/components/layouts/CheckIn/index.tsx:309
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} ya está registrado"
 
-#: src/components/layouts/CheckIn/index.tsx:177
+#: src/components/layouts/CheckIn/index.tsx:185
 msgid "{0} {1}'s ticket is cancelled"
 msgstr "La entrada de {0} {1} está cancelada"
 
-#: src/components/layouts/CheckIn/index.tsx:187
+#: src/components/layouts/CheckIn/index.tsx:195
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "La entrada de {0} {1} no es válida para esta lista de registro"
 
-#: src/components/layouts/CheckIn/index.tsx:193
+#: src/components/layouts/CheckIn/index.tsx:201
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>registrado</0> con éxito"
 
-#: src/components/layouts/CheckIn/index.tsx:216
+#: src/components/layouts/CheckIn/index.tsx:224
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>retirado</0> con éxito"
 
@@ -117,6 +117,10 @@ msgstr "{affectedEventCount, plural, one {# evento publicado dejará de ofrecer 
 #: src/components/common/EventCard/index.tsx:123
 msgid "{availableCount} of {totalCount} available"
 msgstr "{availableCount} de {totalCount} disponibles"
+
+#: src/components/common/CheckIn/AttendeeList.tsx:82
+msgid "{checkedInCount} of {totalCount} checked in"
+msgstr "{checkedInCount} de {totalCount} registrados"
 
 #: src/components/routes/product-widget/SelectProducts/SeatingPanel/index.tsx:36
 msgid "{chosen} of {needed} seats selected"
@@ -871,11 +875,11 @@ msgstr "Ocurrió un error inesperado."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Ocurrió un error inesperado. Inténtalo de nuevo."
 
-#: src/components/layouts/CheckIn/index.tsx:115
+#: src/components/layouts/CheckIn/index.tsx:123
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr "Y {remaining} registro(s) más rechazado(s) — revisa la lista"
 
-#: src/components/layouts/CheckIn/index.tsx:311
+#: src/components/layouts/CheckIn/index.tsx:319
 msgid "another list"
 msgstr "otra lista"
 
@@ -1203,8 +1207,8 @@ msgstr "Lista de asistentes actualizada {age} — tocá para actualizar"
 msgid "Attendee Name"
 msgstr "Nombre del asistente"
 
-#: src/components/layouts/CheckIn/index.tsx:285
-#: src/components/layouts/CheckIn/index.tsx:292
+#: src/components/layouts/CheckIn/index.tsx:293
+#: src/components/layouts/CheckIn/index.tsx:300
 msgid "Attendee not found"
 msgstr "Asistente no encontrado"
 
@@ -1333,7 +1337,7 @@ msgstr "Esperando pago offline"
 msgid "Awaiting Offline Pmt."
 msgstr "Esperando pago fuera de línea"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:89
+#: src/components/common/CheckIn/AttendeeList.tsx:115
 msgid "Awaiting payment"
 msgstr "Esperando pago"
 
@@ -1571,11 +1575,11 @@ msgstr "Cancelar anulará todos los asistentes asociados con este pedido y liber
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:30
+#: src/components/common/CheckIn/AttendeeList.tsx:38
 msgid "Cannot Check In"
 msgstr "No se puede registrar entrada"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:34
+#: src/components/common/CheckIn/AttendeeList.tsx:42
 msgid "Cannot Check In (Cancelled)"
 msgstr "No se puede registrar (Cancelado)"
 
@@ -1644,7 +1648,7 @@ msgstr "Cambiar configuración de lista de espera"
 msgid "Charity"
 msgstr "Caridad"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:41
+#: src/components/common/CheckIn/AttendeeList.tsx:49
 msgid "Check In"
 msgstr "Registrar entrada"
 
@@ -1660,7 +1664,7 @@ msgstr "Registrar entrada y marcar pedido como pagado"
 msgid "Check in only"
 msgstr "Solo registrar entrada"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:38
+#: src/components/common/CheckIn/AttendeeList.tsx:46
 msgid "Check Out"
 msgstr "Registrar salida"
 
@@ -1694,15 +1698,15 @@ msgstr "¡Lista de Check-In Creada!"
 msgid "Check-In List deleted successfully"
 msgstr "Lista de registro eliminada con éxito"
 
-#: src/components/layouts/CheckIn/index.tsx:432
+#: src/components/layouts/CheckIn/index.tsx:440
 msgid "Check-in list has expired"
 msgstr "La lista de registro ha expirado"
 
-#: src/components/layouts/CheckIn/index.tsx:449
+#: src/components/layouts/CheckIn/index.tsx:457
 msgid "Check-in list is not active"
 msgstr "La lista de registro no está activa"
 
-#: src/components/layouts/CheckIn/index.tsx:417
+#: src/components/layouts/CheckIn/index.tsx:425
 msgid "Check-in list not found"
 msgstr "Lista de registro no encontrada"
 
@@ -5618,7 +5622,7 @@ msgstr "No se han añadido asistentes a este pedido."
 msgid "No Attendees to show"
 msgstr "No hay asistentes para mostrar"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:65
+#: src/components/common/CheckIn/AttendeeList.tsx:91
 msgid "No attendees to show."
 msgstr "No hay asistentes para mostrar."
 
@@ -7762,10 +7766,14 @@ msgstr "Guardar Diseño del Ticket"
 msgid "Save VAT Settings"
 msgstr "Guardar Configuración del IVA"
 
-#: src/components/layouts/CheckIn/index.tsx:512
-#: src/components/layouts/CheckIn/index.tsx:522
+#: src/components/layouts/CheckIn/index.tsx:520
+#: src/components/layouts/CheckIn/index.tsx:530
 msgid "Scan"
 msgstr "Escanear"
+
+#: src/components/common/CheckIn/AttendeeList.tsx:79
+msgid "Scan a ticket, or search by name to find someone"
+msgstr "Escanea una entrada o busca por nombre"
 
 #: src/components/modals/SendMessageModal/index.tsx:381
 msgid "Schedule for later"
@@ -7819,7 +7827,7 @@ msgstr "Buscar por nombre, correo electrónico o cuenta..."
 msgid "Search by name, email, or order #..."
 msgstr "Busque por nombre, correo electrónico o número de pedido..."
 
-#: src/components/layouts/CheckIn/index.tsx:508
+#: src/components/layouts/CheckIn/index.tsx:516
 msgid "Search by name, order # or attendee #..."
 msgstr "Buscar por nombre, número de pedido o número de asistente..."
 
@@ -8894,7 +8902,7 @@ msgstr "Ese código de promoción no es válido."
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "El color de fondo de la página. Al usar imagen de portada, se aplica como una superposición."
 
-#: src/components/layouts/CheckIn/index.tsx:422
+#: src/components/layouts/CheckIn/index.tsx:430
 msgid "The check-in list you are looking for does not exist."
 msgstr "La lista de registro que buscas no existe."
 
@@ -9091,7 +9099,7 @@ msgstr "Esta categoría aún no tiene productos."
 msgid "This category is hidden from public view"
 msgstr "Esta categoría está oculta de la vista pública"
 
-#: src/components/layouts/CheckIn/index.tsx:205
+#: src/components/layouts/CheckIn/index.tsx:213
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Este check-in todavía se está sincronizando. Probá de nuevo en un momento."
 
@@ -9099,7 +9107,7 @@ msgstr "Este check-in todavía se está sincronizando. Probá de nuevo en un mom
 msgid "This check-in list has expired"
 msgstr "Esta lista de registro ha expirado"
 
-#: src/components/layouts/CheckIn/index.tsx:437
+#: src/components/layouts/CheckIn/index.tsx:445
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Esta lista de registro ha expirado y ya no está disponible para registros."
 
@@ -9111,7 +9119,7 @@ msgstr "Esta lista de registro está activa"
 msgid "This check-in list is not active yet"
 msgstr "Esta lista de registro aún no está activa"
 
-#: src/components/layouts/CheckIn/index.tsx:454
+#: src/components/layouts/CheckIn/index.tsx:462
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Esta lista de registro aún no está activa y no está disponible para registros."
 
@@ -9297,7 +9305,7 @@ msgstr "boleto"
 msgid "Ticket"
 msgstr "Boleto"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:84
+#: src/components/common/CheckIn/AttendeeList.tsx:110
 msgid "Ticket Cancelled"
 msgstr "Entrada Cancelada"
 
@@ -9614,11 +9622,11 @@ msgstr "Verdadero si pago pendiente"
 msgid "Try another email"
 msgstr "Probar otro correo"
 
-#: src/components/layouts/CheckIn/index.tsx:515
+#: src/components/layouts/CheckIn/index.tsx:523
 msgid "Turn sound off"
 msgstr "Desactivar sonido"
 
-#: src/components/layouts/CheckIn/index.tsx:515
+#: src/components/layouts/CheckIn/index.tsx:523
 msgid "Turn sound on"
 msgstr "Activar sonido"
 
@@ -9648,8 +9656,8 @@ msgstr "Tipo de boleto"
 msgid "Typography"
 msgstr "Tipografía"
 
-#: src/components/layouts/CheckIn/index.tsx:229
-#: src/components/layouts/CheckIn/index.tsx:231
+#: src/components/layouts/CheckIn/index.tsx:237
+#: src/components/layouts/CheckIn/index.tsx:239
 msgid "Unable to check out attendee"
 msgstr "No se pudo retirar al asistente"
 
@@ -9669,7 +9677,7 @@ msgstr "No se puede crear una pregunta. Por favor revisa tus datos"
 msgid "Unable to duplicate product. Please check your details"
 msgstr "No se pudo duplicar el producto. Por favor, revisá tus datos"
 
-#: src/components/layouts/CheckIn/index.tsx:286
+#: src/components/layouts/CheckIn/index.tsx:294
 msgid "Unable to fetch attendee"
 msgstr "No se pudo obtener el asistente"
 
@@ -10613,8 +10621,8 @@ msgstr "Estás suplantando a <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Está emitiendo un reembolso parcial. Al cliente se le reembolsará {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:224
-#: src/components/layouts/CheckIn/index.tsx:286
+#: src/components/layouts/CheckIn/index.tsx:232
+#: src/components/layouts/CheckIn/index.tsx:294
 msgid "You are offline"
 msgstr "Estás desconectado"
 
@@ -10638,8 +10646,8 @@ msgstr "No puedes archivar el último organizador activo de tu cuenta."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "No puede cambiar el tipo de producto ya que hay asistentes asociados con este producto."
 
-#: src/components/layouts/CheckIn/index.tsx:247
-#: src/components/layouts/CheckIn/index.tsx:328
+#: src/components/layouts/CheckIn/index.tsx:255
+#: src/components/layouts/CheckIn/index.tsx:336
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "No puede registrar a asistentes con pedidos no pagados. Esta configuración se puede cambiar en los ajustes del evento."
 

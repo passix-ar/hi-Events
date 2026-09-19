@@ -1,6 +1,6 @@
 import {Button, Loader} from "@mantine/core";
-import {IconTicket} from "@tabler/icons-react";
-import {t} from "@lingui/macro";
+import {IconQrcode, IconTicket} from "@tabler/icons-react";
+import {t, Trans} from "@lingui/macro";
 import {Attendee} from "../../../types.ts";
 import classes from "../../layouts/CheckIn/CheckIn.module.scss";
 
@@ -12,6 +12,11 @@ interface AttendeeListProps {
     // does not stop while one person is being undone.
     checkingOutPublicId: string | null;
     allowOrdersAwaitingOfflinePaymentToCheckIn: boolean;
+    // Whether the door is actually looking for someone. With an empty search box no rows are
+    // rendered at all — see the comment on the idle state below.
+    isSearching: boolean;
+    checkedInCount: number;
+    totalCount: number;
     onCheckInToggle: (attendee: Attendee) => void;
     onClickSound?: () => void;
 }
@@ -22,6 +27,9 @@ export const AttendeeList = ({
                                  isLoading,
                                  checkingOutPublicId,
                                  allowOrdersAwaitingOfflinePaymentToCheckIn,
+                                 isSearching,
+                                 checkedInCount,
+                                 totalCount,
                                  onCheckInToggle,
                                  onClickSound
                              }: AttendeeListProps) => {
@@ -55,6 +63,24 @@ export const AttendeeList = ({
         return (
             <div className={classes.loading}>
                 <Loader size={40}/>
+            </div>
+        );
+    }
+
+    // Nobody finds a person by scrolling a list of two thousand: at a door you scan, and you type a
+    // name only when the code will not read. So with an empty search box the list renders nothing —
+    // roughly a dozen DOM nodes per attendee that React would otherwise reconcile on every roster
+    // refresh, every scan and every check-out, for rows no one was going to look at.
+    if (!isSearching) {
+        return (
+            <div className={classes.idle}>
+                <IconQrcode size={48} stroke={1.2}/>
+                <p className={classes.idleHint}>
+                    {t`Scan a ticket, or search by name to find someone`}
+                </p>
+                <p className={classes.idleProgress}>
+                    <Trans>{checkedInCount} of {totalCount} checked in</Trans>
+                </p>
             </div>
         );
     }

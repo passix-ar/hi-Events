@@ -100,6 +100,14 @@ const CheckIn = () => {
             || String(a.order_id) === normalizedSearch
         ), [roster.attendees, normalizedSearch]);
 
+    // Counted off the roster in memory rather than off the check-in list's own totals: this way it
+    // includes the check-ins that are still queued, so the number on screen matches what the door
+    // has actually let through.
+    const checkedInCount = useMemo(
+        () => roster.attendees.filter(attendee => attendee.check_in).length,
+        [roster.attendees],
+    );
+
     // A check-in the server refused (cancelled ticket, unpaid order) is reported
     // when its background sync comes back, not at scan time. Each one is a person
     // who did not get through, so none is dropped silently.
@@ -542,6 +550,9 @@ const CheckIn = () => {
                 isLoading={roster.isLoading && roster.attendees.length === 0}
                 checkingOutPublicId={checkingOutPublicId}
                 allowOrdersAwaitingOfflinePaymentToCheckIn={allowOrdersAwaitingOfflinePaymentToCheckIn || false}
+                isSearching={normalizedSearch !== ''}
+                checkedInCount={checkedInCount}
+                totalCount={roster.attendees.length}
                 onCheckInToggle={handleCheckInToggle}
                 onClickSound={playSuccess}
             />
