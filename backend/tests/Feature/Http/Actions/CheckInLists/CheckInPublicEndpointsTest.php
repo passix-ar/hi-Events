@@ -291,4 +291,86 @@ class CheckInPublicEndpointsTest extends TestCase
         $response->assertOk();
         $this->assertGreaterThan(0, $response->json('meta.per_page'));
     }
+
+    /**
+     * The most valuable behaviour on this route, and until now only covered by unit tests that mock
+     * the service. One unreadable code in a batch used to answer 409 for the whole request, and the
+     * scanner threw away the entire queue on it — everyone scanned since the last flush lost their
+     * check-in. Each failure now lands against its own public_id and the rest is written.
+     */
+    public function test_one_bad_code_does_not_sink_the_rest_of_the_batch(): void
+    {
+        $offList = $this->anAttendeeOnAProductThisListDoesNotCover();
+
+        $response = $this->scan([
+            ['public_id' => $this->attendee->public_id, 'action' => 'check-in'],
+            ['public_id' => $offList->public_id, 'action' => 'check-in'],
+            ['public_id' => 'A-NOBODY1', 'action' => 'check-in'],
+        ]);
+
+        $response->assertOk();
+        $this->assertCount(1, $response->json('data'), 'the good scan did not get through');
+        $this->assertSame($this->attendee->id, $response->json('data.0.attendee_id'));
+
+        $this->assertArrayHasKey($offList->public_id, $response->json('errors'));
+        $this->assertArrayHasKey('A-NOBODY1', $response->json('errors'));
+        $this->assertArrayNotHasKey($this->attendee->public_id, $response->json('errors'));
+
+        $this->assertSame(
+            1,
+            DB::table('attendee_check_ins')
+                ->where('check_in_list_id', $this->checkInList->id)
+                ->whereNull('deleted_at')
+                ->count(),
+            'the batch wrote something for a code it should have refused',
+        );
+    }
+
+    /**
+     * A ticket of the same event whose product is not attached to this list — the VIP holder who
+     * walks up to the general entrance.
+     */
+    private function anAttendeeOnAProductThisListDoesNotCover(): Attendee
+    {
+        $category = ProductCategory::create([
+            'name' => 'VIP',
+            'event_id' => $this->event->id,
+            'order' => 1,
+            'is_hidden' => false,
+        ]);
+
+        $product = Product::create([
+            'title' => 'VIP',
+            'event_id' => $this->event->id,
+            'product_category_id' => $category->id,
+            'type' => 'PAID',
+            'product_type' => 'TICKET',
+            'order' => 1,
+            'is_hidden' => false,
+        ]);
+
+        $productPrice = ProductPrice::create(['product_id' => $product->id, 'price' => 5000]);
+
+        $order = Order::create([
+            'short_id' => IdHelper::shortId(IdHelper::ORDER_PREFIX),
+            'event_id' => $this->event->id,
+            'currency' => 'ARS',
+            'status' => OrderStatus::COMPLETED->name,
+            'public_id' => IdHelper::publicId('O'),
+        ]);
+
+        // Deliberately NOT attached to $this->checkInList.
+        return Attendee::create([
+            'short_id' => IdHelper::shortId(IdHelper::ATTENDEE_PREFIX),
+            'email' => 'vip@test.passix',
+            'first_name' => 'Grace',
+            'last_name' => 'Hopper',
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'product_price_id' => $productPrice->id,
+            'event_id' => $this->event->id,
+            'public_id' => IdHelper::publicId('A'),
+            'status' => AttendeeStatus::ACTIVE->name,
+        ]);
+    }
 }

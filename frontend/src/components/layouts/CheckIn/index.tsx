@@ -164,9 +164,11 @@ const CheckIn = () => {
     // Resolves locally and returns at once: the check-in is queued and confirmed
     // with the server in the background (see useCheckInRoster).
     //
-    // Memoised, with everything below it, because the keyboard listener for the USB scanner is
-    // rebuilt whenever this identity changes: unmemoised it was torn down and re-registered on
-    // every render, which at a door means on every character the reader types.
+    // Memoised so the chain below does not churn needlessly. Note this does NOT make it stable:
+    // `useDisclosure` returns a fresh handlers object on every render, and `products` /
+    // `allowedProductIds` change identity on every refetch of the check-in list. That is why the
+    // USB listener reads what it calls through a ref instead of depending on it — see
+    // `processBarcodeRef` below.
     const handleCheckInAction = useCallback((
         attendee: Attendee,
         action: 'check-in' | 'check-in-and-mark-order-as-paid'
@@ -354,6 +356,15 @@ const CheckIn = () => {
         }
     }, [handleQrCheckIn]);
 
+    // The keypress listener is registered once per scanning mode, and what it calls must not be
+    // part of its identity. `processBarcode` changes on every render — a new `useDisclosure`
+    // handlers object travels up through handleCheckInAction and handleQrCheckIn — so with it in
+    // the dependencies the effect tore itself down mid-burst and its cleanup wiped the half-typed
+    // code. At a door that is a scan lost in silence: no green, no red, nobody through. Behind a
+    // ref the listener survives renders and still calls the current one.
+    const processBarcodeRef = useRef(processBarcode);
+    processBarcodeRef.current = processBarcode;
+
     // Track page focus
     useEffect(() => {
         const handleFocus = () => setPageHasFocus(true);
@@ -385,7 +396,11 @@ const CheckIn = () => {
             if (e.key === 'Enter') {
                 // Process the accumulated barcode on Enter
                 if (currentBarcodeRef.current.length > 0) {
-                    processBarcode(currentBarcodeRef.current);
+                    // The reader's Enter terminates a code; it must not also activate whatever has
+                    // focus. Guarded on there being a code buffered, so ordinary keyboard use is
+                    // untouched — this only fires on the tail of a scan.
+                    e.preventDefault();
+                    processBarcodeRef.current(currentBarcodeRef.current);
                     currentBarcodeRef.current = '';
                 }
             } else if (e.key.length === 1) {
@@ -402,7 +417,7 @@ const CheckIn = () => {
                     currentBarcodeRef.current = '';
 
                     if (isScannableBarcode(barcode)) {
-                        processBarcode(barcode);
+                        processBarcodeRef.current(barcode);
                     }
                 }, 100);
             }
@@ -417,7 +432,9 @@ const CheckIn = () => {
             }
             currentBarcodeRef.current = '';
         };
-    }, [hidScannerMode, qrScannerOpen, processBarcode]);
+        // Only the two things that legitimately re-register the listener. The cleanup above clears
+        // the buffer, so anything else in here throws away a code being typed.
+    }, [hidScannerMode, qrScannerOpen]);
 
     if (CheckInListQuery.error && (CheckInListQuery.error as any).response?.status === 404) {
         return (
@@ -540,7 +557,6 @@ const CheckIn = () => {
                 pendingCount={roster.pendingCount}
                 stuckCount={roster.stuckCount}
                 loadedAt={roster.loadedAt}
-                isLoading={roster.isLoading}
                 loadError={roster.loadError}
                 onRetry={retrySync}
             />

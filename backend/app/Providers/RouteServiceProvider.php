@@ -28,16 +28,17 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            // The door scanner is exempt and runs on the 'check-in' limiter below instead.
-            // This cap is per bare IP, and every device at a door shares the venue's NAT, so the
-            // whole entrance draws on one budget: at 10k attendees a single phone spends ~65
-            // req/min (the roster re-downloads the full list every 60s in pages of 250, plus one
-            // POST per scan), which puts the third phone over the limit. The 429 that follows is
-            // worse than it looks — a refused POST is retried and the check-in survives, but a
-            // refused roster GET surfaces as "could not load the attendee list", which at the door
-            // reads as bad wifi rather than as a cap. See docs/check-in-rate-limit.md.
+            // The door scanner gets a budget of its own rather than the global one. The global cap
+            // is per bare IP and every device at a door shares the venue's NAT, so the whole
+            // entrance draws on a single budget: the roster re-downloads the full list every 60s in
+            // pages of 250, which at our scale is 2-3 GET/min per phone but grows with the event.
+            // 600 leaves room for a couple of hundred devices at the events we actually run, while
+            // still refusing a scrape — these routes are unauthenticated and hand back the whole
+            // roster with names, order and seat. Writes carry their own 'check-in' limiter below.
+            // The thresholds where this would start refusing a real door are in
+            // docs/check-in-rate-limit.md; read it before changing the number.
             if (str_starts_with($request->route()?->uri() ?? '', 'public/check-in-lists')) {
-                return Limit::none();
+                return Limit::perMinute(600)->by($request->ip());
             }
 
             return Limit::perMinute(config('app.api_rate_limit_per_minute'))

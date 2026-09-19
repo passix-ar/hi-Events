@@ -13,7 +13,6 @@ const input = (overrides: Partial<SyncStateInput> = {}): SyncStateInput => ({
     pendingCount: 0,
     stuckCount: 0,
     loadedAt: NOW,
-    isLoading: false,
     loadError: false,
     mounted: true,
     now: NOW,
@@ -76,7 +75,28 @@ describe('pickSyncState', () => {
     });
 
     it('says it is loading only while there is nothing to show yet', () => {
-        expect(pickSyncState(input({isLoading: true, loadedAt: null}))).toEqual({kind: 'loading'});
-        expect(pickSyncState(input({isLoading: true}))).toEqual({kind: 'ok'});
+        expect(pickSyncState(input({loadedAt: null}))).toEqual({kind: 'loading'});
+        expect(pickSyncState(input())).toEqual({kind: 'ok'});
+    });
+
+    // The case that shipped: the server renders this, and on the server there is no localStorage,
+    // so there is no roster date to read and the refresh cycle has not started either. It went out
+    // as "all check-ins synced" over an empty list.
+    it('never claims to be synced before a roster has ever arrived', () => {
+        expect(pickSyncState(input({loadedAt: null}))).toEqual({kind: 'loading'});
+        expect(pickSyncState(input({loadedAt: null, mounted: false}))).toEqual({kind: 'loading'});
+    });
+
+    // Without a roster there is still a worse thing to say than "loading", and those branches run
+    // first. Pinned because the fix above sits right underneath them.
+    it('still reports the connection and the queue ahead of loading', () => {
+        expect(pickSyncState(input({loadedAt: null, online: false, pendingCount: 2})))
+            .toEqual({kind: 'offline', pendingCount: 2});
+        expect(pickSyncState(input({loadedAt: null, pendingCount: 2})))
+            .toEqual({kind: 'syncing', pendingCount: 2});
+        expect(pickSyncState(input({loadedAt: null, stuckCount: 1})))
+            .toEqual({kind: 'stuck', stuckCount: 1});
+        expect(pickSyncState(input({loadedAt: null, loadError: true})))
+            .toEqual({kind: 'error'});
     });
 });

@@ -23,7 +23,7 @@ const AGE_TICK_MS = 30_000;
  *
  * Which of those it says is decided by `pickSyncState`; this only paints it.
  */
-export const SyncStatus = ({online, pendingCount, stuckCount, loadedAt, isLoading, loadError, onRetry}: SyncStatusProps) => {
+export const SyncStatus = ({online, pendingCount, stuckCount, loadedAt, loadError, onRetry}: SyncStatusProps) => {
     // This renders on the server too, where there is no localStorage and loadedAt is always null.
     // Comparing against the clock before mounting would give the server and the client different
     // text and break hydration.
@@ -36,7 +36,7 @@ export const SyncStatus = ({online, pendingCount, stuckCount, loadedAt, isLoadin
         return () => clearInterval(interval);
     }, []);
 
-    const state = pickSyncState({online, pendingCount, stuckCount, loadedAt, isLoading, loadError, mounted, now: Date.now()});
+    const state = pickSyncState({online, pendingCount, stuckCount, loadedAt, loadError, mounted, now: Date.now()});
 
     // `pendingCount` below is read from the prop rather than from `state`: lingui turns whatever is
     // interpolated into the message id, so `state.pendingCount` would rewrite the id and orphan the

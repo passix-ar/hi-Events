@@ -18,7 +18,6 @@ export type SyncStateInput = {
     pendingCount: number;
     stuckCount: number;
     loadedAt: number | null;
-    isLoading: boolean;
     loadError: boolean;
     // False until the component has mounted. The scanner route renders on the server too, where
     // there is no localStorage and `loadedAt` is always null; comparing against the clock before
@@ -37,7 +36,7 @@ export type SyncStateInput = {
  * apparently fine, and a roster from half an hour ago.
  */
 export const pickSyncState = (
-    {online, pendingCount, stuckCount, loadedAt, isLoading, loadError, mounted, now}: SyncStateInput,
+    {online, pendingCount, stuckCount, loadedAt, loadError, mounted, now}: SyncStateInput,
 ): SyncState => {
     if (loadError && loadedAt === null) {
         return {kind: 'error'};
@@ -58,7 +57,15 @@ export const pickSyncState = (
         return {kind: 'syncing', pendingCount};
     }
 
-    if (isLoading && loadedAt === null) {
+    // No roster has ever arrived, so there is nothing to be in sync with. This used to also require
+    // a request to be in flight, and that was the bug: `isLoading` starts false — before the refresh
+    // cycle begins, and on the server, where there is no localStorage to read a snapshot from — so
+    // the bar went out saying "all check-ins synced" over an empty list, which is the exact lie this
+    // component exists to prevent. A request being in flight turns out to say nothing this needs:
+    // with a roster already on screen a refresh is not worth reporting, and without one the answer
+    // is "loading" either way. Everything more urgent (error, offline, stuck, syncing) is decided
+    // above.
+    if (loadedAt === null) {
         return {kind: 'loading'};
     }
 

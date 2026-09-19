@@ -24,6 +24,11 @@ export const ScannerSelectionModal = ({
             onClose={onClose}
             title={t`Select Scanner Type`}
             size="sm"
+            // This modal hands control to a scanner, so returning focus to the button that opened
+            // it is wrong in both branches: the camera opens its own full-screen modal, and the USB
+            // reader types straight into the page — with the focus back on "Scan", the reader's
+            // first Enter activated that button and reopened this modal on top of the door.
+            returnFocus={false}
         >
             <Stack>
                 <Button

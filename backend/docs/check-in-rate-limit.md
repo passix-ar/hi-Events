@@ -20,10 +20,13 @@ would start being refused. Read it before changing any of these numbers.
 | `POST .../check-ins` | The queue flush — with a live connection this is **one POST per scan** | 20–30/min while scanning |
 | `DELETE .../check-ins/{short_id}` | Manual check-out | rare |
 
-The roster is what dominates, and it scales with the size of the event:
+The roster is what dominates, and it scales with the size of the event. **Our events run in the
+hundreds**; the larger rows are here because the numbers below are chosen against them, not because
+we see them:
 
-| Event size | Roster pages/min | + scanning | Per device | 
+| Event size | Roster pages/min | + scanning | Per device |
 |---|---|---|---|
+| **300 attendees (our scale)** | **2** | ~25 | **~27 req/min** |
 | 2,000 attendees | 8 | ~25 | ~33 req/min |
 | 5,000 attendees | 20 | ~25 | ~45 req/min |
 | 10,000 attendees | 40 | ~25 | ~65 req/min |
@@ -47,37 +50,54 @@ Keyed by **list and origin together**, which is the part that matters:
 ~30 POST/min per device, and the budget covers roughly **10 devices behind one NAT scanning flat
 out**. Unlike the roster, this number does not grow with the size of the event.
 
-## What is deliberately NOT capped
+## What caps the reads
 
-The three `GET` routes are **exempt from the global `api` limiter** (see the early return in
-`RateLimiter::for('api', ...)`) and carry no limiter of their own.
+The three `GET` routes take **600/min per IP**, set in the early return of
+`RateLimiter::for('api', ...)` rather than inheriting the global cap:
 
-This is the opposite of the obvious choice, and it is deliberate. Before the exemption, the global
-cap of **180/min per bare IP** applied to them, which — using the table above — is what a door hits
-with:
+```php
+Limit::perMinute(600)->by($request->ip())
+```
 
-- **5 devices** at a 2,000-person event,
-- **4 devices** at 5,000,
-- **2 devices** at 10,000.
+They were briefly exempt altogether. That was sized against a 10,000-person event and was the wrong
+trade for what we actually run: these routes are unauthenticated, guarded only by a `short_id` that
+is meant to be handed around, and they return the whole roster with names, order and seat. Leaving
+them uncapped meant anyone holding the link could pull it as fast as they liked.
 
-In other words the pre-existing global cap was already strangling large events, and adding a
-tighter one would have made it worse. Measured, not estimated: 195 sequential POSTs against the dev
-stack returned the first `429` on request #180.
+600 is generous at our scale and still refuses a scrape. Where it would start refusing a real door,
+counting only the roster GETs:
 
-The failure mode is also worse than it looks. A refused `POST` is retried by the scanner's queue
+| Event size | Roster GET/min per device | Devices before 600/min |
+|---|---|---|
+| **300 attendees (our scale)** | 2 | **~240** |
+| 2,000 attendees | 8 | 75 |
+| 5,000 attendees | 20 | 30 |
+| 10,000 attendees | 40 | **15** |
+
+So the cap is invisible at the events we run and would only bite at a scale we do not operate at —
+and even there, only with more than fifteen phones on one entrance's wifi. Note that a page reload
+replays the whole roster in one burst, so a round of reloads at a large event spends a chunk of the
+minute's budget at once.
+
+The global cap this replaced was **180/min per bare IP**, which the same table puts at 5 devices for
+a 2,000-person event and 2 at 10,000 — already too tight. Measured, not estimated: 195 sequential
+requests against the dev stack returned the first `429` on request #180.
+
+The failure mode is worth knowing. A refused `POST` is retried by the scanner's queue
 (`classifyFlushFailure` treats 429 as retryable) so no check-in is lost — but a refused roster `GET`
 surfaces in the UI as *"Could not load the attendee list"*, which at a door reads as bad wifi rather
 than as a cap, and sends staff chasing the wrong problem.
 
 ## When this will need revisiting
 
-The write cap is stable against event growth. The exemption on reads is not a free pass — it is a
-decision to accept unbounded reads on a `short_id`-guarded endpoint **because the client re-downloads
-the entire roster every 60 seconds**. If that ever changes to an incremental refresh (only what
-changed since the last `loadedAt`), read traffic drops by an order of magnitude and these routes can
-and should be capped like the rest.
+The write cap is stable against event growth. The read cap is not: it is spent almost entirely by
+the roster refresh, **which re-downloads the entire list every 60 seconds**, so its headroom shrinks
+as events get bigger. The table above is the thing to re-check, not the number itself.
 
-Until then, do not put a limiter on the roster `GET` without first working out the per-device
-request rate at the largest event in production, multiplying by the number of devices on one
-entrance's wifi, and leaving headroom for page reloads — each of which replays the whole roster in
-one burst.
+If the refresh ever becomes incremental — only what changed since the last `loadedAt` — read traffic
+drops by an order of magnitude and 600 stops being a constraint at any size we would plausibly run.
+That is the change worth making before raising this number.
+
+Until then, do not lower it without first working out the per-device request rate at the largest
+event in production, multiplying by the number of devices on one entrance's wifi, and leaving
+headroom for page reloads — each of which replays the whole roster in one burst.
