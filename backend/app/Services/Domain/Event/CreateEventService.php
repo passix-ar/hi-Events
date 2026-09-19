@@ -183,11 +183,14 @@ class CreateEventService
         $organizerSettings = $organizer->getOrganizerSettings();
         $organizerThemeSettings = $organizerSettings->getHomepageThemeSettings() ?? [];
 
-        // Build the new homepage_theme_settings from organizer settings
+        // Build the new homepage_theme_settings from organizer settings. The
+        // fallbacks are Passix's dark theme: organizer themes (ColorTheme) carry the
+        // homepage_*_color keys, not mode/accent/background, so without this every
+        // new event opened in the upstream light theme on a dark platform.
         $homepageThemeSettings = [
-            'accent' => $organizerThemeSettings['accent'] ?? '#8b5cf6',
-            'background' => $organizerThemeSettings['background'] ?? '#f5f3ff',
-            'mode' => $organizerThemeSettings['mode'] ?? 'light',
+            'accent' => $organizerThemeSettings['accent'] ?? '#d6ff3d',
+            'background' => $organizerThemeSettings['background'] ?? '#0b0b0e',
+            'mode' => $organizerThemeSettings['mode'] ?? 'dark',
             'background_type' => $eventCoverCreated
                 ? HomepageBackgroundType::MIRROR_COVER_IMAGE->name
                 : ($organizerThemeSettings['background_type'] ?? HomepageBackgroundType::COLOR->name),
