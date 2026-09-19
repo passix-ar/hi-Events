@@ -33,8 +33,8 @@ export const HidScannerStatus = ({
                 <IconScan size={18}/>
                 <span>
                     {pageHasFocus
-                        ? 'USB Scanner Active - Ready to Scan'
-                        : 'USB Scanner Paused - Click anywhere to resume scanning'}
+                        ? t`USB Scanner Active - Ready to Scan`
+                        : t`USB Scanner Paused - Click anywhere to resume scanning`}
                 </span>
             </div>
             <Button
@@ -48,7 +48,7 @@ export const HidScannerStatus = ({
                     showSuccess(t`USB Scanner mode deactivated`);
                 }}
             >
-                Disable
+                {t`Disable`}
             </Button>
         </div>
     );

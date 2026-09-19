@@ -43,28 +43,28 @@ msgstr "(boş)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:334
+#: src/components/layouts/CheckIn/index.tsx:344
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} saat {time} itibarıyla <0>{listName}</0> üzerinden zaten girdi"
 
-#: src/components/layouts/CheckIn/index.tsx:193
-#: src/components/layouts/CheckIn/index.tsx:319
+#: src/components/layouts/CheckIn/index.tsx:205
+#: src/components/layouts/CheckIn/index.tsx:331
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} zaten giriş yaptı"
 
-#: src/components/layouts/CheckIn/index.tsx:200
+#: src/components/layouts/CheckIn/index.tsx:212
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:210
+#: src/components/layouts/CheckIn/index.tsx:222
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "{0} {1} adlı kişinin bileti bu giriş listesi için geçerli değil"
 
-#: src/components/layouts/CheckIn/index.tsx:216
+#: src/components/layouts/CheckIn/index.tsx:228
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>başarıyla check-in yaptı</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:236
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>başarıyla check-out yaptı</0>"
 
@@ -135,7 +135,7 @@ msgstr "{eventCount} etkinlik"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} saat, {minutes} dakika ve {seconds} saniye"
 
-#: src/hooks/useCheckInRoster.ts:302
+#: src/hooks/useCheckInRoster.ts:343
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} giriş kaydedilemedi"
 
@@ -871,11 +871,11 @@ msgstr "Beklenmeyen bir hata oluştu."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
 
-#: src/components/layouts/CheckIn/index.tsx:108
+#: src/components/layouts/CheckIn/index.tsx:116
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:331
+#: src/components/layouts/CheckIn/index.tsx:341
 msgid "another list"
 msgstr "başka bir liste"
 
@@ -1203,7 +1203,8 @@ msgstr "Katılımcı listesi {age} güncellendi — yenilemek için dokunun"
 msgid "Attendee Name"
 msgstr "Katılımcı Adı"
 
-#: src/components/layouts/CheckIn/index.tsx:309
+#: src/components/layouts/CheckIn/index.tsx:315
+#: src/components/layouts/CheckIn/index.tsx:322
 msgid "Attendee not found"
 msgstr "Katılımcı bulunamadı"
 
@@ -1332,7 +1333,7 @@ msgstr "Çevrimdışı Ödeme Bekleniyor"
 msgid "Awaiting Offline Pmt."
 msgstr "Çevrimdışı Ödeme Bekleniyor"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:86
+#: src/components/common/CheckIn/AttendeeList.tsx:89
 msgid "Awaiting payment"
 msgstr "Ödeme bekleniyor"
 
@@ -1570,11 +1571,11 @@ msgstr "İptal etmek, bu siparişle ilişkili tüm katılımcıları iptal edece
 msgid "Cancelled"
 msgstr "İptal Edildi"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:28
+#: src/components/common/CheckIn/AttendeeList.tsx:30
 msgid "Cannot Check In"
 msgstr "Check-in Yapılamaz"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:32
+#: src/components/common/CheckIn/AttendeeList.tsx:34
 msgid "Cannot Check In (Cancelled)"
 msgstr "Giriş Yapılamaz (İptal Edildi)"
 
@@ -1643,7 +1644,7 @@ msgstr "Bekleme listesi ayarlarını değiştir"
 msgid "Charity"
 msgstr "Hayır Kurumu"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:39
+#: src/components/common/CheckIn/AttendeeList.tsx:41
 msgid "Check In"
 msgstr "Check-in Yap"
 
@@ -1659,7 +1660,7 @@ msgstr "Check-in yap ve siparişi ödenmiş olarak işaretle"
 msgid "Check in only"
 msgstr "Sadece check-in yap"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:36
+#: src/components/common/CheckIn/AttendeeList.tsx:38
 msgid "Check Out"
 msgstr "Check-out Yap"
 
@@ -2915,6 +2916,10 @@ msgstr "Detaylar"
 #: src/components/routes/welcome/index.tsx:193
 msgid "Didn't receive the code?"
 msgstr "Kodu almadınız mı?"
+
+#: src/components/common/CheckIn/HidScannerStatus.tsx:51
+msgid "Disable"
+msgstr "Devre dışı bırak"
 
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:27
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
@@ -4279,7 +4284,7 @@ msgstr "Sabit ücret 0 veya daha büyük olmalıdır"
 msgid "Fixed Fee:"
 msgstr "Sabit Ücret:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:167
 msgid "Flash is not available on this device"
 msgstr "Bu cihazda flaş mevcut değil"
 
@@ -5613,7 +5618,7 @@ msgstr "Bu siparişe katılımcı eklenmemiş."
 msgid "No Attendees to show"
 msgstr "Gösterilecek Katılımcı yok"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:63
+#: src/components/common/CheckIn/AttendeeList.tsx:65
 msgid "No attendees to show."
 msgstr ""
 
@@ -7815,8 +7820,8 @@ msgid "Search by name, email, or order #..."
 msgstr "Ad, e-posta veya sipariş #'a göre ara..."
 
 #: src/components/layouts/CheckIn/index.tsx:538
-msgid "Search by name, order #, attendee # or email..."
-msgstr "Ad, sipariş #, katılımcı # veya e-postaya göre ara..."
+msgid "Search by name, order # or attendee #..."
+msgstr "Ad, sipariş # veya katılımcı #'ye göre ara..."
 
 #: src/components/routes/event/promo-codes.tsx:36
 msgid "Search by name..."
@@ -9086,7 +9091,7 @@ msgstr "Bu kategoride henüz hiç ürün yok."
 msgid "This category is hidden from public view"
 msgstr "Bu kategori halktan gizli"
 
-#: src/components/layouts/CheckIn/index.tsx:228
+#: src/components/layouts/CheckIn/index.tsx:240
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Bu giriş kaydı hâlâ eşitleniyor. Lütfen birazdan tekrar deneyin."
 
@@ -9265,10 +9270,6 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Bu şifre sıfırlama bağlantısı geçersiz veya süresi dolmuş."
 
-#: src/components/layouts/CheckIn/index.tsx:282
-msgid "This ticket was just scanned. Please wait before scanning again."
-msgstr "Bu bilet az önce tarandı. Tekrar taramadan önce lütfen bekleyin."
-
 #: src/components/modals/EditUserModal/index.tsx:65
 msgid "This user is not active, as they have not accepted their invitation."
 msgstr "Bu kullanıcı davetini kabul etmediği için aktif değil."
@@ -9296,7 +9297,7 @@ msgstr "bilet"
 msgid "Ticket"
 msgstr "Bilet"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:81
+#: src/components/common/CheckIn/AttendeeList.tsx:84
 msgid "Ticket Cancelled"
 msgstr "Bilet İptal Edildi"
 
@@ -9647,8 +9648,8 @@ msgstr "Bilet türü"
 msgid "Typography"
 msgstr "Tipografi"
 
-#: src/components/layouts/CheckIn/index.tsx:247
-#: src/components/layouts/CheckIn/index.tsx:249
+#: src/components/layouts/CheckIn/index.tsx:259
+#: src/components/layouts/CheckIn/index.tsx:261
 msgid "Unable to check out attendee"
 msgstr "Katılımcı check-out'u yapılamadı"
 
@@ -9668,7 +9669,7 @@ msgstr "Soru oluşturulamadı. Lütfen bilgilerinizi kontrol edin"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:302
+#: src/components/layouts/CheckIn/index.tsx:316
 msgid "Unable to fetch attendee"
 msgstr "Katılımcı getirilemedi"
 
@@ -9818,6 +9819,10 @@ msgstr "Kullanım Örneği"
 msgid "Usage Limit"
 msgstr "Kullanım Sınırı"
 
+#: src/components/common/CheckIn/HidScannerStatus.tsx:36
+msgid "USB Scanner Active - Ready to Scan"
+msgstr "USB Tarayıcı aktif - Taramaya hazır"
+
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:50
 msgid "USB Scanner Already Active"
 msgstr "USB Tarayıcı Zaten Aktif"
@@ -9829,6 +9834,10 @@ msgstr "USB Tarayıcı modu etkinleştirildi. Şimdi biletleri taramaya başlay�
 #: src/components/common/CheckIn/HidScannerStatus.tsx:48
 msgid "USB Scanner mode deactivated"
 msgstr "USB Tarayıcı modu devre dışı bırakıldı"
+
+#: src/components/common/CheckIn/HidScannerStatus.tsx:37
+msgid "USB Scanner Paused - Click anywhere to resume scanning"
+msgstr "USB Tarayıcı duraklatıldı - Devam etmek için herhangi bir yere tıklayın"
 
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:50
 msgid "USB/HID Scanner"
@@ -10588,7 +10597,7 @@ msgstr "Evet, siparişimi iptal et"
 msgid "Yes, remove them"
 msgstr "Evet, kaldır"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:86
 msgid "You already scanned this ticket"
 msgstr "Bu bileti zaten taradınız"
 
@@ -10604,8 +10613,8 @@ msgstr "<0>{0}</0> ({1}) rolünü üstleniyorsunuz"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Kısmi iade yapıyorsunuz. Müşteriye {0} {1} iade edilecek."
 
-#: src/components/layouts/CheckIn/index.tsx:242
-#: src/components/layouts/CheckIn/index.tsx:302
+#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:316
 msgid "You are offline"
 msgstr "Çevrimdışısınız"
 
@@ -10629,8 +10638,8 @@ msgstr "Hesabınızdaki son aktif organizatörü arşivleyemezsiniz."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Bu ürünle ilişkili katılımcılar olduğu için ürün türünü değiştiremezsiniz."
 
-#: src/components/layouts/CheckIn/index.tsx:265
-#: src/components/layouts/CheckIn/index.tsx:351
+#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:358
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Ödenmemiş siparişleri olan katılımcıları check-in yaptıramazsınız. Bu ayar etkinlik ayarlarından değiştirilebilir."
 

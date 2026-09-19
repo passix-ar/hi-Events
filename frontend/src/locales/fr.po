@@ -43,28 +43,28 @@ msgstr "(vide)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:334
+#: src/components/layouts/CheckIn/index.tsx:344
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} est déjà entré à {time} via <0>{listName}</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:193
-#: src/components/layouts/CheckIn/index.tsx:319
+#: src/components/layouts/CheckIn/index.tsx:205
+#: src/components/layouts/CheckIn/index.tsx:331
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} est déjà enregistré"
 
-#: src/components/layouts/CheckIn/index.tsx:200
+#: src/components/layouts/CheckIn/index.tsx:212
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:210
+#: src/components/layouts/CheckIn/index.tsx:222
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "Le billet de {0} {1} n'est pas valable pour cette liste d'enregistrement"
 
-#: src/components/layouts/CheckIn/index.tsx:216
+#: src/components/layouts/CheckIn/index.tsx:228
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>enregistré</0> avec succès"
 
-#: src/components/layouts/CheckIn/index.tsx:236
+#: src/components/layouts/CheckIn/index.tsx:248
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>sorti</0> avec succès"
 
@@ -135,7 +135,7 @@ msgstr "{eventCount} événements"
 msgid "{hours} hours, {minutes} minutes, and {seconds} seconds"
 msgstr "{hours} heures, {minutes} minutes, et {seconds} secondes"
 
-#: src/hooks/useCheckInRoster.ts:302
+#: src/hooks/useCheckInRoster.ts:343
 msgid "{message} — {lost} check-in(s) could not be saved"
 msgstr "{message} — {lost} enregistrement(s) n'ont pas pu être enregistrés"
 
@@ -871,11 +871,11 @@ msgstr "Une erreur inattendue est apparue."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Une erreur inattendue est apparue. Veuillez réessayer."
 
-#: src/components/layouts/CheckIn/index.tsx:108
+#: src/components/layouts/CheckIn/index.tsx:116
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:331
+#: src/components/layouts/CheckIn/index.tsx:341
 msgid "another list"
 msgstr "une autre liste"
 
@@ -1203,7 +1203,8 @@ msgstr "Liste des participants mise à jour {age} — appuyez pour actualiser"
 msgid "Attendee Name"
 msgstr "Nom du participant"
 
-#: src/components/layouts/CheckIn/index.tsx:309
+#: src/components/layouts/CheckIn/index.tsx:315
+#: src/components/layouts/CheckIn/index.tsx:322
 msgid "Attendee not found"
 msgstr "Participant non trouvé"
 
@@ -1332,7 +1333,7 @@ msgstr "En attente d'un paiement hors ligne"
 msgid "Awaiting Offline Pmt."
 msgstr "Paiement hors ligne en attente"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:86
+#: src/components/common/CheckIn/AttendeeList.tsx:89
 msgid "Awaiting payment"
 msgstr "En attente de paiement"
 
@@ -1570,11 +1571,11 @@ msgstr "L'annulation annulera tous les participants associés à cette commande 
 msgid "Cancelled"
 msgstr "Annulé"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:28
+#: src/components/common/CheckIn/AttendeeList.tsx:30
 msgid "Cannot Check In"
 msgstr "Impossible d'enregistrer"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:32
+#: src/components/common/CheckIn/AttendeeList.tsx:34
 msgid "Cannot Check In (Cancelled)"
 msgstr "Impossible d'enregistrer (Annulé)"
 
@@ -1643,7 +1644,7 @@ msgstr "Modifier les paramètres de liste d'attente"
 msgid "Charity"
 msgstr "Charité"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:39
+#: src/components/common/CheckIn/AttendeeList.tsx:41
 msgid "Check In"
 msgstr "Enregistrer"
 
@@ -1659,7 +1660,7 @@ msgstr "Enregistrer et marquer la commande comme payée"
 msgid "Check in only"
 msgstr "Enregistrement uniquement"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:36
+#: src/components/common/CheckIn/AttendeeList.tsx:38
 msgid "Check Out"
 msgstr "Désenregistrer"
 
@@ -2915,6 +2916,10 @@ msgstr "Détails"
 #: src/components/routes/welcome/index.tsx:193
 msgid "Didn't receive the code?"
 msgstr "Vous n'avez pas reçu le code ?"
+
+#: src/components/common/CheckIn/HidScannerStatus.tsx:51
+msgid "Disable"
+msgstr "Désactiver"
 
 #: src/components/forms/CapaciyAssigmentForm/index.tsx:27
 msgid "Disabling this capacity will track sales but not stop them when the limit is reached"
@@ -4279,7 +4284,7 @@ msgstr "Les frais fixes doivent être égaux ou supérieurs à 0"
 msgid "Fixed Fee:"
 msgstr "Frais fixes :"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:182
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:167
 msgid "Flash is not available on this device"
 msgstr "Flash n'est pas disponible sur cet appareil"
 
@@ -5613,7 +5618,7 @@ msgstr "Aucun invité n'a été ajouté à cette commande."
 msgid "No Attendees to show"
 msgstr "Aucun participant à afficher"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:63
+#: src/components/common/CheckIn/AttendeeList.tsx:65
 msgid "No attendees to show."
 msgstr ""
 
@@ -7815,8 +7820,8 @@ msgid "Search by name, email, or order #..."
 msgstr "Recherchez par nom, e-mail ou numéro de commande..."
 
 #: src/components/layouts/CheckIn/index.tsx:538
-msgid "Search by name, order #, attendee # or email..."
-msgstr "Rechercher par nom, numéro de commande, numéro de participant ou e-mail..."
+msgid "Search by name, order # or attendee #..."
+msgstr "Rechercher par nom, numéro de commande ou numéro de participant..."
 
 #: src/components/routes/event/promo-codes.tsx:36
 msgid "Search by name..."
@@ -9086,7 +9091,7 @@ msgstr "Cette catégorie n'a pas encore de produits."
 msgid "This category is hidden from public view"
 msgstr "Cette catégorie est masquée de la vue publique"
 
-#: src/components/layouts/CheckIn/index.tsx:228
+#: src/components/layouts/CheckIn/index.tsx:240
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Ce check-in est encore en cours de synchronisation. Réessayez dans un instant."
 
@@ -9265,10 +9270,6 @@ msgstr ""
 msgid "This reset password link is invalid or expired."
 msgstr "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
 
-#: src/components/layouts/CheckIn/index.tsx:282
-msgid "This ticket was just scanned. Please wait before scanning again."
-msgstr "Ce billet vient d'être scanné. Veuillez attendre avant de scanner à nouveau."
-
 #: src/components/modals/EditUserModal/index.tsx:65
 msgid "This user is not active, as they have not accepted their invitation."
 msgstr "Cet utilisateur n'est pas actif car il n'a pas accepté son invitation."
@@ -9296,7 +9297,7 @@ msgstr "billet"
 msgid "Ticket"
 msgstr "Billet"
 
-#: src/components/common/CheckIn/AttendeeList.tsx:81
+#: src/components/common/CheckIn/AttendeeList.tsx:84
 msgid "Ticket Cancelled"
 msgstr "Billet annulé"
 
@@ -9647,8 +9648,8 @@ msgstr "Type de billet"
 msgid "Typography"
 msgstr "Typographie"
 
-#: src/components/layouts/CheckIn/index.tsx:247
-#: src/components/layouts/CheckIn/index.tsx:249
+#: src/components/layouts/CheckIn/index.tsx:259
+#: src/components/layouts/CheckIn/index.tsx:261
 msgid "Unable to check out attendee"
 msgstr "Impossible de sortir le participant"
 
@@ -9668,7 +9669,7 @@ msgstr "Impossible de créer une question. Veuillez vérifier vos coordonnées"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:302
+#: src/components/layouts/CheckIn/index.tsx:316
 msgid "Unable to fetch attendee"
 msgstr "Impossible de récupérer le participant"
 
@@ -9818,6 +9819,10 @@ msgstr "Exemple d'utilisation"
 msgid "Usage Limit"
 msgstr "Limite d'utilisation"
 
+#: src/components/common/CheckIn/HidScannerStatus.tsx:36
+msgid "USB Scanner Active - Ready to Scan"
+msgstr "Scanner USB actif - Prêt à scanner"
+
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:50
 msgid "USB Scanner Already Active"
 msgstr "Scanner USB déjà actif"
@@ -9829,6 +9834,10 @@ msgstr "Mode scanner USB activé. Commencez à scanner les billets maintenant."
 #: src/components/common/CheckIn/HidScannerStatus.tsx:48
 msgid "USB Scanner mode deactivated"
 msgstr "Mode scanner USB désactivé"
+
+#: src/components/common/CheckIn/HidScannerStatus.tsx:37
+msgid "USB Scanner Paused - Click anywhere to resume scanning"
+msgstr "Scanner USB en pause - Cliquez n'importe où pour reprendre"
 
 #: src/components/common/CheckIn/ScannerSelectionModal.tsx:50
 msgid "USB/HID Scanner"
@@ -10588,7 +10597,7 @@ msgstr "Oui, annuler ma commande"
 msgid "Yes, remove them"
 msgstr "Oui, supprime-les"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:104
+#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:86
 msgid "You already scanned this ticket"
 msgstr "Vous avez déjà scanné ce billet"
 
@@ -10604,8 +10613,8 @@ msgstr "Vous usurpez l'identité de <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Vous émettez un remboursement partiel. Le client sera remboursé de {0} {1}."
 
-#: src/components/layouts/CheckIn/index.tsx:242
-#: src/components/layouts/CheckIn/index.tsx:302
+#: src/components/layouts/CheckIn/index.tsx:254
+#: src/components/layouts/CheckIn/index.tsx:316
 msgid "You are offline"
 msgstr "Vous êtes hors ligne"
 
@@ -10629,8 +10638,8 @@ msgstr "Vous ne pouvez pas archiver le dernier organisateur actif de votre compt
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Vous ne pouvez pas changer le type de produit car des invités y sont associés."
 
-#: src/components/layouts/CheckIn/index.tsx:265
-#: src/components/layouts/CheckIn/index.tsx:351
+#: src/components/layouts/CheckIn/index.tsx:277
+#: src/components/layouts/CheckIn/index.tsx:358
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Vous ne pouvez pas enregistrer des participants avec des commandes impayées. Ce paramètre peut être modifié dans les paramètres de l'événement."
 
