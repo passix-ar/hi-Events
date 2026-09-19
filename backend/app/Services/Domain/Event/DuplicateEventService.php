@@ -97,17 +97,22 @@ class DuplicateEventService
                 $this->clonePerOrderQuestions($event, $newEvent->getId());
             }
 
+            $oldProductToNewProductMap = null;
+
             if ($duplicateProducts) {
-                $this->cloneExistingProducts(
+                $oldProductToNewProductMap = $this->cloneExistingProducts(
                     event: $event,
                     newEventId: $newEvent->getId(),
                     duplicateQuestions: $duplicateQuestions,
-                    duplicatePromoCodes: $duplicatePromoCodes,
                     duplicateCapacityAssignments: $duplicateCapacityAssignments,
                     duplicateCheckInLists: $duplicateCheckInLists,
                 );
             } else {
                 $this->createProductCategoryService->createDefaultProductCategory($newEvent);
+            }
+
+            if ($duplicatePromoCodes) {
+                $this->clonePromoCodes($event, $newEvent->getId(), $oldProductToNewProductMap);
             }
 
             if ($duplicateEventCoverImage) {
@@ -163,16 +168,16 @@ class DuplicateEventService
     }
 
     /**
+     * @return array<int, int> old product id => new product id
      * @throws Throwable
      */
     private function cloneExistingProducts(
         EventDomainObject $event,
         int               $newEventId,
         bool              $duplicateQuestions,
-        bool              $duplicatePromoCodes,
         bool              $duplicateCapacityAssignments,
         bool              $duplicateCheckInLists,
-    ): void
+    ): array
     {
         $oldProductToNewProductMap = [];
 
@@ -203,10 +208,6 @@ class DuplicateEventService
             $this->clonePerProductQuestions($event, $newEventId, $oldProductToNewProductMap);
         }
 
-        if ($duplicatePromoCodes) {
-            $this->clonePromoCodes($event, $newEventId, $oldProductToNewProductMap);
-        }
-
         if ($duplicateCapacityAssignments) {
             $this->cloneCapacityAssignments($event, $newEventId, $oldProductToNewProductMap);
         }
@@ -214,6 +215,8 @@ class DuplicateEventService
         if ($duplicateCheckInLists) {
             $this->cloneCheckInLists($event, $newEventId, $oldProductToNewProductMap);
         }
+
+        return $oldProductToNewProductMap;
     }
 
     /**
@@ -265,19 +268,37 @@ class DuplicateEventService
     }
 
     /**
+     * A null map means the products were not duplicated: the codes are copied unrestricted (an
+     * empty list applies to every product) and the organizer narrows them once the new products
+     * exist. Otherwise a code follows the products that were actually cloned. Products deleted
+     * since the code was created are not in the map; a code left pointing at nothing is skipped
+     * rather than copied unrestricted, which would silently widen the discount to every ticket.
+     *
+     * @param array<int, int>|null $oldProductToNewProductMap
      * @throws Throwable
      */
-    private function clonePromoCodes(EventDomainObject $event, int $newEventId, array $oldProductToNewProductMap): void
+    private function clonePromoCodes(EventDomainObject $event, int $newEventId, ?array $oldProductToNewProductMap): void
     {
         foreach ($event->getPromoCodes() as $promoCode) {
+            $applicableProductIds = [];
+            $originalProductIds = $promoCode->getApplicableProductIds() ?? [];
+
+            if ($oldProductToNewProductMap !== null && $originalProductIds !== []) {
+                $applicableProductIds = array_values(array_intersect_key(
+                    $oldProductToNewProductMap,
+                    array_flip($originalProductIds),
+                ));
+
+                if ($applicableProductIds === []) {
+                    continue;
+                }
+            }
+
             $this->createPromoCodeService->createPromoCode(
                 (new PromoCodeDomainObject())
                     ->setCode($promoCode->getCode())
                     ->setEventId($newEventId)
-                    ->setApplicableProductIds(array_map(
-                        static fn($productId) => $oldProductToNewProductMap[$productId],
-                        $promoCode->getApplicableProductIds() ?? [],
-                    ))
+                    ->setApplicableProductIds($applicableProductIds)
                     ->setDiscountType($promoCode->getDiscountType())
                     ->setDiscount($promoCode->getDiscount())
                     ->setExpiryDate($promoCode->getExpiryDate())
