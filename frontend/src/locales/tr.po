@@ -43,28 +43,28 @@ msgstr "(boş)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:344
+#: src/components/layouts/CheckIn/index.tsx:314
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} saat {time} itibarıyla <0>{listName}</0> üzerinden zaten girdi"
 
-#: src/components/layouts/CheckIn/index.tsx:205
-#: src/components/layouts/CheckIn/index.tsx:331
+#: src/components/layouts/CheckIn/index.tsx:170
+#: src/components/layouts/CheckIn/index.tsx:301
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} zaten giriş yaptı"
 
-#: src/components/layouts/CheckIn/index.tsx:212
+#: src/components/layouts/CheckIn/index.tsx:177
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:222
+#: src/components/layouts/CheckIn/index.tsx:187
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "{0} {1} adlı kişinin bileti bu giriş listesi için geçerli değil"
 
-#: src/components/layouts/CheckIn/index.tsx:228
+#: src/components/layouts/CheckIn/index.tsx:193
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>başarıyla check-in yaptı</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:248
+#: src/components/layouts/CheckIn/index.tsx:216
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>başarıyla check-out yaptı</0>"
 
@@ -871,11 +871,11 @@ msgstr "Beklenmeyen bir hata oluştu."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
 
-#: src/components/layouts/CheckIn/index.tsx:116
+#: src/components/layouts/CheckIn/index.tsx:115
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:341
+#: src/components/layouts/CheckIn/index.tsx:311
 msgid "another list"
 msgstr "başka bir liste"
 
@@ -1203,8 +1203,8 @@ msgstr "Katılımcı listesi {age} güncellendi — yenilemek için dokunun"
 msgid "Attendee Name"
 msgstr "Katılımcı Adı"
 
-#: src/components/layouts/CheckIn/index.tsx:315
-#: src/components/layouts/CheckIn/index.tsx:322
+#: src/components/layouts/CheckIn/index.tsx:285
+#: src/components/layouts/CheckIn/index.tsx:292
 msgid "Attendee not found"
 msgstr "Katılımcı bulunamadı"
 
@@ -1501,7 +1501,7 @@ msgstr "Kaliforniya"
 msgid "Call-to-Action Button"
 msgstr "Harekete Geçirici Düğme"
 
-#: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:16
+#: src/components/common/CheckIn/QrScanner/PermissionDeniedMessage.tsx:16
 msgid "Camera permission was denied. <0>Request Permission</0> again, or if this doesn't work, you will need to <1>grant this page</1> access to your camera in your browser settings."
 msgstr "Kamera izni reddedildi. Tekrar <0>İzin İste</0>yin, veya bu işe yaramazsa, tarayıcı ayarlarınızdan <1>bu sayfaya</1> kamera erişimi vermeniz gerekecek."
 
@@ -1694,15 +1694,15 @@ msgstr "Giriş Listesi Oluşturuldu"
 msgid "Check-In List deleted successfully"
 msgstr "Check-In Listesi başarıyla silindi"
 
-#: src/components/layouts/CheckIn/index.tsx:462
+#: src/components/layouts/CheckIn/index.tsx:432
 msgid "Check-in list has expired"
 msgstr "Check-in listesinin süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:479
+#: src/components/layouts/CheckIn/index.tsx:449
 msgid "Check-in list is not active"
 msgstr "Check-in listesi aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:447
+#: src/components/layouts/CheckIn/index.tsx:417
 msgid "Check-in list not found"
 msgstr "Check-in listesi bulunamadı"
 
@@ -1830,7 +1830,7 @@ msgstr "Notları görüntülemek için tıklayın"
 msgid "close"
 msgstr "kapat"
 
-#: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:27
+#: src/components/common/CheckIn/QrScanner/PermissionDeniedMessage.tsx:27
 #: src/components/common/CookieConsentBanner/index.tsx:37
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
 #: src/components/modals/JoinWaitlistModal/index.tsx:130
@@ -4284,7 +4284,7 @@ msgstr "Sabit ücret 0 veya daha büyük olmalıdır"
 msgid "Fixed Fee:"
 msgstr "Sabit Ücret:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:167
+#: src/components/common/CheckIn/QrScanner/QrScanner.tsx:157
 msgid "Flash is not available on this device"
 msgstr "Bu cihazda flaş mevcut değil"
 
@@ -7762,8 +7762,8 @@ msgstr "Bilet Tasarımını Kaydet"
 msgid "Save VAT Settings"
 msgstr "KDV Ayarlarını Kaydet"
 
-#: src/components/layouts/CheckIn/index.tsx:542
-#: src/components/layouts/CheckIn/index.tsx:552
+#: src/components/layouts/CheckIn/index.tsx:512
+#: src/components/layouts/CheckIn/index.tsx:522
 msgid "Scan"
 msgstr "Tara"
 
@@ -7819,7 +7819,7 @@ msgstr "Ad, e-posta veya hesaba göre ara..."
 msgid "Search by name, email, or order #..."
 msgstr "Ad, e-posta veya sipariş #'a göre ara..."
 
-#: src/components/layouts/CheckIn/index.tsx:538
+#: src/components/layouts/CheckIn/index.tsx:508
 msgid "Search by name, order # or attendee #..."
 msgstr "Ad, sipariş # veya katılımcı #'ye göre ara..."
 
@@ -7950,7 +7950,7 @@ msgstr "Bir etkinlik seçin"
 msgid "Select attendee group"
 msgstr "Katılımcı grubu seçin"
 
-#: src/components/common/AttendeeCheckInTable/QrScannerControls.tsx:47
+#: src/components/common/CheckIn/QrScanner/QrScannerControls.tsx:47
 msgid "Select Camera"
 msgstr "Kamera Seç"
 
@@ -8894,7 +8894,7 @@ msgstr "Bu promosyon kodu geçersiz"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Sayfanın arka plan rengi. Kapak resmi kullanıldığında, bu bir kaplama olarak uygulanır."
 
-#: src/components/layouts/CheckIn/index.tsx:452
+#: src/components/layouts/CheckIn/index.tsx:422
 msgid "The check-in list you are looking for does not exist."
 msgstr "Aradığınız check-in listesi mevcut değil."
 
@@ -9091,7 +9091,7 @@ msgstr "Bu kategoride henüz hiç ürün yok."
 msgid "This category is hidden from public view"
 msgstr "Bu kategori halktan gizli"
 
-#: src/components/layouts/CheckIn/index.tsx:240
+#: src/components/layouts/CheckIn/index.tsx:205
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Bu giriş kaydı hâlâ eşitleniyor. Lütfen birazdan tekrar deneyin."
 
@@ -9099,7 +9099,7 @@ msgstr "Bu giriş kaydı hâlâ eşitleniyor. Lütfen birazdan tekrar deneyin."
 msgid "This check-in list has expired"
 msgstr "Bu check-in listesi süresi doldu"
 
-#: src/components/layouts/CheckIn/index.tsx:467
+#: src/components/layouts/CheckIn/index.tsx:437
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Bu check-in listesinin süresi doldu ve artık check-in için kullanılamıyor."
 
@@ -9111,7 +9111,7 @@ msgstr "Bu check-in listesi aktif"
 msgid "This check-in list is not active yet"
 msgstr "Bu check-in listesi henüz aktif değil"
 
-#: src/components/layouts/CheckIn/index.tsx:484
+#: src/components/layouts/CheckIn/index.tsx:454
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Bu check-in listesi henüz aktif değil ve check-in yapılabilir durumda değil."
 
@@ -9614,11 +9614,11 @@ msgstr "Ödeme beklemedeyse doğru"
 msgid "Try another email"
 msgstr "Başka bir e-posta deneyin"
 
-#: src/components/layouts/CheckIn/index.tsx:545
+#: src/components/layouts/CheckIn/index.tsx:515
 msgid "Turn sound off"
 msgstr "Sesi kapat"
 
-#: src/components/layouts/CheckIn/index.tsx:545
+#: src/components/layouts/CheckIn/index.tsx:515
 msgid "Turn sound on"
 msgstr "Sesi aç"
 
@@ -9648,8 +9648,8 @@ msgstr "Bilet türü"
 msgid "Typography"
 msgstr "Tipografi"
 
-#: src/components/layouts/CheckIn/index.tsx:259
-#: src/components/layouts/CheckIn/index.tsx:261
+#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:231
 msgid "Unable to check out attendee"
 msgstr "Katılımcı check-out'u yapılamadı"
 
@@ -9669,7 +9669,7 @@ msgstr "Soru oluşturulamadı. Lütfen bilgilerinizi kontrol edin"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:316
+#: src/components/layouts/CheckIn/index.tsx:286
 msgid "Unable to fetch attendee"
 msgstr "Katılımcı getirilemedi"
 
@@ -10597,7 +10597,7 @@ msgstr "Evet, siparişimi iptal et"
 msgid "Yes, remove them"
 msgstr "Evet, kaldır"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:86
+#: src/components/common/CheckIn/QrScanner/QrScanner.tsx:76
 msgid "You already scanned this ticket"
 msgstr "Bu bileti zaten taradınız"
 
@@ -10613,8 +10613,8 @@ msgstr "<0>{0}</0> ({1}) rolünü üstleniyorsunuz"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Kısmi iade yapıyorsunuz. Müşteriye {0} {1} iade edilecek."
 
-#: src/components/layouts/CheckIn/index.tsx:254
-#: src/components/layouts/CheckIn/index.tsx:316
+#: src/components/layouts/CheckIn/index.tsx:224
+#: src/components/layouts/CheckIn/index.tsx:286
 msgid "You are offline"
 msgstr "Çevrimdışısınız"
 
@@ -10638,8 +10638,8 @@ msgstr "Hesabınızdaki son aktif organizatörü arşivleyemezsiniz."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Bu ürünle ilişkili katılımcılar olduğu için ürün türünü değiştiremezsiniz."
 
-#: src/components/layouts/CheckIn/index.tsx:277
-#: src/components/layouts/CheckIn/index.tsx:358
+#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:328
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Ödenmemiş siparişleri olan katılımcıları check-in yaptıramazsınız. Bu ayar etkinlik ayarlarından değiştirilebilir."
 

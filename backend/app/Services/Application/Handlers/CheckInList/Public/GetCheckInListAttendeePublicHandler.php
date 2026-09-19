@@ -4,16 +4,15 @@ namespace HiEvents\Services\Application\Handlers\CheckInList\Public;
 
 use HiEvents\DomainObjects\AttendeeCheckInDomainObject;
 use HiEvents\DomainObjects\AttendeeDomainObject;
-use HiEvents\DomainObjects\CheckInListDomainObject;
 use HiEvents\DomainObjects\EventDomainObject;
 use HiEvents\DomainObjects\Generated\CheckInListDomainObjectAbstract;
 use HiEvents\DomainObjects\ProductDomainObject;
 use HiEvents\Exceptions\CannotCheckInException;
-use HiEvents\Helper\DateHelper;
 use HiEvents\Repository\Eloquent\Value\Relationship;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
+use HiEvents\Services\Domain\CheckInList\CheckInListDataService;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class GetCheckInListAttendeePublicHandler
@@ -22,6 +21,7 @@ class GetCheckInListAttendeePublicHandler
         private readonly AttendeeRepositoryInterface    $attendeeRepository,
         private readonly CheckInListRepositoryInterface $checkInListRepository,
         private readonly AttendeeOtherListCheckInsService $otherListCheckInsService,
+        private readonly CheckInListDataService $checkInListDataService,
     )
     {
     }
@@ -42,7 +42,7 @@ class GetCheckInListAttendeePublicHandler
             throw new ResourceNotFoundException(__('Check-in list not found'));
         }
 
-        $this->validateCheckInListIsActive($checkInList);
+        $this->checkInListDataService->validateCheckInListIsAvailable($checkInList);
 
         // The product comes along because this lookup is how a ticket from another list of the
         // event reaches the scanner, and the door has to be told which one it is to send the person
@@ -65,20 +65,5 @@ class GetCheckInListAttendeePublicHandler
         $this->otherListCheckInsService->attach(collect([$attendee]), $checkInList);
 
         return $attendee;
-    }
-
-    /**
-     * @todo - Move this to its own service. It's used 3 times
-     * @throws CannotCheckInException
-     */
-    private function validateCheckInListIsActive(CheckInListDomainObject $checkInList): void
-    {
-        if ($checkInList->getExpiresAt() && DateHelper::utcDateIsPast($checkInList->getExpiresAt())) {
-            throw new CannotCheckInException(__('Check-in list has expired'));
-        }
-
-        if ($checkInList->getActivatesAt() && DateHelper::utcDateIsFuture($checkInList->getActivatesAt())) {
-            throw new CannotCheckInException(__('Check-in list is not active yet'));
-        }
     }
 }

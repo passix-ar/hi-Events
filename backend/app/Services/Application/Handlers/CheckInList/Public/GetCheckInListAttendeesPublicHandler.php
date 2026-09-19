@@ -2,14 +2,13 @@
 
 namespace HiEvents\Services\Application\Handlers\CheckInList\Public;
 
-use HiEvents\DomainObjects\CheckInListDomainObject;
 use HiEvents\DomainObjects\Generated\CheckInListDomainObjectAbstract;
 use HiEvents\Exceptions\CannotCheckInException;
-use HiEvents\Helper\DateHelper;
 use HiEvents\Http\DTO\QueryParamsDTO;
 use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
+use HiEvents\Services\Domain\CheckInList\CheckInListDataService;
 use Illuminate\Contracts\Pagination\Paginator;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -19,6 +18,7 @@ class GetCheckInListAttendeesPublicHandler
         private readonly AttendeeRepositoryInterface    $attendeeRepository,
         private readonly CheckInListRepositoryInterface $checkInListRepository,
         private readonly AttendeeOtherListCheckInsService $otherListCheckInsService,
+        private readonly CheckInListDataService $checkInListDataService,
     )
     {
     }
@@ -40,26 +40,12 @@ class GetCheckInListAttendeesPublicHandler
             throw new ResourceNotFoundException(__('Check-in list not found'));
         }
 
-        $this->validateCheckInListIsActive($checkInList);
+        $this->checkInListDataService->validateCheckInListIsAvailable($checkInList);
 
         $attendees = $this->attendeeRepository->getAttendeesByCheckInShortId($shortId, $queryParams);
 
         $this->otherListCheckInsService->attach($attendees->getCollection(), $checkInList);
 
         return $attendees;
-    }
-
-    /**
-     * @throws CannotCheckInException
-     */
-    private function validateCheckInListIsActive(CheckInListDomainObject $checkInList): void
-    {
-        if ($checkInList->getExpiresAt() && DateHelper::utcDateIsPast($checkInList->getExpiresAt())) {
-            throw new CannotCheckInException(__('Check-in list has expired'));
-        }
-
-        if ($checkInList->getActivatesAt() && DateHelper::utcDateIsFuture($checkInList->getActivatesAt())) {
-            throw new CannotCheckInException(__('Check-in list is not active yet'));
-        }
     }
 }

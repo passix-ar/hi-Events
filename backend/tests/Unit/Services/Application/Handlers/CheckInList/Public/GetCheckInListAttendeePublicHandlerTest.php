@@ -9,6 +9,7 @@ use HiEvents\Repository\Interfaces\AttendeeRepositoryInterface;
 use HiEvents\Repository\Interfaces\CheckInListRepositoryInterface;
 use HiEvents\Services\Application\Handlers\CheckInList\Public\GetCheckInListAttendeePublicHandler;
 use HiEvents\Services\Domain\CheckInList\AttendeeOtherListCheckInsService;
+use HiEvents\Services\Domain\CheckInList\CheckInListDataService;
 use Mockery as m;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Tests\TestCase;
@@ -18,6 +19,7 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
     private CheckInListRepositoryInterface $checkInListRepository;
     private AttendeeRepositoryInterface $attendeeRepository;
     private AttendeeOtherListCheckInsService $otherListCheckInsService;
+    private CheckInListDataService $checkInListDataService;
     private GetCheckInListAttendeePublicHandler $handler;
 
     protected function setUp(): void
@@ -30,10 +32,15 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
         $this->otherListCheckInsService = m::mock(AttendeeOtherListCheckInsService::class);
         $this->otherListCheckInsService->shouldReceive('attach')->byDefault();
 
+        // The activation window is validated by the shared service, not re-implemented here.
+        $this->checkInListDataService = m::mock(CheckInListDataService::class);
+        $this->checkInListDataService->shouldReceive('validateCheckInListIsAvailable')->byDefault();
+
         $this->handler = new GetCheckInListAttendeePublicHandler(
             $this->attendeeRepository,
             $this->checkInListRepository,
             $this->otherListCheckInsService,
+            $this->checkInListDataService,
         );
     }
 
@@ -57,7 +64,11 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
     public function testHandleThrowsCannotCheckInIfListExpired(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->twice()->andReturn(now()->subMinute());
+
+        $this->checkInListDataService
+            ->shouldReceive('validateCheckInListIsAvailable')
+            ->once()
+            ->andThrow(new CannotCheckInException(__('Check-in list has expired')));
 
         $this->checkInListRepository
             ->shouldReceive('loadRelation')
@@ -77,8 +88,11 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
     public function testHandleThrowsCannotCheckInIfListNotActiveYet(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->once()->andReturn(null);
-        $checkInList->shouldReceive('getActivatesAt')->twice()->andReturn(now()->addMinute());
+
+        $this->checkInListDataService
+            ->shouldReceive('validateCheckInListIsAvailable')
+            ->once()
+            ->andThrow(new CannotCheckInException(__('Check-in list is not active yet')));
 
         $this->checkInListRepository
             ->shouldReceive('loadRelation')
@@ -104,8 +118,6 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
     public function testHandleReturnsNullWhenTheAttendeeDoesNotExist(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->once()->andReturn(null);
-        $checkInList->shouldReceive('getActivatesAt')->once()->andReturn(null);
         $checkInList->shouldReceive('getEventId')->once()->andReturn(123);
 
         $this->checkInListRepository
@@ -137,8 +149,6 @@ class GetCheckInListAttendeePublicHandlerTest extends TestCase
     public function testHandleReturnsAttendeeSuccessfully(): void
     {
         $checkInList = m::mock(CheckInListDomainObject::class);
-        $checkInList->shouldReceive('getExpiresAt')->once()->andReturn(null);
-        $checkInList->shouldReceive('getActivatesAt')->once()->andReturn(null);
         $checkInList->shouldReceive('getEventId')->once()->andReturn(123);
 
         $attendee = m::mock(AttendeeDomainObject::class);

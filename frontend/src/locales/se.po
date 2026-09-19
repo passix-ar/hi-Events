@@ -43,28 +43,28 @@ msgstr "(tom)"
 msgid "{0} {1}"
 msgstr "{0} {1}"
 
-#: src/components/layouts/CheckIn/index.tsx:344
+#: src/components/layouts/CheckIn/index.tsx:314
 msgid "{0} {1} already entered at {time} via <0>{listName}</0>"
 msgstr "{0} {1} kom redan in kl. {time} via <0>{listName}</0>"
 
-#: src/components/layouts/CheckIn/index.tsx:205
-#: src/components/layouts/CheckIn/index.tsx:331
+#: src/components/layouts/CheckIn/index.tsx:170
+#: src/components/layouts/CheckIn/index.tsx:301
 msgid "{0} {1} is already checked in"
 msgstr "{0} {1} är redan incheckad"
 
-#: src/components/layouts/CheckIn/index.tsx:212
+#: src/components/layouts/CheckIn/index.tsx:177
 msgid "{0} {1}'s ticket is cancelled"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:222
+#: src/components/layouts/CheckIn/index.tsx:187
 msgid "{0} {1}'s ticket is not valid for this check-in list"
 msgstr "{0} {1}s biljett är inte giltig för den här incheckningslistan"
 
-#: src/components/layouts/CheckIn/index.tsx:228
+#: src/components/layouts/CheckIn/index.tsx:193
 msgid "{0} <0>checked in</0> successfully"
 msgstr "{0} <0>incheckad</0> lyckades"
 
-#: src/components/layouts/CheckIn/index.tsx:248
+#: src/components/layouts/CheckIn/index.tsx:216
 msgid "{0} <0>checked out</0> successfully"
 msgstr "{0} <0>utcheckad</0> lyckades"
 
@@ -871,11 +871,11 @@ msgstr "Ett oväntat fel uppstod."
 msgid "An unexpected error occurred. Please try again."
 msgstr "Ett oväntat fel uppstod. Vänligen försök igen."
 
-#: src/components/layouts/CheckIn/index.tsx:116
+#: src/components/layouts/CheckIn/index.tsx:115
 msgid "And {remaining} more check-in(s) refused — check the list"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:341
+#: src/components/layouts/CheckIn/index.tsx:311
 msgid "another list"
 msgstr "en annan lista"
 
@@ -1203,8 +1203,8 @@ msgstr "Deltagarlistan uppdaterades {age} — tryck för att uppdatera"
 msgid "Attendee Name"
 msgstr "Deltagarens namn"
 
-#: src/components/layouts/CheckIn/index.tsx:315
-#: src/components/layouts/CheckIn/index.tsx:322
+#: src/components/layouts/CheckIn/index.tsx:285
+#: src/components/layouts/CheckIn/index.tsx:292
 msgid "Attendee not found"
 msgstr "Deltagare hittades inte"
 
@@ -1501,7 +1501,7 @@ msgstr "Kalifornien"
 msgid "Call-to-Action Button"
 msgstr "Uppmaningsknapp"
 
-#: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:16
+#: src/components/common/CheckIn/QrScanner/PermissionDeniedMessage.tsx:16
 msgid "Camera permission was denied. <0>Request Permission</0> again, or if this doesn't work, you will need to <1>grant this page</1> access to your camera in your browser settings."
 msgstr "Kamerabehörighet nekades. <0>Begär behörighet</0> igen, eller om detta inte fungerar behöver du <1>ge denna sida</1> åtkomst till kameran i webbläsarens inställningar."
 
@@ -1694,15 +1694,15 @@ msgstr "Incheckningslista skapad"
 msgid "Check-In List deleted successfully"
 msgstr "Incheckningslista togs bort"
 
-#: src/components/layouts/CheckIn/index.tsx:462
+#: src/components/layouts/CheckIn/index.tsx:432
 msgid "Check-in list has expired"
 msgstr "Incheckningslistan har gått ut"
 
-#: src/components/layouts/CheckIn/index.tsx:479
+#: src/components/layouts/CheckIn/index.tsx:449
 msgid "Check-in list is not active"
 msgstr "Incheckningslistan är inte aktiv"
 
-#: src/components/layouts/CheckIn/index.tsx:447
+#: src/components/layouts/CheckIn/index.tsx:417
 msgid "Check-in list not found"
 msgstr "Incheckningslistan hittades inte"
 
@@ -1830,7 +1830,7 @@ msgstr "Klicka för att visa anteckningar"
 msgid "close"
 msgstr "stäng"
 
-#: src/components/common/AttendeeCheckInTable/PermissionDeniedMessage.tsx:27
+#: src/components/common/CheckIn/QrScanner/PermissionDeniedMessage.tsx:27
 #: src/components/common/CookieConsentBanner/index.tsx:37
 #: src/components/modals/JoinWaitlistModal/index.tsx:103
 #: src/components/modals/JoinWaitlistModal/index.tsx:130
@@ -4284,7 +4284,7 @@ msgstr "Fast avgift måste vara 0 eller högre"
 msgid "Fixed Fee:"
 msgstr "Fast avgift:"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:167
+#: src/components/common/CheckIn/QrScanner/QrScanner.tsx:157
 msgid "Flash is not available on this device"
 msgstr "Blixt är inte tillgänglig på den här enheten"
 
@@ -7762,8 +7762,8 @@ msgstr "Spara biljettlayout"
 msgid "Save VAT Settings"
 msgstr "Spara momsinställningar"
 
-#: src/components/layouts/CheckIn/index.tsx:542
-#: src/components/layouts/CheckIn/index.tsx:552
+#: src/components/layouts/CheckIn/index.tsx:512
+#: src/components/layouts/CheckIn/index.tsx:522
 msgid "Scan"
 msgstr "Skanna"
 
@@ -7819,7 +7819,7 @@ msgstr "Sök på namn, e-post eller konto..."
 msgid "Search by name, email, or order #..."
 msgstr "Sök på namn, e-post eller ordernummer..."
 
-#: src/components/layouts/CheckIn/index.tsx:538
+#: src/components/layouts/CheckIn/index.tsx:508
 msgid "Search by name, order # or attendee #..."
 msgstr "Sök på namn, ordernummer eller deltagarnummer..."
 
@@ -7950,7 +7950,7 @@ msgstr "Välj ett evenemang"
 msgid "Select attendee group"
 msgstr "Välj deltagargrupp"
 
-#: src/components/common/AttendeeCheckInTable/QrScannerControls.tsx:47
+#: src/components/common/CheckIn/QrScanner/QrScannerControls.tsx:47
 msgid "Select Camera"
 msgstr "Välj kamera"
 
@@ -8894,7 +8894,7 @@ msgstr "Den kampanjkoden är ogiltig"
 msgid "The background color of the page. When using cover image, this is applied as an overlay."
 msgstr "Sidans bakgrundsfärg. När en omslagsbild används appliceras detta som en överlagring."
 
-#: src/components/layouts/CheckIn/index.tsx:452
+#: src/components/layouts/CheckIn/index.tsx:422
 msgid "The check-in list you are looking for does not exist."
 msgstr "Incheckningslistan du letar efter finns inte."
 
@@ -9091,7 +9091,7 @@ msgstr "Den här kategorin har inga produkter ännu."
 msgid "This category is hidden from public view"
 msgstr "Den här kategorin är dold för allmänheten"
 
-#: src/components/layouts/CheckIn/index.tsx:240
+#: src/components/layouts/CheckIn/index.tsx:205
 msgid "This check-in is still syncing. Please try again in a moment."
 msgstr "Den här incheckningen synkas fortfarande. Försök igen om en stund."
 
@@ -9099,7 +9099,7 @@ msgstr "Den här incheckningen synkas fortfarande. Försök igen om en stund."
 msgid "This check-in list has expired"
 msgstr "Den här incheckningslistan har löpt ut"
 
-#: src/components/layouts/CheckIn/index.tsx:467
+#: src/components/layouts/CheckIn/index.tsx:437
 msgid "This check-in list has expired and is no longer available for check-ins."
 msgstr "Den här incheckningslistan har löpt ut och är inte längre tillgänglig för incheckning."
 
@@ -9111,7 +9111,7 @@ msgstr "Den här incheckningslistan är aktiv"
 msgid "This check-in list is not active yet"
 msgstr "Den här incheckningslistan är inte aktiv ännu"
 
-#: src/components/layouts/CheckIn/index.tsx:484
+#: src/components/layouts/CheckIn/index.tsx:454
 msgid "This check-in list is not yet active and is not available for check-ins."
 msgstr "Den här incheckningslistan är ännu inte aktiv och är inte tillgänglig för incheckning."
 
@@ -9614,11 +9614,11 @@ msgstr "Sant om betalning väntar"
 msgid "Try another email"
 msgstr "Prova en annan e-postadress"
 
-#: src/components/layouts/CheckIn/index.tsx:545
+#: src/components/layouts/CheckIn/index.tsx:515
 msgid "Turn sound off"
 msgstr "Stäng av ljudet"
 
-#: src/components/layouts/CheckIn/index.tsx:545
+#: src/components/layouts/CheckIn/index.tsx:515
 msgid "Turn sound on"
 msgstr "Slå på ljudet"
 
@@ -9648,8 +9648,8 @@ msgstr "Typ av biljett"
 msgid "Typography"
 msgstr "Typografi"
 
-#: src/components/layouts/CheckIn/index.tsx:259
-#: src/components/layouts/CheckIn/index.tsx:261
+#: src/components/layouts/CheckIn/index.tsx:229
+#: src/components/layouts/CheckIn/index.tsx:231
 msgid "Unable to check out attendee"
 msgstr "Det gick inte att checka ut deltagaren"
 
@@ -9669,7 +9669,7 @@ msgstr "Det gick inte att skapa frågan. Kontrollera dina uppgifter"
 msgid "Unable to duplicate product. Please check your details"
 msgstr ""
 
-#: src/components/layouts/CheckIn/index.tsx:316
+#: src/components/layouts/CheckIn/index.tsx:286
 msgid "Unable to fetch attendee"
 msgstr "Det gick inte att hämta deltagaren"
 
@@ -10597,7 +10597,7 @@ msgstr "Ja, avbryt min order"
 msgid "Yes, remove them"
 msgstr "Ja, ta bort dem"
 
-#: src/components/common/AttendeeCheckInTable/QrScanner.tsx:86
+#: src/components/common/CheckIn/QrScanner/QrScanner.tsx:76
 msgid "You already scanned this ticket"
 msgstr "Du har redan skannat den här biljetten"
 
@@ -10613,8 +10613,8 @@ msgstr "Du utger dig för att vara <0>{0}</0> ({1})"
 msgid "You are issuing a partial refund. The customer will be refunded {0} {1}."
 msgstr "Du gör en delåterbetalning. Kunden kommer att få {0} {1} återbetalat."
 
-#: src/components/layouts/CheckIn/index.tsx:254
-#: src/components/layouts/CheckIn/index.tsx:316
+#: src/components/layouts/CheckIn/index.tsx:224
+#: src/components/layouts/CheckIn/index.tsx:286
 msgid "You are offline"
 msgstr "Du är offline"
 
@@ -10638,8 +10638,8 @@ msgstr "Du kan inte arkivera den sista aktiva arrangören på ditt konto."
 msgid "You cannot change the product type as there are attendees associated with this product."
 msgstr "Du kan inte ändra produkttyp eftersom det finns deltagare kopplade till den här produkten."
 
-#: src/components/layouts/CheckIn/index.tsx:277
-#: src/components/layouts/CheckIn/index.tsx:358
+#: src/components/layouts/CheckIn/index.tsx:247
+#: src/components/layouts/CheckIn/index.tsx:328
 msgid "You cannot check in attendees with unpaid orders. This setting can be changed in the event settings."
 msgstr "Du kan inte checka in deltagare med obetalda ordrar. Den här inställningen kan ändras i evenemangsinställningarna."
 

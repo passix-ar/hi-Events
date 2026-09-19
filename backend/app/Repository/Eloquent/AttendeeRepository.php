@@ -141,14 +141,15 @@ class AttendeeRepository extends BaseRepository implements AttendeeRepositoryInt
 
         // The door scanner downloads the whole list up front, so this endpoint
         // allows bigger pages than the default cap of 100. The cap is restored
-        // afterwards so it does not leak into other queries on this repository.
+        // afterwards so it does not leak into other queries on this repository,
+        // and getPaginationPerPage applies it to whatever is asked for.
         $defaultMaxPerPage = $this->maxPerPage;
         $this->setMaxPerPage(self::CHECK_IN_ROSTER_MAX_PER_PAGE);
 
         try {
             return $this->simplePaginateWhere(
                 where: $where,
-                limit: min($params->per_page, self::CHECK_IN_ROSTER_MAX_PER_PAGE),
+                limit: $params->per_page,
             );
         } finally {
             $this->setMaxPerPage($defaultMaxPerPage);

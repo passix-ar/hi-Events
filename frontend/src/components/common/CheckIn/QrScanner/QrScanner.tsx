@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import QrScanner from 'qr-scanner';
 import classes from './QrScanner.module.scss';
-import {showError} from "../../../utilites/notifications.tsx";
+import {showError} from "../../../../utilites/notifications.tsx";
 import {t} from "@lingui/macro";
 import {QrScannerControls} from './QrScannerControls';
 import {PermissionDeniedMessage} from './PermissionDeniedMessage';
@@ -19,6 +19,10 @@ interface QRScannerComponentProps {
     // sound button showing the opposite of what the scanner was doing.
     isSoundOn: boolean;
     onSoundToggle: () => void;
+    // A code was read and is being resolved. The page owns every sound the door makes — this
+    // component used to keep its own copies and play them itself, which meant each scan was
+    // announced twice, once by each side.
+    onScanStart?: () => void;
 }
 
 export const QRScannerComponent = (props: QRScannerComponentProps) => {
@@ -40,27 +44,13 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
     const checkedInIdsRef = useRef<Set<string>>(new Set());
     const onAttendeeScannedRef = useRef(props.onAttendeeScanned);
     onAttendeeScannedRef.current = props.onAttendeeScanned;
+    const onScanStartRef = useRef(props.onScanStart);
+    onScanStartRef.current = props.onScanStart;
 
     const [isScanFailed, setIsScanFailed] = useState(false);
     const [isScanSucceeded, setIsScanSucceeded] = useState(false);
 
     const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    const scanSuccessAudioRef = useRef<HTMLAudioElement | null>(null);
-    const scanErrorAudioRef = useRef<HTMLAudioElement | null>(null);
-    const scanInProgressAudioRef = useRef<HTMLAudioElement | null>(null);
-
-    // The decode callback is registered once and reads this from a ref, not from its closure.
-    const isSoundOnRef = useRef(props.isSoundOn);
-    isSoundOnRef.current = props.isSoundOn;
-
-    const playAudio = (audio: HTMLAudioElement | null) => {
-        if (isSoundOnRef.current && audio) {
-            audio.play().catch(() => {
-                // Ignore audio play errors (e.g. the browser blocked autoplay)
-            });
-        }
-    };
 
     const handleDecoded = (code: string) => {
         const now = Date.now();
@@ -90,7 +80,7 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
 
         isBusyRef.current = true;
         setIsCheckingIn(true);
-        playAudio(scanInProgressAudioRef.current);
+        onScanStartRef.current?.();
 
         // The overlay must reflect what actually happened: a code this scanner cannot
         // resolve — a QR from another app, an unknown ticket — is a failed scan, and
@@ -136,8 +126,8 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
         setIsScanSucceeded(succeeded);
         setIsScanFailed(!succeeded);
 
-        playAudio(succeeded ? scanSuccessAudioRef.current : scanErrorAudioRef.current);
-
+        // Visual only. The sound for this outcome is played by the page, which is where the
+        // check-in is actually decided.
         if (feedbackTimeoutRef.current) {
             clearTimeout(feedbackTimeoutRef.current);
         }
@@ -252,10 +242,6 @@ export const QRScannerComponent = (props: QRScannerComponentProps) => {
                 onClose={handleClose}
             />
 
-            <audio ref={scanSuccessAudioRef} src="/sounds/scan-success.wav"/>
-            <audio ref={scanErrorAudioRef} src="/sounds/scan-error.wav"/>
-            <audio ref={scanInProgressAudioRef} src="/sounds/scan-in-progress.wav"/>
-            
             <div className={`${classes.scannerOverlay} ${isScanSucceeded ? classes.success : ""} ${isScanFailed ? classes.failure : ""} ${isCheckingIn ? classes.checkingIn : ""}`}/>
         </div>
     );

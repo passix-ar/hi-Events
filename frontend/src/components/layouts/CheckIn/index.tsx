@@ -10,15 +10,16 @@ import classes from "./CheckIn.module.scss";
 import {ActionIcon, Modal} from "@mantine/core";
 import {SearchBar} from "../../common/SearchBar";
 import {IconInfoCircle, IconQrcode, IconVolume, IconVolumeOff} from "@tabler/icons-react";
-import {QRScannerComponent} from "../../common/AttendeeCheckInTable/QrScanner.tsx";
+import {QRScannerComponent} from "../../common/CheckIn/QrScanner/QrScanner.tsx";
 import {isPendingCheckIn, useCheckInRoster} from "../../../hooks/useCheckInRoster.ts";
+import {useScanSounds} from "../../../hooks/useScanSounds.tsx";
+import {useDeleteCheckInPublic} from "../../../mutations/useDeleteCheckInPublic.ts";
 import {NoResultsSplash} from "../../common/NoResultsSplash";
 import {Countdown} from "../../common/Countdown";
 import Truncate from "../../common/Truncate";
 import {Header} from "../../common/Header";
 import {publicCheckInClient} from "../../../api/check-in.client.ts";
 import {SyncStatus} from "../../common/CheckIn/SyncStatus";
-import {isSsr} from "../../../utilites/helpers.ts";
 import {AttendeeList} from "../../common/CheckIn/AttendeeList";
 import {CheckInOptionsModal} from "../../common/CheckIn/CheckInOptionsModal";
 import {ScannerSelectionModal} from "../../common/CheckIn/ScannerSelectionModal";
@@ -53,14 +54,8 @@ const CheckIn = () => {
     // The keys the USB reader has typed so far. A ref rather than state: it changes on every
     // character and nothing renders it, and as state it rebuilt the listener on each keystroke.
     const currentBarcodeRef = useRef('');
-    const scanSuccessAudioRef = useRef<HTMLAudioElement | null>(null);
-    const scanErrorAudioRef = useRef<HTMLAudioElement | null>(null);
-    const [isSoundOn, setIsSoundOn] = useState(() => {
-        if (isSsr()) return true;
-        // Use a unified sound setting for all scanners
-        const storedIsSoundOn = localStorage.getItem("scannerSoundOn");
-        return storedIsSoundOn === null ? true : JSON.parse(storedIsSoundOn);
-    });
+    // Every sound the door makes comes from here — see useScanSounds for why that matters.
+    const {isSoundOn, setIsSoundOn, playSuccess, playError, playInProgress, audioElements} = useScanSounds();
     const [selectedAttendee, setSelectedAttendee] = useState<Attendee | null>(null);
     const [checkInModalOpen, checkInModalHandlers] = useDisclosure(false);
     const [infoModalOpen, infoModalHandlers] = useDisclosure(false, {
@@ -81,8 +76,12 @@ const CheckIn = () => {
         Boolean(checkInList?.is_expired),
     );
     // Who is being checked out, not whether someone is: as a single flag it put every button in the
-    // list into a loading state, so undoing one check-in froze the whole door.
-    const [checkingOutPublicId, setCheckingOutPublicId] = useState<string | null>(null);
+    // list into a loading state, so undoing one check-in froze the whole door. Derived from the
+    // mutation rather than mirrored in its own state, so there is one source of truth.
+    const checkOutMutation = useDeleteCheckInPublic();
+    const checkingOutPublicId = checkOutMutation.isPending
+        ? checkOutMutation.variables?.attendeePublicId ?? null
+        : null;
 
     // The list is searched in memory: no request per keystroke, and it works
     // with the connection down.
@@ -116,47 +115,13 @@ const CheckIn = () => {
             showError(t`And ${remaining} more check-in(s) refused — check the list`);
         }
 
-        playErrorSound();
+        playError();
         roster.clearRejected();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roster.rejected]);
     const areOfflinePaymentsEnabled = eventSettings?.payment_providers?.includes('OFFLINE');
     const allowOrdersAwaitingOfflinePaymentToCheckIn = areOfflinePaymentsEnabled
         && eventSettings?.allow_orders_awaiting_offline_payment_to_check_in;
-
-    // Save sound preference to localStorage
-    useEffect(() => {
-        if (!isSsr()) {
-            localStorage.setItem("scannerSoundOn", JSON.stringify(isSoundOn));
-        }
-    }, [isSoundOn]);
-
-    // Sound helpers
-    const playSuccessSound = useCallback(() => {
-        if (isSoundOn && scanSuccessAudioRef.current) {
-            scanSuccessAudioRef.current.play().catch(() => {
-                // Ignore audio play errors (e.g., user hasn't interacted with page)
-            });
-        }
-    }, [isSoundOn]);
-
-    const playErrorSound = useCallback(() => {
-        if (isSoundOn && scanErrorAudioRef.current) {
-            scanErrorAudioRef.current.play().catch(() => {
-                // Ignore audio play errors (e.g., user hasn't interacted with page)
-            });
-        }
-    }, [isSoundOn]);
-
-    const playClickSound = useCallback(() => {
-        if (isSoundOn && scanSuccessAudioRef.current) {
-            // Use success sound for click feedback
-            scanSuccessAudioRef.current.currentTime = 0; // Reset to start for quick successive clicks
-            scanSuccessAudioRef.current.play().catch(() => {
-                // Ignore audio play errors
-            });
-        }
-    }, [isSoundOn]);
 
     // Retrying the roster alone does nothing in the case where the warning matters most: opening the
     // scanner with no signal means the check-in list never loaded, and without it the roster refresh
@@ -203,14 +168,14 @@ const CheckIn = () => {
         if (outcome.status === 'already-checked-in') {
             showError(scanFeedback(attendee,
                 <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
-            playErrorSound();
+            playError();
             return false;
         }
 
         if (outcome.status === 'cancelled') {
             showError(scanFeedback(attendee,
                 <Trans>{attendee.first_name} {attendee.last_name}'s ticket is cancelled</Trans>));
-            playErrorSound();
+            playError();
             return false;
         }
 
@@ -220,17 +185,17 @@ const CheckIn = () => {
         if (outcome.status === 'not-on-this-list') {
             showError(scanFeedback(attendee,
                 <Trans>{attendee.first_name} {attendee.last_name}'s ticket is not valid for this check-in list</Trans>));
-            playErrorSound();
+            playError();
             return false;
         }
 
         showSuccess(scanFeedback(attendee,
             <Trans>{attendee.first_name} <b>checked in</b> successfully</Trans>));
-        playSuccessSound();
+        playSuccess();
         checkInModalHandlers.close();
         setSelectedAttendee(null);
         return true;
-    }, [roster.queueCheckIn, scanFeedback, playErrorSound, playSuccessSound, checkInModalHandlers]);
+    }, [roster.queueCheckIn, scanFeedback, playError, playSuccess, checkInModalHandlers]);
 
     const handleCheckInToggle = (attendee: Attendee) => {
         if (attendee.check_in) {
@@ -241,15 +206,20 @@ const CheckIn = () => {
                 return;
             }
 
-            setCheckingOutPublicId(attendee.public_id);
-            publicCheckInClient.deleteCheckIn(checkInListShortId, attendee.check_in.short_id)
-                .then(() => {
+            checkOutMutation.mutate({
+                checkInListShortId,
+                checkInShortId: attendee.check_in.short_id,
+                attendeePublicId: attendee.public_id,
+            }, {
+                onSuccess: () => {
                     roster.patchAttendee(attendee.public_id, {check_in: undefined});
                     showSuccess(<Trans>{attendee.first_name} <b>checked out</b> successfully</Trans>);
-                    playSuccessSound();
-                })
-                .catch((error) => {
-                    playErrorSound();
+                    playSuccess();
+                },
+                // Handled here rather than inside the mutation: this is the screen that knows
+                // whether the door is offline, and what to tell the person holding the phone.
+                onError: (error) => {
+                    playError();
                     if (!networkStatus.online) {
                         showError(t`You are offline`);
                         return;
@@ -260,8 +230,8 @@ const CheckIn = () => {
                     } else {
                         showError(t`Unable to check out attendee`);
                     }
-                })
-                .finally(() => setCheckingOutPublicId(null));
+                },
+            });
             return;
         }
 
@@ -314,13 +284,13 @@ const CheckIn = () => {
                     showError(isUnknownCode
                         ? t`Attendee not found`
                         : networkStatus.online ? t`Unable to fetch attendee` : t`You are offline`);
-                    playErrorSound();
+                    playError();
                     return false;
                 }
 
                 if (!attendee) {
                     showError(t`Attendee not found`);
-                    playErrorSound();
+                    playError();
                     return false;
                 }
             }
@@ -329,7 +299,7 @@ const CheckIn = () => {
             if (attendee.check_in) {
                 showError(scanFeedback(attendee,
                     <Trans>{attendee.first_name} {attendee.last_name} is already checked in</Trans>));
-                playErrorSound();
+                playError();
                 return false;
             }
 
@@ -342,7 +312,7 @@ const CheckIn = () => {
                 const time = new Date(enteredElsewhere.checked_in_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
                 showError(scanFeedback(attendee,
                     <Trans>{attendee.first_name} {attendee.last_name} already entered at {time} via <b>{listName}</b></Trans>));
-                playErrorSound();
+                playError();
                 return false;
             }
 
@@ -356,7 +326,7 @@ const CheckIn = () => {
 
             if (!allowOrdersAwaitingOfflinePaymentToCheckIn && isAttendeeAwaitingPayment) {
                 showError(t`You cannot check in attendees with unpaid orders. This setting can be changed in the event settings.`);
-                playErrorSound();
+                playError();
                 return false;
             }
 
@@ -366,7 +336,7 @@ const CheckIn = () => {
             // reopen it left the scanner refusing every later scan until the page was reloaded.
             isProcessingRef.current = false;
         }
-    }, [roster.findByPublicId, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, scanFeedback, playErrorSound, networkStatus.online]);
+    }, [roster.findByPublicId, checkInListShortId, allowOrdersAwaitingOfflinePaymentToCheckIn, checkInModalHandlers, handleCheckInAction, scanFeedback, playError, networkStatus.online]);
 
 
     // Process completed barcode
@@ -573,7 +543,7 @@ const CheckIn = () => {
                 checkingOutPublicId={checkingOutPublicId}
                 allowOrdersAwaitingOfflinePaymentToCheckIn={allowOrdersAwaitingOfflinePaymentToCheckIn || false}
                 onCheckInToggle={handleCheckInToggle}
-                onClickSound={playClickSound}
+                onClickSound={playSuccess}
             />
             <CheckInOptionsModal
                 isOpen={checkInModalOpen}
@@ -615,6 +585,7 @@ const CheckIn = () => {
                             onClose={() => setQrScannerOpen(false)}
                             isSoundOn={isSoundOn}
                             onSoundToggle={() => setIsSoundOn(!isSoundOn)}
+                            onScanStart={playInProgress}
                         />
                     </Modal.Content>
                 </Modal.Root>
@@ -624,9 +595,7 @@ const CheckIn = () => {
                 checkInList={checkInList}
                 onClose={infoModalHandlers.close}
             />
-            {/* Audio elements for HID scanner sounds */}
-            <audio ref={scanSuccessAudioRef} src="/sounds/scan-success.wav"/>
-            <audio ref={scanErrorAudioRef} src="/sounds/scan-error.wav"/>
+            {audioElements}
         </div>
     );
 }

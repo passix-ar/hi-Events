@@ -45,8 +45,8 @@ export const QrScannerControls = ({
                     </Menu.Target>
                     <Menu.Dropdown>
                         <Menu.Label>{t`Select Camera`}</Menu.Label>
-                        {cameraList?.map((camera, index) => (
-                            <Menu.Item key={index} onClick={() => onCameraSelect(camera)}>
+                        {cameraList?.map((camera) => (
+                            <Menu.Item key={camera.id} onClick={() => onCameraSelect(camera)}>
                                 {camera.label}
                             </Menu.Item>
                         ))}
